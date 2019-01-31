@@ -1,0 +1,7 @@
+index:
+    path: /
+    controller: App\Controller\PageController::home
+
+page_templates:
+  path: /template/{slug}
+  controller: App\Controller\PageController::pageTemplate
