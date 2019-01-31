@@ -1,0 +1,39 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>{% block title %}CCS{% endblock %}</title>
+
+    <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
+    {% block header %}
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% endblock %}
+
+    {% block blocking_javascript %}
+
+    {% endblock %}
+</head>
+
+<body>
+
+<nav><a href="/">Home</a></nav>
+
+{% block body %}{% endblock %}
+
+{% block nonblocking_javascript %}
+<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+<script>
+    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto'); ga('send', 'pageview')
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+{% endblock %}
+
+</body>
+
+</html>
