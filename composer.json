@@ -60,6 +60,10 @@
         }
     },
     "require-dev": {
+        "behat/mink": "dev-master",
+        "behat/mink-extension": "dev-master",
+        "behat/mink-goutte-driver": "^1.2",
+        "roave/security-advisories": "dev-master",
         "symfony/debug-pack": "^1.0",
         "symfony/phpunit-bridge": "4.2.*",
         "symfony/web-server-bundle": "4.2.*"

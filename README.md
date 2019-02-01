@@ -20,6 +20,12 @@ Create unit tests in `tests/` and run via `bin/phpunit`
 
 See [Getting Started with PHPUnit](https://phpunit.de/getting-started/phpunit-7.html)
 
+### Behat
+
+Create Behat tests in `features/` and run via `bin/behat` 
+
+See [quick start](http://docs.behat.org/en/latest/quick_start.html) and [Behat and Mink](http://docs.behat.org/en/v2.5/cookbook/behat_and_mink.html)
+
 ## Installation
 
 ### Composer
