@@ -22,7 +22,11 @@ See [Getting Started with PHPUnit](https://phpunit.de/getting-started/phpunit-7.
 
 ### Behat
 
-Create Behat tests in `features/` and run via `bin/behat` 
+Create Behat tests in `features/`
+ 
+To run first ensure you are running the local server via `bin/console server:run`
+
+Run Behat tests via: `bin/behat` 
 
 See [quick start](http://docs.behat.org/en/latest/quick_start.html) and [Behat and Mink](http://docs.behat.org/en/v2.5/cookbook/behat_and_mink.html)
 
