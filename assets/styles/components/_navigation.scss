@@ -1,0 +1,172 @@
+/*------------------------------------*\
+  #Navigation
+\*------------------------------------*/
+
+.global-navigation {
+
+    background-color: #7C1539;
+    margin-bottom: govuk-px-to-rem(- 20);
+    // This is to offset the margin-bottom which is rendered on .global-header when the navigation is closed
+    margin-top: govuk-px-to-rem(20);
+
+    @include govuk-media-query($from: desktop) {
+
+        background-color: transparent;
+
+    }
+
+}
+
+.global-navigation[aria-hidden="false"] {
+
+    display: block;
+    visibility: visible;
+
+}
+.global-navigation[aria-hidden="true"] {
+
+    display: none;
+    visibility: hidden;
+
+}
+
+/* ul */
+.nav-list {
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @include govuk-media-query($from: desktop) {
+
+    }
+
+}
+
+.nav-list--secondary {
+
+    padding-top: govuk-px-to-rem(40);
+    position: relative;
+
+    &:before {
+
+        content: " ";
+        display: block;
+        position: absolute;
+        top: govuk-px-to-rem(20);
+        left: govuk-px-to-rem(20);
+        width: calc(100% - #{govuk-px-to-rem(20)});
+        height: govuk-px-to-rem(1);
+        background-color: white;
+        
+
+    }
+
+    @include govuk-media-query($from: desktop) {
+
+        &:before { content: none; }
+
+    }
+
+}
+
+
+
+
+/* li */
+.nav-list__item {
+
+    @include govuk-media-query($from: desktop) {
+
+        display: inline-block;
+        margin-right: 0.5em;
+
+    }
+
+}
+
+
+
+/* a */
+.nav-list__link {
+
+    display: block;
+    padding: govuk-px-to-rem(15) govuk-px-to-rem(20) govuk-px-to-rem(14) govuk-px-to-rem(20);
+    text-decoration: none;
+
+    @include govuk-media-query($from: desktop) {
+
+        display: inline-block;
+        padding: govuk-px-to-rem(8) govuk-px-to-rem(0) govuk-px-to-rem(8) govuk-px-to-rem(0);
+
+    }
+
+}
+
+
+/* a */
+.nav-list--primary .nav-list__link {
+
+    // GDS uses an 8-key font scale which predefines which sizes are available.
+    // This allows fonts to scale with breakpoints
+    @include govuk-font(24, $weight: regular);
+
+}
+
+
+
+/* a */
+.nav-list--secondary .nav-list__link {
+
+    // GDS uses an 8-key font scale which predefines which sizes are available.
+    // This allows fonts to scale with breakpoints
+    @include govuk-font(19, $weight: regular);
+
+}
+
+
+
+/**
+ * Highlight current navigation item
+ */
+.item-current {
+
+    background-color: #5F0D2A;
+
+    @include govuk-media-query($from: desktop) {
+
+        background-color: transparent;
+        border-bottom: solid govuk-px-to-rem(2) white;
+
+    }
+
+}
+
+.nav-list__link + .nav-list__link {
+
+    @include govuk-media-query($from: desktop) {}
+
+}
+
+.global-navigation__toggler {
+
+    background-color: white;
+    border: 0;
+    border-radius: govuk-px-to-rem(3);
+    color: #9B1A47;
+    padding: 1em;
+
+    position: absolute;
+    right: govuk-px-to-rem(20);
+    top: govuk-px-to-rem(41);
+
+    @include govuk-focusable;
+    @include govuk-font(19, $weight: regular);
+
+    @include govuk-media-query($from: desktop) {
+
+        display: none;
+
+    }
+
+}

@@ -1,0 +1,40 @@
+@import "settings";
+
+// Import GOV.UK Frontend
+@import "assets/govuk-frontend/all";
+
+//@import "node_modules/govuk-frontend/components/table/table";
+
+@import "typography/font-face";
+@import "typography/typography";
+
+@import "tools/mixins";
+
+// Patterns that aren't in Frontend
+//@import "patterns/check-your-answers";
+//@import "patterns/step-by-step-navigation";
+//@import "patterns/task-list";
+//@import "patterns/related-items";
+
+// Components that aren't in Frontend
+//@import "components/cookie-banner";
+@import "components/header";
+@import "components/footer";
+
+@import "forms/buttons";
+@import "forms/checkboxes";
+@import "forms/radios";
+
+@import "components/accordion";
+@import "components/aside";
+@import "components/address";
+@import "components/enclosure";
+@import "components/headings";
+@import "components/icons";
+@import "components/links";
+@import "components/lists";
+@import "components/navigation";
+@import "components/pagination";
+@import "components/print";
+@import "components/tables";
+@import "components/warning-text";

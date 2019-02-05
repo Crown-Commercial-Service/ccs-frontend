@@ -1,0 +1,28 @@
+/*------------------------------------*\
+  #Icons
+\*------------------------------------*/
+
+.icon {
+
+    margin-top: 0;
+
+    display: inline-block;
+
+    width: 1em;
+    height: 1em;
+
+    fill: currentColor;
+
+    vertical-align: middle;
+
+    position: relative;
+    top: -0.0625em;
+    
+}
+
+.icon + span:not(.visuallyhidden),
+span:not(.visuallyhidden) + .icon {
+
+    margin-left: 0.5rem;
+
+}
