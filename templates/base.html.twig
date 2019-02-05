@@ -14,16 +14,23 @@
 
     {% endblock %}
 
+    <link rel="stylesheet" href=/assets/styles/styles.css?v=1.0.0">
+
     {% block blocking_javascript %}
 
     {% endblock %}
 </head>
 
 <body>
+<script>document.querySelector('body').classList.add('js-enabled');</script>
 
 <nav><a href="/">Home</a></nav>
 
+{{ include('/includes/header.html.twig') }}
+
 {% block body %}{% endblock %}
+
+{{ include('/includes/footer.html.twig') }}
 
 {% block nonblocking_javascript %}
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
@@ -35,5 +42,9 @@
 {% endblock %}
 
 </body>
+
+<script src="/assets/scripts/libraries/jquery-1.11.3.js"></script>
+<script src="/assets/scripts/all.js"></script>
+<script src="/assets/scripts/app.js"></script>
 
 </html>
