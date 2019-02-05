@@ -35,7 +35,7 @@ To install PHP packages for development, run:
 composer install
 ```
 
-To install PHP packages for Staging and Production , run:
+To install PHP packages for Staging and Production, run:
 
 ```
 composer install --no-dev --optimize-autoloader
