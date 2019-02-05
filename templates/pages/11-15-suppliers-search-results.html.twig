@@ -1,0 +1,445 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
+
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
+
+        <div class="govuk-phase-banner">
+            <p class="govuk-phase-banner__content">
+                <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                    beta </strong> <span class="govuk-phase-banner__text">
+      This is a new service – your
+      <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+    </span>
+            </p>
+        </div>
+
+
+        <div class="govuk-breadcrumbs">
+            <ol class="govuk-breadcrumbs__list">
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="#">Home</a>
+                </li>
+                <!--<li class="govuk-breadcrumbs__list-item">-->
+                <!--<a class="govuk-breadcrumbs__link" href="#">Search framework</a>-->
+                <!--</li>-->
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                    Search suppliers
+                </li>
+            </ol>
+        </div>
+
+
+
+
+
+        <!-- required wrapper 2 -->
+        <main class="govuk-main-wrapper">
+
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+
+                    <h1 class="govuk-heading-xl page-title">Search suppliers</h1>
+
+                    <div class="govuk-warning-text">
+                        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                        <strong class="govuk-warning-text__text">
+                            <span class="govuk-warning-text__assistive">Important</span>
+                            Some of our suppliers will not be displayed on this page
+                        </strong>
+                        <p class="govuk-body">Suppliers for <a href="sdg">Dynamic Purchasing System (DPS)</a> agreements or
+                            <a href="gfg">G-Cloud</a> are not available on this page</p>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-quarter">
+
+                    <form action="">
+
+                        <div class="govuk-form-group govuk-form-group--enclosure">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="name">
+                                    Keyword search
+                                </label>
+                                <input class="govuk-input input--search-icon" id="name" name="name" type="text">
+                                <button class="visuallyhidden">Search suppliers</button>
+                            </div>
+                        </div>
+
+
+                        <h2 class="govuk-heading-m">Apply filters</h2>
+
+
+                        <div class="govuk-form-group govuk-form-group--enclosure">
+                            <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h1 class="govuk-fieldset__heading">
+                                        Which types of waste do you transport?
+                                    </h1>
+                                </legend>
+                                <span id="waste-hint" class="govuk-hint">
+      Select all that apply.
+    </span>
+                                <div class="govuk-checkboxes govuk-checkboxes--small">
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-1" name="waste" type="checkbox" value="carcasses">
+                                        <label class="govuk-label govuk-checkboxes__label" for="waste-1">
+                                            Waste from animal carcasses
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-2" name="waste" type="checkbox" value="mines">
+                                        <label class="govuk-label govuk-checkboxes__label" for="waste-2">
+                                            Waste from mines or quarries
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-3" name="waste" type="checkbox" value="farm">
+                                        <label class="govuk-label govuk-checkboxes__label" for="waste-3">
+                                            Farm or agricultural waste
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+
+
+
+
+                        <div class="govuk-form-group govuk-form-group--enclosure">
+                            <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h1 class="govuk-fieldset__heading">
+                                        Lot
+                                    </h1>
+                                </legend>
+                                <span id="waste-hint" class="govuk-hint">
+      Show suppliers that are on multiple lots
+    </span>
+                                <div class="govuk-radios govuk-radios--small govuk-radios--conditional" data-module="radios">
+
+                                    <div class="govuk-radios__item govuk-radios__item--small">
+                                        <input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot" type="radio" value="england">
+                                        <label class="govuk-label govuk-radios__label" for="show-all-suppliers-on-framwork-1">
+                                            Show all suppliers on framework
+                                        </label>
+                                    </div>
+
+                                    <div class="govuk-radios__item govuk-radios__item--small">
+                                        <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3">
+                                        <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">
+                                            Show suppliers on a specific lot
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--small govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-3">
+
+                                        <div class="govuk-form-group">
+                                            <fieldset class="govuk-fieldset">
+                                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                                    <h1 class="govuk-fieldset__heading visuallyhidden">
+                                                        Select lot to filter by
+                                                    </h1>
+                                                </legend>
+                                                <div class="govuk-radios govuk-radios--small">
+                                                    <div class="govuk-radios__item govuk-radios__item--small">
+                                                        <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-1" name="where-do-you-live" type="radio" value="england">
+                                                        <label class="govuk-label govuk-radios__label" for="where-do-you-live-1">
+                                                            Lot 1 Data access services
+                                                        </label>
+                                                    </div>
+                                                    <div class="govuk-radios__item govuk-radios__item--small">
+                                                        <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-2" name="where-do-you-live" type="radio" value="scotland">
+                                                        <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
+                                                            Lot 2 Local connectivity services
+                                                        </label>
+                                                    </div>
+                                                    <div class="govuk-radios__item govuk-radios__item--small">
+                                                        <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-3" name="where-do-you-live" type="radio" value="wales">
+                                                        <label class="govuk-label govuk-radios__label" for="where-do-you-live-3">
+                                                            Lot 3 Voice telephony services
+                                                        </label>
+                                                    </div>
+                                                    <div class="govuk-radios__item govuk-radios__item--small">
+                                                        <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-4" name="where-do-you-live" type="radio" value="northern-ireland">
+                                                        <label class="govuk-label govuk-radios__label" for="where-do-you-live-4">
+                                                            Lot 4 IP telephony services
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="govuk-radios__item govuk-radios__item--small">
+                                        <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-2" name="lot" type="radio" value="phone" data-aria-controls="conditional-how-contacted-conditional-2">
+                                        <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">
+                                            Show suppliers that are on multiple lots
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--small govuk-radio__conditional--hidden" id="conditional-how-contacted-conditional-2">
+                                        <div class="govuk-form-group">
+                                            <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                                    <h1 class="govuk-fieldset__heading visuallyhidden">
+                                                        Select one or more lots to filter by
+                                                    </h1>
+                                                </legend>
+                                                <div class="govuk-checkboxes govuk-checkboxes--small">
+                                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                        <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="multiple-lots-1" name="waste" type="checkbox" value="carcasses">
+                                                        <label class="govuk-label govuk-checkboxes__label" for="multiple-lots-1">
+                                                            Lot 1 Data access services
+                                                        </label>
+                                                    </div>
+                                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                        <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="multiple-lots-2" name="waste" type="checkbox" value="mines">
+                                                        <label class="govuk-label govuk-checkboxes__label" for="multiple-lots-2">
+                                                            Lot 2 Local connectivity services
+                                                        </label>
+                                                    </div>
+                                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                        <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="multiple-lots-3" name="waste" type="checkbox" value="farm">
+                                                        <label class="govuk-label govuk-checkboxes__label" for="multiple-lots-3">
+                                                            Lot 7 Paging
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+                            </fieldset>
+                        </div>
+
+
+
+
+
+                        <div class="govuk-form-group govuk-form-group--enclosure">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h1 class="govuk-fieldset__heading">
+                                        Results per page
+                                    </h1>
+                                </legend>
+                                <span id="waste-hint" class="govuk-hint">
+      10 results per page
+    </span>
+                                <div class="govuk-radios govuk-radios--small">
+                                    <div class="govuk-radios__item govuk-radios__item--small">
+                                        <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-1" name="where-do-you-live" type="radio" value="england">
+                                        <label class="govuk-label govuk-radios__label" for="results-per-page-1">
+                                            10
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item govuk-radios__item--small">
+                                        <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-2" name="where-do-you-live" type="radio" value="scotland">
+                                        <label class="govuk-label govuk-radios__label" for="results-per-page-2">
+                                            25
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item govuk-radios__item--small">
+                                        <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-3" name="where-do-you-live" type="radio" value="wales">
+                                        <label class="govuk-label govuk-radios__label" for="results-per-page-3">
+                                            50
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item govuk-radios__item--small">
+                                        <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-4" name="where-do-you-live" type="radio" value="northern-ireland">
+                                        <label class="govuk-label govuk-radios__label" for="results-per-page-4">
+                                            View all
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+
+
+
+
+                    </form>
+
+                </div>
+                <div class="govuk-grid-column-three-quarters">
+
+                    <h2 class="govuk-heading-m">4 suppliers found</h2>
+
+
+                    <ul class="govuk-list govuk-list--suppliers">
+                        <li>
+                            <h4 class="govuk-heading-m apollo-heading-link"><a href="sdfglk">Apleona HSG Ltd.</a></h4>
+                            <ul class="govuk-list">
+                                <li>Corporate Software Solutions (RM1042)</li>
+                                <li>Corporate Finance Services (RM3719)</li>
+                                <li>Technology Products 2 (RM3733)</li>
+                                <li>Cyber Security Services 2 (RM3764ii)</li>
+                                <li>Technology Services 2 (RM3804)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4 class="govuk-heading-m apollo-heading-link"><a href="sdfglk">Apleona HSG Ltd.</a></h4>
+                            <ul class="govuk-list">
+                                <li>Corporate Software Solutions (RM1042)</li>
+                                <li>Technology Services 2 (RM3804)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4 class="govuk-heading-m apollo-heading-link"><a href="sdfglk">Apleona HSG Ltd.</a></h4>
+                            <ul class="govuk-list">
+                                <li>Corporate Software Solutions (RM1042)</li>
+                                <li>Corporate Finance Services (RM3719)</li>
+                                <li>Technology Products 2 (RM3733)</li>
+                                <li>Cyber Security Services 2 (RM3764ii)</li>
+                                <li>Technology Services 2 (RM3804)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4 class="govuk-heading-m apollo-heading-link"><a href="sdfglk">Apleona HSG Ltd.</a></h4>
+                            <ul class="govuk-list">
+                                <li>Corporate Software Solutions (RM1042)</li>
+                                <li>Cyber Security Services 2 (RM3764ii)</li>
+                                <li>Technology Services 2 (RM3804)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4 class="govuk-heading-m apollo-heading-link"><a href="sdfglk">Apleona HSG Ltd.</a></h4>
+                            <ul class="govuk-list">
+                                <li>Corporate Software Solutions (RM1042)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4 class="govuk-heading-m apollo-heading-link"><a href="sdfglk">Apleona HSG Ltd.</a></h4>
+                            <ul class="govuk-list">
+                                <li>Corporate Software Solutions (RM1042)</li>
+                                <li>Corporate Finance Services (RM3719)</li>
+                                <li>Technology Products 2 (RM3733)</li>
+                                <li>Cyber Security Services 2 (RM3764ii)</li>
+                                <li>Technology Services 2 (RM3804)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4 class="govuk-heading-m apollo-heading-link"><a href="sdfglk">Apleona HSG Ltd.</a></h4>
+                            <ul class="govuk-list">
+                                <li>Corporate Software Solutions (RM1042)</li>
+                                <li>Corporate Finance Services (RM3719)</li>
+                                <li>Technology Products 2 (RM3733)</li>
+                                <li>Cyber Security Services 2 (RM3764ii)</li>
+                                <li>Technology Services 2 (RM3804)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4 class="govuk-heading-m apollo-heading-link"><a href="sdfglk">Apleona HSG Ltd.</a></h4>
+                            <ul class="govuk-list">
+                                <li>Corporate Software Solutions (RM1042)</li>
+                                <li>Cyber Security Services 2 (RM3764ii)</li>
+                                <li>Technology Services 2 (RM3804)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4 class="govuk-heading-m apollo-heading-link"><a href="sdfglk">Apleona HSG Ltd.</a></h4>
+                            <ul class="govuk-list">
+                                <li>Corporate Software Solutions (RM1042)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4 class="govuk-heading-m apollo-heading-link"><a href="sdfglk">Apleona HSG Ltd.</a></h4>
+                            <ul class="govuk-list">
+                                <li>Corporate Software Solutions (RM1042)</li>
+                                <li>Corporate Finance Services (RM3719)</li>
+                                <li>Technology Products 2 (RM3733)</li>
+                                <li>Cyber Security Services 2 (RM3764ii)</li>
+                                <li>Technology Services 2 (RM3804)</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+
+
+                    <ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination">
+                        <li class="pagination__item pagination__item--previous">
+                            <a href="#">
+                            <span class="icon">
+                                <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M6.7 0l1.4 1.4-4.3 4.3h13v2H3.9l4.2 4-1.4 1.4L0 6.7z" fill="#007194" fill-rule="evenodd"/></svg>
+                            </span>
+                                <span>Previous</span>
+                            </a>
+                        </li>
+                        <li class="pagination__item">
+                            <a href="#">
+                                <span class="visuallyhidden">Page</span>1<span class="visuallyhidden">of 123</span>
+                            </a>
+                        </li>
+                        <li class="pagination__item">
+                            <span>…</span>
+                        </li>
+                        <li class="pagination__item">
+                            <a href="#">
+                                <span class="visuallyhidden">Page</span>40<span class="visuallyhidden">of 123</span>
+                            </a>
+                        </li>
+                        <li class="pagination__item">
+                            <a href="#" rel="prev">
+                                <span class="visuallyhidden">Page</span>41<span class="visuallyhidden">of 123</span>
+                            </a>
+                        </li>
+                        <li class="pagination__item">
+                            <span class="visuallyhidden">You’re currently on page</span>42<span class="visuallyhidden">of 123</span>
+                        </li>
+                        <li class="pagination__item">
+                            <a href="#" rel="next">
+                                <span class="visuallyhidden">Page</span>43<span class="visuallyhidden">of 123</span>
+                            </a>
+                        </li>
+                        <li class="pagination__item">
+                            <a href="#">
+                                <span class="visuallyhidden">Page</span>44<span class="visuallyhidden">of 123</span>
+                            </a>
+                        </li>
+                        <li class="pagination__item">
+                            <span>…</span>
+                        </li>
+                        <li class="pagination__item">
+                            <a href="#">
+                                <span class="visuallyhidden">Page</span>123<span class="visuallyhidden">of 123</span>
+                            </a>
+                        </li>
+                        <li class="pagination__item pagination__item--next">
+                            <a href="#">
+                                <span>Next</span>
+                                <span class="icon">
+                                <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"/></svg>
+                            </span>
+                            </a>
+                        </li>
+                    </ul>
+
+
+
+                </div>
+            </div>
+
+
+
+        </main>
+    </div>
+
+
+
+{% endblock %}
