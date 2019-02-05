@@ -2,6 +2,11 @@
 
 Symfony application to generate the Crown Commercial public website at https://www.crowncommercial.gov.uk/
 
+### Requirements
+
+* PHP 7.2+
+* NPM 8.9.4
+
 ## Deployment
 
 To deploy to Development environment merge to `development` branch.
@@ -46,6 +51,24 @@ On Staging and Production use this to install PHP packages:
 composer install --no-dev --optimize-autoloader
 ```
 
+### Node package manager (NPM)
+
+Run NPM to install package dependencies for Javascript. We use this to compile Javascript modules and Sass into CSS.
+
+```
+# We use Node version manager (NVM) to change the active version of node
+nvm use 8.11.1
+npm install
+
+# Run the first time you install the package dependencies
+npm run build
+```
+
+```
+# To watch for changes
+npm run watch
+```
+
 ### Local dev
 
 Run this command to view the website at http://127.0.0.1:8000
@@ -55,8 +78,4 @@ bin/console server:run
 ```
 
 Or setup local host http://local.crowncommercial.gov.uk/ to point to the `public/` folder.
-
-### Requirements
-
-* PHP 7.2+
 
