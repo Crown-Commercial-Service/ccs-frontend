@@ -1,0 +1,20 @@
+/*------------------------------------*\
+  #Warning text
+\*------------------------------------*/
+
+// Move padding to parent to allow for multiline texts
+.govuk-warning-text {
+
+    padding-left: 50px;
+
+}
+
+.govuk-warning-text__text {
+
+    padding: 0;
+
+}
+
+.govuk-warning-text__icon {
+    top: 1em
+}
