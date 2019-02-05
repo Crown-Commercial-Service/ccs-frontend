@@ -12,7 +12,7 @@
     "images:svg": "svgo --folder=assets/svg --output=public/assets/svg --disable='removeViewBox'",
     "images": "npm-run-all --parallel images:imagemin images:svg",
     "fonts": "shx cp -r assets/fonts/* public/assets/fonts",
-    "js:copygovuk-frontend": "shx cp -r assets/govuk-frontend* public/assets/govuk-frontend",
+    "js:copygovuk-frontend": "shx cp -r node_modules/govuk-frontend/all.js public/assets/scripts/all.js",
     "js:copylibraries": "shx cp -r assets/scripts/libraries/* public/assets/scripts/libraries/",
     "jsmain:babel:transpile": "./node_modules/.bin/babel assets/scripts --out-dir public/assets/scripts --presets=@babel/preset-env",
     "js": "npm-run-all --parallel js:copylibraries jsmain:babel:transpile js:copygovuk-frontend",

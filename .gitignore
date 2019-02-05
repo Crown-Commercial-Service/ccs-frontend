@@ -18,3 +18,4 @@
 ###< symfony/web-server-bundle ###
 
 node_modules
+/public/assets
