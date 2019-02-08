@@ -1,0 +1,8 @@
+/*------------------------------------*\
+  #Accordion
+\*------------------------------------*/
+.govuk-accordion__section-button {
+
+    @include govuk-font(22, $weight: regular);
+
+}

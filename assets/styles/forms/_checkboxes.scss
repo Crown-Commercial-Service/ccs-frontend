@@ -1,0 +1,95 @@
+/*------------------------------------*\
+  #Checkboxes
+\*------------------------------------*/
+
+// Default GDS radios and checkboxes are 40x40 pixels large, which is the recommended size for tapability
+.govuk-checkboxes--small {
+
+
+
+}
+
+.govuk-checkboxes__item--small {
+
+    background-color: white;
+    min-height: 24px;
+    margin-bottom: 0;
+    padding: 10px 0 10px 34px;
+
+}
+
+.govuk-checkboxes__item--small + .govuk-checkboxes__item--small,
+.govuk-checkboxes__conditional--small + .govuk-checkboxes__item--small {
+
+    border-top: 1px solid #D9D9D9;
+
+}
+
+.govuk-checkboxes__item--small .govuk-checkboxes__label {
+
+    padding: 0px 15px 0px;
+    line-height: 24px;
+
+}
+
+.govuk-checkboxes__input--small,
+.govuk-checkboxes__input--small + .govuk-checkboxes__label::before {
+
+    height: 24px;
+    width: 24px;
+    top: 10px;
+    left: 10px;
+
+}
+
+.govuk-checkboxes__input--small + .govuk-checkboxes__label::after {
+
+    // We're using subpixel values
+    top: 16.6px;
+    left: 15.4px;
+    width: 10.8px;
+    height: 4.2px;
+    border-width: 0 0 3px 3px;
+
+}
+
+.govuk-checkboxes__conditional {
+
+    background-color: white;
+    padding-left: 10px;
+    position: relative;
+
+    &::before,
+    &::after {
+
+        content: " ";
+        display: block;
+
+    }
+
+    &::before {
+
+        // include the height of the ::after element
+        height: calc(100% + 20px);
+        width: 18px;
+        background-color: white;
+        position: absolute;
+        top: 0;
+        left: -22px;
+
+    }
+
+    &::after {
+
+        height: 20px;
+
+        //
+        width: calc(100% + 4px);
+        background-color: white;
+        position: absolute;
+        bottom: -20px;
+        left: -4px;
+
+    }
+
+}

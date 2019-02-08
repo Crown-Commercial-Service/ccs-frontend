@@ -1,0 +1,15 @@
+/*------------------------------------*\
+  #Tag
+\*------------------------------------*/
+.govuk-tag {
+
+    @include govuk-font(17featured, $weight: bold);
+    padding-bottom: govuk-px-to-rem(3);
+
+}
+
+.govuk-tag--subtle {
+
+    background-color: #6F777B;
+
+}

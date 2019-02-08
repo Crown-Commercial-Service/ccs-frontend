@@ -1,0 +1,29 @@
+/*------------------------------------*\
+  #Enclosure
+\*------------------------------------*/
+
+.apollo-enclosure {
+
+    padding: govuk-px-to-rem(25);
+    background-color: $ccs-subtle-colour;
+
+    +.apollo-enclosure {
+
+        margin-top: govuk-px-to-rem(25);
+
+    }
+
+}
+
+.govuk-form-group--enclosure {
+
+    padding: govuk-px-to-rem(8);
+    background-color: $ccs-subtle-colour;
+
+}
+
+.govuk-form-group--enclosure {
+
+
+
+}

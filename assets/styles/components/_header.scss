@@ -1,0 +1,57 @@
+/*------------------------------------*\
+  #Header
+\*------------------------------------*/
+
+.header-global {
+
+    background: $ccs-colour;
+    color: govuk-colour("white");
+    padding-bottom: govuk-px-to-rem(20);
+
+}
+
+.header-global a {
+
+    color: inherit;
+
+    &:hover,
+    &:focus,
+    &:active {
+
+        color: govuk-colour("grey-4");
+
+    }
+
+}
+
+.logo {
+
+    display: block;
+
+    max-width: govuk-px-to-rem(110);
+
+    img {
+        max-width: 100%;
+    }
+
+    @include govuk-media-query($from: desktop) {
+
+        max-width: govuk-px-to-rem(140);
+
+    }
+
+}
+
+.header-global .logo {
+
+    padding-left: govuk-px-to-rem(5);
+    padding-top: govuk-px-to-rem(20);
+
+    @include govuk-media-query($from: desktop) {
+
+        padding-left: 0;
+        padding-top: 0;
+
+    }
+
+}
