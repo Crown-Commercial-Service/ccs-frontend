@@ -2,12 +2,39 @@
 
 {% block body %}
 
-    <h1>CCS Page Template frontend test</h1>
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
 
-    <p>Templates in <code>pages/{template name}.html.twig</code> can be tested via the temporary test URL <code>/template/{template name}</code></p>
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
-    <ul>
-        <li><a href="/template/contact">Contact</a></li>
-    </ul>
+
+
+        <!-- required wrapper 2 -->
+        <main class="govuk-main-wrapper">
+
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-three-quarters">
+
+                    <h1 class="govuk-heading-xl">Templates</h1>
+
+                    <p class="govuk-body-l">Complete list of templates required to populate pages for the MVP.</p>
+
+                    <ul class="govuk-body-l">
+                        <li><a href="template/2-3-frameworks-search-results">2,3 - Frameworks search results</a></li>
+                        <li><a href="template/4-5-7-9-10-framework-details">4-5,7,9-10 - Framework details</a></li>
+                        <li><a href="template/11-15-suppliers-search-results">11-15 - Suppliers search results</a></li>
+                        <li><a href="template/16-17-supplier-details">16-17 - Supplier details</a></li>
+                    </ul>
+
+
+                </div>
+                {#<div class="govuk-grid-column-one-quarter">#}
+                {#</div>#}
+            </div>
+
+
+        </main>
+    </div>
 
 {% endblock %}

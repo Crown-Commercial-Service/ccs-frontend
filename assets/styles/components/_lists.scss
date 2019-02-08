@@ -1,0 +1,73 @@
+/*------------------------------------*\
+  #Lists
+\*------------------------------------*/
+
+.list--inline {
+
+    list-style-type: none;
+    padding-left: 0;
+
+    li {
+
+        display: inline-block;
+        margin-right: 0.5em;
+
+    }
+
+}
+
+.govuk-list--definition {
+
+
+    dt {
+
+        display: inline-block;
+        font-weight: bold;
+        width: 50%;
+
+        &:after { content: ":"; }
+
+    }
+
+    dd {
+
+        display: inline-block;
+        margin: 0;
+        width: 45%;
+
+        &:before {
+
+            content: " ";
+            display: block;
+            clear: both;
+
+        }
+
+    }
+
+}
+
+.apollo-list--definition {
+
+
+    dd {
+
+        margin-left: govuk-px-to-rem(25);
+
+    }
+
+}
+
+
+
+// Used to display lists of documents
+.govuk-list--suppliers {
+
+    > li + li {
+
+        border-top: govuk-px-to-rem(1) solid $ccs-border-colour;
+        padding-top: govuk-px-to-rem(20);
+
+    }
+
+}

@@ -1,0 +1,33 @@
+/*------------------------------------*\
+  #Footer
+\*------------------------------------*/
+.footer-global {
+
+    background-color: $ccs-footer-colour;
+    color: govuk-colour("white");
+
+}
+
+.govuk-footer__link.govuk-footer__link {
+
+    color: inherit;
+
+    &:hover {
+        color: govuk-colour("grey-4");
+    }
+    &:focus {
+        color: govuk-colour("black");
+    }
+    &:active {
+
+        color: govuk-colour("grey-4");
+
+    }
+
+}
+
+.govuk-footer__heading {
+
+    color: inherit;
+
+}
