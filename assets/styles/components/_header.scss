@@ -6,7 +6,6 @@
 
     background: $ccs-colour;
     color: govuk-colour("white");
-    padding-bottom: govuk-px-to-rem(20);
 
 }
 
@@ -51,7 +50,14 @@
 
         padding-left: 0;
         padding-top: 0;
+        margin-right: auto;
 
     }
+
+}
+
+.footer-global .logo {
+
+    margin-bottom: govuk-px-to-rem(40);
 
 }
