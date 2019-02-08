@@ -12,9 +12,11 @@
 .govuk-warning-text__text {
 
     padding: 0;
+    font-weight: 600;
 
 }
 
 .govuk-warning-text__icon {
-    top: 1em
+    top: 0;
+    transform: translateY(50%);
 }

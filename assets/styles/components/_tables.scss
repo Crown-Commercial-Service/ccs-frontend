@@ -7,3 +7,33 @@
     border-bottom: 0;
 
 }
+
+.ccs-table--framework-lots {
+
+    margin-bottom: 0;
+
+    td {
+        vertical-align: text-top;
+    }
+
+    tr:last-child td {
+
+        border: 0;
+
+    }
+
+}
+
+.ccs-table--framework-lots .govuk-table__header,
+.ccs-table--framework-lots .govuk-table__cell {
+
+    padding-top: govuk-px-to-rem(14);
+    padding-bottom: govuk-px-to-rem(14);
+
+}
+
+.govuk-table__cell--width-30 {
+
+    width: 30%;
+
+}

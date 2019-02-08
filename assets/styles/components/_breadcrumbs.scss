@@ -1,9 +1,6 @@
 /*------------------------------------*\
-  #Typography
+  #Breadcrumbs
 \*------------------------------------*/
-
-.ccs-font-weight-semibold {
-
-    font-weight: 600;
-
+.govuk-breadcrumbs {
+    margin-top: govuk-px-to-rem(30);
 }

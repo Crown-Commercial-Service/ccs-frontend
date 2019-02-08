@@ -15,15 +15,24 @@
 
 }
 
-.govuk-form-group--enclosure {
+.apollo-enclosure--framework-lots {
 
-    padding: govuk-px-to-rem(8);
-    background-color: $ccs-subtle-colour;
+    // subtract the padding-top added by the definition key
+    // subtract the padding-bottom added table cell
+    padding: govuk-px-to-rem(18-10) govuk-px-to-rem(26) govuk-px-to-rem(28-14) govuk-px-to-rem(26);
 
 }
 
 .govuk-form-group--enclosure {
 
+    padding: govuk-px-to-rem(20);
+    background-color: $ccs-subtle-colour;
 
+    .govuk-checkboxes,
+    .govuk-radios {
+
+        margin: 0 govuk-px-to-rem(-12) govuk-px-to-rem(-9) govuk-px-to-rem(-12);
+
+    }
 
 }

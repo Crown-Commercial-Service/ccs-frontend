@@ -16,13 +16,19 @@
 
 }
 
+.footer-global .govuk-list li {
+
+    margin-bottom: govuk-px-to-rem(2);
+
+}
+
 .govuk-list--definition {
 
 
     dt {
 
         display: inline-block;
-        font-weight: bold;
+        font-weight: 600;
         width: 50%;
 
         &:after { content: ":"; }
@@ -49,6 +55,8 @@
 
 .apollo-list--definition {
 
+    @include govuk-font(19, $weight: regular);
+
 
     dd {
 
@@ -58,6 +66,19 @@
 
 }
 
+.apollo-list--definition__key {
+
+    margin-bottom: govuk-px-to-rem(10);
+    font-weight: 600;
+
+}
+
+// Suppliers details template
+.apollo-enclosure--framework-lots .govuk-summary-list {
+
+    margin-bottom: govuk-px-to-rem(30-16-10);
+
+}
 
 
 // Used to display lists of documents
