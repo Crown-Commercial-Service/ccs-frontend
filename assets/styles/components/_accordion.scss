@@ -6,3 +6,38 @@
     @include govuk-font(22, $weight: regular);
 
 }
+
+.js-enabled .govuk-accordion__section-header {
+
+    padding-bottom: govuk-px-to-rem(20);
+
+}
+
+.js-enabled .govuk-accordion__section-button {
+
+    padding-top: govuk-px-to-rem(20);
+
+}
+
+.js-enabled .govuk-accordion__section-content {
+
+    padding-top: govuk-px-to-rem(10);
+    padding-bottom: govuk-px-to-rem(50);
+
+}
+
+.js-enabled .govuk-accordion__icon:after,
+.js-enabled .govuk-accordion__icon:before {
+
+    width: 12.5%;
+    height: 12.5%;
+    border-width: 1px;
+
+}
+.js-enabled  .govuk-accordion__icon:before {
+    width: 100%;
+}
+
+.js-enabled  .govuk-accordion__icon:after {
+    height: 100%;
+}

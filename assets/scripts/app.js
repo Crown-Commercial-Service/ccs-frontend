@@ -19,7 +19,7 @@ $(document).ready(function () {
 
         if (matchMedia) {
             // This matches the `desk` breakpoint in CSS
-            var mq = window.matchMedia('(min-width: 840px)')
+            var mq = window.matchMedia('(min-width: 769px)')
             // console.log(mq.matches);
             mq.addListener(updateARIAroles)
             // WidthChange(mq);
