@@ -7,7 +7,6 @@ Symfony application to generate the Crown Commercial public website at https://w
 - [Getting started](#getting-started)
   - [Requirements](#requirements)
   - [Installation](#installation)
-    - [Building styles and scripts](#building-styles-and-scripts)
   - [Local dev](#local-dev)
 - [Continous integration](#continous-integration)
   - [PHP Unit](#php-unit)
@@ -118,4 +117,4 @@ To deploy to Production environment open a Pull Request and merge to `master` br
 
 ## Acknowledgments
 
-* GDS
+* [GDS](https://www.gov.uk/government/organisations/government-digital-service)
