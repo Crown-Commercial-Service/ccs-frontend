@@ -21,7 +21,7 @@
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
                 <li class="govuk-breadcrumbs__list-item">
-                    <a class="govuk-breadcrumbs__link" href="#">Home</a>
+                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
                 </li>
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="#">Search suppliers</a>
@@ -34,7 +34,7 @@
 
 
         <!-- required wrapper 2 -->
-        <main class="govuk-main-wrapper">
+        <main id="main-content" class="govuk-main-wrapper">
 
 
             <div class="govuk-grid-row">
@@ -66,48 +66,49 @@
                             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
 
 
-                                <div class="apollo-enclosure">
+                                <div class="apollo-enclosure apollo-enclosure--framework-lots">
 
-                                    <dl class="govuk-summary-list">
+                                    <dl class="govuk-summary-list govuk-summary-list--no-border">
                                         <div class="govuk-summary-list__row">
-                                            <dt class="govuk-summary-list__key">
+                                            <dt class="govuk-summary-list__key govuk-!-font-size-17featured">
                                                 Framework ID
                                             </dt>
-                                            <dd class="govuk-summary-list__value">
+                                            <dd class="govuk-summary-list__value govuk-!-font-size-17featured">
                                                 SDFHUSDGDS
                                             </dd>
                                         </div>
                                     </dl>
 
-                                    <table class="govuk-table">
+                                    <table class="govuk-table ccs-table--framework-lots">
                                         <caption class="govuk-table__caption visuallyhidden">Lot numbers, names and contact details
                                         </caption>
                                         <thead class="govuk-table__head">
                                         <tr class="govuk-table__row">
-                                            <th class="govuk-table__header" scope="col">
+                                            <th class="govuk-table__header govuk-!-font-size-18" scope="col">
                                                 Lot number
                                             </th>
-                                            <th class="govuk-table__header" scope="col">
+                                            <th class="govuk-table__header govuk-!-font-size-18" scope="col">
                                                 Lot name and contact
                                             </th>
                                         </tr>
                                         </thead>
                                         <tbody class="govuk-table__body">
                                         <tr class="govuk-table__row">
-                                            <td class="govuk-table__cell">
+                                            <td class="govuk-table__cell govuk-table__cell--width-30 govuk-!-font-size-18">
                                                 2c
                                             </td>
                                             <td class="govuk-table__cell">
-                                                <h3 class="govuk-heading-m">London and South East England</h3>
-                                                John Doe on<a href="mailto:john.doe@amey.co.uk">john.doe@amey.co.uk</a></td>
+                                                <h3 class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">London and South East England</h3>
+                                                <p class="govuk-!-font-size-16 govuk-!-margin-0">John Doe on <a href="mailto:john.doe@amey.co.uk">john.doe@amey.co.uk</a></p>
+                                            </td>
                                         </tr>
                                         <tr class="govuk-table__row">
-                                            <td class="govuk-table__cell">
+                                            <td class="govuk-table__cell govuk-table__cell--width-30 govuk-!-font-size-18">
                                                 2e
                                             </td>
                                             <td class="govuk-table__cell">
-                                                <h3 class="govuk-heading-m">North West England</h3>
-                                                <p class="govuk-body">Call switchboard</p>
+                                                <h3 class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">North West England</h3>
+                                                <p class="govuk-!-font-size-16 govuk-!-margin-0">Call switchboard</p>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -127,22 +128,19 @@
                         <div class="apollo-enclosure">
                             <h2 class="govuk-heading-m">Contact</h2>
 
-                            <p class="govuk-body"><strong>Telephone:</strong>
-                                <span itemprop="telephone">01223 328017</span>
-                            </p>
+                            <h3 class="govuk-heading-m govuk-!-font-size-17featured govuk-!-margin-0 govuk-!-font-weight-bold">Telephone:</h3>
+                            <p class="govuk-!-font-size-17featured" itemprop="telephone">01223 328017</p>
 
-                            <p class="govuk-body"><strong>Website:</strong>
-                                <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a>
-                            </p>
+                            <h3 class="govuk-heading-m govuk-!-font-size-17featured govuk-!-margin-0 govuk-!-font-weight-bold">Website:</h3>
+                            <p class="govuk-!-font-size-17featured"><a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a></p>
 
-                            <p class="govuk-body"><strong><abbr title="Data Universal Numbering System">DUNS</abbr> number:</strong>
-                                <span>1234567890</span>
-                            </p>
+                            <h3 class="govuk-heading-m govuk-!-font-size-17featured govuk-!-margin-0 govuk-!-font-weight-bold"><abbr title="Data Universal Numbering System">DUNS</abbr> number:</h3>
+                            <p class="govuk-!-font-size-17featured">1234567890</p>
 
 
-                            <address class="govuk-body" itemscope="" itemtype="http://schema.org/LocalBusiness">
-                                <h3>Address:</h3>
-                                <div itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
+                            <address class="" itemscope="" itemtype="http://schema.org/LocalBusiness">
+                                <h3 class="govuk-heading-m govuk-!-font-size-17featured govuk-!-margin-0 govuk-!-font-weight-bold">Address:</h3>
+                                <div class="govuk-body govuk-!-font-size-17featured" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
                                     <span itemprop="streetAddress">50 St Stephen's Place,</span>
                                     <span itemprop="addressLocality">Cambridge</span>
                                     <span itemprop="postalCode">CB3 0JE</span>

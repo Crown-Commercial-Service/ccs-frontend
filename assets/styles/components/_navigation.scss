@@ -2,7 +2,33 @@
   #Navigation
 \*------------------------------------*/
 
+.ccs-width-container {
+
+    max-width: 960px;
+    margin: 0 auto;
+
+}
+
+.nav-wrapper {
+
+    padding: 0 0 govuk-px-to-rem(20) 0;
+
+    @include govuk-media-query($from: desktop) {
+
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: flex-end;
+        padding: govuk-px-to-rem(22) 0 govuk-px-to-rem(26);
+        text-align: right;
+
+    }
+
+}
+
 .global-navigation {
+
+    display: flex;
+    flex-flow: column nowrap;
 
     background-color: #7C1539;
     margin-bottom: govuk-px-to-rem(- 20);
@@ -12,6 +38,8 @@
     @include govuk-media-query($from: desktop) {
 
         background-color: transparent;
+        margin-top: 0;
+        margin-bottom: 0;
 
     }
 
@@ -19,7 +47,7 @@
 
 .global-navigation[aria-hidden="false"] {
 
-    display: block;
+    display: flex;
     visibility: visible;
 
 }
@@ -43,9 +71,26 @@
 
 }
 
+.nav-list--primary {
+
+    order: 1;
+
+    @include govuk-media-query($from: desktop) {
+
+        order: 2;
+        margin-top: govuk-px-to-rem(8);
+        margin-bottom: govuk-px-to-rem(- 4);
+
+    }
+
+}
+
 .nav-list--secondary {
 
-    padding-top: govuk-px-to-rem(40);
+    // put this list after the primary one on mobile
+    order: 2;
+    padding-top: govuk-px-to-rem(30);
+
     position: relative;
 
     &:before {
@@ -55,7 +100,7 @@
         position: absolute;
         top: govuk-px-to-rem(20);
         left: govuk-px-to-rem(20);
-        width: calc(100% - #{govuk-px-to-rem(20)});
+        width: calc(100% - #{govuk-px-to-rem(40)});
         height: govuk-px-to-rem(1);
         background-color: white;
         
@@ -63,6 +108,8 @@
     }
 
     @include govuk-media-query($from: desktop) {
+
+        order: 1;
 
         &:before { content: none; }
 
@@ -79,7 +126,7 @@
     @include govuk-media-query($from: desktop) {
 
         display: inline-block;
-        margin-right: 0.5em;
+        margin-right: 1.5em;
 
     }
 
@@ -97,7 +144,7 @@
     @include govuk-media-query($from: desktop) {
 
         display: inline-block;
-        padding: govuk-px-to-rem(8) govuk-px-to-rem(0) govuk-px-to-rem(8) govuk-px-to-rem(0);
+        padding: govuk-px-to-rem(8) govuk-px-to-rem(0) 0.25em govuk-px-to-rem(0);
 
     }
 
@@ -109,7 +156,7 @@
 
     // GDS uses an 8-key font scale which predefines which sizes are available.
     // This allows fonts to scale with breakpoints
-    @include govuk-font(24, $weight: regular);
+    @include govuk-font(20, $weight: regular);
 
 }
 
@@ -120,7 +167,7 @@
 
     // GDS uses an 8-key font scale which predefines which sizes are available.
     // This allows fonts to scale with breakpoints
-    @include govuk-font(19, $weight: regular);
+    @include govuk-font(18, $weight: regular);
 
 }
 
@@ -154,7 +201,7 @@
     border: 0;
     border-radius: govuk-px-to-rem(3);
     color: #9B1A47;
-    padding: 1em;
+    padding: govuk-px-to-rem(11) govuk-px-to-rem(14);
 
     position: absolute;
     right: govuk-px-to-rem(20);
