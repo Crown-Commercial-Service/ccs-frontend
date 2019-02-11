@@ -33,7 +33,7 @@ script:
   # Run PHPCS (todo)
   #- if [[ "$SNIFF" == "1" ]]; then vendor/bin/phpcs; fi
   # Run PHP Unit
-  - /bin/phpunit
+  - bin/phpunit
 
 notifications:
   on_success: never
