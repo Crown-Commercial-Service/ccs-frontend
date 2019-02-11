@@ -5,6 +5,8 @@
 # Only run on the following branches
 branches:
   only:
+    - development
+    - preprod
     - master
 
 # Declare project language
