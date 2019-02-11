@@ -85,7 +85,7 @@ Optionally: Set up local host http://local.crowncommercial.gov.uk/ to point to t
 
 ## Continous integration
 
-@todo
+We use [Travis CI](https://travis-ci.org/Crown-Commercial-Service/ccs-frontend) to run automated tests on all merges into development, preprod and master. 
 
 ### PHP Unit
 
@@ -102,6 +102,24 @@ To run first ensure you are running the local server via `bin/console server:run
 Run Behat tests via: `bin/behat` 
 
 See [quick start](http://docs.behat.org/en/latest/quick_start.html) and [Behat and Mink](http://docs.behat.org/en/v2.5/cookbook/behat_and_mink.html)
+
+### PHP CodeSniffer
+
+You can test coding standards (PSR2) via:
+
+```
+# Summary report
+vendor/bin/phpcs --report=summary
+
+# Full details
+vendor/bin/phpcs
+```
+
+Where possible you can auto-fix code via:
+
+```
+vendor/bin/phpcbf
+```
 
 ## Deployment
 
