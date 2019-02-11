@@ -8,10 +8,11 @@ Symfony application to generate the Crown Commercial public website at https://w
   - [Requirements](#requirements)
   - [Installation](#installation)
   - [Local dev](#local-dev)
-- [Continous integration](#continous-integration)
+- [Deployment](#deployment)
+- [Continuous integration](#continuous-integration)
   - [PHP Unit](#php-unit)
   - [Behat](#behat)
-- [Deployment](#deployment)
+  - [PHP CodeSniffer](#php-codesniffer)
 - [Built with](#built-with)
 - [Acknowledgments](#acknowledgments)
 
@@ -83,7 +84,15 @@ bin/console server:run
 
 Optionally: Set up local host http://local.crowncommercial.gov.uk/ to point to the `public/` folder.
 
-## Continous integration
+## Deployment
+
+To deploy to Development environment merge to `development` branch.
+
+To deploy to PreProd environment merge to `preprod` branch. 
+
+To deploy to Production environment open a Pull Request and merge to `master` branch.
+
+## Continuous integration
 
 We use [Travis CI](https://travis-ci.org/Crown-Commercial-Service/ccs-frontend) to run automated tests on all merges into development, preprod and master. 
 
@@ -120,14 +129,6 @@ Where possible you can auto-fix code via:
 ```
 vendor/bin/phpcbf
 ```
-
-## Deployment
-
-To deploy to Development environment merge to `development` branch.
-
-To deploy to PreProd environment merge to `preprod` branch. 
-
-To deploy to Production environment open a Pull Request and merge to `master` branch.
 
 ## Built with
 
