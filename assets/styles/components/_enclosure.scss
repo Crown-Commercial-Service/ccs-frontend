@@ -15,6 +15,18 @@
 
 }
 
+.apollo-enclosure--white {
+
+    background-color: transparent;
+
+}
+
+.apollo-enclosure--further-competition + .apollo-enclosure--further-competition {
+
+    margin-top: 0;
+
+}
+
 .apollo-enclosure--framework-lots {
 
     // subtract the padding-top added by the definition key
@@ -25,7 +37,7 @@
 
 .govuk-form-group--enclosure {
 
-    padding: govuk-px-to-rem(20);
+    padding: govuk-px-to-rem(15) govuk-px-to-rem(20) govuk-px-to-rem(20) govuk-px-to-rem(20);
     background-color: $ccs-subtle-colour;
 
     .govuk-checkboxes,

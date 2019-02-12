@@ -24,14 +24,15 @@
 
 .govuk-list--definition {
 
-
     dt {
 
         display: inline-block;
         font-weight: 600;
         width: 50%;
 
-        &:after { content: ":"; }
+        &:after {
+            content: ":";
+        }
 
     }
 
@@ -43,9 +44,9 @@
 
         &:before {
 
+            clear: both;
             content: " ";
             display: block;
-            clear: both;
 
         }
 
@@ -57,7 +58,6 @@
 
     @include govuk-font(19, $weight: regular);
 
-
     dd {
 
         margin-left: govuk-px-to-rem(25);
@@ -68,8 +68,8 @@
 
 .apollo-list--definition__key {
 
-    margin-bottom: govuk-px-to-rem(10);
     font-weight: 600;
+    margin-bottom: govuk-px-to-rem(10);
 
 }
 
@@ -80,7 +80,6 @@
 
 }
 
-
 // Used to display lists of documents
 .govuk-list--suppliers {
 
@@ -88,6 +87,62 @@
 
         border-top: govuk-px-to-rem(1) solid $ccs-border-colour;
         padding-top: govuk-px-to-rem(20);
+
+    }
+
+}
+
+.govuk-list--checkmark {
+
+    list-style: none;
+    padding-left: 20px;
+
+    li {
+
+        position: relative;
+
+    }
+
+    li:before {
+
+        background-image: url(../svg/icon-checkmark.svg);
+        background-size: 19px 15px;
+        content: " ";
+        display: block;
+        height: govuk-px-to-rem(15);
+        left: govuk-px-to-rem(- 30);
+        position: absolute;
+
+        top: govuk-px-to-rem(2);
+        width: govuk-px-to-rem(19);
+
+    }
+
+}
+
+.govuk-list--cross {
+
+    list-style: none;
+    padding-left: 20px;
+
+    li {
+
+        position: relative;
+
+    }
+
+    li:before {
+
+        background-image: url(../svg/icon-cross.svg);
+        background-size: 14px 14px;
+        content: " ";
+        display: block;
+        height: govuk-px-to-rem(14);
+        left: govuk-px-to-rem(- 30);
+        position: absolute;
+
+        top: govuk-px-to-rem(4);
+        width: govuk-px-to-rem(14);
 
     }
 

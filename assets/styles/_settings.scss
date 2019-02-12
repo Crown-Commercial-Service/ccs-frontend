@@ -11,12 +11,20 @@ $govuk-global-styles: true;
 //$govuk-link-colour: red;
 
 $govuk-font-family: "Source Sans Pro", "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
+$govuk-font-family-tabular: "Source Sans Pro", "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
 
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+// Named colours
+$blue-lagoon: #007E8A;
+
+// Variabelised colours (reference these in Sass partials)
 $ccs-colour: #9B1A47;
 $ccs-footer-colour: #2F2F2F;
 $ccs-text-colour: #0B0C0C;
+
+$ccs-button-colour: $blue-lagoon;
+$ccs-button-hover-colour: #006770;
 
 $ccs-border-colour: #E1E1E1;
 

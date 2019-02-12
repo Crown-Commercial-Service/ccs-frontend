@@ -1,6 +1,18 @@
 /*------------------------------------*\
   #Breadcrumbs
 \*------------------------------------*/
+
 .govuk-breadcrumbs {
     margin-top: govuk-px-to-rem(30);
+}
+
+.govuk-breadcrumbs__list-item:before {
+
+    bottom: auto;
+    height: 0.3em;
+    margin: 0;
+
+    top: calc(50% + 2px);
+    transform: translateY(-50%) rotate(45deg);
+    width: 0.3em;
 }
