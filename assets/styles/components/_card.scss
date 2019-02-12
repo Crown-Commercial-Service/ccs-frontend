@@ -1,0 +1,21 @@
+/*------------------------------------*\
+  #Card
+\*------------------------------------*/
+
+.apollo-card {
+
+    background-color: $ccs-subtle-colour;
+    padding: govuk-px-to-rem(20);
+
+}
+
+.apollo-card__heading {
+
+    background-color: $ccs-button-colour;
+    color: white;
+    margin: govuk-px-to-rem(- 20) govuk-px-to-rem(- 20) govuk-px-to-rem(20) govuk-px-to-rem(- 20);
+    padding: govuk-px-to-rem(13) govuk-px-to-rem(20) govuk-px-to-rem(6) govuk-px-to-rem(20);
+
+}
+
+.apollo-list--definition--card {}

@@ -41,3 +41,9 @@
 .js-enabled  .govuk-accordion__icon:after {
     height: 100%;
 }
+
+.js-enabled .govuk-accordion__section + .govuk-accordion__section {
+
+    //border: 0;
+
+}

@@ -1,0 +1,92 @@
+/*------------------------------------*\
+  #Homepage
+\*------------------------------------*/
+.govuk-form-group--enclosure--homepage {
+
+    background-color: rgba(#6D0227, 0.41);
+    border-radius: govuk-px-to-rem(3);
+    color: white;
+
+    .govuk-label {
+
+        color: inherit;
+
+    }
+
+    .govuk-input {
+
+        border: 0;
+        border-radius: govuk-px-to-rem(3) 0 0 govuk-px-to-rem(3);
+        box-shadow: 0 2px 4px 0 rgba(black, 0.29);
+
+    }
+
+    .govuk-form-group {
+
+
+
+    }
+
+}
+
+.homepage-hero {
+
+    padding-top: govuk-px-to-rem(50);
+    padding-bottom: govuk-px-to-rem(62);
+
+}
+
+.homepage-hero-title {
+
+    margin-bottom: govuk-px-to-rem(10);
+
+}
+
+.homepage-hero .govuk-body-l {
+
+    margin-bottom: govuk-px-to-rem(50);
+
+}
+
+.homepage-hero-title,
+.homepage-hero .govuk-body-l {
+
+    color: white;
+    text-align: center;
+
+}
+
+
+
+.homepage-hero__search-button {
+
+    background: $ccs-button-colour url("../images/icon-search-white.png") center center no-repeat;
+    background-size: 19px 19px;
+    border: 0;
+    // 40px to match the input height (this is fickle)
+    min-height: govuk-px-to-rem(40);
+    min-width: govuk-px-to-rem(44);
+
+    &:hover,
+    &:active,
+    &:focus {
+
+        background-color: $ccs-button-hover-colour;
+
+    }
+
+}
+
+.homepage-hero__search-group {
+
+    position: relative;
+
+    .homepage-hero__search-button {
+
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+    }
+
+}
