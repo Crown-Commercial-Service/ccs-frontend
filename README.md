@@ -7,12 +7,12 @@ Symfony application to generate the Crown Commercial public website at https://w
 - [Getting started](#getting-started)
   - [Requirements](#requirements)
   - [Installation](#installation)
-    - [Building styles and scripts](#building-styles-and-scripts)
   - [Local dev](#local-dev)
-- [Continous integration](#continous-integration)
+- [Deployment](#deployment)
+- [Continuous integration](#continuous-integration)
   - [PHP Unit](#php-unit)
   - [Behat](#behat)
-- [Deployment](#deployment)
+  - [PHP CodeSniffer](#php-codesniffer)
 - [Built with](#built-with)
 - [Acknowledgments](#acknowledgments)
 
@@ -29,6 +29,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 A step-by-step guide to get a development environment running on your machine.
 
+#### Composer
+
 To install PHP packages for development, run:
 
 ```
@@ -41,6 +43,7 @@ To install PHP packages for Staging and Production, run:
 composer install --no-dev --optimize-autoloader
 ```
 
+#### NPM
 Use NPM to compile Javascript modules and Sass into CSS. Install the long-term support (LTS) version of [Node.js](https://nodejs.org/en/), which includes NPM. The minimum version of Node required is 8.9.4. We recommend using [`nvm`](https://github.com/creationix/nvm) for managing versions of Node.
 
 To install Node packages, run:
@@ -81,9 +84,17 @@ bin/console server:run
 
 Optionally: Set up local host http://local.crowncommercial.gov.uk/ to point to the `public/` folder.
 
-## Continous integration
+## Deployment
 
-@todo
+To deploy to Development environment merge to `development` branch.
+
+To deploy to PreProd environment merge to `preprod` branch. 
+
+To deploy to Production environment open a Pull Request and merge to `master` branch.
+
+## Continuous integration
+
+We use [Travis CI](https://travis-ci.org/Crown-Commercial-Service/ccs-frontend) to run automated tests on all merges into development, preprod and master. 
 
 ### PHP Unit
 
@@ -101,13 +112,23 @@ Run Behat tests via: `bin/behat`
 
 See [quick start](http://docs.behat.org/en/latest/quick_start.html) and [Behat and Mink](http://docs.behat.org/en/v2.5/cookbook/behat_and_mink.html)
 
-## Deployment
+### PHP CodeSniffer
 
-To deploy to Development environment merge to `development` branch.
+You can test coding standards (PSR2) via:
 
-To deploy to PreProd environment merge to `preprod` branch. 
+```
+# Summary report
+vendor/bin/phpcs --report=summary
 
-To deploy to Production environment open a Pull Request and merge to `master` branch.
+# Full details
+vendor/bin/phpcs
+```
+
+Where possible you can auto-fix code via:
+
+```
+vendor/bin/phpcbf
+```
 
 ## Built with
 
@@ -115,4 +136,5 @@ To deploy to Production environment open a Pull Request and merge to `master` br
 
 ## Acknowledgments
 
-* GDS
+* [GDS](https://www.gov.uk/government/organisations/government-digital-service)
+.

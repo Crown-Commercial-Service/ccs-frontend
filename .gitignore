@@ -19,3 +19,8 @@
 
 node_modules
 /public/assets
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###
