@@ -59,7 +59,8 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-three-quarters">
 
-                    <h1 class="govuk-heading-xl page-title">Apleona HSG Ltd. {framework title} which span multiple lines&nbsp;<strong class="govuk-tag govuk-tag--subtle">Expired</strong></h1>
+                    {#<h1 class="govuk-heading-xl page-title">Apleona HSG Ltd. {framework title} which span multiple lines&nbsp;<strong class="govuk-tag govuk-tag--subtle">Expired</strong></h1>#}
+                    <h1 class="govuk-heading-xl page-title">Apleona HSG Ltd. {framework title} which span multiple lines</h1>
 
                     <p class="govuk-body-l">{framework summary}Networks and
                         telecommunications services, including the Public Services
@@ -78,6 +79,8 @@
                             </div>
                             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
 
+
+
                                 <details class="govuk-details">
                                     <summary class="govuk-details__summary">
     <span class="govuk-details__summary-text">
@@ -92,6 +95,23 @@
                                             here</a>.
                                     </div>
                                 </details>
+
+                                <details class="govuk-details">
+                                    <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      01/11/2018 - Event
+    </span>
+                                    </summary>
+                                    <div class="govuk-details__text">
+                                        Come and meet the team and find out more
+                                        about this framework at our conference in
+                                        Liverpool on 15/10/2018. To register for
+                                        your place, please <a href="/link">sign up
+                                            here</a>.
+                                    </div>
+                                </details>
+
+
 
                             </div>
                         </div>
@@ -178,16 +198,16 @@
                                             internet services, broadband routing,
                                             home and teleworker packages and online
                                             storage.</p>
-                                        <p class="govuk-body">Expires:
-                                            <time>31/07/2019</time>
-                                        </p>
+                                        {#<p class="govuk-body">Expires:#}
+                                            {#<time>31/07/2019</time>#}
+                                        {#</p>#}
                                         <p><a href="6-suppliers-on-lot">26 suppliers</a></p>
                                     </dd>
 
                                     <dt class="apollo-list--definition__key">Lot 2: Local connectivity services
-                                        <strong class="govuk-tag">Expired:
-                                            <time>26/06/2018</time>
-                                        </strong></dt>
+                                        {#<strong class="govuk-tag">Expired:#}
+                                            {#<time>26/06/2018</time>#}
+                                        {#</strong></dt>#}
                                     <dd>
                                         <p class="govuk-body">Ranged connectivity
                                             services: site-to-site or site-to-cloud.
@@ -212,16 +232,16 @@
                                             internet services, broadband routing,
                                             home and teleworker packages and online
                                             storage.</p>
-                                        <p class="govuk-body">Expires:
-                                            <time>31/07/2019</time>
-                                        </p>
+                                        {#<p class="govuk-body">Expires:#}
+                                            {#<time>31/07/2019</time>#}
+                                        {#</p>#}
                                         <p><a href="6-suppliers-on-lot">26 suppliers</a></p>
                                     </dd>
 
                                     <dt class="apollo-list--definition__key">Lot 4: Inbound voice telephony services
-                                        <strong class="govuk-tag">Expired:
-                                            <time>26/06/2018</time>
-                                        </strong></dt>
+                                        {#<strong class="govuk-tag">Expired:#}
+                                            {#<time>26/06/2018</time>#}
+                                        {#</strong></dt>#}
                                     <dd>
                                         <p class="govuk-body">Ranged connectivity
                                             services: site-to-site or site-to-cloud.
@@ -246,11 +266,11 @@
                                             internet services, broadband routing,
                                             home and teleworker packages and online
                                             storage.</p>
-                                        <p class="govuk-body">
-                                            <strong class="govuk-tag">Expires before
-                                                framework:
-                                                <time>26/06/2018</time>
-                                            </strong></p>
+                                        {#<p class="govuk-body">#}
+                                            {#<strong class="govuk-tag">Expires before#}
+                                                {#framework:#}
+                                                {#<time>26/06/2018</time>#}
+                                            {#</strong></p>#}
                                         <p><a href="6-suppliers-on-lot">26 suppliers</a></p>
                                     </dd>
 
@@ -275,9 +295,9 @@
                                                 Some important information here.
                                             </div>
                                         </details>
-                                        <p class="govuk-body">Expires:
-                                            <time>31/07/2019</time>
-                                        </p>
+                                        {#<p class="govuk-body">Expires:#}
+                                            {#<time>31/07/2019</time>#}
+                                        {#</p>#}
                                         <p><a href="6-suppliers-on-lot">26 suppliers</a></p>
                                     </dd>
                                 </dl>
