@@ -34,6 +34,15 @@
     padding-top: govuk-px-to-rem(50);
     padding-bottom: govuk-px-to-rem(62);
 
+    //max-width: 66%;
+
+    @include govuk-media-query($from: 961) {
+
+        max-width: 66%;
+        margin: 0 auto;
+
+    }
+
 }
 
 .homepage-hero-title {
@@ -52,7 +61,7 @@
 .homepage-hero .govuk-body-l {
 
     color: white;
-    text-align: center;
+    //text-align: center;
 
 }
 
