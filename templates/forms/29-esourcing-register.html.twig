@@ -1,0 +1,30 @@
+
+    <h1>Register as a buyer for the CCS eSourcing tool</h1>
+
+            <!-- form -->
+            {# For Twig global variables see config/packages/<environment>/twig.yaml #}
+            <form action="{{ web_to_case_post_url }}" method="POST">
+
+                <input type=hidden name="orgid" value="{{ web_to_case_orgid }}">
+                <input type=hidden name="retURL" value="{{ site_url }}/esourcing-register/thanks"> <!-- add the redirect url here-->
+                <input type="hidden" id="priority" name="priority" value="Green" />
+                <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
+                <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
+
+                {# see https://symfony.com/doc/current/templating/app_variable.html #}
+                {% if app.debug %}
+                    <input type="hidden" name="debug" value=1>
+                    <input type="hidden" name="debugEmail" value="daniel.evans=crowncommercial.gov.uk@example.com">
+                {% endif %}
+
+                <label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /><br>
+                <label for="company">Organisation</label><input  id="company" maxlength="80" name="company" size="20" type="text" /><br>
+                <label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>
+                <label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br>
+                <label for="checkbox-label">Do you require a call back</label><input id="00Nb0000009IXEg" name="00Nb0000009IXEg" type="checkbox" value="1" /><br>
+                <label for="job-title">Job Title</label><input id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" /><br>
+                <label for="description">Description</label><textarea name="description"></textarea><br>
+
+                <input type="submit" name="Submit">
+
+            </form>
