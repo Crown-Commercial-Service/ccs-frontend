@@ -43,13 +43,19 @@
 
 .header-global .logo {
 
-    padding-left: govuk-px-to-rem(5);
+    padding-left: 15px;
     padding-top: govuk-px-to-rem(20);
+
+    @include govuk-media-query($from: 641) {
+
+        padding-left: 30px;
+
+    }
 
     @include govuk-media-query($from: desktop) {
 
-        padding-left: 0;
         padding-top: 0;
+        padding-left: 0;
         margin-right: auto;
 
     }

@@ -28,6 +28,20 @@
 
 }
 
+.wysiwyg-content hr {
+
+    @extend .govuk-section-break;
+    @extend .govuk-section-break--m;
+    @extend .govuk-section-break--visible;
+
+}
+
+.wysiwyg-content blockquote {
+
+    margin: 0 20px 20px 20px;
+
+}
+
 .flex-video {
 
     position: relative;
