@@ -9,6 +9,13 @@
 
 }
 
+.govuk-warning-text__icon {
+
+    // Manually adjust the line-height for the icon because Source Sans has a different x-height than Transport (GDS font) and looks wonky otherwise
+    line-height: 24px;
+
+}
+
 .govuk-warning-text__text {
 
     padding: 0;
@@ -17,6 +24,8 @@
 }
 
 .govuk-warning-text__icon {
+
+    // dynamic height offset which is doesn't require magic numbers
     top: 0;
     transform: translateY(50%);
 }
