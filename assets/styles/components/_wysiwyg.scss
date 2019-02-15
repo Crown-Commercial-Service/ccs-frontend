@@ -42,6 +42,15 @@
 
 }
 
+
+
+.wysiwyg-content table {
+
+    @extend .govuk-table;
+
+}
+
+
 .flex-video {
 
     position: relative;
