@@ -99,11 +99,22 @@
         display: block;
         position: absolute;
         top: govuk-px-to-rem(20);
-        left: govuk-px-to-rem(20);
-        width: calc(100% - #{govuk-px-to-rem(40)});
+        left: govuk-px-to-rem(15);
+        width: calc(100% - 30px);
         height: govuk-px-to-rem(1);
-        background-color: white;
+        background-color: rgba(white, 0.42);
         
+
+    }
+
+    @include govuk-media-query($from: 641) {
+
+        &:before {
+
+            left: govuk-px-to-rem(30);
+            width: calc(100% - 60px);
+
+        }
 
     }
 
@@ -130,6 +141,12 @@
 
     }
 
+    &:last-child {
+
+        margin-right: 0;
+
+    }
+
 }
 
 
@@ -138,8 +155,14 @@
 .nav-list__link {
 
     display: block;
-    padding: govuk-px-to-rem(15) govuk-px-to-rem(20) govuk-px-to-rem(14) govuk-px-to-rem(20);
+    padding: govuk-px-to-rem(15) govuk-px-to-rem(15) govuk-px-to-rem(14) govuk-px-to-rem(15);
     text-decoration: none;
+
+    @include govuk-media-query($from: 641) {
+
+        padding: govuk-px-to-rem(15) govuk-px-to-rem(30) govuk-px-to-rem(14) govuk-px-to-rem(30);
+
+    }
 
     @include govuk-media-query($from: desktop) {
 
@@ -204,16 +227,28 @@
     padding: govuk-px-to-rem(11) govuk-px-to-rem(14);
 
     position: absolute;
-    right: govuk-px-to-rem(20);
+    right: govuk-px-to-rem(15);
     top: govuk-px-to-rem(41);
 
     @include govuk-focusable;
     @include govuk-font(19, $weight: regular);
+
+    @include govuk-media-query($from: 641) {
+
+        right: govuk-px-to-rem(30);
+
+    }
 
     @include govuk-media-query($from: desktop) {
 
         display: none;
 
     }
+
+}
+
+.header-global--home .global-navigation__toggler {
+
+     top: govuk-px-to-rem(78);
 
 }
