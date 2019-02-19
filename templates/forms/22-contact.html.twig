@@ -14,7 +14,7 @@
                 {# See https://symfony.com/doc/current/templating/app_variable.html #}
                 {% if app.debug %}
                     <input type="hidden" name="debug" value=1>
-                    <input type="hidden" name="debugEmail" value="daniel.evans=crowncommercial.gov.uk@example.com">
+                    <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
                 {% endif %}
 
                 <label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /><br>
