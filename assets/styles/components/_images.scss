@@ -2,11 +2,19 @@
   #Images
 \*------------------------------------*/
 
+picture {
+
+    display: block;
+    width: 100%;
+
+}
+
 img {
 
-    max-width: 100%;
+    width: 100%;
     height: auto;
-    vertical-align: baseline;
+    // change so that images doesn't sit on baseline of text
+    vertical-align: middle;
 
 }
 
