@@ -11,13 +11,17 @@
 
 .header-global a {
 
-    color: inherit;
+    color: white;
 
     &:hover,
-    &:focus,
     &:active {
 
         color: govuk-colour("grey-4");
+
+    }
+    &:focus {
+
+        color: $govuk-focus-text-colour;
 
     }
 

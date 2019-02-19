@@ -1,0 +1,35 @@
+/*------------------------------------*\
+  #Call-to-action
+\*------------------------------------*/
+
+.apollo-call-to-action {
+
+    background: #ffffff;
+    background-position: 25px 23px;
+    background-repeat: no-repeat;
+    background-size: 45px;
+    border: 1px solid #e7e4df;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
+    margin-bottom: 30px;
+
+    padding: 80px 25px 5px 25px;
+
+    @include govuk-media-query($from: desktop) {
+
+        margin-bottom: 0;
+
+    }
+
+}
+
+.apollo-call-to-action--help {
+
+    background-image: url(../svg/help.svg);
+
+}
+
+.apollo-call-to-action--aggregation {
+
+    background-image: url(../svg/aggregation.svg);
+
+}
