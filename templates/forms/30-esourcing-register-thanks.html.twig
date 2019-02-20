@@ -1,6 +1,42 @@
+{% extends 'base.html.twig' %}
 
-<h1>Your application has been sent</h1>
+{% block body %}
+
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
+
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
+
+        <div class="govuk-phase-banner">
+            <p class="govuk-phase-banner__content">
+                <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                    beta </strong> <span class="govuk-phase-banner__text">
+      This is a new service – your
+      <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+    </span>
+            </p>
+        </div>
 
 
-<p>Text here</p>
+        <!-- required wrapper 2 -->
+        <main id="main-content" class="govuk-main-wrapper">
 
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+
+                    <h1 class="govuk-heading-xl page-title">Your application has been sent</h1>
+
+                    <p>We will be in touch soon with your log-in details. If you don't,
+                        <a href="/contact">contact us</a>.</p>
+                    <p><a href="selgtnfd">What do you think of this service?</a> (Survey takes approximately 4 minutes to complete).</p>
+
+
+                </div>
+            </div>
+
+
+        </main>
+    </div>
+
+{% endblock %}

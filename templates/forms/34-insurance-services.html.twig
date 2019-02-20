@@ -1,30 +1,262 @@
+{% extends 'base.html.twig' %}
 
-    <h1>Insurance Services 2 non-disclosure agreement (NDA)</h1>
+{% block body %}
 
-            <!-- form -->
-            {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-            <form action="{{ web_to_case_post_url }}" method="POST">
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
 
-                <input type=hidden name="orgid" value="{{ web_to_case_orgid }}">
-                <input type=hidden name="retURL" value="{{ site_url }}/insurance-services-nda/thanks"> <!-- add the redirect url here-->
-                <input type="hidden" id="priority" name="priority" value="Green" />
-                <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
-                <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
-                {# see https://symfony.com/doc/current/templating/app_variable.html #}
-                {% if app.debug %}
-                    <input type="hidden" name="debug" value=1>
-                    <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
-                {% endif %}
+        <div class="govuk-phase-banner">
+            <p class="govuk-phase-banner__content">
+                <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                    beta </strong> <span class="govuk-phase-banner__text">
+      This is a new service – your
+      <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+    </span>
+            </p>
+        </div>
 
-                <label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /><br>
-                <label for="company">Organisation</label><input  id="company" maxlength="80" name="company" size="20" type="text" /><br>
-                <label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>
-                <label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br>
-                <label for="checkbox-label">Do you require a call back</label><input id="00Nb0000009IXEg" name="00Nb0000009IXEg" type="checkbox" value="1" /><br>
-                <label for="job-title">Job Title</label><input id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" /><br>
-                <label for="description">Description</label><textarea name="description"></textarea><br>
 
-                <input type="submit" name="Submit">
+        <!--<div class="govuk-breadcrumbs">-->
+        <!--<ol class="govuk-breadcrumbs__list">-->
+        <!--<li class="govuk-breadcrumbs__list-item">-->
+        <!--<a class="govuk-breadcrumbs__link" href="/">Home</a>-->
+        <!--</li>-->
+        <!--<li class="govuk-breadcrumbs__list-item">-->
+        <!--<a class="govuk-breadcrumbs__link" href="#">Search suppliers</a>-->
+        <!--</li>-->
+        <!--<li class="govuk-breadcrumbs__list-item" aria-current="page">-->
+        <!--Amey OW Limited-->
+        <!--</li>-->
+        <!--</ol>-->
+        <!--</div>-->
 
-            </form>
+
+        <!-- required wrapper 2 -->
+        <main id="main-content"  class="govuk-main-wrapper">
+
+
+            {#<div class="govuk-grid-row">#}
+            {#<div class="govuk-grid-column-full">#}
+
+            {#<h1 class="govuk-heading-xl page-title">Book online training for the CCS eSourcing tool</h1>#}
+
+            {#</div>#}
+            {#</div>#}
+
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-three-quarters">
+
+                    <h1 class="govuk-heading-xl page-title">Insurance Services 2 non-disclosure agreement (NDA)</h1>
+
+
+                    <p class="govuk-body-l">Suppliers’ pricing under the insurance services agreement is commercially sensitive. Therefore, please complete and submit this agreement.</p>
+
+                    <p>On behalf of the organisation below, I agree that I will:</p>
+
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>keep the pricing information supplied strictly confidential</li>
+                        <li>not make use of any part of it for any purposes other than for accessing the agreement</li>
+                        <li>not disclose any part of it to any other person or organisation, other than those reasonably required to know it, such as employees, agents, consultants and subcontractors, who are also bound to hold pricing information in confidence and to use it only for the purposes of accessing the agreement.</li>
+                    </ul>
+
+
+
+                    {#<form action="{{ web_to_case_post_url }}" method="POST">#}
+
+                        {#<input type=hidden name="orgid" value="{{ web_to_case_orgid }}">#}
+                        {#<input type=hidden name="retURL" value="{{ site_url }}/insurance-services-nda/thanks"> <!-- add the redirect url here-->#}
+                        {#<input type="hidden" id="priority" name="priority" value="Green" />#}
+                        {#<input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />#}
+                        {#<input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />#}
+
+                        {# see https://symfony.com/doc/current/templating/app_variable.html #}
+                        {#{% if app.debug %}#}
+                            {#<input type="hidden" name="debug" value=1>#}
+                            {#<input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">#}
+                        {#{% endif %}#}
+
+                        {#<label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /><br>#}
+                        {#<label for="company">Organisation</label><input  id="company" maxlength="80" name="company" size="20" type="text" /><br>#}
+                        {#<label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>#}
+                        {#<label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br>#}
+                        {#<label for="checkbox-label">Do you require a call back</label><input id="00Nb0000009IXEg" name="00Nb0000009IXEg" type="checkbox" value="1" /><br>#}
+                        {#<label for="job-title">Job Title</label><input id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" /><br>#}
+                        {#<label for="description">Description</label><textarea name="description"></textarea><br>#}
+
+                        {#<input type="submit" name="Submit">#}
+
+                    {#</form>#}
+
+
+
+                    <!-- form -->
+                    {# For Twig global variables see config/packages/<environment>/twig.yaml #}
+                    <form class="govuk-!-width-three-quarters" action="{{ web_to_case_post_url }}" method="POST">
+
+                        <input type=hidden name="orgid" value="{{ web_to_case_orgid }}">
+                        <input type=hidden name="retURL" value="{{ site_url }}/insurance-services-nda/thanks"> <!-- add the redirect url here-->
+                        <input type="hidden" id="priority" name="priority" value="Green" />
+                        <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
+                        <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
+
+                        {# See https://symfony.com/doc/current/templating/app_variable.html #}
+                        {% if app.debug %}
+                            <input type="hidden" name="debug" value=1>
+                            <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
+                        {% endif %}
+
+
+                        {# `name` value must match fields in Salesforce. `class` value must match GDS components #}
+
+                        <h2 class="govuk-heading-m">Your organisation</h2>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="company">
+                                Name of organisation you are buying on behalf of (can this be the `organisation` field in Salesforce?)
+                            </label>
+                            <input class="govuk-input" id="company" maxlength="80" name="company" size="20" type="text" />
+                        </div>
+
+                        <h2 class="govuk-heading-m">Person agreeing to non-disclosure</h2>
+
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="name">
+                                Name (combined from First name and Last name)
+                            </label>
+                            <input class="govuk-input" id="name" maxlength="80" name="name" size="20" type="text" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="email">
+                                Email
+                            </label>
+                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="text" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="name">
+                                Telephone number (optional)
+                            </label>
+                            <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="00Nb0000009IXEs">
+                                Job title
+                            </label>
+                            <input class="govuk-input" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" />
+                        </div>
+
+                        <h2 class="govuk-heading-m">Contract details (all these will need to be populated into `description` in Salesforce</h2>
+
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                                    <h1 class="govuk-fieldset__heading">
+                                        Which lot will you be accessing?
+                                    </h1>
+                                </legend>
+                                <div class="govuk-checkboxes">
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="lot-1" name="lots" type="checkbox" value="Lot 1 insurance">
+                                        <label class="govuk-label govuk-checkboxes__label" for="lot-1">
+                                            Lot 1 insurance
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="lot-2" name="lots" type="checkbox" value="Lot 2 multi-supplier insurance brokerage">
+                                        <label class="govuk-label govuk-checkboxes__label" for="lot-2">
+                                            Lot 2 multi-supplier insurance brokerage
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="lot-3" name="lots" type="checkbox" value="Lot 3 compensation claims-handling">
+                                        <label class="govuk-label govuk-checkboxes__label" for="lot-3">
+                                            Lot 3 compensation claims-handling
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="annual-insurance-spend">
+                                What is your annual spend on insurance?
+                            </label>
+                            <input class="govuk-input" id="annual-insurance-spend" maxlength="100" name="annual-insurance-spend" size="20" type="text" />
+                        </div>
+
+
+
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" aria-describedby="passport-issued-hint" role="group">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                                    <h1 class="govuk-fieldset__heading">
+                                        What is your estimated insurance contract start date?
+                                    </h1>
+                                </legend>
+                                <span id="passport-issued-hint" class="govuk-hint">
+      For example, 21 06 2020
+    </span>
+                                <div class="govuk-date-input" id="passport-issued">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="insurance-start-day">
+                                                Day
+                                            </label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="insurance-start-day" name="insurance-start-day" type="number" pattern="[0-9]*">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="insurance-start-month">
+                                                Month
+                                            </label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="insurance-start-month" name="insurance-start-month" type="number" pattern="[0-9]*">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="insurance-start-year">
+                                                Year
+                                            </label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="insurance-start-year" name="insurance-start-year" type="number" pattern="[0-9]*">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+
+
+
+                        {# Catch-all field for additional Salesforce data #}
+                        {#<textarea class="govuk-textarea" id="description" name="description" rows="5" aria-describedby="more-detail-hint"></textarea>#}
+
+                        <p>Here is our <a href="sgfnk">privacy notice</a>.</p>
+
+                        <div class="govuk-form-group">
+                            <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Agree to NDA (Updated copy)</button>
+                        </div>
+
+                    </form>
+
+                    <script>
+
+
+
+                    </script>
+
+
+
+
+                </div>
+                {#<div class="govuk-grid-column-one-quarter">#}
+                {#</div>#}
+            </div>
+
+
+        </main>
+    </div>
+
+{% endblock %}
