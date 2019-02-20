@@ -1,30 +1,157 @@
+{% extends 'base.html.twig' %}
 
-    <h1>Sign up to receive news and updates from CCS</h1>
+{% block body %}
 
-            <!-- form -->
-            {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-            <form action="{{ web_to_case_post_url }}" method="POST">
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
 
-                <input type=hidden name="orgid" value="{{ web_to_case_orgid }}">
-                <input type=hidden name="retURL" value="{{ site_url }}/newsletter/thanks"> <!-- add the redirect url here-->
-                <input type="hidden" id="priority" name="priority" value="Green" />
-                <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
-                <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
-                {# see https://symfony.com/doc/current/templating/app_variable.html #}
-                {% if app.debug %}
-                    <input type="hidden" name="debug" value=1>
-                    <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
-                {% endif %}
+        <div class="govuk-phase-banner">
+            <p class="govuk-phase-banner__content">
+                <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                    beta </strong> <span class="govuk-phase-banner__text">
+      This is a new service – your
+      <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+    </span>
+            </p>
+        </div>
 
-                <label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /><br>
-                <label for="company">Organisation</label><input  id="company" maxlength="80" name="company" size="20" type="text" /><br>
-                <label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>
-                <label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br>
-                <label for="checkbox-label">Do you require a call back</label><input id="00Nb0000009IXEg" name="00Nb0000009IXEg" type="checkbox" value="1" /><br>
-                <label for="job-title">Job Title</label><input id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" /><br>
-                <label for="description">Description</label><textarea name="description"></textarea><br>
 
-                <input type="submit" name="Submit">
+        <!--<div class="govuk-breadcrumbs">-->
+        <!--<ol class="govuk-breadcrumbs__list">-->
+        <!--<li class="govuk-breadcrumbs__list-item">-->
+        <!--<a class="govuk-breadcrumbs__link" href="/">Home</a>-->
+        <!--</li>-->
+        <!--<li class="govuk-breadcrumbs__list-item">-->
+        <!--<a class="govuk-breadcrumbs__link" href="#">Search suppliers</a>-->
+        <!--</li>-->
+        <!--<li class="govuk-breadcrumbs__list-item" aria-current="page">-->
+        <!--Amey OW Limited-->
+        <!--</li>-->
+        <!--</ol>-->
+        <!--</div>-->
 
-            </form>
+
+        <!-- required wrapper 2 -->
+        <main id="main-content"  class="govuk-main-wrapper">
+
+
+            {#<div class="govuk-grid-row">#}
+            {#<div class="govuk-grid-column-full">#}
+
+            {#<h1 class="govuk-heading-xl page-title">Book online training for the CCS eSourcing tool</h1>#}
+
+            {#</div>#}
+            {#</div>#}
+
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-three-quarters">
+
+                    <h1 class="govuk-heading-xl page-title">Sign up to receive news and updates from CCS</h1>
+
+                    <p class="govuk-body-l">Complete the form below to start learning about how we can save you time and money in procurement.</p>
+
+
+
+                    {#<form action="{{ web_to_case_post_url }}" method="POST">#}
+
+                        {#<input type=hidden name="orgid" value="{{ web_to_case_orgid }}">#}
+                        {#<input type=hidden name="retURL" value="{{ site_url }}/newsletter/thanks"> <!-- add the redirect url here-->#}
+                        {#<input type="hidden" id="priority" name="priority" value="Green" />#}
+                        {#<input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />#}
+                        {#<input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />#}
+
+                        {# see https://symfony.com/doc/current/templating/app_variable.html #}
+                        {#{% if app.debug %}#}
+                            {#<input type="hidden" name="debug" value=1>#}
+                            {#<input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">#}
+                        {#{% endif %}#}
+
+                        {#<label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /><br>#}
+                        {#<label for="company">Organisation</label><input  id="company" maxlength="80" name="company" size="20" type="text" /><br>#}
+                        {#<label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>#}
+                        {#<label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br>#}
+                        {#<label for="checkbox-label">Do you require a call back</label><input id="00Nb0000009IXEg" name="00Nb0000009IXEg" type="checkbox" value="1" /><br>#}
+                        {#<label for="job-title">Job Title</label><input id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" /><br>#}
+                        {#<label for="description">Description</label><textarea name="description"></textarea><br>#}
+
+                        {#<input type="submit" name="Submit">#}
+
+                    {#</form>#}
+
+
+                    <!-- form -->
+                    {# For Twig global variables see config/packages/<environment>/twig.yaml #}
+                    <form class="govuk-!-width-three-quarters" action="{{ web_to_case_post_url }}" method="POST">
+
+                        <input type=hidden name="orgid" value="{{ web_to_case_orgid }}">
+                        <input type=hidden name="retURL" value="{{ site_url }}/newsletter/thanks"> <!-- add the redirect url here-->
+                        <input type="hidden" id="priority" name="priority" value="Green" />
+                        <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
+                        <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
+
+                        {# See https://symfony.com/doc/current/templating/app_variable.html #}
+                        {% if app.debug %}
+                            <input type="hidden" name="debug" value=1>
+                            <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
+                        {% endif %}
+
+
+                        {# `name` value must match fields in Salesforce. `class` value must match GDS components #}
+                        <div class="govuk-form-group { govuk-form-group--error }">
+                            <label class="govuk-label" for="name">
+                                Name (combined from First name and Last name)
+                            </label>
+                            <span id="full-name-error" class="govuk-error-message">
+    Descriptive and helpful error message
+  </span>
+                            <input class="govuk-input { govuk-input--error }" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="email">
+                                Email
+                            </label>
+                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="text" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="name">
+                                Telephone number (optional)
+                            </label>
+                            <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="company">
+                                Organisation
+                            </label>
+                            <input class="govuk-input" id="company" maxlength="80" name="company" size="20" type="text" />
+                        </div>
+
+                        <p>Here is our <a href="segffg">privacy notice</a>.</p>
+
+                        <div class="govuk-form-group">
+                            <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Subscribe to our newsletter (Updated copy)</button>
+                        </div>
+
+                    </form>
+
+                    <script>
+
+
+
+                    </script>
+
+
+
+
+                </div>
+                {#<div class="govuk-grid-column-one-quarter">#}
+                {#</div>#}
+            </div>
+
+
+        </main>
+    </div>
+
+{% endblock %}

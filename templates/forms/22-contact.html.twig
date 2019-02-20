@@ -1,30 +1,250 @@
+{% extends 'base.html.twig' %}
 
-    <h1>Contact CCS</h1>
+{% block body %}
 
-            <!-- form -->
-            {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-            <form action="{{ web_to_case_post_url }}" method="POST">
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
 
-                <input type=hidden name="orgid" value="{{ web_to_case_orgid }}">
-                <input type=hidden name="retURL" value="{{ site_url }}/contact/thanks"> <!-- add the redirect url here-->
-                <input type="hidden" id="priority" name="priority" value="Green" />
-                <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
-                <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
-                {# See https://symfony.com/doc/current/templating/app_variable.html #}
-                {% if app.debug %}
-                    <input type="hidden" name="debug" value=1>
-                    <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
-                {% endif %}
+        <div class="govuk-phase-banner">
+            <p class="govuk-phase-banner__content">
+                <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                    beta </strong> <span class="govuk-phase-banner__text">
+      This is a new service – your
+      <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+    </span>
+            </p>
+        </div>
 
-                <label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /><br>
-                <label for="company">Organisation</label><input  id="company" maxlength="80" name="company" size="20" type="text" /><br>
-                <label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>
-                <label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br>
-                <label for="checkbox-label">Do you require a call back</label><input id="00Nb0000009IXEg" name="00Nb0000009IXEg" type="checkbox" value="1" /><br>
-                <label for="job-title">Job Title</label><input id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" /><br>
-                <label for="description">Description</label><textarea name="description"></textarea><br>
 
-                <input type="submit" name="Submit">
+        <!--<div class="govuk-breadcrumbs">-->
+        <!--<ol class="govuk-breadcrumbs__list">-->
+        <!--<li class="govuk-breadcrumbs__list-item">-->
+        <!--<a class="govuk-breadcrumbs__link" href="/">Home</a>-->
+        <!--</li>-->
+        <!--<li class="govuk-breadcrumbs__list-item">-->
+        <!--<a class="govuk-breadcrumbs__link" href="#">Search suppliers</a>-->
+        <!--</li>-->
+        <!--<li class="govuk-breadcrumbs__list-item" aria-current="page">-->
+        <!--Amey OW Limited-->
+        <!--</li>-->
+        <!--</ol>-->
+        <!--</div>-->
 
-            </form>
+
+        <!-- required wrapper 2 -->
+        <main id="main-content"  class="govuk-main-wrapper">
+
+
+            {#<div class="govuk-grid-row">#}
+            {#<div class="govuk-grid-column-full">#}
+
+            {#<h1 class="govuk-heading-xl page-title">Book online training for the CCS eSourcing tool</h1>#}
+
+            {#</div>#}
+            {#</div>#}
+
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-three-quarters">
+
+                    <h1 class="govuk-heading-xl page-title">Contact CCS</h1>
+
+
+                    <p class="govuk-body-l">You can contact us by email, phone or using the enquiry form below.</p>
+
+                    <h2 class="govuk-heading-m">Email</h2>
+                    <p><a href="mailto:info@crowncommercial.govuk">info@crowncommercial.govuk</a></p>
+                    <h2 class="govuk-heading-m">Phone</h2>
+                    <p><a href="tel:03454102222">0345 410 2222</a></p>
+
+                    <p>CCS customer services team is available Monday to Friday, 9am to 5pm.</p>
+
+
+
+                    <!-- form -->
+                    {# For Twig global variables see config/packages/<environment>/twig.yaml #}
+                    <form class="govuk-!-width-three-quarters" action="{{ web_to_case_post_url }}" method="POST">
+
+                        <input type=hidden name="orgid" value="{{ web_to_case_orgid }}">
+                        <input type=hidden name="retURL" value="{{ site_url }}/contact/thanks"> <!-- add the redirect url here-->
+                        <input type="hidden" id="priority" name="priority" value="Green" />
+                        <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
+                        <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
+
+                        {# See https://symfony.com/doc/current/templating/app_variable.html #}
+                        {% if app.debug %}
+                            <input type="hidden" name="debug" value=1>
+                            <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
+                        {% endif %}
+
+
+                        {# `name` value must match fields in Salesforce. `class` value must match GDS components #}
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h1 class="govuk-fieldset__heading">
+                                        Type of enquiry (not a Salesforce field)
+                                    </h1>
+                                </legend>
+                                <span id="how-contacted-conditional-hint" class="govuk-hint">
+      Select one option.
+    </span>
+                                <div class="govuk-radios govuk-radios--conditional" data-module="radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="how-contacted" type="radio" value="email" data-aria-controls="conditional-how-contacted-conditional-1">
+                                        <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-1">
+                                            General enquiry
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="how-contacted-conditional-2" name="how-contacted" type="radio" value="phone" data-aria-controls="conditional-how-contacted-conditional-2">
+                                        <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">
+                                            Complaint (should reveal more fields at bottom of form)
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-2">
+                                        <div class="govuk-form-group">
+                                            <p>We're sorry to hear you're unhappy with CCS. We will respond in 2 working days with the name of the person dealing with your complaint and any actions taken. We will communicate progress of your complaint at least every 10 days until your complaint is resolved.</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+
+                        <div class="govuk-form-group { govuk-form-group--error }">
+                            <label class="govuk-label" for="name">
+                                Name (combined from First name and Last name)
+                            </label>
+                            <span id="full-name-error" class="govuk-error-message">
+    Descriptive and helpful error message
+  </span>
+                            <input class="govuk-input { govuk-input--error }" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="email">
+                                Email
+                            </label>
+                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="text" />
+                        </div>
+
+
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    <h1 class="govuk-fieldset__heading">
+                                        Do you require a callback? (Changed from two radios to one checkbox and moved to before Tel field)
+                                    </h1>
+                                </legend>
+                                <div class="govuk-checkboxes">
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="00Nb0000009IXEg" name="00Nb0000009IXEg" type="checkbox" value="1" />
+                                        <label class="govuk-label govuk-checkboxes__label" for="00Nb0000009IXEg">
+                                            Yes
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="name">
+                                Telephone number (optional)
+                            </label>
+                            <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text" />
+                        </div>
+
+
+
+
+
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="company">
+                                Organisation
+                            </label>
+                            <input class="govuk-input" id="company" maxlength="80" name="company" size="20" type="text" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="00Nb0000009IXEs">
+                                Job title
+                            </label>
+                            <input class="govuk-input" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" />
+                        </div>
+                        <div class="govuk-form-group govuk-!-width-one-half">
+                            <label class="govuk-label" for="post-code">
+                                Organisation post code (not a Salesforce field)
+                            </label>
+                            <input class="govuk-input" id="post-code" maxlength="100" name="post-code" size="20" type="text" />
+                        </div>
+
+
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                                    <h1 class="govuk-fieldset__heading">
+                                        Is your complaint about (conditional on selecting `complaint` in radio. Not a Salesforce field)
+                                    </h1>
+                                </legend>
+                                <div class="govuk-checkboxes">
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="complaint-1" name="complaint" type="checkbox" value="Service">
+                                        <label class="govuk-label govuk-checkboxes__label" for="complaint-1">
+                                            Service
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="complaint-2" name="complaint" type="checkbox" value="Supplier staff">
+                                        <label class="govuk-label govuk-checkboxes__label" for="complaint-2">
+                                            Supplier staff
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input class="govuk-checkboxes__input" id="complaint-3" name="complaint" type="checkbox" value="Other">
+                                        <label class="govuk-label govuk-checkboxes__label" for="complaint-3">
+                                            Other
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="description">
+                                Can you provide more detail?
+                            </label>
+                            <span id="description-hint" class="govuk-hint">
+    Do not include personal or financial information, like your credit card details.
+  </span>
+                            <textarea class="govuk-textarea" id="description" name="description" rows="5" aria-describedby="more-detail-hint"></textarea>
+                        </div>
+
+                        <p>Depending on if the customer choses general or complaint, the retURL field needs to be changed.</p>
+
+                        <div class="govuk-form-group">
+                            <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Send enquiry (Updated copy)</button>
+                        </div>
+
+                    </form>
+
+                    <script>
+
+
+
+                    </script>
+
+
+
+
+                </div>
+                {#<div class="govuk-grid-column-one-quarter">#}
+                {#</div>#}
+            </div>
+
+
+        </main>
+    </div>
+
+{% endblock %}
