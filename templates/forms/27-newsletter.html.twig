@@ -86,11 +86,14 @@
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
                     <form class="govuk-!-width-three-quarters" action="{{ web_to_case_post_url }}" method="POST">
 
-                        <input type=hidden name="orgid" value="{{ web_to_case_orgid }}">
-                        <input type=hidden name="retURL" value="{{ site_url }}/newsletter/thanks"> <!-- add the redirect url here-->
-                        <input type="hidden" id="priority" name="priority" value="Green" />
-                        <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
-                        <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
+                        <p><em>Hidden Salesforce fields</em></p>
+                        {# Change these field types to hidden for Production #}
+                        <input type="text" name="orgid" value="{{ web_to_case_orgid }}">
+                        {# Post-submit redirect URL #}
+                        <input type="text" name="retURL" value="{{ site_url }}/newsletter/thanks"> <!-- add the redirect url here-->
+                        <input type="text" id="priority" name="priority" value="Green" />
+                        <input type="text" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
+                        <input type="text" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
 
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
