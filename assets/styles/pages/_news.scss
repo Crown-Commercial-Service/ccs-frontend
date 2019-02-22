@@ -65,6 +65,14 @@
 
 }
 
+.news-listing--compact.news-listing--compact {
+
+    flex-flow: column nowrap;
+    margin-top: 0;
+    max-width: 100%;
+
+}
+
 .news-listing__item {
 
     border: 1px solid #E7E7E7;
@@ -101,6 +109,12 @@
 
     }
 
+
+}
+
+.news-listing--compact .news-listing__item {
+
+    max-width: 100%;
 
 }
 

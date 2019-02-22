@@ -1,6 +1,19 @@
 /*------------------------------------*\
   #Aside
 \*------------------------------------*/
+.aside {
+
+    @include govuk-font(16, $weight: regular);
+
+    .govuk-list,
+    .govuk-body {
+
+        font: inherit;
+
+    }
+
+}
+
 .aside__heading {
 
     margin-top: 0;
