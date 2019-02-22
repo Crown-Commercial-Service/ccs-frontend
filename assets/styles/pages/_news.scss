@@ -114,7 +114,42 @@
 
 .news-listing--compact .news-listing__item {
 
+    background-color: white;
     max-width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+
+    picture {
+
+        max-width: 25%;
+        position: relative;
+
+    }
+
+    img {
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+
+    }
+
+    + .news-listing__item {
+
+        margin-top: 20px;
+
+    }
+
+}
+
+.news-listing--compact .news-listing__item__caption {
+
+    padding: 15px 10px 15px 15px;
 
 }
 
@@ -154,5 +189,18 @@
 .news-listing-body {
 
     @include govuk-font(16, $weight: regular);
+
+}
+
+.news-listing--compact .news-listing-meta {
+
+    @include govuk-font(14, $weight: regular);
+
+}
+
+.news-listing--compact .news-listing-title {
+
+    @include govuk-font(17search, $weight: bold);
+    margin: 5px 0 0 0;
 
 }
