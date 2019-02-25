@@ -73,6 +73,12 @@
 
 }
 
+.apollo-list--definition__value + .apollo-list--definition__key {
+
+    margin-top: govuk-px-to-rem(40);
+
+}
+
 // Suppliers details template
 .apollo-enclosure--framework-lots .govuk-summary-list {
 
