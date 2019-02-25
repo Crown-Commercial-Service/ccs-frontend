@@ -103,7 +103,7 @@
                         <input type="text" name="retURL" value="{{ site_url }}/insurance-services-nda/thanks"> <!-- add the redirect url here-->
                         <input type="text" id="priority" name="priority" value="Green" />
                         <input type="text" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
-                        <input type="text" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
+                        <input type="text" id="subject" maxlength="80" name="subject" size="20" value="Website - Insurance NDA" />
 
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
@@ -234,7 +234,7 @@
 
 
                         {# Catch-all field for additional Salesforce data #}
-                        {#<textarea class="govuk-textarea" id="description" name="description" rows="5" aria-describedby="more-detail-hint"></textarea>#}
+                        <input type="hidden" class="govuk-!-width-full" name="description" id="salesforce-textarea" />
 
                         <p>Here is our <a href="sgfnk">privacy notice</a>.</p>
 
@@ -246,7 +246,41 @@
 
                     <script>
 
+                        // Collect all the checkbox values
+                        lotsCheckboxes = document.getElementsByName("lots");
 
+                        // Collect the Annual Insurance spend value
+                        annualInsuranceSpend = document.getElementById("annual-insurance-spend");
+
+                        // Collect the date values
+                        fieldStartDay = document.getElementById("insurance-start-day");
+                        fieldStartMonth = document.getElementById("insurance-start-month");
+                        fieldStartYear = document.getElementById("insurance-start-year");
+
+                        // The field were we collect all the data for Salesforce
+                        dataCollectionFieldForSalesforce = document.getElementById("salesforce-textarea");
+
+                        // We gather the data once the user submits the form
+                        formSubmitButton = document.getElementById("submit");
+
+                        formSubmitButton.addEventListener('click', function (e) {
+
+                            for (var i = 0, length = lotsCheckboxes.length; i < length; i++)
+                            {
+
+                                if (lotsCheckboxes[i].checked)
+                                {
+                                    // put radio values into collection field
+                                    dataCollectionFieldForSalesforce.value += lotsCheckboxes[i].name + ": " + lotsCheckboxes[i].value + ", ";
+
+                                }
+                            }
+
+                            dataCollectionFieldForSalesforce.value += annualInsuranceSpend.name + ": " + annualInsuranceSpend.value;
+                            dataCollectionFieldForSalesforce.value += " Estimated insurance contract start date (DD/MM/YYYY): " + fieldStartDay.value + "/" + fieldStartMonth.value + "/" + fieldStartYear.value;
+
+
+                        }, false);
 
                     </script>
 
