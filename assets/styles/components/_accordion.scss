@@ -21,8 +21,8 @@
 
 .js-enabled .govuk-accordion__section-content {
 
-    padding-top: govuk-px-to-rem(10);
-    padding-bottom: govuk-px-to-rem(50);
+    padding-top: 0;
+    padding-bottom: govuk-px-to-rem(30);
 
 }
 
@@ -45,5 +45,12 @@
 .js-enabled .govuk-accordion__section + .govuk-accordion__section {
 
     //border: 0;
+
+}
+
+// Apply to any section which follows an open accordion one (design choice)
+.govuk-accordion__section--expanded + .govuk-accordion__section {
+
+    border-color: transparent;
 
 }
