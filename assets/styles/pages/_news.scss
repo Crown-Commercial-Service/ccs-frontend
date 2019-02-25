@@ -3,9 +3,9 @@
 \*------------------------------------*/
 .news--featured {
 
-    padding-top: govuk-px-to-rem(50);
-    padding-bottom: govuk-px-to-rem(62);
     max-width: 66%;
+    padding-bottom: govuk-px-to-rem(62);
+    padding-top: govuk-px-to-rem(50);
 
     .news-listing-title--featured,
     .govuk-body-l {
@@ -46,15 +46,15 @@
 
     display: flex;
     flex-flow: row wrap;
-    padding: 0;
     list-style: none;
     margin-top: 0;
+    padding: 0;
 
     @include govuk-media-query($from: tablet) {
 
-        margin-top: 44px;
-        margin-right: -22px;
         margin-left: -22px;
+        margin-right: -22px;
+        margin-top: 44px;
 
     }
 
@@ -77,15 +77,15 @@
 
     border: 1px solid #E7E7E7;
     flex: 1 0 auto;
+    margin-top: 44px;
     max-width: 100%;
     width: 100%;
-    margin-top: 44px;
 
     @include govuk-media-query($from: tablet) {
 
-        max-width: calc(50% - 46px);
         margin-left: 22px;
         margin-right: 22px;
+        max-width: calc(50% - 46px);
 
         // negative child range (remove margin from first 3)
         &:nth-child(-n+2) {
@@ -115,9 +115,9 @@
 .news-listing--compact .news-listing__item {
 
     background-color: white;
-    max-width: 100%;
     display: flex;
     flex-flow: row nowrap;
+    max-width: 100%;
 
     picture {
 
@@ -128,14 +128,14 @@
 
     img {
 
-        position: absolute;
-        top: 0;
-        left: 0;
         bottom: 0;
-        right: 0;
-        object-fit: cover;
-        width: 100%;
         height: 100%;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%;
+        object-fit: cover;
 
     }
 
@@ -170,6 +170,22 @@
 
     @include govuk-font(22, $weight: bold);
     margin: 10px 0;
+
+}
+
+.news-listing-summary {
+
+    @include govuk-font(16, $weight: regular);
+
+}
+
+
+
+.news-listing-summary--featured {
+
+    color: white;
+    margin: 10px 0;
+    @include govuk-font(20, $weight: regular);
 
 }
 
