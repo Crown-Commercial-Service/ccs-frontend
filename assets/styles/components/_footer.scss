@@ -6,6 +6,7 @@
     background-color: $ccs-footer-colour;
     color: govuk-colour("white");
     padding-top: govuk-px-to-rem(50);
+    margin-top: govuk-px-to-rem(50);
 
 }
 
@@ -18,15 +19,18 @@
 .govuk-footer__link.govuk-footer__link {
 
     color: white;
+    text-decoration: none;
 
     &:visited {
         color: white;
     }
     &:hover {
         color: govuk-colour("grey-4");
+        text-decoration: underline;
     }
     &:focus {
         color: govuk-colour("black");
+        text-decoration: underline;
     }
     &:active {
 

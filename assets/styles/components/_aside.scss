@@ -21,3 +21,16 @@
     @include govuk-font(24, $weight: bold);
 
 }
+
+.aside .govuk-list--definition {
+
+    //margin-bottom: 0;
+
+}
+
+.aside dl:last-of-type,
+.aside p:last-of-type {
+
+    margin-bottom: 0;
+
+}
