@@ -1,0 +1,32 @@
+rm_number:
+  type: text
+title:
+  type: text
+summary:
+  type: richtext
+description:
+  type: richtext
+updates:
+  type: richtext
+benefits:
+  type: richtext
+terms:
+  type: text
+pillar:
+  type: text
+category:
+  type: text
+status:
+  type: text
+start_date:
+  type: date
+end_date:
+  type: date
+tenders_open_date:
+  type: date
+tenders_close_date:
+  type: date
+expected_live_date:
+  type: date
+expected_award_date:
+  type: date

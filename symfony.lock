@@ -77,6 +77,9 @@
             "ref": "0dc9cceda799fd3a08b96987e176a261028a3709"
         }
     },
+    "studio24/frontend": {
+        "version": "dev-master"
+    },
     "symfony/apache-pack": {
         "version": "1.0",
         "recipe": {
@@ -265,5 +268,8 @@
     },
     "twig/twig": {
         "version": "v2.6.2"
+    },
+    "webmozart/assert": {
+        "version": "1.4.0"
     }
 }
