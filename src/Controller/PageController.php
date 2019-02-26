@@ -51,8 +51,8 @@ class PageController extends AbstractController
         // Check Composer has loaded required classes
         $required = [
             'Symfony\Bundle\FrameworkBundle\Controller\AbstractController',
-            'Studio24\Frontend\Cms\RestData',
-            'Studio24\Frontend\Cms\Wordpress'
+            //'Studio24\Frontend\Cms\RestData',
+            //'Studio24\Frontend\Cms\Wordpress'
         ];
         foreach ($required as $class) {
             if (!class_exists($class)) {
