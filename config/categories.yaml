@@ -1,0 +1,68 @@
+---
+Buildings:
+  db_value: 'Buildings'
+  slug: 'buildings'
+  children:
+    Construction:
+      db_value: 'Construction'
+      slug: 'construction'
+    Utilities & Fuels:
+      db_value: 'Utilities & Fuels'
+      slug: 'utilities-fuels'
+    Workplace:
+      db_value: 'Workplace'
+      slug: 'workplace'
+
+Corporate Services:
+  db_value: 'Corporate Services'
+  slug: 'corporate-services'
+  children:
+    Contact Centres:
+      db_value: 'Contact Centres'
+      slug: 'contact-centres'
+    Document Management & Logistics:
+      db_value: 'Document Management & Logistics'
+      slug: 'document-management-logistics'
+    Financial Services:
+      db_value: 'Financial Services'
+      slug: 'financial-services'
+    Fleet:
+      db_value: 'Fleet'
+      slug: 'fleet'
+    Marcomms & Research:
+      db_value: 'Marcomms & Research'
+      slug: 'marcomms-research'
+    Travel:
+      db_value: 'Travel'
+      slug: 'travel'
+
+People:
+  db_value: 'People'
+  slug: 'people'
+  children:
+    People Services:
+      db_value: 'People Services'
+      slug: 'people-services'
+    Professional Services:
+      db_value: 'Professional Services'
+      slug: 'professional-services'
+    Workforce:
+      db_value: 'Workforce'
+      slug: 'workforce'
+
+Technology:
+  db_value: 'Technology'
+  slug: 'technology'
+  children:
+    Digital Future:
+      db_value: 'Digital Future'
+      slug: 'digital-future'
+    Network Services:
+      db_value: 'Network Services'
+      slug: 'network-services'
+    Software:
+      db_value: 'Software'
+      slug: 'software'
+    Technology Products & Services:
+      db_value: 'Technology Products & Services'
+      slug: 'technology-products-services'
