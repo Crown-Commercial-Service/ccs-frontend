@@ -46,7 +46,7 @@ class FrameworksController extends AbstractController
         $data = [
             'pagination' => $results->getPagination(),
             'results'    => $results,
-            'categories' => FrameworkCategories::getCategories()
+            'categories' => FrameworkCategories::getAll()
         ];
         dump($results);
 
@@ -68,8 +68,8 @@ class FrameworksController extends AbstractController
      */
     public function listByCategory(string $category, int $page = 1)
     {
-        // Map category slug to category name
-        $categoryName = FrameworkCategories::getName($category);
+        // Map category slug to category db value
+        $categoryName = FrameworkCategories::getDbValueBySlug($category);
         if ($categoryName === null) {
             $this->redirectToRoute('frameworks_list');
         }
@@ -81,7 +81,7 @@ class FrameworksController extends AbstractController
             'category_slug' => $category,
             'pagination'    => $results->getPagination(),
             'results'       => $results,
-            'categories'    => FrameworkCategories::getCategories()
+            'categories'    => FrameworkCategories::getAll()
         ];
         return $this->render('frameworks/list.html.twig', $data);
     }
