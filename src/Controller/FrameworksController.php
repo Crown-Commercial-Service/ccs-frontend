@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Utils\FrameworkCategories;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,7 +45,8 @@ class FrameworksController extends AbstractController
         $results = $this->api->list($page);
         $data = [
             'pagination' => $results->getPagination(),
-            'results'    => $results
+            'results'    => $results,
+            'categories' => FrameworkCategories::getCategories()
         ];
         dump($results);
 
@@ -66,16 +68,18 @@ class FrameworksController extends AbstractController
      */
     public function listByCategory(string $category, int $page = 1)
     {
-        // @todo map category slug to category name in DB
-        
+        // Map category slug to category name
+        $category = FrameworkCategories::getName($category);
+
         $results = $this->api->list($page, ['category' => $category]);
 
         $data = [
             'category'      => $category,
             'pagination'    => $results->getPagination(),
-            'results'       => $results
+            'results'       => $results,
+            'categories'    => FrameworkCategories::getCategories()
         ];
-        return $this->render('frameworks/list-category.html.twig', $data);
+        return $this->render('frameworks/list.html.twig', $data);
     }
 
 
