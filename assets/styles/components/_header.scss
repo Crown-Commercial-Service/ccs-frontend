@@ -40,6 +40,12 @@
 
     max-width: govuk-px-to-rem(110);
 
+    &:hover {
+
+        opacity: 0.5;
+
+    }
+
     img {
         max-width: 100%;
     }
