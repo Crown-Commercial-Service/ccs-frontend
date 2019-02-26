@@ -157,6 +157,7 @@
     display: block;
     padding: govuk-px-to-rem(15) govuk-px-to-rem(15) govuk-px-to-rem(14) govuk-px-to-rem(15);
     text-decoration: none;
+    border-bottom: solid govuk-px-to-rem(2) transparent;
 
     @include govuk-media-query($from: 641) {
 
@@ -199,6 +200,7 @@
 /**
  * Highlight current navigation item
  */
+.nav-list__link:hover,
 .item-current {
 
     background-color: #5F0D2A;
@@ -206,7 +208,7 @@
     @include govuk-media-query($from: desktop) {
 
         background-color: transparent;
-        border-bottom: solid govuk-px-to-rem(2) white;
+        border-color: white;
 
     }
 
