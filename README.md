@@ -43,6 +43,18 @@ To install PHP packages for Staging and Production, run:
 composer install --no-dev --optimize-autoloader
 ```
 
+#### Environment config
+
+Add a file called `env.local` with the following configuration settings:
+
+```
+APP_API_BASE_URL='ENTER URL'
+```
+
+To explain these settings:
+
+* APP_API_BASE_URL - Base URL to WordPress site suffixed with /wp-json/ (e.g. `https://cms.crowncommercial.local/wp-json/`)
+
 #### NPM
 Use NPM to compile Javascript modules and Sass into CSS. Install the long-term support (LTS) version of [Node.js](https://nodejs.org/en/), which includes NPM. The minimum version of Node required is 8.9.4. We recommend using [`nvm`](https://github.com/creationix/nvm) for managing versions of Node.
 
