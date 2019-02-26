@@ -8,6 +8,25 @@ use PHPUnit\Framework\TestCase;
 
 class FrameworkCategoriesTest extends TestCase
 {
+
+    public function testFind()
+    {
+        $cat = FrameworkCategories::find('People');
+        $this->assertEquals(3, count($cat));
+        $this->assertTrue(isset($cat['children']));
+
+        $cat = FrameworkCategories::find('Marcomms & Research');
+        $this->assertEquals('marcomms-research', $cat['slug']);
+        $this->assertFalse(isset($cat['children']));
+
+        $cat = FrameworkCategories::find('Workplace');
+        $this->assertEquals('workplace', $cat['slug']);
+        $this->assertFalse(isset($cat['children']));
+
+        $cat = FrameworkCategories::find('Fake');
+        $this->assertNull($cat);
+    }
+
     public function testCategories()
     {
         $categories = FrameworkCategories::getCategories();
@@ -23,4 +42,12 @@ class FrameworkCategoriesTest extends TestCase
         $this->assertEquals('Marcomms & Research', FrameworkCategories::getName('marcomms-research'));
         $this->assertEquals(3, count(FrameworkCategories::getCategoriesByPillar('People')));
     }
+
+    public function testDbValue()
+    {
+        $this->assertEquals('Buildings', FrameworkCategories::getDbValue('Buildings'));
+        $this->assertEquals('People', FrameworkCategories::getDbValue('People'));
+        $this->assertEquals('Marcomms & Research', FrameworkCategories::getDbValue('Marcomms & Research'));
+    }
+
 }

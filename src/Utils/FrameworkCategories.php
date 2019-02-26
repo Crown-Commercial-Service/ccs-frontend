@@ -3,39 +3,22 @@ declare(strict_types=1);
 
 namespace App\Utils;
 
+use Symfony\Component\Yaml\Yaml;
+
 class FrameworkCategories
 {
-
     /**
-     * Array of pillars and categories => url slugs
-     * @var array
+     * Load categories config file
      */
-    protected static $categories = [
-        'Buildings' => [
-            'Construction'          => 'construction',
-            'Utilities & Fuels'     => 'utilities-fuels',
-            'Workplace'             => 'workplace',
-        ],
-        'Corporate Services' => [
-            'Contact Centres'       => 'contact-centres',
-            'Document Management & Logistics' => 'document-management-logistics',
-            'Financial Services'    => 'financial-services',
-            'Fleet'                 => 'fleet',
-            'Marcomms & Research'   => 'marcomms-research',
-            'Travel'                => 'travel',
-        ],
-        'People' => [
-            'People Services'       => 'people-services',
-            'Professional Services' => 'professional-services',
-            'Workforce'             => 'workforce',
-        ],
-        'Technology' => [
-            'Digital Future'        => 'digital-future',
-            'Network Services'      => 'network-services',
-            'Software'              => 'software',
-            'Technology Products & Services' => 'technology-products-services',
-        ],
-    ];
+    public static function loadConfig()
+    {
+        static $config;
+        if (is_array($config)) {
+            return $config;
+        }
+        $config = Yaml::parse(file_get_contents(__DIR__ . '/../../config/categories.yaml'));
+        return $config;
+    }
 
     /**
      * Return A-Z array of all categories (category name => category URL slug)
@@ -46,9 +29,10 @@ class FrameworkCategories
     protected static function getAll(): array
     {
         $data = [];
-        foreach (self::$categories as $pillar => $items) {
-            foreach ($items as $name => $slug) {
-                $data[$name] = $slug;
+        $categories = self::loadConfig();
+        foreach ($categories as $pillar) {
+            foreach ($pillar['children'] as $name => $values) {
+                $data[$name] = $values['slug'];
             }
         }
         ksort($data);
@@ -86,12 +70,53 @@ class FrameworkCategories
      */
     public static function getSlug(string $name): ?string
     {
-        $categories = self::getAll();
-        if (array_key_exists($name, $categories)) {
-            return $categories[$name];
+        $category = self::find($name);
+        if ($category === null) {
+            return null;
         }
 
+        return $category['slug'];
+    }
+
+    /**
+     * Match either a pillar or category and return its data
+     *
+     * @param string $name
+     * @return array|null
+     */
+    public static function find(string $name): ?array
+    {
+        $categories = self::loadConfig();
+        foreach ($categories as $pillarName => $pillar) {
+            if ($pillarName === $name) {
+                return $pillar;
+            }
+
+            foreach ($pillar['children'] as $categoryName => $category) {
+                if ($categoryName === $name) {
+                    return $category;
+                }
+            }
+        }
         return null;
+    }
+
+    /**
+     * Return the db value for a given category name
+     *
+     * Returns null on no results
+     *
+     * @param string $name
+     * @return string|null
+     */
+    public static function getDbValue(string $name): ?string
+    {
+        $category = self::find($name);
+        if ($category === null) {
+            return null;
+        }
+
+        return $category['db_value'];
     }
 
     /**
@@ -114,8 +139,14 @@ class FrameworkCategories
      */
     public static function getCategoriesByPillar(string $pillar): array
     {
-        if (isset(self::$categories[$pillar])) {
-            return self::$categories[$pillar];
+        $categories = self::loadConfig();
+        $data = [];
+
+        if (isset($categories[$pillar])) {
+            foreach ($categories[$pillar]['children'] as $name => $values) {
+                $data[$name] = $values['slug'];
+            }
+            return $data;
         }
         return [];
     }
