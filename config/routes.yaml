@@ -20,7 +20,7 @@ frameworks_list:
 
 frameworks_list_by_category:
   path: /frameworks/category/{category}/{page}
-  controller: App\Controller\FrameworksController::list
+  controller: App\Controller\FrameworksController::listByCategory
   requirements:
     page: '\d+'
   defaults:
