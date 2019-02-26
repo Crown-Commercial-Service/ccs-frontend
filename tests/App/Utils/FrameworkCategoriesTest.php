@@ -12,16 +12,16 @@ class FrameworkCategoriesTest extends TestCase
     public function testFind()
     {
         $cat = FrameworkCategories::find('People');
-        $this->assertEquals(3, count($cat));
-        $this->assertTrue(isset($cat['children']));
+        $this->assertEquals(4, count($cat));
+        $this->assertTrue(isset($cat['categories']));
 
         $cat = FrameworkCategories::find('Marcomms & Research');
         $this->assertEquals('marcomms-research', $cat['slug']);
-        $this->assertFalse(isset($cat['children']));
+        $this->assertFalse(isset($cat['categories']));
 
         $cat = FrameworkCategories::find('Workplace');
         $this->assertEquals('workplace', $cat['slug']);
-        $this->assertFalse(isset($cat['children']));
+        $this->assertFalse(isset($cat['categories']));
 
         $cat = FrameworkCategories::find('Fake');
         $this->assertNull($cat);
@@ -29,7 +29,7 @@ class FrameworkCategoriesTest extends TestCase
 
     public function testCategories()
     {
-        $categories = FrameworkCategories::getCategories();
+        $categories = FrameworkCategories::getAll();
         $this->assertEquals(16, count($categories));
         $first = current($categories);
         $this->assertEquals('construction', $first);
@@ -38,9 +38,9 @@ class FrameworkCategoriesTest extends TestCase
 
         $this->assertEquals('utilities-fuels', FrameworkCategories::getSlug('Utilities & Fuels'));
         $this->assertEquals('document-management-logistics', FrameworkCategories::getSlug('Document Management & Logistics'));
-        $this->assertEquals('Technology Products & Services', FrameworkCategories::getName( 'technology-products-services'));
-        $this->assertEquals('Marcomms & Research', FrameworkCategories::getName('marcomms-research'));
-        $this->assertEquals(3, count(FrameworkCategories::getCategoriesByPillar('People')));
+        $this->assertEquals('Technology Products & Services', FrameworkCategories::getNameBySlug( 'technology-products-services'));
+        $this->assertEquals('Marcomms & Research', FrameworkCategories::getNameBySlug('marcomms-research'));
+        $this->assertEquals(3, count(FrameworkCategories::getAllByPillar('People')));
     }
 
     public function testDbValue()
