@@ -46,7 +46,7 @@
                 <div class="govuk-grid-column-full">
 
                     {% if category is defined %}
-                    <h1 class="govuk-heading-xl page-title">{{ category }}</h1>
+                    <h1 class="govuk-heading-xl page-title">Frameworks in the {{ category }} category</h1>
                     {% else %}
                     <h1 class="govuk-heading-xl page-title">Search frameworks</h1>
                     {% endif %}
@@ -77,7 +77,7 @@
 
 
                         {# see https://studio24.github.io/frontend/templating/content-fields.html #}
-                        <h2 class="govuk-heading-m">Categories</h2>
+                        <h2 class="govuk-heading-m">Browse by category</h2>
                         <ul class="govuk-list">
                             {% for name,slug in categories %}
                                 <li><a href="{{ path('frameworks_list_by_category', {'category': slug}) }}">{{ name }}</a></li>
@@ -182,7 +182,7 @@
                     <ul class="govuk-list govuk-list--suppliers">
                     {% for item in results %}
                         <li>
-                            <h3 class="govuk-heading-m ccs-heading-link govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22"><a href="/frameworks/{{ item.content.rm_number }}">{{ item.content.title }}</a> <!--<strong class="govuk-tag govuk-tag--subtle">Expired</strong>--> </h3>
+                            <h3 class="govuk-heading-m ccs-heading-link govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22"><a href="/frameworks/{{ item.content.rm_number }}">{{ item.content.title }}</a> <strong class="govuk-tag govuk-tag--subtle">{{ item.content.status }}</strong> </h3>
                             <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
                                 <li><strong>Framework ID:</strong> {{ item.content.rm_number }}</li>
                                 <li><strong>Start Date:</strong> {{ item.content.start_date.format('d/m/Y') }}</li>
