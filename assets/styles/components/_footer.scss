@@ -49,3 +49,13 @@
     padding-bottom: govuk-px-to-rem(16);
 
 }
+
+.social-links .govuk-footer__link {
+
+    &:hover {
+
+        opacity: 0.5;
+
+    }
+
+}
