@@ -3,39 +3,23 @@ declare(strict_types=1);
 
 namespace App\Utils;
 
+use Symfony\Component\Yaml\Yaml;
+
 class FrameworkCategories
 {
-
     /**
-     * Array of pillars and categories => url slugs
-     * @var array
+     * Load categories config file
      */
-    protected static $categories = [
-        'Buildings' => [
-            'Construction'          => 'construction',
-            'Utilities & Fuels'     => 'utilities-fuels',
-            'Workplace'             => 'workplace',
-        ],
-        'Corporate Services' => [
-            'Contact Centres'       => 'contact-centres',
-            'Document Management & Logistics' => 'document-management-logistics',
-            'Financial Services'    => 'financial-services',
-            'Fleet'                 => 'fleet',
-            'Marcomms & Research'   => 'marcomms-research',
-            'Travel'                => 'travel',
-        ],
-        'People' => [
-            'People Services'       => 'people-services',
-            'Professional Services' => 'professional-services',
-            'Workforce'             => 'workforce',
-        ],
-        'Technology' => [
-            'Digital Future'        => 'digital-future',
-            'Network Services'      => 'network-services',
-            'Software'              => 'software',
-            'Technology Products & Services' => 'technology-products-services',
-        ],
-    ];
+    protected static function loadConfig()
+    {
+        static $config;
+        if (is_array($config)) {
+            return $config;
+        }
+
+        $config = Yaml::parse(file_get_contents(__DIR__ . '/../../config/categories.yaml'));
+        return $config;
+    }
 
     /**
      * Return A-Z array of all categories (category name => category URL slug)
@@ -43,12 +27,14 @@ class FrameworkCategories
      * @param string $pillar
      * @return array
      */
-    protected static function getAll(): array
+    public static function getAll(): array
     {
         $data = [];
-        foreach (self::$categories as $pillar => $items) {
-            foreach ($items as $name => $slug) {
-                $data[$name] = $slug;
+        $config = self::loadConfig();
+
+        foreach ($config['pillars'] as $pillar) {
+            foreach ($pillar['categories'] as $category) {
+                $data[$category['name']] = $category['slug'];
             }
         }
         ksort($data);
@@ -57,23 +43,91 @@ class FrameworkCategories
     }
 
     /**
+     * Return array of categories for a pillar (category name => category URL slug)
+     *
+     * Returns an empty array on no results
+     *
+     * @param string $name Pillar name
+     * @return array
+     */
+    public static function getAllByPillar(string $name): array
+    {
+        $data = [];
+        $config = self::loadConfig();
+
+        foreach ($config['pillars'] as $pillar) {
+            if ($pillar['name'] === $name) {
+                foreach ($pillar['categories'] as $category) {
+                    $data[$category['name']] = $category['slug'];
+                }
+                return $data;
+            }
+        }
+        return [];
+    }
+
+    /**
+     * Match either a pillar or category and return its data
+     *
+     * @param string $name
+     * @return array|null
+     */
+    public static function find(string $name): ?array
+    {
+        $config = self::loadConfig();
+        foreach ($config['pillars'] as $pillar) {
+            if ($pillar['name'] === $name) {
+                return $pillar;
+            }
+
+            foreach ($pillar['categories'] as $category) {
+                if ($category['name'] === $name) {
+                    return $category;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Match either a pillar or category and return its data
+     *
+     * @param string $slug
+     * @return array|null
+     */
+    public static function findBySlug(string $slug): ?array
+    {
+        $config = self::loadConfig();
+        foreach ($config['pillars'] as $pillar) {
+            if ($pillar['slug'] === $slug) {
+                return $pillar;
+            }
+
+            foreach ($pillar['categories'] as $category) {
+                if ($category['slug'] === $slug) {
+                    return $category;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Return the category name for a given category slug
      *
      * Returns null on no results
      *
-     * @param string $slug
+     * @param string $slug Pillar or category slug
      * @return string|null
      */
-    public static function getName(string $slug): ?string
+    public static function getNameBySlug(string $slug): ?string
     {
-        $categories = self::getAll();
-        foreach ($categories as $key => $val) {
-            if ($slug === $val) {
-                return $key;
-            }
+        $category = self::findBySlug($slug);
+        if ($category === null) {
+            return null;
         }
 
-        return null;
+        return $category['name'];
     }
 
     /**
@@ -81,43 +135,53 @@ class FrameworkCategories
      *
      * Returns null on no results
      *
-     * @param string $name
+     * @param string $name Pillar or category name
      * @return string|null
      */
     public static function getSlug(string $name): ?string
     {
-        $categories = self::getAll();
-        if (array_key_exists($name, $categories)) {
-            return $categories[$name];
+        $category = self::find($name);
+        if ($category === null) {
+            return null;
         }
 
-        return null;
+        return $category['slug'];
     }
 
     /**
-     * Return A-Z array of all categories (category name => category URL slug)
+     * Return the db value for a given category name
      *
-     * @return array
+     * Returns null on no results
+     *
+     * @param string $name Pillar or category name
+     * @return string|null
      */
-    public static function getCategories(): array
+    public static function getDbValue(string $name): ?string
     {
-        return self::getAll();
+        $category = self::find($name);
+        if ($category === null) {
+            return null;
+        }
+
+        return $category['db_value'];
     }
 
     /**
-     * Return array of categories for a pillar (category name => category URL slug)
+     * Return the db value for a given category name
      *
-     * Returns an empty array on no results
+     * Returns null on no results
      *
-     * @param string $pillar
-     * @return array
+     * @param string $slug Pillar or category slug
+     * @return string|null
      */
-    public static function getCategoriesByPillar(string $pillar): array
+    public static function getDbValueBySlug(string $slug): ?string
     {
-        if (isset(self::$categories[$pillar])) {
-            return self::$categories[$pillar];
+        $category = self::findBySlug($slug);
+        if ($category === null) {
+            return null;
         }
-        return [];
+
+        return $category['db_value'];
     }
 
 }
