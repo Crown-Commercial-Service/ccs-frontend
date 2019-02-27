@@ -1,21 +1,217 @@
+{% extends 'base.html.twig' %}
 
-{# see https://studio24.github.io/frontend/templating/pagination.html #}
-This is page {{ pagination.page }}, displaying results {{ pagination.from }}-{{ pagination.to }} of {{ pagination.totalResults }} results
+{% block body %}
 
-{# see https://studio24.github.io/frontend/templating/content-fields.html #}
 
-<ul>
-{% for name,slug in categories %}
-    <li><a href="{{ url('frameworks_list_by_category', {'category': slug}) }}">{{ name }}</a></li>
-{% endfor %}
-</ul>
 
-{% for item in results %}
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
 
-    <h2>{{ item.content.title }}</h2>
-    <p>Framework ID:  {{ item.content.rm_number }} Start date: {{ item.content.start_date.format('d/m/Y') }} End date: {{ item.content.end_date.format('d/m/Y') }}</p>
-    <p>{{ item.content.summary }}</p>
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
-{% endfor %}
+        <div class="govuk-phase-banner">
+            <p class="govuk-phase-banner__content">
+                <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                    beta </strong> <span class="govuk-phase-banner__text">
+      This is a new service – your
+      <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+    </span>
+            </p>
+        </div>
 
-{{ include('includes/pagination.html.twig', {'pagination': pagination, 'route': 'frameworks_list'}) }}
+
+        <div class="govuk-breadcrumbs">
+            <ol class="govuk-breadcrumbs__list">
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
+                </li>
+                <!--<li class="govuk-breadcrumbs__list-item">-->
+                <!--<a class="govuk-breadcrumbs__link" href="2-3-frameworks-search-result">Search frameworks</a>-->
+                <!--</li>-->
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                    Search framework
+                </li>
+            </ol>
+        </div>
+
+
+
+
+
+        <!-- required wrapper 2 -->
+        <main id="main-content" class="govuk-main-wrapper">
+
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+
+                    {% if category is defined %}
+                    <h1 class="govuk-heading-xl page-title">Frameworks in the {{ category }} category</h1>
+                    {% else %}
+                    <h1 class="govuk-heading-xl page-title">Search frameworks</h1>
+                    {% endif %}
+
+                </div>
+            </div>
+
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-third">
+
+                    <form action="">
+
+                        <div class="govuk-form-group govuk-form-group--enclosure">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="name">
+                                    Search frameworks
+                                </label>
+                                <input class="govuk-input input--search-icon" id="name" name="name" type="text">
+                                <button type="submit" class="visuallyhidden">Search frameworks</button>
+                            </div>
+                        </div>
+
+
+
+                        {# see https://studio24.github.io/frontend/templating/pagination.html #}
+                        {#This is page {{ pagination.page }}, displaying results {{ pagination.from }}-{{ pagination.to }} of {{ pagination.totalResults }} results#}
+
+
+                        {# see https://studio24.github.io/frontend/templating/content-fields.html #}
+                        <h2 class="govuk-heading-m">Browse by category</h2>
+                        <ul class="govuk-list">
+                            {% for name,slug in categories %}
+                                <li><a href="{{ path('frameworks_list_by_category', {'category': slug}) }}">{{ name }}</a></li>
+                            {% endfor %}
+                        </ul>
+
+
+                        {#<div class="govuk-form-group govuk-form-group--enclosure">#}
+                        {#<fieldset class="govuk-fieldset" aria-describedby="waste-hint">#}
+                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
+                        {#<h1 class="govuk-fieldset__heading">#}
+                        {#Status#}
+                        {#</h1>#}
+                        {#</legend>#}
+                        {#<span id="waste-hint" class="govuk-hint">#}
+                        {#2 selected#}
+                        {#</span>#}
+                        {#<div class="govuk-checkboxes govuk-checkboxes--small">#}
+                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
+                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-1" name="waste" type="checkbox" value="carcasses">#}
+                        {#<label class="govuk-label govuk-checkboxes__label" for="waste-1">#}
+                        {#Live#}
+                        {#</label>#}
+                        {#</div>#}
+                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
+                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-2" name="waste" type="checkbox" value="mines">#}
+                        {#<label class="govuk-label govuk-checkboxes__label" for="waste-2">#}
+                        {#Expired#}
+                        {#</label>#}
+                        {#</div>#}
+                        {#</div>#}
+                        {#</fieldset>#}
+                        {#</div>#}
+
+
+
+
+
+
+
+
+
+
+
+                        {#<div class="govuk-form-group govuk-form-group--enclosure">#}
+                        {#<fieldset class="govuk-fieldset">#}
+                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
+                        {#<h1 class="govuk-fieldset__heading">#}
+                        {#Results per page#}
+                        {#</h1>#}
+                        {#</legend>#}
+                        {#<span id="waste-hint" class="govuk-hint">#}
+                        {#10 results per page#}
+                        {#</span>#}
+                        {#<div class="govuk-radios govuk-radios--small">#}
+                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
+                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-1" name="where-do-you-live" type="radio" value="england">#}
+                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-1">#}
+                        {#10#}
+                        {#</label>#}
+                        {#</div>#}
+                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
+                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-2" name="where-do-you-live" type="radio" value="scotland">#}
+                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-2">#}
+                        {#25#}
+                        {#</label>#}
+                        {#</div>#}
+                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
+                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-3" name="where-do-you-live" type="radio" value="wales">#}
+                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-3">#}
+                        {#50#}
+                        {#</label>#}
+                        {#</div>#}
+                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
+                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-4" name="where-do-you-live" type="radio" value="northern-ireland">#}
+                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-4">#}
+                        {#View all#}
+                        {#</label>#}
+                        {#</div>#}
+                        {#</div>#}
+                        {#</fieldset>#}
+                        {#</div>#}
+
+
+
+
+
+                    </form>
+
+                </div>
+                <div class="govuk-grid-column-two-thirds">
+
+                    {% if pagination.totalResults > 1 %}
+                    <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} frameworks found</h2>
+                    {% else %}
+                    <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} frameworks found</h2>
+                    {% endif %}
+
+
+                    {# see https://studio24.github.io/frontend/templating/content-fields.html #}
+
+                    <ul class="govuk-list govuk-list--suppliers">
+                    {% for item in results %}
+                        <li>
+                            <h3 class="govuk-heading-m ccs-heading-link govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22"><a href="/frameworks/{{ item.content.rm_number }}">{{ item.content.title }}</a> <strong class="govuk-tag govuk-tag--subtle">{{ item.content.status }}</strong> </h3>
+                            <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                <li><strong>Framework ID:</strong> {{ item.content.rm_number }}</li>
+                                <li><strong>Start Date:</strong> {{ item.content.start_date.format('d/m/Y') }}</li>
+                                <li><strong>End Date:</strong> {{ item.content.end_date.format('d/m/Y') }}</li>
+                            </ul>
+                                    <p>{{ item.content.summary }}</p>
+                        </li>
+                    {% endfor %}
+                    </ul>
+
+
+                    {# Pagination #}
+
+                    {% if category is defined %}
+                        {{ include('includes/pagination.category.html.twig', {'pagination': pagination, 'route': 'frameworks_list_by_category', 'category': category}) }}
+                    {% else %}
+                        {{ include('includes/pagination.html.twig', {'pagination': pagination, 'route': 'frameworks_list'}) }}
+                    {% endif %}
+
+
+
+                </div>
+            </div>
+
+
+
+        </main>
+    </div>
+
+
+
+{% endblock %}
