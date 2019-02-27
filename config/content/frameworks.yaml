@@ -49,3 +49,5 @@ lots:
       type: date
 documents:
   type: text
+total_suppliers:
+  type: number
