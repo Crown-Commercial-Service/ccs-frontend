@@ -30,3 +30,22 @@ expected_live_date:
   type: date
 expected_award_date:
   type: date
+published_status:
+  type: text
+document_updates:
+  type: richtext
+lots:
+  type: array
+  content_fields:
+    lot_number:
+      type: text
+    title:
+      type: text
+    status:
+      type: text
+    description:
+      type: richtext
+    expiry_date:
+      type: date
+documents:
+  type: text

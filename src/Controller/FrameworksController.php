@@ -22,7 +22,7 @@ class FrameworksController extends AbstractController
     {
         $this->api = new RestData(
             getenv('APP_API_BASE_URL'),
-            new ContentModel(__DIR__ . '/../../config/packages/content/content-model.yaml')
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('frameworks');
         $this->api->setCache($cache);
