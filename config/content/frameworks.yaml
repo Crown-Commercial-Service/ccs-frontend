@@ -47,6 +47,27 @@ lots:
       type: richtext
     expiry_date:
       type: date
+    suppliers:
+      type: array
+      content_fields:
+        name:
+          type: text
+        duns_number:
+          type: text
+        phone_number:
+          type: text
+        street:
+          type: text
+        city:
+          type: text
+        country:
+          type: text
+        postcode:
+          type: text
+        website:
+          type: text
+        trading_name:
+          type: text
 documents:
   type: text
 total_suppliers:

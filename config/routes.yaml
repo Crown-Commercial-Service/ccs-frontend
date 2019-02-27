@@ -30,6 +30,14 @@ frameworks_show:
   path: /frameworks/{rmNumber}
   controller: App\Controller\FrameworksController::show
 
+frameworks_suppliers:
+  path: /frameworks/{rmNumber}/suppliers
+  controller: App\Controller\FrameworksController::suppliersOnFramework
+
+frameworks_lot_suppliers:
+  path: /frameworks/{rmNumber}:{lotNumber}/lot-suppliers
+  controller: App\Controller\FrameworksController::suppliersOnLot
+
 form_contact:
   path: /contact
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController

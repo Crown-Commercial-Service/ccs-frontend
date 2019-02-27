@@ -74,7 +74,7 @@ class FrameworksController extends AbstractController
             $this->redirectToRoute('frameworks_list');
         }
 
-        $results = $this->api->list($page, ['category' => urlencode($categoryName)]);
+        $results = $this->api->list($page, ['category' => $categoryName]);
         
         $data = [
             'category'      => $categoryName,
@@ -85,7 +85,6 @@ class FrameworksController extends AbstractController
         ];
         return $this->render('frameworks/list.html.twig', $data);
     }
-
 
     /**
      * Show one framework
@@ -106,6 +105,38 @@ class FrameworksController extends AbstractController
             'framework' => $results
         ];
         return $this->render('frameworks/show.html.twig', $data);
+    }
+
+    public function suppliersOnFramework(string $rmNumber)
+    {
+        $results = $this->api->getOne($rmNumber);
+        $data = [
+            'framework' => $results
+        ];
+        return $this->render('frameworks/framework-suppliers.html.twig', $data);
+    }
+
+    public function suppliersOnLot(string $rmNumber, string $lotNumber)
+    {
+        // @todo Create Lot API endpoint, grabbing data from framework for now
+        $results = $this->api->getOne($rmNumber);
+
+        $lots = $results->getContent()->get('lots');
+        $lot = false;
+        if (is_iterable($lots)) {
+            foreach ($lots as $item) {
+                if ($item['lot_number'] == $lotNumber) {
+                    $lot = $item;
+                }
+            }
+        }
+
+        $data = [
+            'framework' => $results,
+            'lot' => $lot
+        ];
+
+        return $this->render('frameworks/lot-suppliers.html.twig', $data);
     }
 
 }

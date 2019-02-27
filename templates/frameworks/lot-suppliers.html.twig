@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+   <h1>{{ lot.lot_number }}: {{ lot.title }}</h1>
+
+   <ul>
+   {% for supplier in lot.suppliers %}
+      <li>{{ supplier.name }}</li>
+   {% endfor %}
+   </ul>
+
+   <p><a href="{{ path('frameworks_show', {'rmNumber': framework.content.rm_number}) }}">{{ framework.content.title }}</a></p>
+
+{% endblock %}

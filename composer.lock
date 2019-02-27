@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "d9858430569b91859f96a5d12f795e5a",
@@ -475,12 +475,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/studio24/frontend.git",
-                "reference": "d77e06c6b81f7c0dd0a2bb4b105de32353abe81f"
+                "reference": "adf2e67c0f245d73cc56731ce74bfb603a54859b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studio24/frontend/zipball/d77e06c6b81f7c0dd0a2bb4b105de32353abe81f",
-                "reference": "d77e06c6b81f7c0dd0a2bb4b105de32353abe81f",
+                "url": "https://api.github.com/repos/studio24/frontend/zipball/adf2e67c0f245d73cc56731ce74bfb603a54859b",
+                "reference": "adf2e67c0f245d73cc56731ce74bfb603a54859b",
                 "shasum": ""
             },
             "require": {
@@ -519,7 +519,7 @@
                 }
             ],
             "description": "Framework to build an efficient front-end website with content from a Headless CMS or other data sources",
-            "time": "2019-02-27T08:57:50+00:00"
+            "time": "2019-02-27T23:04:11+00:00"
         },
         {
             "name": "symfony/apache-pack",
