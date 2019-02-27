@@ -1,0 +1,36 @@
+<nav class="page-numbers-container pagination-container" aria-label="Pagination">
+    {%  if not pagination.firstPage %}
+        <div class="previous">
+            <a href="{{ path(route, {'page': pagination.previous, 'category': category_slug}) }}" rel="previous">
+                Previous <span class="hidden-mobile">page</span>
+            </a>
+        </div>
+    {% endif %}
+    {%  if not pagination.lastPage %}
+        <div class="next">
+            <a href="{{ path(route, {'page': pagination.next, 'category': category_slug}) }}" rel="next">
+                Next <span class="hidden-mobile">page</span>
+            </a>
+        </div>
+    {% endif %}
+    {% set pageLinks = pagination.pageLinks(5) %}
+    <div class="pagination">
+        <ul class="list-inline">
+            {% if pagination.page > pagination.first and pageLinks[0] > 2 %}
+                <li><a href="{{ path(route, {'page': pagination.last, 'category': category_slug}) }}"><span class="visuallyhidden">Page </span>{{ pagination.first }}</a></li>
+                <li>…</li>
+            {% endif %}
+            {% for pageLink in pageLinks %}
+                {% if pageLink == pagination.page  %}
+                    <li class="active"><span class="visuallyhidden">Page </span>{{ pageLink }}</li>
+                {% else %}
+                    <li><a href="{{ path(route, {'page': pageLink, 'category': category_slug}) }}"><span class="visuallyhidden">Page </span>{{ pageLink }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if pagination.page < pagination.last and pageLinks[4] < (pagination.last - 1) %}
+                <li>…</li>
+                <li><a href="{{ path(route, {'page': pagination.last, 'category': category_slug}) }}"><span class="visuallyhidden">Page </span>{{ pagination.last }}</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
