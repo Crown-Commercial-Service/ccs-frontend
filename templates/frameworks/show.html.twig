@@ -42,12 +42,14 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
 
+                    {% if framework.content.status == 'Expired - Data Still Received' %}
                     <div class="govuk-warning-text">
                         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
                         <strong class="govuk-warning-text__text">
                             <span class="govuk-warning-text__assistive">Important</span>
-                            {{ framework.content.status }}</strong>
+                            Expired framework - This information is for reference only</strong>
                     </div>
+                    {% endif %}
 
                 </div>
             </div>
@@ -59,133 +61,130 @@
                     {#<h1 class="govuk-heading-xl page-title">Apleona HSG Ltd. {framework title} which span multiple lines&nbsp;<strong class="govuk-tag govuk-tag--subtle">Expired</strong></h1>#}
                     <h1 class="govuk-heading-xl page-title">{{ framework.content.title }}</h1>
 
-                    <p class="govuk-body-l">{framework summary}Networks and
-                        telecommunications services, including the Public
-                        Services Network and the Health and Social Care
-                        Network.</p>
+                    {#<p class="govuk-body-l">Networks and#}
+                        {#telecommunications services, including the Public#}
+                        {#Services Network and the Health and Social Care#}
+                        {#Network.</p>#}
 
 
                     {# see https://studio24.github.io/frontend/templating/content-fields.html #}
                     {# see https://studio24.github.io/frontend/templating/debugging.html #}
                     {#{{ dump(framework) }}#}
 
-                    <p>unallocated content on some frameworks</p>
-                    <ul>
-                        <li><code>tenders_open_date</code>: {{ framework.content.tenders_open_date }}</li>
-                        <li><code>tenders_close_date</code>: {{ framework.content.tenders_close_date }}</li>
-                        <li><code>expected_live_date</code>: {{ framework.content.expected_live_date }}</li>
-                        <li><code>expected_award_date</code>: {{ framework.content.expected_award_date }}</li>
-                    </ul>
+                    {#<p>unallocated content on some frameworks</p>#}
+                    {#<ul>#}
+                        {#<li><code>tenders_open_date</code>: {{ framework.content.tenders_open_date }}</li>#}
+                        {#<li><code>tenders_close_date</code>: {{ framework.content.tenders_close_date }}</li>#}
+                        {#<li><code>expected_live_date</code>: {{ framework.content.expected_live_date }}</li>#}
+                        {#<li><code>expected_award_date</code>: {{ framework.content.expected_award_date }}</li>#}
+                    {#</ul>#}
 
 
                     <div class="govuk-accordion" data-module="accordion" id="accordion-default">
 
-                        <div class="govuk-accordion__section ">
-                            <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading">
-        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
-          Updates (not MVP?)
-        </span>
-                                </h2>
-                            </div>
-                            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
 
 
-                                <details class="govuk-details">
-                                    <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      05/11/2018 - Conference
-    </span>
-                                    </summary>
-                                    <div class="govuk-details__text">
-                                        Come and meet the team and find out more
-                                        about this framework at our conference
-                                        in Liverpool on 15/10/2018. To register
-                                        for your place, please <a href="/link">sign
-                                            up here</a>.
-                                    </div>
-                                </details>
+                        {#<div class="govuk-accordion__section ">#}
+                            {#<div class="govuk-accordion__section-header">#}
+                                {#<h2 class="govuk-accordion__section-heading">#}
+        {#<span class="govuk-accordion__section-button" id="accordion-default-heading-1">#}
+          {#Updates#}
+        {#</span>#}
+                                {#</h2>#}
+                            {#</div>#}
+                            {#<div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">#}
 
-                                <details class="govuk-details">
-                                    <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      01/11/2018 - Event
-    </span>
-                                    </summary>
-                                    <div class="govuk-details__text">
-                                        Come and meet the team and find out more
-                                        about this framework at our conference
-                                        in Liverpool on 15/10/2018. To register
-                                        for your place, please <a href="/link">sign
-                                            up here</a>.
-                                    </div>
-                                </details>
+                                {#<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus est et ex harum hic laborum minima nam numquam, optio pariatur perferendis provident quisquam quo similique, ullam. Itaque placeat provident voluptas.</p>#}
+
+                                {#<details class="govuk-details">#}
+                                    {#<summary class="govuk-details__summary">#}
+    {#<span class="govuk-details__summary-text">#}
+      {#05/11/2018 - Conference#}
+    {#</span>#}
+                                    {#</summary>#}
+                                    {#<div class="govuk-details__text">#}
+                                        {#Come and meet the team and find out more#}
+                                        {#about this framework at our conference#}
+                                        {#in Liverpool on 15/10/2018. To register#}
+                                        {#for your place, please <a href="/link">sign#}
+                                            {#up here</a>.#}
+                                    {#</div>#}
+                                {#</details>#}
 
 
-                            </div>
-                        </div>
-                        <div class="govuk-accordion__section ">
-                            <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading">
-        <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
-          Description
-        </span>
-                                </h2>
-                            </div>
-                            <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">
-                                <p class='govuk-body'>This agreement covers
-                                    networks and telecommunications services,
-                                    for all public sector organisations. It is
-                                    compliant with the government's technology
-                                    strategy.</p>
+                            {#</div>#}
+                        {#</div>#}
 
-                                <p class='govuk-body'>The Health and Social Care
-                                    Network (HSCN) is the data network for
-                                    health and care organisations, replacing N3
-                                    and providing connectivity for the NHS and
-                                    wider health and social care providers. All
-                                    NHS organisations are required to procure
-                                    HSCN connectivity and can do this from HSCN
-                                    compliant suppliers through this
-                                    agreement.</p>
 
-                                <p class='govuk-body'> HSCN and CCS have
-                                    collaborated on a new national framework,
-                                    HSCN Access Services (RM3825), which is
-                                    dedicated to making HSCN connectivity
-                                    readily available from all HSCN-compliant
-                                    suppliers.</p>
 
-                                <p class='govuk-body'>If you need only
-                                    maintenance for technology products use the
-                                    Technology services 2 agreement (RM3804)
-                                    agreement, and to buy hardware use
-                                    Technology products 2 (RM3733).</p>
-                            </div>
-                        </div>
-                        <div class="govuk-accordion__section ">
-                            <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading">
-        <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
-          Benefits
-        </span>
-                                </h2>
-                            </div>
-                            <div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3">
-                                <ul class="govuk-list govuk-list--bullet">
-                                    <li>Flexible contract lengths</li>
-                                    <li>Migration path for legacy technology
-                                    </li>
-                                    <li>Savings from new and emerging
-                                        technologies
-                                    </li>
-                                    <li>Pre-defined and agreed contract terms
-                                        and conditions with some ability for
-                                        minor variations.
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        {#<div class="govuk-accordion__section ">#}
+                            {#<div class="govuk-accordion__section-header">#}
+                                {#<h2 class="govuk-accordion__section-heading">#}
+        {#<span class="govuk-accordion__section-button" id="accordion-default-heading-2">#}
+          {#Description#}
+        {#</span>#}
+                                {#</h2>#}
+                            {#</div>#}
+                            {#<div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">#}
+                                {#<p class='govuk-body'>This agreement covers#}
+                                    {#networks and telecommunications services,#}
+                                    {#for all public sector organisations. It is#}
+                                    {#compliant with the government's technology#}
+                                    {#strategy.</p>#}
+
+                                {#<p class='govuk-body'>The Health and Social Care#}
+                                    {#Network (HSCN) is the data network for#}
+                                    {#health and care organisations, replacing N3#}
+                                    {#and providing connectivity for the NHS and#}
+                                    {#wider health and social care providers. All#}
+                                    {#NHS organisations are required to procure#}
+                                    {#HSCN connectivity and can do this from HSCN#}
+                                    {#compliant suppliers through this#}
+                                    {#agreement.</p>#}
+
+                                {#<p class='govuk-body'> HSCN and CCS have#}
+                                    {#collaborated on a new national framework,#}
+                                    {#HSCN Access Services (RM3825), which is#}
+                                    {#dedicated to making HSCN connectivity#}
+                                    {#readily available from all HSCN-compliant#}
+                                    {#suppliers.</p>#}
+
+                                {#<p class='govuk-body'>If you need only#}
+                                    {#maintenance for technology products use the#}
+                                    {#Technology services 2 agreement (RM3804)#}
+                                    {#agreement, and to buy hardware use#}
+                                    {#Technology products 2 (RM3733).</p>#}
+                            {#</div>#}
+                        {#</div>#}
+
+
+
+                        {#<div class="govuk-accordion__section ">#}
+                            {#<div class="govuk-accordion__section-header">#}
+                                {#<h2 class="govuk-accordion__section-heading">#}
+        {#<span class="govuk-accordion__section-button" id="accordion-default-heading-3">#}
+          {#Benefits#}
+        {#</span>#}
+                                {#</h2>#}
+                            {#</div>#}
+                            {#<div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3">#}
+                                {#<ul class="govuk-list govuk-list--bullet">#}
+                                    {#<li>Flexible contract lengths</li>#}
+                                    {#<li>Migration path for legacy technology#}
+                                    {#</li>#}
+                                    {#<li>Savings from new and emerging#}
+                                        {#technologies#}
+                                    {#</li>#}
+                                    {#<li>Pre-defined and agreed contract terms#}
+                                        {#and conditions with some ability for#}
+                                        {#minor variations.#}
+                                    {#</li>#}
+                                {#</ul>#}
+                            {#</div>#}
+                        {#</div>#}
+
+
+
                         <div class="govuk-accordion__section ">
                             <div class="govuk-accordion__section-header">
                                 <h2 class="govuk-accordion__section-heading">
@@ -195,271 +194,161 @@
                                 </h2>
                             </div>
                             <div id="accordion-default-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4">
+
+
+                                {#{{ framework.content.lots|length }}#}
+
+                                {#<ul>#}
+                                    {#{% for lot in framework.content.lots|sort %}#}
+                                        {#<li>{{ loop.index }}:: {{ lot.lot_number }}:: {{ lot.status }}:: {{ lot.expiry_date }}</li>#}
+                                    {#{% endfor %}#}
+                                {#</ul>#}
+
                                 <p class="govuk-body">There are
-                                    <a href="8-suppliers-on-framework">36
+                                    <a href="/">{{ framework.content.total_suppliers }}
                                         suppliers</a> on this framework.</p>
 
 
                                 <dl class="apollo-list apollo-list--definition">
+                                    {% for lot in framework.content.lots|sort %}
                                     <dt class="apollo-list--definition__key">Lot
-                                        1: Data access services
+                                        {{ lot.lot_number }}: {{ lot.title }}
                                     </dt>
                                     <dd class="apollo-list--definition__value">
-                                        <p class="govuk-!-margin-bottom-2">
-                                            Ranged connectivity services:
-                                            site-to-site or site-to-cloud.
-                                            Includes terrestrial, wireless and
-                                            satellite solutions, network
-                                            security, equipment, support,
-                                            connectivity circuits, IP
-                                            connectivity, ISP and internet
-                                            services, broadband routing, home
-                                            and teleworker packages and online
-                                            storage.</p>
+                                        {% if lot.description %}
+                                        <div class="govuk-!-margin-bottom-2">{{ lot.description }}</div>
+                                        {% endif %}
                                         {#<p class>Expires:#}
-                                        {#<time>31/07/2019</time>#}
+                                        {#<time>{{ lot.expiry_date.format('Y/mm/dd') }}/time>#}
                                         {#</p>#}
-                                        <p><a href="6-suppliers-on-lot">26
-                                                suppliers</a></p>
+                                        {#<p><a href="6-suppliers-on-lot">26#}
+                                                {#suppliers</a></p>#}
                                     </dd>
-
-                                    <dt class="apollo-list--definition__key">Lot
-                                        2: Local connectivity services
-                                        {#<strong class="govuk-tag">Expired:#}
-                                        {#<time>26/06/2018</time>#}
-                                        {#</strong></dt>#}
-                                    <dd class="apollo-list--definition__value">
-                                        <p class="govuk-!-margin-bottom-2">
-                                            Ranged connectivity services:
-                                            site-to-site or site-to-cloud.
-                                            Includes terrestrial, wireless and
-                                            satellite solutions, network
-                                            security, equipment, support,
-                                            connectivity circuits, IP
-                                            connectivity, ISP and internet
-                                            services, broadband routing, home
-                                            and teleworker packages and online
-                                            storage.</p>
-                                        <p><a href="6-suppliers-on-lot">26
-                                                suppliers</a></p>
-                                    </dd>
-
-                                    <dt class="apollo-list--definition__key">Lot
-                                        3: Voice telephony services
-                                    </dt>
-                                    <dd class="apollo-list--definition__value">
-                                        <p class="govuk-!-margin-bottom-2">
-                                            Ranged connectivity services:
-                                            site-to-site or site-to-cloud.
-                                            Includes terrestrial, wireless and
-                                            satellite solutions, network
-                                            security, equipment, support,
-                                            connectivity circuits, IP
-                                            connectivity, ISP and internet
-                                            services, broadband routing, home
-                                            and teleworker packages and online
-                                            storage.</p>
-                                        {#<p class>Expires:#}
-                                        {#<time>31/07/2019</time>#}
-                                        {#</p>#}
-                                        <p><a href="6-suppliers-on-lot">26
-                                                suppliers</a></p>
-                                    </dd>
-
-                                    <dt class="apollo-list--definition__key">Lot
-                                        4: Inbound voice telephony services
-                                        {#<strong class="govuk-tag">Expired:#}
-                                        {#<time>26/06/2018</time>#}
-                                        {#</strong></dt>#}
-                                    <dd class="apollo-list--definition__value">
-                                        <p class="govuk-!-margin-bottom-2">
-                                            Ranged connectivity services:
-                                            site-to-site or site-to-cloud.
-                                            Includes terrestrial, wireless and
-                                            satellite solutions, network
-                                            security, equipment, support,
-                                            connectivity circuits, IP
-                                            connectivity, ISP and internet
-                                            services, broadband routing, home
-                                            and teleworker packages and online
-                                            storage.</p>
-                                        <p><a href="6-suppliers-on-lot">26
-                                                suppliers</a></p>
-                                    </dd>
-
-                                    <dt class="apollo-list--definition__key">Lot
-                                        5: IP telephony services
-                                    </dt>
-                                    <dd class="apollo-list--definition__value">
-                                        <p class="govuk-!-margin-bottom-2">
-                                            Ranged connectivity services:
-                                            site-to-site or site-to-cloud.
-                                            Includes terrestrial, wireless and
-                                            satellite solutions, network
-                                            security, equipment, support,
-                                            connectivity circuits, IP
-                                            connectivity, ISP and internet
-                                            services, broadband routing, home
-                                            and teleworker packages and online
-                                            storage.</p>
-                                        {#<p class>#}
-                                        {#<strong class="govuk-tag">Expires before#}
-                                        {#framework:#}
-                                        {#<time>26/06/2018</time>#}
-                                        {#</strong></p>#}
-                                        <p><a href="6-suppliers-on-lot">26
-                                                suppliers</a></p>
-                                    </dd>
-
-                                    <dt class="apollo-list--definition__key">Lot
-                                        6: Mobile voice and data services
-                                    </dt>
-                                    <dd class="apollo-list--definition__value">
-                                        <p class="govuk-!-margin-bottom-2">
-                                            Ranged connectivity services:
-                                            site-to-site or site-to-cloud.
-                                            Includes terrestrial, wireless and
-                                            satellite solutions, network
-                                            security, equipment, support,
-                                            connectivity circuits, IP
-                                            connectivity, ISP and internet
-                                            services, broadband routing, home
-                                            and teleworker packages and online
-                                            storage.</p>
-                                        <details class="govuk-details">
-                                            <summary class="govuk-details__summary">
-    <span class="govuk-details__summary-text">
-      05/11/2018 - Price increase
-    </span>
-                                            </summary>
-                                            <div class="govuk-details__text">
-                                                Some important information here.
-                                            </div>
-                                        </details>
-                                        {#<p class>Expires:#}
-                                        {#<time>31/07/2019</time>#}
-                                        {#</p>#}
-                                        <p><a href="6-suppliers-on-lot">26
-                                                suppliers</a></p>
-                                    </dd>
+                                    {% endfor %}
                                 </dl>
 
 
                             </div>
                         </div>
-                        <div class="govuk-accordion__section ">
-                            <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading">
-        <span class="govuk-accordion__section-button" id="accordion-default-heading-5">
-          How to buy
-        </span>
-                                </h2>
-                            </div>
-                            <div id="accordion-default-content-5" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-5">
-
-                                <p class="govuk-body">Read the
-                                    ‘<a href="sdgdfg">Buyer and Supplier
-                                        Guide</a>’. The guide explains the 3
-                                    ways to buy:</p>
-
-                                <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-                                    1. Catalogue (Lot 6)</h3>
-                                <p class="govuk-body">Designed for day to day
-                                    purchases of low value, low volume or high
-                                    urgency. <a href="dsgkdg">Sign up to The
-                                        Purchasing Platform</a>.
-                                </p>
-
-                                <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-                                    2. Further competitions</h3>
-                                <p class="govuk-body govuk-!-margin-bottom-0">
-                                    These may be run using CCS’s eSourcing tool,
-                                    or your own eSourcing method.
-                                </p>
-                                <ul class="govuk-list">
-                                    <li><a href="dzf">Register for CCS’s
-                                            eSourcing tool</a></li>
-                                    <li><a href="sdgf">Log in to CCS’s eSourcing
-                                            tool</a></li>
-                                    <li><a href="dxgjhx">Read the guidance for
-                                            CCs’s eSourcing tool</a></li>
-                                </ul>
-
-                                <h3 class="govuk-heading-s govuk-!-margin-bottom-1">
-                                    3. Large volume hardware requirements</h3>
-                                <p class="govuk-body">Lot 5 is for these kind of
-                                    purchases. You can also use our aggregation
-                                    team to join with another public sector
-                                    organisation that has common purchasing
-                                    needs. Read about <a href="dsg">Technology
-                                        Aggregation Opportunities</a>.
-                                </p>
-
-                            </div>
-                        </div>
-                        <div class="govuk-accordion__section ">
-                            <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading">
-        <span class="govuk-accordion__section-button" id="accordion-default-heading-6">
-          Documents
-        </span>
-                                </h2>
-                            </div>
-                            <div id="accordion-default-content-6" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-6">
-
-                                <h3 class="govuk-heading-s">Updates</h3>
-                                <p class="govuk-body">15/10/2018 - Further
-                                    Competition Template updated We now have a
-                                    new section that is particularly relevant
-                                    for long-term contracts.
-
-                                    25/04/2018 - Order form updated The new form
-                                    now includes a longer description field.
-                                </p>
 
 
-                                <h3 class="govuk-heading-s">Titles (this should be Documents instead)</h3>
-                                <ul class="govuk-list">
-                                    <li><a href="/links">Buyers Guide</a></li>
-                                    <li><a href="/links">Agreement Information
-                                            Leaflet</a></li>
-                                    <li><a href="/links">Further Competition
-                                            Template</a></li>
-                                    <li><a href="/links">Supplier Outcome Letter
-                                            Template - Successful Supplier</a>
-                                    </li>
-                                    <li><a href="/links">Supplier Outcome Letter
-                                            Template - Unsuccessful Supplier</a>
-                                    </li>
-                                    <li><a href="/links">Order Form</a></li>
-                                    <li><a href="/links">Call Off Contract
-                                            (T&C's)</a></li>
-                                    <li><a href="/links">Call Off Contract
-                                            (T&C's inc. GDPR)</a></li>
-                                    <li><a href="/links">Alternative and
-                                            additional Call Off Contract
-                                            provisions (T&C's)</a></li>
-                                    <li><a href="/links">Alternative and
-                                            additional Call Off Contract
-                                            provisions (T&C's)</a></li>
-                                    <li><a href="/links">Framework Agreement
-                                            (Generic)</a></li>
-                                    <li><a href="/links">Prior Information
-                                            Notice (PIN)</a></li>
-                                    <li><a href="/links">Contract Notice
-                                            (OJEU)</a></li>
-                                    <li><a href="/links">Contract Award
-                                            Notice</a></li>
-                                    <li><a href="/links">Supplier Contacts
-                                            v1.5</a></li>
-                                    <li><a href="/links">GDPR FAQ's March
-                                            2018</a></li>
-                                    <li><a href="/links">Supplier Matrix v1.8
-                                            Inclusive of GDPR</a></li>
-                                    <li><a href="/links">Call-Off Schedule 5
-                                            Schedule of Processing, Personal
-                                            Data and Data Subjects</a></li>
-                                </ul>
+
+                        {#<div class="govuk-accordion__section ">#}
+                            {#<div class="govuk-accordion__section-header">#}
+                                {#<h2 class="govuk-accordion__section-heading">#}
+        {#<span class="govuk-accordion__section-button" id="accordion-default-heading-5">#}
+          {#How to buy#}
+        {#</span>#}
+                                {#</h2>#}
+                            {#</div>#}
+                            {#<div id="accordion-default-content-5" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-5">#}
+
+                                {#<p class="govuk-body">Read the#}
+                                    {#‘<a href="sdgdfg">Buyer and Supplier#}
+                                        {#Guide</a>’. The guide explains the 3#}
+                                    {#ways to buy:</p>#}
+
+                                {#<h3 class="govuk-heading-s govuk-!-margin-bottom-1">#}
+                                    {#1. Catalogue (Lot 6)</h3>#}
+                                {#<p class="govuk-body">Designed for day to day#}
+                                    {#purchases of low value, low volume or high#}
+                                    {#urgency. <a href="dsgkdg">Sign up to The#}
+                                        {#Purchasing Platform</a>.#}
+                                {#</p>#}
+
+                                {#<h3 class="govuk-heading-s govuk-!-margin-bottom-1">#}
+                                    {#2. Further competitions</h3>#}
+                                {#<p class="govuk-body govuk-!-margin-bottom-0">#}
+                                    {#These may be run using CCS’s eSourcing tool,#}
+                                    {#or your own eSourcing method.#}
+                                {#</p>#}
+                                {#<ul class="govuk-list">#}
+                                    {#<li><a href="dzf">Register for CCS’s#}
+                                            {#eSourcing tool</a></li>#}
+                                    {#<li><a href="sdgf">Log in to CCS’s eSourcing#}
+                                            {#tool</a></li>#}
+                                    {#<li><a href="dxgjhx">Read the guidance for#}
+                                            {#CCs’s eSourcing tool</a></li>#}
+                                {#</ul>#}
+
+                                {#<h3 class="govuk-heading-s govuk-!-margin-bottom-1">#}
+                                    {#3. Large volume hardware requirements</h3>#}
+                                {#<p class="govuk-body">Lot 5 is for these kind of#}
+                                    {#purchases. You can also use our aggregation#}
+                                    {#team to join with another public sector#}
+                                    {#organisation that has common purchasing#}
+                                    {#needs. Read about <a href="dsg">Technology#}
+                                        {#Aggregation Opportunities</a>.#}
+                                {#</p>#}
+
+                            {#</div>#}
+                        {#</div>#}
+
+
+
+                        {#<div class="govuk-accordion__section ">#}
+                            {#<div class="govuk-accordion__section-header">#}
+                                {#<h2 class="govuk-accordion__section-heading">#}
+        {#<span class="govuk-accordion__section-button" id="accordion-default-heading-6">#}
+          {#Documents#}
+        {#</span>#}
+                                {#</h2>#}
+                            {#</div>#}
+                            {#<div id="accordion-default-content-6" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-6">#}
+
+                                {#<h3 class="govuk-heading-s">Updates</h3>#}
+                                {#<p class="govuk-body">15/10/2018 - Further#}
+                                    {#Competition Template updated We now have a#}
+                                    {#new section that is particularly relevant#}
+                                    {#for long-term contracts.#}
+
+                                    {#25/04/2018 - Order form updated The new form#}
+                                    {#now includes a longer description field.#}
+                                {#</p>#}
+
+
+                                {#<h3 class="govuk-heading-s">Titles (this should be Documents instead)</h3>#}
+                                {#<ul class="govuk-list">#}
+                                    {#<li><a href="/links">Buyers Guide</a></li>#}
+                                    {#<li><a href="/links">Agreement Information#}
+                                            {#Leaflet</a></li>#}
+                                    {#<li><a href="/links">Further Competition#}
+                                            {#Template</a></li>#}
+                                    {#<li><a href="/links">Supplier Outcome Letter#}
+                                            {#Template - Successful Supplier</a>#}
+                                    {#</li>#}
+                                    {#<li><a href="/links">Supplier Outcome Letter#}
+                                            {#Template - Unsuccessful Supplier</a>#}
+                                    {#</li>#}
+                                    {#<li><a href="/links">Order Form</a></li>#}
+                                    {#<li><a href="/links">Call Off Contract#}
+                                            {#(T&C's)</a></li>#}
+                                    {#<li><a href="/links">Call Off Contract#}
+                                            {#(T&C's inc. GDPR)</a></li>#}
+                                    {#<li><a href="/links">Alternative and#}
+                                            {#additional Call Off Contract#}
+                                            {#provisions (T&C's)</a></li>#}
+                                    {#<li><a href="/links">Alternative and#}
+                                            {#additional Call Off Contract#}
+                                            {#provisions (T&C's)</a></li>#}
+                                    {#<li><a href="/links">Framework Agreement#}
+                                            {#(Generic)</a></li>#}
+                                    {#<li><a href="/links">Prior Information#}
+                                            {#Notice (PIN)</a></li>#}
+                                    {#<li><a href="/links">Contract Notice#}
+                                            {#(OJEU)</a></li>#}
+                                    {#<li><a href="/links">Contract Award#}
+                                            {#Notice</a></li>#}
+                                    {#<li><a href="/links">Supplier Contacts#}
+                                            {#v1.5</a></li>#}
+                                    {#<li><a href="/links">GDPR FAQ's March#}
+                                            {#2018</a></li>#}
+                                    {#<li><a href="/links">Supplier Matrix v1.8#}
+                                            {#Inclusive of GDPR</a></li>#}
+                                    {#<li><a href="/links">Call-Off Schedule 5#}
+                                            {#Schedule of Processing, Personal#}
+                                            {#Data and Data Subjects</a></li>#}
+                                {#</ul>#}
 
 
                                 {#<table class="govuk-table">#}
@@ -487,188 +376,14 @@
                                 {#<a href="{url to source}">Buyers#}
                                 {#Guide</a></td>#}
                                 {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#16/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Agreement#}
-                                {#Information Leaflet</a></td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#01/11/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Further#}
-                                {#Competition Template</a></td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#16/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Supplier#}
-                                {#Outcome Letter Template - Successful#}
-                                {#Supplier</a></td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#16/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Supplier#}
-                                {#Outcome Letter Template -#}
-                                {#Unsuccessful Supplier</a></td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#25/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Order Form</a>#}
-                                {#</td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#16/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Call Off#}
-                                {#Contract (T&C's)</a></td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#16/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Call Off#}
-                                {#Contract (T&C's inc. GDPR)</a></td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#16/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Alternative#}
-                                {#and additional Call Off Contract#}
-                                {#provisions (T&C's)</a></td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#16/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Alternative#}
-                                {#and additional Call Off Contract#}
-                                {#provisions (T&C's)</a></td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#16/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Framework#}
-                                {#Agreement (Generic)</a></td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#09/10/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Prior#}
-                                {#Information Notice (PIN)</a></td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#16/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Contract#}
-                                {#Notice (OJEU)</a></td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#16/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Contract Award#}
-                                {#Notice</a></td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#16/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Supplier#}
-                                {#Contacts v1.5</a></td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#16/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">GDPR FAQ's#}
-                                {#March 2018</a></td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#16/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Supplier#}
-                                {#Matrix v1.8 Inclusive of GDPR</a>#}
-                                {#</td>#}
-                                {#</tr>#}
-                                {#<tr class="govuk-table__row">#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<time class="govuk-list--documents__datetime">#}
-                                {#16/08/2018#}
-                                {#</time>#}
-                                {#</td>#}
-                                {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                                {#<a href="{url to source}">Call-Off#}
-                                {#Schedule 5 Schedule of Processing,#}
-                                {#Personal Data and Data Subjects</a>#}
-                                {#</td>#}
-                                {#</tr>#}
                                 {#</tbody>#}
                                 {#</table>#}
 
-                            </div>
-                        </div>
+                            {#</div>#}
+
+
+
+                        {#</div>#}
 
                     </div>
 
@@ -703,10 +418,11 @@
                                     {{ framework.content.end_date.format('d/m/Y') }}
                                 </dd>
                                 <dt>Lots</dt>
-                                <dd class="apollo-list--definition__value">12 !
+                                <dd class="apollo-list--definition__value">
+                                    {{ framework.content.lots|length }}
                                 </dd>
                                 <dt>Suppliers</dt>
-                                <dd class="apollo-list--definition__value">36 !
+                                <dd class="apollo-list--definition__value">36!
                                 </dd>
                             </dl>
                         </div>
