@@ -49,12 +49,12 @@
 
     @include govuk-media-query($from: desktop) {
 
-        max-width: calc(33.33% - 46px);
+        //max-width: calc(33.33% - 46px);
 
         // negative child range (remove margin from first 3)
         &:nth-child(-n+3) {
 
-            margin-top: 0;
+            //margin-top: 0;
 
         }
 
