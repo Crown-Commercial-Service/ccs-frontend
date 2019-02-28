@@ -89,6 +89,40 @@ class FrameworksController extends AbstractController
     }
 
     /**
+     * List frameworks by category
+     *
+     * @param string $pillar
+     * @param int $page
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PaginationException
+     * @throws \Studio24\Frontend\Exception\PermissionException
+     */
+    public function listByPillar(string $pillar, int $page = 1)
+    {
+        // Map category slug to category db value
+        $pillarName = FrameworkCategories::getDbValueBySlug($pillar);
+        if ($pillarName === null) {
+            $this->redirectToRoute('frameworks_list');
+        }
+
+        $results = $this->api->list($page, ['pillar' => $pillarName]);
+
+        $data = [
+            'pillar'        => $pillarName,
+            'pillar_slug'   => $pillar,
+            'pagination'    => $results->getPagination(),
+            'results'       => $results,
+            'categories'    => FrameworkCategories::getAll(),
+            'pillars'       => FrameworkCategories::getAllPillars()
+        ];
+        return $this->render('frameworks/list.html.twig', $data);
+    }
+
+    /**
      * Show one framework
      *
      * @param string $rmNumber
