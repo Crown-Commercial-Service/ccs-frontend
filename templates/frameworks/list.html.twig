@@ -76,7 +76,7 @@
                             {% for pillar in pillars.pillars %}
                                 <li>
                                     {#{{ dump(pillar) }}#}
-                                    <a href="{{ path('frameworks_list_by_category', {'category': pillar.slug}) }}">{{ pillar.name }}</a>
+                                    <a href="{{ path('frameworks_list_by_pillar', {'pillar': pillar.slug}) }}">{{ pillar.name }}</a>
 
                                     <ul class="govuk-list">
                                         {% for category in pillar.categories %}
