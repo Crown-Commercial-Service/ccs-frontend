@@ -42,6 +42,18 @@ class FrameworkCategories
         return $data;
     }
 
+
+    /**
+     * Return array of pillars
+     *
+     * @return array
+     */
+    public static function getAllPillars(): array
+    {
+        return self::loadConfig();
+    }
+
+
     /**
      * Return array of categories for a pillar (category name => category URL slug)
      *

@@ -46,7 +46,8 @@ class FrameworksController extends AbstractController
         $data = [
             'pagination' => $results->getPagination(),
             'results'    => $results,
-            'categories' => FrameworkCategories::getAll()
+            'categories' => FrameworkCategories::getAll(),
+            'pillars'       => FrameworkCategories::getAllPillars()
         ];
         dump($results);
 
@@ -75,13 +76,14 @@ class FrameworksController extends AbstractController
         }
 
         $results = $this->api->list($page, ['category' => $categoryName]);
-        
+
         $data = [
             'category'      => $categoryName,
             'category_slug' => $category,
             'pagination'    => $results->getPagination(),
             'results'       => $results,
-            'categories'    => FrameworkCategories::getAll()
+            'categories'    => FrameworkCategories::getAll(),
+            'pillars'       => FrameworkCategories::getAllPillars()
         ];
         return $this->render('frameworks/list.html.twig', $data);
     }
