@@ -1,0 +1,86 @@
+/*------------------------------------*\
+  #Header
+\*------------------------------------*/
+
+.header-global {
+
+    background: $ccs-colour;
+    color: govuk-colour("white");
+
+}
+
+.header-global--news-details {
+
+    background: #404040;
+    color: govuk-colour("white");
+
+}
+
+.header-global a {
+
+    color: white;
+
+    &:hover,
+    &:active {
+
+        color: govuk-colour("grey-4");
+
+    }
+    &:focus {
+
+        color: $govuk-focus-text-colour;
+
+    }
+
+}
+
+.logo {
+
+    display: block;
+
+    max-width: govuk-px-to-rem(110);
+
+    &:hover {
+
+        opacity: 0.5;
+
+    }
+
+    img {
+        max-width: 100%;
+    }
+
+    @include govuk-media-query($from: desktop) {
+
+        max-width: govuk-px-to-rem(140);
+
+    }
+
+}
+
+.header-global .logo {
+
+    padding-left: 15px;
+    padding-top: govuk-px-to-rem(20);
+
+    @include govuk-media-query($from: 641) {
+
+        padding-left: 30px;
+
+    }
+
+    @include govuk-media-query($from: desktop) {
+
+        padding-top: 0;
+        padding-left: 0;
+        margin-right: auto;
+
+    }
+
+}
+
+.footer-global .logo {
+
+    margin-bottom: govuk-px-to-rem(40);
+
+}

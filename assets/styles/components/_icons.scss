@@ -1,0 +1,28 @@
+/*------------------------------------*\
+  #Icons
+\*------------------------------------*/
+
+.icon {
+
+    margin-top: 0;
+
+    display: inline-block;
+
+    width: 1em;
+    height: 1em;
+
+    fill: currentColor;
+
+    position: relative;
+    // this is the remaining half-leading (x) of the default body copy (size: 16, line-height: 20)
+    // (line-height - font-size)/2 = x
+    top: 0.125em;
+    
+}
+
+.icon + span:not(.visuallyhidden),
+span:not(.visuallyhidden) + .icon {
+
+    margin-left: 0.5rem;
+
+}

@@ -1,0 +1,12 @@
+---
+default:
+  extensions:
+    Behat\MinkExtension:
+      base_url: 'http://127.0.0.1:8000'
+      sessions:
+        default:
+          goutte: ~
+  suites:
+    my_suite:
+      contexts:
+        - Behat\MinkExtension\Context\MinkContext

@@ -1,0 +1,87 @@
+---
+pillars:
+  - name: 'Buildings'
+    db_value: 'Buildings'
+    slug: 'buildings'
+
+    categories:
+      - name: 'Construction'
+        db_value: 'Construction'
+        slug: 'construction'
+
+      - name: 'Utilities & Fuels'
+        db_value: 'Utilities & Fuels'
+        slug: 'utilities-fuels'
+
+      - name: 'Workplace'
+        db_value: 'Workplace'
+        slug: 'workplace'
+
+
+  - name: 'Corporate Services'
+    db_value: 'Corporate Services'
+    slug: 'corporate-services'
+
+    categories:
+      - name: 'Contact Centres'
+        db_value: 'Contact Centres'
+        slug: 'contact-centres'
+
+      - name: 'Document Management & Logistics'
+        db_value: 'Document Management & Logistics'
+        slug: 'document-management-logistics'
+
+      - name: 'Financial Services'
+        db_value: 'Financial Services'
+        slug: 'financial-services'
+
+      - name: 'Fleet'
+        db_value: 'Fleet'
+        slug: 'fleet'
+
+      - name: 'Marcomms & Research'
+        db_value: 'Marcomms & Research'
+        slug: 'marcomms-research'
+
+      - name: 'Travel'
+        db_value: 'Travel'
+        slug: 'travel'
+
+  - name: 'People'
+    db_value: 'People'
+    slug: 'people'
+
+    categories:
+      - name: 'People Services'
+        db_value: 'People Services'
+        slug: 'people-services'
+
+      - name: 'Professional Services'
+        db_value: 'Professional Services'
+        slug: 'professional-services'
+
+      - name: 'Workforce'
+        db_value: 'Workforce'
+        slug: 'workforce'
+
+
+  - name: 'Technology'
+    db_value: 'Technology'
+    slug: 'technology'
+
+    categories:
+      - name: 'Digital Future'
+        db_value: 'Digital Future'
+        slug: 'digital-future'
+
+      - name: 'Network Services'
+        db_value: 'Network Services'
+        slug: 'network-services'
+
+      - name: 'Software'
+        db_value: 'Software'
+        slug: 'software'
+
+      - name: 'Technology Products & Services'
+        db_value: 'Technology Products & Services'
+        slug: 'technology-products-services'

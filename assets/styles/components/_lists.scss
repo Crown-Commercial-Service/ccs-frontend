@@ -1,0 +1,161 @@
+/*------------------------------------*\
+  #Lists
+\*------------------------------------*/
+
+.list--inline {
+
+    list-style-type: none;
+    padding-left: 0;
+
+    li {
+
+        display: inline-block;
+        margin-right: 0.5em;
+
+    }
+
+}
+
+.govuk-list .govuk-list {
+
+    margin-left: 20px;
+
+}
+
+.footer-global .govuk-list li {
+
+    margin-bottom: govuk-px-to-rem(2);
+
+}
+
+.govuk-list--definition {
+
+    dt {
+
+        display: inline-block;
+        font-weight: 600;
+        width: 50%;
+
+        &:after {
+            content: ":";
+        }
+
+    }
+
+    dd {
+
+        display: inline-block;
+        margin: 0;
+        width: 45%;
+
+        &:before {
+
+            clear: both;
+            content: " ";
+            display: block;
+
+        }
+
+    }
+
+}
+
+.apollo-list--definition {
+
+    @include govuk-font(19, $weight: regular);
+
+    dd {
+
+        margin-left: govuk-px-to-rem(25);
+
+    }
+
+}
+
+.apollo-list--definition__key {
+
+    font-weight: 600;
+    margin-bottom: govuk-px-to-rem(10);
+
+}
+
+.apollo-list--definition__value + .apollo-list--definition__key {
+
+    margin-top: govuk-px-to-rem(40);
+
+}
+
+// Suppliers details template
+.apollo-enclosure--framework-lots .govuk-summary-list {
+
+    margin-bottom: govuk-px-to-rem(30-16-10);
+
+}
+
+// Used to display lists of documents
+.govuk-list--suppliers {
+
+    > li + li {
+
+        border-top: govuk-px-to-rem(1) solid $ccs-border-colour;
+        padding-top: govuk-px-to-rem(20);
+
+    }
+
+}
+
+.govuk-list--checkmark {
+
+    list-style: none;
+    padding-left: 20px;
+
+    li {
+
+        position: relative;
+
+    }
+
+    li:before {
+
+        background-image: url(../svg/icon-checkmark.svg);
+        background-size: 19px 15px;
+        content: " ";
+        display: block;
+        height: govuk-px-to-rem(15);
+        left: govuk-px-to-rem(- 30);
+        position: absolute;
+
+        top: govuk-px-to-rem(2);
+        width: govuk-px-to-rem(19);
+
+    }
+
+}
+
+.govuk-list--cross {
+
+    list-style: none;
+    padding-left: 20px;
+
+    li {
+
+        position: relative;
+
+    }
+
+    li:before {
+
+        background-image: url(../svg/icon-cross.svg);
+        background-size: 14px 14px;
+        content: " ";
+        display: block;
+        height: govuk-px-to-rem(14);
+        left: govuk-px-to-rem(- 30);
+        position: absolute;
+
+        top: govuk-px-to-rem(4);
+        width: govuk-px-to-rem(14);
+
+    }
+
+}

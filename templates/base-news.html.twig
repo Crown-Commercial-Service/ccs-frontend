@@ -1,0 +1,50 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>{% block title %}CCS{% endblock %}</title>
+
+    <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
+    {% block header %}
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% endblock %}
+
+    <link rel="stylesheet" href=/assets/styles/styles.css?v=1.0.0">
+
+    {% block blocking_javascript %}
+
+    {% endblock %}
+</head>
+
+<body class="govuk-template__body">
+<script>document.querySelector('body').classList.add('js-enabled');</script>
+
+<a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+
+{{ include('/includes/header-news.html.twig') }}
+
+{% block body %}{% endblock %}
+
+{{ include('/includes/footer.html.twig') }}
+
+{% block nonblocking_javascript %}
+    <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+    <script>
+        window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+        ga('create', 'UA-XXXXX-Y', 'auto'); ga('send', 'pageview')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+{% endblock %}
+
+</body>
+
+<script src="/assets/scripts/libraries/jquery-1.11.3.js"></script>
+<script src="/assets/scripts/all.js"></script>
+<script src="/assets/scripts/app.js"></script>
+
+</html>
