@@ -1,0 +1,16 @@
+/*------------------------------------*\
+  #Address
+\*------------------------------------*/
+
+address {
+
+    font-style: normal;
+
+}
+
+// make <span>s take up their own lines
+address span {
+
+    display: block;
+
+}

@@ -1,0 +1,36 @@
+/*------------------------------------*\
+  #Aside
+\*------------------------------------*/
+.aside {
+
+    @include govuk-font(16, $weight: regular);
+
+    .govuk-list,
+    .govuk-body {
+
+        font: inherit;
+
+    }
+
+}
+
+.aside__heading {
+
+    margin-top: 0;
+    margin-bottom: govuk-px-to-rem(10);
+    @include govuk-font(24, $weight: bold);
+
+}
+
+.aside .govuk-list--definition {
+
+    //margin-bottom: 0;
+
+}
+
+.aside dl:last-of-type,
+.aside p:last-of-type {
+
+    margin-bottom: 0;
+
+}

@@ -1,0 +1,42 @@
+/*------------------------------------*\
+  #Pagination
+\*------------------------------------*/
+
+/*
+ ul
+ */
+.pagination {
+
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+
+    margin-top: govuk-px-to-rem(40);
+    padding-top: govuk-px-to-rem(30);
+    border-top: solid govuk-px-to-rem(1) $ccs-border-colour;
+
+}
+
+// Make the active page and the ellipsis more subtle
+.pagination__item {
+
+    color: #6F777B;
+
+}
+
+.pagination__item a {
+
+    text-decoration: none;
+
+}
+
+.pagination__item--previous.pagination__item--previous {
+
+    margin-right: auto;
+
+}
+.pagination__item--next.pagination__item--next {
+
+    margin-left: auto;
+
+}

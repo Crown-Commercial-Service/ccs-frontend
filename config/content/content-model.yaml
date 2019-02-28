@@ -1,0 +1,4 @@
+content_types:
+  frameworks:
+    api_endpoint: ccs/v1/frameworks
+    content_fields: frameworks.yaml

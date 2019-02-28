@@ -1,0 +1,291 @@
+// global styles for <a> and <p> tags which otherwise won't have styles without classes
+$govuk-global-styles: true;
+
+
+/**
+ * See https://design-system.service.gov.uk/ for variables we can override
+ * If you can't find them in the Design System you might have to look the
+ * `node_modules/settings` folder.
+ * Please note; You need to define the variables before importing GOV.UK Frontend
+ */
+//$govuk-link-colour: red;
+
+$govuk-font-family: "Source Sans Pro", "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
+$govuk-font-family-tabular: "Source Sans Pro", "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
+
+
+// Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+// Named colours
+$blue-lagoon: #007E8A;
+
+// Variabelised colours (reference these in Sass partials)
+$ccs-colour: #9B1A47;
+$ccs-footer-colour: #2F2F2F;
+$ccs-text-colour: #0B0C0C;
+
+$ccs-button-colour: $blue-lagoon;
+$ccs-button-hover-colour: #006770;
+
+$ccs-border-colour: #E1E1E1;
+
+$ccs-subtle-colour: #F6F6F6;
+
+
+// change default 700 to 600 (semibold)
+$govuk-font-weight-bold: 600;
+
+$govuk-typography-scale: (
+    80: (
+        null: (
+            font-size: 53px,
+            line-height: 55px
+        ),
+        tablet: (
+            font-size: 80px,
+            line-height: 80px
+        ),
+        print: (
+            font-size: 53pt,
+            line-height: 1.1
+        )
+    ),
+    56: (
+        null: (
+            font-size: 45px,
+            line-height: 50px
+        ),
+        tablet: (
+            font-size: 56px,
+            line-height: 60px
+        ),
+        print: (
+            font-size: 45pt,
+            line-height: 1.1
+        )
+    ),
+    48: (
+        null: (
+            font-size: 32px,
+            line-height: 35px
+        ),
+        tablet: (
+            font-size: 48px,
+            line-height: 50px
+        ),
+        print: (
+            font-size: 32pt,
+            line-height: 1.15
+        )
+    ),
+    36: (
+        null: (
+            font-size: 24px,
+            line-height: 25px
+        ),
+        tablet: (
+            font-size: 36px,
+            line-height: 40px
+        ),
+        print: (
+            font-size: 24pt,
+            line-height: 1.05
+        )
+    ),
+    27: (
+        null: (
+            font-size: 18px,
+            line-height: 20px
+        ),
+        tablet: (
+            font-size: 27px,
+            line-height: 30px
+        ),
+        print: (
+            font-size: 18pt,
+            line-height: 1.15
+        )
+    ),
+    24: (
+        null: (
+            font-size: 18px,
+            line-height: 20px
+        ),
+        tablet: (
+            font-size: 24px,
+            line-height: 30px
+        ),
+        print: (
+            font-size: 18pt,
+            line-height: 1.15
+        )
+    ),
+    22: (
+        null: (
+            font-size: 20px,
+            line-height: 22px
+        ),
+        tablet: (
+            font-size: 22px,
+            line-height: 24px
+        ),
+        print: (
+            font-size: 20pt,
+            line-height: 1.1
+        )
+    ),
+    20: (
+        null: (
+            font-size: 20px,
+            line-height: 21px
+        ),
+        tablet: (
+            font-size: 20px,
+            line-height: 21px
+        ),
+        print: (
+            font-size: 20pt,
+            line-height: 1.05
+        )
+    ),
+    19: (
+        null: (
+            font-size: 16px,
+            line-height: 20px
+        ),
+        tablet: (
+            font-size: 19px,
+            line-height: 25px
+        ),
+        print: (
+            font-size: 14pt,
+            line-height: 1.15
+        )
+    ),
+    18: (
+        null: (
+            font-size: 18px,
+            line-height: 23px
+        ),
+        tablet: (
+            font-size: 18px,
+            line-height: 23px
+        ),
+        print: (
+            font-size: 18pt,
+            line-height: 1.2
+        )
+    ),
+    17featured: (
+        null: (
+            font-size: 17px,
+            line-height: 24px
+        ),
+        tablet: (
+            font-size: 17px,
+            line-height: 24px
+        ),
+        print: (
+            font-size: 17pt,
+            line-height: 1.4
+        )
+    ),
+    17search: (
+        null: (
+            font-size: 17px,
+            line-height: 17px
+        ),
+        tablet: (
+            font-size: 17px,
+            line-height: 17px
+        ),
+        print: (
+            font-size: 17pt,
+            line-height: 1
+        )
+    ),
+    16: (
+        null: (
+            font-size: 14px,
+            line-height: 16px
+        ),
+        tablet: (
+            font-size: 16px,
+            line-height: 20px
+        ),
+        print: (
+            font-size: 14pt,
+            line-height: 1.2
+        )
+    ),
+    15: (
+        null: (
+            font-size: 15px,
+            line-height: 19px
+        ),
+        tablet: (
+            font-size: 15px,
+            line-height: 19px
+        ),
+        print: (
+            font-size: 15pt,
+            line-height: 1.2
+        )
+    ),
+    14: (
+        null: (
+            font-size: 12px,
+            line-height: 15px
+        ),
+        tablet: (
+            font-size: 14px,
+            line-height: 20px
+        ),
+        print: (
+            font-size: 12pt,
+            line-height: 1.2
+        )
+    )
+);
+
+$govuk-spacing-responsive-scale: (
+    0: (
+        null: 0,
+        tablet: 0
+    ),
+    1: (
+        null: 5px,
+        tablet: 5px
+    ),
+    2: (
+        null: 10px,
+        tablet: 10px
+    ),
+    3: (
+        null: 15px,
+        tablet: 15px
+    ),
+    4: (
+        null: 15px,
+        tablet: 20px
+    ),
+    5: (
+        null: 15px,
+        tablet: 25px
+    ),
+    6: (
+        null: 20px,
+        tablet: 30px
+    ),
+    7: (
+        null: 25px,
+        tablet: 40px
+    ),
+    8: (
+        null: 30px,
+        tablet: 50px
+    ),
+    9: (
+        null: 40px,
+        tablet: 60px
+    )
+);

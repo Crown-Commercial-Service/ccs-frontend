@@ -1,0 +1,50 @@
+/**
+ * See https://design-system.service.gov.uk/ for variables we can override
+ * Only CCS overrides are available in the `styles` folder. All other styles
+ * are imported
+ *
+ * Please note; You need to define the variables before importing GOV.UK Frontend
+ */
+@import "settings";
+
+// Import GOV.UK Frontend
+@import "node_modules/govuk-frontend/all";
+
+
+
+@import "typography/font-face";
+@import "typography/typography";
+
+@import "tools/mixins";
+
+@import "components/header";
+@import "components/footer";
+
+@import "forms/buttons";
+@import "forms/checkboxes";
+@import "forms/radios";
+
+@import "components/accordion";
+@import "components/address";
+@import "components/aside";
+@import "components/breadcrumbs";
+@import "components/call-to-action";
+@import "components/card";
+@import "components/enclosure";
+@import "components/headings";
+@import "components/icons";
+@import "components/images";
+@import "components/links";
+@import "components/lists";
+@import "components/navigation";
+@import "components/pagination";
+@import "components/phase-banner";
+@import "components/print";
+@import "components/tables";
+@import "components/tags";
+@import "components/warning-text";
+@import "components/wysiwyg";
+
+@import "pages/homepage";
+@import "pages/news";
+@import "pages/how-to-buy";

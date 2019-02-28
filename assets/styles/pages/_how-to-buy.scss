@@ -1,0 +1,64 @@
+/*------------------------------------*\
+  #How to buy
+\*------------------------------------*/
+.how-to-buy-list {
+
+    // There is no global default on classless elements
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row wrap;
+    list-style: none;
+    // adjust to account for half-leading of `Frameworks` heading (will visually align ascender of text to top of list items
+    margin-top: 3px;
+    padding: 0;
+
+    @include govuk-media-query($from: tablet) {
+
+        margin-left: -22px;
+        margin-right: -22px;
+        //margin-top: 0;
+
+    }
+
+}
+
+
+.how-to-buy-list__item {
+
+    // There is no global default on classless elements
+    box-sizing: inherit;
+    flex: 1 0 auto;
+    margin-top: 34px;
+    max-width: 100%;
+    width: 100%;
+
+    @include govuk-media-query($from: tablet) {
+
+        margin-left: 22px;
+        margin-right: 22px;
+        max-width: calc(50% - 46px);
+
+        // negative child range (remove margin from first 3)
+        &:nth-child(-n+2) {
+
+            margin-top: 0;
+
+        }
+
+    }
+
+    @include govuk-media-query($from: desktop) {
+
+        //max-width: calc(33.33% - 46px);
+
+        // negative child range (remove margin from first 3)
+        &:nth-child(-n+3) {
+
+            //margin-top: 0;
+
+        }
+
+    }
+
+
+}
