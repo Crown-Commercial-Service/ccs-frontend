@@ -7,6 +7,11 @@ picture {
     display: block;
     width: 100%;
 
+    // make links in picture elements render around the child image
+    a {
+        display: block;
+    }
+
 }
 
 img {
@@ -28,7 +33,7 @@ img {
 
     @extend .govuk-body;
 
-    margin-top: 20px;
+    margin-top: 5px;
 
 }
 

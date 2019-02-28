@@ -147,6 +147,16 @@
 
 }
 
+.news-listing__item__image-link {
+
+    &:hover {
+
+        opacity: 0.5;
+
+    }
+
+}
+
 .news-listing--compact .news-listing__item__caption {
 
     padding: 15px 10px 15px 15px;
@@ -170,6 +180,12 @@
 
     @include govuk-font(22, $weight: bold);
     margin: 10px 0;
+
+    a {
+
+        text-decoration: none;
+
+    }
 
 }
 

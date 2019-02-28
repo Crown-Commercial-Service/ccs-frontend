@@ -54,48 +54,31 @@
           <p class="govuk-body-l govuk-!-font-weight-bold">{{ framework.content.total_suppliers }} suppliers on this framework.</p>
 
 
-          {#{{ dump(framework.content) }}#}
+            {#{{ dump(framework.content) }}#}
 
-          {#{% for supplier in framework.content.lots %}#}
-              {#{{ dump(supplier) }}#}
-          {#{% endfor %}#}
 
-          {#<ul class="govuk-list govuk-list--suppliers">#}
-            {#<li>#}
-              {#<h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22"><a href="4-5-7-9-10-framework-details">Apleona HSG Ltd.</a></h3>#}
-              {#<ul class="govuk-list govuk-!-font-size-17featured">#}
-                {#<li>Network services name of (RM12344)</li>#}
-                {#<li>Network services name of (RM12344)</li>#}
-                {#<li>Network services name of (RM12344)</li>#}
-              {#</ul>#}
-            {#</li>#}
-            {#<li>#}
-              {#<h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22"><a href="1234r5t6">Arcanum Information Security Ltd</a></h3>#}
-              {#<ul class="govuk-list govuk-!-font-size-17featured">#}
-                {#<li>Network services name of (RM12344)</li>#}
-              {#</ul>#}
-            {#</li>#}
-            {#<li>#}
-              {#<h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22"><a href="4-5-7-9-10-framework-details">Apollo Energy Ltd</a></h3>#}
-              {#<ul class="govuk-list govuk-!-font-size-17featured">#}
-                {#<li>Network services name of (RM12344)</li>#}
-                {#<li>Network services name of (RM12344)</li>#}
-                {#<li>Network services name of (RM12344)</li>#}
-                {#<li>Network services name of (RM12344)</li>#}
-                {#<li>Network services name of (RM12344)</li>#}
-                {#<li>Network services name of (RM12344)</li>#}
-              {#</ul>#}
-            {#</li>#}
-            {#<li>#}
-              {#<h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22"><a href="4-5-7-9-10-framework-details">APD Communications Ltd</a></h3>#}
-              {#<ul class="govuk-list govuk-!-font-size-17featured">#}
-                {#<li>Network services name of (RM12344)</li>#}
-                {#<li>Network services name of (RM12344)</li>#}
-                {#<li>Network services name of (RM12344)</li>#}
-              {#</ul>#}
-            {#</li>#}
-          {#</ul>#}
 
+
+          <ul class="govuk-list govuk-list--suppliers">
+          {% for lot in framework.content.lots %}
+              {#{{ dump(lot) }}#}
+
+              {% for supplier in lot.suppliers %}
+
+                <li>
+                  <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22"><a href="#">{{ supplier.name }}</a></h3>
+                  <ul class="govuk-list govuk-!-font-size-17featured">
+                    List of Frameworks where this supplier appears
+                    {#<li>Network services name of (RM12344)</li>#}
+                    {#<li>Network services name of (RM12344)</li>#}
+                    {#<li>Network services name of (RM12344)</li>#}
+                  </ul>
+                </li>
+
+              {% endfor %}
+
+          {% endfor %}
+          </ul>
 
 
           <ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination">
