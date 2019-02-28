@@ -26,6 +26,14 @@ frameworks_list_by_category:
   defaults:
     page: 1
 
+frameworks_list_by_pillar:
+  path: /frameworks/pillar/{pillar}/{page}
+  controller: App\Controller\FrameworksController::listByPillar
+  requirements:
+    page: '\d+'
+  defaults:
+    page: 1
+
 frameworks_show:
   path: /frameworks/{rmNumber}
   controller: App\Controller\FrameworksController::show
