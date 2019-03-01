@@ -45,6 +45,9 @@
                     {% if category is defined %}
                         <h1 class="govuk-heading-xl page-title">Frameworks in
                             the {{ category }} category</h1>
+                    {% elseif pillar is defined %}
+                        <h1 class="govuk-heading-xl page-title">Frameworks in
+                            the {{ pillar }} category</h1>
                     {% else %}
                         <h1 class="govuk-heading-xl page-title">Search
                             frameworks</h1>
@@ -184,7 +187,7 @@
 
                     {# see https://studio24.github.io/frontend/templating/content-fields.html #}
 
-                    <ul class="govuk-list govuk-list--suppliers">
+                    <ul class="govuk-list govuk-list--frameworks">
                         {% for item in results %}
                             <li>
                                 <h3 class="govuk-heading-m ccs-heading-link govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22">
