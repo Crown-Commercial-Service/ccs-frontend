@@ -32,7 +32,7 @@
 
     }
 
-    @include govuk-media-query($from: desktop) {
+    @include govuk-media-query($from: 960+60) {
 
         padding-left: 0;
         padding-right: 0;
