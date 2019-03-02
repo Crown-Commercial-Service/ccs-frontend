@@ -1,0 +1,11 @@
+supplier_name:
+  type: text
+supplier_id:
+  type: number
+live_frameworks:
+  type: array
+  content_fields:
+    title:
+      type: text
+    rm_number:
+      type: text

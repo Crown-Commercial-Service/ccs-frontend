@@ -39,12 +39,28 @@ frameworks_show:
   controller: App\Controller\FrameworksController::show
 
 frameworks_suppliers:
-  path: /frameworks/{rmNumber}/suppliers
+  path: /frameworks/{rmNumber}/suppliers/{page}
   controller: App\Controller\FrameworksController::suppliersOnFramework
+  requirements:
+    page: '\d+'
+  defaults:
+    page: 1
 
 frameworks_lot_suppliers:
   path: /frameworks/{rmNumber}:{lotNumber}/lot-suppliers
   controller: App\Controller\FrameworksController::suppliersOnLot
+
+news_list:
+  path: "/news/{page}"
+  controller: App\Controller\NewsController::list
+  defaults:
+    page: 1
+  requirements:
+    page: '\d+'
+
+news_page:
+  path: "/news/{slug}"
+  controller: App\Controller\NewsController::show
 
 form_contact:
   path: /contact

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>News and Views</h1>
+
+    <p>Displaying {{ pages.pagination.totalResults|number_format }} results, Page {{ pages.pagination.page }} of {{ pages.pagination.totalPages }}</p>
+
+    {% for page in pages %}
+
+        <p>
+            <img src="{{ page.content.image.byName('medium') }}" alt="{{ page.content.image.alt }}" />
+            <a href="{{ url('news_page', {'slug': page.urlSlug}) }}">{{ page.title }}</a>
+            {{ page.datePublished.format('d.m.Y') }}
+        </p>
+
+    {% endfor %}
+
+    {{ include('includes/pagination.html.twig', {'pagination': pages.pagination, 'route': 'news_list'}) }}
+
+{% endblock %}

@@ -28,7 +28,7 @@
           <a class="govuk-breadcrumbs__link" href="/frameworks">Search frameworks</a>
         </li>
         <li class="govuk-breadcrumbs__list-item">
-          <a class="govuk-breadcrumbs__link" href="#">{{ framework.content.title }}</a>
+          <a class="govuk-breadcrumbs__link" href="#">{# metadata.framework_title #}</a>
         </li>
         <li class="govuk-breadcrumbs__list-item" aria-current="page">
           Suppliers on framework
@@ -49,37 +49,33 @@
         <div class="govuk-grid-column-two-thirds">
 
 
-          <h1 class="govuk-heading-xl page-title">{{ framework.content.title }}</h1>
+          <h1 class="govuk-heading-xl page-title">{{ metadata.framework_title }}</h1>
 
-          <p class="govuk-body-l govuk-!-font-weight-bold">{{ framework.content.total_suppliers }} suppliers on this framework.</p>
+          {{ dump(metadata) }}
+          {{ dump(results) }}
 
-
-            {#{{ dump(framework.content) }}#}
-
-
-
+          <p class="govuk-body-l govuk-!-font-weight-bold">{{ pagination.totalResults }} suppliers on this framework.</p>
 
           <ul class="govuk-list govuk-list--suppliers">
-          {% for lot in framework.content.lots %}
-              {#{{ dump(lot) }}#}
 
-              {% for supplier in lot.suppliers %}
+            {% for item in results %}
 
-                <li>
-                  <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22"><a href="#">{{ supplier.name }}</a></h3>
-                  <ul class="govuk-list govuk-!-font-size-17featured">
-                    List of Frameworks where this supplier appears
-                    {#<li>Network services name of (RM12344)</li>#}
-                    {#<li>Network services name of (RM12344)</li>#}
-                    {#<li>Network services name of (RM12344)</li>#}
-                  </ul>
-                </li>
+              <li>
+                <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22"><a href="#">{{ item.content.supplier_name }}</a></h3>
+                <ul class="govuk-list govuk-!-font-size-17featured">
 
-              {% endfor %}
+                  {% for framework in item.content.live_frameworks %}
+                    <li>{{ framework.title }} ({{ framework.rm_number }})</li>
+                  {% endfor %}
 
-          {% endfor %}
+                </ul>
+              </li>
+
+            {% endfor %}
+
           </ul>
 
+          TODO: Update pagination
 
           <ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination">
             <li class="pagination__item pagination__item--previous">
