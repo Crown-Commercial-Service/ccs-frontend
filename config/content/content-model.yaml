@@ -2,3 +2,6 @@ content_types:
   frameworks:
     api_endpoint: ccs/v1/frameworks
     content_fields: frameworks.yaml
+  framework_suppliers:
+    api_endpoint: ccs/v1/framework-suppliers
+    content_fields: framework-suppliers.yaml

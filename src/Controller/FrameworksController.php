@@ -143,11 +143,32 @@ class FrameworksController extends AbstractController
         return $this->render('frameworks/show.html.twig', $data);
     }
 
-    public function suppliersOnFramework(string $rmNumber)
+
+    /**
+     * List unique suppliers on a framework
+     *
+     * @param string $rmNumber
+     * @param int $page
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PaginationException
+     * @throws \Studio24\Frontend\Exception\PermissionException
+     */
+    public function suppliersOnFramework(string $rmNumber, int $page = 1)
     {
-        $results = $this->api->getOne($rmNumber);
+        // Set custom API endpoint
+        // @todo Find better wauy to set custom endpoint URLs
+        $this->api->getContentModel()->getContentType('framework_suppliers')->setApiEndpoint(sprintf('ccs/v1/framework-suppliers/%s', $rmNumber));
+        $this->api->setContentType('framework_suppliers');
+
+        $results = $this->api->list($page);
         $data = [
-            'framework' => $results
+            'pagination'    => $results->getPagination(),
+            'results'       => $results,
+            'metadata'      => $results->getMetadata(),
         ];
         return $this->render('frameworks/framework-suppliers.html.twig', $data);
     }
