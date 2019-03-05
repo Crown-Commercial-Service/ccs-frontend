@@ -47,8 +47,12 @@ frameworks_suppliers:
     page: 1
 
 frameworks_lot_suppliers:
-  path: /frameworks/{rmNumber}:{lotNumber}/lot-suppliers
+  path: /frameworks/{rmNumber}:{lotNumber}/lot-suppliers/{page}
   controller: App\Controller\FrameworksController::suppliersOnLot
+  requirements:
+    page: '\d+'
+  defaults:
+    page: 1
 
 news_list:
   path: "/news/{page}"

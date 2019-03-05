@@ -27,17 +27,16 @@
                <a class="govuk-breadcrumbs__link" href="/frameworks">Search frameworks</a>
             </li>
             <li class="govuk-breadcrumbs__list-item">
-               <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_show', {'rmNumber': framework.content.rm_number}) }}">{{ framework.content.title }}</a>
+               <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_show', {'rmNumber':  metadata.framework_rm_number }) }}">{{  metadata.framework_title }}</a>
             </li>
             <li class="govuk-breadcrumbs__list-item" aria-current="page">
-               Suppliers on Lot {{ lot.lot_number }}
+               Suppliers on Lot {{ metadata.lot_number }}
             </li>
          </ol>
       </div>
 
 
-
-
+      {{ dump(results) }}
 
       <!-- required wrapper 2 -->
       <main id="main-content"  class="govuk-main-wrapper">
@@ -48,6 +47,7 @@
             <div class="govuk-grid-column-two-thirds">
 
 
+
                {#<ul>#}
                    {#{% for supplier in lot.suppliers %}#}
                       {#<li>{{ supplier.name }}</li>#}
@@ -55,15 +55,15 @@
                {#</ul>#}
 
 
-               <h1 class="govuk-heading-xl page-title">Lot {{ lot.lot_number }}: {{ lot.title }}</h1>
+               <h1 class="govuk-heading-xl page-title">Lot {{ metadata.lot_number }}: {{ metadata.lot_title }}</h1>
 
-               <p class="govuk-body-l govuk-!-font-weight-bold">{{ lot.suppliers|length }} suppliers on this lot.</p>
+               <p class="govuk-body-l govuk-!-font-weight-bold">{{ pagination.totalResults }} suppliers on this lot.</p>
 
 
                <ul class="govuk-list govuk-list--suppliers">
-                   {% for supplier in lot.suppliers %}
+                  {% for item in results %}
                       <li>
-                         <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">{{ supplier.name }}</h3>
+                         <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">{{ item.content.supplier_name }}</h3>
                          <ul class="govuk-list govuk-!-font-size-17featured">
                             <li>Linked list of Frameworks where this supplier appears</li>
                             {#<li><a href="sdg">Network services name of (RM12344)</a></li>#}
@@ -76,63 +76,13 @@
 
 
 
-               <ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination">
-                  <li class="pagination__item pagination__item--previous">
-                     <a href="#">
-                            <span class="icon">
-                                <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M6.7 0l1.4 1.4-4.3 4.3h13v2H3.9l4.2 4-1.4 1.4L0 6.7z" fill="#007194" fill-rule="evenodd"/></svg>
-                            </span>
-                        <span>Previous</span>
-                     </a>
-                  </li>
-                  <li class="pagination__item">
-                     <a href="#">
-                        <span class="visuallyhidden">Page</span>1<span class="visuallyhidden">of 123</span>
-                     </a>
-                  </li>
-                  <li class="pagination__item">
-                     <span>…</span>
-                  </li>
-                  <li class="pagination__item">
-                     <a href="#">
-                        <span class="visuallyhidden">Page</span>40<span class="visuallyhidden">of 123</span>
-                     </a>
-                  </li>
-                  <li class="pagination__item">
-                     <a href="#" rel="prev">
-                        <span class="visuallyhidden">Page</span>41<span class="visuallyhidden">of 123</span>
-                     </a>
-                  </li>
-                  <li class="pagination__item">
-                     <span class="visuallyhidden">You’re currently on page</span>42<span class="visuallyhidden">of 123</span>
-                  </li>
-                  <li class="pagination__item">
-                     <a href="#" rel="next">
-                        <span class="visuallyhidden">Page</span>43<span class="visuallyhidden">of 123</span>
-                     </a>
-                  </li>
-                  <li class="pagination__item">
-                     <a href="#">
-                        <span class="visuallyhidden">Page</span>44<span class="visuallyhidden">of 123</span>
-                     </a>
-                  </li>
-                  <li class="pagination__item">
-                     <span>…</span>
-                  </li>
-                  <li class="pagination__item">
-                     <a href="#">
-                        <span class="visuallyhidden">Page</span>123<span class="visuallyhidden">of 123</span>
-                     </a>
-                  </li>
-                  <li class="pagination__item pagination__item--next">
-                     <a href="#">
-                        <span>Next</span>
-                        <span class="icon">
-                                <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"/></svg>
-                            </span>
-                     </a>
-                  </li>
-               </ul>
+
+               {# Pagination #}
+               {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_lot_suppliers', 'options': {'rmNumber': metadata.framework_rm_number, 'lot_number': metadata.lot_number }} %}
+
+               {% if pagination.totalPages > 1 %}
+                  {{ include('includes/pagination.html.twig', pagination_data) }}
+               {% endif %}
 
 
 
@@ -153,7 +103,7 @@
 
                      <h2 class="aside__heading">Framework</h2>
                      <p class="govuk-body govuk-!-font-size-16">
-                        <a href="{{ path('frameworks_show', {'rmNumber': framework.content.rm_number}) }}">{{ framework.content.title }} ({{ framework.content.rm_number }})</a>
+                        <a href="{{ path('frameworks_show', {'rmNumber': metadata.framework_rm_number }) }}">{{ metadata.framework_title }} ({{ metadata.framework_rm_number }})</a>
                      </p>
 
                </aside>
