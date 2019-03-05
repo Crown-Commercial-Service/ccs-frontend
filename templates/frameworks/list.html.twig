@@ -211,13 +211,15 @@
 
 
                     {# Pagination #}
-
                     {% if category is defined %}
-                        {{ include('includes/pagination.category.html.twig', {'pagination': pagination, 'route': 'frameworks_list_by_category', 'category': category}) }}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_category', 'options': {'category': category_slug}} %}
                     {% else %}
-                        {{ include('includes/pagination.html.twig', {'pagination': pagination, 'route': 'frameworks_list'}) }}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list', 'options': {}} %}
                     {% endif %}
 
+                    {% if pagination.totalPages > 1 %}
+                        {{ include('includes/pagination.html.twig', pagination_data) }}
+                    {% endif %}
 
                 </div>
             </div>
