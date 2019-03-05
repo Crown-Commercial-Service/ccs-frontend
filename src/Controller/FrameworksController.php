@@ -163,11 +163,13 @@ class FrameworksController extends AbstractController
     public function suppliersOnFramework(string $rmNumber, int $page = 1)
     {
         // Set custom API endpoint
-        // @todo Find better wauy to set custom endpoint URLs
+        // @todo Find better way to set custom endpoint URLs
         $this->api->getContentModel()->getContentType('framework_suppliers')->setApiEndpoint(sprintf('ccs/v1/framework-suppliers/%s', $rmNumber));
         $this->api->setContentType('framework_suppliers');
 
         $results = $this->api->list($page);
+        $results->getPagination()->setResultsPerPage(4);
+
         $data = [
             'pagination'    => $results->getPagination(),
             'results'       => $results,
@@ -176,24 +178,34 @@ class FrameworksController extends AbstractController
         return $this->render('frameworks/framework-suppliers.html.twig', $data);
     }
 
-    public function suppliersOnLot(string $rmNumber, string $lotNumber)
-    {
-        // @todo Create Lot API endpoint, grabbing data from framework for now
-        $results = $this->api->getOne($rmNumber);
 
-        $lots = $results->getContent()->get('lots');
-        $lot = false;
-        if (is_iterable($lots)) {
-            foreach ($lots as $item) {
-                if ($item['lot_number'] == $lotNumber) {
-                    $lot = $item;
-                }
-            }
-        }
+    /**
+     * Return suppliers on a lot
+     *
+     * @param string $rmNumber
+     * @param string $lotNumber
+     * @param int $page
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentFieldNotSetException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PaginationException
+     * @throws \Studio24\Frontend\Exception\PermissionException
+     */
+    public function suppliersOnLot(string $rmNumber, string $lotNumber, int $page = 1)
+    {
+        $this->api->getContentModel()->getContentType('framework_lot_suppliers')->setApiEndpoint(sprintf('ccs/v1/lot-suppliers/%s/lot/%s', $rmNumber, $lotNumber));
+        $this->api->setContentType('framework_lot_suppliers');
+
+        $results = $this->api->list($page);
+        $results->getPagination()->setResultsPerPage(4);
 
         $data = [
-            'framework' => $results,
-            'lot' => $lot
+            'pagination'    => $results->getPagination(),
+            'results'       => $results,
+            'metadata'      => $results->getMetadata()
         ];
 
         return $this->render('frameworks/lot-suppliers.html.twig', $data);

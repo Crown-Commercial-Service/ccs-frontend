@@ -5,3 +5,9 @@ content_types:
   framework_suppliers:
     api_endpoint: ccs/v1/framework-suppliers
     content_fields: framework-suppliers.yaml
+  framework_lot_suppliers:
+    api_endpoint: ccs/v1/lot-suppliers
+    content_fields: framework-suppliers.yaml
+  news:
+    api_endpoint: wp/v2/posts
+
