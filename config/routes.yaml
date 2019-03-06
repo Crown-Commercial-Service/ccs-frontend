@@ -54,6 +54,20 @@ frameworks_lot_suppliers:
   defaults:
     page: 1
 
+suppliers_list:
+  path: /suppliers/{page}
+  controller: App\Controller\SuppliersController::list
+  requirements:
+    page: '\d+'
+  defaults:
+    page: 1
+
+suppliers_show:
+  path: /suppliers/{id}/{slug}
+  controller: App\Controller\SuppliersController::show
+  requirements:
+    id: '\d+'
+
 news_list:
   path: "/news/{page}"
   controller: App\Controller\NewsController::list
