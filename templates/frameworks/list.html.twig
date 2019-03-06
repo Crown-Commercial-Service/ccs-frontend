@@ -76,15 +76,24 @@
                         {# see https://studio24.github.io/frontend/templating/content-fields.html #}
                         <h2 class="govuk-heading-m">Browse by category</h2>
                         <ul class="govuk-list">
-                            {% for pillar in pillars.pillars %}
+
+                            {% for pillar_item in pillars.pillars %}
                                 <li>
-                                    {#{{ dump(pillar) }}#}
-                                    <a href="{{ path('frameworks_list_by_pillar', {'pillar': pillar.slug}) }}">{{ pillar.name }}</a>
+                                    {% if pillar is defined and pillar == pillar_item.name %}
+                                        <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug}) }}">{{ pillar_item.name }}</a>
+                                    {% else %}
+                                        <a href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug}) }}">{{ pillar_item.name }}</a>
+                                    {% endif %}
+
 
                                     <ul class="govuk-list">
-                                        {% for category in pillar.categories %}
+                                        {% for category_item in pillar_item.categories %}
                                             <li>
-                                                <a href="{{ path('frameworks_list_by_category', {'category': category.slug}) }}">{{ category.name }}</a>
+                                                {% if category is defined and category == category_item.name %}
+                                                    <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_category', {'category': category_item.slug}) }}">{{ category_item.name }}</a>
+                                                {% else %}
+                                                    <a href="{{ path('frameworks_list_by_category', {'category': category_item.slug}) }}">{{ category_item.name }}</a>
+                                                {% endif %}
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -204,14 +213,16 @@
                                             Date:</strong> {{ item.content.end_date.format('d/m/Y') }}
                                     </li>
                                 </ul>
-                                <p>{{ item.content.summary }}</p>
+                                <p>{{ item.content.summary | raw }}</p>
                             </li>
                         {% endfor %}
                     </ul>
 
 
                     {# Pagination #}
-                    {% if category is defined %}
+                    {% if pillar is defined %}
+                    {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_pillar', 'options': {'pillar': pillar_slug}} %}
+                    {% elseif category is defined %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_category', 'options': {'category': category_slug}} %}
                     {% else %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list', 'options': {}} %}
