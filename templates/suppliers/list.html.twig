@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Suppliers</h1>
+
+    {{ dump(results) }}
+
+    {% for item in results %}
+
+        {% if item.content.trading_name is not empty %}
+            {% set name = item.content.trading_name %}
+        {% else %}
+            {% set name = item.content.name %}
+        {% endif %}
+
+        <p><a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a></p>
+
+    {% endfor %}
+
+    {# Pagination #}
+    {%  set pagination_data = {'pagination': pagination, 'route': 'suppliers_list', 'options': {} } %}
+
+    {% if pagination.totalPages > 1 %}
+        {{ include('includes/pagination.html.twig', pagination_data) }}
+    {% endif %}
+
+{% endblock %}

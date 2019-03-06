@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% if supplier.content.trading_name is not empty %}
+        {% set name = supplier.content.trading_name %}
+    {% else %}
+        {% set name = supplier.content.name %}
+    {% endif %}
+
+    <h1>Supplier: {{ name }}</h1>
+
+    {{ dump(supplier) }}
+
+{% endblock %}

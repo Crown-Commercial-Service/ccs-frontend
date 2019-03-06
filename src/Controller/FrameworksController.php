@@ -7,6 +7,7 @@ use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Studio24\Frontend\Cms\RestData;
+use Symfony\Component\HttpFoundation\Request;
 
 class FrameworksController extends AbstractController
 {
@@ -40,8 +41,9 @@ class FrameworksController extends AbstractController
      * @throws \Studio24\Frontend\Exception\PaginationException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function list(int $page = 1)
+    public function list(int $page = 1, Request $request)
     {
+        $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page);
         $results->getPagination()->setResultsPerPage(20);
 
@@ -68,7 +70,7 @@ class FrameworksController extends AbstractController
      * @throws \Studio24\Frontend\Exception\PaginationException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function listByCategory(string $category, int $page = 1)
+    public function listByCategory(string $category, int $page = 1, Request $request)
     {
         // Map category slug to category db value
         $categoryName = FrameworkCategories::getDbValueBySlug($category);
@@ -76,6 +78,7 @@ class FrameworksController extends AbstractController
             $this->redirectToRoute('frameworks_list');
         }
 
+        $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page, ['category' => $categoryName]);
         $results->getPagination()->setResultsPerPage(20);
 
@@ -103,7 +106,7 @@ class FrameworksController extends AbstractController
      * @throws \Studio24\Frontend\Exception\PaginationException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function listByPillar(string $pillar, int $page = 1)
+    public function listByPillar(string $pillar, int $page = 1, Request $request)
     {
         // Map category slug to category db value
         $pillarName = FrameworkCategories::getDbValueBySlug($pillar);
@@ -111,6 +114,7 @@ class FrameworksController extends AbstractController
             $this->redirectToRoute('frameworks_list');
         }
 
+        $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page, ['pillar' => $pillarName]);
         $results->getPagination()->setResultsPerPage(20);
 
@@ -137,8 +141,9 @@ class FrameworksController extends AbstractController
      * @throws \Studio24\Frontend\Exception\FailedRequestException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function show(string $rmNumber)
+    public function show(string $rmNumber, Request $request)
     {
+        $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->getOne($rmNumber);
         $data = [
             'framework' => $results
@@ -160,13 +165,14 @@ class FrameworksController extends AbstractController
      * @throws \Studio24\Frontend\Exception\PaginationException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function suppliersOnFramework(string $rmNumber, int $page = 1)
+    public function suppliersOnFramework(string $rmNumber, int $page = 1, Request $request)
     {
         // Set custom API endpoint
         // @todo Find better way to set custom endpoint URLs
         $this->api->getContentModel()->getContentType('framework_suppliers')->setApiEndpoint(sprintf('ccs/v1/framework-suppliers/%s', $rmNumber));
         $this->api->setContentType('framework_suppliers');
 
+        $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page);
         $results->getPagination()->setResultsPerPage(4);
 
@@ -194,11 +200,12 @@ class FrameworksController extends AbstractController
      * @throws \Studio24\Frontend\Exception\PaginationException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function suppliersOnLot(string $rmNumber, string $lotNumber, int $page = 1)
+    public function suppliersOnLot(string $rmNumber, string $lotNumber, int $page = 1, Request $request)
     {
         $this->api->getContentModel()->getContentType('framework_lot_suppliers')->setApiEndpoint(sprintf('ccs/v1/lot-suppliers/%s/lot/%s', $rmNumber, $lotNumber));
         $this->api->setContentType('framework_lot_suppliers');
 
+        $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page);
         $results->getPagination()->setResultsPerPage(4);
 

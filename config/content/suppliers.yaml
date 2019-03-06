@@ -1,0 +1,74 @@
+id:
+  type: number
+salesforce_id:
+  type: text
+duns_number:
+  type: text
+name:
+  type: text
+phone_number:
+  type: text
+street:
+  type: text
+city:
+  type: text
+country:
+  type: text
+postcode:
+  type: text
+website:
+  type: text
+trading_name:
+  type: text
+frameworks:
+  type: array
+  content_fields:
+    rm_number:
+      type: text
+    title:
+      type: text
+    summary:
+      type: richtext
+    description:
+      type: richtext
+    updates:
+      type: richtext
+    benefits:
+      type: richtext
+    terms:
+      type: text
+    pillar:
+      type: text
+    category:
+      type: text
+    status:
+      type: text
+    start_date:
+      type: date
+    end_date:
+      type: date
+    tenders_open_date:
+      type: date
+    tenders_close_date:
+      type: date
+    expected_live_date:
+      type: date
+    expected_award_date:
+      type: date
+    published_status:
+      type: text
+    document_updates:
+      type: richtext
+    lots:
+      type: array
+      content_fields:
+        lot_number:
+          type: text
+        title:
+          type: text
+        status:
+          type: text
+        description:
+          type: richtext
+        expiry_date:
+          type: date
