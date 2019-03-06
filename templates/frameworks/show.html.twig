@@ -183,17 +183,13 @@
 
                                 <dl class="apollo-list apollo-list--definition">
                                     {% for lot in framework.content.lots|sort %}
-                                        <dt class="apollo-list--definition__key">
-                                            Lot
-                                            {{ lot.lot_number }}
-                                            : {{ lot.title }}
-                                        </dt>
+                                        <dt class="apollo-list--definition__key">Lot {{ lot.lot_number }}: {{ lot.title }}</dt>
                                         <dd class="apollo-list--definition__value">
                                             {% if lot.description %}
                                                 <div class="govuk-!-margin-bottom-2">{{ lot.description }}</div>
                                             {% endif %}
                                             {#<p class>Expires:#}
-                                            {#<time>{{ lot.expiry_date.format('Y/mm/dd') }}/time>#}
+                                            {#<time>{{ lot.expiry_date.format('d/m/Y') }}/time>#}
                                             {#</p>#}
 
                                             {% if lot.suppliers|length == 0 %}
@@ -213,56 +209,24 @@
                         </div>
 
 
-                        {#<div class="govuk-accordion__section ">#}
-                        {#<div class="govuk-accordion__section-header">#}
-                        {#<h2 class="govuk-accordion__section-heading">#}
-                        {#<span class="govuk-accordion__section-button" id="accordion-default-heading-5">#}
-                        {#How to buy#}
-                        {#</span>#}
-                        {#</h2>#}
-                        {#</div>#}
-                        {#<div id="accordion-default-content-5" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-5">#}
+                        {% if framework.content.how_to_buy %}
+                        <div class="govuk-accordion__section ">
+                        <div class="govuk-accordion__section-header">
+                        <h2 class="govuk-accordion__section-heading">
+                        <span class="govuk-accordion__section-button" id="accordion-default-heading-5">
+                        How to buy
+                        </span>
+                        </h2>
+                        </div>
+                        <div id="accordion-default-content-5" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-5">
 
-                        {#<p class="govuk-body">Read the#}
-                        {#‘<a href="sdgdfg">Buyer and Supplier#}
-                        {#Guide</a>’. The guide explains the 3#}
-                        {#ways to buy:</p>#}
+                            <div class="wysiwyg-content">
+                                {{ framework.content.how_to_buy | raw }}
+                            </div>
 
-                        {#<h3 class="govuk-heading-s govuk-!-margin-bottom-1">#}
-                        {#1. Catalogue (Lot 6)</h3>#}
-                        {#<p class="govuk-body">Designed for day to day#}
-                        {#purchases of low value, low volume or high#}
-                        {#urgency. <a href="dsgkdg">Sign up to The#}
-                        {#Purchasing Platform</a>.#}
-                        {#</p>#}
-
-                        {#<h3 class="govuk-heading-s govuk-!-margin-bottom-1">#}
-                        {#2. Further competitions</h3>#}
-                        {#<p class="govuk-body govuk-!-margin-bottom-0">#}
-                        {#These may be run using CCS’s eSourcing tool,#}
-                        {#or your own eSourcing method.#}
-                        {#</p>#}
-                        {#<ul class="govuk-list">#}
-                        {#<li><a href="dzf">Register for CCS’s#}
-                        {#eSourcing tool</a></li>#}
-                        {#<li><a href="sdgf">Log in to CCS’s eSourcing#}
-                        {#tool</a></li>#}
-                        {#<li><a href="dxgjhx">Read the guidance for#}
-                        {#CCs’s eSourcing tool</a></li>#}
-                        {#</ul>#}
-
-                        {#<h3 class="govuk-heading-s govuk-!-margin-bottom-1">#}
-                        {#3. Large volume hardware requirements</h3>#}
-                        {#<p class="govuk-body">Lot 5 is for these kind of#}
-                        {#purchases. You can also use our aggregation#}
-                        {#team to join with another public sector#}
-                        {#organisation that has common purchasing#}
-                        {#needs. Read about <a href="dsg">Technology#}
-                        {#Aggregation Opportunities</a>.#}
-                        {#</p>#}
-
-                        {#</div>#}
-                        {#</div>#}
+                        </div>
+                        </div>
+                        {% endif %}
 
 
 
