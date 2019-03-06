@@ -57,6 +57,28 @@ class FrameworksController extends AbstractController
         return $this->render('frameworks/list.html.twig', $data);
     }
 
+
+    public function upcomingDeals(Request $request)
+    {
+        $this->api->setContentType('upcoming_deals');
+        $this->api->setCacheKey($request->getRequestUri());
+
+        // @todo At present need to pass fake ID since API method is intended to return one item with an ID, review this
+        $results = $this->api->getOne(0);
+
+        $data = [
+            'awarded_pipeline'              => $results->getContent()->get('awarded_pipeline'),
+            'underway_pipeline'             => $results->getContent()->get('underway_pipeline'),
+            'dynamic_purchasing_systems'    => $results->getContent()->get('dynamic_purchasing_systems'),
+            'planned_pipeline'              => $results->getContent()->get('planned_pipeline'),
+            'future_pipeline'               => $results->getContent()->get('future_pipeline'),
+        ];
+
+        return $this->render('frameworks/upcoming-list.html.twig', $data);
+    }
+
+
+
     /**
      * List frameworks by category
      *

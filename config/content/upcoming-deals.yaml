@@ -1,0 +1,213 @@
+meta:
+  type: array
+  content_fields:
+    awarded_pipeline_results:
+      type: number
+    underway_pipeline_results:
+      type: number
+    dynamic_purchasing_systems_results:
+      type: number
+    planned_pipeline_results:
+      type: number
+    future_pipeline_results:
+      type: number
+
+awarded_pipeline:
+  type: array
+  content_fields:
+    rm_number:
+      type: text
+    title:
+      type: text
+    summary:
+      type: richtext
+    description:
+      type: richtext
+    updates:
+      type: richtext
+    benefits:
+      type: richtext
+    terms:
+      type: text
+    pillar:
+      type: text
+    category:
+      type: text
+    status:
+      type: text
+    start_date:
+      type: date
+    end_date:
+      type: date
+    tenders_open_date:
+      type: date
+    tenders_close_date:
+      type: date
+    expected_live_date:
+      type: date
+    expected_award_date:
+      type: date
+    published_status:
+      type: text
+    document_updates:
+      type: richtext
+
+underway_pipeline:
+  type: array
+  content_fields:
+    rm_number:
+      type: text
+    title:
+      type: text
+    summary:
+      type: richtext
+    description:
+      type: richtext
+    updates:
+      type: richtext
+    benefits:
+      type: richtext
+    terms:
+      type: text
+    pillar:
+      type: text
+    category:
+      type: text
+    status:
+      type: text
+    start_date:
+      type: date
+    end_date:
+      type: date
+    tenders_open_date:
+      type: date
+    tenders_close_date:
+      type: date
+    expected_live_date:
+      type: date
+    expected_award_date:
+      type: date
+    published_status:
+      type: text
+    document_updates:
+      type: richtext
+
+dynamic_purchasing_systems:
+  type: array
+  content_fields:
+    rm_number:
+      type: text
+    title:
+      type: text
+    summary:
+      type: richtext
+    description:
+      type: richtext
+    updates:
+      type: richtext
+    benefits:
+      type: richtext
+    terms:
+      type: text
+    pillar:
+      type: text
+    category:
+      type: text
+    status:
+      type: text
+    start_date:
+      type: date
+    end_date:
+      type: date
+    tenders_open_date:
+      type: date
+    tenders_close_date:
+      type: date
+    expected_live_date:
+      type: date
+    expected_award_date:
+      type: date
+    published_status:
+      type: text
+    document_updates:
+      type: richtext
+
+planned_pipeline:
+  type: array
+  content_fields:
+    rm_number:
+      type: text
+    title:
+      type: text
+    summary:
+      type: richtext
+    description:
+      type: richtext
+    updates:
+      type: richtext
+    benefits:
+      type: richtext
+    terms:
+      type: text
+    pillar:
+      type: text
+    category:
+      type: text
+    status:
+      type: text
+    start_date:
+      type: date
+    end_date:
+      type: date
+    tenders_open_date:
+      type: date
+    tenders_close_date:
+      type: date
+    expected_live_date:
+      type: date
+    expected_award_date:
+      type: date
+    published_status:
+      type: text
+    document_updates:
+      type: richtext
+
+future_pipeline:
+  type: array
+  content_fields:
+    rm_number:
+      type: text
+    title:
+      type: text
+    summary:
+      type: richtext
+    description:
+      type: richtext
+    updates:
+      type: richtext
+    benefits:
+      type: richtext
+    terms:
+      type: text
+    pillar:
+      type: text
+    category:
+      type: text
+    status:
+      type: text
+    start_date:
+      type: date
+    end_date:
+      type: date
+    tenders_open_date:
+      type: date
+    tenders_close_date:
+      type: date
+    expected_live_date:
+      type: date
+    expected_award_date:
+      type: date
+    published_status:
+      type: text
+    document_updates:
+      type: richtext

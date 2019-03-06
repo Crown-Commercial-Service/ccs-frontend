@@ -1,4 +1,7 @@
 content_types:
+  upcoming_deals:
+    api_endpoint: ccs/v1/upcoming-deals
+    content_fields: upcoming-deals.yaml
   frameworks:
     api_endpoint: ccs/v1/frameworks
     content_fields: frameworks.yaml
