@@ -10,6 +10,8 @@ updates:
   type: richtext
 benefits:
   type: richtext
+how_to_buy:
+  type: richtext
 terms:
   type: text
 pillar:
