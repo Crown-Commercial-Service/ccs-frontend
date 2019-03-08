@@ -78,7 +78,7 @@
 
 
                {# Pagination #}
-               {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_lot_suppliers', 'options': {'rmNumber': metadata.framework_rm_number, 'lot_number': metadata.lot_number }} %}
+               {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_lot_suppliers', 'options': {'rmNumber': metadata.framework_rm_number, 'lotNumber': metadata.lot_number }} %}
 
                {% if pagination.totalPages > 1 %}
                   {{ include('includes/pagination.html.twig', pagination_data) }}
