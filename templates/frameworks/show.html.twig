@@ -218,15 +218,16 @@
 
 
 
-                        {#<div class="govuk-accordion__section ">#}
-                        {#<div class="govuk-accordion__section-header">#}
-                        {#<h2 class="govuk-accordion__section-heading">#}
-                        {#<span class="govuk-accordion__section-button" id="accordion-default-heading-6">#}
-                        {#Documents#}
-                        {#</span>#}
-                        {#</h2>#}
-                        {#</div>#}
-                        {#<div id="accordion-default-content-6" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-6">#}
+                        {% if framework.content.documents %}
+                        <div class="govuk-accordion__section ">
+                        <div class="govuk-accordion__section-header">
+                        <h2 class="govuk-accordion__section-heading">
+                        <span class="govuk-accordion__section-button" id="accordion-default-heading-6">
+                        Documents
+                        </span>
+                        </h2>
+                        </div>
+                        <div id="accordion-default-content-6" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-6">
 
                         {#<h3 class="govuk-heading-s">Updates</h3>#}
                         {#<p class="govuk-body">15/10/2018 - Further#}
@@ -239,48 +240,12 @@
                         {#</p>#}
 
 
-                        {#<h3 class="govuk-heading-s">Titles (this should be Documents instead)</h3>#}
-                        {#<ul class="govuk-list">#}
-                        {#<li><a href="/links">Buyers Guide</a></li>#}
-                        {#<li><a href="/links">Agreement Information#}
-                        {#Leaflet</a></li>#}
-                        {#<li><a href="/links">Further Competition#}
-                        {#Template</a></li>#}
-                        {#<li><a href="/links">Supplier Outcome Letter#}
-                        {#Template - Successful Supplier</a>#}
-                        {#</li>#}
-                        {#<li><a href="/links">Supplier Outcome Letter#}
-                        {#Template - Unsuccessful Supplier</a>#}
-                        {#</li>#}
-                        {#<li><a href="/links">Order Form</a></li>#}
-                        {#<li><a href="/links">Call Off Contract#}
-                        {#(T&C's)</a></li>#}
-                        {#<li><a href="/links">Call Off Contract#}
-                        {#(T&C's inc. GDPR)</a></li>#}
-                        {#<li><a href="/links">Alternative and#}
-                        {#additional Call Off Contract#}
-                        {#provisions (T&C's)</a></li>#}
-                        {#<li><a href="/links">Alternative and#}
-                        {#additional Call Off Contract#}
-                        {#provisions (T&C's)</a></li>#}
-                        {#<li><a href="/links">Framework Agreement#}
-                        {#(Generic)</a></li>#}
-                        {#<li><a href="/links">Prior Information#}
-                        {#Notice (PIN)</a></li>#}
-                        {#<li><a href="/links">Contract Notice#}
-                        {#(OJEU)</a></li>#}
-                        {#<li><a href="/links">Contract Award#}
-                        {#Notice</a></li>#}
-                        {#<li><a href="/links">Supplier Contacts#}
-                        {#v1.5</a></li>#}
-                        {#<li><a href="/links">GDPR FAQ's March#}
-                        {#2018</a></li>#}
-                        {#<li><a href="/links">Supplier Matrix v1.8#}
-                        {#Inclusive of GDPR</a></li>#}
-                        {#<li><a href="/links">Call-Off Schedule 5#}
-                        {#Schedule of Processing, Personal#}
-                        {#Data and Data Subjects</a></li>#}
-                        {#</ul>#}
+                        <h3 class="govuk-heading-s">Titles</h3>
+                        <ul class="govuk-list">
+                            {% for document in framework.content.documents %}
+                                <li><a href="{{ document.url }}">{{ document.title }}</a></li>
+                            {% endfor %}
+                        </ul>
 
 
                         {#<table class="govuk-table">#}
@@ -311,11 +276,14 @@
                         {#</tbody>#}
                         {#</table>#}
 
-                        {#</div>#}
+                        </div>
 
 
 
-                        {#</div>#}
+                        </div>
+                        {% endif %}
+
+
 
                     </div>
 
