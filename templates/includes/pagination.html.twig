@@ -16,7 +16,7 @@
 
     {% if pagination.page > pagination.first and pageLinks[0] > 2 %}
         <li class="pagination__item">
-            <a href="{{ path(route, options|merge({'page': pagination.last})) }}"><span class="visuallyhidden">Page </span>{{ pagination.first }}
+            <a href="{{ path(route, options|merge({'page': pagination.first})) }}"><span class="visuallyhidden">Page </span>{{ pagination.first }}
             </a></li>
         <li class="pagination__item">…</li>
     {% endif %}

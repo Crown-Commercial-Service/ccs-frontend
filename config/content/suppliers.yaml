@@ -20,7 +20,7 @@ website:
   type: text
 trading_name:
   type: text
-frameworks:
+live_frameworks:
   type: array
   content_fields:
     rm_number:
