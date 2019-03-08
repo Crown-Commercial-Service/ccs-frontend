@@ -71,6 +71,11 @@ lots:
         trading_name:
           type: text
 documents:
-  type: text
+  type: array
+  content_fields:
+    title:
+      type: text
+    url:
+      type: text
 total_suppliers:
   type: number
