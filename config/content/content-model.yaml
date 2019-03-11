@@ -1,6 +1,7 @@
 content_types:
   page:
     api_endpoint: wp/v2/pages
+    content_fields: pages.yaml
   news:
     api_endpoint: wp/v2/posts
   upcoming_deals:
