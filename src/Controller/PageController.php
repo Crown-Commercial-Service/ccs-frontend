@@ -3,39 +3,48 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Psr\SimpleCache\CacheInterface;
+use Studio24\Frontend\Cms\Wordpress;
+use Studio24\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class PageController extends AbstractController
 {
-
     /**
-     * Homepage
+     * Frameworks Rest API data
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @var Wordpress
      */
-    public function home()
+    protected $api;
+
+    public function __construct(CacheInterface $cache)
     {
-        return $this->render('pages/home.html.twig');
+        $this->api = new Wordpress(
+            getenv('APP_API_BASE_URL'),
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
+        );
+        $this->api->setContentType('page');
+        $this->api->setCache($cache);
     }
 
     /**
-     * Simple page controller to test frontend templates
+     * Generic page controller
      *
-     * @param $slug
+     * @param string $slug
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function pageTemplate(string $slug)
+    public function page(string $slug, Request $request)
     {
-        $template = 'pages/' . $slug . '.html.twig';
+        $this->api->setCacheKey($request->getRequestUri());
+        $page = $this->api->getPageBySlug($slug);
 
-        if (!file_exists(__DIR__ . '/../../templates/' . $template)) {
-            throw $this->createNotFoundException('Template not found at ' . $template);
-        }
-
-        return $this->render($template);
+        return $this->render('pages/page.html.twig', [
+            'page' => $page
+        ]);
     }
-
 
     /**
      * Simple healthcheck
