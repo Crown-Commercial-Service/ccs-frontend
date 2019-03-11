@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
+use Studio24\Frontend\ContentModel\ContentModel;
 use Studio24\Frontend\Exception\WordpressException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -13,7 +14,7 @@ class NewsController extends AbstractController
     /**
      * Frameworks Rest API data
      *
-     * @var RestData
+     * @var Wordpress
      */
     protected $api;
 
