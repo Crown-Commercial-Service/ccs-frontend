@@ -28,6 +28,12 @@
 
 }
 
+.wysiwyg-content h4 {
+
+    @include govuk-font(24, $weight: bold);
+
+}
+
 .wysiwyg-content hr {
 
     @extend .govuk-section-break;

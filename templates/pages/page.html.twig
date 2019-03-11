@@ -1,9 +1,113 @@
-{% extends 'base-home.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
 
-    <h1>{{ page.title }}</h1>
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
 
-    {{ dump(page) }}
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
+
+        <div class="govuk-phase-banner">
+            <p class="govuk-phase-banner__content">
+                <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                    beta </strong> <span class="govuk-phase-banner__text">
+      This is a new service – your
+      <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+    </span>
+            </p>
+        </div>
+
+
+        <div class="govuk-breadcrumbs">
+            <ol class="govuk-breadcrumbs__list">
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
+                </li>
+                {#<li class="govuk-breadcrumbs__list-item">#}
+                {#<a class="govuk-breadcrumbs__link" href="#">Help and#}
+                {#support</a>#}
+                {#</li>#}
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                    {{ page.title }}
+                </li>
+            </ol>
+        </div>
+
+
+        <!-- required wrapper 2 -->
+        <main id="main-content" class="govuk-main-wrapper">
+
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+
+                    <h1 class="govuk-heading-xl page-title">{{ page.title }}</h1>
+
+                    <p class="govuk-body-l">The Lead element is used for
+                        displaying a summary of the page our visitors is about
+                        to read. Keep the lead concise and under 270 characters
+                        (including spaces) so that it can be displayed for
+                        search engine results as the meta description.</p>
+
+
+                    <div class="wysiwyg-content">
+
+                        {{ page.content.content | raw }}
+
+                    </div>
+                    {# End of wysiwyg content #}
+
+
+                    {#<h3 class="govuk-heading-m">Accordion</h3>#}
+
+
+                    {#<div class="govuk-accordion" data-module="accordion" id="accordion-default">#}
+
+                        {#<div class="govuk-accordion__section ">#}
+                            {#<div class="govuk-accordion__section-header">#}
+                                {#<h2 class="govuk-accordion__section-heading">#}
+        {#<span class="govuk-accordion__section-button" id="accordion-default-heading-1">#}
+          {#Accordion heading#}
+        {#</span>#}
+                                {#</h2>#}
+                            {#</div>#}
+                            {#<div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">#}
+
+
+                                {#<p>Lorem ipsum dolor sit amet, consectetur#}
+                                    {#adipisicing elit. Amet blanditiis ducimus#}
+                                    {#ipsa maiores necessitatibus omnis#}
+                                    {#praesentium, provident reprehenderit totam#}
+                                    {#voluptas. Adipisci consequatur labore#}
+                                    {#laborum magnam necessitatibus odio quod#}
+                                    {#veniam, voluptatum.</p>#}
+
+
+                            {#</div>#}
+                        {#</div>#}
+
+
+                    {#</div>#}
+
+
+
+
+
+
+
+                    <div class="app-c-print-link">
+                        <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">Print this page</button>
+                    </div>
+
+
+
+
+
+
+                </div>
+
+
+        </main>
+    </div>
 
 {% endblock %}
