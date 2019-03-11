@@ -2,6 +2,8 @@ rm_number:
   type: text
 title:
   type: text
+type:
+  type: text
 summary:
   type: richtext
 description:
@@ -79,3 +81,5 @@ documents:
       type: text
 total_suppliers:
   type: number
+upcoming_deal_details:
+  type: richtext

@@ -12,7 +12,7 @@
                 <strong class="govuk-tag govuk-phase-banner__content__tag ">
                     beta </strong> <span class="govuk-phase-banner__text">
       This is a new service – your
-      <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+      <a class="govuk-link" href="https://www.surveymonkey.co.uk/r/ZHV7B2S">feedback</a> will help us to improve it.
     </span>
             </p>
         </div>
@@ -43,14 +43,12 @@
 
                     <h1 class="govuk-heading-xl page-title">{{ page.title }}</h1>
 
-                    <p class="govuk-body-l">The Lead element is used for
-                        displaying a summary of the page our visitors is about
-                        to read. Keep the lead concise and under 270 characters
-                        (including spaces) so that it can be displayed for
-                        search engine results as the meta description.</p>
-
+                    {% if page.content.page_lead_text %}
+                    <p class="govuk-body-l">{{ page.content.page_lead_text }}</p>
+                    {% endif %}
 
                     {#{{ dump(page) }}#}
+
 
 
                     <div class="wysiwyg-content">
@@ -61,39 +59,33 @@
                     {# End of wysiwyg content #}
 
 
-                    {#<h3 class="govuk-heading-m">Accordion</h3>#}
 
 
-                    {#<div class="govuk-accordion" data-module="accordion" id="accordion-default">#}
-
-                        {#<div class="govuk-accordion__section ">#}
-                            {#<div class="govuk-accordion__section-header">#}
-                                {#<h2 class="govuk-accordion__section-heading">#}
-        {#<span class="govuk-accordion__section-button" id="accordion-default-heading-1">#}
-          {#Accordion heading#}
-        {#</span>#}
-                                {#</h2>#}
-                            {#</div>#}
-                            {#<div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">#}
+                    {% if page.content.page_accordion %}
+                    <div class="govuk-accordion govuk-!-margin-top-6" data-module="accordion" id="accordion-default">
 
 
-                                {#<p>Lorem ipsum dolor sit amet, consectetur#}
-                                    {#adipisicing elit. Amet blanditiis ducimus#}
-                                    {#ipsa maiores necessitatibus omnis#}
-                                    {#praesentium, provident reprehenderit totam#}
-                                    {#voluptas. Adipisci consequatur labore#}
-                                    {#laborum magnam necessitatibus odio quod#}
-                                    {#veniam, voluptatum.</p>#}
+                        {% for accordion_item in page.content.page_accordion %}
+                        <div class="govuk-accordion__section ">
+                            <div class="govuk-accordion__section-header">
+                                <h2 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ loop.index }}">
+          {{ accordion_item.page_accordion_page_accordion_item_title }}
+        </span>
+                                </h2>
+                            </div>
+                            <div id="accordion-default-content-{{ loop.index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ loop.index }}">
 
+                                {{ accordion_item.page_accordion_page_accordion_item_content | raw }}
 
-                            {#</div>#}
-                        {#</div>#}
-
-
-                    {#</div>#}
+                            </div>
+                        </div>
+                        {% endfor %}
 
 
 
+                    </div>
+                    {% endif %}
 
 
 
@@ -101,9 +93,6 @@
                     <div class="app-c-print-link">
                         <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">Print this page</button>
                     </div>
-
-
-
 
 
 
