@@ -1,14 +1,14 @@
 index:
     path: /
-    controller: App\Controller\PageController::home
+    controller: App\Controller\TempTemplateController::home
+
+temp_page_templates:
+  path: /template/{slug}
+  controller: App\Controller\TempTemplateController::pageTemplate
 
 healthcheck:
   path: /health
   controller: App\Controller\PageController::healthcheck
-
-page_templates:
-  path: /template/{slug}
-  controller: App\Controller\PageController::pageTemplate
 
 frameworks_list:
   path: /frameworks/{page}
@@ -149,3 +149,7 @@ form_insurance_services_nda_thanks:
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
   defaults:
     template: forms/35-insurance-services-thanks.html.twig
+
+page:
+  path: /{slug}
+  controller: App\Controller\PageController::page
