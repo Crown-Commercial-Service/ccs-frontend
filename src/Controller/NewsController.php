@@ -30,17 +30,7 @@ class NewsController extends AbstractController
 
     public function list($page = 1)
     {
-        echo "FISH";
-
-        $list = $this->wp->listPages($page);
-
-        // Cache page IDs
-        // @todo refactor for re-use
-        $pageIds = [];
-        foreach ($list as $item) {
-            $pageIds[$item->getUrlSlug()] = $item->getId();
-        }
-        $cache->set('pageIds', $pageIds);
+        $list = $this->api->listPages($page);
 
         return $this->render('news/list.html.twig', [
             'url' => sprintf('/news/page/%s', $page),
