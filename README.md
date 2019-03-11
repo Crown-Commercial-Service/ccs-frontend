@@ -96,6 +96,12 @@ bin/console server:run
 
 Optionally: Set up local host http://local.crowncommercial.gov.uk/ to point to the `public/` folder.
 
+#### Clear cache
+
+```
+bin/console cache:clear
+```
+
 ## Deployment
 
 To deploy to Development environment merge to `development` branch.
