@@ -67,6 +67,9 @@
                     <div class="govuk-body-l">{{ framework.content.summary | striptags }}</div>
 
 
+                    {{ framework.content.upcoming_deal_details }}
+
+
                     {# see https://studio24.github.io/frontend/templating/content-fields.html #}
                     {# see https://studio24.github.io/frontend/templating/debugging.html #}
                     {{ dump(framework) }}
@@ -164,7 +167,24 @@
                                 {#{% endfor %}#}
                                 {#</ul>#}
 
-                                <p class="govuk-body">There are
+
+
+                                {# Expected `type` values;
+
+                                - Upcoming deal
+                                - Standard framework
+                                - DPS
+                                - G-cloud
+
+                                #}
+                                {% if framework.content.type is 'DPS' %}
+                                <p>Please read the 'How to buy' tab below for detailed instructions on how to find out which suppliers are on this framework.</p>
+                                {% endif %}
+
+                                {% if framework.content.type is 'DPS' %}
+                                <p><a href="https://www.digitalmarketplace.service.gov.uk/">Digital Marketplace</a> has the constantly updated list of the suppliers on this framework.</p>
+
+                                <p>There are
                                     <a href="{{ path('frameworks_suppliers', {'rmNumber': framework.content.rm_number }) }}">{{ framework.content.total_suppliers }}
                                         suppliers</a> on this framework.</p>
 
@@ -322,10 +342,18 @@
                                 <dd class="apollo-list--definition__value">
                                     {{ framework.content.lots|length }}
                                 </dd>
+                                {#
+                                Upcoming deal
+                                Standard framework
+                                DPS
+                                G-cloud
+                                #}
+                                {% if framework.content.type is not 'DPS' %}
                                 <dt>Suppliers</dt>
                                 <dd class="apollo-list--definition__value">
                                     {{ framework.content.total_suppliers }}
                                 </dd>
+                                {% endif %}
                             </dl>
                         </div>
 
