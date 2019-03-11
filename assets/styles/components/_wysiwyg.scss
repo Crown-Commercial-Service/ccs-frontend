@@ -30,7 +30,7 @@
 
 .wysiwyg-content h4 {
 
-    @include govuk-font(24, $weight: bold);
+    @include govuk-font(20, $weight: bold);
 
 }
 
@@ -85,9 +85,10 @@
 }
 
 
-.flex-video {
+.responsive-video {
 
     position: relative;
+    padding-bottom: 56.25%;
 
     iframe {
 
@@ -104,7 +105,7 @@
 }
 
 // Make the video adjust for 16:9
-.flex-video.widescreen {
+.responsive-video.widescreen {
 
     padding-bottom: 56.25%;
 
