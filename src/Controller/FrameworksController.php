@@ -239,5 +239,4 @@ class FrameworksController extends AbstractController
 
         return $this->render('frameworks/lot-suppliers.html.twig', $data);
     }
-
 }
