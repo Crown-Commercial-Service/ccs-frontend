@@ -195,5 +195,4 @@ class FrameworkCategories
 
         return $category['db_value'];
     }
-
 }
