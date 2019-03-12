@@ -1,0 +1,9 @@
+page_lead_text:
+  type: text
+page_accordion:
+  type: array
+  content_fields:
+    page_accordion_page_accordion_item_title:
+      type: text
+    page_accordion_page_accordion_item_content:
+      type: richtext

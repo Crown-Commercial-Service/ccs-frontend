@@ -39,5 +39,4 @@ class TempTemplateController extends AbstractController
 
         return $this->render($template);
     }
-
 }

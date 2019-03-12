@@ -54,6 +54,4 @@ class SuppliersController extends AbstractController
         ];
         return $this->render('suppliers/show.html.twig', $data);
     }
-
-
 }

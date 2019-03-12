@@ -83,5 +83,4 @@ class PageController extends AbstractController
 
         return new JsonResponse(['message' => 'OK']);
     }
-
 }
