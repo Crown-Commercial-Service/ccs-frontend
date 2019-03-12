@@ -198,7 +198,7 @@
                                                 <div class="govuk-!-margin-bottom-2">{{ lot.description }}</div>
                                             {% endif %}
 
-                                            {% if lot.expiry_date.format %}
+                                            {% if lot.expiry_date is defined %}
                                             <p class>Expires:
                                             <time>{{ lot.expiry_date.format('d/m/Y') }}</time>
                                             </p>
