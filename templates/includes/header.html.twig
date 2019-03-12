@@ -13,6 +13,11 @@
         </span>
             </button>
 
+            {{ render(controller(
+                'App\\Controller\\MenuController::menu',
+                { 'id': 21, 'templatePath': 'menus/default-menu.html.twig' }
+            )) }}
+
             <nav class="global-navigation" data-toggle="nav">
                 {#<ul class="nav-list nav-list--secondary">#}
                     {#<li class="nav-list__item">#}

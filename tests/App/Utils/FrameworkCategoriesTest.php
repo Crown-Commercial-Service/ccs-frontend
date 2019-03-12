@@ -38,7 +38,7 @@ class FrameworkCategoriesTest extends TestCase
 
         $this->assertEquals('utilities-fuels', FrameworkCategories::getSlug('Utilities & Fuels'));
         $this->assertEquals('document-management-logistics', FrameworkCategories::getSlug('Document Management & Logistics'));
-        $this->assertEquals('Technology Products & Services', FrameworkCategories::getNameBySlug( 'technology-products-services'));
+        $this->assertEquals('Technology Products & Services', FrameworkCategories::getNameBySlug('technology-products-services'));
         $this->assertEquals('Marcomms & Research', FrameworkCategories::getNameBySlug('marcomms-research'));
         $this->assertEquals(3, count(FrameworkCategories::getAllByPillar('People')));
     }
@@ -49,5 +49,4 @@ class FrameworkCategoriesTest extends TestCase
         $this->assertEquals('People', FrameworkCategories::getDbValue('People'));
         $this->assertEquals('Marcomms & Research', FrameworkCategories::getDbValue('Marcomms & Research'));
     }
-
 }
