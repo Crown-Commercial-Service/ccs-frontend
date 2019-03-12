@@ -2,6 +2,8 @@ rm_number:
   type: text
 title:
   type: text
+type:
+  type: text
 summary:
   type: richtext
 description:
@@ -9,6 +11,8 @@ description:
 updates:
   type: richtext
 benefits:
+  type: richtext
+how_to_buy:
   type: richtext
 terms:
   type: text
@@ -69,6 +73,13 @@ lots:
         trading_name:
           type: text
 documents:
-  type: text
+  type: array
+  content_fields:
+    title:
+      type: text
+    url:
+      type: text
 total_suppliers:
   type: number
+upcoming_deal_details:
+  type: richtext

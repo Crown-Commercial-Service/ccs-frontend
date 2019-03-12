@@ -1,14 +1,14 @@
 index:
     path: /
-    controller: App\Controller\PageController::home
+    controller: App\Controller\TempTemplateController::home
+
+temp_page_templates:
+  path: /template/{slug}
+  controller: App\Controller\TempTemplateController::pageTemplate
 
 healthcheck:
   path: /health
   controller: App\Controller\PageController::healthcheck
-
-page_templates:
-  path: /template/{slug}
-  controller: App\Controller\PageController::pageTemplate
 
 frameworks_list:
   path: /frameworks/{page}
@@ -17,6 +17,10 @@ frameworks_list:
     page: '\d+'
   defaults:
     page: 1
+
+frameworks_upcoming_deals:
+  path: /frameworks/upcoming
+  controller: App\Controller\FrameworksController::upcomingDeals
 
 frameworks_list_by_category:
   path: /frameworks/category/{category}/{page}
@@ -47,8 +51,26 @@ frameworks_suppliers:
     page: 1
 
 frameworks_lot_suppliers:
-  path: /frameworks/{rmNumber}:{lotNumber}/lot-suppliers
+  path: /frameworks/{rmNumber}:{lotNumber}/lot-suppliers/{page}
   controller: App\Controller\FrameworksController::suppliersOnLot
+  requirements:
+    page: '\d+'
+  defaults:
+    page: 1
+
+suppliers_list:
+  path: /suppliers/{page}
+  controller: App\Controller\SuppliersController::list
+  requirements:
+    page: '\d+'
+  defaults:
+    page: 1
+
+suppliers_show:
+  path: /suppliers/{id}/{slug}
+  controller: App\Controller\SuppliersController::show
+  requirements:
+    id: '\d+'
 
 news_list:
   path: "/news/{page}"
@@ -127,3 +149,7 @@ form_insurance_services_nda_thanks:
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
   defaults:
     template: forms/35-insurance-services-thanks.html.twig
+
+page:
+  path: /{slug}
+  controller: App\Controller\PageController::page
