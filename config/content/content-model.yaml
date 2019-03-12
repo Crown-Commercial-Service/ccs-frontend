@@ -19,3 +19,11 @@ content_types:
   suppliers:
     api_endpoint: ccs/v1/suppliers
     content_fields: suppliers.yaml
+
+global:
+  image_sizes:
+    - thumbnail
+    - medium
+    - medium_large
+    - large
+    - full
