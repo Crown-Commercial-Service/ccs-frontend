@@ -38,5 +38,4 @@ class MenuController extends AbstractController
             'menu' => $menu
         ]);
     }
-
 }
