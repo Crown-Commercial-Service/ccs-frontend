@@ -4,6 +4,7 @@ content_types:
     content_fields: pages.yaml
   news:
     api_endpoint: wp/v2/posts
+    content_fields: news.yaml
   upcoming_deals:
     api_endpoint: ccs/v1/upcoming-deals
     content_fields: upcoming-deals.yaml
