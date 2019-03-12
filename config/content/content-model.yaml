@@ -1,7 +1,30 @@
 content_types:
+  page:
+    api_endpoint: wp/v2/pages
+    content_fields: pages.yaml
+  news:
+    api_endpoint: wp/v2/posts
+    content_fields: news.yaml
+  upcoming_deals:
+    api_endpoint: ccs/v1/upcoming-deals
+    content_fields: upcoming-deals.yaml
   frameworks:
     api_endpoint: ccs/v1/frameworks
     content_fields: frameworks.yaml
   framework_suppliers:
     api_endpoint: ccs/v1/framework-suppliers
     content_fields: framework-suppliers.yaml
+  framework_lot_suppliers:
+    api_endpoint: ccs/v1/lot-suppliers
+    content_fields: framework-suppliers.yaml
+  suppliers:
+    api_endpoint: ccs/v1/suppliers
+    content_fields: suppliers.yaml
+
+global:
+  image_sizes:
+    - thumbnail
+    - medium
+    - medium_large
+    - large
+    - full

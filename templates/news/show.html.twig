@@ -1,56 +1,87 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-
-
-        <p>{{ page.content.post_type }}</p>
-        <h1>{{ page.title }}</h1>
-
-
-        <p>
-            {{  page.datePublished.format('d.m.y') }}
-        </p>
-
-        <!-- flexible components -->
-
-        <div class="fluid-content">
-            {% if page.content.page_content is not empty %}
-                {% for component in page.content.page_content %}
-                    {% set componentdata = { 'componentobject' : component } %}
-                    {% include 'flexible-components/component-' ~ component.acf_fc_layout ~ '.html.twig' with componentdata %}
-                {% endfor %}
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block headerclasses %}
+            {% if page.featuredImage %}
+                header-global header-global--news-details
+            {% else %}
+                header-global
             {% endif %}
+        {% endblock %}
 
-        </div>
+        {% block headerstyles %}
+            {% if page.featuredImage %}
+                style="background-size: cover; background-image: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.75) 41%, rgba(0,0,0,0.6) 71%, rgba(0,0,0,0.3) 100%), url(https://ccsheretohelp.uk/wp-content/uploads/2019/01/Highways-England-Technology-Operations-Centre.jpg);"
+            {% endif %}
+        {% endblock %}
 
-        <div class="container content">
-            <!-- sharing -->
-            <div class="post-sharing two-thirds-width u-margin--t-regular u-margin--b-small"><h4>Share</h4>
-                <div class="post-sharing__icons"><span><span data-link="#share-facebook"><span
-                                    class="post-sharing__facebook"><i class="u-icon--facebook"></i></span></span><span
-                                data-link="#share-twitter"><span class="post-sharing__twitter"><i
-                                        class="u-icon--twitter"></i></span></span></span><a
-                            href="mailto:?subject=https://www.fauna-flora.org{{ url }}"
-                            target="_blank" class="post-sharing__email"><i class="u-icon--icon-mail-footer"></i></a>
+        {% block featuredcontent %}
+            <div class="govuk-width-container">
+                <div class="news--featured">
+
+                    {% dump(page) %}
+                    <div class="news-listing-meta--featured">News | {{ page.datePublished|date('jS F Y') }}</div>
+                    <h1 class="govuk-heading-xl govuk-!-font-size-48 page-title news-listing-title--featured">{{ page.title }}</h1>
+
                 </div>
             </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
 
-            <!-- more on author -->
-            <div class="container__inside two-thirds-width">
-                <div itemprop="author" itemscope="itemscope" itemtype="http://schema.org/Person" class="author"
-                >
-                    <div class="author__inside"><!---->
-                        <div class="author__item"><span class="u-content--bold">
-          Written by:
-          <span itemprop="name" class="author__name">{# page.content.author.post_title #}</span></span><span
-                                    class="author__title u-content--light-grey u-content--italic u-content--block"
-                            >{# page.content.author.acf.job_title #}</span><!----></div>
-                    </div>
-                </div>
-            </div>
+{% block body %}
+    <div class="govuk-width-container">
 
+        <div class="govuk-breadcrumbs">
+            <ol class="govuk-breadcrumbs__list">
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
+                </li>
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/news">News</a>
+                </li>
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                {{ page.title }} - to update
+                </li>
+            </ol>
         </div>
 
+        <main id="main-content" class="govuk-main-wrapper">
+
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+
+                {#<h1 class="govuk-heading-xl page-title">New data protection legislation is coming: How to ensure data processing contracts comply with the law</h1>#}
+
+                {% if page.content.post_lead_text %}
+                <p class="govuk-body-l">
+                    {{ page.content.post_lead_text }}
+                </p>
+                {% endif %}
+
+                <div class="wysiwyg-content">
+
+                    {{ page.content.content|raw }}
+
+                </div>
+                {# End of wysiwyg content #}
+
+
+
+                <div class="app-c-print-link">
+                    <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">Print this page</button>
+                </div>
+
+
+
+
+            </div>
+
+
+        </div>
+    </main>
     </div>
 
 {% endblock %}

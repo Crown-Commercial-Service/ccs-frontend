@@ -5,15 +5,17 @@ namespace App\Controller;
 
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
+use Studio24\Frontend\ContentModel\ContentModel;
 use Studio24\Frontend\Exception\WordpressException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class NewsController extends AbstractController
 {
     /**
      * Frameworks Rest API data
      *
-     * @var RestData
+     * @var Wordpress
      */
     protected $api;
 
@@ -27,19 +29,11 @@ class NewsController extends AbstractController
         $this->api->setCache($cache);
     }
 
-    public function list($page = 1)
+    public function list($page = 1, Request $request)
     {
-        echo "FISH";
-
-        $list = $this->wp->listPages($page);
-
-        // Cache page IDs
-        // @todo refactor for re-use
-        $pageIds = [];
-        foreach ($list as $item) {
-            $pageIds[$item->getUrlSlug()] = $item->getId();
-        }
-        $cache->set('pageIds', $pageIds);
+        $page = (int) $page;
+        $this->api->setCacheKey($request->getRequestUri());
+        $list = $this->api->listPages($page);
 
         return $this->render('news/list.html.twig', [
             'url' => sprintf('/news/page/%s', $page),
@@ -47,21 +41,14 @@ class NewsController extends AbstractController
         ]);
     }
 
-    public function show($slug)
+    public function show($slug, Request $request)
     {
-        // Get page IDs
-        // @todo refactor to lazy-load since will fail if this does not exist
-        $pageIds = $cache->get('pageIds');
-        if (!isset($pageIds[$slug])) {
-            throw new WordpressException(sprintf('Cannot find page ID for slug %s', $slug));
-        }
-        $id = $pageIds[$slug];
-        $page = $this->wp->getPage($id);
+        $this->api->setCacheKey($request->getRequestUri());
+        $page = $this->api->getPageBySlug($slug);
 
         return $this->render('news/show.html.twig', [
             'url' => sprintf('/news/%s', $slug),
             'page' => $page
         ]);
     }
-
 }

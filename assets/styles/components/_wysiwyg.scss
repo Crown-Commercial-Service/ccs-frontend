@@ -28,6 +28,12 @@
 
 }
 
+.wysiwyg-content h4 {
+
+    @include govuk-font(20, $weight: bold);
+
+}
+
 .wysiwyg-content hr {
 
     @extend .govuk-section-break;
@@ -79,7 +85,7 @@
 }
 
 
-.flex-video {
+.responsive-video {
 
     position: relative;
 
@@ -98,7 +104,7 @@
 }
 
 // Make the video adjust for 16:9
-.flex-video.widescreen {
+.responsive-video.widescreen {
 
     padding-bottom: 56.25%;
 

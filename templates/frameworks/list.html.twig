@@ -14,7 +14,7 @@
                 <strong class="govuk-tag govuk-phase-banner__content__tag ">
                     beta </strong> <span class="govuk-phase-banner__text">
       This is a new service – your
-      <a class="govuk-link" href="#">feedback</a> will help us to improve it.
+      <a class="govuk-link" href="https://www.surveymonkey.co.uk/r/ZHV7B2S">feedback</a> will help us to improve it.
     </span>
             </p>
         </div>
@@ -76,15 +76,24 @@
                         {# see https://studio24.github.io/frontend/templating/content-fields.html #}
                         <h2 class="govuk-heading-m">Browse by category</h2>
                         <ul class="govuk-list">
-                            {% for pillar in pillars.pillars %}
+
+                            {% for pillar_item in pillars.pillars %}
                                 <li>
-                                    {#{{ dump(pillar) }}#}
-                                    <a href="{{ path('frameworks_list_by_pillar', {'pillar': pillar.slug}) }}">{{ pillar.name }}</a>
+                                    {% if pillar is defined and pillar == pillar_item.name %}
+                                        <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug}) }}">{{ pillar_item.name }}</a>
+                                    {% else %}
+                                        <a href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug}) }}">{{ pillar_item.name }}</a>
+                                    {% endif %}
+
 
                                     <ul class="govuk-list">
-                                        {% for category in pillar.categories %}
+                                        {% for category_item in pillar_item.categories %}
                                             <li>
-                                                <a href="{{ path('frameworks_list_by_category', {'category': category.slug}) }}">{{ category.name }}</a>
+                                                {% if category is defined and category == category_item.name %}
+                                                    <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_category', {'category': category_item.slug}) }}">{{ category_item.name }}</a>
+                                                {% else %}
+                                                    <a href="{{ path('frameworks_list_by_category', {'category': category_item.slug}) }}">{{ category_item.name }}</a>
+                                                {% endif %}
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -191,7 +200,7 @@
                         {% for item in results %}
                             <li>
                                 <h3 class="govuk-heading-m ccs-heading-link govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22">
-                                    <a href="/frameworks/{{ item.content.rm_number }}">{{ item.content.title }}</a> {# <strong class="govuk-tag govuk-tag--subtle">{{ item.content.status }}</strong> #}
+                                    <a href="{{ path('frameworks_show', {'rmNumber':  item.content.rm_number }) }}">{{ item.content.title }}</a> {# <strong class="govuk-tag govuk-tag--subtle">{{ item.content.status }}</strong> #}
                                 </h3>
                                 <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
                                     <li><strong>Framework
@@ -204,20 +213,24 @@
                                             Date:</strong> {{ item.content.end_date.format('d/m/Y') }}
                                     </li>
                                 </ul>
-                                <p>{{ item.content.summary }}</p>
+                                <p class="govuk-body-s">{{ item.content.summary | striptags }}</p>
                             </li>
                         {% endfor %}
                     </ul>
 
 
                     {# Pagination #}
-
-                    {% if category is defined %}
-                        {{ include('includes/pagination.category.html.twig', {'pagination': pagination, 'route': 'frameworks_list_by_category', 'category': category}) }}
+                    {% if pillar is defined %}
+                    {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_pillar', 'options': {'pillar': pillar_slug}} %}
+                    {% elseif category is defined %}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_category', 'options': {'category': category_slug}} %}
                     {% else %}
-                        {{ include('includes/pagination.html.twig', {'pagination': pagination, 'route': 'frameworks_list'}) }}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list', 'options': {}} %}
                     {% endif %}
 
+                    {% if pagination.totalPages > 1 %}
+                        {{ include('includes/pagination.html.twig', pagination_data) }}
+                    {% endif %}
 
                 </div>
             </div>

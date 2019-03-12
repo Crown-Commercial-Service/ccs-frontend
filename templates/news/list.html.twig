@@ -9,13 +9,15 @@
     {% for page in pages %}
 
         <p>
+            {% if page.content.image %}
             <img src="{{ page.content.image.byName('medium') }}" alt="{{ page.content.image.alt }}" />
+            {% endif %}
             <a href="{{ url('news_page', {'slug': page.urlSlug}) }}">{{ page.title }}</a>
             {{ page.datePublished.format('d.m.Y') }}
         </p>
 
     {% endfor %}
 
-    {{ include('includes/pagination.html.twig', {'pagination': pages.pagination, 'route': 'news_list'}) }}
+    {{ include('includes/pagination.html.twig', {'pagination': pages.pagination, 'route': 'news_list', 'options': {}}) }}
 
 {% endblock %}

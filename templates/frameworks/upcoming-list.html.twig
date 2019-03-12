@@ -1,0 +1,348 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
+
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
+
+        <div class="govuk-phase-banner">
+            <p class="govuk-phase-banner__content">
+                <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                    beta </strong> <span class="govuk-phase-banner__text">
+      This is a new service – your
+      <a class="govuk-link" href="https://www.surveymonkey.co.uk/r/ZHV7B2S">feedback</a> will help us to improve it.
+    </span>
+            </p>
+        </div>
+
+
+        <div class="govuk-breadcrumbs">
+            <ol class="govuk-breadcrumbs__list">
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
+                </li>
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                    Upcoming deals
+                </li>
+            </ol>
+        </div>
+
+
+
+
+
+        <!-- required wrapper 2 -->
+        <main id="main-content"  class="govuk-main-wrapper">
+
+
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+
+
+
+                    <h1 class="govuk-heading-xl page-title">Upcoming deals</h1>
+
+                    <p class="govuk-body-l govuk-!-width-three-quarters">If you would like to find out more about the scope of any of these procurements please
+                        <a href="sdgjnf">contact us</a>.</p>
+
+
+
+
+
+                    {#{{ dump(awarded_pipeline) }}#}
+                    {#{{ dump(underway_pipeline) }}#}
+                    {#{{ dump(dynamic_purchasing_systems) }}#}
+                    {#{{ dump(planned_pipeline) }}#}
+                    {#{{ dump(future_pipeline) }}#}
+
+
+
+                    {% if awarded_pipeline %}
+
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements recently awarded</h2>
+
+                        <table class="govuk-table ccs-table--upcoming-deals">
+                            <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.
+                            </caption>
+                            <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                    Category
+                                </th>
+                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                    Framework title
+                                </th>
+                                <th class="govuk-table__header govuk-table__header--numeric govuk-!-font-size-19" scope="col">
+                                    Expected live
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="govuk-table__body">
+
+
+                                {% for upcoming_deal in awarded_pipeline %}
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-font-size-16">
+                                    {{ upcoming_deal.category }}
+                                </td>
+                                <td class="govuk-table__cell">
+                                    <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
+                                        <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
+                                    </p>
+                                    <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Framework ID:</strong> {{ upcoming_deal.rm_number }}</p>
+                                </td>
+                                <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
+                                    {% if upcoming_deal.expected_live_date is not null %}
+                                        {{ upcoming_deal.expected_live_date.format('d/m/Y') }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    {% endif %}
+
+
+
+
+                    {% if underway_pipeline %}
+
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements in progress</h2>
+
+                        <table class="govuk-table ccs-table--upcoming-deals">
+                            <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.
+                            </caption>
+                            <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                    Category
+                                </th>
+                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                    Framework title
+                                </th>
+                                <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
+                                    Tenders close date
+                                </th>
+                                <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
+                                    Expected award date
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="govuk-table__body">
+
+                        {% for upcoming_deal in underway_pipeline %}
+
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell govuk-!-font-size-16">
+                                    {{ upcoming_deal.category }}
+                                </td>
+                                <td class="govuk-table__cell">
+                                    <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
+                                        <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
+                                    </p>
+                                    <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Framework ID:</strong> {{ upcoming_deal.rm_number }}</p>
+                                </td>
+                                <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
+                            {% if upcoming_deal.tenders_close_date is not null %}
+                                {{ upcoming_deal.tenders_close_date.format('d/m/Y') }}
+                            {% endif %}
+                                </td>
+                                <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
+                                    {% if upcoming_deal.expected_award_date is not null  %}
+                                        {{ upcoming_deal.expected_award_date.format('d/m/Y') }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+
+                        {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    {% endif %}
+
+
+
+
+
+
+                    {% if dynamic_purchasing_systems %}
+
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Dynamic Purchasing Systems currently open</h2>
+
+                        <table class="govuk-table ccs-table--upcoming-deals">
+                            <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.
+                            </caption>
+                            <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                    Category
+                                </th>
+                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                    Framework title
+                                </th>
+                                <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
+                                    Expected live
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="govuk-table__body">
+
+                            {% for upcoming_deal in dynamic_purchasing_systems %}
+
+                                <tr class="govuk-table__row">
+                                    <td class="govuk-table__cell govuk-!-font-size-16">
+                                        {{ upcoming_deal.category }}
+                                    </td>
+                                    <td class="govuk-table__cell">
+                                        <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
+                                            <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
+                                        </p>
+                                        <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Framework ID:</strong> {{ upcoming_deal.rm_number }}</p>
+                                    </td>
+                                    <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
+                                        {% if upcoming_deal.expected_live_date is not null  %}
+                                            {{ upcoming_deal.expected_live_date.format('d/m/Y') }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    {% endif %}
+
+
+
+
+
+
+
+
+                    {% if planned_pipeline %}
+
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Planned procurements</h2>
+
+                        <table class="govuk-table ccs-table--upcoming-deals">
+                            <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.
+                            </caption>
+                            <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                    Category
+                                </th>
+                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                    Framework title
+                                </th>
+                                <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
+                                    Tenders open
+                                </th>
+                                <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
+                                    Expected live
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="govuk-table__body">
+
+                            {% for upcoming_deal in planned_pipeline %}
+
+                                <tr class="govuk-table__row">
+                                    <td class="govuk-table__cell govuk-!-font-size-16">
+                                        {{ upcoming_deal.category }}
+                                    </td>
+                                    <td class="govuk-table__cell">
+                                        <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
+                                            <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
+                                        </p>
+                                        <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Framework ID:</strong> {{ upcoming_deal.rm_number }}</p>
+                                    </td>
+                                    <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
+                                        {% if upcoming_deal.tenders_open_date is not null %}
+                                            {{ upcoming_deal.tenders_open_date.format('M Y') }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
+                                        {% if upcoming_deal.expected_live_date is not null  %}
+                                            {{ upcoming_deal.expected_live_date.format('d/m/Y') }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    {% endif %}
+
+
+
+
+
+
+
+                    {% if future_pipeline %}
+
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Future pipeline</h2>
+
+                        <table class="govuk-table ccs-table--upcoming-deals">
+                            <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.
+                            </caption>
+                            <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                    Category
+                                </th>
+                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                    Framework title
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="govuk-table__body">
+
+                            {% for upcoming_deal in future_pipeline %}
+
+                                <tr class="govuk-table__row">
+                                    <td class="govuk-table__cell govuk-!-font-size-16">
+                                        {{ upcoming_deal.category }}
+                                    </td>
+                                    <td class="govuk-table__cell">
+                                        <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
+                                            <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
+                                        </p>
+                                        <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Framework ID:</strong> {{ upcoming_deal.rm_number }}</p>
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+
+                    {% endif %}
+
+
+
+
+
+
+
+
+                </div>
+
+            </div>
+
+
+        </main>
+    </div>
+
+
+{% endblock %}

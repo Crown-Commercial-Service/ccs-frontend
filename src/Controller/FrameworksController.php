@@ -7,6 +7,7 @@ use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Studio24\Frontend\Cms\RestData;
+use Symfony\Component\HttpFoundation\Request;
 
 class FrameworksController extends AbstractController
 {
@@ -40,19 +41,43 @@ class FrameworksController extends AbstractController
      * @throws \Studio24\Frontend\Exception\PaginationException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function list(int $page = 1)
+    public function list(int $page = 1, Request $request)
     {
+        $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page);
+        $results->getPagination()->setResultsPerPage(20);
+
         $data = [
             'pagination' => $results->getPagination(),
             'results'    => $results,
             'categories' => FrameworkCategories::getAll(),
             'pillars'       => FrameworkCategories::getAllPillars()
         ];
-        dump($results);
 
         return $this->render('frameworks/list.html.twig', $data);
     }
+
+
+    public function upcomingDeals(Request $request)
+    {
+        $this->api->setContentType('upcoming_deals');
+        $this->api->setCacheKey($request->getRequestUri());
+
+        // @todo At present need to pass fake ID since API method is intended to return one item with an ID, review this
+        $results = $this->api->getOne(0);
+
+        $data = [
+            'awarded_pipeline'              => $results->getContent()->get('awarded_pipeline'),
+            'underway_pipeline'             => $results->getContent()->get('underway_pipeline'),
+            'dynamic_purchasing_systems'    => $results->getContent()->get('dynamic_purchasing_systems'),
+            'planned_pipeline'              => $results->getContent()->get('planned_pipeline'),
+            'future_pipeline'               => $results->getContent()->get('future_pipeline'),
+        ];
+
+        return $this->render('frameworks/upcoming-list.html.twig', $data);
+    }
+
+
 
     /**
      * List frameworks by category
@@ -67,7 +92,7 @@ class FrameworksController extends AbstractController
      * @throws \Studio24\Frontend\Exception\PaginationException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function listByCategory(string $category, int $page = 1)
+    public function listByCategory(string $category, int $page = 1, Request $request)
     {
         // Map category slug to category db value
         $categoryName = FrameworkCategories::getDbValueBySlug($category);
@@ -75,7 +100,9 @@ class FrameworksController extends AbstractController
             $this->redirectToRoute('frameworks_list');
         }
 
+        $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page, ['category' => $categoryName]);
+        $results->getPagination()->setResultsPerPage(20);
 
         $data = [
             'category'      => $categoryName,
@@ -101,7 +128,7 @@ class FrameworksController extends AbstractController
      * @throws \Studio24\Frontend\Exception\PaginationException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function listByPillar(string $pillar, int $page = 1)
+    public function listByPillar(string $pillar, int $page = 1, Request $request)
     {
         // Map category slug to category db value
         $pillarName = FrameworkCategories::getDbValueBySlug($pillar);
@@ -109,7 +136,9 @@ class FrameworksController extends AbstractController
             $this->redirectToRoute('frameworks_list');
         }
 
+        $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page, ['pillar' => $pillarName]);
+        $results->getPagination()->setResultsPerPage(20);
 
         $data = [
             'pillar'        => $pillarName,
@@ -134,8 +163,9 @@ class FrameworksController extends AbstractController
      * @throws \Studio24\Frontend\Exception\FailedRequestException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function show(string $rmNumber)
+    public function show(string $rmNumber, Request $request)
     {
+        $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->getOne($rmNumber);
         $data = [
             'framework' => $results
@@ -157,14 +187,17 @@ class FrameworksController extends AbstractController
      * @throws \Studio24\Frontend\Exception\PaginationException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function suppliersOnFramework(string $rmNumber, int $page = 1)
+    public function suppliersOnFramework(string $rmNumber, int $page = 1, Request $request)
     {
         // Set custom API endpoint
-        // @todo Find better wauy to set custom endpoint URLs
+        // @todo Find better way to set custom endpoint URLs
         $this->api->getContentModel()->getContentType('framework_suppliers')->setApiEndpoint(sprintf('ccs/v1/framework-suppliers/%s', $rmNumber));
         $this->api->setContentType('framework_suppliers');
 
+        $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page);
+        $results->getPagination()->setResultsPerPage(4);
+
         $data = [
             'pagination'    => $results->getPagination(),
             'results'       => $results,
@@ -173,27 +206,37 @@ class FrameworksController extends AbstractController
         return $this->render('frameworks/framework-suppliers.html.twig', $data);
     }
 
-    public function suppliersOnLot(string $rmNumber, string $lotNumber)
-    {
-        // @todo Create Lot API endpoint, grabbing data from framework for now
-        $results = $this->api->getOne($rmNumber);
 
-        $lots = $results->getContent()->get('lots');
-        $lot = false;
-        if (is_iterable($lots)) {
-            foreach ($lots as $item) {
-                if ($item['lot_number'] == $lotNumber) {
-                    $lot = $item;
-                }
-            }
-        }
+    /**
+     * Return suppliers on a lot
+     *
+     * @param string $rmNumber
+     * @param string $lotNumber
+     * @param int $page
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentFieldNotSetException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PaginationException
+     * @throws \Studio24\Frontend\Exception\PermissionException
+     */
+    public function suppliersOnLot(string $rmNumber, string $lotNumber, int $page = 1, Request $request)
+    {
+        $this->api->getContentModel()->getContentType('framework_lot_suppliers')->setApiEndpoint(sprintf('ccs/v1/lot-suppliers/%s/lot/%s', $rmNumber, $lotNumber));
+        $this->api->setContentType('framework_lot_suppliers');
+
+        $this->api->setCacheKey($request->getRequestUri());
+        $results = $this->api->list($page);
+        $results->getPagination()->setResultsPerPage(4);
 
         $data = [
-            'framework' => $results,
-            'lot' => $lot
+            'pagination'    => $results->getPagination(),
+            'results'       => $results,
+            'metadata'      => $results->getMetadata()
         ];
 
         return $this->render('frameworks/lot-suppliers.html.twig', $data);
     }
-
 }
