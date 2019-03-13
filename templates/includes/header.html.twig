@@ -24,44 +24,20 @@
         </span>
             </button>
 
-            {{ render(controller(
-                'App\\Controller\\MenuController::menu',
-                { 'id': 21, 'templatePath': 'menus/default-menu.html.twig' }
-            )) }}
 
             {% block mainnavigation %}
             <nav class="global-navigation" data-toggle="nav">
-                {#<ul class="nav-list nav-list--secondary">#}
-                    {#<li class="nav-list__item">#}
-                        {#<a class="nav-list__link" href="/template/38-generic">About CCS</a>#}
-                    {#</li>#}
-                    {#<li class="nav-list__item">#}
-                        {#<a class="nav-list__link" href="/contact">Contact CCS</a>#}
-                    {#</li>#}
-                    {#<li class="nav-list__item">#}
-                        {#<a class="nav-list__link" href="/template/41-42-news-listing">News</a></li>#}
-                    {#<li class="nav-list__item">#}
-                        {#<a class="nav-list__link" href="/template/36-how-to-buy">Help and#}
-                            {#support</a></li>#}
-                    {#<li class="nav-list__item">#}
-                        {#<a class="nav-list__link" href="tel:0345 410#}
-                            {#2222">Helpline: 0345 410#}
-                            {#2222</a></li>#}
-                {#</ul>#}
-                <ul class="nav-list nav-list--primary">
-                    <li class="nav-list__item">
-                        <a class="nav-list__link" href="/frameworks">Search
-                            frameworks</a></li>
-                    <li class="nav-list__item">
-                        <a class="nav-list__link" href="/suppliers">Search
-                            suppliers</a></li>
-                    <li class="nav-list__item">
-                        <a class="nav-list__link" href="/frameworks/upcoming">Upcoming deals</a>
-                    </li>
-                    {#<li class="nav-list__item">#}
-                        {#<a class="nav-list__link" href="link">Products and#}
-                            {#services</a></li>#}
-                </ul>
+
+                {{ render(controller(
+                    'App\\Controller\\MenuController::menu',
+                    { 'id': 22, 'templatePath': 'menus/secondary-menu.html.twig' }
+                )) }}
+
+                {{ render(controller(
+                    'App\\Controller\\MenuController::menu',
+                    { 'id': 21, 'templatePath': 'menus/primary-menu.html.twig' }
+                )) }}
+
             </nav>
 
             {% endblock %}
