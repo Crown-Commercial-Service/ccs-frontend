@@ -1,23 +1,150 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-news.html.twig' %}
 
 {% block body %}
 
-    <h1>News and Views</h1>
 
-    <p>Displaying {{ pages.pagination.totalResults|number_format }} results, Page {{ pages.pagination.page }} of {{ pages.pagination.totalPages }}</p>
 
-    {% for page in pages %}
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
 
-        <p>
-            {% if page.content.image %}
-            <img src="{{ page.content.image.byName('medium') }}" alt="{{ page.content.image.alt }}" />
-            {% endif %}
-            <a href="{{ url('news_page', {'slug': page.urlSlug}) }}">{{ page.title }}</a>
-            {{ page.datePublished.format('d.m.Y') }}
-        </p>
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
-    {% endfor %}
 
-    {{ include('includes/pagination.html.twig', {'pagination': pages.pagination, 'route': 'news_list', 'options': {}}) }}
+        {#<div class="govuk-breadcrumbs">#}
+        {#<ol class="govuk-breadcrumbs__list">#}
+        {#<li class="govuk-breadcrumbs__list-item">#}
+        {#<a class="govuk-breadcrumbs__link" href="/">Home</a>#}
+        {#</li>#}
+        {#<!--<li class="govuk-breadcrumbs__list-item">-->#}
+        {#<!--<a class="govuk-breadcrumbs__link" href="2-3-frameworks-search-result">Search frameworks</a>-->#}
+        {#<!--</li>-->#}
+        {#<li class="govuk-breadcrumbs__list-item" aria-current="page">#}
+        {#Search framework#}
+        {#</li>#}
+        {#</ol>#}
+        {#</div>#}
+
+
+        <!-- required wrapper 2 -->
+        <main id="main-content" class="govuk-main-wrapper">
+
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+
+
+                    {#<h1>News and Views</h1>#}
+
+                    {#<p>Displaying {{ pages.pagination.totalResults|number_format }} results, Page {{ pages.pagination.page }} of {{ pages.pagination.totalPages }}</p>#}
+
+                    {% if pages %}
+                    <ul class="news-listing">
+
+                    {% for page in pages %}
+
+                        {#{{ dump(page) }}#}
+
+                        <li class="news-listing__item">
+                            <picture>
+                                <a href="{{ url('news_page', {'slug': page.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
+                                    {% if page.featuredImage %}
+                                        <img src="{{ page.featuredImage.url }}" alt="{{ page.featuredImage.alt }}" aria-hidden="true" />
+                                    {% endif %}
+                                    {#<img src="/assets/images/news-thumb.png" alt="" aria-hidden="true">#}
+                                </a>
+                            </picture>
+                            <div class="news-listing__item__caption">
+                                <div class="news-listing-meta">taxonomy | {{ page.datePublished.format('jS F Y') }}
+                                </div>
+                                <h2 class="news-listing-title"><a href="{{ url('news_page', {'slug': page.urlSlug}) }}">{{ page.title }}</a></h2>
+
+                                {% if page.content.post_lead_text %}
+                                <p class="news-listing-summary">
+                                    {{ page.content.post_lead_text }}
+                                </p>
+                                {% endif %}
+
+
+                            </div>
+                        </li>
+
+                        {#<p>#}
+                            {#{% if page.content.featuredImage %}#}
+                                {#<img src="{{ page.content.featuredImage.byName('medium') }}" alt="{{ page.content.featuredImage.alt }}" />#}
+                            {#{% endif %}#}
+                            {#<a href="">{{ page.title }}</a>#}
+                            {#{{ page.datePublished.format('d.m.Y') }}#}
+                        {#</p>#}
+
+                    {% endfor %}
+
+                    </ul>
+                    {% endif %}
+
+                    {{ include('includes/pagination.html.twig', {'pagination': pages.pagination, 'route': 'news_list', 'options': {}}) }}
+
+
+                    {#<ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination">#}
+                        {#<li class="pagination__item pagination__item--previous">#}
+                            {#<a href="#">#}
+                            {#<span class="icon">#}
+                                {#<svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M6.7 0l1.4 1.4-4.3 4.3h13v2H3.9l4.2 4-1.4 1.4L0 6.7z" fill="#007194" fill-rule="evenodd"/></svg>#}
+                            {#</span> <span>Previous</span> </a>#}
+                        {#</li>#}
+                        {#<li class="pagination__item">#}
+                            {#<a href="#">#}
+                                {#<span class="visuallyhidden">Page</span>1<span class="visuallyhidden">of 123</span>#}
+                            {#</a>#}
+                        {#</li>#}
+                        {#<li class="pagination__item">#}
+                            {#<span>…</span>#}
+                        {#</li>#}
+                        {#<li class="pagination__item">#}
+                            {#<a href="#">#}
+                                {#<span class="visuallyhidden">Page</span>40<span class="visuallyhidden">of 123</span>#}
+                            {#</a>#}
+                        {#</li>#}
+                        {#<li class="pagination__item">#}
+                            {#<a href="#" rel="prev">#}
+                                {#<span class="visuallyhidden">Page</span>41<span class="visuallyhidden">of 123</span>#}
+                            {#</a>#}
+                        {#</li>#}
+                        {#<li class="pagination__item">#}
+                            {#<span class="visuallyhidden">You’re currently on page</span>42<span class="visuallyhidden">of 123</span>#}
+                        {#</li>#}
+                        {#<li class="pagination__item">#}
+                            {#<a href="#" rel="next">#}
+                                {#<span class="visuallyhidden">Page</span>43<span class="visuallyhidden">of 123</span>#}
+                            {#</a>#}
+                        {#</li>#}
+                        {#<li class="pagination__item">#}
+                            {#<a href="#">#}
+                                {#<span class="visuallyhidden">Page</span>44<span class="visuallyhidden">of 123</span>#}
+                            {#</a>#}
+                        {#</li>#}
+                        {#<li class="pagination__item">#}
+                            {#<span>…</span>#}
+                        {#</li>#}
+                        {#<li class="pagination__item">#}
+                            {#<a href="#">#}
+                                {#<span class="visuallyhidden">Page</span>123<span class="visuallyhidden">of 123</span>#}
+                            {#</a>#}
+                        {#</li>#}
+                        {#<li class="pagination__item pagination__item--next">#}
+                            {#<a href="#"> <span>Next</span> <span class="icon">#}
+                                {#<svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"/></svg>#}
+                            {#</span> </a>#}
+                        {#</li>#}
+                    {#</ul>#}
+
+
+                </div>
+            </div>
+
+
+        </main>
+    </div>
+
+
 
 {% endblock %}
