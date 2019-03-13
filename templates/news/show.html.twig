@@ -6,7 +6,7 @@
             {% if page.featuredImage %}
                 header-global header-global--news-details
             {% else %}
-                header-global
+                header-global header-global--news-details
             {% endif %}
         {% endblock %}
 
@@ -20,7 +20,6 @@
             <div class="govuk-width-container">
                 <div class="news--featured">
 
-                    {% dump(page) %}
                     <div class="news-listing-meta--featured">News | {{ page.datePublished|date('jS F Y') }}</div>
                     <h1 class="govuk-heading-xl govuk-!-font-size-48 page-title news-listing-title--featured">{{ page.title }}</h1>
 
@@ -42,7 +41,7 @@
                     <a class="govuk-breadcrumbs__link" href="/news">News</a>
                 </li>
                 <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                {{ page.title }} - to update
+                {{ page.title }}
                 </li>
             </ol>
         </div>
