@@ -153,3 +153,5 @@ form_insurance_services_nda_thanks:
 page:
   path: /{slug}
   controller: App\Controller\PageController::page
+  requirements:
+    slug: .+
