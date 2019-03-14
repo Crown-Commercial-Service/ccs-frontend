@@ -1,9 +1,9 @@
 content_types:
   page:
     api_endpoint: wp/v2/pages
-    content_fields: pages.yaml
   news:
     api_endpoint: wp/v2/posts
+    content_fields: news.yaml
   upcoming_deals:
     api_endpoint: ccs/v1/upcoming-deals
     content_fields: upcoming-deals.yaml
@@ -19,3 +19,11 @@ content_types:
   suppliers:
     api_endpoint: ccs/v1/suppliers
     content_fields: suppliers.yaml
+
+global:
+  image_sizes:
+    - thumbnail
+    - medium
+    - medium_large
+    - large
+    - full

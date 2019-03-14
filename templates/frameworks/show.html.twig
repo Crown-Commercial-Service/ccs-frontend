@@ -2,6 +2,37 @@
 
 {% block body %}
 
+    {% set frameworkStatus = null %}
+
+    {# Take today's date and subtract 3 months from it #}
+    {% set today = "now"|date_modify("-3 months")|date('Y-m-d') %}
+    {# Do a range comparison using http://php.net/manual/en/datetime.diff.php #}
+    {% set difference = date(today).diff(date(framework.content.start_date)) %}
+
+    {# This is for debugging only #}
+    {#{% if difference.invert %}#}
+    {#this date is further than 3 months#}
+    {#{% else %}#}
+    {#this date is in range#}
+    {#{% endif %}#}
+
+    {% if framework.content.status == "Future (Pipeline)" %}
+        {% set frameworkStatus = "upcoming" %}
+    {% elseif framework.content.status == "Planned (Pipeline)" %}
+        {% set frameworkStatus = "upcoming" %}
+    {% elseif framework.content.status == "Underway (Pipeline)" %}
+        {% set frameworkStatus = "upcoming" %}
+    {% elseif framework.content.status == "Live" and framework.content.term == "DPS" %}
+        {# Dynamic Purchasing Systems currently open #}
+        {% set frameworkStatus = "upcoming" %}
+    {% elseif (framework.content.status == "Awarded (Pipeline)" or (framework.content.status == "Live" and framework.content.term != "DPS" and not difference.invert) ) %}
+        {# Procurements recently awarded #}
+        {% set frameworkStatus = "upcoming" %}
+    {% else %}
+        {% set frameworkStatus = "live" %}
+    {% endif %}
+
+
 
     <!-- required wrapper 1 -->
     <div class="govuk-width-container">
@@ -25,11 +56,11 @@
                     <a class="govuk-breadcrumbs__link" href="#">Home</a>
                 </li>
                 <li class="govuk-breadcrumbs__list-item">
-                    <a class="govuk-breadcrumbs__link" href="/frameworks">Search
+                    <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_list') }}">Search
                         frameworks</a>
                 </li>
                 <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                    Framework details
+                    {{ framework.content.title }}
                 </li>
             </ol>
         </div>
@@ -39,348 +70,390 @@
         <main id="main-content" class="govuk-main-wrapper">
 
 
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
+            {% if frameworkStatus == "live" %}
 
-                    {% if framework.content.status == 'Expired - Data Still Received' %}
-                        <div class="govuk-warning-text">
-                            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                            <strong class="govuk-warning-text__text">
-                                <span class="govuk-warning-text__assistive">Important</span>
-                                Expired framework - This information is for
-                                reference only</strong>
-                        </div>
-                    {% endif %}
 
+
+
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+
+                        {% if framework.content.status == 'Expired - Data Still Received' %}
+                            <div class="govuk-warning-text">
+                                <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                                <strong class="govuk-warning-text__text">
+                                    <span class="govuk-warning-text__assistive">Important</span>
+                                    Expired framework - This information is for
+                                    reference only</strong>
+                            </div>
+                        {% endif %}
+
+                    </div>
                 </div>
-            </div>
 
 
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
 
-                    {#<h1 class="govuk-heading-xl page-title">Apleona HSG Ltd. {framework title} which span multiple lines&nbsp;<strong class="govuk-tag govuk-tag--subtle">Expired</strong></h1>#}
-                    <h1 class="govuk-heading-xl page-title">{{ framework.content.title }}</h1>
+                        {#<h1 class="govuk-heading-xl page-title">Apleona HSG Ltd. {framework title} which span multiple lines&nbsp;<strong class="govuk-tag govuk-tag--subtle">Expired</strong></h1>#}
+                        <h1 class="govuk-heading-xl page-title">{{ framework.content.title }}</h1>
 
-                    {# https://twig.symfony.com/doc/2.x/filters/raw.html #}
-                    {# https://twig.symfony.com/doc/2.x/filters/striptags.html #}
-                    <div class="govuk-body-l">{{ framework.content.summary | striptags }}</div>
-
-
-                    {{ framework.content.upcoming_deal_details }}
+                        {# https://twig.symfony.com/doc/2.x/filters/raw.html #}
+                        {# https://twig.symfony.com/doc/2.x/filters/striptags.html #}
+                        <div class="govuk-body-l">{{ framework.content.summary | striptags }}</div>
 
 
-                    {# see https://studio24.github.io/frontend/templating/content-fields.html #}
-                    {# see https://studio24.github.io/frontend/templating/debugging.html #}
-                    {{ dump(framework) }}
+                        {# see https://studio24.github.io/frontend/templating/content-fields.html #}
+                        {# see https://studio24.github.io/frontend/templating/debugging.html #}
+                        {#{{ dump(framework) }}#}
 
-                    {#<p>unallocated content on some frameworks</p>#}
-                    {#<ul>#}
-                    {#<li><code>tenders_open_date</code>: {{ framework.content.tenders_open_date }}</li>#}
-                    {#<li><code>tenders_close_date</code>: {{ framework.content.tenders_close_date }}</li>#}
-                    {#<li><code>expected_live_date</code>: {{ framework.content.expected_live_date }}</li>#}
-                    {#<li><code>expected_award_date</code>: {{ framework.content.expected_award_date }}</li>#}
-                    {#</ul>#}
-
-
-                    <div class="govuk-accordion" data-module="accordion" id="accordion-default">
+                        {#<p>unallocated content on some frameworks</p>#}
+                        {#<ul>#}
+                        {#<li><code>tenders_open_date</code>: {{ framework.content.tenders_open_date }}</li>#}
+                        {#<li><code>tenders_close_date</code>: {{ framework.content.tenders_close_date }}</li>#}
+                        {#<li><code>expected_live_date</code>: {{ framework.content.expected_live_date }}</li>#}
+                        {#<li><code>expected_award_date</code>: {{ framework.content.expected_award_date }}</li>#}
+                        {#</ul>#}
 
 
-                        {% if framework.content.updates %}
-                        <div class="govuk-accordion__section ">
-                        <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading">
+                        <div class="govuk-accordion" data-module="accordion" id="accordion-default">
+
+
+                            {% if framework.content.updates %}
+                                <div class="govuk-accordion__section ">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
                         <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
                         Updates
                         </span>
-                        </h2>
-                        </div>
-                        <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                                        </h2>
+                                    </div>
+                                    <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
 
-                            <div class="wysiwyg-content">
-                                {{ framework.content.updates | raw }}
-                            </div>
+                                        <div class="wysiwyg-content">
+                                            {{ framework.content.updates | raw }}
+                                        </div>
 
-                        </div>
-                        </div>
-                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
 
 
 
-                        {% if framework.content.description %}
-                            <div class="govuk-accordion__section ">
-                                <div class="govuk-accordion__section-header">
-                                    <h2 class="govuk-accordion__section-heading">
+                            {% if framework.content.description %}
+                                <div class="govuk-accordion__section ">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
         <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
           Description
         </span>
-                                    </h2>
-                                </div>
-                                <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">
-
-                                    <div class="wysiwyg-content">
-                                        {{ framework.content.description | raw }}
+                                        </h2>
                                     </div>
+                                    <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">
 
+                                        <div class="wysiwyg-content">
+                                            {{ framework.content.description | raw }}
+                                        </div>
+
+                                    </div>
                                 </div>
-                            </div>
-                        {% endif %}
+                            {% endif %}
 
 
 
-                        {% if framework.content.benefits %}
-                            <div class="govuk-accordion__section ">
-                                <div class="govuk-accordion__section-header">
-                                    <h2 class="govuk-accordion__section-heading">
+                            {% if framework.content.benefits %}
+                                <div class="govuk-accordion__section ">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
         <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
           Benefits
         </span>
-                                    </h2>
-                                </div>
-                                <div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3">
-
-                                    <div class="wysiwyg-content">
-                                        {{ framework.content.benefits | raw }}
+                                        </h2>
                                     </div>
+                                    <div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3">
 
+                                        <div class="wysiwyg-content">
+                                            {{ framework.content.benefits | raw }}
+                                        </div>
+
+                                    </div>
                                 </div>
-                            </div>
-                        {% endif %}
+                            {% endif %}
 
 
-                        <div class="govuk-accordion__section ">
-                            <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading">
+                            <div class="govuk-accordion__section ">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
         <span class="govuk-accordion__section-button" id="accordion-default-heading-4">
           Products and suppliers
         </span>
-                                </h2>
+                                    </h2>
+                                </div>
+                                <div id="accordion-default-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4">
+
+
+                                    {#{{ framework.content.lots|length }}#}
+
+                                    {#<ul>#}
+                                    {#{% for lot in framework.content.lots|sort %}#}
+                                    {#<li>{{ loop.index }}:: {{ lot.lot_number }}:: {{ lot.status }}:: {{ lot.expiry_date }}</li>#}
+                                    {#{% endfor %}#}
+                                    {#</ul>#}
+
+
+
+                                    {# Expected `type` values;
+
+                                    - Upcoming deal
+                                    - Standard framework
+                                    - DPS
+                                    - G-cloud
+
+                                    #}
+                                    {#{% if framework.content.type is 'DPS' %}#}
+                                    {#<p>Please read the 'How to buy' tab below for detailed instructions on how to find out which suppliers are on this framework.</p>#}
+                                    {#{% endif %}#}
+
+                                    {#{% if framework.content.type is 'G-cloud' %}#}
+                                    {#<p><a href="https://www.digitalmarketplace.service.gov.uk/">Digital Marketplace</a> has the constantly updated list of the suppliers on this framework.</p>#}
+                                    {#{% endif %}#}
+
+                                    <p>There are
+                                        <a href="{{ path('frameworks_suppliers', {'rmNumber': framework.content.rm_number }) }}">{{ framework.content.total_suppliers }}
+                                            suppliers</a> on this framework.</p>
+
+
+                                    <dl class="apollo-list apollo-list--definition">
+                                        {% for lot in framework.content.lots|sort %}
+                                            <dt class="apollo-list--definition__key">
+                                                Lot {{ lot.lot_number }}
+                                                : {{ lot.title }}</dt>
+                                            <dd class="apollo-list--definition__value">
+                                                {% if lot.description %}
+                                                    <div class="govuk-!-margin-bottom-2">{{ lot.description }}</div>
+                                                {% endif %}
+
+                                                {% if lot.expiry_date is defined %}
+                                                    <p class>Expires:
+                                                        <time>{{ lot.expiry_date.format('d/m/Y') }}</time>
+                                                    </p>
+                                                {% endif %}
+
+                                                {% if lot.suppliers|length == 0 %}
+                                                    <p>No suppliers</p>
+                                                {% else %}
+                                                    <p>
+                                                        <a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }}
+                                                            suppliers</a></p>
+                                                {% endif %}
+
+                                            </dd>
+                                        {% endfor %}
+                                    </dl>
+
+
+                                </div>
                             </div>
-                            <div id="accordion-default-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4">
 
 
-                                {#{{ framework.content.lots|length }}#}
-
-                                {#<ul>#}
-                                {#{% for lot in framework.content.lots|sort %}#}
-                                {#<li>{{ loop.index }}:: {{ lot.lot_number }}:: {{ lot.status }}:: {{ lot.expiry_date }}</li>#}
-                                {#{% endfor %}#}
-                                {#</ul>#}
-
-
-
-                                {# Expected `type` values;
-
-                                - Upcoming deal
-                                - Standard framework
-                                - DPS
-                                - G-cloud
-
-                                #}
-                                {#{% if framework.content.type is 'DPS' %}#}
-                                {#<p>Please read the 'How to buy' tab below for detailed instructions on how to find out which suppliers are on this framework.</p>#}
-                                {#{% endif %}#}
-
-                                {#{% if framework.content.type is 'G-cloud' %}#}
-                                {#<p><a href="https://www.digitalmarketplace.service.gov.uk/">Digital Marketplace</a> has the constantly updated list of the suppliers on this framework.</p>#}
-                                {#{% endif %}#}
-
-                                <p>There are
-                                    <a href="{{ path('frameworks_suppliers', {'rmNumber': framework.content.rm_number }) }}">{{ framework.content.total_suppliers }}
-                                        suppliers</a> on this framework.</p>
-
-
-                                <dl class="apollo-list apollo-list--definition">
-                                    {% for lot in framework.content.lots|sort %}
-                                        <dt class="apollo-list--definition__key">Lot {{ lot.lot_number }}: {{ lot.title }}</dt>
-                                        <dd class="apollo-list--definition__value">
-                                            {% if lot.description %}
-                                                <div class="govuk-!-margin-bottom-2">{{ lot.description }}</div>
-                                            {% endif %}
-
-                                            {% if lot.expiry_date is defined %}
-                                            <p class>Expires:
-                                            <time>{{ lot.expiry_date.format('d/m/Y') }}</time>
-                                            </p>
-                                            {% endif %}
-
-                                            {% if lot.suppliers|length == 0 %}
-                                                <p>No suppliers</p>
-                                            {% else %}
-                                                <p>
-                                                    <a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }}
-                                                        suppliers</a></p>
-                                            {% endif %}
-
-                                        </dd>
-                                    {% endfor %}
-                                </dl>
-
-
-                            </div>
-                        </div>
-
-
-                        {% if framework.content.how_to_buy %}
-                        <div class="govuk-accordion__section ">
-                        <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading">
+                            {% if framework.content.how_to_buy %}
+                                <div class="govuk-accordion__section ">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
                         <span class="govuk-accordion__section-button" id="accordion-default-heading-5">
                         How to buy
                         </span>
-                        </h2>
-                        </div>
-                        <div id="accordion-default-content-5" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-5">
+                                        </h2>
+                                    </div>
+                                    <div id="accordion-default-content-5" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-5">
 
-                            <div class="wysiwyg-content">
-                                {{ framework.content.how_to_buy | raw }}
-                            </div>
+                                        <div class="wysiwyg-content">
+                                            {{ framework.content.how_to_buy | raw }}
+                                        </div>
 
-                        </div>
-                        </div>
-                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
 
 
 
-                        {% if framework.content.documents %}
-                        <div class="govuk-accordion__section ">
-                        <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading">
+                            {% if framework.content.documents %}
+                                <div class="govuk-accordion__section ">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
                         <span class="govuk-accordion__section-button" id="accordion-default-heading-6">
                         Documents
                         </span>
-                        </h2>
+                                        </h2>
+                                    </div>
+                                    <div id="accordion-default-content-6" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-6">
+
+                                        {#<h3 class="govuk-heading-s">Updates</h3>#}
+                                        {#<p class="govuk-body">15/10/2018 - Further#}
+                                        {#Competition Template updated We now have a#}
+                                        {#new section that is particularly relevant#}
+                                        {#for long-term contracts.#}
+
+                                        {#25/04/2018 - Order form updated The new form#}
+                                        {#now includes a longer description field.#}
+                                        {#</p>#}
+
+
+                                        <h3 class="govuk-heading-s">Titles</h3>
+                                        <ul class="govuk-list">
+                                            {% for document in framework.content.documents %}
+                                                <li>
+                                                    <a href="{{ document.url }}">{{ document.title }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+
+
+                                        {#<table class="govuk-table">#}
+                                        {#<caption class="govuk-table__caption visuallyhidden">Documents#}
+                                        {#and days they were last updated.#}
+                                        {#</caption>#}
+                                        {#<thead class="govuk-table__head">#}
+                                        {#<tr class="govuk-table__row">#}
+                                        {#<th class="govuk-table__header" scope="col">#}
+                                        {#Updated#}
+                                        {#</th>#}
+                                        {#<th class="govuk-table__header" scope="col">#}
+                                        {#Title#}
+                                        {#</th>#}
+                                        {#</tr>#}
+                                        {#</thead>#}
+                                        {#<tbody class="govuk-table__body">#}
+                                        {#<tr class="govuk-table__row">#}
+                                        {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
+                                        {#<time class="govuk-list--documents__datetime">#}
+                                        {#16/08/2018#}
+                                        {#</time>#}
+                                        {#</td>#}
+                                        {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
+                                        {#<a href="{url to source}">Buyers#}
+                                        {#Guide</a></td>#}
+                                        {#</tr>#}
+                                        {#</tbody>#}
+                                        {#</table>#}
+
+                                    </div>
+
+
+                                </div>
+                            {% endif %}
+
+
                         </div>
-                        <div id="accordion-default-content-6" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-6">
-
-                        {#<h3 class="govuk-heading-s">Updates</h3>#}
-                        {#<p class="govuk-body">15/10/2018 - Further#}
-                        {#Competition Template updated We now have a#}
-                        {#new section that is particularly relevant#}
-                        {#for long-term contracts.#}
-
-                        {#25/04/2018 - Order form updated The new form#}
-                        {#now includes a longer description field.#}
-                        {#</p>#}
 
 
-                        <h3 class="govuk-heading-s">Titles</h3>
-                        <ul class="govuk-list">
-                            {% for document in framework.content.documents %}
-                                <li><a href="{{ document.url }}">{{ document.title }}</a></li>
-                            {% endfor %}
-                        </ul>
-
-
-                        {#<table class="govuk-table">#}
-                        {#<caption class="govuk-table__caption visuallyhidden">Documents#}
-                        {#and days they were last updated.#}
-                        {#</caption>#}
-                        {#<thead class="govuk-table__head">#}
-                        {#<tr class="govuk-table__row">#}
-                        {#<th class="govuk-table__header" scope="col">#}
-                        {#Updated#}
-                        {#</th>#}
-                        {#<th class="govuk-table__header" scope="col">#}
-                        {#Title#}
-                        {#</th>#}
-                        {#</tr>#}
-                        {#</thead>#}
-                        {#<tbody class="govuk-table__body">#}
-                        {#<tr class="govuk-table__row">#}
-                        {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                        {#<time class="govuk-list--documents__datetime">#}
-                        {#16/08/2018#}
-                        {#</time>#}
-                        {#</td>#}
-                        {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
-                        {#<a href="{url to source}">Buyers#}
-                        {#Guide</a></td>#}
-                        {#</tr>#}
-                        {#</tbody>#}
-                        {#</table>#}
-
+                        <div class="app-c-print-link">
+                            <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">
+                                Print this page
+                            </button>
                         </div>
 
 
+                    </div>
+                    <div class="govuk-grid-column-one-third">
 
-                        </div>
+
+                        <aside class="aside">
+
+                            <div class="apollo-enclosure">
+
+                                <h2 class="aside__heading">Key facts</h2>
+
+                                <dl class="govuk-list govuk-list--definition">
+                                    <dt>Framework ID</dt>
+                                    <dd class="apollo-list--definition__value">
+                                        {{ framework.content.rm_number }}
+                                    </dd>
+                                    <dt>Start date</dt>
+                                    <dd class="apollo-list--definition__value">
+                                        {{ framework.content.start_date.format('d/m/Y') }}
+                                    </dd>
+                                    <dt>End date</dt>
+                                    <dd class="apollo-list--definition__value">
+                                        {{ framework.content.end_date.format('d/m/Y') }}
+                                    </dd>
+                                    <dt>Lots</dt>
+                                    <dd class="apollo-list--definition__value">
+                                        {{ framework.content.lots|length }}
+                                    </dd>
+                                    {#
+                                    Upcoming deal
+                                    Standard framework
+                                    DPS
+                                    G-cloud
+                                    #}
+                                    {#{% if framework.content.type is not 'DPS' %}#}
+                                    <dt>Suppliers</dt>
+                                    <dd class="apollo-list--definition__value">
+                                        {{ framework.content.total_suppliers }}
+                                    </dd>
+                                    {#{% endif %}#}
+                                </dl>
+                            </div>
+
+                            <div class="apollo-enclosure">
+                                <h2 class="aside__heading">Contact</h2>
+
+                                <p class="govuk-body">CCS customer services team
+                                    is available Monday to Friday, 9am to
+                                    5pm.</p>
+                                <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">
+                                    Email:</h3>
+                                <p class="govuk-body">
+                                    <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a>
+                                </p>
+                                <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">
+                                    Telephone:</h3>
+                                <p class="govuk-body">0345 410 2222</p>
+                            </div>
+
+                        </aside>
+
+
+                    </div>
+                </div>
+
+
+
+
+
+
+            {% else %}
+
+
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+
+                        <h1 class="govuk-heading-xl page-title">{{ framework.content.title }}</h1>
+
+                        {% if framework.content.summary %}
+                            <div class="govuk-body-l">{{ framework.content.summary | striptags }}</div>
                         {% endif %}
 
+                        {{ dump(framework) }}
+
+
+                        {# Start of wysiwyg content #}
+                        {% if framework.content.upcoming_deal_details %}
+                            <div class="wysiwyg-content">
+
+                                {{ framework.content.upcoming_deal_details | raw }}
+
+                            </div>
+                        {% endif %}
+                        {# End of wysiwyg content #}
 
 
                     </div>
-
-
-                    <div class="app-c-print-link">
-                        <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">
-                            Print this page
-                        </button>
-                    </div>
-
-
                 </div>
-                <div class="govuk-grid-column-one-third">
 
 
-                    <aside class="aside">
-
-                        <div class="apollo-enclosure">
-
-                            <h2 class="aside__heading">Key facts</h2>
-
-                            <dl class="govuk-list govuk-list--definition">
-                                <dt>Framework ID</dt>
-                                <dd class="apollo-list--definition__value">
-                                    {{ framework.content.rm_number }}
-                                </dd>
-                                <dt>Start date</dt>
-                                <dd class="apollo-list--definition__value">
-                                    {{ framework.content.start_date.format('d/m/Y') }}
-                                </dd>
-                                <dt>End date</dt>
-                                <dd class="apollo-list--definition__value">
-                                    {{ framework.content.end_date.format('d/m/Y') }}
-                                </dd>
-                                <dt>Lots</dt>
-                                <dd class="apollo-list--definition__value">
-                                    {{ framework.content.lots|length }}
-                                </dd>
-                                {#
-                                Upcoming deal
-                                Standard framework
-                                DPS
-                                G-cloud
-                                #}
-                                {#{% if framework.content.type is not 'DPS' %}#}
-                                <dt>Suppliers</dt>
-                                <dd class="apollo-list--definition__value">
-                                    {{ framework.content.total_suppliers }}
-                                </dd>
-                                {#{% endif %}#}
-                            </dl>
-                        </div>
-
-                        <div class="apollo-enclosure">
-                            <h2 class="aside__heading">Contact</h2>
-
-                            <p class="govuk-body">CCS customer services team is
-                                available Monday to Friday, 9am to 5pm.</p>
-                            <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">
-                                Email:</h3>
-                            <p class="govuk-body">
-                                <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a>
-                            </p>
-                            <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">
-                                Telephone:</h3>
-                            <p class="govuk-body">0345 410 2222</p>
-                        </div>
-
-                    </aside>
-
-
-                </div>
-            </div>
+            {% endif %}
 
 
         </main>
