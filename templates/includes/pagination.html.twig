@@ -30,7 +30,7 @@
                 </a></li>
         {% endif %}
     {% endfor %}
-    {% if pagination.page < pagination.last and pageLinks[4] < (pagination.last - 1) %}
+    {% if pagination.page < pagination.last and max(pageLinks) < (pagination.last - 1) %}
         <li class="pagination__item">…</li>
         <li class="pagination__item">
             <a href="{{ path(route, options|merge({'page': pagination.last})) }}"><span class="visuallyhidden">Page </span>{{ pagination.last }}
