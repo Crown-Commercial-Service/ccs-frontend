@@ -6,13 +6,13 @@
             {% if page.featuredImage %}
                 header-global header-global--news-details
             {% else %}
-                header-global
+                header-global header-global--news-details
             {% endif %}
         {% endblock %}
 
         {% block headerstyles %}
             {% if page.featuredImage %}
-                style="background-size: cover; background-image: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.75) 41%, rgba(0,0,0,0.6) 71%, rgba(0,0,0,0.3) 100%), url(https://ccsheretohelp.uk/wp-content/uploads/2019/01/Highways-England-Technology-Operations-Centre.jpg);"
+                style="background-size: cover; background-image: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.75) 41%, rgba(0,0,0,0.6) 71%, rgba(0,0,0,0.3) 100%), url({{ page.featuredImage.url }});"
             {% endif %}
         {% endblock %}
 
@@ -20,7 +20,6 @@
             <div class="govuk-width-container">
                 <div class="news--featured">
 
-                    {% dump(page) %}
                     <div class="news-listing-meta--featured">News | {{ page.datePublished|date('jS F Y') }}</div>
                     <h1 class="govuk-heading-xl govuk-!-font-size-48 page-title news-listing-title--featured">{{ page.title }}</h1>
 
@@ -42,7 +41,7 @@
                     <a class="govuk-breadcrumbs__link" href="/news">News</a>
                 </li>
                 <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                {{ page.title }} - to update
+                {{ page.title }}
                 </li>
             </ol>
         </div>
@@ -52,8 +51,6 @@
 
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
-
-                {#<h1 class="govuk-heading-xl page-title">New data protection legislation is coming: How to ensure data processing contracts comply with the law</h1>#}
 
                 {% if page.content.post_lead_text %}
                 <p class="govuk-body-l">
