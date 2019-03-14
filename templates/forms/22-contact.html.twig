@@ -34,7 +34,7 @@
 
 
         <!-- required wrapper 2 -->
-        <main id="main-content"  class="govuk-main-wrapper">
+        <main id="main-content" class="govuk-main-wrapper">
 
 
             {#<div class="govuk-grid-row">#}
@@ -52,15 +52,31 @@
                     <h1 class="govuk-heading-xl page-title">Contact CCS</h1>
 
 
-                    <p class="govuk-body-l">You can contact us by email, phone or using the enquiry form below.</p>
+                    <p class="govuk-body-l">You can contact us by email, phone
+                        or using the enquiry form below.</p>
 
-                    <h2 class="govuk-heading-m">Email</h2>
-                    <p><a href="mailto:info@crowncommercial.govuk">info@crowncommercial.govuk</a></p>
-                    <h2 class="govuk-heading-m">Phone</h2>
-                    <p><a href="tel:03454102222">0345 410 2222</a></p>
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-one-quarter">
+                            <h2 class="govuk-heading-m">Email:</h2>
+                        </div>
+                        <div class="govuk-grid-column-three-quarters">
+                            <p class="govuk-!-font-size-24">
+                                <a href="mailto:info@crowncommercial.govuk">info@crowncommercial.govuk</a>
+                            </p>
+                        </div>
+                    </div>
 
-                    <p>CCS customer services team is available Monday to Friday, 9am to 5pm.</p>
-
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-one-quarter">
+                            <h2 class="govuk-heading-m">Phone:</h2>
+                        </div>
+                        <div class="govuk-grid-column-three-quarters">
+                            <p class="govuk-!-font-size-24">
+                                <a href="tel:03454102222">0345 410 2222</a></p>
+                            <p>CCS customer services team is available Monday to
+                                Friday, 9am to 5pm.</p>
+                        </div>
+                    </div>
 
 
                     <!-- form -->
@@ -70,10 +86,11 @@
                         {# Change these field types to hidden for Production #}
                         <input type="hidden" name="orgid" value="{{ web_to_case_orgid }}">
                         {# Post-submit redirect URL #}
-                        <input type="hidden" name="retURL" value="{{ site_url }}/contact/thanks"> <!-- add the redirect url here-->
-                        <input type="hidden" id="priority" name="priority" value="Green" />
-                        <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
-                        <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
+                        <input type="hidden" id="returnURL" name="retURL" value="{{ site_url }}/contact/thanks">
+                        <!-- add the redirect url here-->
+                        <input type="hidden" id="priority" name="priority" value="Green"/>
+                        <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}"/>
+                        {#<input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />#}
 
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
@@ -87,7 +104,7 @@
                             <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading">
-                                        Type of enquiry (could this be used to populate the `subject` field in Salesforce)
+                                        Type of enquiry
                                     </h1>
                                 </legend>
                                 <span id="how-contacted-conditional-hint" class="govuk-hint">
@@ -95,20 +112,27 @@
     </span>
                                 <div class="govuk-radios govuk-radios--conditional" data-module="radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="how-contacted" type="radio" value="Website - Enquiry" data-aria-controls="conditional-how-contacted-conditional-1">
+                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="subject" type="radio" value="Website - Enquiry" data-aria-controls="conditional-how-contacted-conditional-1">
                                         <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-1">
-                                            General enquiry
-                                        </label>
+                                            General enquiry </label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-2" name="how-contacted" type="radio" value="Website - Complaint" data-aria-controls="conditional-how-contacted-conditional-2">
+                                        <input class="govuk-radios__input" id="how-contacted-conditional-2" name="subject" type="radio" value="Website - Complaint" data-aria-controls="conditional-how-contacted-conditional-2">
                                         <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">
-                                            Complaint
-                                        </label>
+                                            Complaint </label>
                                     </div>
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-2">
                                         <div class="govuk-form-group">
-                                            <p>We're sorry to hear you're unhappy with CCS. We will respond in 2 working days with the name of the person dealing with your complaint and any actions taken. We will communicate progress of your complaint at least every 10 days until your complaint is resolved.</p>
+                                            <p>We're sorry to hear you're
+                                                unhappy with CCS. We will
+                                                respond in 2 working days with
+                                                the name of the person dealing
+                                                with your complaint and any
+                                                actions taken. We will
+                                                communicate progress of your
+                                                complaint at least every 10 days
+                                                until your complaint is
+                                                resolved.</p>
                                         </div>
 
                                     </div>
@@ -119,20 +143,19 @@
 
                         {# wrapper class for error states; `govuk-form-group--error`  #}
                         <div class="govuk-form-group --govuk-form-group--error">
-                            <label class="govuk-label" for="name">
-                                Name (combined from First name and Last name)
-                            </label>
+                            <label class="govuk-label" for="name"> Name
+                                (combined from First name and Last
+                                name) </label>
                             {#<span id="full-name-error" class="govuk-error-message">#}
-    {#Descriptive and helpful error message#}
-  {#</span>#}
+                            {#Descriptive and helpful error message#}
+                            {#</span>#}
                             {# input class for error states; `govuk-input--error`  #}
-                            <input class="govuk-input --govuk-input--error" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" />
+                            <input class="govuk-input --govuk-input--error" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text"/>
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="email">
-                                Email
-                            </label>
-                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="text" />
+                                Email </label>
+                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="text"/>
                         </div>
 
 
@@ -145,80 +168,70 @@
                                 </legend>
                                 <div class="govuk-checkboxes">
                                     <div class="govuk-checkboxes__item">
-                                        <input class="govuk-checkboxes__input" id="00Nb0000009IXEg" name="00Nb0000009IXEg" type="checkbox" value="1" />
+                                        <input class="govuk-checkboxes__input" id="00Nb0000009IXEg" name="00Nb0000009IXEg" type="checkbox" value="1"/>
                                         <label class="govuk-label govuk-checkboxes__label" for="00Nb0000009IXEg">
-                                            Yes
-                                        </label>
+                                            Yes </label>
                                     </div>
                                 </div>
                             </fieldset>
                         </div>
                         <div class="govuk-form-group">
-                            <label class="govuk-label" for="name">
-                                Telephone number (optional)
-                            </label>
-                            <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text" />
+                            <label class="govuk-label" for="name"> Telephone
+                                number (optional) </label>
+                            <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text"/>
                         </div>
-
-
-
 
 
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="company">
-                                Organisation
-                            </label>
-                            <input class="govuk-input" id="company" maxlength="80" name="company" size="20" type="text" />
+                                Organisation </label>
+                            <input class="govuk-input" id="company" maxlength="80" name="company" size="20" type="text"/>
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="00Nb0000009IXEs">
-                                Job title
-                            </label>
-                            <input class="govuk-input" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" />
+                                Job title </label>
+                            <input class="govuk-input" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text"/>
                         </div>
                         <div class="govuk-form-group govuk-!-width-one-half">
                             <label class="govuk-label" for="post-code">
-                                Organisation post code
-                            </label>
-                            <input class="govuk-input" id="post-code" maxlength="100" name="post-code" size="20" type="text" />
+                                Organisation post code </label>
+                            <input class="govuk-input" id="post-code" maxlength="100" name="post-code" size="20" type="text"/>
+                        </div>
+
+
+                        <div id="conditional-fields" class="govuk-radios__conditional--hidden">
+                            <div class="govuk-form-group">
+                                <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                                        <h1 class="govuk-fieldset__heading">
+                                            Is your complaint about
+                                        </h1>
+                                    </legend>
+                                    <div class="govuk-checkboxes">
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="complaint-1" name="complaint" type="checkbox" value="Service">
+                                            <label class="govuk-label govuk-checkboxes__label" for="complaint-1">
+                                                Service </label>
+                                        </div>
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="complaint-2" name="complaint" type="checkbox" value="Supplier staff">
+                                            <label class="govuk-label govuk-checkboxes__label" for="complaint-2">
+                                                Supplier staff </label>
+                                        </div>
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="complaint-3" name="complaint" type="checkbox" value="Other">
+                                            <label class="govuk-label govuk-checkboxes__label" for="complaint-3">
+                                                Other </label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
                         </div>
 
 
                         <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                                    <h1 class="govuk-fieldset__heading">
-                                        Is your complaint about (conditional on selecting `complaint` in radio. Not a Salesforce field)
-                                    </h1>
-                                </legend>
-                                <div class="govuk-checkboxes">
-                                    <div class="govuk-checkboxes__item">
-                                        <input class="govuk-checkboxes__input" id="complaint-1" name="complaint" type="checkbox" value="Service">
-                                        <label class="govuk-label govuk-checkboxes__label" for="complaint-1">
-                                            Service
-                                        </label>
-                                    </div>
-                                    <div class="govuk-checkboxes__item">
-                                        <input class="govuk-checkboxes__input" id="complaint-2" name="complaint" type="checkbox" value="Supplier staff">
-                                        <label class="govuk-label govuk-checkboxes__label" for="complaint-2">
-                                            Supplier staff
-                                        </label>
-                                    </div>
-                                    <div class="govuk-checkboxes__item">
-                                        <input class="govuk-checkboxes__input" id="complaint-3" name="complaint" type="checkbox" value="Other">
-                                        <label class="govuk-label govuk-checkboxes__label" for="complaint-3">
-                                            Other
-                                        </label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-
-
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="more-detail">
-                                Can you provide more detail?
-                            </label>
+                            <label class="govuk-label" for="more-detail"> Can
+                                you provide more detail? </label>
                             <span id="more-detail-hint" class="govuk-hint">
     Do not include personal or financial information, like your credit card details.
   </span>
@@ -226,10 +239,12 @@
                         </div>
 
                         {# Catch-all field for additional Salesforce data #}
-                        <input type="hidden" class="govuk-!-width-full" name="description" id="salesforce-textarea" />
+                        <input type="hidden" class="govuk-!-width-full" name="description" id="salesforce-textarea"/>
 
                         <div class="govuk-form-group">
-                            <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Send enquiry</button>
+                            <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">
+                                Send enquiry
+                            </button>
                         </div>
 
                     </form>
@@ -237,7 +252,7 @@
                     <script>
 
                         // Collect all the radio values
-                        fieldCheckboxes = document.getElementsByName("complaint");
+                        fieldCheckboxes = document.getElementsByName("subject");
 
                         // Collect the Postcode value
                         fieldPostCode = document.getElementById("post-code");
@@ -248,8 +263,28 @@
                         // The field were we collect all the data for Salesforce
                         dataCollectionFieldForSalesforce = document.getElementById("salesforce-textarea");
 
+                        // Set up the custom fields. We need to update the retURL field depending on the `fieldCheckboxes` values
+                        retURLfield = document.getElementById("returnURL");
+                        condtionalFields = document.getElementById("conditional-fields");
                         generalEnquiryReturnURL = "{{ site_url }}/contact/thanks";
                         complaintReturnURL = "{{ site_url }}/contact/thanks/complaint";
+
+                        for (var i = 0; i < fieldCheckboxes.length; i++) {
+
+                            fieldCheckboxes[i].addEventListener('click', function (e) {
+
+                                if (this.value === "Website - Complaint" && this.checked) {
+                                    retURLfield.value = complaintReturnURL;
+                                    condtionalFields.classList.remove("govuk-radios__conditional--hidden")
+                                }
+
+                                if (this.value === "Website - Enquiry" && this.checked) {
+                                    retURLfield.value = generalEnquiryReturnURL;
+                                    condtionalFields.classList.add("govuk-radios__conditional--hidden")
+                                }
+
+                            }, false);
+                        }
 
 
                         // We gather the data once the user submits the form
@@ -257,11 +292,9 @@
 
                         formSubmitButton.addEventListener('click', function (e) {
 
-                            for (var i = 0, length = fieldCheckboxes.length; i < length; i++)
-                            {
+                            for (var i = 0, length = fieldCheckboxes.length; i < length; i++) {
 
-                                if (fieldCheckboxes[i].checked)
-                                {
+                                if (fieldCheckboxes[i].checked) {
                                     // do whatever you want with the checked radio
                                     // alert(fieldCheckboxes[i].value);
                                     dataCollectionFieldForSalesforce.value += fieldCheckboxes[i].name + ": " + fieldCheckboxes[i].value + ", ";
@@ -275,8 +308,6 @@
                         }, false);
 
                     </script>
-
-
 
 
                 </div>
