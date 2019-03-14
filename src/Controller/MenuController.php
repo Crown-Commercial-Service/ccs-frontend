@@ -39,6 +39,8 @@ class MenuController extends AbstractController
     {
         $menu = $this->api->getMenu($id);
 
+        $menu->setBaseUrls(getenv('APP_CMS_BASE_URL'), getenv('APP_BASE_URL'));
+
         return $this->render($templatePath, [
             'menu' => $menu
         ]);
