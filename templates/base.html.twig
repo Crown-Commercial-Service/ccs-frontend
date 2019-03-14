@@ -8,7 +8,7 @@
     <title>{% block title %}CCS{% endblock %}</title>
 
     <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
-    {% block header %}
+    {% block head %}
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -38,7 +38,10 @@
 
 <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
 
-{{ include('/includes/header.html.twig') }}
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+    {% endembed %}
+{% endblock %}
 
 {% block body %}{% endblock %}
 

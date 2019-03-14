@@ -1,7 +1,4 @@
-index:
-    path: /
-    controller: App\Controller\TempTemplateController::home
-
+# System routes
 temp_page_templates:
   path: /template/{slug}
   controller: App\Controller\TempTemplateController::pageTemplate
@@ -10,8 +7,13 @@ healthcheck:
   path: /health
   controller: App\Controller\PageController::healthcheck
 
+# Page routes
+home:
+  path: /
+  controller: App\Controller\TempTemplateController::home
+
 frameworks_list:
-  path: /frameworks/{page}
+  path: /agreements/{page}
   controller: App\Controller\FrameworksController::list
   requirements:
     page: '\d+'
@@ -19,11 +21,11 @@ frameworks_list:
     page: 1
 
 frameworks_upcoming_deals:
-  path: /frameworks/upcoming
+  path: /agreements/upcoming
   controller: App\Controller\FrameworksController::upcomingDeals
 
 frameworks_list_by_category:
-  path: /frameworks/category/{category}/{page}
+  path: /agreements/category/{category}/{page}
   controller: App\Controller\FrameworksController::listByCategory
   requirements:
     page: '\d+'
@@ -31,7 +33,7 @@ frameworks_list_by_category:
     page: 1
 
 frameworks_list_by_pillar:
-  path: /frameworks/pillar/{pillar}/{page}
+  path: /agreements/pillar/{pillar}/{page}
   controller: App\Controller\FrameworksController::listByPillar
   requirements:
     page: '\d+'
@@ -39,11 +41,11 @@ frameworks_list_by_pillar:
     page: 1
 
 frameworks_show:
-  path: /frameworks/{rmNumber}
+  path: /agreements/{rmNumber}
   controller: App\Controller\FrameworksController::show
 
 frameworks_suppliers:
-  path: /frameworks/{rmNumber}/suppliers/{page}
+  path: /agreements/{rmNumber}/suppliers/{page}
   controller: App\Controller\FrameworksController::suppliersOnFramework
   requirements:
     page: '\d+'
@@ -51,7 +53,7 @@ frameworks_suppliers:
     page: 1
 
 frameworks_lot_suppliers:
-  path: /frameworks/{rmNumber}:{lotNumber}/lot-suppliers/{page}
+  path: /agreements/{rmNumber}:{lotNumber}/lot-suppliers/{page}
   controller: App\Controller\FrameworksController::suppliersOnLot
   requirements:
     page: '\d+'
@@ -153,3 +155,5 @@ form_insurance_services_nda_thanks:
 page:
   path: /{slug}
   controller: App\Controller\PageController::page
+  requirements:
+    slug: .+
