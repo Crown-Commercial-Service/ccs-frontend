@@ -24,7 +24,7 @@
                <a class="govuk-breadcrumbs__link" href="/">Home</a>
             </li>
             <li class="govuk-breadcrumbs__list-item">
-               <a class="govuk-breadcrumbs__link" href="/frameworks">Search frameworks</a>
+               <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_list') }}">Search frameworks</a>
             </li>
             <li class="govuk-breadcrumbs__list-item">
                <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_show', {'rmNumber':  metadata.framework_rm_number }) }}">{{  metadata.framework_title }}</a>
