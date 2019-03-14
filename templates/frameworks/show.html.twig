@@ -235,7 +235,8 @@
                                                     <div class="govuk-!-margin-bottom-2">{{ lot.description }}</div>
                                                 {% endif %}
 
-                                                {% if lot.expiry_date is defined %}
+                                                {# Sometimes, such RM1018, lots are `null` so check for both #}
+                                                {% if lot.expiry_date is defined and lot.expiry_date is not null %}
                                                     <p class>Expires:
                                                         <time>{{ lot.expiry_date.format('d/m/Y') }}</time>
                                                     </p>
