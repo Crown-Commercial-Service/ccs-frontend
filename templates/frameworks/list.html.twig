@@ -48,9 +48,10 @@
                     {% elseif pillar is defined %}
                         <h1 class="govuk-heading-xl page-title">Frameworks in
                             the {{ pillar }} category</h1>
+                    {% elseif query is defined %}
+                        <h1 class="govuk-heading-xl page-title">Search frameworks for {{ query }}</h1>
                     {% else %}
-                        <h1 class="govuk-heading-xl page-title">Search
-                            frameworks</h1>
+                        <h1 class="govuk-heading-xl page-title">Search frameworks</h1>
                     {% endif %}
 
                 </div>
@@ -60,13 +61,13 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-third">
 
-                    <form action="">
+                    <form action="{{ path('frameworks_search') }}" method="GET">
 
                         <div class="govuk-form-group govuk-form-group--enclosure">
                             <div class="govuk-form-group">
                                 <label class="govuk-label" for="name"> Search
                                     frameworks </label>
-                                <input class="govuk-input input--search-icon" id="name" name="name" type="text">
+                                <input class="govuk-input input--search-icon" id="q" name="q" type="text">
                                 <button type="submit" class="visuallyhidden">
                                     Search frameworks
                                 </button>
