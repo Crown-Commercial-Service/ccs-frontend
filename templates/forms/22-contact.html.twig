@@ -67,14 +67,13 @@
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
                     <form class="govuk-!-width-three-quarters" action="{{ web_to_case_post_url }}" method="POST">
 
-                        <p><em>Hidden Salesforce fields</em></p>
                         {# Change these field types to hidden for Production #}
-                        <input type="text" name="orgid" value="{{ web_to_case_orgid }}">
+                        <input type="hidden" name="orgid" value="{{ web_to_case_orgid }}">
                         {# Post-submit redirect URL #}
-                        <input type="text" name="retURL" value="{{ site_url }}/contact/thanks"> <!-- add the redirect url here-->
-                        <input type="text" id="priority" name="priority" value="Green" />
-                        <input type="text" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
-                        <input type="text" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
+                        <input type="hidden" name="retURL" value="{{ site_url }}/contact/thanks"> <!-- add the redirect url here-->
+                        <input type="hidden" id="priority" name="priority" value="Green" />
+                        <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
+                        <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
 
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
@@ -104,7 +103,7 @@
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="how-contacted-conditional-2" name="how-contacted" type="radio" value="Website - Complaint" data-aria-controls="conditional-how-contacted-conditional-2">
                                         <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">
-                                            Complaint (should reveal more fields at bottom of form)
+                                            Complaint
                                         </label>
                                     </div>
                                     <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-2">
@@ -118,14 +117,16 @@
                         </div>
 
 
-                        <div class="govuk-form-group { govuk-form-group--error }">
+                        {# wrapper class for error states; `govuk-form-group--error`  #}
+                        <div class="govuk-form-group --govuk-form-group--error">
                             <label class="govuk-label" for="name">
                                 Name (combined from First name and Last name)
                             </label>
-                            <span id="full-name-error" class="govuk-error-message">
-    Descriptive and helpful error message
-  </span>
-                            <input class="govuk-input { govuk-input--error }" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" />
+                            {#<span id="full-name-error" class="govuk-error-message">#}
+    {#Descriptive and helpful error message#}
+  {#</span>#}
+                            {# input class for error states; `govuk-input--error`  #}
+                            <input class="govuk-input --govuk-input--error" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" />
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="email">
@@ -139,7 +140,7 @@
                             <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading">
-                                        Do you require a callback? (Changed from two radios to one checkbox and moved to before Tel field)
+                                        Do you require a callback?
                                     </h1>
                                 </legend>
                                 <div class="govuk-checkboxes">
@@ -177,7 +178,7 @@
                         </div>
                         <div class="govuk-form-group govuk-!-width-one-half">
                             <label class="govuk-label" for="post-code">
-                                Organisation post code (not a Salesforce field)
+                                Organisation post code
                             </label>
                             <input class="govuk-input" id="post-code" maxlength="100" name="post-code" size="20" type="text" />
                         </div>
@@ -227,10 +228,8 @@
                         {# Catch-all field for additional Salesforce data #}
                         <input type="hidden" class="govuk-!-width-full" name="description" id="salesforce-textarea" />
 
-                        <p>Depending on if the customer choses general or complaint, the retURL field needs to be changed.</p>
-
                         <div class="govuk-form-group">
-                            <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Send enquiry (Updated copy)</button>
+                            <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Send enquiry</button>
                         </div>
 
                     </form>
@@ -248,6 +247,10 @@
 
                         // The field were we collect all the data for Salesforce
                         dataCollectionFieldForSalesforce = document.getElementById("salesforce-textarea");
+
+                        generalEnquiryReturnURL = "{{ site_url }}/contact/thanks";
+                        complaintReturnURL = "{{ site_url }}/contact/thanks/complaint";
+
 
                         // We gather the data once the user submits the form
                         formSubmitButton = document.getElementById("submit");
