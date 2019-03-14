@@ -37,19 +37,19 @@
 
             <div class="govuk-footer__section">
 
-                {#{{ render(controller(#}
-                    {#'App\\Controller\\MenuController::menu',#}
-                    {#{ 'id': 24, 'templatePath': 'menus/footer-menu.html.twig' }#}
-                {#)) }}#}
+                {{ render(controller(
+                    'App\\Controller\\MenuController::menu',
+                    { 'id': 24, 'templatePath': 'menus/footer-menu.html.twig' }
+                )) }}
 
             </div>
 
             <div class="govuk-footer__section">
 
-                {#{{ render(controller(#}
-                    {#'App\\Controller\\MenuController::menu',#}
-                    {#{ 'id': 25, 'templatePath': 'menus/footer-menu.html.twig' }#}
-                {#)) }}#}
+                {{ render(controller(
+                    'App\\Controller\\MenuController::menu',
+                    { 'id': 25, 'templatePath': 'menus/footer-menu.html.twig' }
+                )) }}
 
             </div>
 
