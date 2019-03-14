@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class MenuController extends AbstractController
 {
@@ -42,6 +43,13 @@ class MenuController extends AbstractController
 
         if (empty($menu)) {
             return new Response();
+        }
+
+        $cmsBaseUrl = getenv('APP_CMS_BASE_URL');
+        $appBaseUrl = getenv('APP_BASE_URL');
+
+        if (empty($cmsBaseUrl) || empty($appBaseUrl)) {
+            throw new HttpException(500, 'You must set APP_CMS_BASE_URL and APP_BASE_URL environment variables in your .env or .env.local');
         }
 
         $menu->setBaseUrls(getenv('APP_CMS_BASE_URL'), getenv('APP_BASE_URL'));
