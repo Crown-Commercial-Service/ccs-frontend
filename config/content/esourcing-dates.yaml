@@ -1,0 +1,10 @@
+buyer_dates:
+  type: array
+  content_fields:
+    date:
+      type: datetime
+supplier_dates:
+  type: array
+  content_fields:
+    date:
+      type: datetime
