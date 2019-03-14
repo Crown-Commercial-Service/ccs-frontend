@@ -72,3 +72,11 @@ live_frameworks:
           type: richtext
         expiry_date:
           type: date
+        supplier_contact_name:
+          type: text
+        supplier_contact_email:
+          type: text
+        supplier_trading_name:
+          type: text
+        supplier_website_contact:
+          type: text
