@@ -107,7 +107,7 @@
 
                         {# see https://studio24.github.io/frontend/templating/content-fields.html #}
                         {# see https://studio24.github.io/frontend/templating/debugging.html #}
-                        {#{{ dump(framework) }}#}
+                        {{ dump(framework) }}
 
                         {#<p>unallocated content on some frameworks</p>#}
                         {#<ul>#}
@@ -212,6 +212,7 @@
                                     - G-cloud
 
                                     #}
+                                    {{ framework.content.type }}
                                     {#{% if framework.content.type is 'DPS' %}#}
                                     {#<p>Please read the 'How to buy' tab below for detailed instructions on how to find out which suppliers are on this framework.</p>#}
                                     {#{% endif %}#}
