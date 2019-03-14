@@ -118,9 +118,7 @@ form_newsletter_thanks:
 
 form_esourcing_training:
   path: /esourcing-training
-  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-  defaults:
-    template: forms/31-esourcing-training.html.twig
+  controller: App\Controller\FormController::eSourcingTraining
 
 form_esourcing_training_thanks:
   path: /esourcing-training/thanks
