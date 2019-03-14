@@ -10,7 +10,7 @@ healthcheck:
 # Page routes
 home:
   path: /
-  controller: App\Controller\TempTemplateController::home
+  controller: App\Controller\PageController::home
 
 frameworks_list:
   path: /agreements/{page}
