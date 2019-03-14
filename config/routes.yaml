@@ -1,7 +1,4 @@
-home:
-    path: /
-    controller: App\Controller\TempTemplateController::home
-
+# System routes
 temp_page_templates:
   path: /template/{slug}
   controller: App\Controller\TempTemplateController::pageTemplate
@@ -9,6 +6,11 @@ temp_page_templates:
 healthcheck:
   path: /health
   controller: App\Controller\PageController::healthcheck
+
+# Page routes
+home:
+  path: /
+  controller: App\Controller\TempTemplateController::home
 
 frameworks_list:
   path: /agreements/{page}
