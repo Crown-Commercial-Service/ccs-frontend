@@ -9,6 +9,7 @@ use Studio24\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class MenuController extends AbstractController
 {
@@ -38,6 +39,10 @@ class MenuController extends AbstractController
     public function menu(int $id, string $templatePath = 'menus/default-menu.html.twig')
     {
         $menu = $this->api->getMenu($id);
+
+        if (empty($menu)) {
+            return new Response();
+        }
 
         $menu->setBaseUrls(getenv('APP_CMS_BASE_URL'), getenv('APP_BASE_URL'));
 
