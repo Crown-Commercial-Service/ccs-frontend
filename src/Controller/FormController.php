@@ -53,9 +53,6 @@ class FormController extends AbstractController
         $results = $this->api->getOne(0);
 
         $data = ['esourcingDates' => $results];
-        
-        print_r($data);
-        die();
 
         return $this->render('forms/31-esourcing-training.html.twig', $data);
     }
