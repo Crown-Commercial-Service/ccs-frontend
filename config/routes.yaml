@@ -1,4 +1,4 @@
-index:
+home:
     path: /
     controller: App\Controller\TempTemplateController::home
 
