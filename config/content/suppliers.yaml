@@ -78,5 +78,3 @@ live_frameworks:
           type: text
         supplier_trading_name:
           type: text
-        supplier_website_contact:
-          type: text
