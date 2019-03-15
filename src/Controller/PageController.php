@@ -6,9 +6,11 @@ namespace App\Controller;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
 use Studio24\Frontend\ContentModel\ContentModel;
+use Studio24\Frontend\Exception\ApiException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageController extends AbstractController
 {
@@ -30,19 +32,73 @@ class PageController extends AbstractController
     }
 
     /**
+     * Homepage
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PaginationException
+     * @throws \Studio24\Frontend\Exception\PermissionException
+     */
+    public function home(Request $request)
+    {
+        $this->api->setCacheKey($request->getRequestUri());
+
+        $this->api->setContentType('news');
+        $news = $this->api->listPages(1, ['limit' => 3]);
+
+        return $this->render('pages/home.html.twig', [
+            'news' => $news
+        ]);
+    }
+
+    /**
      * Generic page controller
      *
      * @param string $slug
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Studio24\Frontend\Exception\ApiException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PaginationException
+     * @throws \Studio24\Frontend\Exception\PermissionException
      */
     public function page(string $slug, Request $request)
     {
-        $this->api->setCacheKey($request->getRequestUri());
-        $page = $this->api->getPageBySlug($slug);
+        // @todo May need to look at mapping URLs to page IDs in the future
+
+        // Get end part of page slug which should allow us to retreive page in WordPress
+        $parts = explode('/', trim($slug, '/'));
+        $slug = end($parts);
+
+        try {
+            $this->api->setCacheKey($request->getRequestUri());
+            $page = $this->api->getPageBySlug($slug);
+
+        } catch (ApiException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
+        }
+
+        // Create breadcrumb
+        // @todo Improve breadcrumb creation
+        array_pop($parts);
+        $breadcrumb = [];
+        $link = '';
+        foreach ($parts as $part) {
+            $name = ucfirst(str_replace('-', ' ', $part));
+            $link .= '/' . $part;
+            $breadcrumb[$link] = $name;
+        }
 
         return $this->render('pages/page.html.twig', [
-            'page' => $page
+            'page'               => $page,
+            'breadcrumb_parents' => $breadcrumb,
         ]);
     }
 
