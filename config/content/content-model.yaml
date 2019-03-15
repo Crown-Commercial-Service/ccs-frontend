@@ -4,6 +4,9 @@ content_types:
   news:
     api_endpoint: wp/v2/posts
     content_fields: news.yaml
+    taxonomies:
+      - categories
+      - tags
   upcoming_deals:
     api_endpoint: ccs/v1/upcoming-deals
     content_fields: upcoming-deals.yaml
