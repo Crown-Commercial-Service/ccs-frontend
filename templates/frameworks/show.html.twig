@@ -443,9 +443,6 @@
                             <div class="govuk-body-l">{{ framework.content.summary | striptags }}</div>
                         {% endif %}
 
-                        {{ dump(framework) }}
-
-
                         {# Start of wysiwyg content #}
                         {% if framework.content.upcoming_deal_details %}
                             <div class="wysiwyg-content">
@@ -455,6 +452,14 @@
                             </div>
                         {% endif %}
                         {# End of wysiwyg content #}
+
+
+                        <div class="app-c-print-link">
+                            <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">
+                                Print this page
+                            </button>
+                        </div>
+
 
 
                     </div>
