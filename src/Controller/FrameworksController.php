@@ -172,12 +172,12 @@ class FrameworksController extends AbstractController
 
 
     /**
-     * @todo Search frameworks
+     * Search frameworks
+     *
      * @see http://ccs-agreements.cabinetoffice.localhost/wp-json/ccs/v1/frameworks/?keyword=RM6107
      * @see http://ccs-agreements.cabinetoffice.localhost/wp-json/ccs/v1/frameworks/?keyword=Courier%20Services
      *
      * @param Request $request
-     * @param string $category
      * @param int $page
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
@@ -187,23 +187,19 @@ class FrameworksController extends AbstractController
      * @throws \Studio24\Frontend\Exception\PaginationException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function search(Request $request, string $category, int $page = 1)
+    public function search(Request $request, int $page = 1)
     {
-        // Map category slug to category db value
-        $categoryName = FrameworkCategories::getDbValueBySlug($category);
-        if ($categoryName === null) {
-            $this->redirectToRoute('frameworks_list');
-        }
+        // Get search query
+        $query =  $request->query->get('q');
 
         $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page, [
-            'category' => $categoryName,
-            'limit' => 20
+            'keyword'   => $query,
+            'limit'     => 20,
         ]);
 
         $data = [
-            'category'      => $categoryName,
-            'category_slug' => $category,
+            'query'         => $query,
             'pagination'    => $results->getPagination(),
             'results'       => $results,
             'categories'    => FrameworkCategories::getAll(),
