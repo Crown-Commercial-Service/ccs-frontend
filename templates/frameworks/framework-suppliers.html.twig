@@ -25,7 +25,7 @@
           <a class="govuk-breadcrumbs__link" href="/">Home</a>
         </li>
         <li class="govuk-breadcrumbs__list-item">
-          <a class="govuk-breadcrumbs__link" href="/frameworks">Search frameworks</a>
+          <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_list') }}">Search frameworks</a>
         </li>
         <li class="govuk-breadcrumbs__list-item">
           <a class="govuk-breadcrumbs__link" href="#">{{  metadata.framework_title }}</a>
@@ -61,7 +61,7 @@
             {% for item in results %}
 
               <li>
-                <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22"><a href="/suppliers/{{ item.content.supplier_id }}">{{ item.content.supplier_name }}</a></h3>
+                <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22"><a href="{{ path('suppliers_show', {'id': item.content.supplier_id, 'slug': slugify(item.content.supplier_name)} ) }}">{{ item.content.supplier_name }}</a></h3>
                 <ul class="govuk-list govuk-!-font-size-17featured">
 
                   {% for framework in item.content.live_frameworks %}
