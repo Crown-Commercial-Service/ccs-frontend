@@ -41,9 +41,6 @@
                     <ul class="news-listing">
 
                     {% for page in pages %}
-
-                        {#{{ dump(page) }}#}
-
                         <li class="news-listing__item">
                             <picture>
                                 <a href="{{ url('news_page', {'slug': page.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
@@ -73,15 +70,6 @@
 
                             </div>
                         </li>
-
-                        {#<p>#}
-                            {#{% if page.content.featuredImage %}#}
-                                {#<img src="{{ page.content.featuredImage.byName('medium') }}" alt="{{ page.content.featuredImage.alt }}" />#}
-                            {#{% endif %}#}
-                            {#<a href="">{{ page.title }}</a>#}
-                            {#{{ page.datePublished.format('d.m.Y') }}#}
-                        {#</p>#}
-
                     {% endfor %}
 
                     </ul>
