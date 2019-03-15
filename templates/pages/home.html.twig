@@ -1,4 +1,63 @@
-{% extends 'base-home.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block headerclasses %}
+            header-global header-global--home
+        {% endblock %}
+
+        {% block headerstyles %}
+                style="background-size: cover; background-image: url(/assets/images/header.jpg);"
+        {% endblock %}
+
+        {% block featuredcontent %}
+            <div class="homepage-hero govuk-width-container">
+
+                <h2 class="govuk-heading-xl govuk-!-font-size-56 govuk-!-font-weight-regular homepage-hero-title">Public procurement<br>made simple</h2>
+                <p class="govuk-body-l">Save time, save money and comply with procurement regulations.
+                    Free for public sector and charity buyers.</p>
+
+
+                <div class="govuk-grid-row">
+
+                    <div class="govuk-grid-column-one-half">
+
+                        <form action="{{ path('frameworks_search') }}" method="GET">
+
+                            <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage">
+                                <div class="govuk-form-group homepage-hero__search-group">
+                                    <label class="govuk-label" for="q">Search frameworks</label>
+                                    <input class="govuk-input" id="q" name="q" type="text">
+                                    <button class="homepage-hero__search-button"><span class="visuallyhidden">Search frameworks</span></button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                    <div class="govuk-grid-column-one-half">
+
+                        <form action="{{ path('suppliers_search') }}" method="GET">
+
+                            <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage">
+                                <div class="govuk-form-group homepage-hero__search-group">
+                                    <label class="govuk-label" for="q">Search suppliers</label>
+                                    <input class="govuk-input" id="q" name="q" type="text">
+                                    <button class="homepage-hero__search-button"><span class="visuallyhidden">Search suppliers</span></button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
 
 {% block body %}
 
