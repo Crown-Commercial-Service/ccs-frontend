@@ -6,6 +6,7 @@
             {% if page.featuredImage %}
                 header-global header-global--news-details
             {% else %}
+                {# This make sure the background is grey even is there isn't a featured image #}
                 header-global header-global--news-details
             {% endif %}
         {% endblock %}
@@ -20,7 +21,13 @@
             <div class="govuk-width-container">
                 <div class="news--featured">
 
-                    <div class="news-listing-meta--featured">News | {{ page.datePublished|date('jS F Y') }}</div>
+                    <div class="news-listing-meta--featured">
+                        {% if page.taxonomies.categories %}
+                        {% for category in page.taxonomies.categories %}
+                            {{ category.name }}{% if loop.index < page.taxonomies.categories|length %}, {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        | {{ page.datePublished|date('jS F Y') }}</div>
                     <h1 class="govuk-heading-xl govuk-!-font-size-48 page-title news-listing-title--featured">{{ page.title }}</h1>
 
                 </div>

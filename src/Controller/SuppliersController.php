@@ -43,7 +43,41 @@ class SuppliersController extends AbstractController
         return $this->render('suppliers/list.html.twig', $data);
     }
 
+    /**
+     * Search suppliers
+     *
+     * @see http://ccs-agreements.cabinetoffice.localhost/wp-json/ccs/v1/suppliers/?keyword=503645152
+     * @see http://ccs-agreements.cabinetoffice.localhost/wp-json/ccs/v1/suppliers/?keyword=RM6073
+     * @see http://ccs-agreements.cabinetoffice.localhost/wp-json/ccs/v1/suppliers/?keyword=courier
+     *
+     * @param Request $request
+     * @param int $page
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PaginationException
+     * @throws \Studio24\Frontend\Exception\PermissionException
+     */
+    public function search(Request $request, int $page = 1)
+    {
+        // Get search query
+        $query =  $request->query->get('q');
 
+        $this->api->setCacheKey($request->getRequestUri());
+        $results = $this->api->list($page, [
+            'keyword'   => $query,
+            'limit'     => 20,
+        ]);
+
+        $data = [
+            'query'         => $query,
+            'pagination'    => $results->getPagination(),
+            'results'       => $results,
+        ];
+        return $this->render('suppliers/list.html.twig', $data);
+    }
 
     public function show(string $id, Request $request)
     {

@@ -1,4 +1,58 @@
-{% extends 'base-news.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block headerclasses %}
+            header-global header-global--home
+        {% endblock %}
+
+        {% block headerstyles %}
+
+            {% if pages %}
+                {% for page in pages %}
+
+            {% if page.featuredImage and loop.first %}
+                style="background-size: cover; background-image: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.75) 41%, rgba(0,0,0,0.6) 71%, rgba(0,0,0,0.3) 100%), url({{ page.featuredImage.url }});"
+            {% endif %}
+
+            {% endfor %}
+            {% endif %}
+
+        {% endblock %}
+
+        {% block featuredcontent %}
+
+            {% if pages %}
+            {% for page in pages %}
+
+                {% if loop.first %}
+
+            <div class="govuk-width-container">
+                <div class="news--featured">
+
+                    <div class="news-listing-meta--featured">
+                        {% if page.taxonomies.categories %}
+                            {% for category in page.taxonomies.categories %}
+                                {{ category.name }}{% if loop.index < page.taxonomies.categories|length %}, {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        | {{ page.datePublished|date('jS F Y') }}</div>
+                    <h2 class="govuk-heading-xl govuk-!-font-size-48 page-title news-listing-title--featured">{{ page.title }}</h2>
+                    <p class="news-listing-summary--featured">{{ page.content.post_lead_text }}</p>
+
+                    <p class="news-listing-summary--featured"><a href="{{ url('news_page', {'slug': page.urlSlug}) }}" class="govuk-!-font-weight-bold">Continue reading <span class="visuallyhidden">{{ page.title }}</span></a></p>
+
+                </div>
+            </div>
+
+                {% endif %}
+
+            {% endfor %}
+            {% endif %}
+
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
 
 {% block body %}
 
@@ -33,7 +87,7 @@
                 <div class="govuk-grid-column-full">
 
 
-                    {#<h1>News and Views</h1>#}
+                    <h1 class="visuallyhidden">News</h1>
 
                     {#<p>Displaying {{ pages.pagination.totalResults|number_format }} results, Page {{ pages.pagination.page }} of {{ pages.pagination.totalPages }}</p>#}
 
@@ -41,9 +95,9 @@
                     <ul class="news-listing">
 
                     {% for page in pages %}
-
-                        {#{{ dump(page) }}#}
-
+                        {% if loop.first %}
+                            {# We skip the first item because we're already displaying it in the header as Featured post #}
+                        {% else %}
                         <li class="news-listing__item">
                             <picture>
                                 <a href="{{ url('news_page', {'slug': page.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
@@ -54,7 +108,13 @@
                                 </a>
                             </picture>
                             <div class="news-listing__item__caption">
-                                <div class="news-listing-meta">taxonomy | {{ page.datePublished.format('jS F Y') }}
+                                <div class="news-listing-meta">
+                                    {% if page.taxonomies.categories %}
+                                        {% for category in page.taxonomies.categories %}
+                                            {{ category.name }}{% if loop.index < page.taxonomies.categories|length %}, {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    | {{ page.datePublished.format('jS F Y') }}
                                 </div>
                                 <h2 class="news-listing-title"><a href="{{ url('news_page', {'slug': page.urlSlug}) }}">{{ page.title }}</a></h2>
 
@@ -67,15 +127,7 @@
 
                             </div>
                         </li>
-
-                        {#<p>#}
-                            {#{% if page.content.featuredImage %}#}
-                                {#<img src="{{ page.content.featuredImage.byName('medium') }}" alt="{{ page.content.featuredImage.alt }}" />#}
-                            {#{% endif %}#}
-                            {#<a href="">{{ page.title }}</a>#}
-                            {#{{ page.datePublished.format('d.m.Y') }}#}
-                        {#</p>#}
-
+                        {% endif %}
                     {% endfor %}
 
                     </ul>

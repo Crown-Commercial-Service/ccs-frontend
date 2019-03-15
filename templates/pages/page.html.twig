@@ -59,12 +59,13 @@
 
 
 
+                    {# Start of WYSIWYG content #}
                     <div class="wysiwyg-content">
 
                         {{ page.content.content | raw }}
 
                     </div>
-                    {# End of wysiwyg content #}
+                    {# End of WYSIWYG content #}
 
 
 
@@ -84,7 +85,13 @@
                             </div>
                             <div id="accordion-default-content-{{ loop.index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ loop.index }}">
 
-                                {{ accordion_item.page_accordion_page_accordion_item_content | raw }}
+                                {# Start of WYSIWYG content #}
+                                <div class="wysiwyg-content">
+
+                                    {{ accordion_item.page_accordion_page_accordion_item_content | raw }}
+
+                                </div>
+                                {# End of WYSIWYG content #}
 
                             </div>
                         </div>
