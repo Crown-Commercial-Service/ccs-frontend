@@ -54,12 +54,12 @@
 
                 <div class="govuk-grid-column-one-half">
 
-                    <form action="">
+                        <form action="{{ path('frameworks_search') }}" method="GET">
 
                         <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage">
                             <div class="govuk-form-group homepage-hero__search-group">
-                                <label class="govuk-label" for="search_framework">Search frameworks</label>
-                                <input class="govuk-input" id="search_framework" name="search_framework" type="text">
+                                <label class="govuk-label" for="q">Search frameworks</label>
+                                <input class="govuk-input" id="q" name="q" type="text">
                                 <button class="homepage-hero__search-button"><span class="visuallyhidden">Search frameworks</span></button>
                             </div>
                         </div>
@@ -69,12 +69,12 @@
                 </div>
                 <div class="govuk-grid-column-one-half">
 
-                    <form action="">
+                    <form action="{{ path('suppliers_search') }}" method="GET">
 
                         <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage">
                             <div class="govuk-form-group homepage-hero__search-group">
-                                <label class="govuk-label" for="search_suppliers">Search suppliers</label>
-                                <input class="govuk-input" id="search_suppliers" name="search_suppliers" type="text">
+                                <label class="govuk-label" for="q">Search suppliers</label>
+                                <input class="govuk-input" id="q" name="q" type="text">
                                 <button class="homepage-hero__search-button"><span class="visuallyhidden">Search suppliers</span></button>
                             </div>
                         </div>
