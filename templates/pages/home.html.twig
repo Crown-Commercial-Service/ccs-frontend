@@ -13,6 +13,7 @@
         {% block featuredcontent %}
             <div class="homepage-hero govuk-width-container">
 
+                <h1 class="visuallyhidden">Crown commercial services homepage</h1>
                 <h2 class="govuk-heading-xl govuk-!-font-size-56 govuk-!-font-weight-regular homepage-hero-title">Public procurement<br>made simple</h2>
                 <p class="govuk-body-l">Save time, save money and comply with procurement regulations.
                     Free for public sector and charity buyers.</p>
@@ -156,7 +157,7 @@
                                                 {% endif %}
                                                 | {{ news_item.datePublished.format('jS F Y') }}
                                             </div>
-                                            <h2 class="news-listing-title"><a href="{{ url('news_page', {'slug': news_item.urlSlug}) }}">{{ news_item.title }}</a></h2>
+                                            <h3 class="news-listing-title"><a href="{{ url('news_page', {'slug': news_item.urlSlug}) }}">{{ news_item.title }}</a></h3>
                                         </div>
                                     </li>
                                     {% endif %}
