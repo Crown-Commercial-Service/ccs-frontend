@@ -45,17 +45,34 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
 
-                    <h1 class="govuk-heading-xl page-title">Search suppliers</h1>
+                    {% if query is defined %}
+                        <h1 class="govuk-heading-xl page-title">Search suppliers for {{ query }}</h1>
 
-                    <div class="govuk-warning-text">
-                        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                        <strong class="govuk-warning-text__text">
-                            <span class="govuk-warning-text__assistive">Important</span>
-                            Some of our suppliers will not be displayed on this page
-                        </strong>
-                        <p class="govuk-body">Suppliers for <a href="sdg">Dynamic Purchasing System (DPS)</a> agreements or
-                            <a href="gfg">G-Cloud</a> are not available on this page</p>
-                    </div>
+                        <div class="govuk-warning-text">
+                            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                            <strong class="govuk-warning-text__text">
+                                <span class="govuk-warning-text__assistive">Important</span>
+                                Some of our suppliers will not be displayed on this page
+                            </strong>
+                            <p class="govuk-body">Suppliers for <a href="sdg">Dynamic Purchasing System (DPS)</a> agreements or
+                                <a href="gfg">G-Cloud</a> are not available on this page</p>
+                        </div>
+
+                    {% else %}
+
+                        <h1 class="govuk-heading-xl page-title">Search suppliers</h1>
+
+                        <div class="govuk-warning-text">
+                            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                            <strong class="govuk-warning-text__text">
+                                <span class="govuk-warning-text__assistive">Important</span>
+                                Some of our suppliers will not be displayed on this page
+                            </strong>
+                            <p class="govuk-body">Suppliers for <a href="sdg">Dynamic Purchasing System (DPS)</a> agreements or
+                                <a href="gfg">G-Cloud</a> are not available on this page</p>
+                        </div>
+
+                    {% endif %}
 
                 </div>
             </div>
@@ -64,14 +81,14 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-third">
 
-                    <form action="">
+                    <form action="{{ path('suppliers_search') }}">
 
                         <div class="govuk-form-group govuk-form-group--enclosure">
                             <div class="govuk-form-group">
                                 <label class="govuk-label" for="name">
                                     Keyword search
                                 </label>
-                                <input class="govuk-input input--search-icon" id="name" name="name" type="text">
+                                <input class="govuk-input input--search-icon" id="q" name="q" type="text">
                                 <button class="visuallyhidden">Search suppliers</button>
                             </div>
                         </div>
