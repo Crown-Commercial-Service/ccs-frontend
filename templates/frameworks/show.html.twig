@@ -102,12 +102,10 @@
                         {# https://twig.symfony.com/doc/2.x/filters/striptags.html #}
                         <div class="govuk-body-l">{{ framework.content.summary | striptags }}</div>
 
-                        {{ framework.content.terms }}
-
 
                         {# see https://studio24.github.io/frontend/templating/content-fields.html #}
                         {# see https://studio24.github.io/frontend/templating/debugging.html #}
-                        {{ dump(framework) }}
+                        {#{{ dump(framework) }}#}
 
                         {#<p>unallocated content on some frameworks</p>#}
                         {#<ul>#}
@@ -193,17 +191,6 @@
                                 </div>
                                 <div id="accordion-default-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4">
 
-
-                                    {#{{ framework.content.lots|length }}#}
-
-                                    {#<ul>#}
-                                    {#{% for lot in framework.content.lots|sort %}#}
-                                    {#<li>{{ loop.index }}:: {{ lot.lot_number }}:: {{ lot.status }}:: {{ lot.expiry_date }}</li>#}
-                                    {#{% endfor %}#}
-                                    {#</ul>#}
-
-
-
                                     {# Expected `type` values;
 
                                     - Upcoming deal
@@ -212,18 +199,28 @@
                                     - G-cloud
 
                                     #}
-                                    {{ framework.content.type }}
-                                    {#{% if framework.content.type is 'DPS' %}#}
-                                    {#<p>Please read the 'How to buy' tab below for detailed instructions on how to find out which suppliers are on this framework.</p>#}
-                                    {#{% endif %}#}
+                                    {% if framework.content.type == "DPS" %}
+                                        <p>Please read the 'How to buy' tab
+                                            below for detailed instructions on
+                                            how to find out which suppliers are
+                                            on this framework.</p>
 
-                                    {#{% if framework.content.type is 'G-cloud' %}#}
-                                    {#<p><a href="https://www.digitalmarketplace.service.gov.uk/">Digital Marketplace</a> has the constantly updated list of the suppliers on this framework.</p>#}
-                                    {#{% endif %}#}
+                                    {% elseif framework.content.type == "G-cloud" %}
+                                        <p>
+                                            <a href="https://www.digitalmarketplace.service.gov.uk/">Digital
+                                                Marketplace</a> has the
+                                            constantly updated list of the
+                                            suppliers on this framework.</p>
 
-                                    <p>There are
-                                        <a href="{{ path('frameworks_suppliers', {'rmNumber': framework.content.rm_number }) }}">{{ framework.content.total_suppliers }}
-                                            suppliers</a> on this framework.</p>
+                                        {# Only link to suppliers if the item is not DPS or G-cloud #}
+                                    {% else %}
+
+                                        <p>There are
+                                            <a href="{{ path('frameworks_suppliers', {'rmNumber': framework.content.rm_number }) }}">{{ framework.content.total_suppliers }}
+                                                suppliers</a> on this framework.
+                                        </p>
+
+                                    {% endif %}
 
 
                                     <dl class="apollo-list apollo-list--definition">
@@ -243,12 +240,17 @@
                                                     </p>
                                                 {% endif %}
 
-                                                {% if lot.suppliers|length == 0 %}
-                                                    <p>No suppliers</p>
+                                                {% if framework.content.type == "G-cloud" or framework.content.type == "DPS" %}
+                                                    {# Don't display Supplier link if TRUE #}
                                                 {% else %}
-                                                    <p>
-                                                        <a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }}
-                                                            suppliers</a></p>
+                                                    {% if lot.suppliers|length == 0 %}
+                                                        <p>No suppliers</p>
+                                                    {% else %}
+                                                        <p>
+                                                            <a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }}
+                                                                suppliers</a>
+                                                        </p>
+                                                    {% endif %}
                                                 {% endif %}
 
                                             </dd>
@@ -391,12 +393,14 @@
                                     DPS
                                     G-cloud
                                     #}
-                                    {#{% if framework.content.type is not 'DPS' %}#}
+                                    {% if framework.content.type == "G-cloud" or framework.content.type == "DPS" %}
+                                        {# Don't display Supplier link if TRUE #}
+                                    {% else %}
                                     <dt>Suppliers</dt>
                                     <dd class="apollo-list--definition__value">
                                         {{ framework.content.total_suppliers }}
                                     </dd>
-                                    {#{% endif %}#}
+                                    {% endif %}
                                 </dl>
                             </div>
 
