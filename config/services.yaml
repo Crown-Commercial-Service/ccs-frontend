@@ -30,3 +30,9 @@ services:
     # Register Frontend Twig helpers
     Studio24\Frontend\Twig\FrontendExtension:
         tags: ['twig.extension']
+
+    # Response listener
+    # @todo remove this in Symfony 4.3 - see https://symfony.com/blog/new-in-symfony-4-3-automatic-search-engine-protection
+    App\EventListener\ResponseListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response }

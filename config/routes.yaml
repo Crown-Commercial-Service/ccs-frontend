@@ -10,7 +10,15 @@ healthcheck:
 # Page routes
 home:
   path: /
-  controller: App\Controller\TempTemplateController::home
+  controller: App\Controller\PageController::home
+
+frameworks_search:
+  path: /agreements/search/{page}
+  controller: App\Controller\FrameworksController::search
+  requirements:
+    page: '\d+'
+  defaults:
+    page: 1
 
 frameworks_list:
   path: /agreements/{page}
@@ -55,6 +63,14 @@ frameworks_suppliers:
 frameworks_lot_suppliers:
   path: /agreements/{rmNumber}:{lotNumber}/lot-suppliers/{page}
   controller: App\Controller\FrameworksController::suppliersOnLot
+  requirements:
+    page: '\d+'
+  defaults:
+    page: 1
+
+suppliers_search:
+  path: /suppliers/search/{page}
+  controller: App\Controller\SuppliersController::search
   requirements:
     page: '\d+'
   defaults:

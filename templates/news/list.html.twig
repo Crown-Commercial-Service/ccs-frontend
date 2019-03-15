@@ -54,7 +54,13 @@
                                 </a>
                             </picture>
                             <div class="news-listing__item__caption">
-                                <div class="news-listing-meta">taxonomy | {{ page.datePublished.format('jS F Y') }}
+                                <div class="news-listing-meta">
+                                    {% if page.taxonomies.categories %}
+                                        {% for category in page.taxonomies.categories %}
+                                            {{ category.name }}{% if loop.index < page.taxonomies.categories|length %}, {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    | {{ page.datePublished.format('jS F Y') }}
                                 </div>
                                 <h2 class="news-listing-title"><a href="{{ url('news_page', {'slug': page.urlSlug}) }}">{{ page.title }}</a></h2>
 
