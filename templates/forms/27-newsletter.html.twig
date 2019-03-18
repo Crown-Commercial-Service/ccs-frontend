@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
 {% block body %}
 
     <!-- required wrapper 1 -->
