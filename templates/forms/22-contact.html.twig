@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
 {% block body %}
 
     <!-- required wrapper 1 -->
@@ -143,9 +150,7 @@
 
                         {# wrapper class for error states; `govuk-form-group--error`  #}
                         <div class="govuk-form-group --govuk-form-group--error">
-                            <label class="govuk-label" for="name"> Name
-                                (combined from First name and Last
-                                name) </label>
+                            <label class="govuk-label" for="name">Name</label>
                             {#<span id="full-name-error" class="govuk-error-message">#}
                             {#Descriptive and helpful error message#}
                             {#</span>#}
