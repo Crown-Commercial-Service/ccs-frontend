@@ -16,6 +16,8 @@
     {#this date is in range#}
     {#{% endif %}#}
 
+    {# difference.invert will be FALSE for frameworks which are Upcoming #}
+
     {% if framework.content.status == "Future (Pipeline)" %}
         {% set frameworkStatus = "upcoming" %}
     {% elseif framework.content.status == "Planned (Pipeline)" %}
@@ -105,7 +107,7 @@
 
                         {# see https://studio24.github.io/frontend/templating/content-fields.html #}
                         {# see https://studio24.github.io/frontend/templating/debugging.html #}
-                        {#{{ dump(framework) }}#}
+                        {{ dump(framework) }}
 
                         {#<p>unallocated content on some frameworks</p>#}
                         {#<ul>#}
@@ -199,13 +201,13 @@
                                     - G-cloud
 
                                     #}
-                                    {% if framework.content.type == "DPS" %}
+                                    {% if framework.content.type == "Dynamic purchasing system" %}
                                         <p>Please read the 'How to buy' tab
                                             below for detailed instructions on
                                             how to find out which suppliers are
                                             on this framework.</p>
 
-                                    {% elseif framework.content.type == "G-cloud" %}
+                                    {% elseif framework.content.type == "G-cloud/DOS" %}
                                         <p>
                                             <a href="https://www.digitalmarketplace.service.gov.uk/">Digital
                                                 Marketplace</a> has the
@@ -240,7 +242,7 @@
                                                     </p>
                                                 {% endif %}
 
-                                                {% if framework.content.type == "G-cloud" or framework.content.type == "DPS" %}
+                                                {% if framework.content.type == "G-cloud/DOS" or framework.content.type == "Dynamic purchasing system" %}
                                                     {# Don't display Supplier link if TRUE #}
                                                 {% else %}
                                                     {% if lot.suppliers|length == 0 %}
@@ -393,7 +395,7 @@
                                     DPS
                                     G-cloud
                                     #}
-                                    {% if framework.content.type == "G-cloud" or framework.content.type == "DPS" %}
+                                    {% if framework.content.type == "G-cloud/DOS" or framework.content.type == "Dynamic purchasing system" %}
                                         {# Don't display Supplier link if TRUE #}
                                     {% else %}
                                     <dt>Suppliers</dt>
