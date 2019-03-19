@@ -69,11 +69,14 @@
 
                <ul class="govuk-list govuk-list--suppliers">
                   {% for item in results %}
+
                       <li>
-                         <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">{{ item.content.supplier_name }}</h3>
+                         <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
+                             <a href="{{ path('suppliers_show', {'id': item.content.supplier_id, 'slug': slugify(item.content.supplier_name)} ) }}">{{ item.content.supplier_name }}</a></h3>
+
                          <ul class="govuk-list govuk-!-font-size-17featured">
                             {% for framework in item.content.live_frameworks %}
-                                <li>{{ framework.title }} ({{ framework.rm_number }})</li>
+                                <li><a href="{{ path('frameworks_show', {'rmNumber':  framework.rm_number }) }}">{{ framework.title }} ({{ framework.rm_number }})</a></li>
                             {% endfor %}
                             {#<li><a href="sdg">Network services name of (RM12344)</a></li>#}
                             {#<li><a href="sdg">Network services name of (RM12344)</a></li>#}
