@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
 {% block body %}
 
 
@@ -47,7 +54,7 @@
                     <h1 class="govuk-heading-xl page-title">Upcoming deals</h1>
 
                     <p class="govuk-body-l govuk-!-width-three-quarters">If you would like to find out more about the scope of any of these procurements please
-                        <a href="sdgjnf">contact us</a>.</p>
+                        <a href="/contact">contact us</a>.</p>
 
 
 
@@ -61,9 +68,9 @@
 
 
 
-                    {% if awarded_pipeline %}
+                    <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements recently awarded</h2>
 
-                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements recently awarded</h2>
+                    {% if awarded_pipeline|length >= 1 %}
 
                         <table class="govuk-table ccs-table--upcoming-deals">
                             {#<caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.#}
@@ -106,14 +113,17 @@
                             </tbody>
                         </table>
 
+                    {% else %}
+
+                        <p>No procurements recently awarded at the moment.</p>
+
                     {% endif %}
 
 
 
+                    <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements in progress</h2>
 
-                    {% if underway_pipeline %}
-
-                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements in progress</h2>
+                    {% if underway_pipeline|length >= 1 %}
 
                         <table class="govuk-table ccs-table--upcoming-deals">
                             <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">The links provided in the agreement section below give further information about the procurement, including the OJEU notice and details on how to tender for interested suppliers.
@@ -165,6 +175,10 @@
                             </tbody>
                         </table>
 
+                    {% else %}
+
+                        <p>No procurements in progress at the moment.</p>
+
                     {% endif %}
 
 
@@ -172,9 +186,9 @@
 
 
 
-                    {% if dynamic_purchasing_systems %}
+                    <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Dynamic Purchasing Systems currently open</h2>
 
-                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Dynamic Purchasing Systems currently open</h2>
+                    {% if dynamic_purchasing_systems|length >= 1 %}
 
                         <table class="govuk-table ccs-table--upcoming-deals">
                             {#<caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.#}
@@ -218,6 +232,10 @@
                             </tbody>
                         </table>
 
+                    {% else %}
+
+                        <p>No Dynamic Purchasing Systems currently open at the moment.</p>
+
                     {% endif %}
 
 
@@ -226,10 +244,9 @@
 
 
 
+                    <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Planned procurements</h2>
 
-                    {% if planned_pipeline %}
-
-                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Planned procurements</h2>
+                    {% if planned_pipeline|length >= 1 %}
 
                         <table class="govuk-table ccs-table--upcoming-deals">
                             {#<caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.#}
@@ -281,6 +298,10 @@
                             </tbody>
                         </table>
 
+                        {% else %}
+
+                            <p>No planned procurements at the moment.</p>
+
                     {% endif %}
 
 
@@ -290,7 +311,7 @@
 
                     <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Future pipeline</h2>
 
-                    {% if future_pipeline %}
+                    {% if future_pipeline|length >= 1 %}
 
                         <table class="govuk-table ccs-table--upcoming-deals">
                             {#<caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.#}

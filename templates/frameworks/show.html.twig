@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
 {% block body %}
 
     {% set frameworkStatus = null %}
@@ -15,6 +22,8 @@
     {#{% else %}#}
     {#this date is in range#}
     {#{% endif %}#}
+
+    {# difference.invert will be FALSE for frameworks which are Upcoming #}
 
     {% if framework.content.status == "Future (Pipeline)" %}
         {% set frameworkStatus = "upcoming" %}
@@ -105,7 +114,7 @@
 
                         {# see https://studio24.github.io/frontend/templating/content-fields.html #}
                         {# see https://studio24.github.io/frontend/templating/debugging.html #}
-                        {#{{ dump(framework) }}#}
+                        {{ dump(framework) }}
 
                         {#<p>unallocated content on some frameworks</p>#}
                         {#<ul>#}
@@ -119,7 +128,7 @@
                         <div class="govuk-accordion" data-module="accordion" id="accordion-default">
 
 
-                            {% if framework.content.updates %}
+                            {% if framework.content.updates and framework.content.updates != "" %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -140,7 +149,7 @@
 
 
 
-                            {% if framework.content.description %}
+                            {% if framework.content.description and framework.content.description != "" %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -161,7 +170,7 @@
 
 
 
-                            {% if framework.content.benefits %}
+                            {% if framework.content.benefits and framework.content.benefits != "" %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -199,13 +208,13 @@
                                     - G-cloud
 
                                     #}
-                                    {% if framework.content.type == "DPS" %}
+                                    {% if framework.content.type == "Dynamic purchasing system" %}
                                         <p>Please read the 'How to buy' tab
                                             below for detailed instructions on
                                             how to find out which suppliers are
                                             on this framework.</p>
 
-                                    {% elseif framework.content.type == "G-cloud" %}
+                                    {% elseif framework.content.type == "G-cloud/DOS" %}
                                         <p>
                                             <a href="https://www.digitalmarketplace.service.gov.uk/">Digital
                                                 Marketplace</a> has the
@@ -240,7 +249,7 @@
                                                     </p>
                                                 {% endif %}
 
-                                                {% if framework.content.type == "G-cloud" or framework.content.type == "DPS" %}
+                                                {% if framework.content.type == "G-cloud/DOS" or framework.content.type == "Dynamic purchasing system" %}
                                                     {# Don't display Supplier link if TRUE #}
                                                 {% else %}
                                                     {% if lot.suppliers|length == 0 %}
@@ -262,7 +271,7 @@
                             </div>
 
 
-                            {% if framework.content.how_to_buy %}
+                            {% if framework.content.how_to_buy and framework.content.how_to_buy != "" %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -283,7 +292,7 @@
 
 
 
-                            {% if framework.content.documents %}
+                            {% if framework.content.documents and framework.content.documents != "" %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -393,7 +402,7 @@
                                     DPS
                                     G-cloud
                                     #}
-                                    {% if framework.content.type == "G-cloud" or framework.content.type == "DPS" %}
+                                    {% if framework.content.type == "G-cloud/DOS" or framework.content.type == "Dynamic purchasing system" %}
                                         {# Don't display Supplier link if TRUE #}
                                     {% else %}
                                     <dt>Suppliers</dt>
