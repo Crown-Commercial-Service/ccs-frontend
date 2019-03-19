@@ -25,7 +25,9 @@
             </button>
 
             {% block mainnavigation %}
-            <nav class="global-navigation" data-toggle="nav">
+            <nav class="global-navigation" data-toggle="nav" data-app-uri="{{ app.request.uri }}" data-app-pathinfo="{{ app.request.pathinfo }}">
+
+                {{ app.request.uri }}
 
                 {{ render(controller(
                     'App\\Controller\\MenuController::menu',
