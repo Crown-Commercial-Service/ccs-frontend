@@ -6,6 +6,20 @@
     margin-top: govuk-px-to-rem(30);
 }
 
+.govuk-breadcrumbs__link {
+
+    text-decoration: none;
+
+    &:hover,
+    &:focus,
+    &:active {
+
+        text-decoration: underline;
+
+    }
+
+}
+
 .govuk-breadcrumbs__list-item:before {
 
     bottom: auto;

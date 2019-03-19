@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
 {% block body %}
 
 
@@ -86,7 +93,7 @@
                         <div class="govuk-form-group govuk-form-group--enclosure">
                             <div class="govuk-form-group">
                                 <label class="govuk-label" for="name">
-                                    Keyword search
+                                    Search suppliers
                                 </label>
                                 <input class="govuk-input input--search-icon" id="q" name="q" type="text">
                                 <button class="visuallyhidden">Search suppliers</button>
@@ -317,6 +324,7 @@
                         {% endif %}
 
                         <li>
+                            {{ dump(item) }}
                             <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22"><a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a></h3>
 
                             <ul class="govuk-list govuk-!-font-size-17featured">

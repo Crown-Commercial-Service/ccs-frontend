@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
 {% block body %}
 
 
@@ -186,12 +193,12 @@
                 </div>
                 <div class="govuk-grid-column-two-thirds">
 
-                    {% if pagination.totalResults > 1 %}
-                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }}
-                            frameworks found</h2>
-                    {% else %}
+                    {% if pagination.totalResults == 1 %}
                         <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }}
                             framework found</h2>
+                    {% else %}
+                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }}
+                            frameworks found</h2>
                     {% endif %}
 
 
