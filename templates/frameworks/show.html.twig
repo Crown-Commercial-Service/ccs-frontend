@@ -114,7 +114,7 @@
 
                         {# see https://studio24.github.io/frontend/templating/content-fields.html #}
                         {# see https://studio24.github.io/frontend/templating/debugging.html #}
-                        {{ dump(framework) }}
+                        {#{{ dump(framework) }}#}
 
                         {#<p>unallocated content on some frameworks</p>#}
                         {#<ul>#}
@@ -128,7 +128,7 @@
                         <div class="govuk-accordion" data-module="accordion" id="accordion-default">
 
 
-                            {% if framework.content.updates %}
+                            {% if framework.content.updates and framework.content.updates != "" %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -149,7 +149,7 @@
 
 
 
-                            {% if framework.content.description %}
+                            {% if framework.content.description and framework.content.description != "" %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -170,7 +170,7 @@
 
 
 
-                            {% if framework.content.benefits %}
+                            {% if framework.content.benefits and framework.content.benefits != "" %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -271,7 +271,7 @@
                             </div>
 
 
-                            {% if framework.content.how_to_buy %}
+                            {% if framework.content.how_to_buy and framework.content.how_to_buy != "" %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -292,7 +292,7 @@
 
 
 
-                            {% if framework.content.documents %}
+                            {% if framework.content.documents and framework.content.documents != "" %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
