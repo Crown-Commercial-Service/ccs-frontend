@@ -220,6 +220,12 @@
 
 }
 
+.nav-list__link:active {
+
+    color: white;
+
+}
+
 .nav-list__link + .nav-list__link {
 
     @include govuk-media-query($from: desktop) {}

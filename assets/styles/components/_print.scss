@@ -6,7 +6,18 @@
 
     border: 0;
     @include govuk-font(19, $weight: regular);
+    @include govuk-focusable;
+    color: $govuk-link-colour;
     text-decoration: underline;
+
+    &:hover,
+    &:focus,
+    &:active {
+
+        color: $govuk-link-hover-colour;
+        text-decoration: none;
+
+    }
 
 }
 
@@ -18,4 +29,13 @@
 .app-c-print-link .app-c-print-link__link {
     background-image: url(../images/icon-print-2x.png);
     background-size: 16px 18px;
+}
+
+/*
+ * If Javascript isn't available, the link won't work
+ */
+.no-js .app-c-print-link__link {
+
+    display: none;
+
 }
