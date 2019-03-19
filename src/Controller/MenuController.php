@@ -57,7 +57,8 @@ class MenuController extends AbstractController
 
         return $this->render($templatePath, [
             'menu' => $menu,
-            'currentUrl' => $currentUrl
+            'currentUrl' => $currentUrl,
+            'currentPath' => str_replace( getenv('APP_BASE_URL') , '' , $currentUrl)
         ]);
     }
 }
