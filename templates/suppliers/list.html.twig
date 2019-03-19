@@ -324,7 +324,7 @@
                         {% endif %}
 
                         <li>
-                            {{ dump(item) }}
+                            {#{{ dump(item) }}#}
                             <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22"><a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a></h3>
 
                             <ul class="govuk-list govuk-!-font-size-17featured">
