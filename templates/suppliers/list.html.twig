@@ -79,12 +79,14 @@
                     <form action="{{ path('suppliers_search') }}">
 
                         <div class="govuk-form-group govuk-form-group--enclosure">
-                            <div class="govuk-form-group">
+                            <div class="govuk-form-group sidebar__search-group">
                                 <label class="govuk-label" for="name">
                                     Search suppliers
                                 </label>
-                                <input class="govuk-input input--search-icon" id="q" name="q" type="text">
-                                <button class="visuallyhidden">Search suppliers</button>
+                                <input class="govuk-input" id="q" name="q" type="text">
+                                <button class="sidebar__search-button">
+                                    <span class="visuallyhidden">Search suppliers</span>
+                                </button>
                             </div>
                         </div>
 
