@@ -1,0 +1,38 @@
+/*------------------------------------*\
+  #Sidebar
+\*------------------------------------*/
+.sidebar__search-button {
+
+    background: transparent url("../images/icon-search.png") center center no-repeat;
+    background-size: 19px 19px;
+    border: 0;
+    //border: 2px solid #0b0c0c;
+    //border-color: #0b0c0c #0b0c0c #0b0c0c transparent;
+    // 40px to match the input height (this is fickle)
+    min-height: govuk-px-to-rem(40);
+    min-width: govuk-px-to-rem(44);
+
+    &:hover,
+    &:active,
+    &:focus {
+
+        background-color: $ccs-button-hover-colour;
+        background-image: url("../images/icon-search-white.png");
+
+    }
+
+}
+
+.sidebar__search-group {
+
+    position: relative;
+
+    .sidebar__search-button {
+
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+    }
+
+}
