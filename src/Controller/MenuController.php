@@ -35,9 +35,10 @@ class MenuController extends AbstractController
      *
      * @param integer $id
      * @param string $templatePath
+     * @param string $currentUrl
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function menu(int $id, string $templatePath = 'menus/default-menu.html.twig')
+    public function menu(int $id, string $templatePath = 'menus/default-menu.html.twig', string $currentUrl)
     {
         $menu = $this->api->getMenu($id);
 
@@ -55,7 +56,8 @@ class MenuController extends AbstractController
         $menu->setBaseUrls(getenv('APP_CMS_BASE_URL'), getenv('APP_BASE_URL'));
 
         return $this->render($templatePath, [
-            'menu' => $menu
+            'menu' => $menu,
+            'currentUrl' => $currentUrl
         ]);
     }
 }
