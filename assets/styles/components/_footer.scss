@@ -19,18 +19,18 @@
 .govuk-footer__link.govuk-footer__link {
 
     color: white;
-    text-decoration: none;
+    text-decoration: underline;
 
     &:visited {
         color: white;
     }
     &:hover {
         color: govuk-colour("grey-4");
-        text-decoration: underline;
+        text-decoration: none;
     }
     &:focus {
         color: govuk-colour("black");
-        text-decoration: underline;
+        text-decoration: none;
     }
     &:active {
 
