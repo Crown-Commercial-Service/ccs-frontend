@@ -103,10 +103,10 @@
                             <picture>
                                 <a href="{{ url('news_page', {'slug': page.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
                                     {% if page.featuredImage %}
-                                        {{ dump(page.featuredImage) }}
-                                        {{ page.featuredImage.byName('thumbnail') }}
-                                        {{ page.featuredImage.byName('medium') }}
-                                        {{ page.featuredImage.byName('medium_large') }}
+                                        {#{{ dump(page.featuredImage) }}#}
+                                        {#{{ page.featuredImage.byName('thumbnail') }}#}
+                                        {#{{ page.featuredImage.byName('medium') }}#}
+                                        {#{{ page.featuredImage.byName('medium_large') }}#}
                                         {#{{ page.featuredImage.medium.url }}#}
                                         {#{{ page.featuredImage.medium_large.url }}#}
                                         <img src="{{ page.featuredImage.url }}" alt="{{ page.featuredImage.alt }}" aria-hidden="true" />
