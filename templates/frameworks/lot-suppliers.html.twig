@@ -76,11 +76,9 @@
 
                          <ul class="govuk-list govuk-!-font-size-17featured">
                             {% for framework in item.content.live_frameworks %}
-                                <li><a href="{{ path('frameworks_show', {'rmNumber':  framework.rm_number }) }}">{{ framework.title }} ({{ framework.rm_number }})</a></li>
+                                {#<li><a href="{{ path('frameworks_show', {'rmNumber':  framework.rm_number }) }}">{{ framework.title }} ({{ framework.rm_number }})</a></li>#}
+                                <li>{{ framework.title }} ({{ framework.rm_number }})</li>
                             {% endfor %}
-                            {#<li><a href="sdg">Network services name of (RM12344)</a></li>#}
-                            {#<li><a href="sdg">Network services name of (RM12344)</a></li>#}
-                            {#<li><a href="sdg">Network services name of (RM12344)</a></li>#}
                          </ul>
                       </li>
                    {% endfor %}
