@@ -30,7 +30,7 @@
 
                 {{ render(controller(
                     'App\\Controller\\MenuController::menu',
-                    { 'id': 23, 'templatePath': 'menus/footer-menu.html.twig', 'currentUrl': app.request.uri }
+                    { 'id': 23, 'templatePath': 'menus/footer-menu.html.twig', 'currentPath': app.request.pathinfo }
                 )) }}
 
             </div>
@@ -39,7 +39,7 @@
 
                 {{ render(controller(
                     'App\\Controller\\MenuController::menu',
-                    { 'id': 24, 'templatePath': 'menus/footer-menu.html.twig', 'currentUrl': app.request.uri }
+                    { 'id': 24, 'templatePath': 'menus/footer-menu.html.twig', 'currentPath': app.request.pathinfo }
                 )) }}
 
             </div>
@@ -48,7 +48,7 @@
 
                 {{ render(controller(
                     'App\\Controller\\MenuController::menu',
-                    { 'id': 25, 'templatePath': 'menus/footer-menu.html.twig', 'currentUrl': app.request.uri }
+                    { 'id': 25, 'templatePath': 'menus/footer-menu.html.twig', 'currentPath': app.request.pathinfo }
                 )) }}
 
             </div>
