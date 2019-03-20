@@ -31,6 +31,7 @@
         {% set frameworkStatus = "upcoming" %}
     {% elseif framework.content.status == "Underway (Pipeline)" %}
         {% set frameworkStatus = "upcoming" %}
+
     {% elseif framework.content.status == "Live" and framework.content.term == "DPS" %}
         {# Dynamic Purchasing Systems currently open #}
         {% set frameworkStatus = "upcoming" %}
@@ -62,7 +63,7 @@
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
                 <li class="govuk-breadcrumbs__list-item">
-                    <a class="govuk-breadcrumbs__link" href="#">Home</a>
+                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
                 </li>
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_list') }}">Search
@@ -128,7 +129,7 @@
                         <div class="govuk-accordion" data-module="accordion" id="accordion-default">
 
 
-                            {% if framework.content.updates and framework.content.updates != "" %}
+                            {% if framework.content.updates and framework.content.updates != "" and framework.content.status != 'Expired - Data Still Received' %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -149,7 +150,7 @@
 
 
 
-                            {% if framework.content.description and framework.content.description != "" %}
+                            {% if framework.content.description and framework.content.description != "" and framework.content.status != 'Expired - Data Still Received' %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -170,7 +171,7 @@
 
 
 
-                            {% if framework.content.benefits and framework.content.benefits != "" %}
+                            {% if framework.content.benefits and framework.content.benefits != "" and framework.content.status != 'Expired - Data Still Received' %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -226,7 +227,7 @@
 
                                         <p>There are
                                             <a href="{{ path('frameworks_suppliers', {'rmNumber': framework.content.rm_number }) }}">{{ framework.content.total_suppliers }}
-                                                suppliers</a> on this framework.
+                                                suppliers</a> on this framework
                                         </p>
 
                                     {% endif %}
@@ -271,7 +272,7 @@
                             </div>
 
 
-                            {% if framework.content.how_to_buy and framework.content.how_to_buy != "" %}
+                            {% if framework.content.how_to_buy and framework.content.how_to_buy != "" and framework.content.status != 'Expired - Data Still Received' %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -313,8 +314,6 @@
                                         {#now includes a longer description field.#}
                                         {#</p>#}
 
-
-                                        <h3 class="govuk-heading-s">Titles</h3>
                                         <ul class="govuk-list">
                                             {% for document in framework.content.documents %}
                                                 <li>
