@@ -16,6 +16,14 @@
 
 }
 
+.wysiwyg-content .govuk-list--checkmark,
+.wysiwyg-content .govuk-list--cross {
+
+    list-style: none;
+    padding-left: 20px;
+
+}
+
 .wysiwyg-content h2 {
 
     @extend .govuk-heading-l;

@@ -54,32 +54,20 @@
 
                     {% if query is defined %}
                         <h1 class="govuk-heading-xl page-title">Search suppliers for {{ query }}</h1>
-
-                        <div class="govuk-warning-text">
-                            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                            <strong class="govuk-warning-text__text">
-                                <span class="govuk-warning-text__assistive">Important</span>
-                                Some of our suppliers will not be displayed on this page
-                            </strong>
-                            <p class="govuk-body">Suppliers for <a href="sdg">Dynamic Purchasing System (DPS)</a> agreements or
-                                <a href="gfg">G-Cloud</a> are not available on this page</p>
-                        </div>
-
                     {% else %}
-
                         <h1 class="govuk-heading-xl page-title">Search suppliers</h1>
-
-                        <div class="govuk-warning-text">
-                            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                            <strong class="govuk-warning-text__text">
-                                <span class="govuk-warning-text__assistive">Important</span>
-                                Some of our suppliers will not be displayed on this page
-                            </strong>
-                            <p class="govuk-body">Suppliers for <a href="sdg">Dynamic Purchasing System (DPS)</a> agreements or
-                                <a href="gfg">G-Cloud</a> are not available on this page</p>
-                        </div>
-
                     {% endif %}
+
+                    <div class="govuk-warning-text">
+                        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                        <strong class="govuk-warning-text__text">
+                            <span class="govuk-warning-text__assistive">Important</span>
+                            Some of our suppliers will not be displayed on this page
+                        </strong>
+                        <p>Select <a href="https://supplierregistration.cabinetoffice.gov.uk/dps">Dynamic Purchasing Systems</a> or
+                            <a href="https://www.digitalmarketplace.service.gov.uk/g-cloud/suppliers">G-cloud/DOS</a> to go to see more suppliers for that type of agreement. To find out what a DPS, G-cloud or DOS is take a look at
+                            <a href="/help-and-support/how-to-buy/">How to buy</a>.</p>
+                    </div>
 
                 </div>
             </div>
@@ -91,12 +79,14 @@
                     <form action="{{ path('suppliers_search') }}">
 
                         <div class="govuk-form-group govuk-form-group--enclosure">
-                            <div class="govuk-form-group">
+                            <div class="govuk-form-group sidebar__search-group">
                                 <label class="govuk-label" for="name">
                                     Search suppliers
                                 </label>
-                                <input class="govuk-input input--search-icon" id="q" name="q" type="text">
-                                <button class="visuallyhidden">Search suppliers</button>
+                                <input class="govuk-input" id="q" name="q" type="text">
+                                <button class="sidebar__search-button">
+                                    <span class="visuallyhidden">Search suppliers</span>
+                                </button>
                             </div>
                         </div>
 
