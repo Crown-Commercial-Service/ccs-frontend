@@ -44,8 +44,8 @@ sudo ln -s "$WEB_CURRENT/public" "$WEB_CURRENT/html"
 
 # Set permissions
 sudo chown -R ec2-user:ec2-user /var/www
-sudo chown -R apache:ec2-user "$WEB_CURRENT/var/log"
-sudo chmod -R og+w "$WEB_CURRENT/var/log"
+sudo chown -R apache:ec2-user "$WEB_CURRENT/var"
+sudo chmod -R og+w "$WEB_CURRENT/var"
 
 # Cleanup
 if [ -e "$DEPLOY_PATH" ]; then
