@@ -191,6 +191,9 @@
                             {% endif %}
 
 
+
+
+                            {% if framework.content.lots and framework.content.lots != "" and framework.content.status != 'Expired - Data Still Received' %}
                             <div class="govuk-accordion__section ">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
@@ -270,6 +273,9 @@
 
                                 </div>
                             </div>
+                            {% endif %}
+
+
 
 
                             {% if framework.content.how_to_buy and framework.content.how_to_buy != "" and framework.content.status != 'Expired - Data Still Received' %}
