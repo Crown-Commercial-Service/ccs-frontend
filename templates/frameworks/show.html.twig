@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ framework.content.title }} - CCS{% endblock %}
+
 {% block header %}
     {% embed '/includes/header.html.twig' %}
         {% block bannerarea %}
@@ -31,15 +33,27 @@
         {% set frameworkStatus = "upcoming" %}
     {% elseif framework.content.status == "Underway (Pipeline)" %}
         {% set frameworkStatus = "upcoming" %}
-    {% elseif framework.content.status == "Live" and framework.content.term == "DPS" %}
-        {# Dynamic Purchasing Systems currently open #}
+
+    {% elseif framework.content.status == "Live" and framework.content.terms == "DPS" and framework.content.type == "Upcoming deal" %}
+        {# Dynamic Purchasing Systems currently open that have NOT been set as Upcoming deals in WP #}
         {% set frameworkStatus = "upcoming" %}
-    {% elseif (framework.content.status == "Awarded (Pipeline)" or (framework.content.status == "Live" and framework.content.term != "DPS" and not difference.invert) ) %}
-        {# Procurements recently awarded #}
-        {% set frameworkStatus = "upcoming" %}
+    {% elseif (framework.content.status == "Awarded (Pipeline)" or (framework.content.status == "Live" and framework.content.terms != "DPS" and not difference.invert) ) %}
+
+    {# Procurements recently awarded #}
+        {% if framework.content.type == "Upcoming deal" %}
+            {% set frameworkStatus = "upcoming" %}
+        {% else %}
+            {% set frameworkStatus = "live" %}
+        {% endif %}
+
     {% else %}
         {% set frameworkStatus = "live" %}
     {% endif %}
+
+    {#{{ frameworkStatus }}#}
+    {#{{ framework.content.status }}#}
+    {#{{ framework.content.terms }}#}
+    {#{{ framework.content.type }}#}
 
 
 
@@ -62,7 +76,7 @@
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
                 <li class="govuk-breadcrumbs__list-item">
-                    <a class="govuk-breadcrumbs__link" href="#">Home</a>
+                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
                 </li>
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_list') }}">Search
@@ -128,7 +142,7 @@
                         <div class="govuk-accordion" data-module="accordion" id="accordion-default">
 
 
-                            {% if framework.content.updates and framework.content.updates != "" %}
+                            {% if framework.content.updates and framework.content.updates != "" and framework.content.status != 'Expired - Data Still Received' %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -149,7 +163,7 @@
 
 
 
-                            {% if framework.content.description and framework.content.description != "" %}
+                            {% if framework.content.description and framework.content.description != "" and framework.content.status != 'Expired - Data Still Received' %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -170,7 +184,7 @@
 
 
 
-                            {% if framework.content.benefits and framework.content.benefits != "" %}
+                            {% if framework.content.benefits and framework.content.benefits != "" and framework.content.status != 'Expired - Data Still Received' %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -190,6 +204,9 @@
                             {% endif %}
 
 
+
+
+                            {% if framework.content.lots and framework.content.lots != "" and framework.content.status != 'Expired - Data Still Received' %}
                             <div class="govuk-accordion__section ">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
@@ -226,14 +243,14 @@
 
                                         <p>There are
                                             <a href="{{ path('frameworks_suppliers', {'rmNumber': framework.content.rm_number }) }}">{{ framework.content.total_suppliers }}
-                                                suppliers</a> on this framework.
+                                                suppliers</a> on this framework
                                         </p>
 
                                     {% endif %}
 
 
                                     <dl class="apollo-list apollo-list--definition">
-                                        {% for lot in framework.content.lots|sort %}
+                                        {% for lot in framework.content.lots %}
                                             <dt class="apollo-list--definition__key">
                                                 Lot {{ lot.lot_number }}
                                                 : {{ lot.title }}</dt>
@@ -269,9 +286,12 @@
 
                                 </div>
                             </div>
+                            {% endif %}
 
 
-                            {% if framework.content.how_to_buy and framework.content.how_to_buy != "" %}
+
+
+                            {% if framework.content.how_to_buy and framework.content.how_to_buy != "" and framework.content.status != 'Expired - Data Still Received' %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -313,8 +333,6 @@
                                         {#now includes a longer description field.#}
                                         {#</p>#}
 
-
-                                        <h3 class="govuk-heading-s">Titles</h3>
                                         <ul class="govuk-list">
                                             {% for document in framework.content.documents %}
                                                 <li>
@@ -343,8 +361,7 @@
                                         {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
                                         {#<time class="govuk-list--documents__datetime">#}
                                         {#16/08/2018#}
-                                        {#</time>#}
-                                        {#</td>#}
+                                        {#</time>#}{#</td>#}
                                         {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
                                         {#<a href="{url to source}">Buyers#}
                                         {#Guide</a></td>#}
@@ -448,9 +465,9 @@
 
                         <h1 class="govuk-heading-xl page-title">{{ framework.content.title }}</h1>
 
-                        {% if framework.content.summary %}
-                            <div class="govuk-body-l">{{ framework.content.summary | striptags }}</div>
-                        {% endif %}
+                        {#{% if framework.content.summary %}#}
+                            {#<div class="govuk-body-l">{{ framework.content.summary | striptags }}</div>#}
+                        {#{% endif %}#}
 
                         {# Start of wysiwyg content #}
                         {% if framework.content.upcoming_deal_details %}

@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Suppliers on {{ metadata.framework_title }} - CCS{% endblock %}
+
 {% block header %}
     {% embed '/includes/header.html.twig' %}
         {% block bannerarea %}
@@ -61,7 +63,7 @@
           {#{{ dump(metadata) }}#}
           {#{{ dump(results) }}#}
 
-          <p class="govuk-body-l govuk-!-font-weight-bold">{{ pagination.totalResults }} suppliers on this framework.</p>
+          <p class="govuk-body-l govuk-!-font-weight-bold">{{ pagination.totalResults }} suppliers on this framework</p>
 
           <ul class="govuk-list govuk-list--suppliers">
 

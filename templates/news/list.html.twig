@@ -25,6 +25,7 @@
             {% if pages %}
             {% for page in pages %}
 
+                {# We check to see if this is the first one in the list and ONLY display that one #}
                 {% if loop.first %}
 
             <div class="govuk-width-container">
@@ -102,6 +103,12 @@
                             <picture>
                                 <a href="{{ url('news_page', {'slug': page.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
                                     {% if page.featuredImage %}
+                                        {#{{ dump(page.featuredImage) }}#}
+                                        {#{{ page.featuredImage.byName('thumbnail') }}#}
+                                        {#{{ page.featuredImage.byName('medium') }}#}
+                                        {#{{ page.featuredImage.byName('medium_large') }}#}
+                                        {#{{ page.featuredImage.medium.url }}#}
+                                        {#{{ page.featuredImage.medium_large.url }}#}
                                         <img src="{{ page.featuredImage.url }}" alt="{{ page.featuredImage.alt }}" aria-hidden="true" />
                                     {% endif %}
                                     {#<img src="/assets/images/news-thumb.png" alt="" aria-hidden="true">#}
