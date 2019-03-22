@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ framework.content.title }} - CCS{% endblock %}
+
 {% block header %}
     {% embed '/includes/header.html.twig' %}
         {% block bannerarea %}
@@ -248,7 +250,7 @@
 
 
                                     <dl class="apollo-list apollo-list--definition">
-                                        {% for lot in framework.content.lots|sort %}
+                                        {% for lot in framework.content.lots %}
                                             <dt class="apollo-list--definition__key">
                                                 Lot {{ lot.lot_number }}
                                                 : {{ lot.title }}</dt>
