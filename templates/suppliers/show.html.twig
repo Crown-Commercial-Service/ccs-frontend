@@ -141,10 +141,12 @@
                                                                 on
                                                                 <a href="mailto:{{ lot.supplier_contact_email }}">{{ lot.supplier_contact_email }}</a>
                                                             </p>
+                                                        {% elseif supplier.content.phone_number %}
+                                                            <p class="govuk-!-font-size-16 govuk-!-margin-0">
+                                                                Call {{ name }} on {{ supplier.content.phone_number }}</p>
                                                         {% else %}
                                                             <p class="govuk-!-font-size-16 govuk-!-margin-0">
-                                                                Call
-                                                                switchboard</p>
+                                                            Call {{ name }}</p>
                                                         {% endif %}
                                                     </td>
                                                 </tr>
@@ -343,7 +345,7 @@
                     <aside class="aside">
 
                         <div class="apollo-enclosure">
-                            <h2 class="govuk-heading-m">Contact</h2>
+                            <h2 class="govuk-heading-m">Supplier details</h2>
 
                             <h3 class="govuk-heading-m govuk-!-font-size-17featured govuk-!-margin-0 govuk-!-font-weight-bold">
                                 Telephone:</h3>
