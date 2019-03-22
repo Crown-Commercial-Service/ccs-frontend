@@ -143,11 +143,10 @@
                                                             </p>
                                                         {% elseif supplier.content.phone_number %}
                                                             <p class="govuk-!-font-size-16 govuk-!-margin-0">
-                                                                Call {{ supplier.content.phone_number }}</p>
-                                                            {% else %}
+                                                                Call {{ name }} on {{ supplier.content.phone_number }}</p>
+                                                        {% else %}
                                                             <p class="govuk-!-font-size-16 govuk-!-margin-0">
-                                                            Email
-                                                                <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a></p>
+                                                            Call {{ name }}</p>
                                                         {% endif %}
                                                     </td>
                                                 </tr>
