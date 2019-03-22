@@ -124,3 +124,13 @@
     margin-top: 0;
 
 }
+
+.align-center-from-desktop {
+
+    @include govuk-media-query($from: desktop) {
+
+        text-align: center;
+
+    }
+
+}
