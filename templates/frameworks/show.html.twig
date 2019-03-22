@@ -32,15 +32,26 @@
     {% elseif framework.content.status == "Underway (Pipeline)" %}
         {% set frameworkStatus = "upcoming" %}
 
-    {% elseif framework.content.status == "Live" and framework.content.term == "DPS" %}
-        {# Dynamic Purchasing Systems currently open #}
+    {% elseif framework.content.status == "Live" and framework.content.terms == "DPS" and framework.content.type == "Upcoming deal" %}
+        {# Dynamic Purchasing Systems currently open that have NOT been set as Upcoming deals in WP #}
         {% set frameworkStatus = "upcoming" %}
-    {% elseif (framework.content.status == "Awarded (Pipeline)" or (framework.content.status == "Live" and framework.content.term != "DPS" and not difference.invert) ) %}
-        {# Procurements recently awarded #}
-        {% set frameworkStatus = "upcoming" %}
+    {% elseif (framework.content.status == "Awarded (Pipeline)" or (framework.content.status == "Live" and framework.content.terms != "DPS" and not difference.invert) ) %}
+
+    {# Procurements recently awarded #}
+        {% if framework.content.type == "Upcoming deal" %}
+            {% set frameworkStatus = "upcoming" %}
+        {% else %}
+            {% set frameworkStatus = "live" %}
+        {% endif %}
+
     {% else %}
         {% set frameworkStatus = "live" %}
     {% endif %}
+
+    {#{{ frameworkStatus }}#}
+    {#{{ framework.content.status }}#}
+    {#{{ framework.content.terms }}#}
+    {#{{ framework.content.type }}#}
 
 
 
@@ -191,6 +202,9 @@
                             {% endif %}
 
 
+
+
+                            {% if framework.content.lots and framework.content.lots != "" and framework.content.status != 'Expired - Data Still Received' %}
                             <div class="govuk-accordion__section ">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
@@ -270,6 +284,9 @@
 
                                 </div>
                             </div>
+                            {% endif %}
+
+
 
 
                             {% if framework.content.how_to_buy and framework.content.how_to_buy != "" and framework.content.status != 'Expired - Data Still Received' %}
@@ -342,8 +359,7 @@
                                         {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
                                         {#<time class="govuk-list--documents__datetime">#}
                                         {#16/08/2018#}
-                                        {#</time>#}
-                                        {#</td>#}
+                                        {#</time>#}{#</td>#}
                                         {#<td class="govuk-table__cell govuk-table__cell--noborder">#}
                                         {#<a href="{url to source}">Buyers#}
                                         {#Guide</a></td>#}
@@ -447,9 +463,9 @@
 
                         <h1 class="govuk-heading-xl page-title">{{ framework.content.title }}</h1>
 
-                        {% if framework.content.summary %}
-                            <div class="govuk-body-l">{{ framework.content.summary | striptags }}</div>
-                        {% endif %}
+                        {#{% if framework.content.summary %}#}
+                            {#<div class="govuk-body-l">{{ framework.content.summary | striptags }}</div>#}
+                        {#{% endif %}#}
 
                         {# Start of wysiwyg content #}
                         {% if framework.content.upcoming_deal_details %}
