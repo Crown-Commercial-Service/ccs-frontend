@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Upcoming deals - CCS{% endblock %}
+
 {% block header %}
     {% embed '/includes/header.html.twig' %}
         {% block bannerarea %}
@@ -78,7 +80,7 @@
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
-                                    Category
+                                    Pillar
                                 </th>
                                 <th class="govuk-table__header govuk-!-font-size-19" scope="col">
                                     Framework title
@@ -94,7 +96,7 @@
                                 {% for upcoming_deal in awarded_pipeline %}
                             <tr class="govuk-table__row">
                                 <td class="govuk-table__cell govuk-!-font-size-16">
-                                    {{ upcoming_deal.category }}
+                                    {{ upcoming_deal.pillar }}
                                 </td>
                                 <td class="govuk-table__cell">
                                     <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
@@ -131,16 +133,16 @@
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
-                                    Category
+                                    Pillar
                                 </th>
                                 <th class="govuk-table__header govuk-!-font-size-19" scope="col">
                                     Framework title
                                 </th>
                                 <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
-                                    Tenders close date
+                                    Tenders close
                                 </th>
                                 <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
-                                    Expected award date
+                                    Expected award
                                 </th>
                             </tr>
                             </thead>
@@ -150,7 +152,7 @@
 
                             <tr class="govuk-table__row">
                                 <td class="govuk-table__cell govuk-!-font-size-16">
-                                    {{ upcoming_deal.category }}
+                                    {{ upcoming_deal.pillar }}
                                 </td>
                                 <td class="govuk-table__cell">
                                     <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
@@ -196,13 +198,13 @@
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
-                                    Category
+                                    Pillar
                                 </th>
                                 <th class="govuk-table__header govuk-!-font-size-19" scope="col">
                                     Framework title
                                 </th>
                                 <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
-                                    Expected live
+                                    Live
                                 </th>
                             </tr>
                             </thead>
@@ -212,7 +214,7 @@
 
                                 <tr class="govuk-table__row">
                                     <td class="govuk-table__cell govuk-!-font-size-16">
-                                        {{ upcoming_deal.category }}
+                                        {{ upcoming_deal.pillar }}
                                     </td>
                                     <td class="govuk-table__cell">
                                         <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
@@ -254,7 +256,7 @@
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
-                                    Category
+                                    Pillar
                                 </th>
                                 <th class="govuk-table__header govuk-!-font-size-19" scope="col">
                                     Framework title
@@ -273,7 +275,7 @@
 
                                 <tr class="govuk-table__row">
                                     <td class="govuk-table__cell govuk-!-font-size-16">
-                                        {{ upcoming_deal.category }}
+                                        {{ upcoming_deal.pillar }}
                                     </td>
                                     <td class="govuk-table__cell">
                                         <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
@@ -319,7 +321,7 @@
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
-                                    Category
+                                    Pillar
                                 </th>
                                 <th class="govuk-table__header govuk-!-font-size-19" scope="col">
                                     Framework title
@@ -332,7 +334,7 @@
 
                                 <tr class="govuk-table__row">
                                     <td class="govuk-table__cell govuk-!-font-size-16">
-                                        {{ upcoming_deal.category }}
+                                        {{ upcoming_deal.pillar }}
                                     </td>
                                     <td class="govuk-table__cell">
                                         <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">

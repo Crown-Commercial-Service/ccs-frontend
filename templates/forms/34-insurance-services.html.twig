@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Insurance Services 2 non-disclosure agreement (NDA) - CCS{% endblock %}
+
 {% block header %}
     {% embed '/includes/header.html.twig' %}
         {% block bannerarea %}
@@ -141,7 +143,7 @@
                             <label class="govuk-label" for="email">
                                 Email
                             </label>
-                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="text" />
+                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="email" required />
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="name">
