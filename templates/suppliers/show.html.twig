@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% if supplier.content.trading_name is not empty %}
+    {% set name = supplier.content.trading_name %}
+{% else %}
+    {% set name = supplier.content.name %}
+{% endif %}
+
+{% block title %}{{ name }} - CCS{% endblock %}
+
 {% block header %}
     {% embed '/includes/header.html.twig' %}
         {% block bannerarea %}
@@ -25,20 +33,13 @@
         </div>
 
 
-        {% if supplier.content.trading_name is not empty %}
-            {% set name = supplier.content.trading_name %}
-        {% else %}
-            {% set name = supplier.content.name %}
-        {% endif %}
-
-
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="/">Home</a>
                 </li>
                 <li class="govuk-breadcrumbs__list-item">
-                    <a class="govuk-breadcrumbs__link" href="#">Search
+                    <a class="govuk-breadcrumbs__link" href="/suppliers">Search
                         suppliers</a>
                 </li>
                 <li class="govuk-breadcrumbs__list-item" aria-current="page">
@@ -141,10 +142,12 @@
                                                                 on
                                                                 <a href="mailto:{{ lot.supplier_contact_email }}">{{ lot.supplier_contact_email }}</a>
                                                             </p>
+                                                        {% elseif supplier.content.phone_number %}
+                                                            <p class="govuk-!-font-size-16 govuk-!-margin-0">
+                                                                Call {{ name }} on {{ supplier.content.phone_number }}</p>
                                                         {% else %}
                                                             <p class="govuk-!-font-size-16 govuk-!-margin-0">
-                                                                Call
-                                                                switchboard</p>
+                                                            Call {{ name }}</p>
                                                         {% endif %}
                                                     </td>
                                                 </tr>
@@ -343,7 +346,7 @@
                     <aside class="aside">
 
                         <div class="apollo-enclosure">
-                            <h2 class="govuk-heading-m">Contact</h2>
+                            <h2 class="govuk-heading-m">Supplier details</h2>
 
                             <h3 class="govuk-heading-m govuk-!-font-size-17featured govuk-!-margin-0 govuk-!-font-weight-bold">
                                 Telephone:</h3>

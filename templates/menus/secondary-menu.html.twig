@@ -1,9 +1,7 @@
-{% set currentPageSlug = currentPath|trim('/','right') %}
-
-<ul class="nav-list nav-list--secondary" data-currentpath="{{ currentPath }}" data-currentpageslug="{{ currentPageSlug }}" data-currenturl="{{ currentUrl }}">
+<ul class="nav-list nav-list--secondary">
     {% for menu_item in menu.children %}
         <li class="nav-list__item">
-            <a data-thispageurl="{{ menu_item.url }}" class="nav-list__link {% if currentPageSlug == menu_item.url or currentUrl == menu_item.url %}item-current{% endif %}" href="{{ menu_item.url }}">{{ menu_item.label }}</a>
+            <a class="nav-list__link {% if menu_item.active %} --item-current {% endif %} " href="{{ menu_item.url }}">{{ menu_item.label }}</a>
         </li>
     {% endfor %}
     {#<li class="nav-list__item">#}

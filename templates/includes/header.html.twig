@@ -27,16 +27,14 @@
             {% block mainnavigation %}
             <nav class="global-navigation" data-toggle="nav" data-app-uri="{{ app.request.uri }}" data-app-pathinfo="{{ app.request.pathinfo }}">
 
-                {{ app.request.uri }}
-
                 {{ render(controller(
                     'App\\Controller\\MenuController::menu',
-                    { 'id': 22, 'templatePath': 'menus/secondary-menu.html.twig', 'currentUrl': app.request.uri }
+                    { 'id': 22, 'templatePath': 'menus/secondary-menu.html.twig', 'currentPath': app.request.pathinfo }
                 )) }}
 
                 {{ render(controller(
                     'App\\Controller\\MenuController::menu',
-                    { 'id': 21, 'templatePath': 'menus/primary-menu.html.twig', 'currentUrl': app.request.uri }
+                    { 'id': 21, 'templatePath': 'menus/primary-menu.html.twig', 'currentPath': app.request.pathinfo }
                 )) }}
 
             </nav>

@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Suppliers on Lot {{ metadata.lot_number }}: {{ metadata.lot_title }} - CCS{% endblock %}
+
 {% block header %}
     {% embed '/includes/header.html.twig' %}
         {% block bannerarea %}
@@ -64,7 +66,7 @@
 
                <h1 class="govuk-heading-xl page-title">Lot {{ metadata.lot_number }}: {{ metadata.lot_title }}</h1>
 
-               <p class="govuk-body-l govuk-!-font-weight-bold">{{ pagination.totalResults }} suppliers on this lot.</p>
+               <p class="govuk-body-l govuk-!-font-weight-bold">{{ pagination.totalResults }} suppliers on this lot</p>
 
 
                <ul class="govuk-list govuk-list--suppliers">
@@ -76,11 +78,9 @@
 
                          <ul class="govuk-list govuk-!-font-size-17featured">
                             {% for framework in item.content.live_frameworks %}
-                                <li><a href="{{ path('frameworks_show', {'rmNumber':  framework.rm_number }) }}">{{ framework.title }} ({{ framework.rm_number }})</a></li>
+                                {#<li><a href="{{ path('frameworks_show', {'rmNumber':  framework.rm_number }) }}">{{ framework.title }} ({{ framework.rm_number }})</a></li>#}
+                                <li>{{ framework.title }} ({{ framework.rm_number }})</li>
                             {% endfor %}
-                            {#<li><a href="sdg">Network services name of (RM12344)</a></li>#}
-                            {#<li><a href="sdg">Network services name of (RM12344)</a></li>#}
-                            {#<li><a href="sdg">Network services name of (RM12344)</a></li>#}
                          </ul>
                       </li>
                    {% endfor %}

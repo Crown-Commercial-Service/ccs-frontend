@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Contact Crown Commercial Services - CCS{% endblock %}
+
 {% block header %}
     {% embed '/includes/header.html.twig' %}
         {% block bannerarea %}
@@ -68,7 +70,7 @@
                         </div>
                         <div class="govuk-grid-column-three-quarters">
                             <p class="govuk-!-font-size-24">
-                                <a href="mailto:info@crowncommercial.govuk">info@crowncommercial.govuk</a>
+                                <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a>
                             </p>
                         </div>
                     </div>
@@ -97,7 +99,7 @@
                         <!-- add the redirect url here-->
                         <input type="hidden" id="priority" name="priority" value="Green"/>
                         <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}"/>
-                        {#<input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />#}
+                        <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
 
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
@@ -119,12 +121,12 @@
     </span>
                                 <div class="govuk-radios govuk-radios--conditional" data-module="radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="subject" type="radio" value="Website - Enquiry" data-aria-controls="conditional-how-contacted-conditional-1">
+                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="origin" type="radio" value="Website - Enquiry" data-aria-controls="conditional-how-contacted-conditional-1" checked>
                                         <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-1">
                                             General enquiry </label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-2" name="subject" type="radio" value="Website - Complaint" data-aria-controls="conditional-how-contacted-conditional-2">
+                                        <input class="govuk-radios__input" id="how-contacted-conditional-2" name="origin" type="radio" value="Website - Complaint" data-aria-controls="conditional-how-contacted-conditional-2">
                                         <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">
                                             Complaint </label>
                                     </div>
@@ -160,7 +162,7 @@
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="email">
                                 Email </label>
-                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="text"/>
+                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="email" required/>
                         </div>
 
 
@@ -235,12 +237,12 @@
 
 
                         <div class="govuk-form-group">
-                            <label class="govuk-label" for="more-detail"> Can
-                                you provide more detail? </label>
+                            <label id="more-detail-label" class="govuk-label" for="more-detail">Can
+                                you provide more detail?</label>
                             <span id="more-detail-hint" class="govuk-hint">
     Do not include personal or financial information, like your credit card details.
   </span>
-                            <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint"></textarea>
+                            <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint" required></textarea>
                         </div>
 
                         {# Catch-all field for additional Salesforce data #}
@@ -257,13 +259,14 @@
                     <script>
 
                         // Collect all the radio values
-                        fieldCheckboxes = document.getElementsByName("subject");
+                        fieldCheckboxes = document.getElementsByName("origin");
 
                         // Collect the Postcode value
                         fieldPostCode = document.getElementById("post-code");
 
                         // Collect the More detail value
                         fieldMoreDetail = document.getElementById("more-detail");
+                        labelMoreDetail = document.getElementById("more-detail-label");
 
                         // The field were we collect all the data for Salesforce
                         dataCollectionFieldForSalesforce = document.getElementById("salesforce-textarea");
@@ -278,14 +281,18 @@
 
                             fieldCheckboxes[i].addEventListener('click', function (e) {
 
+                                // If user selects "Website - Complaint", update redirect URL, show additional fields and update textarea label
                                 if (this.value === "Website - Complaint" && this.checked) {
                                     retURLfield.value = complaintReturnURL;
-                                    condtionalFields.classList.remove("govuk-radios__conditional--hidden")
+                                    condtionalFields.classList.remove("govuk-radios__conditional--hidden");
+                                    labelMoreDetail.textContent = "Briefly state your complaint:";
                                 }
 
+                                // If user selects "Website - Enquiry", update redirect URL, hide additional fields and update textarea label
                                 if (this.value === "Website - Enquiry" && this.checked) {
                                     retURLfield.value = generalEnquiryReturnURL;
-                                    condtionalFields.classList.add("govuk-radios__conditional--hidden")
+                                    condtionalFields.classList.add("govuk-radios__conditional--hidden");
+                                    labelMoreDetail.textContent = "Can you provide more detail?";
                                 }
 
                             }, false);

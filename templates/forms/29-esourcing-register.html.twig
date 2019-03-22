@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Register as a buyer for the CCS eSourcing tool - CCS{% endblock %}
+
 {% block header %}
     {% embed '/includes/header.html.twig' %}
         {% block bannerarea %}
@@ -103,6 +105,7 @@
                         <input type="hidden" id="priority" name="priority" value="Green" />
                         <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
                         <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Website - eSourcing Access" />
+                        <input type="hidden" id="origin" maxlength="80" name="origin" size="20" value="Website - eSourcing Access" />
 
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
@@ -124,7 +127,7 @@
                             <label class="govuk-label" for="email">
                                 Email
                             </label>
-                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="text" />
+                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="email" required />
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="name">
