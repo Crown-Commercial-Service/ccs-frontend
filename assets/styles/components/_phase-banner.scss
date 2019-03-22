@@ -16,6 +16,14 @@
 
         color: inherit;
 
+        &:hover,
+        &:focus,
+        &:active {
+
+            text-decoration: none;
+
+        }
+
     }
 
 }
