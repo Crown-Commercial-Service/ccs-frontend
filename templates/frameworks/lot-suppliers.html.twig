@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Suppliers on Lot {{ metadata.lot_number }}: {{ metadata.lot_title }} - CCS{% endblock %}
+
 {% block header %}
     {% embed '/includes/header.html.twig' %}
         {% block bannerarea %}
