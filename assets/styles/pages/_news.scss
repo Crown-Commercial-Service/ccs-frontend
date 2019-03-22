@@ -203,6 +203,18 @@
     margin: 10px 0;
     @include govuk-font(20, $weight: regular);
 
+    a {
+
+        &:hover,
+        &:focus,
+        &:active {
+
+            text-decoration: none;
+
+        }
+
+    }
+
 }
 
 .news-listing-meta--featured {
