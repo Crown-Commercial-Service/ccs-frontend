@@ -1,6 +1,6 @@
 # Crown Commercial Service website
 
-Symfony application to generate the Crown Commercial public website at https://www.crowncommercial.gov.uk/
+Symfony application to generate the Crown Commercial public website at [https://www.crowncommercial.gov.uk/](https://www.crowncommercial.gov.uk/)
 
 Please see [further web documentation](https://github.com/Crown-Commercial-Service/ccsweb-docs/tree/master/web) (this is a private repo).
 
@@ -134,7 +134,7 @@ See [quick start](http://docs.behat.org/en/latest/quick_start.html) and [Behat a
 
 ### PHP CodeSniffer
 
-You can test coding standards (PSR2) via:
+You can test coding standards ([PSR2](https://www.php-fig.org/psr/psr-2/)) via:
 
 ```
 # Summary report
