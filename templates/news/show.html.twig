@@ -43,7 +43,7 @@
                         {% endfor %}
                         {% endif %}
                         | {{ page.datePublished|date('jS F Y') }}</div>
-                    <h1 class="govuk-heading-xl govuk-!-font-size-48 page-title news-listing-title--featured">{{ page.title }}</h1>
+                    <h1 class="govuk-heading-xl govuk-!-font-size-48 page-title news-listing-title--featured">{{ page.title|raw }}</h1>
 
                 </div>
             </div>

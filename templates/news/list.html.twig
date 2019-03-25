@@ -53,10 +53,10 @@
                             {% endfor %}
                         {% endif %}
                         | {{ page.datePublished|date('jS F Y') }}</div>
-                    <h2 class="govuk-heading-xl govuk-!-font-size-48 page-title news-listing-title--featured">{{ page.title }}</h2>
+                    <h2 class="govuk-heading-xl govuk-!-font-size-48 page-title news-listing-title--featured">{{ page.title|raw }}</h2>
                     <p class="news-listing-summary--featured">{{ page.content.post_lead_text }}</p>
 
-                    <p class="news-listing-summary--featured"><a href="{{ url('news_page', {'slug': page.urlSlug}) }}" class="govuk-!-font-weight-bold">Continue reading <span class="visuallyhidden">{{ page.title }}</span></a></p>
+                    <p class="news-listing-summary--featured"><a href="{{ url('news_page', {'slug': page.urlSlug}) }}" class="govuk-!-font-weight-bold">Continue reading <span class="visuallyhidden">{{ page.title|raw }}</span></a></p>
 
                 </div>
             </div>
@@ -160,7 +160,7 @@
                                     {% endif %}
                                     | {{ page.datePublished.format('jS F Y') }}
                                 </div>
-                                <h2 class="news-listing-title"><a href="{{ url('news_page', {'slug': page.urlSlug}) }}">{{ page.title }}</a></h2>
+                                <h2 class="news-listing-title"><a href="{{ url('news_page', {'slug': page.urlSlug}) }}">{{ page.title|raw }}</a></h2>
 
                                 {% if page.content.post_lead_text %}
                                 <p class="news-listing-summary">
