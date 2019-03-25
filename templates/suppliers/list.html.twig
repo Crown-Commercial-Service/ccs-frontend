@@ -309,11 +309,7 @@
 
                     {% for item in results %}
 
-                        {% if item.content.trading_name is not empty %}
-                            {% set name = item.content.trading_name %}
-                        {% else %}
-                            {% set name = item.content.name %}
-                        {% endif %}
+                        {% set name = item.content.name %}
 
                         <li>
                             {#{{ dump(item) }}#}
