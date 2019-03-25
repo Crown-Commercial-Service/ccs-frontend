@@ -7,3 +7,5 @@ page_accordion:
       type: text
     page_accordion_page_accordion_item_content:
       type: richtext
+full_width_content:
+  type: richtext
