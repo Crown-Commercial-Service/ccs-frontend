@@ -50,7 +50,7 @@
 
 
         <!-- required wrapper 2 -->
-        <main id="main-content" class="govuk-main-wrapper">
+        <main id="main-content" role="main" class="govuk-main-wrapper">
 
 
             <div class="govuk-grid-row">
@@ -138,7 +138,7 @@
                                                     <td class="govuk-table__cell">
                                                         <h3 class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">{{ lot.title }}</h3>
                                                         {% if lot.supplier_contact_email %}
-                                                            <p class="govuk-!-font-size-16 govuk-!-margin-0">{{ lot.supplier_contact_name }}
+                                                            <p class="govuk-!-font-size-16 govuk-!-margin-0">Email {{ lot.supplier_contact_name }}
                                                                 on
                                                                 <a href="mailto:{{ lot.supplier_contact_email }}">{{ lot.supplier_contact_email }}</a>
                                                             </p>
@@ -364,9 +364,9 @@
                             <p class="govuk-!-font-size-17featured">{{ supplier.content.duns_number }}</p>
 
 
+                            <h3 class="govuk-heading-m govuk-!-font-size-17featured govuk-!-margin-0 govuk-!-font-weight-bold">
+                                Address:</h3>
                             <address class="" itemscope="" itemtype="http://schema.org/LocalBusiness">
-                                <h3 class="govuk-heading-m govuk-!-font-size-17featured govuk-!-margin-0 govuk-!-font-weight-bold">
-                                    Address:</h3>
                                 <div class="govuk-body govuk-!-font-size-17featured" itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
                                     <span itemprop="streetAddress">{{ supplier.content.street }}
                                         ,</span>

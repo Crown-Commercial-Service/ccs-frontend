@@ -36,7 +36,13 @@
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NQGRQN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 {# End Google Tag Manager (noscript) #}
 
-<a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+<div id="skiplink-container">
+    <div>
+        <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+    </div>
+</div>
+
+{#<a href="#main-content" class="govuk-skip-link">Skip to main content</a>#}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
