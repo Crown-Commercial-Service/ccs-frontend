@@ -1,7 +1,7 @@
 /*------------------------------------*\
   #How to buy
 \*------------------------------------*/
-.how-to-buy-list {
+.how-to-buy-list.how-to-buy-list {
 
     // There is no global default on classless elements
     box-sizing: border-box;
@@ -23,7 +23,7 @@
 }
 
 
-.how-to-buy-list__item {
+.how-to-buy-list__item.how-to-buy-list__item {
 
     // There is no global default on classless elements
     box-sizing: inherit;
