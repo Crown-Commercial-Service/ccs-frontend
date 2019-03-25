@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}News - CCS{% endblock %}
+
 {% block header %}
     {% embed '/includes/header.html.twig' %}
         {% block headerclasses %}
@@ -12,7 +14,20 @@
                 {% for page in pages %}
 
             {% if page.featuredImage and loop.first %}
-                style="background-size: cover; background-image: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.75) 41%, rgba(0,0,0,0.6) 71%, rgba(0,0,0,0.3) 100%), url({{ page.featuredImage.url }});"
+
+                    {% set theFeaturedImage = "" %}
+
+                    {% if page.featuredImage.byName('news-size-xl') %}
+                        {% set theFeaturedImage = page.featuredImage.byName('news-size-xl') %}
+                    {% elseif page.featuredImage.byName('news-size-l') %}
+                        {% set theFeaturedImage = page.featuredImage.byName('news-size-l') %}
+                    {% elseif page.featuredImage.byName('news-size-m') %}
+                        {% set theFeaturedImage = page.featuredImage.byName('news-size-m') %}
+                    {% elseif page.featuredImage.byName('full') %}
+                        {% set theFeaturedImage = page.featuredImage.byName('full') %}
+                    {% endif %}
+
+                style="background-size: cover; background-image: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.75) 41%, rgba(0,0,0,0.6) 71%, rgba(0,0,0,0.3) 100%), url({{ theFeaturedImage }});"
             {% endif %}
 
             {% endfor %}
@@ -92,6 +107,10 @@
 
                     {#<p>Displaying {{ pages.pagination.totalResults|number_format }} results, Page {{ pages.pagination.page }} of {{ pages.pagination.totalPages }}</p>#}
 
+
+                    {# This is the world's smallest valid GIF, it's transparent, which means we can set the background colour of the container element #}
+                    {% set base64 = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" %}
+
                     {% if pages %}
                     <ul class="news-listing">
 
@@ -100,18 +119,36 @@
                             {# We skip the first item because we're already displaying it in the header as Featured post #}
                         {% else %}
                         <li class="news-listing__item">
+
                             <picture>
                                 <a href="{{ url('news_page', {'slug': page.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
                                     {% if page.featuredImage %}
-                                        {#{{ dump(page.featuredImage) }}#}
-                                        {#{{ page.featuredImage.byName('thumbnail') }}#}
-                                        {#{{ page.featuredImage.byName('medium') }}#}
-                                        {#{{ page.featuredImage.byName('medium_large') }}#}
-                                        {#{{ page.featuredImage.medium.url }}#}
-                                        {#{{ page.featuredImage.medium_large.url }}#}
-                                        <img src="{{ page.featuredImage.url }}" alt="{{ page.featuredImage.alt }}" aria-hidden="true" />
+
+                                        <!--[if IE 9]><video style="display: none;><![endif]-->
+                                        {% if page.featuredImage.byName('news-size-s') %}
+                                            <source media="(max-width: 320px)" srcset="{{ page.featuredImage.byName('news-size-s') }}" data-srcset="{{ page.featuredImage.byName('news-size-s') }}">
+                                        {% endif %}
+
+                                        {% if page.featuredImage.byName('news-size-m') %}
+                                            <source media="(max-width: 768px)" srcset="{{ page.featuredImage.byName('news-size-m') }}" data-srcset="{{ page.featuredImage.byName('news-size-m') }}">
+                                        {% endif %}
+
+                                        {% if page.featuredImage.byName('news-size-l') %}
+                                            <source media="(max-width: 1280px)" srcset="{{ page.featuredImage.byName('news-size-l') }}" data-srcset="{{ page.featuredImage.byName('news-size-l') }}">
+                                        {% endif %}
+                                        <!--[if IE 9]></video><![endif]-->
+                                        <!-- Fallback -->
+                                        {% if page.featuredImage.byName('news-size-m') %}
+                                        <img src="{{ page.featuredImage.byName('news-size-m') }}" alt="" role="presentation" aria-hidden="true">
+                                        {% else %}
+                                            <img src="{{ page.featuredImage.byName('full') }}" alt="" role="presentation" aria-hidden="true">
+                                        {% endif %}
+
+                                    {% else %}
+
+                                        <img src="{{ base64 }}" alt="" role="presentation" aria-hidden="true">
+
                                     {% endif %}
-                                    {#<img src="/assets/images/news-thumb.png" alt="" aria-hidden="true">#}
                                 </a>
                             </picture>
                             <div class="news-listing__item__caption">
