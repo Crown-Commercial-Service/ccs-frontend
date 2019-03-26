@@ -37,7 +37,7 @@
           <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_list') }}">Search frameworks</a>
         </li>
         <li class="govuk-breadcrumbs__list-item">
-          <a class="govuk-breadcrumbs__link" href="#">{{  metadata.framework_title }}</a>
+          <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_show', {'rmNumber':  metadata.framework_rm_number }) }}">{{  metadata.framework_title }}</a>
         </li>
         <li class="govuk-breadcrumbs__list-item" aria-current="page">
           Suppliers on framework
