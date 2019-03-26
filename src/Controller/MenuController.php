@@ -41,7 +41,7 @@ class MenuController extends AbstractController
      */
     public function menu(int $id, string $templatePath = 'menus/default-menu.html.twig', string $currentPath)
     {
-        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $id = (int) filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
         $menu = $this->api->getMenu($id);
 
