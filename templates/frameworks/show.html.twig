@@ -123,7 +123,9 @@
 
                         {# https://twig.symfony.com/doc/2.x/filters/raw.html #}
                         {# https://twig.symfony.com/doc/2.x/filters/striptags.html #}
-                        <div class="govuk-body-l">{{ framework.content.summary | striptags }}</div>
+                        {% if framework.content.summary and framework.content.summary != "" %}
+                        <div class="govuk-body-l">{{ framework.content.summary | striptags | raw }}</div>
+                        {% endif %}
 
 
                         {# see https://studio24.github.io/frontend/templating/content-fields.html #}
@@ -142,7 +144,7 @@
                         <div class="govuk-accordion" data-module="accordion" id="accordion-default">
 
 
-                            {% if framework.content.updates and framework.content.updates != "" and framework.content.status != 'Expired - Data Still Received' %}
+                            {% if framework.content.updates and framework.content.updates != "" %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
