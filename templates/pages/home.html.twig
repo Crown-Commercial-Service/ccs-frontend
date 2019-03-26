@@ -184,9 +184,10 @@
                                     {# Array is currently not limited #}
                                     {% if loop.index <= 3 %}
                                         <li class="news-listing__item">
+
+                                            {% if news_item.featuredImage %}
                                             <picture>
                                                 <a href="{{ url('news_page', {'slug': news_item.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
-                                                    {% if news_item.featuredImage %}
 
                                                         <!--[if IE 9]>
                                                         <video style="display: none;><![endif]-->
@@ -209,14 +210,10 @@
                                                             <img src="{{ news_item.featuredImage.byName('full') }}" alt="" role="presentation" aria-hidden="true">
                                                         {% endif %}
 
-                                                    {% else %}
-
-                                                        <img src="{{ base64 }}" alt="" role="presentation" aria-hidden="true">
-
-                                                    {% endif %}
-                                                    {#<img src="/assets/images/news-thumb.png" alt="" aria-hidden="true">#}
                                                 </a>
                                             </picture>
+                                            {% endif %}
+
                                             <div class="news-listing__item__caption">
                                                 <div class="news-listing-meta">
                                                     {% if news_item.taxonomies.categories %}
@@ -243,7 +240,7 @@
 
                             <h2 class="govuk-heading-m">Learn about CCS</h2>
 
-                            <p class="flex-video widescreen">
+                            <p class="responsive-video widescreen">
                                 <iframe width="560" height="315" src="https://www.youtube.com/embed/_p61ZX4zQHU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             </p>
                             <p><a href="/help-and-support/">Browse all help and
