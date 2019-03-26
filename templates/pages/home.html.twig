@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block htmlclass %}no-js is-home{% endblock %}
+
 {% block title %}Crown Commercial Services - CCS{% endblock %}
 
 {% block header %}
@@ -9,16 +11,19 @@
         {% endblock %}
 
         {% block headerstyles %}
-                style="background-size: cover; background-image: url(/assets/images/header.jpg);"
+            style="background-size: cover; background-image: url(/assets/images/header.jpg);"
         {% endblock %}
 
         {% block featuredcontent %}
             <div class="homepage-hero govuk-width-container">
 
-                <h1 class="visuallyhidden">Crown commercial services homepage</h1>
-                <h2 class="govuk-heading-xl govuk-!-font-size-56 govuk-!-font-weight-regular homepage-hero-title">Public procurement<br>made simple</h2>
-                <p class="govuk-body-l">Save time, save money and comply with procurement regulations.
-                    Free for public sector and charity buyers.</p>
+                <h1 class="visuallyhidden">Crown commercial services
+                    homepage</h1>
+                <h2 class="govuk-heading-xl govuk-!-font-size-56 govuk-!-font-weight-regular homepage-hero-title align-center-from-desktop">
+                    Public procurement<br>made simple</h2>
+                <p class="govuk-body-l align-center-from-desktop">Save time,
+                    save money and comply with procurement regulations. Free for
+                    public sector and charity buyers.</p>
 
 
                 <div class="govuk-grid-row">
@@ -29,9 +34,12 @@
 
                             <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage">
                                 <div class="govuk-form-group homepage-hero__search-group">
-                                    <label class="govuk-label" for="q">Search frameworks</label>
+                                    <label class="govuk-label" for="q">Search
+                                        frameworks</label>
                                     <input class="govuk-input" id="q" name="q" type="text">
-                                    <button class="homepage-hero__search-button"><span class="visuallyhidden">Search frameworks</span></button>
+                                    <button class="homepage-hero__search-button">
+                                        <span class="visuallyhidden">Search frameworks</span>
+                                    </button>
                                 </div>
                             </div>
 
@@ -44,9 +52,12 @@
 
                             <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage">
                                 <div class="govuk-form-group homepage-hero__search-group">
-                                    <label class="govuk-label" for="q">Search suppliers</label>
+                                    <label class="govuk-label" for="q">Search
+                                        suppliers</label>
                                     <input class="govuk-input" id="q" name="q" type="text">
-                                    <button class="homepage-hero__search-button"><span class="visuallyhidden">Search suppliers</span></button>
+                                    <button class="homepage-hero__search-button">
+                                        <span class="visuallyhidden">Search suppliers</span>
+                                    </button>
                                 </div>
                             </div>
 
@@ -71,7 +82,7 @@
 
 
         {# required wrapper 2 #}
-        <main class="govuk-main-wrapper">
+        <main id="main-content" role="main" class="govuk-main-wrapper">
 
 
             <div class="apollo-island">
@@ -83,9 +94,14 @@
                             <h2 class="govuk-heading-m govuk-!-font-size-24">How
                                 to buy</h2>
                             <p class="govuk-body govuk-!-font-size-17featured">
-                                CCS has over 80 commercial agreements you can access in several ways: frameworks, catalogues, portals and aggregation. Learn about the buying routes and what you can buy from each.</p>
+                                CCS has over 80 commercial agreements you can
+                                access in several ways: frameworks, catalogues,
+                                portals and aggregation. Learn about the buying
+                                routes and what you can buy from each.</p>
                             <p class="govuk-body govuk-!-font-size-17featured">
-                                <a href="/help-and-support/how-to-buy/">Learn more <span class="visuallyhidden">about How to buy</span></a></p>
+                                <a href="/help-and-support/how-to-buy/">Learn
+                                    more <span class="visuallyhidden">about How to buy</span></a>
+                            </p>
 
                         </div>
                         <div class="govuk-grid-column-one-quarter">
@@ -93,9 +109,15 @@
                             <h2 class="govuk-heading-m govuk-!-font-size-24">
                                 Frameworks</h2>
                             <p class="govuk-body govuk-!-font-size-17featured">
-                                Frameworks are for common but complex requirements. They comprise a list of suppliers and standardised contract terms. Frameworks are often divided into lots by product or service type.</p>
+                                Frameworks are for common but complex
+                                requirements. They comprise a list of suppliers
+                                and standardised contract terms. Frameworks are
+                                often divided into lots by product or service
+                                type.</p>
                             <p class="govuk-body govuk-!-font-size-17featured">
-                                <a href="/help-and-support/frameworks/">Learn more <span class="visuallyhidden">about Frameworks</span></a></p>
+                                <a href="/help-and-support/frameworks/">Learn
+                                    more <span class="visuallyhidden">about Frameworks</span></a>
+                            </p>
 
                         </div>
                         <div class="govuk-grid-column-one-quarter">
@@ -103,9 +125,15 @@
                             <h2 class="govuk-heading-m govuk-!-font-size-24">
                                 Upcoming deals</h2>
                             <p class="govuk-body govuk-!-font-size-17featured">
-                                CCS plans to launch new commercial agreements and renew some existing ones. Learn which agreements are still open to suppliers to tender, and when they will be ready to buy from.</p>
+                                CCS plans to launch new commercial agreements
+                                and renew some existing ones. Learn which
+                                agreements are still open to suppliers to
+                                tender, and when they will be ready to buy
+                                from.</p>
                             <p class="govuk-body govuk-!-font-size-17featured">
-                                <a href="/agreements/upcoming">Learn more <span class="visuallyhidden">about Upcoming deals</span></a></p>
+                                <a href="/agreements/upcoming">Learn more
+                                    <span class="visuallyhidden">about Upcoming deals</span></a>
+                            </p>
 
                         </div>
                         <div class="govuk-grid-column-one-quarter">
@@ -113,14 +141,23 @@
                             <h2 class="govuk-heading-m govuk-!-font-size-24">
                                 Catalogues</h2>
                             <p class="govuk-body govuk-!-margin-bottom-0">
-                                <a href="/help-and-support/purchasing-platform/">Purchasing platform</a></p>
-                            <p class="govuk-body govuk-!-font-size-16">Technology products, office supplies, multifuncitonal devices</p>
+                                <a href="/help-and-support/purchasing-platform/">Purchasing
+                                    platform</a></p>
+                            <p class="govuk-body govuk-!-font-size-16">
+                                Technology products, office supplies,
+                                multifuncitonal devices</p>
                             <p class="govuk-body govuk-!-margin-bottom-0">
-                                <a href="/help-and-support/digital-marketplace/">Digital marketplace</a></p>
-                            <p class="govuk-body govuk-!-font-size-16">Cloud hosting, digital specialists, data centre space, user research</p>
+                                <a href="/help-and-support/digital-marketplace/">Digital
+                                    marketplace</a></p>
+                            <p class="govuk-body govuk-!-font-size-16">Cloud
+                                hosting, digital specialists, data centre space,
+                                user research</p>
                             <p class="govuk-body govuk-!-margin-bottom-0">
-                                <a href="/help-and-support/emarketplace/">eMarketplace</a></p>
-                            <p class="govuk-body govuk-!-font-size-16">Local authority software, wider public sector office supplies</p>
+                                <a href="/help-and-support/emarketplace/">eMarketplace</a>
+                            </p>
+                            <p class="govuk-body govuk-!-font-size-16">Local
+                                authority software, wider public sector office
+                                supplies</p>
 
                         </div>
                     </div>
@@ -138,30 +175,59 @@
 
                             <ul class="news-listing news-listing--compact">
 
+
+                                {# This is the world's smallest valid GIF, it's transparent, which means we can set the background colour of the container element #}
+                                {% set base64 = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" %}
+
+
                                 {% for news_item in news %}
                                     {# Array is currently not limited #}
                                     {% if loop.index <= 3 %}
-                                    <li class="news-listing__item">
-                                        <picture>
-                                            <a href="{{ url('news_page', {'slug': news_item.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
-                                                {% if news_item.featuredImage %}
-                                                    <img src="{{ news_item.featuredImage.url }}" alt="{{ news_item.featuredImage.alt }}" aria-hidden="true" />
-                                                {% endif %}
-                                                {#<img src="/assets/images/news-thumb.png" alt="" aria-hidden="true">#}
-                                            </a>
-                                        </picture>
-                                        <div class="news-listing__item__caption">
-                                            <div class="news-listing-meta">
-                                                {% if news_item.taxonomies.categories %}
-                                                    {% for category in news_item.taxonomies.categories %}
-                                                        {{ category.name }}{% if loop.index < news_item.taxonomies.categories|length %}, {% endif %}
-                                                    {% endfor %}
-                                                {% endif %}
-                                                | {{ news_item.datePublished.format('jS F Y') }}
+                                        <li class="news-listing__item">
+
+                                            {% if news_item.featuredImage %}
+                                            <picture>
+                                                <a href="{{ url('news_page', {'slug': news_item.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
+
+                                                        <!--[if IE 9]>
+                                                        <video style="display: none;><![endif]-->
+                                                        {% if news_item.featuredImage.byName('news-size-s') %}
+                                                            <source media="(max-width: 320px)" srcset="{{ news_item.featuredImage.byName('news-size-s') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-s') }}">
+                                                        {% endif %}
+
+                                                        {% if news_item.featuredImage.byName('news-size-m') %}
+                                                            <source media="(max-width: 768px)" srcset="{{ news_item.featuredImage.byName('news-size-m') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-m') }}">
+                                                        {% endif %}
+
+                                                        {% if news_item.featuredImage.byName('news-size-l') %}
+                                                            <source media="(max-width: 1280px)" srcset="{{ news_item.featuredImage.byName('news-size-l') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-l') }}">
+                                                        {% endif %}
+                                                        <!--[if IE 9]></video><![endif]-->
+                                                        <!-- Fallback -->
+                                                        {% if news_item.featuredImage.byName('news-size-m') %}
+                                                            <img src="{{ news_item.featuredImage.byName('news-size-m') }}" alt="" role="presentation" aria-hidden="true">
+                                                        {% else %}
+                                                            <img src="{{ news_item.featuredImage.byName('full') }}" alt="" role="presentation" aria-hidden="true">
+                                                        {% endif %}
+
+                                                </a>
+                                            </picture>
+                                            {% endif %}
+
+                                            <div class="news-listing__item__caption">
+                                                <div class="news-listing-meta">
+                                                    {% if news_item.taxonomies.categories %}
+                                                        {% for category in news_item.taxonomies.categories %}
+                                                            {{ category.name }}{% if loop.index < news_item.taxonomies.categories|length %}, {% endif %}
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                    | {{ news_item.datePublished.format('jS F Y') }}
+                                                </div>
+                                                <h3 class="news-listing-title">
+                                                    <a href="{{ url('news_page', {'slug': news_item.urlSlug}) }}">{{ news_item.title|raw }}</a>
+                                                </h3>
                                             </div>
-                                            <h3 class="news-listing-title"><a href="{{ url('news_page', {'slug': news_item.urlSlug}) }}">{{ news_item.title }}</a></h3>
-                                        </div>
-                                    </li>
+                                        </li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>
@@ -174,11 +240,11 @@
 
                             <h2 class="govuk-heading-m">Learn about CCS</h2>
 
-                            <p class="flex-video widescreen">
+                            <p class="responsive-video widescreen">
                                 <iframe width="560" height="315" src="https://www.youtube.com/embed/_p61ZX4zQHU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             </p>
-                            <p><a href="/help-and-support/">Browse all help and support
-                                    guides</a></p>
+                            <p><a href="/help-and-support/">Browse all help and
+                                    support guides</a></p>
 
 
                         </div>

@@ -27,6 +27,7 @@ class FrameworksController extends AbstractController
         );
         $this->api->setContentType('frameworks');
         $this->api->setCache($cache);
+        $this->api->setCacheLifetime(1800);
     }
 
     /**
@@ -44,6 +45,59 @@ class FrameworksController extends AbstractController
      */
     public function list(Request $request, int $page = 1)
     {
+        /**
+         * Detect incoming old links from ccs-agreements domain
+         * E.g. f[0]=im_field_category:7
+         */
+        $f = filter_var($request->query->get('f'), FILTER_SANITIZE_STRING);
+        if (!empty($f) && is_array($f) && !empty($f[0])) {
+            switch ($f[0]) {
+                case 'im_field_category:7':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'technology-products-services']);
+                case 'im_field_category:14':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'professional-services']);
+                case 'im_field_category:20':
+                    return $this->redirectToRoute('frameworks_list_by_pillar', ['pillar' => 'buildings']);
+                case 'im_field_category:9':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'utilities-fuels']);
+                case 'im_field_category:10':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'marcomms-research']);
+                case 'im_field_category:19':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'workplace']);
+                case 'im_field_category:21':
+                    return $this->redirectToRoute('frameworks_list_by_pillar', ['pillar' => 'technology']);
+                case 'im_field_category:16':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'fleet']);
+                case 'im_field_category:15':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'travel']);
+                case 'im_field_category:41':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'construction']);
+            }
+            if (preg_match('/^im_field_category/', $f[0])) {
+                return $this->redirectToRoute('frameworks_list');
+            }
+        }
+
+        /**
+         * Detect incoming old links from ccs-agreements
+         * E.g. ?sm_field_contract_id=RM3823*
+         * ?sm_field_contract_id="RM3823:10a"
+         */
+        $smField = filter_var($request->query->get('sm_field_contract_id'), FILTER_SANITIZE_STRING);
+        if (!empty($smField)) {
+            $smField = filter_var($smField, FILTER_SANITIZE_STRING);
+            $smField = html_entity_decode($smField);
+            $smField = preg_replace('![^a-zA-Z0-9./\-:]!', '', $smField);
+
+            $elements = explode(':', $smField);
+            if (count($elements) === 1) {
+                return $this->redirectToRoute('frameworks_suppliers', ['rmNumber' => $elements[0]]);
+            } else {
+                return $this->redirectToRoute('frameworks_lot_suppliers', ['rmNumber' => $elements[0], 'lotNumber' => $elements[1]]);
+            }
+        }
+
+        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
         $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page, ['limit' => 20]);
 
@@ -56,7 +110,6 @@ class FrameworksController extends AbstractController
 
         return $this->render('frameworks/list.html.twig', $data);
     }
-
 
     /**
      * List upcoming deals
@@ -107,6 +160,9 @@ class FrameworksController extends AbstractController
      */
     public function listByCategory(Request $request, string $category, int $page = 1)
     {
+        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+        $category = filter_var($category, FILTER_SANITIZE_STRING);
+
         // Map category slug to category db value
         $categoryName = FrameworkCategories::getDbValueBySlug($category);
         if ($categoryName === null) {
@@ -147,6 +203,9 @@ class FrameworksController extends AbstractController
      */
     public function listByPillar(Request $request, string $pillar, int $page = 1)
     {
+        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+        $pillar = filter_var($pillar, FILTER_SANITIZE_STRING);
+
         // Map category slug to category db value
         $pillarName = FrameworkCategories::getDbValueBySlug($pillar);
         if ($pillarName === null) {
@@ -190,7 +249,8 @@ class FrameworksController extends AbstractController
     public function search(Request $request, int $page = 1)
     {
         // Get search query
-        $query =  $request->query->get('q');
+        $query =  filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
+        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page, [
@@ -223,6 +283,8 @@ class FrameworksController extends AbstractController
      */
     public function show(string $rmNumber, Request $request)
     {
+        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
+
         $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->getOne($rmNumber);
         $data = [
@@ -248,6 +310,9 @@ class FrameworksController extends AbstractController
      */
     public function suppliersOnFramework(Request $request, string $rmNumber, int $page = 1)
     {
+        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
+        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+
         // Set custom API endpoint
         // @todo Find better way to set custom endpoint URLs
         $this->api->getContentModel()->getContentType('framework_suppliers')->setApiEndpoint(sprintf('ccs/v1/framework-suppliers/%s', $rmNumber));
@@ -283,6 +348,10 @@ class FrameworksController extends AbstractController
      */
     public function suppliersOnLot(Request $request, string $rmNumber, string $lotNumber, int $page = 1)
     {
+        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
+        $lotNumber = filter_var($lotNumber, FILTER_SANITIZE_STRING);
+        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+
         $this->api->getContentModel()->getContentType('framework_lot_suppliers')->setApiEndpoint(sprintf('ccs/v1/lot-suppliers/%s/lot/%s', $rmNumber, $lotNumber));
         $this->api->setContentType('framework_lot_suppliers');
 

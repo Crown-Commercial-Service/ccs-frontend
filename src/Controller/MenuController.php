@@ -27,6 +27,7 @@ class MenuController extends AbstractController
             getenv('APP_API_BASE_URL')
         );
         $this->api->setCache($cache);
+        $this->api->setCacheLifetime(1800);
     }
 
 
@@ -40,6 +41,8 @@ class MenuController extends AbstractController
      */
     public function menu(int $id, string $templatePath = 'menus/default-menu.html.twig', string $currentPath)
     {
+        $id = (int) filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
         $menu = $this->api->getMenu($id);
 
         if (empty($menu)) {

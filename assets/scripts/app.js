@@ -7,11 +7,6 @@ $(document).ready(function () {
     window.GOVUKFrontend.initAll();
 
 
-
-
-
-
-
         // Check for if an element exists
         function exists (elem) {
             return (elem != null && (elem.length >= 0 || elem.innerHTML.length >= 0))
@@ -24,7 +19,6 @@ $(document).ready(function () {
             mq.addListener(updateARIAroles)
             // WidthChange(mq);
         }
-
         var contentToggler = document.querySelectorAll('[data-toggler]')
 
         function updateARIAroles () {
@@ -64,6 +58,12 @@ $(document).ready(function () {
             } // end of exists
 
         } // end of function
+
+
+
+    // call this on page load
+    updateARIAroles();
+
 
         // Class toggler
         // This is used for the search and the main navigation

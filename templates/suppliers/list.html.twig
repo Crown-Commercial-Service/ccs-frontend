@@ -48,7 +48,7 @@
 
 
         <!-- required wrapper 2 -->
-        <main id="main-content"  class="govuk-main-wrapper">
+        <main id="main-content" role="main"  class="govuk-main-wrapper">
 
 
             <div class="govuk-grid-row">
@@ -309,11 +309,7 @@
 
                     {% for item in results %}
 
-                        {% if item.content.trading_name is not empty %}
-                            {% set name = item.content.trading_name %}
-                        {% else %}
-                            {% set name = item.content.name %}
-                        {% endif %}
+                        {% set name = item.content.name %}
 
                         <li>
                             {#{{ dump(item) }}#}
@@ -322,7 +318,7 @@
                             <ul class="govuk-list govuk-!-font-size-17featured">
                                 {% for framework in item.content.live_frameworks %}
 
-                                    <li>{{ framework.title }} ({{ framework.rm_number }})</li>
+                                    <li>{{ framework.title }} ({{ framework.rm_number }}) {% if framework.status == "Expired - Data Still Received" %}<strong class="govuk-tag govuk-tag--subtle">Expired</strong>{% endif %}</li>
 
                                 {% endfor %}
                             </ul>
