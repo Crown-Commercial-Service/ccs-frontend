@@ -45,7 +45,7 @@
 
 
         <!-- required wrapper 2 -->
-        <main id="main-content" class="govuk-main-wrapper">
+        <main id="main-content" role="main" class="govuk-main-wrapper">
 
 
             <div class="govuk-grid-row">
@@ -223,7 +223,7 @@
                                             Date:</strong> {{ item.content.end_date.format('d/m/Y') }}
                                     </li>
                                 </ul>
-                                <p class="govuk-body-s">{{ item.content.summary | striptags }}</p>
+                                <p class="govuk-body-s">{{ item.content.summary | striptags | raw }}</p>
                             </li>
                         {% endfor %}
                     </ul>

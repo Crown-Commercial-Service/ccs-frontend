@@ -90,7 +90,7 @@
 
 
         <!-- required wrapper 2 -->
-        <main id="main-content" class="govuk-main-wrapper">
+        <main id="main-content" role="main" class="govuk-main-wrapper">
 
 
             {% if frameworkStatus == "live" %}
@@ -123,7 +123,9 @@
 
                         {# https://twig.symfony.com/doc/2.x/filters/raw.html #}
                         {# https://twig.symfony.com/doc/2.x/filters/striptags.html #}
-                        <div class="govuk-body-l">{{ framework.content.summary | striptags }}</div>
+                        {% if framework.content.summary and framework.content.summary != "" %}
+                        <div class="govuk-body-l">{{ framework.content.summary | striptags | raw }}</div>
+                        {% endif %}
 
 
                         {# see https://studio24.github.io/frontend/templating/content-fields.html #}
@@ -142,7 +144,7 @@
                         <div class="govuk-accordion" data-module="accordion" id="accordion-default">
 
 
-                            {% if framework.content.updates and framework.content.updates != "" and framework.content.status != 'Expired - Data Still Received' %}
+                            {% if framework.content.updates and framework.content.updates != "" %}
                                 <div class="govuk-accordion__section ">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
@@ -253,7 +255,7 @@
                                         {% for lot in framework.content.lots %}
                                             <dt class="apollo-list--definition__key">
                                                 Lot {{ lot.lot_number }}
-                                                : {{ lot.title }}</dt>
+                                                : {{ lot.title|raw }}</dt>
                                             <dd class="apollo-list--definition__value">
                                                 {% if lot.description %}
                                                     <div class="govuk-!-margin-bottom-2">{{ lot.description }}</div>

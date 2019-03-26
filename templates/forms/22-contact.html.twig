@@ -43,7 +43,7 @@
 
 
         <!-- required wrapper 2 -->
-        <main id="main-content" class="govuk-main-wrapper">
+        <main id="main-content" role="main" class="govuk-main-wrapper">
 
 
             {#<div class="govuk-grid-row">#}
@@ -247,6 +247,8 @@
 
                         {# Catch-all field for additional Salesforce data #}
                         <input type="hidden" class="govuk-!-width-full" name="description" id="salesforce-textarea"/>
+
+                        <p>Here is our <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice">privacy notice</a>.</p>
 
                         <div class="govuk-form-group">
                             <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">
