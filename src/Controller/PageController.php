@@ -29,6 +29,7 @@ class PageController extends AbstractController
         );
         $this->api->setContentType('page');
         $this->api->setCache($cache);
+        $this->api->setCacheLifetime(1800);
     }
 
     /**
@@ -71,6 +72,8 @@ class PageController extends AbstractController
      */
     public function page(string $slug, Request $request)
     {
+        $slug = filter_var($slug, FILTER_SANITIZE_STRING);
+
         // @todo May need to look at mapping URLs to page IDs in the future
 
         // Get end part of page slug which should allow us to retreive page in WordPress

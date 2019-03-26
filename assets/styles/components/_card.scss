@@ -2,7 +2,7 @@
   #Card
 \*------------------------------------*/
 
-.apollo-card {
+.apollo-card.apollo-card {
 
     background-color: $ccs-subtle-colour;
     border: 1px solid #DBDBDB;
@@ -17,7 +17,7 @@
 
 }
 
-.apollo-card__heading {
+.apollo-card__heading.apollo-card__heading {
 
     background-color: $ccs-button-colour;
     color: white;
@@ -26,7 +26,7 @@
 
 }
 
-.apollo-list--definition--card dt {
+.apollo-list--definition--card.apollo-list--definition--card dt {
 
     margin-bottom: 5px;
 
@@ -40,7 +40,7 @@
     }
 
 }
-.apollo-list--definition--card dd {
+.apollo-list--definition--card.apollo-list--definition--card dd {
 
     border-bottom: 1px solid #DBDBDB;
     margin: 0;
@@ -66,7 +66,7 @@
 
 }
 
-.apollo-list--definition--card .govuk-list {
+.apollo-list--definition--card.apollo-list--definition--card .govuk-list {
 
     @include govuk-font(16, $weight: regular);
     margin-bottom: 0;

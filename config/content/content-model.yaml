@@ -34,3 +34,7 @@ global:
     - medium_large
     - large
     - full
+    - news-size-s
+    - news-size-m
+    - news-size-l
+    - news-size-xl

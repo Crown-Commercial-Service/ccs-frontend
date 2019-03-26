@@ -4,7 +4,7 @@
 
 .ccs-width-container {
 
-    max-width: 960px;
+    max-width: 1020px;
     margin: 0 auto;
 
 }
@@ -206,27 +206,30 @@
 /**
  * Highlight current navigation item
  */
-.nav-list__link:hover,
+.nav-list__link.nav-list__link:hover,
+.nav-list__link.nav-list__link:focus,
 .item-current {
 
     background-color: #5F0D2A;
+    color: govuk-colour("white");
 
     @include govuk-media-query($from: desktop) {
 
         background-color: transparent;
         border-color: white;
+        color: inherit;
 
     }
 
 }
 
-.nav-list__link:active {
+.nav-list__link.nav-list__link:active {
 
     color: white;
 
 }
 
-.nav-list__link + .nav-list__link {
+.nav-list__link.nav-list__link + .nav-list__link.nav-list__link {
 
     @include govuk-media-query($from: desktop) {}
 
