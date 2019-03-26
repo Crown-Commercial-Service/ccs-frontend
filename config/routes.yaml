@@ -1,8 +1,4 @@
 # System routes
-temp_page_templates:
-  path: /template/{slug}
-  controller: App\Controller\TempTemplateController::pageTemplate
-
 healthcheck:
   path: /health
   controller: App\Controller\PageController::healthcheck
