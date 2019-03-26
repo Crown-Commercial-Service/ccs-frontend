@@ -45,6 +45,59 @@ class FrameworksController extends AbstractController
      */
     public function list(Request $request, int $page = 1)
     {
+        /**
+         * Detect incoming old links from ccs-agreements domain
+         * E.g. f[0]=im_field_category:7
+         */
+        $f = $request->query->get('f');
+        if (!empty($f) && is_array($f) && !empty($f[0])) {
+            switch ($f[0]) {
+                case 'im_field_category:7':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'technology-products-services']);
+                case 'im_field_category:14':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'professional-services']);
+                case 'im_field_category:20':
+                    return $this->redirectToRoute('frameworks_list_by_pillar', ['pillar' => 'buildings']);
+                case 'im_field_category:9':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'utilities-fuels']);
+                case 'im_field_category:10':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'marcomms-research']);
+                case 'im_field_category:19':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'workplace']);
+                case 'im_field_category:21':
+                    return $this->redirectToRoute('frameworks_list_by_pillar', ['pillar' => 'technology']);
+                case 'im_field_category:16':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'fleet']);
+                case 'im_field_category:15':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'travel']);
+                case 'im_field_category:41':
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'construction']);
+            }
+            if (preg_match('/^im_field_category/', $f[0])) {
+                return $this->redirectToRoute('frameworks_list');
+            }
+        }
+
+        /**
+         * Detect incoming old links from ccs-agreements
+         * E.g. ?sm_field_contract_id=RM3823*
+         * ?sm_field_contract_id="RM3823:10a"
+         */
+        $smField = $request->query->get('sm_field_contract_id');
+        if (!empty($smField)) {
+            $smField = filter_var($smField, FILTER_SANITIZE_STRING);
+            $smField = html_entity_decode($smField);
+            $smField = preg_replace('![^a-zA-Z0-9./\-:]!', '', $smField);
+
+            $elements = explode(':', $smField);
+            if (count($elements) === 1) {
+                return $this->redirectToRoute('frameworks_suppliers', ['rmNumber' => $elements[0]]);
+            } else {
+                return $this->redirectToRoute('frameworks_lot_suppliers', ['rmNumber' => $elements[0], 'lotNumber' => $elements[1]]);
+            }
+        }
+
+        
         $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page, ['limit' => 20]);
 
@@ -57,7 +110,6 @@ class FrameworksController extends AbstractController
 
         return $this->render('frameworks/list.html.twig', $data);
     }
-
 
     /**
      * List upcoming deals
@@ -191,7 +243,7 @@ class FrameworksController extends AbstractController
     public function search(Request $request, int $page = 1)
     {
         // Get search query
-        $query =  $request->query->get('q');
+        $query =  filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
 
         $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page, [
