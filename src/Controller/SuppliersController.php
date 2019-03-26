@@ -64,7 +64,18 @@ class SuppliersController extends AbstractController
     public function search(Request $request, int $page = 1)
     {
         // Get search query
-        $query =  $request->query->get('q');
+        $query = filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
+
+        // Type param
+        $type = filter_var($request->query->get('t'), FILTER_SANITIZE_STRING);
+        if (!empty($type) && $type == 'old') {
+            /**
+             * Replace dash separated with spaces (+)
+             * From: q=bramble-hub-limited
+             * To:   q=bramble+hub+limited
+             */
+            $query = str_replace('-', '+', $query);
+        }
 
         $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page, [
