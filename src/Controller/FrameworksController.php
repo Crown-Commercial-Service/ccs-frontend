@@ -27,6 +27,7 @@ class FrameworksController extends AbstractController
         );
         $this->api->setContentType('frameworks');
         $this->api->setCache($cache);
+        $this->api->setCacheLifetime(1800);
     }
 
     /**

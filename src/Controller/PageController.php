@@ -29,6 +29,7 @@ class PageController extends AbstractController
         );
         $this->api->setContentType('page');
         $this->api->setCache($cache);
+        $this->api->setCacheLifetime(1800);
     }
 
     /**
