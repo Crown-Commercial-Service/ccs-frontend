@@ -30,8 +30,23 @@ class SuppliersController extends AbstractController
     }
 
 
+    /**
+     * List active suppliers
+     *
+     * @param int $page
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PaginationException
+     * @throws \Studio24\Frontend\Exception\PermissionException
+     */
     public function list(int $page = 1, Request $request)
     {
+        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+
         $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page);
         $results->getPagination()->setResultsPerPage(20);
@@ -65,6 +80,7 @@ class SuppliersController extends AbstractController
     {
         // Get search query
         $query = filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
+        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         // Type param
         $type = filter_var($request->query->get('t'), FILTER_SANITIZE_STRING);
@@ -91,8 +107,23 @@ class SuppliersController extends AbstractController
         return $this->render('suppliers/list.html.twig', $data);
     }
 
+    /**
+     * Show supplier detail page
+     *
+     * @param string $id
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentFieldNotSetException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PermissionException
+     */
     public function show(string $id, Request $request)
     {
+        $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
         $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->getOne($id);
         $data = [
