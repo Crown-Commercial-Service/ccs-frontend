@@ -223,7 +223,7 @@
                                             Date:</strong> {{ item.content.end_date.format('d/m/Y') }}
                                     </li>
                                 </ul>
-                                <p class="govuk-body-s">{{ item.content.summary | striptags }}</p>
+                                <p class="govuk-body-s">{{ item.content.summary | striptags | raw }}</p>
                             </li>
                         {% endfor %}
                     </ul>

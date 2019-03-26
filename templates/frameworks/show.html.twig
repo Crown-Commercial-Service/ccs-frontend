@@ -124,7 +124,7 @@
                         {# https://twig.symfony.com/doc/2.x/filters/raw.html #}
                         {# https://twig.symfony.com/doc/2.x/filters/striptags.html #}
                         {% if framework.content.summary and framework.content.summary != "" %}
-                        <div class="govuk-body-l">{{ framework.content.summary | striptags }}</div>
+                        <div class="govuk-body-l">{{ framework.content.summary | striptags | raw }}</div>
                         {% endif %}
 
 
