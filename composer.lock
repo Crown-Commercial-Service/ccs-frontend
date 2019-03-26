@@ -475,12 +475,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/studio24/frontend.git",
-                "reference": "9486b332ed03e5cff73fcc592d6dd2e3c00a7723"
+                "reference": "7d1300c92a32187b74bd2318c720923e27a94938"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studio24/frontend/zipball/9486b332ed03e5cff73fcc592d6dd2e3c00a7723",
-                "reference": "9486b332ed03e5cff73fcc592d6dd2e3c00a7723",
+                "url": "https://api.github.com/repos/studio24/frontend/zipball/7d1300c92a32187b74bd2318c720923e27a94938",
+                "reference": "7d1300c92a32187b74bd2318c720923e27a94938",
                 "shasum": ""
             },
             "require": {
@@ -521,7 +521,7 @@
                 }
             ],
             "description": "Framework to build an efficient front-end website with content from a Headless CMS or other data sources",
-            "time": "2019-03-25T08:46:14+00:00"
+            "time": "2019-03-26T08:38:59+00:00"
         },
         {
             "name": "symfony/apache-pack",
