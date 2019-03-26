@@ -1,10 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% if supplier.content.trading_name is not empty %}
-    {% set name = supplier.content.trading_name %}
-{% else %}
     {% set name = supplier.content.name %}
-{% endif %}
 
 {% block title %}{{ name }} - CCS{% endblock %}
 
@@ -98,6 +94,7 @@
                                 </div>
                                 <div id="accordion-default-content-{{ loop.index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ loop.index }}">
 
+                                    {#{{ dump(framework) }}#}
 
                                     <div class="apollo-enclosure apollo-enclosure--framework-lots">
 
