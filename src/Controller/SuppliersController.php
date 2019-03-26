@@ -26,6 +26,7 @@ class SuppliersController extends AbstractController
         );
         $this->api->setContentType('suppliers');
         $this->api->setCache($cache);
+        $this->api->setCacheLifetime(1800);
     }
 
 
