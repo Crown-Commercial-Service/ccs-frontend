@@ -49,7 +49,7 @@ class FrameworksController extends AbstractController
          * Detect incoming old links from ccs-agreements domain
          * E.g. f[0]=im_field_category:7
          */
-        $f = $request->query->get('f');
+        $f = filter_var($request->query->get('f'), FILTER_SANITIZE_STRING);
         if (!empty($f) && is_array($f) && !empty($f[0])) {
             switch ($f[0]) {
                 case 'im_field_category:7':
@@ -83,7 +83,7 @@ class FrameworksController extends AbstractController
          * E.g. ?sm_field_contract_id=RM3823*
          * ?sm_field_contract_id="RM3823:10a"
          */
-        $smField = $request->query->get('sm_field_contract_id');
+        $smField = filter_var($request->query->get('sm_field_contract_id'), FILTER_SANITIZE_STRING);
         if (!empty($smField)) {
             $smField = filter_var($smField, FILTER_SANITIZE_STRING);
             $smField = html_entity_decode($smField);
@@ -97,7 +97,7 @@ class FrameworksController extends AbstractController
             }
         }
 
-        
+        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
         $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page, ['limit' => 20]);
 
@@ -160,6 +160,9 @@ class FrameworksController extends AbstractController
      */
     public function listByCategory(Request $request, string $category, int $page = 1)
     {
+        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+        $category = filter_var($category, FILTER_SANITIZE_STRING);
+
         // Map category slug to category db value
         $categoryName = FrameworkCategories::getDbValueBySlug($category);
         if ($categoryName === null) {
@@ -200,6 +203,9 @@ class FrameworksController extends AbstractController
      */
     public function listByPillar(Request $request, string $pillar, int $page = 1)
     {
+        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+        $pillar = filter_var($pillar, FILTER_SANITIZE_STRING);
+
         // Map category slug to category db value
         $pillarName = FrameworkCategories::getDbValueBySlug($pillar);
         if ($pillarName === null) {
@@ -244,6 +250,7 @@ class FrameworksController extends AbstractController
     {
         // Get search query
         $query =  filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
+        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->list($page, [
@@ -276,6 +283,8 @@ class FrameworksController extends AbstractController
      */
     public function show(string $rmNumber, Request $request)
     {
+        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
+
         $this->api->setCacheKey($request->getRequestUri());
         $results = $this->api->getOne($rmNumber);
         $data = [
@@ -301,6 +310,9 @@ class FrameworksController extends AbstractController
      */
     public function suppliersOnFramework(Request $request, string $rmNumber, int $page = 1)
     {
+        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
+        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+
         // Set custom API endpoint
         // @todo Find better way to set custom endpoint URLs
         $this->api->getContentModel()->getContentType('framework_suppliers')->setApiEndpoint(sprintf('ccs/v1/framework-suppliers/%s', $rmNumber));
@@ -336,6 +348,10 @@ class FrameworksController extends AbstractController
      */
     public function suppliersOnLot(Request $request, string $rmNumber, string $lotNumber, int $page = 1)
     {
+        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
+        $lotNumber = filter_var($lotNumber, FILTER_SANITIZE_STRING);
+        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+
         $this->api->getContentModel()->getContentType('framework_lot_suppliers')->setApiEndpoint(sprintf('ccs/v1/lot-suppliers/%s/lot/%s', $rmNumber, $lotNumber));
         $this->api->setContentType('framework_lot_suppliers');
 
