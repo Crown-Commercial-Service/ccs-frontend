@@ -27,11 +27,13 @@ class NewsController extends AbstractController
         );
         $this->api->setContentType('news');
         $this->api->setCache($cache);
+        $this->api->setCacheLifetime(1800);
     }
 
     public function list($page = 1, Request $request)
     {
-        $page = (int) $page;
+        $page = (int) filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+
         $this->api->setCacheKey($request->getRequestUri());
         $list = $this->api->listPages($page);
 
@@ -43,6 +45,8 @@ class NewsController extends AbstractController
 
     public function show($slug, Request $request)
     {
+        $slug = filter_var($slug, FILTER_SANITIZE_STRING);
+
         $this->api->setCacheKey($request->getRequestUri());
         $page = $this->api->getPageBySlug($slug);
 

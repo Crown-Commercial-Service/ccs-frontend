@@ -113,3 +113,24 @@
     border-top: 1px solid #E7E4DF;
 
 }
+
+.is-home .govuk-main-wrapper {
+
+    padding-bottom: 0;
+
+}
+.is-home .footer-global {
+
+    margin-top: 0;
+
+}
+
+.align-center-from-desktop {
+
+    @include govuk-media-query($from: desktop) {
+
+        text-align: center;
+
+    }
+
+}
