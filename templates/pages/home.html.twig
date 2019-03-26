@@ -227,7 +227,7 @@
                                                     | {{ news_item.datePublished.format('jS F Y') }}
                                                 </div>
                                                 <h3 class="news-listing-title">
-                                                    <a href="{{ url('news_page', {'slug': news_item.urlSlug}) }}">{{ news_item.title }}</a>
+                                                    <a href="{{ url('news_page', {'slug': news_item.urlSlug}) }}">{{ news_item.title|raw }}</a>
                                                 </h3>
                                             </div>
                                         </li>
