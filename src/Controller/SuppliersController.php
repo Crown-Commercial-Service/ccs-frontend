@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\ContentModel\ContentModel;
+use Studio24\Frontend\Exception\PaginationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Studio24\Frontend\Cms\RestData;
 use Symfony\Component\HttpFoundation\Request;
+use Studio24\Frontend\Exception\NotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SuppliersController extends AbstractController
 {
@@ -48,7 +51,13 @@ class SuppliersController extends AbstractController
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         $this->api->setCacheKey($request->getRequestUri());
-        $results = $this->api->list($page);
+
+        try {
+            $results = $this->api->list($page);
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
+        }
+
         $results->getPagination()->setResultsPerPage(20);
 
         $data = [
@@ -94,10 +103,15 @@ class SuppliersController extends AbstractController
         }
 
         $this->api->setCacheKey($request->getRequestUri());
-        $results = $this->api->list($page, [
-            'keyword'   => $query,
-            'limit'     => 20,
-        ]);
+
+        try {
+            $results = $this->api->list($page, [
+                'keyword'   => $query,
+                'limit'     => 20,
+            ]);
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
+        }
 
         $data = [
             'query'         => $query,
@@ -125,7 +139,13 @@ class SuppliersController extends AbstractController
         $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
         $this->api->setCacheKey($request->getRequestUri());
-        $results = $this->api->getOne($id);
+
+        try {
+            $results = $this->api->getOne($id);
+        } catch (NotFoundException $e) {
+            throw new NotFoundHttpException('Supplier not found', $e);
+        }
+
         $data = [
             'supplier' => $results
         ];

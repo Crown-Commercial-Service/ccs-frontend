@@ -335,8 +335,13 @@
 
 
                     {# Pagination #}
-                    {%  set pagination_data = {'pagination': pagination, 'route': 'suppliers_list', 'options': {} } %}
 
+                    {% if query is defined %}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'suppliers_search', 'options': {'q': query}} %}
+                    {% else %}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'suppliers_list', 'options': {} } %}
+                    {%  endif %}
+                    
                     {% if pagination.totalPages > 1 %}
                         {{ include('includes/pagination.html.twig', pagination_data) }}
                     {% endif %}

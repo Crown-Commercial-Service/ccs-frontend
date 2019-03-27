@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9858430569b91859f96a5d12f795e5a",
+    "content-hash": "f153e01a41c937e39367fc47c609995f",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -471,16 +471,16 @@
         },
         {
             "name": "studio24/frontend",
-            "version": "dev-master",
+            "version": "v0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/studio24/frontend.git",
-                "reference": "e0364c47947cb81f3f91525d261f23d36f6c8785"
+                "reference": "d5cc3589e986d90c2b61db5074efd7ec7c9be365"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studio24/frontend/zipball/e0364c47947cb81f3f91525d261f23d36f6c8785",
-                "reference": "e0364c47947cb81f3f91525d261f23d36f6c8785",
+                "url": "https://api.github.com/repos/studio24/frontend/zipball/d5cc3589e986d90c2b61db5074efd7ec7c9be365",
+                "reference": "d5cc3589e986d90c2b61db5074efd7ec7c9be365",
                 "shasum": ""
             },
             "require": {
@@ -521,7 +521,7 @@
                 }
             ],
             "description": "Framework to build an efficient front-end website with content from a Headless CMS or other data sources",
-            "time": "2019-03-27T12:11:58+00:00"
+            "time": "2019-03-27T15:16:22+00:00"
         },
         {
             "name": "symfony/apache-pack",
@@ -3882,7 +3882,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "studio24/frontend": 20,
         "behat/mink": 20,
         "behat/mink-extension": 20,
         "roave/security-advisories": 20

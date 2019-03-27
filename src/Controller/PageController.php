@@ -6,7 +6,8 @@ namespace App\Controller;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
 use Studio24\Frontend\ContentModel\ContentModel;
-use Studio24\Frontend\Exception\ApiException;
+use Studio24\Frontend\Exception\FailedRequestException;
+use Studio24\Frontend\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,7 +80,7 @@ class PageController extends AbstractController
             $this->api->setCacheKey($request->getRequestUri());
             $page = $this->api->getPageByUrl($request->getRequestUri());
 
-        } catch (ApiException $e) {
+        } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
 
