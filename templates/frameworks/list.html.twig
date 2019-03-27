@@ -232,9 +232,11 @@
 
                     {# Pagination #}
                     {% if pillar is defined %}
-                    {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_pillar', 'options': {'pillar': pillar_slug}} %}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_pillar', 'options': {'pillar': pillar_slug}} %}
                     {% elseif category is defined %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_category', 'options': {'category': category_slug}} %}
+                    {% elseif query is defined %}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'q': query}} %}
                     {% else %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list', 'options': {}} %}
                     {% endif %}

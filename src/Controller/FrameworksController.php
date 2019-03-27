@@ -5,9 +5,12 @@ namespace App\Controller;
 use App\Utils\FrameworkCategories;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\ContentModel\ContentModel;
+use Studio24\Frontend\Exception\PaginationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Studio24\Frontend\Cms\RestData;
 use Symfony\Component\HttpFoundation\Request;
+use Studio24\Frontend\Exception\NotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FrameworksController extends AbstractController
 {
@@ -99,7 +102,13 @@ class FrameworksController extends AbstractController
 
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
         $this->api->setCacheKey($request->getRequestUri());
-        $results = $this->api->list($page, ['limit' => 20]);
+
+        try {
+            $results = $this->api->list($page, ['limit' => 20]);
+
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
+        }
 
         $data = [
             'pagination' => $results->getPagination(),
@@ -129,7 +138,12 @@ class FrameworksController extends AbstractController
         $this->api->setCacheKey($request->getRequestUri());
 
         // @todo At present need to pass fake ID since API method is intended to return one item with an ID, review this
-        $results = $this->api->getOne(0);
+        try {
+            $results = $this->api->getOne(0);
+
+        } catch (NotFoundException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
+        }
 
         $data = [
             'awarded_pipeline'              => $results->getContent()->get('awarded_pipeline'),
@@ -170,11 +184,16 @@ class FrameworksController extends AbstractController
         }
 
         $this->api->setCacheKey($request->getRequestUri());
-        $results = $this->api->list($page, [
-            'category' => $categoryName,
-            'limit' => 20
 
-        ]);
+        try {
+            $results = $this->api->list($page, [
+                'category' => $categoryName,
+                'limit' => 20
+
+            ]);
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
+        }
 
         $data = [
             'category'      => $categoryName,
@@ -213,10 +232,15 @@ class FrameworksController extends AbstractController
         }
 
         $this->api->setCacheKey($request->getRequestUri());
-        $results = $this->api->list($page, [
-            'pillar' => $pillarName,
-            'limit' => 20
-        ]);
+
+        try {
+            $results = $this->api->list($page, [
+                'pillar' => $pillarName,
+                'limit' => 20
+            ]);
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
+        }
 
         $data = [
             'pillar'        => $pillarName,
@@ -253,10 +277,15 @@ class FrameworksController extends AbstractController
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         $this->api->setCacheKey($request->getRequestUri());
-        $results = $this->api->list($page, [
-            'keyword'   => $query,
-            'limit'     => 20,
-        ]);
+
+        try {
+            $results = $this->api->list($page, [
+                'keyword'   => $query,
+                'limit'     => 20,
+            ]);
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
+        }
 
         $data = [
             'query'         => $query,
@@ -286,7 +315,14 @@ class FrameworksController extends AbstractController
         $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
 
         $this->api->setCacheKey($request->getRequestUri());
-        $results = $this->api->getOne($rmNumber);
+
+        try {
+            $results = $this->api->getOne($rmNumber);
+
+        } catch (NotFoundException $e) {
+            throw new NotFoundHttpException('Framework agreement not found', $e);
+        }
+
         $data = [
             'framework' => $results
         ];
@@ -319,7 +355,13 @@ class FrameworksController extends AbstractController
         $this->api->setContentType('framework_suppliers');
 
         $this->api->setCacheKey($request->getRequestUri());
-        $results = $this->api->list($page, ['limit' => 4]);
+
+        try {
+            $results = $this->api->list($page, ['limit' => 4]);
+
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
+        }
 
         $data = [
             'pagination'    => $results->getPagination(),
@@ -356,7 +398,13 @@ class FrameworksController extends AbstractController
         $this->api->setContentType('framework_lot_suppliers');
 
         $this->api->setCacheKey($request->getRequestUri());
-        $results = $this->api->list($page, ['limit' => 4]);
+
+        try {
+            $results = $this->api->list($page, ['limit' => 4]);
+
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
+        }
 
         $data = [
             'pagination'    => $results->getPagination(),
