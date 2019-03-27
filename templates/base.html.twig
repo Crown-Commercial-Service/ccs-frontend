@@ -3,21 +3,21 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-
     <title>{% block title %}CCS{% endblock %}</title>
+
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <script>(function (H) {
             H.className = H.className.replace(/\bno-js\b/, 'js')
         })(document.documentElement)</script>
     {% block head %}
-        <meta name="description" content="">
+        <meta property="og:description" name="description" content="{% block metadescription %}{% endblock %}"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     {% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.css?v=1.0.0" data-env="prod">
+        <link rel="stylesheet" href="/assets/styles/styles.css?v=1.0.0">
     {% else %}
         <link rel="stylesheet" href="/assets/styles/styles.css?v=1.0.0">
     {% endif %}
@@ -72,7 +72,7 @@
 
 {% block nonblocking_javascript %}
 
-    {% if app.environment == "test" %}
+    {% if app.environment == "THIS WILL NEVER BE TRUE" %}
     <script type="text/javascript">
         (function () {
             var s = document.createElement("script");
