@@ -2,7 +2,7 @@ twig:
     # Salesforce Web-to-case form variables
     globals:
         # No trailing slash on site_url please
-        site_url: 'https://www.crowncommercial.gov.uk/'
+        site_url: 'https://www.crowncommercial.gov.uk'
         web_to_case_post_url: 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8'
         web_to_case_orgid: '00Db0000000egy4'
         web_to_case_record_type: '012b00000005NWC'
