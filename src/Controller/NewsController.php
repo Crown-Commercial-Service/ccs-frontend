@@ -6,9 +6,12 @@ namespace App\Controller;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
 use Studio24\Frontend\ContentModel\ContentModel;
+use Studio24\Frontend\Exception\PaginationException;
 use Studio24\Frontend\Exception\WordpressException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Studio24\Frontend\Exception\NotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class NewsController extends AbstractController
 {
@@ -35,7 +38,12 @@ class NewsController extends AbstractController
         $page = (int) filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         $this->api->setCacheKey($request->getRequestUri());
-        $list = $this->api->listPages($page);
+
+        try {
+            $list = $this->api->listPages($page);
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('News page not found', $e);
+        }
 
         return $this->render('news/list.html.twig', [
             'url' => sprintf('/news/page/%s', $page),
@@ -48,7 +56,12 @@ class NewsController extends AbstractController
         $slug = filter_var($slug, FILTER_SANITIZE_STRING);
 
         $this->api->setCacheKey($request->getRequestUri());
-        $page = $this->api->getPageBySlug($slug);
+
+        try {
+            $page = $this->api->getPageByUrl($request->getRequestUri());
+        } catch (NotFoundException $e) {
+            throw new NotFoundHttpException('News page not found', $e);
+        }
 
         return $this->render('news/show.html.twig', [
             'url' => sprintf('/news/%s', $slug),
