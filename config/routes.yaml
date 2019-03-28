@@ -116,17 +116,17 @@ form_contact_thanks_complaint:
   defaults:
     template: forms/25-contact-thanks-complaint.html.twig
 
-form_newsletter:
-  path: /newsletter
-  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-  defaults:
-    template: forms/27-newsletter.html.twig
-
-form_newsletter_thanks:
-  path: /newsletter/thanks
-  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-  defaults:
-    template: forms/28-newsletter-thanks.html.twig
+#form_newsletter:
+#  path: /newsletter
+#  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+#  defaults:
+#    template: forms/27-newsletter.html.twig
+#
+#form_newsletter_thanks:
+#  path: /newsletter/thanks
+#  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+#  defaults:
+#    template: forms/28-newsletter-thanks.html.twig
 
 form_esourcing_training:
   path: /esourcing-training
@@ -151,13 +151,13 @@ form_esourcing_register_thanks:
     template: forms/30-esourcing-register-thanks.html.twig
 
 form_insurance_services_nda:
-  path: insurance-services-nda
+  path: /insurance-services-nda
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
   defaults:
     template: forms/34-insurance-services.html.twig
 
 form_insurance_services_nda_thanks:
-  path: insurance-services-nda/thanks
+  path: /insurance-services-nda/thanks
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
   defaults:
     template: forms/35-insurance-services-thanks.html.twig
