@@ -349,12 +349,14 @@
                                 Telephone:</h3>
                             <p class="govuk-!-font-size-17featured" itemprop="telephone">{{ supplier.content.phone_number }}</p>
 
-                            <h3 class="govuk-heading-m govuk-!-font-size-17featured govuk-!-margin-0 govuk-!-font-weight-bold">
-                                Website:</h3>
-                            <p class="govuk-!-font-size-17featured break-word">
-                                <a href="{{ 'http://' ~ supplier.content.website }}">{{ supplier.content.website }}</a>
-                            </p>
-
+                            {# Some URIs are malformed, here we check if a string starts with `http` and if it does, we display something #}
+                            {% if supplier.content.website matches "/^http/" %}
+                                <h3 class="govuk-heading-m govuk-!-font-size-17featured govuk-!-margin-0 govuk-!-font-weight-bold">
+                                    Website:</h3>
+                                <p class="govuk-!-font-size-17featured break-word">
+                                    <a href="{{ supplier.content.website }}">{{ supplier.content.website }}</a>
+                                </p>
+                            {% endif %}
                             <h3 class="govuk-heading-m govuk-!-font-size-17featured govuk-!-margin-0 govuk-!-font-weight-bold">
                                 <abbr title="Data Universal Numbering System">DUNS</abbr>
                                 number:</h3>
