@@ -6,7 +6,8 @@ namespace App\Controller;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
 use Studio24\Frontend\ContentModel\ContentModel;
-use Studio24\Frontend\Exception\ApiException;
+use Studio24\Frontend\Exception\FailedRequestException;
+use Studio24\Frontend\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,21 +76,17 @@ class PageController extends AbstractController
         $slug = filter_var($slug, FILTER_SANITIZE_STRING);
 
         // @todo May need to look at mapping URLs to page IDs in the future
-
-        // Get end part of page slug which should allow us to retreive page in WordPress
-        $parts = explode('/', trim($slug, '/'));
-        $slug = end($parts);
-
         try {
             $this->api->setCacheKey($request->getRequestUri());
-            $page = $this->api->getPageBySlug($slug);
+            $page = $this->api->getPageByUrl($request->getRequestUri());
 
-        } catch (ApiException $e) {
+        } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
 
         // Create breadcrumb
         // @todo Improve breadcrumb creation
+        $parts = explode('/', trim($slug, '/'));
         array_pop($parts);
         $breadcrumb = [];
         $link = '';
