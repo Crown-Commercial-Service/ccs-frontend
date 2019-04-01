@@ -18,7 +18,7 @@ pillars:
         slug: 'workplace'
 
 
-  - name: 'Corporate Services'
+  - name: 'Corporate Solutions'
     db_value: 'Corporate Services'
     slug: 'corporate-services'
 
