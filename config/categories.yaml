@@ -19,8 +19,8 @@ pillars:
 
 
   - name: 'Corporate Solutions'
-    db_value: 'Corporate Services'
-    slug: 'corporate-services'
+    db_value: 'Corporate Solutions'
+    slug: 'corporate-solutions'
 
     categories:
       - name: 'Contact Centres'
