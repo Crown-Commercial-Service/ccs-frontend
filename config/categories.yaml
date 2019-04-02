@@ -19,7 +19,7 @@ pillars:
 
 
   - name: 'Corporate Solutions'
-    db_value: 'Corporate Services'
+    db_value: 'Corporate Solutions'
     slug: 'corporate-solutions'
 
     categories:
