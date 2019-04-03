@@ -1,10 +1,13 @@
 /* global $ */
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function (event) {
 
 
-    // Initialise all the GOV.UK Frontend components
-    window.GOVUKFrontend.initAll();
+    if (typeof jQuery != 'undefined') {
+        $('body').addClass('js-enabled');
+        // Initialise all the GOV.UK Frontend components
+        window.GOVUKFrontend.initAll();
+    }
 
 
         // Check for if an element exists
