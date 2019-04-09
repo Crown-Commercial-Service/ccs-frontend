@@ -106,12 +106,19 @@ bin/console cache:clear
 
 ## Deployment
 
-The process for making new changes to the codebase is:
+### Testing changes
 
-1. Test in a feature branch
-2. Merge to `development` branch to test in Development environment
-3. Merge to `preprod` branch to test in PreProd (UAT) environment, get client to test and approve change
-4. When ready to go live create Pull Request to merge changes into `master`, once approved this will deploy to Production
+1. Test in a feature branch.
+2. Merge to `development` branch to test in Development environment.
+3. Merge to `preprod` branch to test in PreProd (UAT) environment.
+4. Get client to test and approve change.
+
+### Deploy a change to Production
+
+1. Create Pull Request to merge changes into `master`, ensure you add details of tickets you are fixing in the PR.
+2. Code must pass automatic tests & be approved by one other person.
+3. Email internal-it@crowncommercial.gov.uk to ask approval of this PR.
+4. Once approved, merge into master. This deploys to Production. 
 
 See details on [Environments](https://github.com/Crown-Commercial-Service/ccsweb-docs/blob/master/web/ENVIRONMENTS.md) (private docs).
 
