@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ page.title }} - CCS{% endblock %}
+{% block title %}{{ page.title|raw }} - CCS{% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
