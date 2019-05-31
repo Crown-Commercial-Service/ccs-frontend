@@ -84,17 +84,18 @@
 
                         {% for framework in supplier.content.live_frameworks %}
 
+                            {#{{ dump(framework) }}#}
+
                             <div class="govuk-accordion__section ">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
         <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ loop.index }}">
-          {{ framework.title }}
+          {{ framework.title }} {% if framework.status == "Expired - Data Still Received" %}
+                <strong class="govuk-tag govuk-tag--subtle">Expired</strong>{% endif %}
         </span>
                                     </h2>
                                 </div>
                                 <div id="accordion-default-content-{{ loop.index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ loop.index }}">
-
-                                    {#{{ dump(framework) }}#}
 
                                     <div class="apollo-enclosure apollo-enclosure--framework-lots">
 
@@ -133,19 +134,30 @@
                                                         {{ lot.lot_number }}
                                                     </td>
                                                     <td class="govuk-table__cell">
-                                                        <h3 class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">{{ lot.title }}</h3>
-                                                        {% if lot.supplier_contact_email and framework.status != "Expired - Data Still Received" %}
-                                                            <p class="govuk-!-font-size-16 govuk-!-margin-0">Email {{ lot.supplier_contact_name }}
-                                                                on
-                                                                <a href="mailto:{{ lot.supplier_contact_email }}">{{ lot.supplier_contact_email }}</a>
-                                                            </p>
-                                                        {% elseif supplier.content.phone_number and framework.status != "Expired - Data Still Received" %}
-                                                            <p class="govuk-!-font-size-16 govuk-!-margin-0">
-                                                                Call {{ name }} on {{ supplier.content.phone_number }}</p>
-                                                        {% else %}
-                                                            <p class="govuk-!-font-size-16 govuk-!-margin-0">
-                                                            Call {{ name }}</p>
+
+                                                        <h3 class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">{{ lot.title }}
+                                                            {% if lot.status == "Expired" %}
+                                                                <strong class="govuk-tag govuk-tag--subtle">Expired</strong>
+                                                            {% endif %}
+                                                        </h3>
+
+                                                        {% if lot.status == "Live" %}
+                                                            {% if lot.supplier_contact_email %}
+                                                                <p class="govuk-!-font-size-16 govuk-!-margin-0">
+                                                                    Email {{ lot.supplier_contact_name }}
+                                                                    on
+                                                                    <a href="mailto:{{ lot.supplier_contact_email }}">{{ lot.supplier_contact_email }}</a>
+                                                                </p>
+                                                            {% elseif supplier.content.phone_number %}
+                                                                <p class="govuk-!-font-size-16 govuk-!-margin-0">
+                                                                    Call {{ name }}
+                                                                    on {{ supplier.content.phone_number }}</p>
+                                                            {% else %}
+                                                                <p class="govuk-!-font-size-16 govuk-!-margin-0">
+                                                                    Call {{ name }}</p>
+                                                            {% endif %}
                                                         {% endif %}
+
                                                     </td>
                                                 </tr>
                                             {% endfor %}
