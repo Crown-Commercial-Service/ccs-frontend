@@ -84,6 +84,8 @@
 
                         {% for framework in supplier.content.live_frameworks %}
 
+                            {% if framework.status != "Expired" %}
+
                             {#{{ dump(framework) }}#}
 
                             <div class="govuk-accordion__section ">
@@ -136,7 +138,7 @@
                                                     <td class="govuk-table__cell">
 
                                                         <h3 class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
-                                                            {% if lot.status == "Expired" %}
+                                                            {% if lot.status == "Expired" or lot.status == "Expired - Data Still Received" %}
                                                                 <strong class="govuk-tag govuk-tag--subtle">Expired</strong>
                                                             {% endif %}
                                                             {{ lot.title }}
@@ -182,6 +184,9 @@
 
 
                             {#</li>#}
+
+                             {% endif %}
+
                         {% endfor %}
 
 
