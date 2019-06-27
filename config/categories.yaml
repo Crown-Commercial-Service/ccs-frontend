@@ -23,9 +23,6 @@ pillars:
     slug: 'corporate-solutions'
 
     categories:
-      - name: 'Contact Centres'
-        db_value: 'Contact Centres'
-        slug: 'contact-centres'
 
       - name: 'Document Management & Logistics'
         db_value: 'Document Management & Logistics'
@@ -52,6 +49,10 @@ pillars:
     slug: 'people'
 
     categories:
+      - name: 'Contact Centres'
+        db_value: 'Contact Centres'
+        slug: 'contact-centres'
+
       - name: 'People Services'
         db_value: 'People Services'
         slug: 'people-services'
@@ -60,9 +61,13 @@ pillars:
         db_value: 'Professional Services'
         slug: 'professional-services'
 
-      - name: 'Workforce'
-        db_value: 'Workforce'
-        slug: 'workforce'
+      - name: 'Workforce Health & Education'
+        db_value: 'Workforce Health & Education'
+        slug: 'workforce-health-education'
+
+      - name: 'PSR & Permanent Recruitment'
+        db_value: 'PSR & Permanent Recruitment'
+        slug: 'psr-permanent-recruitment'
 
 
   - name: 'Technology'
@@ -78,9 +83,9 @@ pillars:
         db_value: 'Network Services'
         slug: 'network-services'
 
-      - name: 'Software'
-        db_value: 'Software'
-        slug: 'software'
+      - name: 'Software & Cyber'
+        db_value: 'Software & Cyber'
+        slug: 'software-cyber'
 
       - name: 'Technology Products & Services'
         db_value: 'Technology Products & Services'
