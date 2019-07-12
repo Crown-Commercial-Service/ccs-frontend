@@ -258,7 +258,7 @@
                                                 : {{ lot.title|raw }}</dt>
                                             <dd class="apollo-list--definition__value">
                                                 {% if lot.description %}
-                                                    <div class="govuk-!-margin-bottom-2">{{ lot.description }}</div>
+                                                    <div class="govuk-!-margin-bottom-2">{{ lot.description | raw }}</div>
                                                 {% endif %}
 
                                                 {# Sometimes, such RM1018, lots are `null` so check for both #}
