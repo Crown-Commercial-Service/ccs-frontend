@@ -40,7 +40,7 @@ class FrameworkCategoriesTest extends TestCase
         $this->assertEquals('document-management-logistics', FrameworkCategories::getSlug('Document Management & Logistics'));
         $this->assertEquals('Technology Products & Services', FrameworkCategories::getNameBySlug('technology-products-services'));
         $this->assertEquals('Marcomms & Research', FrameworkCategories::getNameBySlug('marcomms-research'));
-        $this->assertEquals(3, count(FrameworkCategories::getAllByPillar('People')));
+        $this->assertEquals(5, count(FrameworkCategories::getAllByPillar('People')));
     }
 
     public function testDbValue()
