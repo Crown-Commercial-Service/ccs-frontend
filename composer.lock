@@ -471,16 +471,16 @@
         },
         {
             "name": "studio24/frontend",
-            "version": "v0.5.0",
+            "version": "v0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/studio24/frontend.git",
-                "reference": "d5cc3589e986d90c2b61db5074efd7ec7c9be365"
+                "reference": "47281a41d4c189fe3873e72e7986a9694ef27439"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/studio24/frontend/zipball/d5cc3589e986d90c2b61db5074efd7ec7c9be365",
-                "reference": "d5cc3589e986d90c2b61db5074efd7ec7c9be365",
+                "reference": "47281a41d4c189fe3873e72e7986a9694ef27439",
                 "shasum": ""
             },
             "require": {
