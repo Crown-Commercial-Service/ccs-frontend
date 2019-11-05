@@ -13,7 +13,7 @@ echo "> Stopping services..."
 for SERVICE in "${SERVICES[@]}"; do
     echo -n "> > Stopping service [$SERVICE]: "
 
-    SERVICE_REGEX=$(echo "$SERVICE" | sed -e 's/\./\\\\./g')
+    SERVICE_REGEX=$(echo "$SERVICE" | sed -e 's/\./\\./g')
 
     sudo systemctl list-unit-files "$SERVICE"|grep -q "^${SERVICE_REGEX}\\s"
     if [ $? -eq 0 ]; then
