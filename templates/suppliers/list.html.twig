@@ -312,13 +312,18 @@
                         {% set name = item.content.name %}
 
                         <li>
-                            {#{{ dump(item) }}#}
-                            <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22"><a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a></h3>
+                            {#{{ dump(item.content) }}#}
+                            <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
+                                <a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a>
+                                {% if item.content.trading_name %}
+                                    <span class="ccs-subtle-notification">Trading as {{ item.content.trading_name }}</span>
+                                {% endif %}
+                            </h3>
 
-                            <ul class="govuk-list govuk-!-font-size-17featured">
+                            <ul class="govuk-list govuk-!-font-size-17featured ccs-framework-list">
                                 {% for framework in item.content.live_frameworks %}
 
-                                    <li>{{ framework.title }} ({{ framework.rm_number }}) {% if framework.status == "Expired - Data Still Received" %}<strong class="govuk-tag govuk-tag--subtle">Expired</strong>{% endif %}</li>
+                                    <li><span class="ccs-framework-list__title">{{ framework.title }} ({{ framework.rm_number }})</span> {% if framework.status == "Expired - Data Still Received" %}<strong class="govuk-tag govuk-tag--subtle ccs-tag--error">Expired</strong>{% endif %}</li>
 
                                 {% endfor %}
                             </ul>
