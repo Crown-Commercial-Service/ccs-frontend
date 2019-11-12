@@ -52,8 +52,13 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
 
+                    <h1 class="govuk-heading-xl page-title">
+                        {{ name }}
 
-                    <h1 class="govuk-heading-xl page-title">{{ name }}</h1>
+                        {% if supplier.content.trading_name %}
+                            <span class="ccs-subtle-notification">Trading as {{ supplier.content.trading_name }}</span>
+                        {% endif %}
+                    </h1>
 
                 </div>
             </div>
