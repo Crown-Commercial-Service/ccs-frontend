@@ -86,30 +86,37 @@
                                     Framework title
                                 </th>
                                 <th class="govuk-table__header govuk-table__header--numeric govuk-!-font-size-19" scope="col">
+                                    Awarded Date
+                                </th>
+                                <th class="govuk-table__header govuk-table__header--numeric govuk-!-font-size-19" scope="col">
                                     Live/Expected live
                                 </th>
                             </tr>
                             </thead>
                             <tbody class="govuk-table__body">
 
-
                                 {% for upcoming_deal in awarded_pipeline %}
-                            <tr class="govuk-table__row">
-                                <td class="govuk-table__cell govuk-!-font-size-16">
-                                    {{ upcoming_deal.pillar }}
-                                </td>
-                                <td class="govuk-table__cell">
-                                    <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
-                                        <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
-                                    </p>
-                                    <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Framework ID:</strong> {{ upcoming_deal.rm_number }}</p>
-                                </td>
-                                <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
-                                    {% if upcoming_deal.expected_live_date is not null %}
-                                        {{ upcoming_deal.expected_live_date.format('d/m/Y') }}
-                                    {% endif %}
-                                </td>
-                            </tr>
+                                    <tr class="govuk-table__row">
+                                        <td class="govuk-table__cell govuk-!-font-size-16">
+                                            {{ upcoming_deal.pillar }}
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
+                                                <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
+                                            </p>
+                                            <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Framework ID:</strong> {{ upcoming_deal.rm_number }}</p>
+                                        </td>
+                                        <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
+                                            {% if upcoming_deal.expected_award_date is not null %}
+                                                {{ upcoming_deal.expected_award_date.format('d/m/Y') }}
+                                            {% endif %}
+                                        </td>
+                                        <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
+                                            {% if upcoming_deal.expected_live_date is not null %}
+                                                {{ upcoming_deal.expected_live_date.format('d/m/Y') }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
                                 {% endfor %}
 
                             </tbody>
