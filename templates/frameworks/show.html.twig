@@ -254,30 +254,37 @@
                                     <dl class="apollo-list apollo-list--definition">
                                         {% for lot in framework.content.lots %}
                                             <dt class="apollo-list--definition__key">
-                                                Lot {{ lot.lot_number }}
-                                                : {{ lot.title|raw }}</dt>
+                                                <span class="apollo-list--definition__key__inner">Lot {{ lot.lot_number }}: {{ lot.title|raw }}</span>
+
+                                            {% if lot.status == "Expired" or lot.status == "Expired - Data Still Received" %}
+                                                <span class="govuk-tag ccs-tag--error">Expired {{ lot.expiry_date.format('d/m/Y') }}</span>
+                                            {% endif %}
+                                            </dt>
                                             <dd class="apollo-list--definition__value">
                                                 {% if lot.description %}
                                                     <div class="govuk-!-margin-bottom-2">{{ lot.description | raw }}</div>
                                                 {% endif %}
 
-                                                {# Sometimes, such RM1018, lots are `null` so check for both #}
-                                                {% if lot.expiry_date is defined and lot.expiry_date is not null %}
-                                                    <p class>Expires:
-                                                        <time>{{ lot.expiry_date.format('d/m/Y') }}</time>
-                                                    </p>
-                                                {% endif %}
-
-                                                {% if framework.content.type == "G-cloud/DOS" or framework.content.type == "Dynamic purchasing system" %}
-                                                    {# Don't display Supplier link if TRUE #}
-                                                {% else %}
-                                                    {% if lot.suppliers|length == 0 %}
-                                                        <p>No suppliers</p>
-                                                    {% else %}
-                                                        <p>
-                                                            <a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }}
-                                                                suppliers</a>
+                                                {# don't show this information if the lot has expired already #}
+                                                {% if lot.status != "Expired" and lot.status != "Expired - Data Still Received" %}
+                                                    {# Sometimes, such RM1018, lots are `null` so check for both #}
+                                                    {% if lot.expiry_date is defined and lot.expiry_date is not null %}
+                                                        <p class>Expires:
+                                                            <time>{{ lot.expiry_date.format('d/m/Y') }}</time>
                                                         </p>
+                                                    {% endif %}
+
+                                                    {% if framework.content.type == "G-cloud/DOS" or framework.content.type == "Dynamic purchasing system" %}
+                                                        {# Don't display Supplier link if TRUE #}
+                                                    {% else %}
+                                                        {% if lot.suppliers|length == 0 %}
+                                                            <p>No suppliers</p>
+                                                        {% else %}
+                                                            <p>
+                                                                <a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }}
+                                                                    suppliers</a>
+                                                            </p>
+                                                        {% endif %}
                                                     {% endif %}
                                                 {% endif %}
 
