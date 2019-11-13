@@ -32,8 +32,16 @@
 
 
 .ccs-subtle-notification {
+
     color: #70787c;
     display: block;
     font-size: govuk-px-to-rem(18);
     font-weight: 400;
+
+}
+
+.ccs-tag--lower-case {
+
+    text-transform: none;
+
 }
