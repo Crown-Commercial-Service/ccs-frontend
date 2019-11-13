@@ -21,6 +21,13 @@ class SuppliersController extends AbstractController
      */
     protected $api;
 
+    /**
+     * Suppliers Search Rest API data
+     *
+     * @var RestData
+     */
+    protected $searchApi;
+
     public function __construct(CacheInterface $cache)
     {
         $this->api = new RestData(
@@ -30,6 +37,15 @@ class SuppliersController extends AbstractController
         $this->api->setContentType('suppliers');
         $this->api->setCache($cache);
         $this->api->setCacheLifetime(1800);
+
+        $this->searchApi = new RestData(
+            getenv('SEARCH_API_BASE_URL'),
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
+        );
+
+        $this->searchApi->setContentType('suppliers');
+        $this->searchApi->setCache($cache);
+        $this->searchApi->setCacheLifetime(1800);
     }
 
 
@@ -104,8 +120,11 @@ class SuppliersController extends AbstractController
 
         $this->api->setCacheKey($request->getRequestUri());
 
+        // We are overriding the content model here
+        $this->searchApi->getContentType()->setApiEndpoint('supplier');
+
         try {
-            $results = $this->api->list($page, [
+            $results = $this->searchApi->list($page, [
                 'keyword'   => $query,
                 'limit'     => 20,
             ]);
