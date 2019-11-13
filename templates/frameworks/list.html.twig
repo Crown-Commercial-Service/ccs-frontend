@@ -223,9 +223,11 @@
                                     <li><strong>Start
                                             Date:</strong> {{ item.content.start_date.format('d/m/Y') }}
                                     </li>
-                                    <li><strong>End
-                                            Date:</strong> {{ item.content.end_date.format('d/m/Y') }}
-                                    </li>
+                                    {% if item.content.status != 'Expired - Data Still Received' %}
+                                        <li><strong>End
+                                                Date:</strong> {{ item.content.end_date.format('d/m/Y') }}
+                                        </li>
+                                    {% endif %}
                                 </ul>
                                 <p class="govuk-body-s">{{ item.content.summary | striptags | raw }}</p>
                             </li>
