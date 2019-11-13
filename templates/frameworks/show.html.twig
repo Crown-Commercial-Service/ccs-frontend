@@ -256,9 +256,12 @@
                                             <dt class="apollo-list--definition__key">
                                                 <span class="apollo-list--definition__key__inner">Lot {{ lot.lot_number }}: {{ lot.title|raw }}</span>
 
-                                            {% if lot.status == "Expired" or lot.status == "Expired - Data Still Received" %}
-                                                <span class="govuk-tag ccs-tag--error">Expired {{ lot.expiry_date.format('d/m/Y') }}</span>
-                                            {% endif %}
+                                                {% if lot.status == "Expired" or lot.status == "Expired - Data Still Received" %}
+                                                    <span class="govuk-tag ccs-tag--error">Expired {{ lot.expiry_date.format('d/m/Y') }}</span>
+                                                {% elseif lot.expiry_date is defined and lot.expiry_date is not null and lot.expiry_date < framework.content.end_date %}
+                                                    {# Output a message if the lot expires before the framework #}
+                                                    <span class="govuk-tag govuk-tag--subtle ccs-tag--lower-case">Lot expires before framework: <time>{{ lot.expiry_date.format('d/m/Y') }}</time></span>
+                                                {% endif %}
                                             </dt>
                                             <dd class="apollo-list--definition__value">
                                                 {% if lot.description %}
@@ -268,7 +271,7 @@
                                                 {# don't show this information if the lot has expired already #}
                                                 {% if lot.status != "Expired" and lot.status != "Expired - Data Still Received" %}
                                                     {# Sometimes, such RM1018, lots are `null` so check for both #}
-                                                    {% if lot.expiry_date is defined and lot.expiry_date is not null %}
+                                                    {% if lot.expiry_date is defined and lot.expiry_date is not null and lot.expiry_date >= framework.content.end_date %}
                                                         <p class>Expires:
                                                             <time>{{ lot.expiry_date.format('d/m/Y') }}</time>
                                                         </p>
