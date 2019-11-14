@@ -121,7 +121,7 @@ class SuppliersController extends AbstractController
         $this->api->setCacheKey($request->getRequestUri());
 
         // We are overriding the content model here
-        $this->searchApi->getContentType()->setApiEndpoint('supplier');
+        $this->searchApi->getContentType()->setApiEndpoint('suppliers');
 
         try {
             $results = $this->searchApi->list($page, [
