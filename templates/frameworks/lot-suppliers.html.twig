@@ -82,7 +82,7 @@
                                 <li>
                                     <span class="ccs-framework-list__title">{{ framework.title }} ({{ framework.rm_number }})</span>
                                     {% if framework.status == 'Expired' or framework.status == 'Expired - Data Still Received' %}
-                                        <span class="govuk-tag ccs-tag--error ccs-tag--lower-case">Expired {{ framework.end_date.format('d/m/Y') }}</span>
+                                        <span class="govuk-tag ccs-tag--error">Expired {{ framework.end_date.format('d/m/Y') }}</span>
                                     {% endif %}
                                 </li>
                             {% endfor %}
