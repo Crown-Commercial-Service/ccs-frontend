@@ -45,7 +45,7 @@ class SuppliersController extends AbstractController
 
         $this->searchApi->setContentType('suppliers');
         $this->searchApi->setCache($cache);
-        $this->searchApi->setCacheLifetime(1800);
+        $this->searchApi->setCacheLifetime(1);
     }
 
 
@@ -66,10 +66,13 @@ class SuppliersController extends AbstractController
     {
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
-        $this->api->setCacheKey($request->getRequestUri());
+        $this->searchApi->setCacheKey($request->getRequestUri());
+
+        // We are overriding the content model here
+        $this->searchApi->getContentType()->setApiEndpoint('suppliers');
 
         try {
-            $results = $this->api->list($page);
+            $results = $this->searchApi->list($page);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
