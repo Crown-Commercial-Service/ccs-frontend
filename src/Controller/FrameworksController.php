@@ -22,6 +22,11 @@ class FrameworksController extends AbstractController
      */
     protected $api;
 
+    /**
+     * @var \Studio24\Frontend\Cms\RestData
+     */
+    protected $searchApi;
+
     public function __construct(CacheInterface $cache)
     {
         $this->api = new RestData(
@@ -31,6 +36,15 @@ class FrameworksController extends AbstractController
         $this->api->setContentType('frameworks');
         $this->api->setCache($cache);
         $this->api->setCacheLifetime(1800);
+
+        $this->searchApi = new RestData(
+            getenv('SEARCH_API_BASE_URL'),
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
+        );
+
+        $this->searchApi->setContentType('suppliers');
+        $this->searchApi->setCache($cache);
+        $this->searchApi->setCacheLifetime(1);
     }
 
     /**
@@ -276,10 +290,13 @@ class FrameworksController extends AbstractController
         $query =  filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
-        $this->api->setCacheKey($request->getRequestUri());
+        $this->searchApi->setCacheKey($request->getRequestUri());
+
+        // We are overriding the content model here
+        $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
         try {
-            $results = $this->api->list($page, [
+            $results = $this->searchApi->list($page, [
                 'keyword'   => $query,
                 'limit'     => 20,
             ]);
