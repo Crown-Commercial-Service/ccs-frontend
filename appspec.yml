@@ -9,7 +9,10 @@ hooks:
       timeout: 60
       runas: root
   AfterInstall:
-    - location: deploy/setup.sh
+    - location: deploy/server_setup.sh
+      timeout: 300
+      runas: root
+    - location: deploy/app_setup.sh
       timeout: 300
       runas: root
   ApplicationStart:
