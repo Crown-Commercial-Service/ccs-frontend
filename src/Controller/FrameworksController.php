@@ -296,7 +296,7 @@ class FrameworksController extends AbstractController
         $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
         try {
-            $results = $this->searchApi->list($page, [
+            $results = $this->api->list($page, [
                 'keyword'   => $query,
                 'limit'     => 20,
             ]);
