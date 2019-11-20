@@ -100,6 +100,8 @@ Optionally: Set up local host http://local.crowncommercial.gov.uk/ to point to t
 
 #### Clear cache
 
+Run this command from the root project directory:
+
 ```
 bin/console cache:clear
 ```
