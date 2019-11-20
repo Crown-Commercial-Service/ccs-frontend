@@ -60,3 +60,13 @@
     margin-bottom: 10px;
 
 }
+
+
+.js-enabled .ccs-accordion--clean {
+    border-bottom: 0 none;
+}
+
+.js-enabled .ccs-accordion__section--clean {
+    border-top: 0 none;
+    padding-bottom: govuk-px-to-rem(2);
+}
