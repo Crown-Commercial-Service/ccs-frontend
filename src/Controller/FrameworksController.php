@@ -357,7 +357,7 @@ class FrameworksController extends AbstractController
         $this->api->setCacheKey($request->getRequestUri());
 
         try {
-            $results = $this->api->list($page, ['limit' => 4]);
+            $results = $this->api->list($page, ['limit' => 20]);
 
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
@@ -400,7 +400,7 @@ class FrameworksController extends AbstractController
         $this->api->setCacheKey($request->getRequestUri());
 
         try {
-            $results = $this->api->list($page, ['limit' => 4]);
+            $results = $this->api->list($page, ['limit' => 20]);
 
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
