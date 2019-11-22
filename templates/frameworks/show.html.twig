@@ -257,7 +257,7 @@
                                                 <span class="apollo-list--definition__key__inner">Lot {{ lot.lot_number }}: {{ lot.title|raw }}</span>
 
                                             {% if lot.status == "Expired" or lot.status == "Expired - Data Still Received" %}
-                                                <span class="govuk-tag ccs-tag--error">Expired {{ lot.expiry_date.format('d/m/Y') }}</span>
+                                                <span class="govuk-tag ccs-tag--error">Expired: {{ lot.expiry_date.format('d/m/Y') }}</span>
                                             {% endif %}
                                             </dt>
                                             <dd class="apollo-list--definition__value">
