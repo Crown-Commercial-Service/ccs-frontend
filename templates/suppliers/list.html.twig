@@ -85,7 +85,11 @@
                                 <label class="govuk-label" for="name">
                                     Search suppliers
                                 </label>
-                                <input class="govuk-input" id="q" name="q" type="text">
+                                {% if query is defined %}
+                                    <input class="govuk-input" id="q" name="q" type="text" value="{{ query }}" />
+                                {% else %}
+                                    <input class="govuk-input" id="q" name="q" type="text" />
+                                {% endif %}
                                 <button class="sidebar__search-button">
                                     <span class="visuallyhidden">Search suppliers</span>
                                 </button>
@@ -312,9 +316,9 @@
                     <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} suppliers found</h2>
 
                     <div class="ccs-filters-summary">
-                        <div class="ccs-filters-summary__facets">
+                        <div class="ccs-filters-summary__facets" id="search-facets-summary">
                             <span class="ccs-filters-summary__label">In</span>
-                            <ul class="ccs-filters-summary__list ccs-filters-summary__facets__list">
+                            <ul class="ccs-filters-summary__list ccs-filters-summary__facets__list" id="search-facets-list">
                                 <li class="ccs-filters-summary__facet">
                                     <a href="#" class="ccs-filters-summary__facet__cancel">Education Technology (RM6103)</a>
                                 </li>
@@ -326,14 +330,16 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="ccs-filters-summary__facets">
+                        {% if query is defined %}
+                        <div class="ccs-filters-summary__facets" id="search-query-summary">
                             <span class="ccs-filters-summary__label">Containing</span>
-                            <ul class="ccs-filters-summary__list">
+                            <ul class="ccs-filters-summary__list" id="search-query-list">
                                 <li class="ccs-filters-summary__facet">
-                                    <a href="#" class="ccs-filters-summary__facet__cancel">Ltd</a>
+                                    <a href="#" class="ccs-filters-summary__facet__cancel">{{ query }}</a>
                                 </li>
                             </ul>
                         </div>
+                        {% endif %}
                     </div>
 
 
@@ -395,6 +401,91 @@
 
         </main>
     </div>
+
+
+
+
+
+    <script>
+        // The search app code
+        function searchApp() {
+
+            'use strict';
+
+            var self = this;
+
+            this.facetsSummary = document.getElementById('search-facets-summary');
+            this.facetsList    = document.getElementById('search-facets-list');
+
+            this.querySummary = document.getElementById('search-query-summary');
+            this.queryList    = document.getElementById('search-query-list');
+
+            this.facetsArray = [];
+
+            this.init = function() {
+                this.bindFrameworksSelection();
+            };
+
+
+            /**
+             * Bind events to the framework radio buttons
+             */
+            this.bindFrameworksSelection = function() {
+                var self = this;
+
+                var frameworkOptions = document.querySelectorAll('input[type="radio"][name="framework"]');
+                var frameworkOptionsNum = frameworkOptions.length;
+                for(var i = 0; i < frameworkOptionsNum; i++) {
+                    frameworkOptions[i].addEventListener('click', function() {
+                        self.updateFrameworkFacet(this);
+                    });
+                }
+            };
+
+
+
+            /**
+             * Update the Framework facet shown in the search summary
+             */
+            this.updateFrameworkFacet = function(item) {
+                var newFacet = document.createElement('li');
+                newFacet.className = 'ccs-filters-summary__facet';
+
+                var newFacetBtn = document.createElement('a');
+                newFacetBtn.setAttribute('href', '#');
+                newFacetBtn.className = 'ccs-filters-summary__facet__cancel';
+                newFacetBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+
+                    //self.facetsArray.
+
+                    // for IE9 compatability
+                    this.parentNode.removeChild(this);
+                    self.facetsSummary.style = "display: none;"
+                });
+                newFacetBtn.innerHTML = item.value;
+
+                newFacet.appendChild(newFacetBtn);
+
+                console.log('add!');
+                self.facetsList.innerHTML = '';
+                self.facetsList.appendChild(newFacet);
+                self.facetsSummary.style = "display: block;"
+            };
+
+
+            this.updateFacetSummary = function() {
+                //
+            }
+
+
+            this.bindResultsAmountSelection = function() {};
+        }
+
+
+        var searchAppication = new searchApp();
+        searchAppication.init();
+    </script>
 
 
 
