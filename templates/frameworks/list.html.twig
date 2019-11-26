@@ -210,7 +210,7 @@
                     <ul class="govuk-list govuk-list--frameworks">
                         {% for item in results %}
                             <li>
-                                <h3 class="govuk-heading-m ccs-heading-link govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22">
+                                <h3 class="govuk-heading-m ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22">
                                     <a href="{{ path('frameworks_show', {'rmNumber':  item.content.rm_number }) }}">{{ item.content.title }}</a> {# <strong class="govuk-tag govuk-tag--subtle">{{ item.content.status }}</strong> #}
                                     {% if item.content.status == 'Expired - Data Still Received' %}
                                         <span class="govuk-tag ccs-tag ccs-tag--error">Expired: {{ item.content.end_date.format('d/m/Y') }}</span>
