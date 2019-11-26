@@ -62,6 +62,10 @@
 }
 
 
+.ccs-accordion--clean .govuk-accordion__controls {
+    display: none;
+}
+
 .js-enabled .ccs-accordion--clean {
     border-bottom: 0 none;
 }
