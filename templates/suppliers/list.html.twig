@@ -323,7 +323,7 @@
                             <ul class="govuk-list govuk-!-font-size-17featured ccs-framework-list">
                                 {% for framework in item.content.live_frameworks %}
 
-                                    <li><span class="ccs-framework-list__title">{{ framework.title }} ({{ framework.rm_number }})</span> {% if framework.status == "Expired - Data Still Received" %}<strong class="govuk-tag govuk-tag--subtle ccs-tag--error">Expired</strong>{% endif %}</li>
+                                    <li><span class="ccs-framework-list__title">{{ framework.title }} ({{ framework.rm_number }})</span> {% if framework.status == "Expired - Data Still Received" %}<strong class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--error">Expired</strong>{% endif %}</li>
 
                                 {% endfor %}
                             </ul>
