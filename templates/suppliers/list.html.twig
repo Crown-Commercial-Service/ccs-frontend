@@ -212,7 +212,7 @@
                                     <div class="govuk-radios govuk-radios--small govuk-radios--conditional" data-module="radios">
 
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot" type="radio" value="england">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot" type="radio" value="england" v-on:click="checkedLot = null">
                                             <label class="govuk-label govuk-radios__label" for="show-all-suppliers-on-framwork-1">
                                                 Show all suppliers on framework
                                             </label>
@@ -235,25 +235,25 @@
                                                     </legend>
                                                     <div class="govuk-radios govuk-radios--small ccs-radios--nested">
                                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-1" name="lot-filter-nested" type="radio" value="england" v-model="checkedLot" :key="">
+                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-1" name="lot-filter-nested" type="radio" value="Lot 1 Data access services" v-model="checkedLot" :key="Lot-1">
                                                             <label class="govuk-label govuk-radios__label" for="where-do-you-live-1">
                                                                 Lot 1 Data access services
                                                             </label>
                                                         </div>
                                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-2" name="lot-filter-nested" type="radio" value="scotland" v-model="checkedLot">
+                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-2" name="lot-filter-nested" type="radio" value="Lot 2 Local connectivity services" v-model="checkedLot" :key="Lot-2">
                                                             <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
                                                                 Lot 2 Local connectivity services
                                                             </label>
                                                         </div>
                                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-3" name="lot-filter-nested" type="radio" value="wales" v-model="checkedLot">
+                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-3" name="lot-filter-nested" type="radio" value="Lot 3 Voice telephony services" v-model="checkedLot" :key="Lot-3">
                                                             <label class="govuk-label govuk-radios__label" for="where-do-you-live-3">
                                                                 Lot 3 Voice telephony services
                                                             </label>
                                                         </div>
                                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-4" name="lot-filter-nested" type="radio" value="northern-ireland" v-model="checkedLot">
+                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-4" name="lot-filter-nested" type="radio" value="Lot 4 IP telephony services" v-model="checkedLot" :key="Lot-4">
                                                             <label class="govuk-label govuk-radios__label" for="where-do-you-live-4">
                                                                 Lot 4 IP telephony services
                                                             </label>
@@ -315,12 +315,16 @@
 
                     <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} suppliers found</h2>
 
-                    <div class="ccs-filters-summary" v-show="filtersSelected">
-                        <div class="ccs-filters-summary__facets" id="search-facets-summary">
+                    <div class="ccs-filters-summary">
+                        <div class="ccs-filters-summary__facets" id="search-facets-summary" v-show="filtersSelected">
                             <span class="ccs-filters-summary__label">In</span>
                             <ul class="ccs-filters-summary__list ccs-filters-summary__facets__list" id="search-facets-list">
                                 <li class="ccs-filters-summary__facet" v-if="checkedFramework">
-                                    <a href="#" class="ccs-filters-summary__facet__cancel">{[ checkedFramework ]}</a>
+                                    <a href="#" class="ccs-filters-summary__facet__cancel" v-on:click="clearFramework">{[ checkedFramework ]}</a>
+                                </li>
+
+                                <li class="ccs-filters-summary__facet" v-if="checkedLot">
+                                    <a href="#" class="ccs-filters-summary__facet__cancel" v-on:click="clearLot">{[ checkedLot ]}</a>
                                 </li>
                             </ul>
                         </div>
@@ -486,17 +490,6 @@
 
     <script src="/assets/scripts/libraries/vue.js"></script>
     <script>
-        // Define a new component called button-counter
-        Vue.component('button-counter', {
-            delimiters: ['{[', ']}'],
-            data: function () {
-                return {
-                    count: 0
-                }
-            },
-            template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
-        });
-
         new Vue({
             delimiters: ['{[', ']}'],
             el: '#main-content',
@@ -513,6 +506,14 @@
                 resetFilters: function(event) {
                     event.preventDefault();
                     this.checkedFramework = null;
+                    this.checkedLot = null;
+                },
+                clearFramework: function(event) {
+                    event.preventDefault();
+                    this.checkedFramework = null;
+                },
+                clearLot: function(event) {
+                    event.preventDefault();
                     this.checkedLot = null;
                 }
             }
