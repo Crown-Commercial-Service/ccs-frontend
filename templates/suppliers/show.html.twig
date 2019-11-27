@@ -98,7 +98,7 @@
                                     <h2 class="govuk-accordion__section-heading">
                                         <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ loop.index }}">
                                           {{ framework.title }} {% if framework.status == "Expired - Data Still Received" %}
-                                                <strong class="govuk-tag govuk-tag--subtle ccs-tag--error">Expired</strong>{% endif %}
+                                                <strong class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--error">Expired</strong>{% endif %}
                                         </span>
                                     </h2>
                                 </div>
@@ -144,7 +144,7 @@
 
                                                         <h3 class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
                                                             {% if lot.status == "Expired" or lot.status == "Expired - Data Still Received" %}
-                                                                <strong class="govuk-tag govuk-tag--subtle ccs-tag--error">Expired</strong>
+                                                                <strong class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--error">Expired</strong>
                                                             {% endif %}
                                                             {{ lot.title }}
                                                         </h3>
