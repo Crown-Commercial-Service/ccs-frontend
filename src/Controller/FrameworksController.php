@@ -42,7 +42,7 @@ class FrameworksController extends AbstractController
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
 
-        $this->searchApi->setContentType('suppliers');
+        $this->searchApi->setContentType('frameworks');
         $this->searchApi->setCache($cache);
         $this->searchApi->setCacheLifetime(1);
     }
@@ -115,10 +115,14 @@ class FrameworksController extends AbstractController
         }
 
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
-        $this->api->setCacheKey($request->getRequestUri());
+
+        $this->searchApi->setCacheKey($request->getRequestUri());
+
+        // We are overriding the content model here
+        $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
         try {
-            $results = $this->api->list($page, ['limit' => 20]);
+            $results = $this->searchApi->list($page, ['limit' => 20]);
 
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
@@ -197,10 +201,13 @@ class FrameworksController extends AbstractController
             $this->redirectToRoute('frameworks_list');
         }
 
-        $this->api->setCacheKey($request->getRequestUri());
+        $this->searchApi->setCacheKey($request->getRequestUri());
+
+        // We are overriding the content model here
+        $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
         try {
-            $results = $this->api->list($page, [
+            $results = $this->searchApi->list($page, [
                 'category' => $categoryName,
                 'limit' => 20
 
@@ -245,10 +252,13 @@ class FrameworksController extends AbstractController
             $this->redirectToRoute('frameworks_list');
         }
 
-        $this->api->setCacheKey($request->getRequestUri());
+        $this->searchApi->setCacheKey($request->getRequestUri());
+
+        // We are overriding the content model here
+        $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
         try {
-            $results = $this->api->list($page, [
+            $results = $this->searchApi->list($page, [
                 'pillar' => $pillarName,
                 'limit' => 20
             ]);
@@ -296,7 +306,7 @@ class FrameworksController extends AbstractController
         $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
         try {
-            $results = $this->api->list($page, [
+            $results = $this->searchApi->list($page, [
                 'keyword'   => $query,
                 'limit'     => 20,
             ]);
