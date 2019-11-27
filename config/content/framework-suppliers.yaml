@@ -9,3 +9,7 @@ live_frameworks:
       type: text
     rm_number:
       type: text
+    status:
+      type: text
+    end_date:
+      type: date
