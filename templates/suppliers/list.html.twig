@@ -315,8 +315,16 @@
                             {#{{ dump(item.content) }}#}
                             <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
                                 <a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a>
-                                {% if item.content.trading_name %}
-                                    <span class="ccs-subtle-notification">Trading as {{ item.content.trading_name }}</span>
+                                {% if item.content.trading_names|length > 0 %}
+                                    <span class="ccs-subtle-notification">
+                                        Trading as
+                                        {% set i = 0 %}
+                                        {% for trading_name in item.content.trading_names %}
+                                            {% set i = i + 1 %}
+                                            {{ trading_name.name }}{# this comment is necessary to remove whitespace for display purposes
+                                            #}{% if i < item.content.trading_names|length %}, {% endif %}
+                                        {% endfor %}
+                                    </span>
                                 {% endif %}
                             </h3>
 
