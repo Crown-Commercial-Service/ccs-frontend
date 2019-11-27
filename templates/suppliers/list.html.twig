@@ -85,7 +85,11 @@
                                 <label class="govuk-label" for="name">
                                     Search suppliers
                                 </label>
-                                <input class="govuk-input" id="q" name="q" type="text">
+                                {% if query is defined %}
+                                    <input class="govuk-input" id="q" name="q" type="text" value="{{ query }}" />
+                                {% else %}
+                                    <input class="govuk-input" id="q" name="q" type="text" />
+                                {% endif %}
                                 <button class="sidebar__search-button">
                                     <span class="visuallyhidden">Search suppliers</span>
                                 </button>
@@ -93,200 +97,210 @@
                         </div>
 
 
-                        {#<h2 class="govuk-heading-m">Apply filters</h2>#}
+                        <div class="ccs-filters-intro">
+                            <a href="{{ path('suppliers_list') }}" class="ccs-clear-filters" v-on:click="resetFilters">Clear Filters</a>
+                            <h2 class="govuk-heading-m">Apply filters</h2>
+                        </div>
 
 
-                        {#<div class="govuk-form-group govuk-form-group--enclosure">#}
-                        {#<fieldset class="govuk-fieldset" aria-describedby="waste-hint">#}
-                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
-                        {#<h1 class="govuk-fieldset__heading">#}
-                        {#Which types of waste do you transport?#}
-                        {#</h1>#}
-                        {#</legend>#}
-                        {#<span id="waste-hint" class="govuk-hint">#}
-                        {#Select all that apply.#}
-                        {#</span>#}
-                        {#<div class="govuk-checkboxes govuk-checkboxes--small">#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-1" name="waste" type="checkbox" value="carcasses">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="waste-1">#}
-                        {#Waste from animal carcasses#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-2" name="waste" type="checkbox" value="mines">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="waste-2">#}
-                        {#Waste from mines or quarries#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-3" name="waste" type="checkbox" value="farm">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="waste-3">#}
-                        {#Farm or agricultural waste#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#</fieldset>#}
-                        {#</div>#}
-
-
-
-
-
-                        {#<div class="govuk-form-group govuk-form-group--enclosure">#}
-                        {#<fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">#}
-                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
-                        {#<h1 class="govuk-fieldset__heading">#}
-                        {#Lot#}
-                        {#</h1>#}
-                        {#</legend>#}
-                        {#<span id="waste-hint" class="govuk-hint">#}
-                        {#Show suppliers that are on multiple lots#}
-                        {#</span>#}
-                        {#<div class="govuk-radios govuk-radios--small govuk-radios--conditional" data-module="radios">#}
-
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot" type="radio" value="england">#}
-                        {#<label class="govuk-label govuk-radios__label" for="show-all-suppliers-on-framwork-1">#}
-                        {#Show all suppliers on framework#}
-                        {#</label>#}
-                        {#</div>#}
-
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3">#}
-                        {#<label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">#}
-                        {#Show suppliers on a specific lot#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__conditional govuk-radios__conditional--small govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-3">#}
-
-                        {#<div class="govuk-form-group">#}
-                        {#<fieldset class="govuk-fieldset">#}
-                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
-                        {#<h1 class="govuk-fieldset__heading visuallyhidden">#}
-                        {#Select lot to filter by#}
-                        {#</h1>#}
-                        {#</legend>#}
-                        {#<div class="govuk-radios govuk-radios--small">#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-1" name="where-do-you-live" type="radio" value="england">#}
-                        {#<label class="govuk-label govuk-radios__label" for="where-do-you-live-1">#}
-                        {#Lot 1 Data access services#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-2" name="where-do-you-live" type="radio" value="scotland">#}
-                        {#<label class="govuk-label govuk-radios__label" for="where-do-you-live-2">#}
-                        {#Lot 2 Local connectivity services#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-3" name="where-do-you-live" type="radio" value="wales">#}
-                        {#<label class="govuk-label govuk-radios__label" for="where-do-you-live-3">#}
-                        {#Lot 3 Voice telephony services#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-4" name="where-do-you-live" type="radio" value="northern-ireland">#}
-                        {#<label class="govuk-label govuk-radios__label" for="where-do-you-live-4">#}
-                        {#Lot 4 IP telephony services#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#</fieldset>#}
-                        {#</div>#}
-
-                        {#</div>#}
-
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-2" name="lot" type="radio" value="phone" data-aria-controls="conditional-how-contacted-conditional-2">#}
-                        {#<label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">#}
-                        {#Show suppliers that are on multiple lots#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__conditional govuk-radios__conditional--small govuk-radio__conditional--hidden" id="conditional-how-contacted-conditional-2">#}
-                        {#<div class="govuk-form-group">#}
-                        {#<fieldset class="govuk-fieldset" aria-describedby="waste-hint">#}
-                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
-                        {#<h1 class="govuk-fieldset__heading visuallyhidden">#}
-                        {#Select one or more lots to filter by#}
-                        {#</h1>#}
-                        {#</legend>#}
-                        {#<div class="govuk-checkboxes govuk-checkboxes--small">#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="multiple-lots-1" name="waste" type="checkbox" value="carcasses">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="multiple-lots-1">#}
-                        {#Lot 1 Data access services#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="multiple-lots-2" name="waste" type="checkbox" value="mines">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="multiple-lots-2">#}
-                        {#Lot 2 Local connectivity services#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="multiple-lots-3" name="waste" type="checkbox" value="farm">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="multiple-lots-3">#}
-                        {#Lot 7 Paging#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#</fieldset>#}
-                        {#</div>#}
-
-                        {#</div>#}
-
-
-
-                        {#</div>#}
-                        {#</fieldset>#}
-                        {#</div>#}
+                        <div class="govuk-accordion ccs-accordion--clean" data-module="accordion" id="accordion-with-summary-sections">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
+                                            Select Framework
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
+                                    <div class="govuk-radios govuk-radios--small ccs-radios--scrollable">
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-1" name="framework" type="radio" value="rm60034" v-model="checkedFramework" :key="rm60034">
+                                            <label class="govuk-label govuk-radios__label" for="framework-1">
+                                                Behavioural Insights (RM6004)
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-2" name="framework" type="radio" value="RM3774" v-model="checkedFramework" :key="RM3774">
+                                            <label class="govuk-label govuk-radios__label" for="framework-2">
+                                                Apprenticeships Training and Related Services (RM3823)
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-3" name="framework" type="radio" value="RM3823" v-model="checkedFramework" :key="RM3823">
+                                            <label class="govuk-label govuk-radios__label" for="framework-3">
+                                                Campaign Solutions (RM3774)
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-4" name="framework" type="radio" value="rm62034" v-model="checkedFramework" :key="rm62034">
+                                            <label class="govuk-label govuk-radios__label" for="framework-4">
+                                                Behavioural Insights (RM6004)
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-5" name="framework" type="radio" value="RM8774" v-model="checkedFramework" :key="RM8774">
+                                            <label class="govuk-label govuk-radios__label" for="framework-5">
+                                                Campaign Solutions (RM3774)
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-6" name="framework" type="radio" value="RM3123" v-model="checkedFramework" :key="RM3123">
+                                            <label class="govuk-label govuk-radios__label" for="framework-6">
+                                                Apprenticeships Training and Related Services (RM3823)
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-7" name="framework" type="radio" value="rm20034" v-model="checkedFramework" :key="rm20034">
+                                            <label class="govuk-label govuk-radios__label" for="framework-7">
+                                                Behavioural Insights (RM6004)
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-8" name="framework" type="radio" value="RM3734" v-model="checkedFramework" :key="RM3734">
+                                            <label class="govuk-label govuk-radios__label" for="framework-8">
+                                                Apprenticeships Training and Related Services (RM3823)
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-9" name="framework" type="radio" value="RM3813" v-model="checkedFramework" :key="RM3813">
+                                            <label class="govuk-label govuk-radios__label" for="framework-9">
+                                                Campaign Solutions (RM3774)
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-10" name="framework" type="radio" value="RM3223" v-model="checkedFramework" :key="RM3223">
+                                            <label class="govuk-label govuk-radios__label" for="framework-10">
+                                                Apprenticeships Training and Related Services (RM3823)
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-11" name="framework" type="radio" value="rm61034" v-model="checkedFramework" :key="rm61034">
+                                            <label class="govuk-label govuk-radios__label" for="framework-11">
+                                                Behavioural Insights (RM6004)
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-12" name="framework" type="radio" value="RM3724" v-model="checkedFramework" :key="RM3724">
+                                            <label class="govuk-label govuk-radios__label" for="framework-12">
+                                                Apprenticeships Training and Related Services (RM3823)
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-13" name="framework" type="radio" value="RM4223" v-model="checkedFramework" :key="RM4223">
+                                            <label class="govuk-label govuk-radios__label" for="framework-13">
+                                                Campaign Solutions (RM3774)
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
 
 
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure">
 
-                        {#<div class="govuk-form-group govuk-form-group--enclosure">#}
-                        {#<fieldset class="govuk-fieldset">#}
-                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
-                        {#<h1 class="govuk-fieldset__heading">#}
-                        {#Results per page#}
-                        {#</h1>#}
-                        {#</legend>#}
-                        {#<span id="waste-hint" class="govuk-hint">#}
-                        {#10 results per page#}
-                        {#</span>#}
-                        {#<div class="govuk-radios govuk-radios--small">#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-1" name="where-do-you-live" type="radio" value="england">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-1">#}
-                        {#10#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-2" name="where-do-you-live" type="radio" value="scotland">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-2">#}
-                        {#25#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-3" name="where-do-you-live" type="radio" value="wales">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-3">#}
-                        {#50#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-4" name="where-do-you-live" type="radio" value="northern-ireland">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-4">#}
-                        {#View all#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#</fieldset>#}
-                        {#</div>#}
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-2">
+                                            Lot
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2">
+                                    <div class="govuk-radios govuk-radios--small govuk-radios--conditional" data-module="radios">
+
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot" type="radio" value="england" v-on:click="checkedLot = null">
+                                            <label class="govuk-label govuk-radios__label" for="show-all-suppliers-on-framwork-1">
+                                                Show all suppliers on framework
+                                            </label>
+                                        </div>
+
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3">
+                                            <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">
+                                                Show suppliers on a specific lot
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__conditional govuk-radios__conditional--small govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-3">
+
+                                            <div class="govuk-form-group">
+                                                <fieldset class="govuk-fieldset">
+                                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" style="margin-bottom: 0;">
+                                                        <h1 class="govuk-fieldset__heading visuallyhidden">
+                                                            Select lot to filter by
+                                                        </h1>
+                                                    </legend>
+                                                    <div class="govuk-radios govuk-radios--small ccs-radios--nested">
+                                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-1" name="lot-filter-nested" type="radio" value="Lot 1 Data access services" v-model="checkedLot" :key="Lot-1">
+                                                            <label class="govuk-label govuk-radios__label" for="where-do-you-live-1">
+                                                                Lot 1 Data access services
+                                                            </label>
+                                                        </div>
+                                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-2" name="lot-filter-nested" type="radio" value="Lot 2 Local connectivity services" v-model="checkedLot" :key="Lot-2">
+                                                            <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
+                                                                Lot 2 Local connectivity services
+                                                            </label>
+                                                        </div>
+                                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-3" name="lot-filter-nested" type="radio" value="Lot 3 Voice telephony services" v-model="checkedLot" :key="Lot-3">
+                                                            <label class="govuk-label govuk-radios__label" for="where-do-you-live-3">
+                                                                Lot 3 Voice telephony services
+                                                            </label>
+                                                        </div>
+                                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-4" name="lot-filter-nested" type="radio" value="Lot 4 IP telephony services" v-model="checkedLot" :key="Lot-4">
+                                                            <label class="govuk-label govuk-radios__label" for="where-do-you-live-4">
+                                                                Lot 4 IP telephony services
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
+
+
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-3">
+                                        Results per page
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
+                                    <div class="govuk-radios govuk-radios--small">
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-1" name="results-per-page" type="radio" value="england">
+                                            <label class="govuk-label govuk-radios__label" for="results-per-page-1">10</label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-2" name="results-per-page" type="radio" value="scotland">
+                                            <label class="govuk-label govuk-radios__label" for="results-per-page-2">25</label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-3" name="results-per-page" type="radio" value="wales">
+                                            <label class="govuk-label govuk-radios__label" for="results-per-page-3">50</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <button class="govuk-button" data-module="govuk-button">
+                            Filter
+                        </button>
 
 
 
@@ -301,7 +315,37 @@
 
                     <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} suppliers found</h2>
 
+                    <div class="ccs-filters-summary">
+                        <div class="ccs-filters-summary__facets" id="search-facets-summary" v-show="filtersSelected">
+                            <span class="ccs-filters-summary__label">In</span>
+                            <ul class="ccs-filters-summary__list ccs-filters-summary__facets__list" id="search-facets-list">
+                                <li class="ccs-filters-summary__facet" v-if="checkedFramework">
+                                    <a href="#" class="ccs-filters-summary__facet__cancel" v-on:click="clearFramework">{[ checkedFramework ]}</a>
+                                </li>
 
+                                <li class="ccs-filters-summary__facet" v-if="checkedLot">
+                                    <a href="#" class="ccs-filters-summary__facet__cancel" v-on:click="clearLot">{[ checkedLot ]}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        {% if query is defined %}
+                        <div class="ccs-filters-summary__facets" id="search-query-summary">
+                            <span class="ccs-filters-summary__label">Containing</span>
+                            <ul class="ccs-filters-summary__list" id="search-query-list">
+                                <li class="ccs-filters-summary__facet">
+                                    <a href="#" class="ccs-filters-summary__facet__cancel">{{ query }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+
+
+                    <div class="apollo-enclosure ccs-results-notification">
+                        <p><strong>Are you running a further competition or conducting an expression of interest?</strong></p>
+                        <a href="#" class="govuk-button ccs-button--tight">View supplier contact details</a>
+                    </div>
+                    
 
                     {% if results %}
 
@@ -355,6 +399,126 @@
 
         </main>
     </div>
+
+
+
+
+
+    {#
+    <script>
+        // The search app code
+        function searchApp() {
+
+            'use strict';
+
+            var self = this;
+
+            this.facetsSummary = document.getElementById('search-facets-summary');
+            this.facetsList    = document.getElementById('search-facets-list');
+
+            this.querySummary = document.getElementById('search-query-summary');
+            this.queryList    = document.getElementById('search-query-list');
+
+            this.facetsArray = [];
+
+            this.init = function() {
+                this.bindFrameworksSelection();
+            };
+
+
+            /**
+             * Bind events to the framework radio buttons
+             */
+            this.bindFrameworksSelection = function() {
+                var self = this;
+
+                var frameworkOptions = document.querySelectorAll('input[type="radio"][name="framework"]');
+                var frameworkOptionsNum = frameworkOptions.length;
+                for(var i = 0; i < frameworkOptionsNum; i++) {
+                    frameworkOptions[i].addEventListener('click', function() {
+                        self.updateFrameworkFacet(this);
+                    });
+                }
+            };
+
+
+
+            /**
+             * Update the Framework facet shown in the search summary
+             */
+            this.updateFrameworkFacet = function(item) {
+                var newFacet = document.createElement('li');
+                newFacet.className = 'ccs-filters-summary__facet';
+
+                var newFacetBtn = document.createElement('a');
+                newFacetBtn.setAttribute('href', '#');
+                newFacetBtn.className = 'ccs-filters-summary__facet__cancel';
+                newFacetBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+
+                    //self.facetsArray.
+
+                    // for IE9 compatability
+                    this.parentNode.removeChild(this);
+                    self.facetsSummary.style = "display: none;"
+                });
+                newFacetBtn.innerHTML = item.value;
+
+                newFacet.appendChild(newFacetBtn);
+
+                console.log('add!');
+                self.facetsList.innerHTML = '';
+                self.facetsList.appendChild(newFacet);
+                self.facetsSummary.style = "display: block;"
+            };
+
+
+            this.updateFacetSummary = function() {
+                //
+            }
+
+
+            this.bindResultsAmountSelection = function() {};
+        }
+
+
+        var searchAppication = new searchApp();
+        searchAppication.init();
+    </script>
+    #}
+
+
+    <script src="/assets/scripts/libraries/vue.js"></script>
+    <script>
+        new Vue({
+            delimiters: ['{[', ']}'],
+            el: '#main-content',
+            data: {
+                checkedFramework: null,
+                checkedLot: null
+            },
+            computed: {
+                filtersSelected: function() {
+                    return (this.checkedFramework || this.checkedLot);
+                }
+            },
+            methods: {
+                resetFilters: function(event) {
+                    event.preventDefault();
+                    this.checkedFramework = null;
+                    this.checkedLot = null;
+                },
+                clearFramework: function(event) {
+                    event.preventDefault();
+                    this.checkedFramework = null;
+                },
+                clearLot: function(event) {
+                    event.preventDefault();
+                    this.checkedLot = null;
+                }
+            }
+        })
+    </script>
 
 
 
