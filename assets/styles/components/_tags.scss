@@ -15,9 +15,33 @@
 
 }
 
+
+
+.ccs-tag {
+
+    letter-spacing: 0;
+
+}
+
+.ccs-tag--error {
+
+    background-color: #b00c1f;
+    font-weight: bold;
+    text-transform: none;
+
+}
+
+.ccs-tag--lower-case {
+
+    text-transform: none;
+
+}
+
 .page-title .govuk-tag {
 
     position: relative;
     top: -0.8em;
 
 }
+
+
