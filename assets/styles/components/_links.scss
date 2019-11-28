@@ -4,6 +4,10 @@
 
 .ccs-heading-link a {
 
+    display: inline-block;
+    line-height: 1.2;
+    margin-bottom: govuk-px-to-rem(4);
+    margin-right: govuk-px-to-rem(6);
     text-decoration: none;
 
     &:hover,
@@ -14,4 +18,11 @@
 
     }
 
+}
+
+
+.ccs-heading-link--inline {
+    a {
+        display: inline;
+    }
 }
