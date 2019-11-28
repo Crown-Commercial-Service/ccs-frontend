@@ -79,9 +79,12 @@ class SuppliersController extends AbstractController
 
         $results->getPagination()->setResultsPerPage(20);
 
+        $facets = $results->getMetadata()->offsetGet('facets');
+
         $data = [
             'pagination' => $results->getPagination(),
             'results'    => $results,
+            'facets'     => $facets
         ];
 
         return $this->render('suppliers/list.html.twig', $data);
@@ -137,10 +140,13 @@ class SuppliersController extends AbstractController
             throw new NotFoundHttpException('Page not found', $e);
         }
 
+        $facets = $results->getMetadata()->offsetGet('facets');
+
         $data = [
             'query'         => $query,
             'pagination'    => $results->getPagination(),
             'results'       => $results,
+            'facets'        => $facets
         ];
         return $this->render('suppliers/list.html.twig', $data);
     }
