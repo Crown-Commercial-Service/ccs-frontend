@@ -130,11 +130,13 @@ class SuppliersController extends AbstractController
         $this->searchApi->getContentType()->setApiEndpoint('suppliers');
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
+        $framework = $request->query->has('framework') ? filter_var($request->query->get('framework'), FILTER_SANITIZE_STRING) : null;
 
         try {
             $results = $this->searchApi->list($page, [
                 'keyword'   => $query,
                 'limit'     => $limit,
+                'framework' => $framework
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
@@ -146,7 +148,8 @@ class SuppliersController extends AbstractController
             'query'         => $query,
             'pagination'    => $results->getPagination(),
             'results'       => $results,
-            'facets'        => $facets
+            'facets'        => $facets,
+            'selected'=> ['framework' => $framework]
         ];
         return $this->render('suppliers/list.html.twig', $data);
     }

@@ -420,11 +420,13 @@
 
     <script src="/assets/scripts/libraries/vue.js"></script>
     <script>
+        var selectedFramework = '{{ selected.framework }}';
+
         new Vue({
             delimiters: ['{[', ']}'],
             el: '#main-content',
             data: {
-                checkedFramework: null,
+                checkedFramework: selectedFramework,
                 checkedLot: null
             },
             computed: {
