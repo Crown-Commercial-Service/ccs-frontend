@@ -126,10 +126,12 @@ class SuppliersController extends AbstractController
         // We are overriding the content model here
         $this->searchApi->getContentType()->setApiEndpoint('suppliers');
 
+        $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
+
         try {
             $results = $this->searchApi->list($page, [
                 'keyword'   => $query,
-                'limit'     => 20,
+                'limit'     => $limit,
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
