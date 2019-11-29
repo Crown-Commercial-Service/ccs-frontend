@@ -2,6 +2,8 @@ supplier_name:
   type: text
 supplier_id:
   type: number
+contact_email:
+  type: text
 live_frameworks:
   type: array
   content_fields:
