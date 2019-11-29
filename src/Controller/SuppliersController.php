@@ -77,14 +77,20 @@ class SuppliersController extends AbstractController
             throw new NotFoundHttpException('Page not found', $e);
         }
 
-        $results->getPagination()->setResultsPerPage(20);
+        $limit = $request->query->has('limit') ? (int)filter_var($request->query->get('limit'),
+          FILTER_SANITIZE_NUMBER_INT) : 20;
+        $framework = $request->query->has('framework') ? filter_var($request->query->get('framework'),
+          FILTER_SANITIZE_STRING) : null;
+
+        $results->getPagination()->setResultsPerPage($limit);
 
         $facets = $results->getMetadata()->offsetGet('facets');
 
         $data = [
-            'pagination' => $results->getPagination(),
-            'results'    => $results,
-            'facets'     => $facets
+          'pagination' => $results->getPagination(),
+          'results'    => $results,
+          'facets'     => $facets,
+          'selected'   => ['framework' => $framework]
         ];
 
         return $this->render('suppliers/list.html.twig', $data);
