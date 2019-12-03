@@ -112,17 +112,18 @@
 
                   <div class="apollo-enclosure">
 
-                      {#<h2 class="aside__heading">Lot description</h2>#}
+                      <h2 class="aside__heading">Framework</h2>
+                      <p class="govuk-body govuk-!-font-size-16">
+                          <a href="{{ path('frameworks_show', {'rmNumber': metadata.framework_rm_number }) }}">{{ metadata.framework_title }} ({{ metadata.framework_rm_number }})</a>
+                      </p>
 
-                      {#<p class="govuk-body govuk-!-font-size-16">#}
-                      {#Ranged connectivity services: site-to-site or site-to-cloud. Includes terrestrial, wireless and satellite solutions, network security, equipment, support, connectivity circuits, IP connectivity, ISP and internet services, broadband routing, home and teleworker packages and online storage.#}
-                      {#</p>#}
+                      <h2 class="aside__heading">Lot description</h2>
 
-                     <h2 class="aside__heading">Framework</h2>
-                     <p class="govuk-body govuk-!-font-size-16">
-                        <a href="{{ path('frameworks_show', {'rmNumber': metadata.framework_rm_number }) }}">{{ metadata.framework_title }} ({{ metadata.framework_rm_number }})</a>
-                     </p>
+                      <p class="govuk-body govuk-!-font-size-16">
+                      Ranged connectivity services: site-to-site or site-to-cloud. Includes terrestrial, wireless and satellite solutions, network security, equipment, support, connectivity circuits, IP connectivity, ISP and internet services, broadband routing, home and teleworker packages and online storage.
+                      </p>
 
+                     <p><a href="{{ path('frameworks_lot_suppliers_csv', {'rmNumber': metadata.framework_rm_number, 'lotNumber' : metadata.lot_number }) }}">Download Supplier Contact Details</a></p>
                </aside>
 
 

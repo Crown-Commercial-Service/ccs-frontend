@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Studio24\Frontend\Cms\RestData;
 use Symfony\Component\HttpFoundation\Request;
 use Studio24\Frontend\Exception\NotFoundException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FrameworksController extends AbstractController
@@ -414,4 +415,85 @@ class FrameworksController extends AbstractController
 
         return $this->render('frameworks/lot-suppliers.html.twig', $data);
     }
+
+
+    public function suppliersOnLotCsv(Request $request, string $rmNumber, string $lotNumber)
+    {
+
+        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
+        $lotNumber = filter_var($lotNumber, FILTER_SANITIZE_STRING);
+
+
+        $this->api->getContentModel()->getContentType('framework_lot_suppliers')->setApiEndpoint(sprintf('ccs/v1/lot-suppliers/%s/lot/%s', $rmNumber, $lotNumber));
+        $this->api->setContentType('framework_lot_suppliers');
+        $this->api->setCacheKey($request->getRequestUri());
+
+        $csvData = array(
+            0 => [
+            'Supplier Name',
+            'Supplier Email',
+            'Supplier Street',
+            'Supplier City',
+            'Supplier Postcode',
+            'Supplier Telephone',
+            ]
+        );
+
+        // Iterate through suppliers and store necessary information into CSV array.
+
+        try {
+            $results = $this->api->list(1,['limit' => 100]);
+
+            $i = 1;
+            foreach ($results as $item) {
+
+                $name = ($item->getContent()->get('supplier_name')) ? $item->getContent()->get('supplier_name')->getValue() : '';
+                $email = ($item->getContent()->get('supplier_email')) ? $item->getContent()->get('supplier_email')->getValue() : '';
+                $street = ($item->getContent()->get('supplier_street')) ? $item->getContent()->get('supplier_street')->getValue() : '';
+                $city = ($item->getContent()->get('supplier_city')) ? $item->getContent()->get('supplier_city')->getValue() : '';
+                $postcode = ($item->getContent()->get('supplier_postcode')) ? $item->getContent()->get('supplier_postcode')->getValue() : '';
+                $phone = ($item->getContent()->get('supplier_phone')) ? $item->getContent()->get('supplier_phone')->getValue() : '';
+
+                $csvData[$i][] = $name;
+                $csvData[$i][] = $email;
+                $csvData[$i][] = $street;
+                $csvData[$i][] = $city;
+                $csvData[$i][] = $postcode;
+                $csvData[$i][] = $phone;
+
+                $i++;
+            }
+
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
+        }
+
+        // Process array into CSV using memory handle (easiest way to pass it into a variable)
+
+        $csv = fopen('php://temp/maxmemory:'. (5*1024*1024), 'r+');
+
+        if ($csvData) {
+            foreach ($csvData as $row) {
+                fputcsv($csv, $row);
+            }
+        }
+
+        rewind($csv);
+        $output = stream_get_contents($csv);
+
+        // Output the CSV
+
+        $response = new Response;
+        $response->setContent($output);
+
+        $response->headers->set('Content-Type', 'text/plain');
+
+        $response->headers->set(
+            'Content-Disposition',
+            'attachment; filename="' . $rmNumber.'_Lot'.$lotNumber.'.csv' . '";'
+        );
+
+        return $response;
+    }
+
 }
