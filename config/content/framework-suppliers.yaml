@@ -12,7 +12,9 @@ supplier_postcode:
   type: text
 supplier_country:
   type: text
-supplier_email:
+supplier_contact_name:
+  type: text
+supplier_contact_email:
   type: text
 supplier_website:
   type: text

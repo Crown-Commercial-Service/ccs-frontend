@@ -431,11 +431,12 @@ class FrameworksController extends AbstractController
         $csvData = array(
             0 => [
             'Supplier Name',
-            'Supplier Email',
-            'Supplier Street',
-            'Supplier City',
-            'Supplier Postcode',
-            'Supplier Telephone',
+            'Contact Name',
+            'Contact Email',
+            'Telephone',
+            'Street',
+            'City',
+            'Postcode',
             ]
         );
 
@@ -447,19 +448,21 @@ class FrameworksController extends AbstractController
             $i = 1;
             foreach ($results as $item) {
 
-                $name = ($item->getContent()->get('supplier_name')) ? $item->getContent()->get('supplier_name')->getValue() : '';
-                $email = ($item->getContent()->get('supplier_email')) ? $item->getContent()->get('supplier_email')->getValue() : '';
+                $supplier_name = ($item->getContent()->get('supplier_name')) ? $item->getContent()->get('supplier_name')->getValue() : '';
+                $contact_name = ($item->getContent()->get('supplier_contact_name')) ? $item->getContent()->get('supplier_contact_name')->getValue() : '';
+                $contact_email = ($item->getContent()->get('supplier_contact_email')) ? $item->getContent()->get('supplier_contact_email')->getValue() : '';
                 $street = ($item->getContent()->get('supplier_street')) ? $item->getContent()->get('supplier_street')->getValue() : '';
                 $city = ($item->getContent()->get('supplier_city')) ? $item->getContent()->get('supplier_city')->getValue() : '';
                 $postcode = ($item->getContent()->get('supplier_postcode')) ? $item->getContent()->get('supplier_postcode')->getValue() : '';
                 $phone = ($item->getContent()->get('supplier_phone')) ? $item->getContent()->get('supplier_phone')->getValue() : '';
 
-                $csvData[$i][] = $name;
-                $csvData[$i][] = $email;
+                $csvData[$i][] = $supplier_name;
+                $csvData[$i][] = $contact_name;
+                $csvData[$i][] = $contact_email;
+                $csvData[$i][] = $phone;
                 $csvData[$i][] = $street;
                 $csvData[$i][] = $city;
                 $csvData[$i][] = $postcode;
-                $csvData[$i][] = $phone;
 
                 $i++;
             }
