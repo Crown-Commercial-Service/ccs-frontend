@@ -117,7 +117,7 @@
                                         {% for framework in facets.frameworks %}
                                         <div class="govuk-radios__item govuk-radios__item--small">
                                             <input class="govuk-radios__input govuk-radios__input--small" id="framework-{{ framework.rm_number }}" name="framework" type="radio" value="{{ framework.rm_number }}" v-model="checkedFramework" :key="{{ framework.rm_number }}">
-                                            <label class="govuk-label govuk-radios__label" for="framework-13">
+                                            <label class="govuk-label govuk-radios__label" for="framework-{{ framework.rm_number }}">
                                                 {{ framework.title }} ({{ framework.rm_number }})
                                             </label>
                                         </div>
@@ -271,15 +271,24 @@
                     </div>
 
 
-                    <div class="apollo-enclosure ccs-results-notification">
+                    <div class="apollo-enclosure ccs-results-notification" v-show="supplierContactPrompt">
                         <p><strong>Are you running a further competition or conducting an expression of interest?</strong></p>
                         <a href="#" class="govuk-button ccs-button--tight">View supplier contact details</a>
                     </div>
+
+
+
+                    <ul class="govuk-list govuk-list--suppliers" v-show="results">
+                        <li v-for="result in results">
+                            <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">{[ result.name ]}</h3>
+                        </li>
+                    </ul>
+
                     
 
                     {% if results %}
 
-                    <ul class="govuk-list govuk-list--suppliers">
+                    <ul class="govuk-list govuk-list--suppliers" v-show="!results">
 
                     {% for item in results %}
 
@@ -309,6 +318,8 @@
 
 
                     {# Pagination #}
+
+                    <results-pagination />
 
                     {% if query is defined %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'suppliers_search', 'options': {'q': query}} %}
@@ -422,16 +433,42 @@
     <script>
         var selectedFramework = '{{ selected.framework }}';
 
+        // Define a new component called button-counter
+        Vue.component('results-pagination', {
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: '<p>Pagination goes here</p>'
+        });
+
+        // /search-api/suppliers?framework=RM1075
+
         new Vue({
             delimiters: ['{[', ']}'],
             el: '#main-content',
             data: {
                 checkedFramework: selectedFramework,
-                checkedLot: null
+                checkedLot: null,
+                results: null,
+                resultsLimit: null
+            },
+            watch: {
+                checkedFramework: function(newValue) {
+                    console.log('Selected framework changed!');
+                    console.log(newValue);
+                    this.updateResults();
+
+                    // @TODO: Update lots filter
+                }
             },
             computed: {
                 filtersSelected: function() {
                     return (this.checkedFramework || this.checkedLot);
+                },
+                supplierContactPrompt: function() {
+                    return (this.checkedFramework && this.checkedLot);
                 }
             },
             methods: {
@@ -447,6 +484,27 @@
                 clearLot: function(event) {
                     event.preventDefault();
                     this.checkedLot = null;
+                },
+                updateResults: function() {
+                    // we have to define this variable as arrow functions are
+                    // ES6, and the `this` variable changes in the fetch promises
+                    var self = this;
+                    console.log("Update results");
+                    var requestUrl = 'http://ccs-agreements.cabinetoffice.localhost/search-api/suppliers?framework=' + this.checkedFramework;
+                    fetch(requestUrl)
+                        .then(function(response) {
+                            if (!response.ok) {
+                                throw new Error('HTTP error, status = ' + response.status);
+                            }
+                            return response.json();
+                        })
+                        .then(function(jsonResponse) {
+                            // update the results property
+                            self.results = jsonResponse.results;
+                        })
+                        .catch(function(error) {
+                            // @TODO: handle errors
+                        });
                 }
             }
         })
