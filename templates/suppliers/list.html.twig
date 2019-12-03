@@ -98,7 +98,7 @@
 
 
                         <div class="ccs-filters-intro">
-                            <a href="{{ path('suppliers_list') }}" class="ccs-clear-filters" v-on:click="resetFilters">Clear Filters</a>
+                            <a href="{{ path('suppliers_list') }}" class="ccs-clear-filters">Clear Filters</a>
                             <h2 class="govuk-heading-m">Apply filters</h2>
                         </div>
 
@@ -116,8 +116,8 @@
                                     <div class="govuk-radios govuk-radios--small ccs-radios--scrollable">
                                         {% for framework in facets.frameworks %}
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-{{ framework.rm_number }}" name="framework" type="radio" value="{{ framework.rm_number }}" v-model="checkedFramework" :key="{{ framework.rm_number }}">
-                                            <label class="govuk-label govuk-radios__label" for="framework-13">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-{{ framework.rm_number }}" name="framework" type="radio" value="{{ framework.rm_number }}" v-model="checkedFramework" :key="{{ framework.rm_number }}" {% if selected.framework == framework.rm_number %} checked {% endif %}>
+                                            <label class="govuk-label govuk-radios__label" for="framework-{{ framework.rm_number }}">
                                                 {{ framework.title }} ({{ framework.rm_number }})
                                             </label>
                                         </div>
@@ -148,51 +148,45 @@
                                             </label>
                                         </div>
 
-                                        <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3">
-                                            <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">
-                                                Show suppliers on a specific lot
-                                            </label>
-                                        </div>
-                                        <div class="govuk-radios__conditional govuk-radios__conditional--small govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-3">
-
-                                            <div class="govuk-form-group">
-                                                <fieldset class="govuk-fieldset">
-                                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" style="margin-bottom: 0;">
-                                                        <h1 class="govuk-fieldset__heading visuallyhidden">
-                                                            Select lot to filter by
-                                                        </h1>
-                                                    </legend>
-                                                    <div class="govuk-radios govuk-radios--small ccs-radios--nested">
-                                                        <div class="govuk-radios__item govuk-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-1" name="lot-filter-nested" type="radio" value="Lot 1 Data access services" v-model="checkedLot" :key="Lot-1">
-                                                            <label class="govuk-label govuk-radios__label" for="where-do-you-live-1">
-                                                                Lot 1 Data access services
-                                                            </label>
-                                                        </div>
-                                                        <div class="govuk-radios__item govuk-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-2" name="lot-filter-nested" type="radio" value="Lot 2 Local connectivity services" v-model="checkedLot" :key="Lot-2">
-                                                            <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
-                                                                Lot 2 Local connectivity services
-                                                            </label>
-                                                        </div>
-                                                        <div class="govuk-radios__item govuk-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-3" name="lot-filter-nested" type="radio" value="Lot 3 Voice telephony services" v-model="checkedLot" :key="Lot-3">
-                                                            <label class="govuk-label govuk-radios__label" for="where-do-you-live-3">
-                                                                Lot 3 Voice telephony services
-                                                            </label>
-                                                        </div>
-                                                        <div class="govuk-radios__item govuk-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-4" name="lot-filter-nested" type="radio" value="Lot 4 IP telephony services" v-model="checkedLot" :key="Lot-4">
-                                                            <label class="govuk-label govuk-radios__label" for="where-do-you-live-4">
-                                                                Lot 4 IP telephony services
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
+                                        {% if facets.lots is defined %}
+                                            <div class="govuk-radios__item govuk-radios__item--small">
+                                                {% if selected.lot is defined and selected.lot is not empty %}
+                                                    <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3" checked>
+                                                {% else %}
+                                                    <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3">
+                                                {% endif %}
+                                                <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">
+                                                    Show suppliers on a specific lot
+                                                </label>
                                             </div>
+                                            <div class="govuk-radios__conditional govuk-radios__conditional--small govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-3">
 
-                                        </div>
+                                                <div class="govuk-form-group">
+                                                    <fieldset class="govuk-fieldset">
+                                                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" style="margin-bottom: 0;">
+                                                            <h1 class="govuk-fieldset__heading visuallyhidden">
+                                                                Select lot to filter by
+                                                            </h1>
+                                                        </legend>
+                                                        <div class="govuk-radios govuk-radios--small ccs-radios--nested">
+                                                            {% for lot in facets.lots %}
+                                                                <div class="govuk-radios__item govuk-radios__item--small">
+                                                                    {% if selected.lot is defined and selected.lot is not empty %}
+                                                                        <input class="govuk-radios__input govuk-radios__input--small" id="lot-{{ lot.id }}" name="lot-filter-nested" type="radio" value="{{ lot.id }}" v-model="checkedLot" :key="Lot-1" {% if selected.lot == lot.id %} checked {% endif %}>
+                                                                    {% else %}
+                                                                        <input class="govuk-radios__input govuk-radios__input--small" id="lot-{{ lot.id }}" name="lot-filter-nested" type="radio" value="{{ lot.id }}" v-model="checkedLot" :key="Lot-1">
+                                                                    {% endif %}
+                                                                    <label class="govuk-label govuk-radios__label" for="lot-{{ lot.id }}">
+                                                                        {{ lot.title }}
+                                                                    </label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -246,6 +240,7 @@
                     <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} suppliers found</h2>
 
                     <div class="ccs-filters-summary">
+                        {#
                         <div class="ccs-filters-summary__facets" id="search-facets-summary" v-show="filtersSelected">
                             <span class="ccs-filters-summary__label">In</span>
                             <ul class="ccs-filters-summary__list ccs-filters-summary__facets__list" id="search-facets-list">
@@ -258,23 +253,44 @@
                                 </li>
                             </ul>
                         </div>
-                        {% if query is defined %}
+                        #}
+
+                        {% if selected.framework is defined and selected.framework is not empty %}
+                        <div class="ccs-filters-summary__facets" id="search-facets-summary" v-show="filtersSelected">
+                            <span class="ccs-filters-summary__label">In</span>
+                            <ul class="ccs-filters-summary__list ccs-filters-summary__facets__list" id="search-facets-list">
+                                <li class="ccs-filters-summary__facet" v-if="checkedFramework">
+                                    <a href="/suppliers/search?q={{ query }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel">{{ selected.framework }}</a>
+                                </li>
+
+                                {% if selected.lot is defined and selected.lot is not empty%}
+                                <li class="ccs-filters-summary__facet" v-if="checkedLot">
+                                    <a href="/suppliers/search?q={{ query }}&framework={{ selected.framework }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearLot">Lot {{ selected.lot }}</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                        {% if query is defined and query is not empty %}
                         <div class="ccs-filters-summary__facets" id="search-query-summary">
                             <span class="ccs-filters-summary__label">Containing</span>
                             <ul class="ccs-filters-summary__list" id="search-query-list">
                                 <li class="ccs-filters-summary__facet">
-                                    <a href="#" class="ccs-filters-summary__facet__cancel">{{ query }}</a>
+                                    <a href="/suppliers/search?limit={{ limit }}" class="ccs-filters-summary__facet__cancel">{{ query }}</a>
                                 </li>
                             </ul>
                         </div>
                         {% endif %}
                     </div>
 
-
-                    <div class="apollo-enclosure ccs-results-notification">
-                        <p><strong>Are you running a further competition or conducting an expression of interest?</strong></p>
-                        <a href="#" class="govuk-button ccs-button--tight">View supplier contact details</a>
-                    </div>
+                    {% if selected.framework is defined and selected.framework is not empty %}
+                        {% if selected.lot is defined and selected.lot is not empty%}
+                            <div class="apollo-enclosure ccs-results-notification">
+                                <p><strong>Are you running a further competition or conducting an expression of interest?</strong></p>
+                                <a href="#" class="govuk-button ccs-button--tight">View supplier contact details</a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
                     
 
                     {% if results %}
@@ -425,7 +441,7 @@
 
     <script src="/assets/scripts/libraries/vue.js"></script>
     <script>
-        var selectedFramework = '{{ selected.framework }}';
+        /*var selectedFramework = '{{ selected.framework }}';
 
         new Vue({
             delimiters: ['{[', ']}'],
@@ -454,7 +470,7 @@
                     this.checkedLot = null;
                 }
             }
-        })
+        })*/
     </script>
 
 

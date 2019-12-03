@@ -137,6 +137,7 @@ class SuppliersController extends AbstractController
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
         $framework = $request->query->has('framework') ? filter_var($request->query->get('framework'), FILTER_SANITIZE_STRING) : null;
+        $lot       = $request->query->has('lot-filter-nested') ? filter_var($request->query->get('lot-filter-nested'), FILTER_SANITIZE_STRING) : null;
 
         try {
             $results = $this->searchApi->list($page, [
@@ -155,7 +156,8 @@ class SuppliersController extends AbstractController
             'pagination'    => $results->getPagination(),
             'results'       => $results,
             'facets'        => $facets,
-            'selected'=> ['framework' => $framework]
+            'limit'         => $limit,
+            'selected'=> ['framework' => $framework, 'lot' => $lot]
         ];
         return $this->render('suppliers/list.html.twig', $data);
     }
