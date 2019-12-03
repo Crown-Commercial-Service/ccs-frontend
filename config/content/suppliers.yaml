@@ -20,6 +20,11 @@ website:
   type: text
 trading_name:
   type: text
+trading_names:
+  type: array
+  content_fields:
+    name:
+      type: text
 live_frameworks:
   type: array
   content_fields:

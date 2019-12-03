@@ -26,6 +26,12 @@
 
 }
 
+.js-enabled .govuk-accordion__icon {
+
+    pointer-events: none;
+
+}
+
 .js-enabled .govuk-accordion__icon:after,
 .js-enabled .govuk-accordion__icon:before {
 
