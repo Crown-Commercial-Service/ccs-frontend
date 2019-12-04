@@ -86,9 +86,9 @@
                                     Search suppliers
                                 </label>
                                 {% if query is defined %}
-                                    <input class="govuk-input" id="q" name="q" type="text" value="{{ query }}" />
+                                    <input class="govuk-input" id="q" name="q" type="text" value="{{ query }}" v-model="searchQuery" />
                                 {% else %}
-                                    <input class="govuk-input" id="q" name="q" type="text" />
+                                    <input class="govuk-input" id="q" name="q" type="text" v-model="searchQuery" />
                                 {% endif %}
                                 <button class="sidebar__search-button">
                                     <span class="visuallyhidden">Search suppliers</span>
@@ -116,7 +116,7 @@
                                     <div class="govuk-radios govuk-radios--small ccs-radios--scrollable">
                                         {% for framework in facets.frameworks %}
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-{{ framework.rm_number }}" name="framework" type="radio" value="{{ framework.rm_number }}" v-model="checkedFramework" :key="{{ framework.rm_number }}">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-{{ framework.rm_number }}" name="framework" type="radio" value="{{ framework.rm_number }}" v-model="checkedFramework" :key="{{ framework.rm_number }}" {% if selected.framework == framework.rm_number %} checked {% endif %}>
                                             <label class="govuk-label govuk-radios__label" for="framework-{{ framework.rm_number }}">
                                                 {{ framework.title }} ({{ framework.rm_number }})
                                             </label>
@@ -148,51 +148,45 @@
                                             </label>
                                         </div>
 
-                                        <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3">
-                                            <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">
-                                                Show suppliers on a specific lot
-                                            </label>
-                                        </div>
-                                        <div class="govuk-radios__conditional govuk-radios__conditional--small govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-3">
-
-                                            <div class="govuk-form-group">
-                                                <fieldset class="govuk-fieldset">
-                                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" style="margin-bottom: 0;">
-                                                        <h1 class="govuk-fieldset__heading visuallyhidden">
-                                                            Select lot to filter by
-                                                        </h1>
-                                                    </legend>
-                                                    <div class="govuk-radios govuk-radios--small ccs-radios--nested">
-                                                        <div class="govuk-radios__item govuk-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-1" name="lot-filter-nested" type="radio" value="Lot 1 Data access services" v-model="checkedLot" :key="Lot-1">
-                                                            <label class="govuk-label govuk-radios__label" for="where-do-you-live-1">
-                                                                Lot 1 Data access services
-                                                            </label>
-                                                        </div>
-                                                        <div class="govuk-radios__item govuk-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-2" name="lot-filter-nested" type="radio" value="Lot 2 Local connectivity services" v-model="checkedLot" :key="Lot-2">
-                                                            <label class="govuk-label govuk-radios__label" for="where-do-you-live-2">
-                                                                Lot 2 Local connectivity services
-                                                            </label>
-                                                        </div>
-                                                        <div class="govuk-radios__item govuk-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-3" name="lot-filter-nested" type="radio" value="Lot 3 Voice telephony services" v-model="checkedLot" :key="Lot-3">
-                                                            <label class="govuk-label govuk-radios__label" for="where-do-you-live-3">
-                                                                Lot 3 Voice telephony services
-                                                            </label>
-                                                        </div>
-                                                        <div class="govuk-radios__item govuk-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-4" name="lot-filter-nested" type="radio" value="Lot 4 IP telephony services" v-model="checkedLot" :key="Lot-4">
-                                                            <label class="govuk-label govuk-radios__label" for="where-do-you-live-4">
-                                                                Lot 4 IP telephony services
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
+                                        {% if facets.lots is defined %}
+                                            <div class="govuk-radios__item govuk-radios__item--small">
+                                                {% if selected.lot is defined and selected.lot is not empty %}
+                                                    <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3" checked>
+                                                {% else %}
+                                                    <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3">
+                                                {% endif %}
+                                                <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">
+                                                    Show suppliers on a specific lot
+                                                </label>
                                             </div>
+                                            <div class="govuk-radios__conditional govuk-radios__conditional--small govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-3">
 
-                                        </div>
+                                                <div class="govuk-form-group">
+                                                    <fieldset class="govuk-fieldset">
+                                                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" style="margin-bottom: 0;">
+                                                            <h1 class="govuk-fieldset__heading visuallyhidden">
+                                                                Select lot to filter by
+                                                            </h1>
+                                                        </legend>
+                                                        <div class="govuk-radios govuk-radios--small ccs-radios--nested">
+                                                            {% for lot in facets.lots %}
+                                                                <div class="govuk-radios__item govuk-radios__item--small">
+                                                                    {% if selected.lot is defined and selected.lot is not empty %}
+                                                                        <input class="govuk-radios__input govuk-radios__input--small" id="lot-{{ lot.id }}" name="lot-filter-nested" type="radio" value="{{ lot.id }}" v-model="checkedLot" :key="Lot-1" {% if selected.lot == lot.id %} checked {% endif %}>
+                                                                    {% else %}
+                                                                        <input class="govuk-radios__input govuk-radios__input--small" id="lot-{{ lot.id }}" name="lot-filter-nested" type="radio" value="{{ lot.id }}" v-model="checkedLot" :key="Lot-1">
+                                                                    {% endif %}
+                                                                    <label class="govuk-label govuk-radios__label" for="lot-{{ lot.id }}">
+                                                                        {{ lot.title }}
+                                                                    </label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -246,24 +240,43 @@
                     <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} suppliers found</h2>
 
                     <div class="ccs-filters-summary">
+
+                        {% if selected.framework is defined and selected.framework is not empty %}
                         <div class="ccs-filters-summary__facets" id="search-facets-summary" v-show="filtersSelected">
                             <span class="ccs-filters-summary__label">In</span>
                             <ul class="ccs-filters-summary__list ccs-filters-summary__facets__list" id="search-facets-list">
                                 <li class="ccs-filters-summary__facet" v-if="checkedFramework">
-                                    <a href="#" class="ccs-filters-summary__facet__cancel" v-on:click="clearFramework">{[ checkedFramework ]}</a>
+                                    <a href="/suppliers/search?q={{ query }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearFramework">{{ selected.framework }}</a>
                                 </li>
 
+                                {% if selected.lot is defined and selected.lot is not empty%}
                                 <li class="ccs-filters-summary__facet" v-if="checkedLot">
-                                    <a href="#" class="ccs-filters-summary__facet__cancel" v-on:click="clearLot">{[ checkedLot ]}</a>
+                                    <a href="/suppliers/search?q={{ query }}&framework={{ selected.framework }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearLot">Lot {{ selected.lot }}</a>
                                 </li>
+                                {% endif %}
                             </ul>
                         </div>
-                        {% if query is defined %}
+                        {% else %}
+                            <div class="ccs-filters-summary__facets" id="search-facets-summary" v-show="filtersSelected">
+                                <span class="ccs-filters-summary__label">In</span>
+                                <ul class="ccs-filters-summary__list ccs-filters-summary__facets__list" id="search-facets-list">
+                                    <li class="ccs-filters-summary__facet" v-if="checkedFramework">
+                                        <a href="/suppliers/search?q={{ query }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearFramework">{[ checkedFramework ]}</a>
+                                    </li>
+
+                                    <li class="ccs-filters-summary__facet" v-if="checkedLot">
+                                        <a href="/suppliers/search?q={{ query }}&framework={{ selected.framework }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearLot">Lot {[ checkedLot ]}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                        {% if query is defined and query is not empty %}
                         <div class="ccs-filters-summary__facets" id="search-query-summary">
                             <span class="ccs-filters-summary__label">Containing</span>
                             <ul class="ccs-filters-summary__list" id="search-query-list">
                                 <li class="ccs-filters-summary__facet">
-                                    <a href="#" class="ccs-filters-summary__facet__cancel">{{ query }}</a>
+                                    <a href="/suppliers/search?limit={{ limit }}" class="ccs-filters-summary__facet__cancel">{{ query }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -277,10 +290,15 @@
                     </div>
 
 
+                    <div v-if="loading">Loading results ...</div>
 
-                    <ul class="govuk-list govuk-list--suppliers" v-show="results">
-                        <li v-for="result in results">
-                            <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">{[ result.name ]}</h3>
+                    <ul class="govuk-list govuk-list--suppliers" v-show="searchResults">
+                        <li v-for="result in searchResults">
+
+                            <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
+                                <a :href="result.url">{[ result.name ]}</a>
+                                <span class="ccs-subtle-notification" v-if="result.trading_name">Trading as {[ result.trading_name ]}</span>
+                            </h3>
                         </li>
                     </ul>
 
@@ -288,20 +306,25 @@
 
                     {% if results %}
 
-                    <ul class="govuk-list govuk-list--suppliers" v-show="!results">
+                    <ul class="govuk-list govuk-list--suppliers" v-show="!searchResults">
 
                     {% for item in results %}
 
                         {% set name = item.content.name %}
 
                         <li>
-                            {#{{ dump(item) }}#}
-                            <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22"><a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a></h3>
+                            {#{{ dump(item.content) }}#}
+                            <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
+                                <a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a>
+                                {% if item.content.trading_name %}
+                                    <span class="ccs-subtle-notification">Trading as {{ item.content.trading_name }}</span>
+                                {% endif %}
+                            </h3>
 
-                            <ul class="govuk-list govuk-!-font-size-17featured">
+                            <ul class="govuk-list govuk-!-font-size-17featured ccs-framework-list">
                                 {% for framework in item.content.live_frameworks %}
 
-                                    <li>{{ framework.title }} ({{ framework.rm_number }}) {% if framework.status == "Expired - Data Still Received" %}<strong class="govuk-tag govuk-tag--subtle">Expired</strong>{% endif %}</li>
+                                    <li><span class="ccs-framework-list__title">{{ framework.title }} ({{ framework.rm_number }})</span> {% if framework.status == "Expired - Data Still Received" %}<strong class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--error">Expired</strong>{% endif %}</li>
 
                                 {% endfor %}
                             </ul>
@@ -449,18 +472,16 @@
             delimiters: ['{[', ']}'],
             el: '#main-content',
             data: {
+                searchQuery: '',
                 checkedFramework: selectedFramework,
                 checkedLot: null,
-                results: null,
-                resultsLimit: null
+                searchResults: null,
+                resultsLimit: null,
+                loading: false
             },
             watch: {
-                checkedFramework: function(newValue) {
-                    console.log('Selected framework changed!');
-                    console.log(newValue);
+                searchRequestUrl: function() {
                     this.updateResults();
-
-                    // @TODO: Update lots filter
                 }
             },
             computed: {
@@ -469,6 +490,11 @@
                 },
                 supplierContactPrompt: function() {
                     return (this.checkedFramework && this.checkedLot);
+                },
+                searchRequestUrl: function() {
+                    return 'http://ccs-agreements.cabinetoffice.localhost/search-api/suppliers?keyword=' + this.searchQuery + '&framework=' + this.checkedFramework + '&lot=' + '&limit' + this.resultsLimit;
+
+                    // page=
                 }
             },
             methods: {
@@ -489,8 +515,12 @@
                     // we have to define this variable as arrow functions are
                     // ES6, and the `this` variable changes in the fetch promises
                     var self = this;
-                    console.log("Update results");
-                    var requestUrl = 'http://ccs-agreements.cabinetoffice.localhost/search-api/suppliers?framework=' + this.checkedFramework;
+                    self.loading = true;
+
+                    var requestUrl = this.searchRequestUrl;
+
+                    console.log(requestUrl);
+
                     fetch(requestUrl)
                         .then(function(response) {
                             if (!response.ok) {
@@ -500,10 +530,18 @@
                         })
                         .then(function(jsonResponse) {
                             // update the results property
-                            self.results = jsonResponse.results;
+                            var tempResults = jsonResponse.results;
+                            for(var i = 0; i < tempResults.length; i++) {
+                                tempResults[i].url = '/suppliers/' + tempResults[i].id + '/aaaaa';
+                            }
+
+                            self.searchResults = tempResults;
+                            self.loading = false;
                         })
                         .catch(function(error) {
                             // @TODO: handle errors
+                            console.log('An error occurred');
+                            self.loading = false;
                         });
                 }
             }

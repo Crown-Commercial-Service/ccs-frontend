@@ -100,6 +100,8 @@ Optionally: Set up local host http://local.crowncommercial.gov.uk/ to point to t
 
 #### Clear cache
 
+Run this command from the root project directory:
+
 ```
 bin/console cache:clear
 ```
@@ -126,8 +128,8 @@ See details on [Environments](https://github.com/Crown-Commercial-Service/ccsweb
 
 Post launch, we will have a number of deployment checks before merging new code into production, notably:
 
-* Code must pass static code analysis tests & automated tests (Travis)
-* Manual review by CCS TechOps to approve Pull Request
+* Code must pass static code analysis tests & automated tests (Travis).
+* Manual review by CCS TechOps to approve Pull Request.
 
 ## Continuous integration
 
