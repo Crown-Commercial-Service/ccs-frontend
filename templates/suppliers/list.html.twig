@@ -205,15 +205,15 @@
                                 <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
                                     <div class="govuk-radios govuk-radios--small">
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-1" name="limit" type="radio" value="10" {{ pagination.resultsPerPage == 10 ? 'checked' : '' }}>
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-1" name="limit" type="radio" value="10" {{ pagination.resultsPerPage == 10 ? 'checked' : '' }} v-model="resultsLimit">
                                             <label class="govuk-label govuk-radios__label" for="results-per-page-1">10</label>
                                         </div>
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-2" name="limit" type="radio" value="20" {{ pagination.resultsPerPage == 20 ? 'checked' : '' }}>
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-2" name="limit" type="radio" value="20" {{ pagination.resultsPerPage == 20 ? 'checked' : '' }} v-model="resultsLimit">
                                             <label class="govuk-label govuk-radios__label" for="results-per-page-2">20</label>
                                         </div>
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-3" name="limit" type="radio" value="50" {{ pagination.resultsPerPage == 50 ? 'checked' : '' }}>
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-3" name="limit" type="radio" value="50" {{ pagination.resultsPerPage == 50 ? 'checked' : '' }} v-model="resultsLimit">
                                             <label class="govuk-label govuk-radios__label" for="results-per-page-3">50</label>
                                         </div>
                                     </div>
