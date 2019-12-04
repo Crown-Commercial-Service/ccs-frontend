@@ -74,17 +74,6 @@
                   <a href="{{ path('suppliers_show', {'id': item.content.supplier_id, 'slug': slugify(item.content.supplier_name)} ) }}">{{ item.content.supplier_name }}</a>
                 </h3>
 
-                {% if item.content.supplier_contact_email is not empty %}
-                  <p class="govuk-list govuk-!-font-size-17featured ccs-framework-list">
-                    {% if item.content.supplier_contact_name is not empty %}
-                      Email {{ item.content.supplier_contact_name}} on
-                    {% endif %}
-
-                    <a href="mailto:{{ item.content.supplier_contact_email }}">{{ item.content.supplier_contact_email }}</a>
-                  </p>
-                {% endif %}
-
-                {#
                 <ul class="govuk-list govuk-!-font-size-17featured">
 
                   {% for framework in item.content.live_frameworks %}
@@ -97,7 +86,6 @@
                   {% endfor %}
 
                 </ul>
-                #}
               </li>
 
             {% endfor %}
