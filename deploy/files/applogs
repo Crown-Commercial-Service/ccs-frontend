@@ -1,0 +1,9 @@
+/var/www/var/log/symfony.log {
+    missingok
+    notifempty
+    size 10M
+    delaycompress
+    compress
+    rotate 4
+    su apache apache
+}
