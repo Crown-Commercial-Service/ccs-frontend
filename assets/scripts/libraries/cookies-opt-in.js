@@ -20,9 +20,101 @@ window.readCookie = function (name) {
     return null;
 };
 
+
+/*\
+|*|
+|*|  :: cookies.js ::
+|*|
+|*|  A complete cookies reader/writer framework with full unicode support.
+|*|  https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie/Simple_document.cookie_framework
+|*|
+|*|  Revision #3 - July 13th, 2017
+|*|
+|*|  https://developer.mozilla.org/en-US/docs/Web/API/document.cookie
+|*|  https://developer.mozilla.org/User:fusionchess
+|*|  https://github.com/madmurphy/cookies.js
+|*|
+|*|  This framework is released under the GNU Public License, version 3 or later.
+|*|  http://www.gnu.org/licenses/gpl-3.0-standalone.html
+|*|
+|*|  Syntaxes:
+|*|
+|*|  * docCookies.setItem(name, value[, end[, path[, domain[, secure]]]])
+|*|  * docCookies.getItem(name)
+|*|  * docCookies.removeItem(name[, path[, domain]])
+|*|  * docCookies.hasItem(name)
+|*|  * docCookies.keys()
+|*|
+\*/
+var docCookies = {
+    getItem: function (sKey) {
+        if (!sKey) {
+            return null;
+        }
+        return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+    },
+    setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+        if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
+            return false;
+        }
+        var sExpires = "";
+        if (vEnd) {
+            switch (vEnd.constructor) {
+                case Number:
+                    sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
+                    /*
+                    Note: Despite officially defined in RFC 6265, the use of `max-age` is not compatible with any
+                    version of Internet Explorer, Edge and some mobile browsers. Therefore passing a number to
+                    the end parameter might not work as expected. A possible solution might be to convert the the
+                    relative time to an absolute time. For instance, replacing the previous line with:
+                    */
+                    /*
+                    sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; expires=" + (new Date(vEnd * 1e3 + Date.now())).toUTCString();
+                    */
+                    break;
+                case String:
+                    sExpires = "; expires=" + vEnd;
+                    break;
+                case Date:
+                    sExpires = "; expires=" + vEnd.toUTCString();
+                    break;
+            }
+        }
+        document.cookie = encodeURIComponent(sKey) + "=" + sValue + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
+        return true;
+    },
+    removeItem: function (sKey, sPath, sDomain) {
+        if (!this.hasItem(sKey)) {
+            return false;
+        }
+        document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
+        return true;
+    },
+    hasItem: function (sKey) {
+        if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) {
+            return false;
+        }
+        return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+    },
+    keys: function () {
+        var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+        for (var nLen = aKeys.length, nIdx = 0; nIdx < nLen; nIdx++) {
+            aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]);
+        }
+        return aKeys;
+    }
+};
+
+
 (function () {
 
-    // We'll use ES5 Template Literals to output these in a more maintainable way
+
+    /**
+     * The initial cookie preferences
+     *
+     * We'll use ES5 Template Literals to output these in a more maintainable way
+     * @type {*[]}
+     */
     var initial_cookie_preferences = [
         {
             Title: "Cookies that measure website use",
@@ -47,12 +139,14 @@ window.readCookie = function (name) {
         }
     ];
 
+
     // Set the default cookies. This JSON Object is saved as the cookie, but we use `initial_cookie_preferences` to maintain structure and various sanity checks
     var cookie_preferences = {
         essentials: true,
         usage: true,
         marketing: true,
     };
+
 
     /**
      * Set cookie
@@ -61,10 +155,12 @@ window.readCookie = function (name) {
      * @param string value
      * @param int days
      * @param string path
+     * @param string domain
      * @see http://www.quirksmode.org/js/cookies.html
      */
-    function createCookie(name, value, days, path) {
+    function createCookie(name, value, days, path, domain) {
         var expires = "";
+        // The domain must match the domain of the JavaScript origin. Setting cookies to foreign domains will be silently ignored
 
         if (days) {
             var date = new Date();
@@ -72,18 +168,22 @@ window.readCookie = function (name) {
             expires = "; expires=" + date.toGMTString();
         }
 
+        // test = Location.hostname;
+        // console.log({test});
         document.cookie = name + "=" + value + expires + "; path=" + path;
+        // else {
+        //     document.cookie = name + "=" + value + expires + "; path=" + path + "; domain=" + domain;
+        // }
     }
 
 
     /**
-     * Sets a cookie to hide the cookie message, and also removes it from the
-     * current DOM view, and replaces it with a basic confirmation message
+     * When user accept the cookie, show this
      */
     function hideMessage() {
         var cookieConsentContainer = document.getElementById('cookie-consent-container');
         if (cookieConsentContainer) {
-            cookieConsentContainer.innerHTML = '<div class="cookie-message__inner govuk-width-container"><p>For more information, or to change your settings, please read <a href="/privacy-notice/">our privacy notice</a>.</p></div>';
+            cookieConsentContainer.innerHTML = '<div class="cookie-message__inner govuk-width-container"><p>For more information, or to change your settings, please read <a href="/cookie-policy/">our privacy notice</a>.</p></div>';
         }
     }
 
@@ -92,11 +192,8 @@ window.readCookie = function (name) {
      * Opt the user in to certain cookies
      */
     function optUserIn() {
-
         hideMessage();
-
         updateSeenCookie();
-
     }
 
 
@@ -118,9 +215,12 @@ window.readCookie = function (name) {
     function updateSeenCookie() {
 
         // check if seen_cookie is set, if not, set it (we're checking this first because we don't want to reset to today every time)
-        var seenCookieMessage = readCookie('seen_cookie_message');
-        if (seenCookieMessage == null) {
-            createCookie('seen_cookie_message', 'true', 365, '/');
+        if (docCookies.getItem('seen_cookie_message') == null) {
+            // 1 year = 3.154e+7
+            // 1 month = 2.628e+6
+            // set the cookie which tells us a user has 'accepted cookies'
+            docCookies.setItem('seen_cookie_message', true, 3.154e+7, '/');
+            // createCookie('seen_cookie_message', 'true', 365, '/');
         }
 
     }
@@ -132,7 +232,7 @@ window.readCookie = function (name) {
         initial_cookie_preferences.forEach((datarecord, idx) => {
 
             if (datarecord.adjustable) {
-                cookieElement = document.getElementById(datarecord.CookieType);
+                var cookieElement = document.getElementById(datarecord.CookieType);
                 if (cookieElement.checked) {
                     cookie_preferences[datarecord.CookieType] = (cookieElement.value === 'true');
                 }
@@ -143,14 +243,18 @@ window.readCookie = function (name) {
 
         });
 
-        createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
+        docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), 2.628e+6, '/');
+        // createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
 
         // check if cookie_preferences_set is set, if not, set it (we're checking this first because we don't want to reset to today every time)
-        var cookiePreferenceIsSet = readCookie('cookie_preferences_set');
-        if (cookiePreferenceIsSet == null) {
-            // remove opt-in cookie
-            createCookie('cookie_preferences_set', 'true', 365, '/');
+        if (docCookies.getItem('cookie_preferences_set') == null) {
+            // set the cookie which tells us that a user has saved their cookie preferences
+            docCookies.setItem('cookie_preferences_set', true, 2.628e+6, '/');
+            // createCookie('cookie_preferences_set', 'true', 365, '/');
         }
+
+        // createCookie('_ga', '', -1, '/', '.crowncommercial.gov.uk');
+        docCookies.removeItem('_ga', '/', '.crowncommercial.gov.uk');
 
         var SettingsUpdatedArea = document.getElementsByClassName("js-live-area");
         SettingsUpdatedArea[0].innerHTML = "<p>Your cookie settings were saved.</p>";
@@ -234,12 +338,10 @@ window.readCookie = function (name) {
     // }
 
 
-
-
     function generateCookieSettingsPageContent(appendTo) {
 
         var CookieSettingsPageContent = document.createDocumentFragment();
-        var cookie_preferences = JSON.parse(readCookie('cookie_preferences'));
+        // var cookie_preferences = JSON.parse(readCookie('cookie_preferences'));
 
         // console.log({cookie_preferences});
 
@@ -247,8 +349,9 @@ window.readCookie = function (name) {
         initial_cookie_preferences.forEach((datarecord, idx) => {
 
             // If the cookie has already been set, match the key value to the
-            if (cookie_preferences !== null) {
-               datarecord.enabled = cookie_preferences[datarecord.CookieType];
+            // if (cookie_preferences !== null) {
+            if (docCookies.getItem('cookie_preferences') !== null) {
+                datarecord.enabled = cookie_preferences[datarecord.CookieType];
             }
 
             // for each record we call out to a function to create the template
@@ -261,7 +364,6 @@ window.readCookie = function (name) {
             // Append the created markup to the fragment
             CookieSettingsPageContent.appendChild(container);
         });
-
 
 
         function createSeries(datarecord, idx) {
@@ -312,8 +414,6 @@ window.readCookie = function (name) {
 
 
         }
-
-
 
 
         // var buttonContainer = document.createElement('p');
@@ -399,16 +499,15 @@ window.readCookie = function (name) {
     /**
      * Only show the cookie message if the user hasn't previously dismissed it
      */
-    var cookie = readCookie('seen_cookie_message');
-    if (cookie === null) {
+    if (docCookies.getItem('seen_cookie_message') == null) {
         createCookieMessage();
     }
 
 
     // Only set the default cookies if they haven't been set
-    var cookiePreferences = readCookie('cookie_preferences');
-    if (cookiePreferences == null) {
-        createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
+    if (docCookies.getItem('cookiePreferences') == null) {
+        docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), 2.628e+6, '/');
+        // createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
     }
 
 
