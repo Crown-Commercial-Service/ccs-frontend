@@ -15,7 +15,7 @@
 
 .cookie-message__inner {
     //display: flex;
-    padding: govuk-px-to-rem(30) govuk-px-to-rem(20);
+    padding: govuk-px-to-rem(30) govuk-px-to-rem(20) 0 govuk-px-to-rem(20);
 
     @include govuk-media-query($from: desktop) {
         //display: flex;
