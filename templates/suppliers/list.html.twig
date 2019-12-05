@@ -284,10 +284,10 @@
                     </div>
 
                     {% if selected.framework is defined and selected.framework is not empty %}
-                        {% if selected.lot is defined and selected.lot is not empty%}
+                        {% if selected.lot_number is defined and selected.lot_number is not empty%}
                             <div class="apollo-enclosure ccs-results-notification">
                                 <p><strong>Are you running a further competition or conducting an expression of interest?</strong></p>
-                                <a href="/agreements/{{ selected.framework }}:{{ selected.lot }}/lot-suppliers" class="govuk-button ccs-button--tight">View supplier contact details</a>
+                                <a href="/agreements/{{ selected.framework }}:{{ selected.lot_number }}/lot-suppliers" class="govuk-button ccs-button--tight">View supplier contact details</a>
                             </div>
                         {% endif %}
                     {% endif %}
