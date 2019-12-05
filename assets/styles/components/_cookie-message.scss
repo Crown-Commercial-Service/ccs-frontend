@@ -15,7 +15,7 @@
 
 .cookie-message__inner {
     //display: flex;
-    padding: govuk-px-to-rem(30) govuk-px-to-rem(20);
+    padding: govuk-px-to-rem(30) govuk-px-to-rem(20) 0 govuk-px-to-rem(20);
 
     @include govuk-media-query($from: desktop) {
         //display: flex;
@@ -39,11 +39,11 @@
 
 
 .cookie-message__actions {
-    //align-items: flex-start;
-    //display: flex;
-    //min-width: govuk-px-to-rem(280);
+    align-items: baseline;
+    display: flex;
+    min-width: govuk-px-to-rem(280);
 
     * + * {
-        //margin-left: govuk-px-to-rem(20);
+        margin-left: govuk-px-to-rem(20);
     }
 }
