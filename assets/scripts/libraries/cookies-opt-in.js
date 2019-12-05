@@ -25,29 +25,29 @@ window.readCookie = function (name) {
     // We'll use ES5 Template Literals to output these in a more maintainable way
     var initial_cookie_preferences = [
         {
-            Title: "Usage",
-            Description: "usage lorem blah blah.",
+            Title: "Cookies that measure website use",
+            Description: "<p>We use Google Analytics to measure how you use the website so we can improve it based on user needs. Google Analytics sets cookies that store anonymised information about:</p><ul><li>how you got to the site</li><li>the pages you visit on GOV.UK and government digital services, and how long you spend on each page</li><li>what you click on while you're visiting the site</li></ul><p>We do not allow Google to use or share the data about how you use this site.</p>",
             CookieType: "usage",
             enabled: false,
             adjustable: true,
         },
         {
-            Title: "Marketing",
-            Description: "marketing lorem blah blah.",
+            Title: "Cookies that help with our communications and marketing",
+            Description: "These cookies may be set by third party websites and do things like measure how you view YouTube videos that are on GOV.UK.",
             CookieType: "marketing",
             enabled: false,
             adjustable: true,
         },
         {
             Title: "Strictly necessary cookies",
-            Description: "essen tial lorem blah blah.",
+            Description: "<p>These essential cookies do things like:</p><ul><li>remember the notifications you've seen so we do not show them to you again</li><li>remember your progress through a form (for example a licence application)</li></ul><p>They always need to be on.</p>",
             CookieType: "essential",
             enabled: true,
             adjustable: false,
         }
     ];
 
-    // Set the default
+    // Set the default cookies. This JSON Object is saved as the cookie, but we use `initial_cookie_preferences` to maintain structure and various sanity checks
     var cookie_preferences = {
         essentials: true,
         usage: true,
@@ -83,8 +83,7 @@ window.readCookie = function (name) {
     function hideMessage() {
         var cookieConsentContainer = document.getElementById('cookie-consent-container');
         if (cookieConsentContainer) {
-            cookieConsentContainer.innerHTML = '<div class="cookie-message__inner site-container"><p>For more information, or to change your settings, please read <a href="/privacy-notice/">our privacy notice</a>.</p></div>';
-            createCookie('dismiss-cookie-message', 'yes', 30, '/');
+            cookieConsentContainer.innerHTML = '<div class="cookie-message__inner govuk-width-container"><p>For more information, or to change your settings, please read <a href="/privacy-notice/">our privacy notice</a>.</p></div>';
         }
     }
 
@@ -93,147 +92,156 @@ window.readCookie = function (name) {
      * Opt the user in to certain cookies
      */
     function optUserIn() {
+
         hideMessage();
-        // create a cookie that lets us detect the user has opted in
-        createCookie('cookie-data-consent', 'yes', 30, '/');
+
+        updateSeenCookie();
+
     }
 
 
-    /**
-     * Opt the user in out of using certain cookies
-     */
-    function optUserOut() {
-        hideMessage();
+    // /**
+    //  * Opt the user in out of using certain cookies
+    //  */
+    // function optUserOut() {
+    //     hideMessage();
+    //
+    //     // if the user previously opted-in, then delete the opt-in cookie
+    //     var consentCookie = readCookie('cookie-data-consent');
+    //     if (consentCookie !== null && consentCookie === 'yes') {
+    //         // remove opt-in cookie
+    //         createCookie('cookie-data-consent', '', -1, '/');
+    //     }
+    // }
 
-        // if the user previously opted-in, then delete the opt-in cookie
-        var consentCookie = readCookie('cookie-data-consent');
-        if (consentCookie !== null && consentCookie === 'yes') {
-            // remove opt-in cookie
-            createCookie('cookie-data-consent', '', -1, '/');
+
+    function updateSeenCookie() {
+
+        // check if seen_cookie is set, if not, set it (we're checking this first because we don't want to reset to today every time)
+        var seenCookieMessage = readCookie('seen_cookie_message');
+        if (seenCookieMessage == null) {
+            createCookie('seen_cookie_message', 'true', 365, '/');
         }
+
     }
 
 
     function UpdateCookiePreferences() {
 
-        // var cookie_preferences = [
-        //     {
-        //         CookieType: "usage",
-        //         enabled: false,
-        //     },
-        //     {
-        //         CookieType: "marketing",
-        //         enabled: false,
-        //     },
-        //     {
-        //         CookieType: "essential",
-        //         enabled: true,
-        //     }
-        // ];
+        // update the cookie references based on user selection
+        initial_cookie_preferences.forEach((datarecord, idx) => {
 
-        // Update the defaults, based on selected radio options
-        // cookie_preferences = JSON.parse(cookie_preferences);
-        console.log({cookie_preferences});
+            if (datarecord.adjustable) {
+                cookieElement = document.getElementById(datarecord.CookieType);
+                if (cookieElement.checked) {
+                    cookie_preferences[datarecord.CookieType] = (cookieElement.value === 'true');
+                }
+                else {
+                    cookie_preferences[datarecord.CookieType] = false;
+                }
+            }
 
-        for (i=0; i <)
-
-        cookie_preferences.keys(p).forEach(function (k) {
-            cookieElement = document.getElementById(cookie_preferences[p]);
-            cookie_preferences[p] = cookieElement.value();
         });
 
         createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
 
-        // set both of these to true when the user submits their preferences
-        createCookie('seen_cookie_message', 'true', 365, '/');
-        createCookie('cookie_preferences_set', 'true', 365, '/');
-
-    }
-
-
-    /**
-     *
-     * Used to generate a status message with a toggle button allowing the
-     * user to change their opted in/out status
-     *
-     * @param appendTo
-     * The HTML element to append this control to
-     *
-     * @param hasChanged
-     * Whether the user has changed this value (we serve different text if that is the case)
-     */
-    function generateStatusMessage(appendTo, hasChanged) {
-        hasChanged = typeof hasChanged !== 'undefined' ? hasChanged : false;
-
-        // cookie that contains whether the user has opted-in/out
-        var consentCookie = readCookie('cookie-data-consent');
-
-        var messageContainer = document.createElement('div');
-        messageContainer.classList.add('cookie-message-inline');
-
-        var message = '';
-        var buttonContainer = document.createElement('p');
-        var toggleButton = document.createElement('button');
-        toggleButton.classList.add('button');
-        toggleButton.classList.add('button--tight');
-
-        // conditional to serve a different message depending on if the user has
-        // opted in or out
-        if (consentCookie !== null && consentCookie === 'yes') {
-            // if the user has just changed their opt-in/out setting, then
-            // we server a different message (which says "you are now" to clarify
-            // that the user has succesfully changed the setting
-            if (hasChanged) {
-                message = '<p>You are now opted-in to our advertising cookies.</p>';
-            } else {
-                message = '<p>You are currently opted-in to our advertising cookies.</p>';
-            }
-
-            toggleButton.innerHTML = 'Opt me out';
-            toggleButton.addEventListener('click', function () {
-                optUserOut();
-                // we use recursion to re-generate this message once the setting
-                // has been changed using `optUserOut()`
-                generateStatusMessage(appendTo, true);
-            });
-        } else {
-            // if the user has just changed their opt-in/out setting, then
-            // we server a different message (which says "you are now" to clarify
-            // that the user has succesfully changed the setting
-            if (hasChanged) {
-                message = '<p>You are now opted-out of our advertising cookies.</p>';
-            } else {
-                message = '<p>You are currently opted-out of our advertising cookies.</p>';
-            }
-
-            toggleButton.innerHTML = 'Opt me in';
-            toggleButton.addEventListener('click', function () {
-                optUserIn();
-                // we use recursion to re-generate this message once the setting
-                // has been changed using `optUserIn()`
-                generateStatusMessage(appendTo, true);
-            });
+        // check if cookie_preferences_set is set, if not, set it (we're checking this first because we don't want to reset to today every time)
+        var cookiePreferenceIsSet = readCookie('cookie_preferences_set');
+        if (cookiePreferenceIsSet == null) {
+            // remove opt-in cookie
+            createCookie('cookie_preferences_set', 'true', 365, '/');
         }
 
-        // build the message contents
-        messageContainer.innerHTML = message;
-        buttonContainer.appendChild(toggleButton);
-        messageContainer.appendChild(buttonContainer);
+        var SettingsUpdatedArea = document.getElementsByClassName("js-live-area");
+        SettingsUpdatedArea[0].innerHTML = "<p>Your cookie settings were saved.</p>";
 
-        // clear the innerHTML of the container, incase we are regenerating
-        // the message (in which case, there will be innacurate content in there)
-        appendTo.innerHTML = '';
-        appendTo.appendChild(messageContainer);
     }
+
+
+    // /**
+    //  *
+    //  * Used to generate a status message with a toggle button allowing the
+    //  * user to change their opted in/out status
+    //  *
+    //  * @param appendTo
+    //  * The HTML element to append this control to
+    //  *
+    //  * @param hasChanged
+    //  * Whether the user has changed this value (we serve different text if that is the case)
+    //  */
+    // function generateStatusMessage(appendTo, hasChanged) {
+    //     hasChanged = typeof hasChanged !== 'undefined' ? hasChanged : false;
+    //
+    //     // cookie that contains whether the user has opted-in/out
+    //     var consentCookie = readCookie('cookie-data-consent');
+    //
+    //     var messageContainer = document.createElement('div');
+    //     messageContainer.classList.add('cookie-message-inline');
+    //
+    //     var message = '';
+    //     var buttonContainer = document.createElement('p');
+    //     var toggleButton = document.createElement('button');
+    //     toggleButton.classList.add('button');
+    //     toggleButton.classList.add('button--tight');
+    //
+    //     // conditional to serve a different message depending on if the user has
+    //     // opted in or out
+    //     if (consentCookie !== null && consentCookie === 'yes') {
+    //         // if the user has just changed their opt-in/out setting, then
+    //         // we server a different message (which says "you are now" to clarify
+    //         // that the user has succesfully changed the setting
+    //         if (hasChanged) {
+    //             message = '<p>You are now opted-in to our advertising cookies.</p>';
+    //         } else {
+    //             message = '<p>You are currently opted-in to our advertising cookies.</p>';
+    //         }
+    //
+    //         toggleButton.innerHTML = 'Opt me out';
+    //         toggleButton.addEventListener('click', function () {
+    //             optUserOut();
+    //             // we use recursion to re-generate this message once the setting
+    //             // has been changed using `optUserOut()`
+    //             generateStatusMessage(appendTo, true);
+    //         });
+    //     } else {
+    //         // if the user has just changed their opt-in/out setting, then
+    //         // we server a different message (which says "you are now" to clarify
+    //         // that the user has succesfully changed the setting
+    //         if (hasChanged) {
+    //             message = '<p>You are now opted-out of our advertising cookies.</p>';
+    //         } else {
+    //             message = '<p>You are currently opted-out of our advertising cookies.</p>';
+    //         }
+    //
+    //         toggleButton.innerHTML = 'Opt me in';
+    //         toggleButton.addEventListener('click', function () {
+    //             optUserIn();
+    //             // we use recursion to re-generate this message once the setting
+    //             // has been changed using `optUserIn()`
+    //             generateStatusMessage(appendTo, true);
+    //         });
+    //     }
+    //
+    //     // build the message contents
+    //     messageContainer.innerHTML = message;
+    //     buttonContainer.appendChild(toggleButton);
+    //     messageContainer.appendChild(buttonContainer);
+    //
+    //     // clear the innerHTML of the container, incase we are regenerating
+    //     // the message (in which case, there will be innacurate content in there)
+    //     appendTo.innerHTML = '';
+    //     appendTo.appendChild(messageContainer);
+    // }
+
+
 
 
     function generateCookieSettingsPageContent(appendTo) {
 
         var CookieSettingsPageContent = document.createDocumentFragment();
-        var CookieSettingsSubmitButton = document.createDocumentFragment();
         var cookie_preferences = JSON.parse(readCookie('cookie_preferences'));
 
-        console.log({cookie_preferences});
+        // console.log({cookie_preferences});
 
         // loop through the data
         initial_cookie_preferences.forEach((datarecord, idx) => {
@@ -267,9 +275,9 @@ window.readCookie = function (name) {
         ${datarecord.Title}
       </h3>
     </legend>
-    <span id="${datarecord.CookieType}-hint" class="govuk-hint">
+    <div id="${datarecord.CookieType}-hint" class="govuk-hint">
       ${datarecord.Description}
-    </span>
+    </div>
     <div class="govuk-radios govuk-radios--inline">
       <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="${datarecord.CookieType}" name="${datarecord.CookieType}" type="radio"
@@ -297,7 +305,7 @@ window.readCookie = function (name) {
 
                 return `
                 <h3 class="">${datarecord.Title}</h3>
-                <p>${datarecord.Description}</p>
+                <div>${datarecord.Description}</div>
                 `;
 
             }
@@ -310,22 +318,29 @@ window.readCookie = function (name) {
 
         // var buttonContainer = document.createElement('p');
         var CookieSettingsSubmitButton = document.createElement('button');
-        CookieSettingsSubmitButton.classList.add('button');
+        CookieSettingsSubmitButton.classList.add('govuk-!-font-size-18', 'govuk-!-font-weight-bold', 'govuk-button');
         CookieSettingsSubmitButton.innerHTML = 'Save changes';
         CookieSettingsSubmitButton.addEventListener('click', function () {
+
             UpdateCookiePreferences();
-            // we use recursion to re-generate this message once the setting
-            // has been changed using `optUserIn()`
-            console.log("Your cookie settings were saved");
-            // generateStatusMessage(appendTo, true);
+            updateSeenCookie();
+
         });
 
+        var CookieSettingsLiveArea = document.createElement('div');
+        CookieSettingsLiveArea.classList.add('cookie-updated-notice', 'js-live-area');
+        CookieSettingsLiveArea.setAttribute('aria-label', "Notice");
+        CookieSettingsLiveArea.setAttribute('aria-live', "polite");
+        CookieSettingsLiveArea.setAttribute('role', "region");
+
+        // we put the elements in the fragment
+        CookieSettingsPageContent.appendChild(CookieSettingsSubmitButton);
+        CookieSettingsPageContent.appendChild(CookieSettingsLiveArea);
 
         // clear the innerHTML of the container, incase we are regenerating
         // the message (in which case, there will be innacurate content in there)
         appendTo.innerHTML = '';
         appendTo.appendChild(CookieSettingsPageContent);
-        appendTo.appendChild(CookieSettingsSubmitButton);
 
     }
 
@@ -349,23 +364,22 @@ window.readCookie = function (name) {
         cookieMessageInner.innerHTML = '<div class="cookie-message__intro"><p>We use non-essential cookies to help us improve this website and our services. Any data collected is anonymised. By continuing to use this site, you agree to our use of cookies.</p></div>';
 
         var optInButton = document.createElement('button');
-        optInButton.classList.add('button');
-        optInButton.classList.add('button--tight');
-        optInButton.classList.add('button--confirm');
+        optInButton.classList.add('govuk-!-font-size-18', 'govuk-!-font-weight-bold', 'govuk-button');
         optInButton.innerHTML = "Accept cookies";
         optInButton.addEventListener('click', optUserIn);
 
-        // var optOutButton = document.createElement('button');
+        var settingsButton = document.createElement('a');
+        settingsButton.setAttribute('href', "/cookie-settings");
+        settingsButton.innerHTML = "Cookie settings";
         // optOutButton.classList.add('button');
         // optOutButton.classList.add('button--tight');
         // optOutButton.classList.add('button--deny');
-        // optOutButton.innerHTML = "No";
         // optOutButton.addEventListener('click', optUserOut);
 
         var cookieMessageButtons = document.createElement('div');
         cookieMessageButtons.classList.add('cookie-message__actions');
         cookieMessageButtons.appendChild(optInButton);
-        // cookieMessageButtons.appendChild(optOutButton);
+        cookieMessageButtons.appendChild(settingsButton);
 
         cookieMessageInner.appendChild(cookieMessageButtons);
 
@@ -385,10 +399,16 @@ window.readCookie = function (name) {
     /**
      * Only show the cookie message if the user hasn't previously dismissed it
      */
-    var cookie = readCookie('dismiss-cookie-message');
-    var consentCookie = readCookie('cookie-data-consent');
-    if (cookie === null && cookie !== 'yes') {
+    var cookie = readCookie('seen_cookie_message');
+    if (cookie === null) {
         createCookieMessage();
+    }
+
+
+    // Only set the default cookies if they haven't been set
+    var cookiePreferences = readCookie('cookie_preferences');
+    if (cookiePreferences == null) {
+        createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
     }
 
 
