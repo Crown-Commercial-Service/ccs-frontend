@@ -47,6 +47,9 @@
     "monolog/monolog": {
         "version": "1.24.0"
     },
+    "php": {
+        "version": "7.3"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -79,6 +82,9 @@
     },
     "studio24/frontend": {
         "version": "dev-master"
+    },
+    "studio24/http-cache-clear": {
+        "version": "v0.1.0"
     },
     "symfony/apache-pack": {
         "version": "1.0",
