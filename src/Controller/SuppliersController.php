@@ -150,6 +150,8 @@ class SuppliersController extends AbstractController
         }
 
         $facets = $results->getMetadata()->offsetGet('facets');
+        
+        $lotNumber = $this->retrieveLotNumberFromFacetsUsingLotId($lot, $facets);
 
         $data = [
             'query'         => $query,
@@ -157,8 +159,10 @@ class SuppliersController extends AbstractController
             'results'       => $results,
             'facets'        => $facets,
             'limit'         => $limit,
-            'selected'=> ['framework' => $framework, 'lot' => $lot]
+            'selected'=> ['framework' => $framework, 'lot' => $lot, 'lot_number' => $lotNumber]
         ];
+
+        
         return $this->render('suppliers/list.html.twig', $data);
     }
 
@@ -191,5 +195,27 @@ class SuppliersController extends AbstractController
             'supplier' => $results
         ];
         return $this->render('suppliers/show.html.twig', $data);
+    }
+
+    /**
+     * Attempt to retrieve the lot number for a lot from the facet data
+     * searching by lot ID
+     *
+     * @param $lotId
+     * @param $facets
+     * @return |null
+     */
+    protected function retrieveLotNumberFromFacetsUsingLotId($lotId, $facets) {
+        if (empty($lotId) || empty($facets) || !isset($facets['lots'])) {
+            return null;
+        }
+        
+        foreach ($facets['lots'] as $facetLot) {
+            if ($facetLot['id'] == $lotId) {
+                return $facetLot['lot_number'];
+            }
+        }
+
+        return null;
     }
 }
