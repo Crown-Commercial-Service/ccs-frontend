@@ -12,6 +12,7 @@
 .nav-wrapper {
 
     padding: 0 0 govuk-px-to-rem(20) 0;
+    position: relative;
 
     @include govuk-media-query($from: desktop) {
 

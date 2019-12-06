@@ -183,7 +183,7 @@ var docCookies = {
     function hideMessage() {
         var cookieConsentContainer = document.getElementById('cookie-consent-container');
         if (cookieConsentContainer) {
-            cookieConsentContainer.innerHTML = '<div class="cookie-message__inner govuk-width-container"><p>For more information, or to change your settings, please read <a href="/cookie-policy/">our privacy notice</a>.</p></div>';
+            cookieConsentContainer.innerHTML = '<div class="cookie-message__inner cookie-message__inner--accepted govuk-width-container"><p>You&rsquo;ve accepted all cookies. You can <a href="/cookie-settings">change your cookie settings</a> at any time.</p></div>';
         }
     }
 
@@ -253,8 +253,8 @@ var docCookies = {
             // createCookie('cookie_preferences_set', 'true', 365, '/');
         }
 
-        // createCookie('_ga', '', -1, '/', '.crowncommercial.gov.uk');
-        docCookies.removeItem('_ga', '/', '.crowncommercial.gov.uk');
+        // @todo add funtion to clean away cookies based on permission groups
+        // docCookies.removeItem('_ga', '/', '.crowncommercial.gov.uk');
 
         var SettingsUpdatedArea = document.getElementsByClassName("js-live-area");
         SettingsUpdatedArea[0].innerHTML = "<p>Your cookie settings were saved.</p>";
@@ -497,9 +497,9 @@ var docCookies = {
 
 
     /**
-     * Only show the cookie message if the user hasn't previously dismissed it
+     * Only show the cookie message if the user hasn't previously dismissed it (and we're NOT on the cookie-settings page
      */
-    if (docCookies.getItem('seen_cookie_message') == null) {
+    if (docCookies.getItem('seen_cookie_message') == null && window.location.href.indexOf("cookie-settings") === -1) {
         createCookieMessage();
     }
 
