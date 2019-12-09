@@ -243,14 +243,14 @@ var docCookies = {
         // let childNodeCookieType = ;
 
         // Loop through all the cookies
-        console.log({initial_cookie_preferences});
-        childNodeCookieType.forEach((cookie, idx) => {
+
+        // childNodeCookieType.forEach((cookie, idx) => {
 
             // @todo add funtion to clean away cookies based on permission groups
-            console.log("haha");
+            // console.log("haha");
             // docCookies.removeItem('_ga', '/', '.crowncommercial.gov.uk');
 
-        });
+        // });
 
     }
 
