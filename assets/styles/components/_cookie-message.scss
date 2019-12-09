@@ -27,6 +27,11 @@
     }
 }
 
+.cookie-message__inner--accepted {
+
+    padding: govuk-px-to-rem(30) govuk-px-to-rem(20) govuk-px-to-rem(10) govuk-px-to-rem(20);
+
+}
 
 .cookie-message__heading {
     padding-right: govuk-px-to-rem(70);
@@ -39,11 +44,17 @@
 
 
 .cookie-message__actions {
-    align-items: baseline;
+
     display: flex;
     min-width: govuk-px-to-rem(280);
 
     * + * {
         margin-left: govuk-px-to-rem(20);
+    }
+
+    @include govuk-media-query($from: desktop) {
+
+        align-items: baseline;
+
     }
 }
