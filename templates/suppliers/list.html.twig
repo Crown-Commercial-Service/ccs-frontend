@@ -113,15 +113,23 @@
                                     </h2>
                                 </div>
                                 <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
-                                    <div class="govuk-radios govuk-radios--small ccs-radios--scrollable">
+                                    <div class="govuk-radios govuk-radios--small ccs-radios--scrollable" v-if="!frameworkList">
                                         {% for framework in facets.frameworks %}
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-{{ framework.rm_number }}" name="framework" type="radio" value="{{ framework.rm_number }}" v-model="checkedFramework" :key="{{ framework.rm_number }}" {% if selected.framework == framework.rm_number %} checked {% endif %}>
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-{{ framework.rm_number }}" name="framework" type="radio" value="{{ framework.rm_number }}"{% if selected.framework == framework.rm_number %} checked {% endif %}>
                                             <label class="govuk-label govuk-radios__label" for="framework-{{ framework.rm_number }}">
                                                 {{ framework.title }} ({{ framework.rm_number }})
                                             </label>
                                         </div>
                                         {% endfor %}
+                                    </div>
+                                    <div class="govuk-radios govuk-radios--small ccs-radios--scrollable" v-if="frameworkList">
+                                        <div class="govuk-radios__item govuk-radios__item--small" v-for="framework in frameworkList">
+                                            <input class="govuk-radios__input govuk-radios__input--small" :id="'framework-' + framework.rm_number" name="framework" type="radio" :value="framework.rm_number" v-model="checkedFramework" :key="framework.rm_number">
+                                            <label class="govuk-label govuk-radios__label" :for="'framework-' + framework.rm_number">
+                                                {[ framework.title ]} ({[ framework.rm_number ]})
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +157,7 @@
                                         </div>
 
                                         {% if facets.lots is defined %}
-                                            <div class="govuk-radios__item govuk-radios__item--small">
+                                            <div class="govuk-radios__item govuk-radios__item--small" v-if="!lotList">
                                                 {% if selected.lot is defined and selected.lot is not empty %}
                                                     <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3" checked>
                                                 {% else %}
@@ -187,6 +195,33 @@
 
                                             </div>
                                         {% endif %}
+                                        <div class="govuk-radios__item govuk-radios__item--small" v-if="lotList">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3">
+                                            <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">
+                                                Show suppliers on a specific lot
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__conditional govuk-radios__conditional--small govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-3">
+
+                                            <div class="govuk-form-group">
+                                                <fieldset class="govuk-fieldset">
+                                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" style="margin-bottom: 0;">
+                                                        <h1 class="govuk-fieldset__heading visuallyhidden">
+                                                            Select lot to filter by
+                                                        </h1>
+                                                    </legend>
+                                                    <div class="govuk-radios govuk-radios--small ccs-radios--nested">
+                                                        <div class="govuk-radios__item govuk-radios__item--small" v-for="lot in lotList">
+                                                            <input class="govuk-radios__input govuk-radios__input--small" :id="'lot-' + lot.id" name="lot-filter-nested" type="radio" :value="lot.id" v-model="checkedLot" :key="lot.id">
+                                                            <label class="govuk-label govuk-radios__label" :for="'lot-' + lot.id">
+                                                                {[ lot.title ]}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -257,7 +292,7 @@
                             </ul>
                         </div>
                         {% else %}
-                            <div class="ccs-filters-summary__facets" id="search-facets-summary" v-show="filtersSelected">
+                            <div class="ccs-filters-summary__facets" id="search-facets-summary" v-show="filtersSelected" style="display: none;">
                                 <span class="ccs-filters-summary__label">In</span>
                                 <ul class="ccs-filters-summary__list ccs-filters-summary__facets__list" id="search-facets-list">
                                     <li class="ccs-filters-summary__facet" v-if="checkedFramework">
@@ -284,7 +319,7 @@
                     </div>
 
 
-                    <div class="apollo-enclosure ccs-results-notification" v-show="supplierContactPrompt">
+                    <div class="apollo-enclosure ccs-results-notification" v-show="supplierContactPrompt" style="display: none;">
                         <p><strong>Are you running a further competition or conducting an expression of interest?</strong></p>
                         <a href="#" class="govuk-button ccs-button--tight">View supplier contact details</a>
                     </div>
@@ -292,13 +327,20 @@
 
                     <div v-if="loading">Loading results ...</div>
 
-                    <ul class="govuk-list govuk-list--suppliers" v-show="searchResults">
+                    <ul class="govuk-list govuk-list--suppliers" v-show="searchResults" style="display: none;">
                         <li v-for="result in searchResults">
 
                             <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
                                 <a :href="result.url">{[ result.name ]}</a>
                                 <span class="ccs-subtle-notification" v-if="result.trading_name">Trading as {[ result.trading_name ]}</span>
                             </h3>
+
+                            <ul class="govuk-list govuk-!-font-size-17featured ccs-framework-list" v-for="framework in result.live_frameworks">
+
+                                <li><span class="ccs-framework-list__title">{[ framework.title ]} ({[ framework.rm_number ]})</span> <strong v-if="framework.status == 'Expired - Data Still Received'" class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--error">Expired</strong></li>
+
+                            </ul>
+
                         </li>
                     </ul>
 
@@ -342,7 +384,12 @@
 
                     {# Pagination #}
 
-                    <results-pagination />
+                    {#
+                    <div>{[ currentPage ]}</div>
+                    <div>{[ searchResultsNumber ]}</div>
+                    <div>{[ resultsLimit ]}</div>
+                    #}
+                    <results-pagination v-bind:total-results="searchResultsNumber" v-bind:results-per-page="resultsLimit" v-bind:current-page="currentPage" v-on:update-page="updatePageValue($event)" />
 
                     {% if query is defined %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'suppliers_search', 'options': {'q': query}} %}
@@ -368,105 +415,56 @@
 
 
 
-    {#
-    <script>
-        // The search app code
-        function searchApp() {
-
-            'use strict';
-
-            var self = this;
-
-            this.facetsSummary = document.getElementById('search-facets-summary');
-            this.facetsList    = document.getElementById('search-facets-list');
-
-            this.querySummary = document.getElementById('search-query-summary');
-            this.queryList    = document.getElementById('search-query-list');
-
-            this.facetsArray = [];
-
-            this.init = function() {
-                this.bindFrameworksSelection();
-            };
-
-
-            /**
-             * Bind events to the framework radio buttons
-             */
-            this.bindFrameworksSelection = function() {
-                var self = this;
-
-                var frameworkOptions = document.querySelectorAll('input[type="radio"][name="framework"]');
-                var frameworkOptionsNum = frameworkOptions.length;
-                for(var i = 0; i < frameworkOptionsNum; i++) {
-                    frameworkOptions[i].addEventListener('click', function() {
-                        self.updateFrameworkFacet(this);
-                    });
-                }
-            };
-
-
-
-            /**
-             * Update the Framework facet shown in the search summary
-             */
-            this.updateFrameworkFacet = function(item) {
-                var newFacet = document.createElement('li');
-                newFacet.className = 'ccs-filters-summary__facet';
-
-                var newFacetBtn = document.createElement('a');
-                newFacetBtn.setAttribute('href', '#');
-                newFacetBtn.className = 'ccs-filters-summary__facet__cancel';
-                newFacetBtn.addEventListener('click', function(event) {
-                    event.preventDefault();
-
-                    //self.facetsArray.
-
-                    // for IE9 compatability
-                    this.parentNode.removeChild(this);
-                    self.facetsSummary.style = "display: none;"
-                });
-                newFacetBtn.innerHTML = item.value;
-
-                newFacet.appendChild(newFacetBtn);
-
-                console.log('add!');
-                self.facetsList.innerHTML = '';
-                self.facetsList.appendChild(newFacet);
-                self.facetsSummary.style = "display: block;"
-            };
-
-
-            this.updateFacetSummary = function() {
-                //
-            }
-
-
-            this.bindResultsAmountSelection = function() {};
-        }
-
-
-        var searchAppication = new searchApp();
-        searchAppication.init();
-    </script>
-    #}
-
-
     <script src="/assets/scripts/libraries/vue.js"></script>
     <script>
         var selectedFramework = '{{ selected.framework }}';
+        var totalResults = {{ pagination.totalResults }};
+
+
 
         // Define a new component called button-counter
         Vue.component('results-pagination', {
-            data: function () {
-                return {
-                    count: 0
+            delimiters: ['{[', ']}'],
+            props: {
+                currentPage: Number,
+                totalResults: Number,
+                resultsPerPage: Number
+            },
+            computed: {
+                numberOfPages: function() {
+                    return Math.ceil(this.totalResults/this.resultsPerPage);
                 }
             },
-            template: '<p>Pagination goes here</p>'
+            methods: {
+                updatePageNumber: function(event, newPage) {
+                    event.preventDefault();
+                    this.$emit('update-page', newPage);
+                }
+            },
+            template: `
+                <ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination">
+                    <li class="pagination__item" v-for="page in numberOfPages">
+                        <a :href="'/suppliers/' + page" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
+                    </li>
+
+                    <li class="pagination__item active">
+                        <span class="visuallyhidden">Page </span>1
+                    </li>
+
+                    <li class="pagination__item">…</li>
+
+                    <li class="pagination__item pagination__item--next">
+                        <a href="/suppliers/2" rel="next">
+                            <span>Next</span> <span class="visuallyhidden">page</span>
+                            <span class="icon">
+                                <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"></path></svg>
+                            </span>
+                        </a>
+                    </li>
+                </ul>`
         });
 
-        // /search-api/suppliers?framework=RM1075
+
 
         new Vue({
             delimiters: ['{[', ']}'],
@@ -474,10 +472,17 @@
             data: {
                 searchQuery: '',
                 checkedFramework: selectedFramework,
-                checkedLot: null,
+                checkedLot: '',
+                frameworkList: null,
+                lotList: null,
                 searchResults: null,
-                resultsLimit: null,
+                searchResultsNumber: totalResults,
+                resultsLimit: 20,
+                currentPage: 1,
                 loading: false
+            },
+            created: function() {
+                this.updateResults();
             },
             watch: {
                 searchRequestUrl: function() {
@@ -492,7 +497,7 @@
                     return (this.checkedFramework && this.checkedLot);
                 },
                 searchRequestUrl: function() {
-                    return 'http://ccs-agreements.cabinetoffice.localhost/search-api/suppliers?keyword=' + this.searchQuery + '&framework=' + this.checkedFramework + '&lot=' + '&limit' + this.resultsLimit;
+                    return 'http://ccs-agreements.cabinetoffice.localhost/search-api/suppliers?keyword=' + this.searchQuery + '&framework=' + this.checkedFramework + '&lot=' + this.checkedLot + '&limit=' + this.resultsLimit + '&page=' + this.currentPage;
 
                     // page=
                 }
@@ -500,16 +505,21 @@
             methods: {
                 resetFilters: function(event) {
                     event.preventDefault();
-                    this.checkedFramework = null;
-                    this.checkedLot = null;
+                    this.checkedFramework = '';
+                    this.checkedLot = '';
+                    this.currentPage = 1;
                 },
                 clearFramework: function(event) {
                     event.preventDefault();
-                    this.checkedFramework = null;
+                    this.checkedFramework = '';
                 },
                 clearLot: function(event) {
                     event.preventDefault();
-                    this.checkedLot = null;
+                    this.checkedLot = '';
+                },
+                updatePageValue: function(newPageValue) {
+                    console.log(newPageValue);
+                    this.currentPage = newPageValue;
                 },
                 updateResults: function() {
                     // we have to define this variable as arrow functions are
@@ -536,11 +546,16 @@
                             }
 
                             self.searchResults = tempResults;
+                            self.searchResultsNumber = jsonResponse.meta.total_results;
+                            self.frameworkList = jsonResponse.meta.facets.frameworks;
+                            self.lotList = jsonResponse.meta.facets.lots;
+
                             self.loading = false;
                         })
                         .catch(function(error) {
                             // @TODO: handle errors
                             console.log('An error occurred');
+                            console.log(error);
                             self.loading = false;
                         });
                 }
