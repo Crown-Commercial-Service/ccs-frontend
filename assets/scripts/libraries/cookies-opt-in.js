@@ -108,7 +108,6 @@ var docCookies = {
 
 (function () {
 
-
     /**
      * The initial cookie preferences
      *
@@ -117,23 +116,35 @@ var docCookies = {
      */
     var initial_cookie_preferences = [
         {
-            Title: "Cookies that measure website use",
-            Description: "<p>We use Google Analytics to measure how you use the website so we can improve it based on user needs. Google Analytics sets cookies that store anonymised information about:</p><ul><li>how you got to the site</li><li>the pages you visit on GOV.UK and government digital services, and how long you spend on each page</li><li>what you click on while you're visiting the site</li></ul><p>We do not allow Google to use or share the data about how you use this site.</p>",
-            CookieType: "usage",
+            title: "Cookies that measure website use",
+            description: "<p>We use Google Analytics to measure how you use the website so we can improve it based on user needs. Google Analytics sets cookies that store anonymised information about:</p><ul><li>how you got to the site</li><li>the pages you visit on GOV.UK and government digital services, and how long you spend on each page</li><li>what you click on while you're visiting the site</li></ul><p>We do not allow Google to use or share the data about how you use this site.</p>",
+            cookie_type: "usage",
+            enabled: false,
+            adjustable: true,
+            cookies: [
+                {
+                    name: "_ga",
+                    path: "/",
+                    domain: ".crowncommercial.gov.uk",
+                },
+                {
+                    name: "_gid",
+                    path: "/",
+                    domain: ".crowncommercial.gov.uk",
+                },
+            ]
+        },
+        {
+            title: "Cookies that help with our communications and marketing",
+            description: "These cookies may be set by third party websites and do things like measure how you view YouTube videos that are on GOV.UK.",
+            cookie_type: "marketing",
             enabled: false,
             adjustable: true,
         },
         {
-            Title: "Cookies that help with our communications and marketing",
-            Description: "These cookies may be set by third party websites and do things like measure how you view YouTube videos that are on GOV.UK.",
-            CookieType: "marketing",
-            enabled: false,
-            adjustable: true,
-        },
-        {
-            Title: "Strictly necessary cookies",
-            Description: "<p>These essential cookies do things like:</p><ul><li>remember the notifications you've seen so we do not show them to you again</li><li>remember your progress through a form (for example a licence application)</li></ul><p>They always need to be on.</p>",
-            CookieType: "essential",
+            title: "Strictly necessary cookies",
+            description: "<p>These essential cookies do things like:</p><ul><li>remember the notifications you've seen so we do not show them to you again</li><li>remember your progress through a form (for example a licence application)</li></ul><p>They always need to be on.</p>",
+            cookie_type: "essential",
             enabled: true,
             adjustable: false,
         }
@@ -226,18 +237,38 @@ var docCookies = {
     }
 
 
+    function deleteDisabledCookies(cookie_type) {
+
+        // get the right child node where cookie_type matches
+        // let childNodeCookieType = ;
+
+        // Loop through all the cookies
+        console.log({initial_cookie_preferences});
+        childNodeCookieType.forEach((cookie, idx) => {
+
+            // @todo add funtion to clean away cookies based on permission groups
+            console.log("haha");
+            // docCookies.removeItem('_ga', '/', '.crowncommercial.gov.uk');
+
+        });
+
+    }
+
+
     function UpdateCookiePreferences() {
 
         // update the cookie references based on user selection
         initial_cookie_preferences.forEach((datarecord, idx) => {
 
             if (datarecord.adjustable) {
-                var cookieElement = document.getElementById(datarecord.CookieType);
+                var cookieElement = document.getElementById(datarecord.cookie_type);
                 if (cookieElement.checked) {
-                    cookie_preferences[datarecord.CookieType] = (cookieElement.value === 'true');
+                    cookie_preferences[datarecord.cookie_type] = (cookieElement.value === 'true');
                 }
                 else {
-                    cookie_preferences[datarecord.CookieType] = false;
+                    cookie_preferences[datarecord.cookie_type] = false;
+                    // send the cookie type
+                    deleteDisabledCookies(datarecord.cookie_type);
                 }
             }
 
@@ -252,9 +283,6 @@ var docCookies = {
             docCookies.setItem('cookie_preferences_set', true, 2.628e+6, '/');
             // createCookie('cookie_preferences_set', 'true', 365, '/');
         }
-
-        // @todo add funtion to clean away cookies based on permission groups
-        // docCookies.removeItem('_ga', '/', '.crowncommercial.gov.uk');
 
         var SettingsUpdatedArea = document.getElementsByClassName("js-live-area");
         SettingsUpdatedArea[0].innerHTML = "<p>Your cookie settings were saved.</p>";
@@ -351,7 +379,7 @@ var docCookies = {
             // If the cookie has already been set, match the key value to the
             // if (cookie_preferences !== null) {
             if (docCookies.getItem('cookie_preferences') !== null) {
-                datarecord.enabled = cookie_preferences[datarecord.CookieType];
+                datarecord.enabled = cookie_preferences[datarecord.cookie_type];
             }
 
             // for each record we call out to a function to create the template
@@ -374,26 +402,26 @@ var docCookies = {
 <fieldset class="govuk-fieldset" aria-describedby="changed-name-hint">
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
       <h3 class="govuk-fieldset__heading">
-        ${datarecord.Title}
+        ${datarecord.title}
       </h3>
     </legend>
-    <div id="${datarecord.CookieType}-hint" class="govuk-hint">
-      ${datarecord.Description}
+    <div id="${datarecord.cookie_type}-hint" class="govuk-hint">
+      ${datarecord.description}
     </div>
     <div class="govuk-radios govuk-radios--inline">
       <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="${datarecord.CookieType}" name="${datarecord.CookieType}" type="radio"
+                <input class="govuk-radios__input" id="${datarecord.cookie_type}" name="${datarecord.cookie_type}" type="radio"
                 ${datarecord.enabled === true ? `checked` : ``}
                 value="true">
-                <label class="govuk-label govuk-radios__label" for="${datarecord.CookieType}">
+                <label class="govuk-label govuk-radios__label" for="${datarecord.cookie_type}">
           On
         </label>
       </div>
       <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="${datarecord.CookieType}-2" name="${datarecord.CookieType}" type="radio"
+        <input class="govuk-radios__input" id="${datarecord.cookie_type}-2" name="${datarecord.cookie_type}" type="radio"
         ${datarecord.enabled === true ? `` : `checked`}
                 value="false">
-                <label class="govuk-label govuk-radios__label" for="${datarecord.CookieType}-2">
+                <label class="govuk-label govuk-radios__label" for="${datarecord.cookie_type}-2">
           Off
         </label>
       </div>
@@ -406,8 +434,8 @@ var docCookies = {
             if (datarecord.adjustable === false) {
 
                 return `
-                <h3 class="">${datarecord.Title}</h3>
-                <div>${datarecord.Description}</div>
+                <h3 class="">${datarecord.title}</h3>
+                <div>${datarecord.description}</div>
                 `;
 
             }
