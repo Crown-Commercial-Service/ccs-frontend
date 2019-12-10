@@ -150,7 +150,7 @@
                                     <div class="govuk-radios govuk-radios--small govuk-radios--conditional" data-module="radios">
 
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot" type="radio" value="england" v-on:click="checkedLot = null">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot" type="radio" value="england" v-on:click="checkedLot = ''">
                                             <label class="govuk-label govuk-radios__label" for="show-all-suppliers-on-framwork-1">
                                                 Show all suppliers on framework
                                             </label>
@@ -196,12 +196,12 @@
                                             </div>
                                         {% endif %}
                                         <div class="govuk-radios__item govuk-radios__item--small" v-if="lotList">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3" v-on:click="displayLotFilter = true">
                                             <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">
                                                 Show suppliers on a specific lot
                                             </label>
                                         </div>
-                                        <div class="govuk-radios__conditional govuk-radios__conditional--small govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-3">
+                                        <div class="govuk-radios__conditional govuk-radios__conditional--small" id="conditional-how-contacted-conditional-3" v-show="displayLotFilter">
 
                                             <div class="govuk-form-group">
                                                 <fieldset class="govuk-fieldset">
@@ -272,7 +272,7 @@
                     {#{{ dump(results) }}#}
 
 
-                    <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} suppliers found</h2>
+                    <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{[ searchResultsNumber ]} suppliers found</h2>
 
                     <div class="ccs-filters-summary">
 
@@ -306,26 +306,29 @@
                             </div>
                         {% endif %}
 
-                        {% if query is defined and query is not empty %}
-                        <div class="ccs-filters-summary__facets" id="search-query-summary">
+
+                        <div class="ccs-filters-summary__facets" id="search-query-summary" v-show="searchQuery" {% if query is defined and query is not empty %}style="display: block;"{% else %}style="display: none;"{% endif %}>
                             <span class="ccs-filters-summary__label">Containing</span>
                             <ul class="ccs-filters-summary__list" id="search-query-list">
                                 <li class="ccs-filters-summary__facet">
-                                    <a href="/suppliers/search?limit={{ limit }}" class="ccs-filters-summary__facet__cancel">{{ query }}</a>
+                                    <a href="/suppliers/search?limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearSearch">
+{#                                        {% if query is defined and query is not empty %}<span>{{ query }}</span>{% endif %}#}
+                                        <span>{[ searchQuery ]}</span>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
-                        {% endif %}
+
                     </div>
 
 
                     <div class="apollo-enclosure ccs-results-notification" v-show="supplierContactPrompt" style="display: none;">
                         <p><strong>Are you running a further competition or conducting an expression of interest?</strong></p>
-                        <a href="#" class="govuk-button ccs-button--tight">View supplier contact details</a>
+                        <a :href="'/agreements/' + checkedFramework + ':11a/lot-suppliers'" class="govuk-button ccs-button--tight">View supplier contact details</a>
                     </div>
 
 
-                    <div v-if="loading">Loading results ...</div>
+                    <div v-if="loading" class="ccs-search-loading">Loading results ...</div>
 
                     <ul class="govuk-list govuk-list--suppliers" v-show="searchResults" style="display: none;">
                         <li v-for="result in searchResults">
@@ -415,8 +418,9 @@
 
 
 
-    <script src="/assets/scripts/libraries/vue.js"></script>
+    <script src="/assets/scripts/libraries/vue.min.js"></script>
     <script>
+        var searchQuery = '{{ query }}';
         var selectedFramework = '{{ selected.framework }}';
         var totalResults = {{ pagination.totalResults }};
 
@@ -443,17 +447,16 @@
             },
             template: `
                 <ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination">
-                    <li class="pagination__item" v-for="page in numberOfPages">
-                        <a :href="'/suppliers/' + page" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
+                    <li class="pagination__item" v-for="page in numberOfPages" v-if="numberOfPages < 6">
+                        <span v-if="page == currentPage"><span class="visuallyhidden">Page </span>{[ page ]}</span>
+                        <a v-else :href="'/suppliers/' + page" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
                     </li>
 
-                    <li class="pagination__item active">
-                        <span class="visuallyhidden">Page </span>1
-                    </li>
+                    <li class="pagination__item"></li>
 
                     <li class="pagination__item">…</li>
 
-                    <li class="pagination__item pagination__item--next">
+                    <li class="pagination__item pagination__item--next" v-if="currentPage != numberOfPages">
                         <a href="/suppliers/2" rel="next">
                             <span>Next</span> <span class="visuallyhidden">page</span>
                             <span class="icon">
@@ -470,11 +473,12 @@
             delimiters: ['{[', ']}'],
             el: '#main-content',
             data: {
-                searchQuery: '',
+                searchQuery: searchQuery,
                 checkedFramework: selectedFramework,
                 checkedLot: '',
                 frameworkList: null,
                 lotList: null,
+                displayLotFilter: false,
                 searchResults: null,
                 searchResultsNumber: totalResults,
                 resultsLimit: 20,
@@ -505,17 +509,24 @@
             methods: {
                 resetFilters: function(event) {
                     event.preventDefault();
+                    this.searchQuery = '';
                     this.checkedFramework = '';
                     this.checkedLot = '';
                     this.currentPage = 1;
+                    this.displayLotFilter = false;
                 },
                 clearFramework: function(event) {
                     event.preventDefault();
                     this.checkedFramework = '';
+                    this.checkedLot = '';
                 },
                 clearLot: function(event) {
                     event.preventDefault();
                     this.checkedLot = '';
+                },
+                clearSearch: function(event) {
+                    event.preventDefault();
+                    this.searchQuery = '';
                 },
                 updatePageValue: function(newPageValue) {
                     console.log(newPageValue);
