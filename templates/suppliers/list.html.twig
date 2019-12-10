@@ -392,7 +392,7 @@
                     <div>{[ searchResultsNumber ]}</div>
                     <div>{[ resultsLimit ]}</div>
                     #}
-                    <results-pagination v-bind:total-results="searchResultsNumber" v-bind:results-per-page="resultsLimit" v-bind:current-page="currentPage" v-on:update-page="updatePageValue($event)" />
+                    <results-pagination v-bind:total-results="searchResultsNumber" v-bind:results-per-page="resultsLimit" v-bind:current-page="currentPage" v-bind:result-pages-link-number="6" v-on:update-page="updatePageValue($event)" />
 
                     {% if query is defined %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'suppliers_search', 'options': {'q': query}} %}
@@ -432,17 +432,48 @@
             props: {
                 currentPage: Number,
                 totalResults: Number,
-                resultsPerPage: Number
+                resultsPerPage: Number,
+                // How many result links to display before we shorten the list
+                resultPagesLinkNumber: Number
             },
             computed: {
                 numberOfPages: function() {
                     return Math.ceil(this.totalResults/this.resultsPerPage);
+                },
+                paginationLinks: function() {
+                    var linksStartPage = 1;
+                    var linksEndPage = 1;
+
+                    if ((this.currentPage - 2) < 1 ) {
+                        linksStartPage = 1;
+                    } else {
+                        linksStartPage = this.currentPage - 2;
+                    }
+
+                    this.currentPage;
+                    linksEndPage   = linkStartPage + 4;
+
+                    if (this.totalResults < this.resultPagesLinkNumber) {
+                        linksEndPage = this.totalResults;
+                    }
+
+                    // start page = 1
+                    // current page = 1
+
+                    // start from current page
+                    // if (current page + linkNumber) > totalPages
+                    //    then we need to subtract the difference from the starting page
+
+                    //
                 }
             },
             methods: {
                 updatePageNumber: function(event, newPage) {
                     event.preventDefault();
                     this.$emit('update-page', newPage);
+                },
+                range : function (start, end) {
+                    return Array(end - start + 1).fill().map((_, idx) => start + idx)
                 }
             },
             template: `
@@ -451,6 +482,8 @@
                         <span v-if="page == currentPage"><span class="visuallyhidden">Page </span>{[ page ]}</span>
                         <a v-else :href="'/suppliers/' + page" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
                     </li>
+
+<span v-for="i in range(4, 10)">{[ i ]} </span>
 
                     <li class="pagination__item"></li>
 
