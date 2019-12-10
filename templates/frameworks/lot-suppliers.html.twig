@@ -11,7 +11,6 @@
 
 {% block body %}
 
-
    <!-- required wrapper 1 -->
    <div class="govuk-width-container">
 
@@ -125,10 +124,18 @@
 
                   <div class="apollo-enclosure">
 
-                      <h2 class="aside__heading">Framework</h2>
-                      <p class="govuk-body govuk-!-font-size-16">
-                          <a href="{{ path('frameworks_show', {'rmNumber': metadata.framework_rm_number }) }}">{{ metadata.framework_title }} ({{ metadata.framework_rm_number }})</a>
-                      </p>
+                      {% if metadata.lot_description %}
+                          <h2 class="aside__heading">Lot description</h2>
+
+                          <p class="govuk-body govuk-!-font-size-16">
+                          {{ metadata.lot_description }}
+                          </p>
+                      {% endif %}
+
+                     <h2 class="aside__heading">Framework</h2>
+                     <p class="govuk-body govuk-!-font-size-16">
+                        <a href="{{ path('frameworks_show', {'rmNumber': metadata.framework_rm_number }) }}">{{ metadata.framework_title }} ({{ metadata.framework_rm_number }})</a>
+                     </p>
 
                       <h2 class="aside__heading">Lot description</h2>
 

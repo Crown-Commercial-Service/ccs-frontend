@@ -87,6 +87,8 @@ class SuppliersController extends AbstractController
         $facets = $results->getMetadata()->offsetGet('facets');
 
         $data = [
+          'query'      => '',
+          'limit'      => $limit,
           'pagination' => $results->getPagination(),
           'results'    => $results,
           'facets'     => $facets,
@@ -150,19 +152,17 @@ class SuppliersController extends AbstractController
         }
 
         $facets = $results->getMetadata()->offsetGet('facets');
-        
+
         $lotNumber = $this->retrieveLotNumberFromFacetsUsingLotId($lot, $facets);
 
         $data = [
-            'query'         => $query,
+            'query'         => (!empty($query) ? $query : ''),
             'pagination'    => $results->getPagination(),
             'results'       => $results,
             'facets'        => $facets,
             'limit'         => $limit,
             'selected'=> ['framework' => $framework, 'lot' => $lot, 'lot_number' => $lotNumber]
         ];
-
-        
         return $this->render('suppliers/list.html.twig', $data);
     }
 
@@ -209,7 +209,7 @@ class SuppliersController extends AbstractController
         if (empty($lotId) || empty($facets) || !isset($facets['lots'])) {
             return null;
         }
-        
+
         foreach ($facets['lots'] as $facetLot) {
             if ($facetLot['id'] == $lotId) {
                 return $facetLot['lot_number'];
