@@ -104,7 +104,7 @@
 
 
                         <div class="govuk-accordion ccs-accordion--clean" data-module="accordion" id="accordion-with-summary-sections">
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
                                         <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
@@ -137,7 +137,7 @@
 
 
 
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
 
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
@@ -229,7 +229,7 @@
 
 
 
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
                                         <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-3">
@@ -272,7 +272,10 @@
                     {#{{ dump(results) }}#}
 
 
-                    <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{[ searchResultsNumber ]} suppliers found</h2>
+                    <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">
+                        <span v-show="javascriptVersion" style="display: none;">{[ searchResultsNumber ]} suppliers found</span>
+                        <span v-if="!javascriptVersion">{{ pagination.totalResults }} suppliers found</span>
+                    </h2>
 
                     <div class="ccs-filters-summary">
 
@@ -328,7 +331,9 @@
                     </div>
 
 
-                    <div v-if="loading" class="ccs-search-loading">Loading results ...</div>
+                    <div v-show="javascriptVersion" style="display: none;">
+                        <div v-if="loading" class="ccs-search-loading">Loading results ...</div>
+                    </div>
 
                     <ul class="govuk-list govuk-list--suppliers" v-show="searchResults" style="display: none;">
                         <li v-for="result in searchResults">
@@ -418,15 +423,23 @@
 
 
 
-    <script src="/assets/scripts/libraries/vue.min.js"></script>
+    <script src="/assets/scripts/libraries/vue.js"></script>
     <script>
-        var searchQuery = '{{ query }}';
-        var selectedFramework = '{{ selected.framework }}';
-        var totalResults = {{ pagination.totalResults }};
+        /**
+         * Not the cleanest way to do this, but perhaps the simplest
+         *
+         * We use these variables to pass values from PHP to the Vue JS
+         * JavaScript application
+         */
+        var apiBaseUrl          = '{{ search_api_base_url }}';
+        var searchQuery         = '{{ query }}';
+        var selectedFramework   = '{{ selected.framework }}';
+        var selectedLot         = '{{ selected.lot }}';
+        var totalResults        = {{ pagination.totalResults }};
 
 
 
-        // Define a new component called button-counter
+        // Define a new component for the results pagination
         Vue.component('results-pagination', {
             delimiters: ['{[', ']}'],
             props: {
@@ -440,31 +453,65 @@
                 numberOfPages: function() {
                     return Math.ceil(this.totalResults/this.resultsPerPage);
                 },
-                paginationLinks: function() {
-                    var linksStartPage = 1;
-                    var linksEndPage = 1;
+                nextPage: function() {
+                    if(this.currentPage == this.numberOfPages) {
+                        return this.currentPage;
+                    }
 
-                    if ((this.currentPage - 2) < 1 ) {
-                        linksStartPage = 1;
+                    return this.currentPage + 1;
+                },
+                previousPage: function() {
+                    if(this.currentPage == 1) {
+                        return this.currentPage;
+                    }
+
+                    return this.currentPage - 1;
+                },
+                paginationStartNumber: function() {
+                    // start page defaults to 2 (second page) because the
+                    // first page link is always output by default
+                    var linksStartPage = 1;
+
+                    // if the start page is at the beginning of the pagination
+                    // then account for this
+                    if ((this.currentPage - 2) < 2 ) {
+                        linksStartPage = 2;
                     } else {
+                        // otherwise the start page is equal to the current
+                        // page minus 2, this means that the pagination should
+                        // have a couple of links either side of the current
+                        // page, e.g.   2 3 [4] 5 6
                         linksStartPage = this.currentPage - 2;
                     }
 
-                    this.currentPage;
-                    linksEndPage   = linkStartPage + 4;
+                    // if the start page is very close to the last page, then
+                    // account for this
+                    if((this.currentPage + this.resultPagesLinkNumber) > this.numberOfPages) {
+                        var difference = (linksStartPage + this.resultPagesLinkNumber) - (this.numberOfPages)
+                        linksStartPage = linksStartPage - difference;
+                    }
 
-                    if (this.totalResults < this.resultPagesLinkNumber) {
+                    if(linksStartPage < 0) {
+                        linksStartPage = 1;
+                    }
+
+                    return linksStartPage;
+                },
+                paginationEndNumber: function() {
+                    var linksEndPage   = this.paginationStartNumber + 4;
+
+                    // if there aren't more pages than the number we
+                    // want to show by minimum, then the end page is just equal
+                    // to the final result page
+                    if (this.numberOfPages < this.resultPagesLinkNumber) {
                         linksEndPage = this.totalResults;
                     }
 
-                    // start page = 1
-                    // current page = 1
+                    if (linksEndPage > this.numberOfPages) {
+                        linksEndPage = this.numberOfPages;
+                    }
 
-                    // start from current page
-                    // if (current page + linkNumber) > totalPages
-                    //    then we need to subtract the difference from the starting page
-
-                    //
+                    return linksEndPage;
                 }
             },
             methods: {
@@ -478,19 +525,34 @@
             },
             template: `
                 <ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination">
-                    <li class="pagination__item" v-for="page in numberOfPages" v-if="numberOfPages < 6">
+                    <li class="pagination__item pagination__item--previous" v-if="currentPage != 1">
+                        <a :href="'/suppliers/' + previousPage" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
+                            <span class="icon">
+                                <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M6.7 0l1.4 1.4-4.3 4.3h13v2H3.9l4.2 4-1.4 1.4L0 6.7z" fill="#007194" fill-rule="evenodd"></path></svg>
+                            </span>
+                            <span>Previous</span> <span class="visuallyhidden">page</span>
+                        </a>
+                    </li>
+
+                    <li class="pagination__item" v-if="numberOfPages > 6">
+                        <span v-if="currentPage == 1"><span class="visuallyhidden">Page </span>1</span>
+                        <a v-else href="/suppliers/1" v-on:click="updatePageNumber($event, 1)"><span class="visuallyhidden">Page </span>1</a>
+                    </li>
+
+                    <li class="pagination__item" v-for="page in range(this.paginationStartNumber, this.paginationEndNumber)">
                         <span v-if="page == currentPage"><span class="visuallyhidden">Page </span>{[ page ]}</span>
                         <a v-else :href="'/suppliers/' + page" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
                     </li>
 
-<span v-for="i in range(4, 10)">{[ i ]} </span>
-
-                    <li class="pagination__item"></li>
-
                     <li class="pagination__item">…</li>
 
+                    <li class="pagination__item" v-if="numberOfPages > 6">
+                        <span v-if="currentPage == numberOfPages"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</span>
+                        <a v-else :href="'/suppliers/' + numberOfPages" v-on:click="updatePageNumber($event, numberOfPages)"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</a>
+                    </li>
+
                     <li class="pagination__item pagination__item--next" v-if="currentPage != numberOfPages">
-                        <a href="/suppliers/2" rel="next">
+                        <a :href="'/suppliers/' + this.nextPage" rel="next" v-on:click="updatePageNumber($event, nextPage)">
                             <span>Next</span> <span class="visuallyhidden">page</span>
                             <span class="icon">
                                 <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"></path></svg>
@@ -503,12 +565,17 @@
 
 
         new Vue({
+            // we have to change the delimeted used as the default is reserved by Twig
             delimiters: ['{[', ']}'],
             el: '#main-content',
             data: {
+                // an almost arbitrary variable, we use this to hide the non-js
+                // version of the search components if the Vue search is instantiated
+                javascriptVersion: true,
+                searchApiBaseUrl: apiBaseUrl,
                 searchQuery: searchQuery,
                 checkedFramework: selectedFramework,
-                checkedLot: '',
+                checkedLot: selectedLot,
                 frameworkList: null,
                 lotList: null,
                 displayLotFilter: false,
@@ -516,14 +583,43 @@
                 searchResultsNumber: totalResults,
                 resultsLimit: 20,
                 currentPage: 1,
-                loading: false
+                // used to display/hide the loading text as appropriate (if the
+                // search results are loading, this property is set to true)
+                loading: false,
+                popstateLoad: false
             },
             created: function() {
+                // unfortunately we have to update the results when we instantiate
+                // the Vue app so it hooks in all the correct event handlers etc.
                 this.updateResults();
+
+                // setup popstate event listener for History API
+                this.setupHistoryApi();
             },
             watch: {
                 searchRequestUrl: function() {
                     this.updateResults();
+
+                    // if the searchRequestUrl hasn't been updated by a popstate
+                    // event (back/forward button) then we push a state item to the
+                    // JS History API
+                    if(this.popstateLoad === false) {
+                        history.pushState({
+                            searchQuery: this.searchQuery,
+                            checkedFramework: this.checkedFramework,
+                            checkedLot: this.checkedLot,
+                            resultsLimit: this.resultsLimit
+                        }, 'Search suppliers - CCS', this.frontendSearchUrl);
+                    }
+
+                    // reset the popstateLoad property to false
+                    this.popstateLoad = false;
+                },
+                checkedFramework: function() {
+                    // when a framework is selected, then we must reset any
+                    // previous lot filters, as we can't guarantee they are applicable
+                    // to the newly filtered framework
+                    this.checkedLot = '';
                 }
             },
             computed: {
@@ -533,15 +629,45 @@
                 supplierContactPrompt: function() {
                     return (this.checkedFramework && this.checkedLot);
                 },
+                // the URL we use to request items from the API
                 searchRequestUrl: function() {
-                    return 'http://ccs-agreements.cabinetoffice.localhost/search-api/suppliers?keyword=' + this.searchQuery + '&framework=' + this.checkedFramework + '&lot=' + this.checkedLot + '&limit=' + this.resultsLimit + '&page=' + this.currentPage;
+                    console.log("update search URL");
+                    return this.searchApiBaseUrl + 'suppliers?keyword=' + this.searchQuery + '&framework=' + this.checkedFramework + '&lot=' + this.checkedLot + '&limit=' + this.resultsLimit + '&page=' + this.currentPage;
 
                     // page=
+                },
+                // the URL that we should update using the history API
+                frontendSearchUrl: function() {
+                    console.log("Update frontend search URL");
+                    var searchUrl = '/suppliers/search/' + this.currentPage;
+
+                    searchUrl += '?search=true';
+
+                    if(this.searchQuery) {
+                        searchUrl += '&q=' + this.searchQuery;
+                    }
+
+                    if(this.checkedFramework) {
+                        searchUrl += '&framework=' + this.checkedFramework;
+                    }
+
+                    if(this.checkedLot) {
+                        searchUrl += '&lot-filter-nested=' + this.checkedLot;
+                    }
+
+                    if(this.resultsLimit) {
+                        searchUrl += '&limit=' + this.resultsLimit;
+                    }
+
+                    return searchUrl;
                 }
             },
             methods: {
                 resetFilters: function(event) {
-                    event.preventDefault();
+                    if(event) {
+                        event.preventDefault();
+                    }
+
                     this.searchQuery = '';
                     this.checkedFramework = '';
                     this.checkedLot = '';
@@ -551,6 +677,8 @@
                 clearFramework: function(event) {
                     event.preventDefault();
                     this.checkedFramework = '';
+                    // we also reset the lot filter, as it is dependent on a
+                    // framework filter being specified
                     this.checkedLot = '';
                 },
                 clearLot: function(event) {
@@ -561,8 +689,27 @@
                     event.preventDefault();
                     this.searchQuery = '';
                 },
+                setupHistoryApi: function() {
+                    var self = this;
+
+                    window.onpopstate = function(event) {
+                        // set the popstate variable to true so that we can
+                        // tell in other parts of the code that the state change
+                        // is being caused by the back/forward button
+                        self.popstateLoad = true;
+
+                        if(event.state == null) {
+                            self.resetFilters(null);
+                            return;
+                        }
+
+                        self.searchQuery      = event.state.searchQuery;
+                        self.checkedFramework = event.state.checkedFramework;
+                        self.checkedLot       = event.state.checkedLot;
+                        self.resultsLimit     = event.state.resultsLimit;
+                    }
+                },
                 updatePageValue: function(newPageValue) {
-                    console.log(newPageValue);
                     this.currentPage = newPageValue;
                 },
                 updateResults: function() {
