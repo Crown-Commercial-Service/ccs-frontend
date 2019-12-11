@@ -87,6 +87,7 @@ class SuppliersController extends AbstractController
         $facets = $results->getMetadata()->offsetGet('facets');
 
         $data = [
+          'page_number'         => $page,
           'search_api_base_url' => getenv('SEARCH_API_BASE_URL'),
           'query'      => '',
           'limit'      => $limit,
@@ -155,6 +156,7 @@ class SuppliersController extends AbstractController
         $facets = $results->getMetadata()->offsetGet('facets');
 
         $data = [
+            'page_number'         => $page,
             'search_api_base_url' => getenv('SEARCH_API_BASE_URL'),
             'query'               => (!empty($query) ? $query : ''),
             'pagination'          => $results->getPagination(),
