@@ -54,6 +54,19 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     echo "> > Moving httpd.conf..."
     sudo mv -f "$SCRIPTDIR/files/httpd.conf" /etc/httpd/conf/httpd.conf
 
+    echo "> > chown'ing php config file..."
+    sudo chown root:root \
+        "$SCRIPTDIR/$DEPLOYMENT_TYPE/files/99-custom.ini"
+        
+    echo "> > chmod'ing php config file..."
+    sudo chmod 644 \
+        "$SCRIPTDIR/$DEPLOYMENT_TYPE/files/99-custom.ini"
+
+    echo "> > Moving php config file..."
+    sudo mv -f \
+        "$SCRIPTDIR/$DEPLOYMENT_TYPE/files/99-custom.ini" \
+        /etc/php.d/
+        
     echo "> > chown'ing logrotate config files..."
     sudo chown root:root \
         "$SCRIPTDIR/files/applogs"
