@@ -25,7 +25,7 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
         "$SCRIPTDIR/files/awscli.conf" \
         "$SCRIPTDIR/files/awslogs.conf"
 
-    echo "> > Movinging awslogs config files..."
+    echo "> > Moving awslogs config files..."
     sudo mv -f \
         "$SCRIPTDIR/files/awscli.conf" \
         "$SCRIPTDIR/files/awslogs.conf" \
@@ -56,15 +56,15 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
 
     echo "> > chown'ing php config file..."
     sudo chown root:root \
-        "$SCRIPTDIR/$DEPLOYMENT_TYPE/files/99-custom.ini"
+        "$SCRIPTDIR/files/99-custom.ini"
         
     echo "> > chmod'ing php config file..."
     sudo chmod 644 \
-        "$SCRIPTDIR/$DEPLOYMENT_TYPE/files/99-custom.ini"
+        "$SCRIPTDIR/files/99-custom.ini"
 
     echo "> > Moving php config file..."
     sudo mv -f \
-        "$SCRIPTDIR/$DEPLOYMENT_TYPE/files/99-custom.ini" \
+        "$SCRIPTDIR/files/99-custom.ini" \
         /etc/php.d/
         
     echo "> > chown'ing logrotate config files..."
