@@ -51,6 +51,27 @@
 
 
 
+/**
+ * modify the padding so that the focus state reaches the edges of the box
+ * (the focus state is set on `.govuk-accordion__section-header`)
+ */
+.ccs-form-group--enclosure--tight {
+
+    padding-left: 0;
+    padding-right: 0;
+
+    .govuk-accordion__section-header,
+    .govuk-accordion__section-content {
+
+        padding-left: govuk-px-to-rem(20);
+        padding-right: govuk-px-to-rem(20);
+
+    }
+
+}
+
+
+
 .ccs-results-notification {
     margin-bottom: govuk-px-to-rem(20);
 }

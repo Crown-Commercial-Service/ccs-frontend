@@ -87,12 +87,14 @@ class SuppliersController extends AbstractController
         $facets = $results->getMetadata()->offsetGet('facets');
 
         $data = [
+          'page_number'         => $page,
+          'search_api_base_url' => getenv('SEARCH_API_BASE_URL'),
           'query'      => '',
           'limit'      => $limit,
           'pagination' => $results->getPagination(),
           'results'    => $results,
           'facets'     => $facets,
-          'selected'   => ['framework' => $framework]
+          'selected'   => ['framework' => $framework, 'lot' => '']
         ];
 
         return $this->render('suppliers/list.html.twig', $data);
@@ -156,6 +158,8 @@ class SuppliersController extends AbstractController
         $lotNumber = $this->retrieveLotNumberFromFacetsUsingLotId($lot, $facets);
 
         $data = [
+            'page_number'         => $page,
+            'search_api_base_url' => getenv('SEARCH_API_BASE_URL'),
             'query'         => (!empty($query) ? $query : ''),
             'pagination'    => $results->getPagination(),
             'results'       => $results,
