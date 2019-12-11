@@ -210,7 +210,7 @@
                                                         <div class="govuk-radios__item govuk-radios__item--small" v-for="lot in lotList">
                                                             <input class="govuk-radios__input govuk-radios__input--small" :id="'lot-' + lot.id" name="lot-filter-nested" type="radio" :value="lot" v-model="checkedLot" :key="lot.id">
                                                             <label class="govuk-label govuk-radios__label" :for="'lot-' + lot.id">
-                                                                {[ lot.title ]}
+                                                                {[ lot.lot_number ]}: {[ lot.title ]}
                                                             </label>
                                                         </div>
                                                     </div>
