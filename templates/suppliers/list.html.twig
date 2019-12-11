@@ -112,7 +112,7 @@
                                     <div class="govuk-radios govuk-radios--small ccs-radios--scrollable" v-if="!frameworkList">
                                         {% for framework in facets.frameworks %}
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-{{ framework.rm_number }}" name="framework" type="radio" value="{{ framework.rm_number }}"{% if selected.framework == framework.rm_number %} checked {% endif %}>
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-{{ framework.rm_number }}" name="framework" type="radio" value="{{ framework.rm_number }}"{% if selected.framework.rm_number is defined and selected.framework.rm_number == framework.rm_number %} checked {% endif %}>
                                             <label class="govuk-label govuk-radios__label" for="framework-{{ framework.rm_number }}">
                                                 {{ framework.title }} ({{ framework.rm_number }})
                                             </label>
@@ -176,12 +176,12 @@
                                                             {% for lot in facets.lots %}
                                                                 <div class="govuk-radios__item govuk-radios__item--small">
                                                                     {% if selected.lot is defined and selected.lot is not empty %}
-                                                                        <input class="govuk-radios__input govuk-radios__input--small" id="lot-{{ lot.id }}" name="lot-filter-nested" type="radio" value="{{ lot.id }}" v-model="checkedLot" :key="Lot-1" {% if selected.lot == lot.id %} checked {% endif %}>
+                                                                        <input class="govuk-radios__input govuk-radios__input--small" id="lot-{{ lot.id }}" name="lot-filter-nested" type="radio" value="{{ lot.id }}" v-model="checkedLot" :key="Lot-1" {% if selected.lot.id == lot.id %} checked {% endif %}>
                                                                     {% else %}
                                                                         <input class="govuk-radios__input govuk-radios__input--small" id="lot-{{ lot.id }}" name="lot-filter-nested" type="radio" value="{{ lot.id }}" v-model="checkedLot" :key="Lot-1">
                                                                     {% endif %}
                                                                     <label class="govuk-label govuk-radios__label" for="lot-{{ lot.id }}">
-                                                                        {{ lot.title }}
+                                                                        Lot {{ lot.lot_number }}: {{ lot.title }}
                                                                     </label>
                                                                 </div>
                                                             {% endfor %}
@@ -282,13 +282,13 @@
                                 <li class="ccs-filters-summary__facet" v-if="checkedFramework">
                                     <a href="/suppliers/search?q={{ query }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearFramework">
                                         <span v-show="checkedFramework" style="display: none;">{[ checkedFramework.title ]} ({[ checkedFramework.rm_number ]})</span>
-                                        <span v-show="!checkedFramework">{{ selected.framework }}</span>
+                                        <span v-show="!checkedFramework">{{ selected.framework.title }} ({{ selected.framework.rm_number }})</span>
                                     </a>
                                 </li>
 
                                 {% if selected.lot is defined and selected.lot is not empty%}
                                 <li class="ccs-filters-summary__facet" v-if="checkedLot">
-                                    <a href="/suppliers/search?q={{ query }}&framework={{ selected.framework }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearLot">Lot {{ selected.lot }}</a>
+                                    <a href="/suppliers/search?q={{ query }}&framework={% if selected.framework.rm_number is defined %}{{ selected.framework.rm_number }}{% endif %}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearLot">Lot {{ selected.lot.lot_number }}: {{ selected.lot.title }}</a>
                                 </li>
                                 {% endif %}
                             </ul>
@@ -304,7 +304,7 @@
                                     </li>
 
                                     <li class="ccs-filters-summary__facet" v-if="checkedLot">
-                                        <a href="/suppliers/search?q={{ query }}&framework={{ selected.framework }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearLot">Lot {[ checkedLot.lot_number ]}: {[ checkedLot.title ]}</a>
+                                        <a href="/suppliers/search?q={{ query }}&framework={% if selected.framework.rm_number is defined %}{{ selected.framework.rm_number }}{% endif %}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearLot">Lot {[ checkedLot.lot_number ]}: {[ checkedLot.title ]}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -315,7 +315,7 @@
                             <span class="ccs-filters-summary__label">Containing</span>
                             <ul class="ccs-filters-summary__list" id="search-query-list">
                                 <li class="ccs-filters-summary__facet">
-                                    <a href="/suppliers/search?framework={{ selected.framework }}&lot-filter-nested={{ selected.lot }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearSearch">
+                                    <a href="/suppliers/search?framework={% if selected.framework.rm_number is defined %}{{ selected.framework.rm_number }}{% endif %}&lot-filter-nested={% if selected.lot.id is defined %}{{ selected.lot.id }}{% endif %}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearSearch">
 {#                                        {% if query is defined and query is not empty %}<span>{{ query }}</span>{% endif %}#}
                                         <span v-show="searchQuery" style="display: none;">{[ searchQuery ]}</span>
                                         <span v-show="!searchQuery">{{ query }}</span>
@@ -436,12 +436,28 @@
          */
         var apiBaseUrl          = '{{ search_api_base_url }}';
         var searchQuery         = '{{ query }}';
+
+        {% if selected.framework.rm_number is defined %}
         var selectedFramework   = {
             doc_count: 0,
-            rm_number: '{{ selected.framework }}',
-            title: ''
+            rm_number: '{{ selected.framework.rm_number }}',
+            title: '{{ selected.framework.title }}'
         };
-        var selectedLot         = '{{ selected.lot }}';
+        {% else %}
+        var selectedFramework = '';
+        {% endif %}
+
+        {% if selected.lot.id is defined %}
+        var selectedLot         = {
+            title: '{{ selected.lot.title }}',
+            id: {{ selected.lot.id }},
+            description: '{{ selected.lot.description }}',
+            lot_number: {{ selected.lot.lot_number }}
+        };
+        {% else %}
+        var selectedLot = '';
+        {% endif %}
+
         var totalResults        = {{ pagination.totalResults }};
         var pageNumber          = {% if page_number is not empty %}{{ page_number }}{% else %}1{% endif %};
 
@@ -541,7 +557,7 @@
             },
             template: `
                 <ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination">
-                    <li class="pagination__item pagination__item--previous" v-if="currentPage != 1">
+                    <li class="pagination__item pagination__item--previous" v-if="currentPage != 1 && numberOfPage != 1">
                         <a :href="'/suppliers/' + previousPage" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
                             <span class="icon">
                                 <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M6.7 0l1.4 1.4-4.3 4.3h13v2H3.9l4.2 4-1.4 1.4L0 6.7z" fill="#007194" fill-rule="evenodd"></path></svg>
@@ -754,7 +770,8 @@
                             // update the results property
                             var tempResults = jsonResponse.results;
                             for(var i = 0; i < tempResults.length; i++) {
-                                tempResults[i].url = '/suppliers/' + tempResults[i].id + '/aaaaa';
+                                // @TODO: we need to pull through the encoded title for each supplier result
+                                tempResults[i].url = '/suppliers/' + tempResults[i].id + '/' + tempResults[i].encoded_name;
                             }
 
                             self.searchResults = tempResults;
