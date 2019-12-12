@@ -160,9 +160,9 @@
                                         {% if facets.lots is defined %}
                                             <div class="govuk-radios__item govuk-radios__item--small" v-if="!lotList">
                                                 {% if selected.lot is defined and selected.lot is not empty %}
-                                                    <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3" checked>
+                                                    <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3" v-on:click="checkedLot = ''" checked>
                                                 {% else %}
-                                                    <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3">
+                                                    <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3" v-on:click="checkedLot = ''">
                                                 {% endif %}
                                                 <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">
                                                     Show suppliers on a specific lot
@@ -197,7 +197,7 @@
                                             </div>
                                         {% endif %}
                                         <div class="govuk-radios__item govuk-radios__item--small" v-show="lotList" style="display: none;">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-lot-list" v-on:click="displayLotFilter = true">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-lot-list" v-on:click="displayLotFilter = true; checkedLot = ''">
                                             <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">
                                                 Show suppliers on a specific lot
                                             </label>
