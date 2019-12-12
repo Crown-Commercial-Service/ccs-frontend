@@ -443,7 +443,7 @@ class FrameworksController extends AbstractController
         // Iterate through suppliers and store necessary information into CSV array.
 
         try {
-            $results = $this->api->list(1,['limit' => 100]);
+            $results = $this->api->list(1,['limit' => 10000]);
 
             $i = 1;
             foreach ($results as $item) {
