@@ -147,7 +147,8 @@ class SuppliersController extends AbstractController
             $results = $this->searchApi->list($page, [
                 'keyword'   => $query,
                 'limit'     => $limit,
-                'framework' => $framework
+                'framework' => $framework,
+                'lot'       => $lot
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
