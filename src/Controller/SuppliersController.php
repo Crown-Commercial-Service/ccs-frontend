@@ -147,7 +147,8 @@ class SuppliersController extends AbstractController
             $results = $this->searchApi->list($page, [
                 'keyword'   => $query,
                 'limit'     => $limit,
-                'framework' => $framework
+                'framework' => $framework,
+                'lot'       => $lot
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
@@ -155,17 +156,18 @@ class SuppliersController extends AbstractController
 
         $facets = $results->getMetadata()->offsetGet('facets');
 
-        $lotNumber = $this->retrieveLotNumberFromFacetsUsingLotId($lot, $facets);
+        $lotObject = $this->retrieveLotFromFacetsUsingLotId($lot, $facets);
+        $frameworkObject = $this->retrieveFrameworkFromFacetsUsingLotId($framework, $facets);
 
         $data = [
             'page_number'         => $page,
             'search_api_base_url' => getenv('SEARCH_API_BASE_URL'),
-            'query'         => (!empty($query) ? $query : ''),
-            'pagination'    => $results->getPagination(),
-            'results'       => $results,
-            'facets'        => $facets,
-            'limit'         => $limit,
-            'selected'=> ['framework' => $framework, 'lot' => $lot, 'lot_number' => $lotNumber]
+            'query'               => (!empty($query) ? $query : ''),
+            'pagination'          => $results->getPagination(),
+            'results'             => $results,
+            'facets'              => $facets,
+            'limit'               => $limit,
+            'selected'=> ['framework' => $frameworkObject, 'lot' => $lotObject]
         ];
         return $this->render('suppliers/list.html.twig', $data);
     }
@@ -201,22 +203,46 @@ class SuppliersController extends AbstractController
         return $this->render('suppliers/show.html.twig', $data);
     }
 
+
     /**
-     * Attempt to retrieve the lot number for a lot from the facet data
+     * Attempt to retrieve the lot object for a lot from the facet data
      * searching by lot ID
      *
      * @param $lotId
      * @param $facets
      * @return |null
      */
-    protected function retrieveLotNumberFromFacetsUsingLotId($lotId, $facets) {
+    protected function retrieveFrameworkFromFacetsUsingLotId($frameworkRmNumber, $facets) {
+        if (empty($frameworkRmNumber) || empty($facets) || !isset($facets['frameworks'])) {
+            return null;
+        }
+
+        foreach ($facets['frameworks'] as $facetFramework) {
+            if ($facetFramework['rm_number'] == $frameworkRmNumber) {
+                return $facetFramework;
+            }
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Attempt to retrieve the lot object for a lot from the facet data
+     * searching by lot ID
+     *
+     * @param $lotId
+     * @param $facets
+     * @return |null
+     */
+    protected function retrieveLotFromFacetsUsingLotId($lotId, $facets) {
         if (empty($lotId) || empty($facets) || !isset($facets['lots'])) {
             return null;
         }
 
         foreach ($facets['lots'] as $facetLot) {
             if ($facetLot['id'] == $lotId) {
-                return $facetLot['lot_number'];
+                return $facetLot;
             }
         }
 
