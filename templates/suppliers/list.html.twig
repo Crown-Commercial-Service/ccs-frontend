@@ -561,7 +561,7 @@
                     this.$emit('update-page', newPage);
                 },
                 range : function (start, end) {
-                    return Array(end - start + 1).fill().map((_, idx) => start + idx)
+                    return Array(end - start + 1).fill().map((_, idx) => start + idx);
                 }
             },
             template: `
@@ -582,7 +582,7 @@
 
                     <li class="pagination__item" v-if="paginationStartNumber > 2">…</li>
 
-                    <li class="pagination__item" v-for="page in range(this.paginationStartNumber, this.paginationEndNumber)" v-if="numberOfPages > 1">
+                    <li class="pagination__item" v-for="page in range(paginationStartNumber, paginationEndNumber)" v-if="numberOfPages > 1">
                         <span v-if="page == currentPage"><span class="visuallyhidden">Page </span>{[ page ]}</span>
                         <a v-else :href="'/suppliers/search/' + page + queryUrl" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
                     </li>
