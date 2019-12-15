@@ -71,7 +71,7 @@
             </div>
 
 
-            <div class="govuk-grid-row">
+            <div class="govuk-grid-row" id="search-app">
                 <div class="govuk-grid-column-one-third">
 
                     <form action="{{ path('suppliers_search') }}" v-on:submit.prevent="updateResults">
@@ -112,7 +112,7 @@
                                     <div class="govuk-radios govuk-radios--small ccs-radios--scrollable" v-if="!frameworkList">
                                         {% for framework in facets.frameworks %}
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-{{ framework.rm_number }}" name="framework" type="radio" value="{{ framework.rm_number }}"{% if selected.framework.rm_number is defined and selected.framework.rm_number == framework.rm_number %} checked {% endif %}>
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-{{ framework.rm_number }}" name="framework" type="radio" value="{{ framework.rm_number }}" {% if selected.rm_number == framework.rm_number %} checked {% endif %}>
                                             <label class="govuk-label govuk-radios__label" for="framework-{{ framework.rm_number }}">
                                                 {{ framework.title }} ({{ framework.rm_number }})
                                             </label>
@@ -151,7 +151,7 @@
                                     <div class="govuk-radios govuk-radios--small govuk-radios--conditional" data-module="radios">
 
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot" type="radio" value="england" v-on:click="checkedLot = ''">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot" type="radio" value="" v-on:click="checkedLot = ''">
                                             <label class="govuk-label govuk-radios__label" for="show-all-suppliers-on-framwork-1">
                                                 Show all suppliers on framework
                                             </label>
@@ -241,15 +241,15 @@
                                 <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
                                     <div class="govuk-radios govuk-radios--small">
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-1" name="limit" type="radio" value="10" {{ pagination.resultsPerPage == 10 ? 'checked' : '' }} v-model="resultsLimit">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-1" name="limit" type="radio" :value="10" {{ pagination.resultsPerPage == 10 ? 'checked' : '' }} v-model="resultsLimit">
                                             <label class="govuk-label govuk-radios__label" for="results-per-page-1">10</label>
                                         </div>
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-2" name="limit" type="radio" value="20" {{ pagination.resultsPerPage == 20 ? 'checked' : '' }} v-model="resultsLimit">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-2" name="limit" type="radio" :value="20" {{ pagination.resultsPerPage == 20 ? 'checked' : '' }} v-model="resultsLimit">
                                             <label class="govuk-label govuk-radios__label" for="results-per-page-2">20</label>
                                         </div>
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-3" name="limit" type="radio" value="50" {{ pagination.resultsPerPage == 50 ? 'checked' : '' }} v-model="resultsLimit">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-3" name="limit" type="radio" :value="50" {{ pagination.resultsPerPage == 50 ? 'checked' : '' }} v-model="resultsLimit">
                                             <label class="govuk-label govuk-radios__label" for="results-per-page-3">50</label>
                                         </div>
                                     </div>
@@ -309,7 +309,7 @@
                                     </li>
 
                                     <li class="ccs-filters-summary__facet" v-if="checkedLot">
-                                        <a href="/suppliers/search?q={{ query }}&framework={% if selected.framework.rm_number is defined %}{{ selected.framework.rm_number }}{% endif %}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearLot">Lot {[ checkedLot.lot_number ]}: {[ checkedLot.title ]}</a>
+                                        <a href="/suppliers/search?q={{ query }}&framework={{ selected.rm_number }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearLot">Lot {[ checkedLot.lot_number ]}: {[ checkedLot.title ]}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -320,7 +320,7 @@
                             <span class="ccs-filters-summary__label">Containing</span>
                             <ul class="ccs-filters-summary__list" id="search-query-list">
                                 <li class="ccs-filters-summary__facet">
-                                    <a href="/suppliers/search?framework={% if selected.framework.rm_number is defined %}{{ selected.framework.rm_number }}{% endif %}&lot-filter-nested={% if selected.lot.id is defined %}{{ selected.lot.id }}{% endif %}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearSearch">
+                                    <a href="/suppliers/search?framework={{ selected.rm_number }}&lot-filter-nested={{ selected.lot_id }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearSearch">
 {#                                        {% if query is defined and query is not empty %}<span>{{ query }}</span>{% endif %}#}
                                         <span v-show="searchQuery" style="display: none;">{[ searchQuery ]}</span>
                                         <span v-show="!searchQuery">{{ query }}</span>
@@ -407,13 +407,10 @@
 
 
                     {# Pagination #}
-                    <results-pagination v-bind:total-results="searchResultsNumber" v-bind:results-per-page="resultsLimit" v-bind:current-page="currentPage" v-bind:result-pages-link-number="6" v-on:update-page="updatePageValue($event)" />
+                    <results-pagination v-bind:total-results="searchResultsNumber" v-bind:results-per-page="resultsLimit" v-bind:current-page="currentPage" v-bind:result-pages-link-number="6" v-bind:query-url="frontendQueryUrl" v-on:update-page="updatePageValue($event)" />
 
-                    {% if query is defined %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'suppliers_search', 'options': {'q': query}} %}
-                    {% else %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'suppliers_list', 'options': {} } %}
-                    {%  endif %}
+                    {%  set pagination_data = {'pagination': pagination, 'route': 'suppliers_search', 'options': {'q': query, 'framework': selected.rm_number, 'lot-filter-nested': selected.lot_id, 'limit': limit} } %}
+
                     
                     {% if pagination.totalPages > 1 %}
                         {{ include('includes/pagination.html.twig', pagination_data) }}
@@ -444,12 +441,13 @@
          * We use these variables to pass values from PHP to the Vue JS
          * JavaScript application
          */
-        var apiBaseUrl          = '{{ search_api_base_url }}';
-        var searchQuery         = '{{ query }}';
+        var apiBaseUrl           = '{{ search_api_base_url }}';
+        var searchQuery          = '{{ query }}';
+        var resultsLimitInitial  = {{ limit }};
 
         {% if selected.framework.rm_number is defined %}
         var selectedFramework   = {
-            doc_count: 0,
+            doc_count: {{ selected.framework.doc_count }},
             rm_number: '{{ selected.framework.rm_number }}',
             title: '{{ selected.framework.title }}'
         };
@@ -460,8 +458,8 @@
         {% if selected.lot.id is defined %}
         var selectedLot         = {
             title: '{{ selected.lot.title }}',
-            id: {{ selected.lot.id }},
-            description: '{{ selected.lot.description }}',
+            id: '{{ selected.lot.id }}',
+            description: {% if selected.lot.description is not empty %}'{{ selected.lot.description }}'{% else %}null{% endif %},
             lot_number: '{{ selected.lot.lot_number }}'
         };
         {% else %}
@@ -481,7 +479,8 @@
                 totalResults: Number,
                 resultsPerPage: Number,
                 // How many result links to display before we shorten the list
-                resultPagesLinkNumber: Number
+                resultPagesLinkNumber: Number,
+                queryUrl: String
             },
             computed: {
                 numberOfPages: function() {
@@ -568,7 +567,7 @@
             template: `
                 <ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination">
                     <li class="pagination__item pagination__item--previous" v-if="currentPage != 1">
-                        <a :href="'/suppliers/' + previousPage" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
+                        <a :href="'/suppliers/search' + previousPage + queryUrl" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
                             <span class="icon">
                                 <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M6.7 0l1.4 1.4-4.3 4.3h13v2H3.9l4.2 4-1.4 1.4L0 6.7z" fill="#007194" fill-rule="evenodd"></path></svg>
                             </span>
@@ -578,25 +577,25 @@
 
                     <li class="pagination__item" v-if="numberOfPages > 6">
                         <span v-if="currentPage == 1"><span class="visuallyhidden">Page </span>1</span>
-                        <a v-else href="/suppliers/1" v-on:click="updatePageNumber($event, 1)"><span class="visuallyhidden">Page </span>1</a>
+                        <a v-else :href="'/suppliers/search/1' + queryUrl" v-on:click="updatePageNumber($event, 1)"><span class="visuallyhidden">Page </span>1</a>
                     </li>
 
                     <li class="pagination__item" v-if="paginationStartNumber > 2">…</li>
 
                     <li class="pagination__item" v-for="page in range(this.paginationStartNumber, this.paginationEndNumber)" v-if="numberOfPages > 1">
                         <span v-if="page == currentPage"><span class="visuallyhidden">Page </span>{[ page ]}</span>
-                        <a v-else :href="'/suppliers/' + page" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
+                        <a v-else :href="'/suppliers/search/' + page + queryUrl" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
                     </li>
 
                     <li class="pagination__item" v-if="(paginationEndNumber + 1) < numberOfPages">…</li>
 
                     <li class="pagination__item" v-if="numberOfPages > 1">
                         <span v-if="currentPage == numberOfPages"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</span>
-                        <a v-else :href="'/suppliers/' + numberOfPages" v-on:click="updatePageNumber($event, numberOfPages)"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</a>
+                        <a v-else :href="'/suppliers/search/' + numberOfPages + queryUrl" v-on:click="updatePageNumber($event, numberOfPages)"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</a>
                     </li>
 
                     <li class="pagination__item pagination__item--next" v-if="currentPage != numberOfPages">
-                        <a :href="'/suppliers/' + this.nextPage" rel="next" v-on:click="updatePageNumber($event, nextPage)">
+                        <a :href="'/suppliers/search/' + nextPage + queryUrl" rel="next" v-on:click="updatePageNumber($event, nextPage)">
                             <span>Next</span> <span class="visuallyhidden">page</span>
                             <span class="icon">
                                 <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"></path></svg>
@@ -611,7 +610,7 @@
         new Vue({
             // we have to change the delimeted used as the default is reserved by Twig
             delimiters: ['{[', ']}'],
-            el: '#main-content',
+            el: '#search-app',
             data: {
                 // an almost arbitrary variable, we use this to hide the non-js
                 // version of the search components if the Vue search is instantiated
@@ -627,7 +626,7 @@
                 displayLotFilter: false,
                 searchResults: null,
                 searchResultsNumber: totalResults,
-                resultsLimit: 20,
+                resultsLimit: resultsLimitInitial,
                 currentPage: pageNumber,
                 // used to display/hide the loading text as appropriate (if the
                 // search results are loading, this property is set to true)
@@ -641,6 +640,11 @@
 
                 // setup popstate event listener for History API
                 this.setupHistoryApi();
+
+                // If a lot is set to filter on page load, then show the lot filters
+                if(this.checkedLot) {
+                    this.$set(this, 'displayLotFilter', true);
+                }
             },
             watch: {
                 searchRequestUrl: function() {
@@ -685,30 +689,37 @@
 
                     // page=
                 },
-                // the URL that we should update using the history API
-                frontendSearchUrl: function() {
-                    console.log("Update frontend search URL");
-                    var searchUrl = '/suppliers/search/' + this.currentPage;
-
-                    searchUrl += '?search=true';
+                /**
+                 * We pass this through to the pagination component so that
+                 * we can retain the query params for each search page link
+                 */
+                frontendQueryUrl: function() {
+                    var queryUrl = '?search=true';
 
                     if(this.searchQuery) {
-                        searchUrl += '&q=' + this.searchQuery;
+                        queryUrl += '&q=' + this.searchQuery;
                     }
 
                     if(this.checkedFramework.rm_number) {
-                        searchUrl += '&framework=' + this.checkedFramework.rm_number;
+                        queryUrl += '&framework=' + this.checkedFramework.rm_number;
                     }
 
                     if(this.checkedLot) {
-                        searchUrl += '&lot-filter-nested=' + this.checkedLot.id;
+                        queryUrl += '&lot-filter-nested=' + this.checkedLot.id;
                     }
 
                     if(this.resultsLimit) {
-                        searchUrl += '&limit=' + this.resultsLimit;
+                        queryUrl += '&limit=' + this.resultsLimit;
                     }
 
+                    return queryUrl;
+                },
+                // the URL that we should update using the history API
+                frontendSearchUrl: function() {
+                    var searchUrl = '/suppliers/search/' + this.currentPage + this.frontendQueryUrl;
+
                     return searchUrl;
+
                 }
             },
             methods: {
