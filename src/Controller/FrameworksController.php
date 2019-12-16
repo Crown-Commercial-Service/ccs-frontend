@@ -464,7 +464,6 @@ class FrameworksController extends AbstractController
             'Supplier Name',
             'Contact Name',
             'Contact Email',
-            'Telephone',
             'Street',
             'City',
             'Postcode',
@@ -485,12 +484,10 @@ class FrameworksController extends AbstractController
                 $street = ($item->getContent()->get('supplier_street')) ? $item->getContent()->get('supplier_street')->getValue() : '';
                 $city = ($item->getContent()->get('supplier_city')) ? $item->getContent()->get('supplier_city')->getValue() : '';
                 $postcode = ($item->getContent()->get('supplier_postcode')) ? $item->getContent()->get('supplier_postcode')->getValue() : '';
-                $phone = ($item->getContent()->get('supplier_phone')) ? $item->getContent()->get('supplier_phone')->getValue() : '';
 
                 $csvData[$i][] = $supplier_name;
                 $csvData[$i][] = $contact_name;
                 $csvData[$i][] = $contact_email;
-                $csvData[$i][] = $phone;
                 $csvData[$i][] = $street;
                 $csvData[$i][] = $city;
                 $csvData[$i][] = $postcode;
