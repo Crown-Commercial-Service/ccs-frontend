@@ -1,26 +1,3 @@
-/**
- * Read cookie
- *
- * @param string name
- * @returns {*}
- * @see http://www.quirksmode.org/js/cookies.html
- */
-window.readCookie = function (name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1, c.length);
-        }
-        if (c.indexOf(nameEQ) == 0) {
-            return c.substring(nameEQ.length, c.length);
-        }
-    }
-    return null;
-};
-
-
 /*\
 |*|
 |*|  :: cookies.js ::
@@ -132,6 +109,11 @@ var docCookies = {
                     path: "/",
                     domain: ".crowncommercial.gov.uk",
                 },
+                {
+                    name: "_gat_UA-47046847-4",
+                    path: "/",
+                    domain: ".crowncommercial.gov.uk",
+                },
             ]
         },
         {
@@ -140,6 +122,18 @@ var docCookies = {
             cookie_type: "marketing",
             enabled: false,
             adjustable: true,
+            cookies: [
+                {
+                    name: "blah blagh",
+                    path: "/",
+                    domain: ".crowncommercial.gov.uk",
+                },
+                {
+                    name: "blah lbah",
+                    path: "/",
+                    domain: ".crowncommercial.gov.uk",
+                },
+            ]
         },
         {
             title: "Strictly necessary cookies",
@@ -157,35 +151,6 @@ var docCookies = {
         usage: true,
         marketing: true,
     };
-
-
-    /**
-     * Set cookie
-     *
-     * @param string name
-     * @param string value
-     * @param int days
-     * @param string path
-     * @param string domain
-     * @see http://www.quirksmode.org/js/cookies.html
-     */
-    function createCookie(name, value, days, path, domain) {
-        var expires = "";
-        // The domain must match the domain of the JavaScript origin. Setting cookies to foreign domains will be silently ignored
-
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toGMTString();
-        }
-
-        // test = Location.hostname;
-        // console.log({test});
-        document.cookie = name + "=" + value + expires + "; path=" + path;
-        // else {
-        //     document.cookie = name + "=" + value + expires + "; path=" + path + "; domain=" + domain;
-        // }
-    }
 
 
     /**
@@ -239,18 +204,20 @@ var docCookies = {
 
     function deleteDisabledCookies(cookie_type) {
 
-        // get the right child node where cookie_type matches
-        // let childNodeCookieType = ;
+        // Loop through each cookie group
+        initial_cookie_preferences.forEach((cookieGroup, idx) => {
 
-        // Loop through all the cookies
+            // Check if the loop cookie type matches the selected cookie_type
+            if (cookieGroup.cookie_type === cookie_type) {
 
-        // childNodeCookieType.forEach((cookie, idx) => {
+                // Loop through each cookie in the selected cookie_type
+                cookieGroup.cookies.forEach((cookie, idx) => {
+                    docCookies.removeItem(cookie.name, cookie.path, cookie.domain);
+                });
 
-            // @todo add funtion to clean away cookies based on permission groups
-            // console.log("haha");
-            // docCookies.removeItem('_ga', '/', '.crowncommercial.gov.uk');
+            }
 
-        // });
+        });
 
     }
 
