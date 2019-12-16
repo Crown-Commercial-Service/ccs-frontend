@@ -48,22 +48,16 @@
     text-decoration: none;
 
     &:before {
+        background-image: url('../svg/icon-cross--dark.svg');
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        background-size: 100%;
         content: "";
+        height: 13px;
+        left: 9px;
+        margin-top: -5px;
         position: absolute;
-        border-top: 2px solid #000;
-        left: govuk-px-to-rem(7);
         top: 50%;
-        transform: rotate(45deg);
-        width: govuk-px-to-rem(16);
-    }
-
-    &:after {
-        content: "";
-        position: absolute;
-        border-top: 2px solid #000;
-        left: govuk-px-to-rem(7);
-        top: 50%;
-        transform: rotate(-45deg);
-        width: govuk-px-to-rem(16);
+        width: 13px;
     }
 }
