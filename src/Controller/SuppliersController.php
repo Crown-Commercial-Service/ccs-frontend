@@ -94,7 +94,12 @@ class SuppliersController extends AbstractController
           'pagination' => $results->getPagination(),
           'results'    => $results,
           'facets'     => $facets,
-          'selected'   => ['framework' => $framework, 'lot' => '']
+          'selected'   => [
+              'framework' => $framework,
+              'lot'       => '',
+              'rm_number' => '',
+              'lot_id'    => ''
+          ]
         ];
 
         return $this->render('suppliers/list.html.twig', $data);
@@ -140,15 +145,15 @@ class SuppliersController extends AbstractController
         $this->searchApi->getContentType()->setApiEndpoint('suppliers');
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
-        $framework = $request->query->has('framework') ? filter_var($request->query->get('framework'), FILTER_SANITIZE_STRING) : null;
-        $lot       = $request->query->has('lot-filter-nested') ? filter_var($request->query->get('lot-filter-nested'), FILTER_SANITIZE_STRING) : null;
+        $frameworkId = $request->query->has('framework') ? filter_var($request->query->get('framework'), FILTER_SANITIZE_STRING) : null;
+        $lotId       = $request->query->has('lot-filter-nested') ? filter_var($request->query->get('lot-filter-nested'), FILTER_SANITIZE_STRING) : null;
 
         try {
             $results = $this->searchApi->list($page, [
                 'keyword'   => $query,
                 'limit'     => $limit,
-                'framework' => $framework,
-                'lot'       => $lot
+                'framework' => $frameworkId,
+                'lot'       => $lotId
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
@@ -156,8 +161,8 @@ class SuppliersController extends AbstractController
 
         $facets = $results->getMetadata()->offsetGet('facets');
 
-        $lotObject = $this->retrieveLotFromFacetsUsingLotId($lot, $facets);
-        $frameworkObject = $this->retrieveFrameworkFromFacetsUsingLotId($framework, $facets);
+        $lotObject = $this->retrieveLotFromFacetsUsingLotId($lotId, $facets);
+        $frameworkObject = $this->retrieveFrameworkFromFacetsUsingLotId($frameworkId, $facets);
 
         $data = [
             'page_number'         => $page,
@@ -167,7 +172,12 @@ class SuppliersController extends AbstractController
             'results'             => $results,
             'facets'              => $facets,
             'limit'               => $limit,
-            'selected'=> ['framework' => $frameworkObject, 'lot' => $lotObject]
+            'selected'=> [
+                'framework' => $frameworkObject,
+                'rm_number' => $frameworkId,
+                'lot'       => $lotObject,
+                'lot_id'    => $lotId
+            ]
         ];
         return $this->render('suppliers/list.html.twig', $data);
     }
