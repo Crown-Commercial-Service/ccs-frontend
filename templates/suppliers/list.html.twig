@@ -78,7 +78,7 @@
 
                         <div class="govuk-form-group govuk-form-group--enclosure">
                             <div class="govuk-form-group sidebar__search-group">
-                                <label class="govuk-label" for="name">
+                                <label class="govuk-label" for="q">
                                     Search suppliers
                                 </label>
                                 {% if query is defined %}
@@ -99,11 +99,11 @@
                         </div>
 
 
-                        <div class="govuk-accordion ccs-accordion--clean" data-module="accordion" id="accordion-with-summary-sections">
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="accordion" id="accordion-with-summary-sections">
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-1">
+                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-1">
                                             Select Framework
                                         </span>
                                     </h2>
@@ -142,7 +142,7 @@
 
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-2">
+                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-2">
                                             Lot
                                         </span>
                                     </h2>
@@ -233,7 +233,7 @@
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-with-summary-sections-heading-3">
+                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-3">
                                         Results per page
                                         </span>
                                     </h2>
@@ -356,7 +356,10 @@
 
                             <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
                                 <a :href="result.url">{[ result.name ]}</a>
-                                <span class="ccs-subtle-notification" v-if="result.trading_name">Trading as {[ result.trading_name ]}</span>
+                                <span class="ccs-subtle-notification" v-if="result.alternative_trading_names.length > 0">
+                                    Trading as
+                                    <span class="trading-name" v-for="trading_name in result.alternative_trading_names">{[ trading_name ]}</span>
+                                </span>
                             </h3>
 
                             <ul class="govuk-list govuk-!-font-size-17featured ccs-framework-list" v-for="framework in result.live_frameworks">
@@ -378,22 +381,17 @@
 
                             {% set name = item.content.name %}
 
-                        <li>
-                            {#{{ dump(item.content) }}#}
-                            <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
-                                <a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a>
-                                {% if item.content.trading_names|length > 0 %}
-                                    <span class="ccs-subtle-notification">
-                                        Trading as
-                                        {% set i = 0 %}
-                                        {% for trading_name in item.content.trading_names %}
-                                            {% set i = i + 1 %}
-                                            {{ trading_name.name }}{# this comment is necessary to remove whitespace for display purposes
-                                            #}{% if i < item.content.trading_names|length %}, {% endif %}
-                                        {% endfor %}
+                            <li>
+                                {#{{ dump(item.content) }}#}
+                                <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
+                                    <a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a>
+                                </h3>
+
+                                {% if item.content.alternative_trading_names is not empty %}
+                                    <span class="ccs-subtle-notification">Trading as
+                                        <span class="trading-name">{{ item.content.alternative_trading_names }}</span>
                                     </span>
                                 {% endif %}
-                            </h3>
 
                                 <ul class="govuk-list govuk-!-font-size-17featured ccs-framework-list">
                                     {% for framework in item.content.live_frameworks %}

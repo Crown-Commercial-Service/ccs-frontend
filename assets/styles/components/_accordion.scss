@@ -69,6 +69,28 @@
 }
 
 
+.ccs-accordion {
+    .govuk-accordion__icon {
+        //16x10
+        background-image: url('../svg/accordion-arrows.svg');
+        background-position: 0 1px;
+        background-repeat: no-repeat;
+        background-size: 16px auto;
+
+        &:before,
+        &:after {
+            display: none;
+        }
+    }
+
+    .govuk-accordion__section--expanded {
+        .govuk-accordion__icon {
+            background-position: 0 -74px;
+        }
+    }
+}
+
+
 .ccs-accordion--clean .govuk-accordion__controls {
     display: none;
 }
@@ -80,4 +102,14 @@
 .js-enabled .ccs-accordion__section--clean {
     border-top: 0 none;
     padding-bottom: govuk-px-to-rem(2);
+}
+
+
+.ccs-accordion__section-button {
+    font-size: govuk-px-to-rem(19);
+    font-weight: 600;
+}
+
+.js-enabled .ccs-accordion__section-button {
+    color: #0B0C0C;
 }

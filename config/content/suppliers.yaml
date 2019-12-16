@@ -20,11 +20,8 @@ website:
   type: text
 trading_name:
   type: text
-trading_names:
-  type: array
-  content_fields:
-    name:
-      type: text
+alternative_trading_names:
+  type: plainarray
 live_frameworks:
   type: array
   content_fields:
