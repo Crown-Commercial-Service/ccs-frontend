@@ -173,21 +173,6 @@ var docCookies = {
     }
 
 
-    // /**
-    //  * Opt the user in out of using certain cookies
-    //  */
-    // function optUserOut() {
-    //     hideMessage();
-    //
-    //     // if the user previously opted-in, then delete the opt-in cookie
-    //     var consentCookie = readCookie('cookie-data-consent');
-    //     if (consentCookie !== null && consentCookie === 'yes') {
-    //         // remove opt-in cookie
-    //         createCookie('cookie-data-consent', '', -1, '/');
-    //     }
-    // }
-
-
     function updateSeenCookie() {
 
         // check if seen_cookie is set, if not, set it (we're checking this first because we don't want to reset to today every time)
@@ -257,86 +242,10 @@ var docCookies = {
     }
 
 
-    // /**
-    //  *
-    //  * Used to generate a status message with a toggle button allowing the
-    //  * user to change their opted in/out status
-    //  *
-    //  * @param appendTo
-    //  * The HTML element to append this control to
-    //  *
-    //  * @param hasChanged
-    //  * Whether the user has changed this value (we serve different text if that is the case)
-    //  */
-    // function generateStatusMessage(appendTo, hasChanged) {
-    //     hasChanged = typeof hasChanged !== 'undefined' ? hasChanged : false;
-    //
-    //     // cookie that contains whether the user has opted-in/out
-    //     var consentCookie = readCookie('cookie-data-consent');
-    //
-    //     var messageContainer = document.createElement('div');
-    //     messageContainer.classList.add('cookie-message-inline');
-    //
-    //     var message = '';
-    //     var buttonContainer = document.createElement('p');
-    //     var toggleButton = document.createElement('button');
-    //     toggleButton.classList.add('button');
-    //     toggleButton.classList.add('button--tight');
-    //
-    //     // conditional to serve a different message depending on if the user has
-    //     // opted in or out
-    //     if (consentCookie !== null && consentCookie === 'yes') {
-    //         // if the user has just changed their opt-in/out setting, then
-    //         // we server a different message (which says "you are now" to clarify
-    //         // that the user has succesfully changed the setting
-    //         if (hasChanged) {
-    //             message = '<p>You are now opted-in to our advertising cookies.</p>';
-    //         } else {
-    //             message = '<p>You are currently opted-in to our advertising cookies.</p>';
-    //         }
-    //
-    //         toggleButton.innerHTML = 'Opt me out';
-    //         toggleButton.addEventListener('click', function () {
-    //             optUserOut();
-    //             // we use recursion to re-generate this message once the setting
-    //             // has been changed using `optUserOut()`
-    //             generateStatusMessage(appendTo, true);
-    //         });
-    //     } else {
-    //         // if the user has just changed their opt-in/out setting, then
-    //         // we server a different message (which says "you are now" to clarify
-    //         // that the user has succesfully changed the setting
-    //         if (hasChanged) {
-    //             message = '<p>You are now opted-out of our advertising cookies.</p>';
-    //         } else {
-    //             message = '<p>You are currently opted-out of our advertising cookies.</p>';
-    //         }
-    //
-    //         toggleButton.innerHTML = 'Opt me in';
-    //         toggleButton.addEventListener('click', function () {
-    //             optUserIn();
-    //             // we use recursion to re-generate this message once the setting
-    //             // has been changed using `optUserIn()`
-    //             generateStatusMessage(appendTo, true);
-    //         });
-    //     }
-    //
-    //     // build the message contents
-    //     messageContainer.innerHTML = message;
-    //     buttonContainer.appendChild(toggleButton);
-    //     messageContainer.appendChild(buttonContainer);
-    //
-    //     // clear the innerHTML of the container, incase we are regenerating
-    //     // the message (in which case, there will be innacurate content in there)
-    //     appendTo.innerHTML = '';
-    //     appendTo.appendChild(messageContainer);
-    // }
-
-
     function generateCookieSettingsPageContent(appendTo) {
 
         var CookieSettingsPageContent = document.createDocumentFragment();
-        // var cookie_preferences = JSON.parse(readCookie('cookie_preferences'));
+        var cookie_preferences = JSON.parse(docCookies.getItem('cookie_preferences'));
 
         // console.log({cookie_preferences});
 
@@ -347,6 +256,7 @@ var docCookies = {
             // if (cookie_preferences !== null) {
             if (docCookies.getItem('cookie_preferences') !== null) {
                 datarecord.enabled = cookie_preferences[datarecord.cookie_type];
+                console.log(cookie_preferences[datarecord.cookie_type]);
             }
 
             // for each record we call out to a function to create the template
@@ -377,7 +287,7 @@ var docCookies = {
     </div>
     <div class="govuk-radios govuk-radios--inline">
       <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="${datarecord.cookie_type}" name="${datarecord.cookie_type}" type="radio"
+                <input class="govuk-radios__input" id="${datarecord.cookie_type}" name="${datarecord.cookie_type}" data-test="${datarecord.enabled}" type="radio"
                 ${datarecord.enabled === true ? `checked` : ``}
                 value="true">
                 <label class="govuk-label govuk-radios__label" for="${datarecord.cookie_type}">
@@ -385,7 +295,7 @@ var docCookies = {
         </label>
       </div>
       <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="${datarecord.cookie_type}-2" name="${datarecord.cookie_type}" type="radio"
+        <input class="govuk-radios__input" id="${datarecord.cookie_type}-2" name="${datarecord.cookie_type}" data-test="${datarecord.enabled}" type="radio"
         ${datarecord.enabled === true ? `` : `checked`}
                 value="false">
                 <label class="govuk-label govuk-radios__label" for="${datarecord.cookie_type}-2">
@@ -500,7 +410,7 @@ var docCookies = {
 
 
     // Only set the default cookies if they haven't been set
-    if (docCookies.getItem('cookiePreferences') == null) {
+    if (docCookies.getItem('cookie_preferences') == null) {
         docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), 2.628e+6, '/');
         // createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
     }
