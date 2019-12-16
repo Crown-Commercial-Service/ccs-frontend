@@ -67,7 +67,7 @@
     .govuk-accordion__icon {
         //16x10
         background-image: url('../svg/accordion-arrows.svg');
-        background-position: 0 3px;
+        background-position: 0 1px;
         background-repeat: no-repeat;
         background-size: 16px auto;
 
@@ -79,7 +79,7 @@
 
     .govuk-accordion__section--expanded {
         .govuk-accordion__icon {
-            background-position: 0 -71px;
+            background-position: 0 -74px;
         }
     }
 }
