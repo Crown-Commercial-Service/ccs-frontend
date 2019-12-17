@@ -122,18 +122,6 @@ var docCookies = {
             cookie_type: "marketing",
             enabled: false,
             adjustable: true,
-            cookies: [
-                {
-                    name: "blah blagh",
-                    path: "/",
-                    domain: ".crowncommercial.gov.uk",
-                },
-                {
-                    name: "blah lbah",
-                    path: "/",
-                    domain: ".crowncommercial.gov.uk",
-                },
-            ]
         },
         {
             title: "Strictly necessary cookies",
