@@ -94,7 +94,12 @@ class SuppliersController extends AbstractController
           'pagination' => $results->getPagination(),
           'results'    => $results,
           'facets'     => $facets,
-          'selected'   => ['framework' => $framework, 'lot' => '']
+          'selected'   => [
+              'framework' => $framework,
+              'lot'       => '',
+              'rm_number' => '',
+              'lot_id'    => ''
+          ]
         ];
 
         return $this->render('suppliers/list.html.twig', $data);
@@ -140,14 +145,15 @@ class SuppliersController extends AbstractController
         $this->searchApi->getContentType()->setApiEndpoint('suppliers');
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
-        $framework = $request->query->has('framework') ? filter_var($request->query->get('framework'), FILTER_SANITIZE_STRING) : null;
-        $lot       = $request->query->has('lot-filter-nested') ? filter_var($request->query->get('lot-filter-nested'), FILTER_SANITIZE_STRING) : null;
+        $frameworkId = $request->query->has('framework') ? filter_var($request->query->get('framework'), FILTER_SANITIZE_STRING) : null;
+        $lotId       = $request->query->has('lot-filter-nested') ? filter_var($request->query->get('lot-filter-nested'), FILTER_SANITIZE_STRING) : null;
 
         try {
             $results = $this->searchApi->list($page, [
                 'keyword'   => $query,
                 'limit'     => $limit,
-                'framework' => $framework
+                'framework' => $frameworkId,
+                'lot'       => $lotId
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
@@ -155,17 +161,23 @@ class SuppliersController extends AbstractController
 
         $facets = $results->getMetadata()->offsetGet('facets');
 
-        $lotNumber = $this->retrieveLotNumberFromFacetsUsingLotId($lot, $facets);
+        $lotObject = $this->retrieveLotFromFacetsUsingLotId($lotId, $facets);
+        $frameworkObject = $this->retrieveFrameworkFromFacetsUsingLotId($frameworkId, $facets);
 
         $data = [
             'page_number'         => $page,
             'search_api_base_url' => getenv('SEARCH_API_BASE_URL'),
-            'query'         => (!empty($query) ? $query : ''),
-            'pagination'    => $results->getPagination(),
-            'results'       => $results,
-            'facets'        => $facets,
-            'limit'         => $limit,
-            'selected'=> ['framework' => $framework, 'lot' => $lot, 'lot_number' => $lotNumber]
+            'query'               => (!empty($query) ? $query : ''),
+            'pagination'          => $results->getPagination(),
+            'results'             => $results,
+            'facets'              => $facets,
+            'limit'               => $limit,
+            'selected'=> [
+                'framework' => $frameworkObject,
+                'rm_number' => $frameworkId,
+                'lot'       => $lotObject,
+                'lot_id'    => $lotId
+            ]
         ];
         return $this->render('suppliers/list.html.twig', $data);
     }
@@ -201,22 +213,46 @@ class SuppliersController extends AbstractController
         return $this->render('suppliers/show.html.twig', $data);
     }
 
+
     /**
-     * Attempt to retrieve the lot number for a lot from the facet data
+     * Attempt to retrieve the lot object for a lot from the facet data
      * searching by lot ID
      *
      * @param $lotId
      * @param $facets
      * @return |null
      */
-    protected function retrieveLotNumberFromFacetsUsingLotId($lotId, $facets) {
+    protected function retrieveFrameworkFromFacetsUsingLotId($frameworkRmNumber, $facets) {
+        if (empty($frameworkRmNumber) || empty($facets) || !isset($facets['frameworks'])) {
+            return null;
+        }
+
+        foreach ($facets['frameworks'] as $facetFramework) {
+            if ($facetFramework['rm_number'] == $frameworkRmNumber) {
+                return $facetFramework;
+            }
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Attempt to retrieve the lot object for a lot from the facet data
+     * searching by lot ID
+     *
+     * @param $lotId
+     * @param $facets
+     * @return |null
+     */
+    protected function retrieveLotFromFacetsUsingLotId($lotId, $facets) {
         if (empty($lotId) || empty($facets) || !isset($facets['lots'])) {
             return null;
         }
 
         foreach ($facets['lots'] as $facetLot) {
             if ($facetLot['id'] == $lotId) {
-                return $facetLot['lot_number'];
+                return $facetLot;
             }
         }
 
