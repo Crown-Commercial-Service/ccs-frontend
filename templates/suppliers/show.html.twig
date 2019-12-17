@@ -55,15 +55,9 @@
                     <h1 class="govuk-heading-xl page-title">
                         {{ name }}
 
-                        {% if supplier.content.trading_names|length > 0 %}
-                            <span class="govuk-caption-l">
-                                Trading as
-                                {% set i = 0 %}
-                                {% for trading_name in supplier.content.trading_names %}
-                                    {% set i = i + 1 %}
-                                    {{ trading_name.name }}{# this comment is necessary to remove whitespace for display purposes
-                                    #}{% if i < supplier.content.trading_names|length %}, {% endif %}
-                                {% endfor %}
+                        {% if supplier.content.alternative_trading_names is not empty %}
+                            <span class="ccs-subtle-notification">Trading as
+                                <span class="trading-name">{{ supplier.content.alternative_trading_names }}</span>
                             </span>
                         {% endif %}
                     </h1>
