@@ -148,10 +148,10 @@
                                     </h2>
                                 </div>
                                 <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2">
-                                    <div class="govuk-radios govuk-radios--small govuk-radios--conditional" data-module="radios">
+                                    <div class="govuk-radios govuk-radios--small" data-module="radios">
 
                                         <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot" type="radio" value="" v-on:click="checkedLot = ''">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot-filter-nested" type="radio" value="all" v-on:click="checkedLot = ''; displayLotFilter = false;" {% if selected.lot is empty %}checked{% endif %}>
                                             <label class="govuk-label govuk-radios__label" for="show-all-suppliers-on-framwork-1">
                                                 Show all suppliers on framework
                                             </label>
@@ -160,15 +160,15 @@
                                         {% if facets.lots is defined %}
                                             <div class="govuk-radios__item govuk-radios__item--small" v-if="!lotList">
                                                 {% if selected.lot is defined and selected.lot is not empty %}
-                                                    <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3" v-on:click="checkedLot = ''" checked>
+                                                    <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot-filter-nested" type="radio" value="filterLot" data-aria-controls="conditional-how-contacted-conditional-3" v-on:click="checkedLot = ''; displayLotFilter = false;" checked>
                                                 {% else %}
-                                                    <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3" v-on:click="checkedLot = ''">
+                                                    <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot-filter-nested" type="radio" value="filterLot" data-aria-controls="conditional-how-contacted-conditional-3" v-on:click="checkedLot = ''; displayLotFilter = false;">
                                                 {% endif %}
                                                 <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">
                                                     Show suppliers on a specific lot
                                                 </label>
                                             </div>
-                                            <div class="govuk-radios__conditional govuk-radios__conditional--small govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-3" v-if="!lotList">
+                                            <div class="govuk-radios__conditional govuk-radios__conditional--small" id="conditional-how-contacted-conditional-3" v-if="!lotList">
 
                                                 <div class="govuk-form-group">
                                                     <fieldset class="govuk-fieldset">
@@ -197,12 +197,12 @@
                                             </div>
                                         {% endif %}
                                         <div class="govuk-radios__item govuk-radios__item--small" v-show="lotList" style="display: none;">
-                                            <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-lot-list" v-on:click="displayLotFilter = true; checkedLot = ''">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot-filter-nested" type="radio" value="filterLot" v-on:click="displayLotFilter = true; checkedLot = ''">
                                             <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">
                                                 Show suppliers on a specific lot
                                             </label>
                                         </div>
-                                        <div class="govuk-radios__conditional govuk-radios__conditional--small" id="conditional-lot-list" v-show="displayLotFilter" style="display: none;">
+                                        <div class="govuk-radios__conditional govuk-radios__conditional--small" id="" v-show="displayLotFilter" style="display: none;">
 
                                             <div class="govuk-form-group">
                                                 <fieldset class="govuk-fieldset">
@@ -371,7 +371,7 @@
                         </li>
                     </ul>
 
-                    
+
 
                     {% if results %}
 
@@ -417,7 +417,7 @@
 
                     {%  set pagination_data = {'pagination': pagination, 'route': 'suppliers_search', 'options': {'q': query, 'framework': selected.rm_number, 'lot-filter-nested': selected.lot_id, 'limit': limit} } %}
 
-                    
+
                     {% if pagination.totalPages > 1 %}
                         {{ include('includes/pagination.html.twig', pagination_data) }}
                     {% endif %}
@@ -438,7 +438,19 @@
 
     <script src="/assets/scripts/libraries/vue.js"></script>
     <script>
-        if(!('Promise' in window)) {
+        /**
+         * Function to test if the browser supports ES6 template literals
+         */
+        function supportsLiterals() {
+            try{
+                return eval("''===``");
+            }
+            catch(e){
+                return false;
+            }
+        }
+
+        if(!('Promise' in window) || !supportsLiterals()) {
             throw new Error("Your browser doesn't support the necessary JavaScript functions to use the enhanced search and has been served a non-JavaScript version");
         }
         /**
@@ -567,7 +579,9 @@
                     this.$emit('update-page', newPage);
                 },
                 range : function (start, end) {
-                    return Array(end - start + 1).fill().map((_, idx) => start + idx);
+                    return Array(end - start + 1).fill().map(function(_, idx) {
+                        return start + idx;
+                    });
                 }
             },
             template: `
