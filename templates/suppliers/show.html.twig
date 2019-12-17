@@ -55,10 +55,8 @@
                     <h1 class="govuk-heading-xl page-title">
                         {{ name }}
 
-                        {% if supplier.content.alternative_trading_names is not empty %}
-                            <span class="ccs-subtle-notification">Trading as
-                                <span class="trading-name">{{ supplier.content.alternative_trading_names }}</span>
-                            </span>
+                        {% if supplier.content.trading_name %}
+                            <span class="ccs-subtle-notification">Trading as {{ supplier.content.trading_name }}</span>
                         {% endif %}
                     </h1>
 
