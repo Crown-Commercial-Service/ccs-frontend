@@ -1,26 +1,3 @@
-/**
- * Read cookie
- *
- * @param string name
- * @returns {*}
- * @see http://www.quirksmode.org/js/cookies.html
- */
-window.readCookie = function (name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1, c.length);
-        }
-        if (c.indexOf(nameEQ) == 0) {
-            return c.substring(nameEQ.length, c.length);
-        }
-    }
-    return null;
-};
-
-
 /*\
 |*|
 |*|  :: cookies.js ::
@@ -132,6 +109,11 @@ var docCookies = {
                     path: "/",
                     domain: ".crowncommercial.gov.uk",
                 },
+                {
+                    name: "_gat_UA-47046847-4",
+                    path: "/",
+                    domain: ".crowncommercial.gov.uk",
+                },
             ]
         },
         {
@@ -160,35 +142,6 @@ var docCookies = {
 
 
     /**
-     * Set cookie
-     *
-     * @param string name
-     * @param string value
-     * @param int days
-     * @param string path
-     * @param string domain
-     * @see http://www.quirksmode.org/js/cookies.html
-     */
-    function createCookie(name, value, days, path, domain) {
-        var expires = "";
-        // The domain must match the domain of the JavaScript origin. Setting cookies to foreign domains will be silently ignored
-
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toGMTString();
-        }
-
-        // test = Location.hostname;
-        // console.log({test});
-        document.cookie = name + "=" + value + expires + "; path=" + path;
-        // else {
-        //     document.cookie = name + "=" + value + expires + "; path=" + path + "; domain=" + domain;
-        // }
-    }
-
-
-    /**
      * When user accept the cookie, show this
      */
     function hideMessage() {
@@ -208,21 +161,6 @@ var docCookies = {
     }
 
 
-    // /**
-    //  * Opt the user in out of using certain cookies
-    //  */
-    // function optUserOut() {
-    //     hideMessage();
-    //
-    //     // if the user previously opted-in, then delete the opt-in cookie
-    //     var consentCookie = readCookie('cookie-data-consent');
-    //     if (consentCookie !== null && consentCookie === 'yes') {
-    //         // remove opt-in cookie
-    //         createCookie('cookie-data-consent', '', -1, '/');
-    //     }
-    // }
-
-
     function updateSeenCookie() {
 
         // check if seen_cookie is set, if not, set it (we're checking this first because we don't want to reset to today every time)
@@ -239,18 +177,20 @@ var docCookies = {
 
     function deleteDisabledCookies(cookie_type) {
 
-        // get the right child node where cookie_type matches
-        // let childNodeCookieType = ;
+        // Loop through each cookie group
+        initial_cookie_preferences.forEach((cookieGroup, idx) => {
 
-        // Loop through all the cookies
+            // Check if the loop cookie type matches the selected cookie_type
+            if (cookieGroup.cookie_type === cookie_type) {
 
-        // childNodeCookieType.forEach((cookie, idx) => {
+                // Loop through each cookie in the selected cookie_type
+                cookieGroup.cookies.forEach((cookie, idx) => {
+                    docCookies.removeItem(cookie.name, cookie.path, cookie.domain);
+                });
 
-            // @todo add funtion to clean away cookies based on permission groups
-            // console.log("haha");
-            // docCookies.removeItem('_ga', '/', '.crowncommercial.gov.uk');
+            }
 
-        // });
+        });
 
     }
 
@@ -290,86 +230,10 @@ var docCookies = {
     }
 
 
-    // /**
-    //  *
-    //  * Used to generate a status message with a toggle button allowing the
-    //  * user to change their opted in/out status
-    //  *
-    //  * @param appendTo
-    //  * The HTML element to append this control to
-    //  *
-    //  * @param hasChanged
-    //  * Whether the user has changed this value (we serve different text if that is the case)
-    //  */
-    // function generateStatusMessage(appendTo, hasChanged) {
-    //     hasChanged = typeof hasChanged !== 'undefined' ? hasChanged : false;
-    //
-    //     // cookie that contains whether the user has opted-in/out
-    //     var consentCookie = readCookie('cookie-data-consent');
-    //
-    //     var messageContainer = document.createElement('div');
-    //     messageContainer.classList.add('cookie-message-inline');
-    //
-    //     var message = '';
-    //     var buttonContainer = document.createElement('p');
-    //     var toggleButton = document.createElement('button');
-    //     toggleButton.classList.add('button');
-    //     toggleButton.classList.add('button--tight');
-    //
-    //     // conditional to serve a different message depending on if the user has
-    //     // opted in or out
-    //     if (consentCookie !== null && consentCookie === 'yes') {
-    //         // if the user has just changed their opt-in/out setting, then
-    //         // we server a different message (which says "you are now" to clarify
-    //         // that the user has succesfully changed the setting
-    //         if (hasChanged) {
-    //             message = '<p>You are now opted-in to our advertising cookies.</p>';
-    //         } else {
-    //             message = '<p>You are currently opted-in to our advertising cookies.</p>';
-    //         }
-    //
-    //         toggleButton.innerHTML = 'Opt me out';
-    //         toggleButton.addEventListener('click', function () {
-    //             optUserOut();
-    //             // we use recursion to re-generate this message once the setting
-    //             // has been changed using `optUserOut()`
-    //             generateStatusMessage(appendTo, true);
-    //         });
-    //     } else {
-    //         // if the user has just changed their opt-in/out setting, then
-    //         // we server a different message (which says "you are now" to clarify
-    //         // that the user has succesfully changed the setting
-    //         if (hasChanged) {
-    //             message = '<p>You are now opted-out of our advertising cookies.</p>';
-    //         } else {
-    //             message = '<p>You are currently opted-out of our advertising cookies.</p>';
-    //         }
-    //
-    //         toggleButton.innerHTML = 'Opt me in';
-    //         toggleButton.addEventListener('click', function () {
-    //             optUserIn();
-    //             // we use recursion to re-generate this message once the setting
-    //             // has been changed using `optUserIn()`
-    //             generateStatusMessage(appendTo, true);
-    //         });
-    //     }
-    //
-    //     // build the message contents
-    //     messageContainer.innerHTML = message;
-    //     buttonContainer.appendChild(toggleButton);
-    //     messageContainer.appendChild(buttonContainer);
-    //
-    //     // clear the innerHTML of the container, incase we are regenerating
-    //     // the message (in which case, there will be innacurate content in there)
-    //     appendTo.innerHTML = '';
-    //     appendTo.appendChild(messageContainer);
-    // }
-
-
     function generateCookieSettingsPageContent(appendTo) {
 
         var CookieSettingsPageContent = document.createDocumentFragment();
-        // var cookie_preferences = JSON.parse(readCookie('cookie_preferences'));
+        var cookie_preferences = JSON.parse(docCookies.getItem('cookie_preferences'));
 
         // console.log({cookie_preferences});
 
@@ -380,6 +244,7 @@ var docCookies = {
             // if (cookie_preferences !== null) {
             if (docCookies.getItem('cookie_preferences') !== null) {
                 datarecord.enabled = cookie_preferences[datarecord.cookie_type];
+                console.log(cookie_preferences[datarecord.cookie_type]);
             }
 
             // for each record we call out to a function to create the template
@@ -410,7 +275,7 @@ var docCookies = {
     </div>
     <div class="govuk-radios govuk-radios--inline">
       <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="${datarecord.cookie_type}" name="${datarecord.cookie_type}" type="radio"
+                <input class="govuk-radios__input" id="${datarecord.cookie_type}" name="${datarecord.cookie_type}" data-test="${datarecord.enabled}" type="radio"
                 ${datarecord.enabled === true ? `checked` : ``}
                 value="true">
                 <label class="govuk-label govuk-radios__label" for="${datarecord.cookie_type}">
@@ -418,7 +283,7 @@ var docCookies = {
         </label>
       </div>
       <div class="govuk-radios__item">
-        <input class="govuk-radios__input" id="${datarecord.cookie_type}-2" name="${datarecord.cookie_type}" type="radio"
+        <input class="govuk-radios__input" id="${datarecord.cookie_type}-2" name="${datarecord.cookie_type}" data-test="${datarecord.enabled}" type="radio"
         ${datarecord.enabled === true ? `` : `checked`}
                 value="false">
                 <label class="govuk-label govuk-radios__label" for="${datarecord.cookie_type}-2">
@@ -533,7 +398,7 @@ var docCookies = {
 
 
     // Only set the default cookies if they haven't been set
-    if (docCookies.getItem('cookiePreferences') == null) {
+    if (docCookies.getItem('cookie_preferences') == null) {
         docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), 2.628e+6, '/');
         // createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
     }
