@@ -64,7 +64,8 @@ class ApiController extends AbstractController
             throw new ApiException(sprintf('Error with Search Suppliers API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent()));
         }
 
-        return new JsonResponse($response->getContent());
+        $responseFinal = json_decode($response->getContent());
+        return new JsonResponse($responseFinal);
     }
 
     /**
@@ -133,7 +134,8 @@ class ApiController extends AbstractController
             throw new ApiException(sprintf('Error with Search Framework API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getMessage()));
         }
 
-        return new JsonResponse($response->getContent());
+        $responseFinal = json_decode($response->getContent());
+        return new JsonResponse($responseFinal);
     }
 
     /**
