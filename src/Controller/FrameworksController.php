@@ -310,10 +310,26 @@ class FrameworksController extends AbstractController
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
 
+        if ($request->query->has('status')) {
+            $status = [];
+            foreach ($request->query->get('status') as $item) {
+                $status[] = filter_var($item, FILTER_SANITIZE_STRING);
+            }
+        }
+
+        if ($request->query->has('category')) {
+            $category = [];
+            foreach ($request->query->get('category') as $item) {
+                $category[] = filter_var($item, FILTER_SANITIZE_STRING);
+            }
+        }
+
         try {
             $results = $this->searchApi->list($page, [
                 'keyword'   => $query,
                 'limit'     => $limit,
+                'status'    => $status ?? null,
+                'pillar'    => $category ?? null,
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
