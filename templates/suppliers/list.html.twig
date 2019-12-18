@@ -82,9 +82,9 @@
                                     Search suppliers
                                 </label>
                                 {% if query is defined %}
-                                    <input class="govuk-input" id="q" name="q" type="text" value="{{ query }}" v-model="searchQuery" />
+                                    <input class="govuk-input" id="q" name="q" type="text" value="{{ query }}" v-model.lazy="searchQuery" />
                                 {% else %}
-                                    <input class="govuk-input" id="q" name="q" type="text" v-model="searchQuery" />
+                                    <input class="govuk-input" id="q" name="q" type="text" v-model.lazy="searchQuery" />
                                 {% endif %}
                                 <button class="sidebar__search-button govuk-input">
                                     <span class="visuallyhidden">Search suppliers</span>
