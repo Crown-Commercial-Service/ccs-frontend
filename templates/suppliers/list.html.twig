@@ -453,7 +453,7 @@
             }
         }
 
-        if(!('Promise' in window) || !supportsLiterals()) {
+        if(!('Promise' in window) || !supportsLiterals() || !window.fetch) {
             throw new Error("Your browser doesn't support the necessary JavaScript functions to use the enhanced search and has been served a non-JavaScript version");
         }
         /**
