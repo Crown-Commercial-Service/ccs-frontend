@@ -381,11 +381,14 @@
 
                             {% set name = item.content.name %}
 
-                            <li>
-                                {#{{ dump(item.content) }}#}
-                                <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
-                                    <a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a>
-                                </h3>
+                        <li>
+                            {#{{ dump(item.content) }}#}
+                            <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
+                                <a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a>
+                                {% if item.content.trading_name %}
+                                    <span class="ccs-subtle-notification">Trading as {{ item.content.trading_name }}</span>
+                                {% endif %}
+                            </h3>
 
                                 {% if item.content.alternative_trading_names is not empty %}
                                     <span class="ccs-subtle-notification">Trading as
@@ -450,7 +453,7 @@
             }
         }
 
-        if(!('Promise' in window) || !supportsLiterals()) {
+        if(!('Promise' in window) || !supportsLiterals() || !window.fetch) {
             throw new Error("Your browser doesn't support the necessary JavaScript functions to use the enhanced search and has been served a non-JavaScript version");
         }
         /**
@@ -691,6 +694,10 @@
                     // to the newly filtered framework
                     this.checkedLot = '';
 
+                    // select the 'who all lots suppliers' radio button
+                    document.getElementById('show-all-suppliers-on-framwork-1').checked = true;
+                    this.displayLotFilter = false;
+
                     // go back to page 1
                     this.currentPage = 1;
                 }
@@ -757,7 +764,7 @@
                                 return el.toLowerCase().indexOf(query.toLowerCase()) !== -1;
                             }
                         )
-                        .reduce((obj, key) => {
+                        .reduce(function(obj, key) {
                             obj[key] = objectArray[key];
                             return obj;
                         }, {});
