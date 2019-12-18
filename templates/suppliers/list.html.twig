@@ -760,7 +760,7 @@
                                 return el.toLowerCase().indexOf(query.toLowerCase()) !== -1;
                             }
                         )
-                        .reduce((obj, key) => {
+                        .reduce(function(obj, key) {
                             obj[key] = objectArray[key];
                             return obj;
                         }, {});
