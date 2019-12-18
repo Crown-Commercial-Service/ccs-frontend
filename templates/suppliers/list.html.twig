@@ -381,11 +381,14 @@
 
                             {% set name = item.content.name %}
 
-                            <li>
-                                {#{{ dump(item.content) }}#}
-                                <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
-                                    <a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a>
-                                </h3>
+                        <li>
+                            {#{{ dump(item.content) }}#}
+                            <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
+                                <a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a>
+                                {% if item.content.trading_name %}
+                                    <span class="ccs-subtle-notification">Trading as {{ item.content.trading_name }}</span>
+                                {% endif %}
+                            </h3>
 
                                 {% if item.content.alternative_trading_names is not empty %}
                                     <span class="ccs-subtle-notification">Trading as
