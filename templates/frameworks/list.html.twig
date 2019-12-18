@@ -135,7 +135,7 @@
                                 <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
                                     <div class="govuk-checkboxes govuk-checkboxes--small">
                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="status-1" name="status[]" type="checkbox" value="live">
+                                            <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="status-1" name="status[]" type="checkbox" value="Live">
                                             <label class="govuk-label govuk-checkboxes__label" for="status-1">Live</label>
                                         </div>
                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
@@ -160,7 +160,7 @@
                                         {% set iteration = 1 %}
                                         {% for pillar_item in pillars.pillars %}
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="category-{{ iteration }}" name="category[]" type="checkbox" value="{{ pillar_item.slug }}">
+                                                <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="category-{{ iteration }}" name="category[]" type="checkbox" value="{{ pillar_item.name }}">
                                                 <label class="govuk-label govuk-checkboxes__label" for="category-{{ iteration }}">{{ pillar_item.name }}</label>
                                             </div>
 
