@@ -94,6 +94,18 @@ news_list:
   requirements:
     page: '\d+'
 
+api_suppliers:
+  path: /api/suppliers
+  controller: App\Controller\ApiController::suppliers
+  defaults:
+    _format: json
+
+api_frameworks:
+  path: /api/frameworks
+  controller: App\Controller\ApiController::frameworks
+  defaults:
+    _format: json
+
 news_page:
   path: "/news/{slug}"
   controller: App\Controller\NewsController::show
