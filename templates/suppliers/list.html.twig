@@ -588,7 +588,7 @@
                 }
             },
             template: `
-                <ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination">
+                <ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination" v-if="numberOfPages > 0">
                     <li class="pagination__item pagination__item--previous" v-if="currentPage != 1">
                         <a :href="'/suppliers/search' + previousPage + queryUrl" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
                             <span class="icon">
