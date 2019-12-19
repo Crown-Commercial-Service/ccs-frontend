@@ -62,9 +62,7 @@
                             <span class="govuk-warning-text__assistive">Important</span>
                             Some of our suppliers will not be displayed on this page
                         </strong>
-                        <p>Select <a href="https://supplierregistration.cabinetoffice.gov.uk/dps">Dynamic Purchasing Systems</a> or
-                            <a href="https://www.digitalmarketplace.service.gov.uk/g-cloud/suppliers">G-cloud/DOS</a> to see more suppliers for that type of agreement. To find out what a DPS, G-cloud or DOS is take a look at
-                            <a href="/help-and-support/how-to-buy/">How to buy</a>.</p>
+                        <p>Select <a href="https://supplierregistration.cabinetoffice.gov.uk/dps">Dynamic Purchasing Systems</a>, <a href="https://www.digitalmarketplace.service.gov.uk/g-cloud/suppliers">G-Cloud</a> or <a href="https://www.digitalmarketplace.service.gov.uk/buyers/frameworks/digital-outcomes-and-specialists-4/requirements/digital-outcomes">Digital Outcomes & Specialists</a> (DOS) to see suppliers for that type of agreement. To find out what a DPS, G-Cloud or DOS is take a look at <a href="/help-and-support/how-to-buy/">How to buy</a>.</p>
                     </div>
 
                 </div>
@@ -104,7 +102,7 @@
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
                                         <span class="govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-1">
-                                            Select Framework
+                                            Select framework
                                         </span>
                                     </h2>
                                 </div>
@@ -119,7 +117,7 @@
                                         </div>
                                         {% endfor %}
                                     </div>
-                                    <div class="govuk-form-group sidebar__search-group" v-show="frameworkList" style="display: none;">
+                                    <div class="govuk-form-group sidebar__search-group subsearch-filter" v-show="frameworkList" style="display: none;">
                                         <label for="searchFrameworkList" class="visuallyhidden">Filter Frameworks by Title</label>
                                         <input class="govuk-input" type="text" name="searchFrameworkList" id="searchFrameworkList" v-model="frameworkFilter" v-on:keydown.enter="frameworkFilterExecute" />
                                         <button class="sidebar__search-button govuk-input" v-on:click="frameworkFilterExecute"><span class="visuallyhidden">Filter frameworks</span></button>
@@ -153,7 +151,7 @@
                                         <div class="govuk-radios__item govuk-radios__item--small">
                                             <input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot-filter-nested" type="radio" value="all" v-on:click="checkedLot = ''; displayLotFilter = false;" {% if selected.lot is empty %}checked{% endif %}>
                                             <label class="govuk-label govuk-radios__label" for="show-all-suppliers-on-framwork-1">
-                                                Show all suppliers on framework
+                                                Show all suppliers on the selected framework
                                             </label>
                                         </div>
 
@@ -333,15 +331,15 @@
 
 
                     {% if selected.framework.rm_number is defined and selected.lot.lot_number is defined %}
-                        <div class="apollo-enclosure ccs-results-notification" v-show="supplierContactPrompt">
+                        <div class="" v-show="supplierContactPrompt">
                             <p><strong>Are you running a further competition or conducting an expression of interest?</strong></p>
-                            <a v-if="!javascriptVersion" href="/agreements/{{ selected.framework.rm_number }}:{{ selected.lot.lot_number }}/lot-suppliers" class="govuk-button ccs-button--tight">View supplier contact details</a>
-                            <a v-show="javascriptVersion" style="display: none;" :href="'/agreements/' + checkedFramework.rm_number + ':' + checkedLot.lot_number + '/lot-suppliers'" class="govuk-button ccs-button--tight">View supplier contact details</a>
+                            <a v-if="!javascriptVersion" href="/agreements/{{ selected.framework.rm_number }}:{{ selected.lot.lot_number }}/lot-suppliers" class="govuk-button ccs-button--tight">See supplier contact details for this lot</a>
+                            <a v-show="javascriptVersion" style="display: none;" :href="'/agreements/' + checkedFramework.rm_number + ':' + checkedLot.lot_number + '/lot-suppliers'" class="govuk-button ccs-button--tight">See supplier contact details for this lot</a>
                         </div>
                     {% else %}
-                        <div class="apollo-enclosure ccs-results-notification" v-show="supplierContactPrompt" style="display: none;">
+                        <div class="" v-show="supplierContactPrompt" style="display: none;">
                             <p><strong>Are you running a further competition or conducting an expression of interest?</strong></p>
-                            <a :href="'/agreements/' + checkedFramework.rm_number + ':' + checkedLot.lot_number + '/lot-suppliers'" class="govuk-button ccs-button--tight">View supplier contact details</a>
+                            <a :href="'/agreements/' + checkedFramework.rm_number + ':' + checkedLot.lot_number + '/lot-suppliers'" class="govuk-button ccs-button--tight">See supplier contact details for this lot</a>
                         </div>
                     {% endif %}
 
