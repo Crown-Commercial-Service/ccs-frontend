@@ -22,6 +22,11 @@ trading_name:
   type: text
 alternative_trading_names:
   type: plainarray
+trading_names:
+  type: array
+  content_fields:
+    name:
+      type: text
 live_frameworks:
   type: array
   content_fields:
