@@ -82,11 +82,11 @@
                                     Search suppliers
                                 </label>
                                 {% if query is defined %}
-                                    <input class="govuk-input" id="q" name="q" type="text" value="{{ query }}" v-model.lazy="searchQuery" />
+                                    <input class="govuk-input" id="q" name="q" type="text" value="{{ query }}" />
                                 {% else %}
-                                    <input class="govuk-input" id="q" name="q" type="text" v-model.lazy="searchQuery" />
+                                    <input class="govuk-input" id="q" name="q" type="text" />
                                 {% endif %}
-                                <button class="sidebar__search-button govuk-input">
+                                <button class="sidebar__search-button govuk-input" id="submit-search-button" v-on:click="updateSearchQueryValue">
                                     <span class="visuallyhidden">Search suppliers</span>
                                 </button>
                             </div>
@@ -138,7 +138,7 @@
 
 
 
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight" v-show="checkedFramework">
 
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
@@ -750,6 +750,11 @@
                 }
             },
             methods: {
+                updateSearchQueryValue: function(event) {
+                    event.preventDefault();
+                    var searchTextInput = document.getElementById('q');
+                    this.searchQuery = searchTextInput.value;
+                },
                 /**
                  * Filter an object, only return object properties that match
                  * the search query
@@ -789,6 +794,7 @@
                     this.currentPage = 1;
                     this.displayLotFilter = false;
                     this.frameworkFilter = '';
+                    document.getElementById('q').value = '';
                     this.frameworkFilterExecute();
                 },
                 clearFramework: function(event) {
@@ -805,6 +811,7 @@
                 clearSearch: function(event) {
                     event.preventDefault();
                     this.searchQuery = '';
+                    document.getElementById('q').value = '';
                 },
                 setupHistoryApi: function() {
                     var self = this;
