@@ -331,13 +331,13 @@
 
 
                     {% if selected.framework.rm_number is defined and selected.lot.lot_number is defined %}
-                        <div class="" v-show="supplierContactPrompt">
+                        <div class="ccs-search-results-cta" v-show="supplierContactPrompt">
                             <p><strong>Are you running a further competition or conducting an expression of interest?</strong></p>
                             <a v-if="!javascriptVersion" href="/agreements/{{ selected.framework.rm_number }}:{{ selected.lot.lot_number }}/lot-suppliers" class="govuk-button ccs-button--tight">See supplier contact details for this lot</a>
                             <a v-show="javascriptVersion" style="display: none;" :href="'/agreements/' + checkedFramework.rm_number + ':' + checkedLot.lot_number + '/lot-suppliers'" class="govuk-button ccs-button--tight">See supplier contact details for this lot</a>
                         </div>
                     {% else %}
-                        <div class="" v-show="supplierContactPrompt" style="display: none;">
+                        <div class="ccs-search-results-cta" v-show="supplierContactPrompt" style="display: none;">
                             <p><strong>Are you running a further competition or conducting an expression of interest?</strong></p>
                             <a :href="'/agreements/' + checkedFramework.rm_number + ':' + checkedLot.lot_number + '/lot-suppliers'" class="govuk-button ccs-button--tight">See supplier contact details for this lot</a>
                         </div>
