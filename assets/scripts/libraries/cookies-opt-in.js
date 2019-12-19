@@ -136,8 +136,8 @@ var docCookies = {
     // Set the default cookies. This JSON Object is saved as the cookie, but we use `initial_cookie_preferences` to maintain structure and various sanity checks
     var cookie_preferences = {
         essentials: true,
-        usage: true,
-        marketing: true,
+        usage: false,
+        marketing: false,
     };
 
 
