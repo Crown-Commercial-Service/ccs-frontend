@@ -119,7 +119,7 @@
                                         </div>
                                         {% endfor %}
                                     </div>
-                                    <div class="govuk-form-group sidebar__search-group" v-show="frameworkList" style="display: none;">
+                                    <div class="govuk-form-group sidebar__search-group subsearch-filter" v-show="frameworkList" style="display: none;">
                                         <label for="searchFrameworkList" class="visuallyhidden">Filter Frameworks by Title</label>
                                         <input class="govuk-input" type="text" name="searchFrameworkList" id="searchFrameworkList" v-model="frameworkFilter" v-on:keydown.enter="frameworkFilterExecute" />
                                         <button class="sidebar__search-button govuk-input" v-on:click="frameworkFilterExecute"><span class="visuallyhidden">Filter frameworks</span></button>
