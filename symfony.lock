@@ -176,9 +176,6 @@
             "ref": "5bb3a8c27df824d195fa68bb635d074854f8498f"
         }
     },
-    "symfony/http-client": {
-        "version": "v4.4.1"
-    },
     "symfony/http-foundation": {
         "version": "v4.2.2"
     },
