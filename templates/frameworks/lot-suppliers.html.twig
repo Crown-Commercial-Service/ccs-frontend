@@ -75,10 +75,22 @@
                          <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
                              <a href="{{ path('suppliers_show', {'id': item.content.supplier_id, 'slug': slugify(item.content.supplier_name)} ) }}">{{ item.content.supplier_name }}</a></h3>
 
+
+                          {% if item.content.supplier_contact_email is not empty %}
+                              <p class="govuk-list govuk-!-font-size-17featured ccs-framework-list">
+                              {% if item.content.supplier_contact_name is not empty %}
+                                  Email {{ item.content.supplier_contact_name}} on
+                              {% endif %}
+
+                              <a href="mailto:{{ item.content.supplier_contact_email }}">{{ item.content.supplier_contact_email }}</a>
+                              </p>
+                          {% endif %}
+
+                         {#
                          <ul class="govuk-list govuk-!-font-size-17featured ccs-framework-list">
-                            {% for framework in item.content.live_frameworks %}
+                            {% for framework in item.content.live_frameworks %}#}
                                 {#<li><a href="{{ path('frameworks_show', {'rmNumber':  framework.rm_number }) }}">{{ framework.title }} ({{ framework.rm_number }})</a></li>#}
-                                <li>
+                                {#<li>
                                     <span class="ccs-framework-list__title">{{ framework.title }} ({{ framework.rm_number }})</span>
                                     {% if framework.status == 'Expired' or framework.status == 'Expired - Data Still Received' %}
                                         <span class="govuk-tag ccs-tag ccs-tag--error ccs-tag--lower-case">Expired: {{ framework.end_date.format('d/m/Y') }}</span>
@@ -86,6 +98,7 @@
                                 </li>
                             {% endfor %}
                          </ul>
+                         #}
                       </li>
                    {% endfor %}
                </ul>
