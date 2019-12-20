@@ -111,21 +111,24 @@
 
                   <div class="apollo-enclosure">
 
+                      <h2 class="aside__heading">Framework</h2>
+                      <p class="govuk-body govuk-!-font-size-16">
+                          <a href="{{ path('frameworks_show', {'rmNumber': metadata.framework_rm_number }) }}">{{ metadata.framework_title }} ({{ metadata.framework_rm_number }})</a>
+                      </p>
+
                       {% if metadata.lot_description %}
                           <h2 class="aside__heading">Lot description</h2>
 
                           <p class="govuk-body govuk-!-font-size-16">
-                          {{ metadata.lot_description }}
+                              {{ metadata.lot_description }}
                           </p>
                       {% endif %}
 
-                     <h2 class="aside__heading">Framework</h2>
-                     <p class="govuk-body govuk-!-font-size-16">
-                        <a href="{{ path('frameworks_show', {'rmNumber': metadata.framework_rm_number }) }}">{{ metadata.framework_title }} ({{ metadata.framework_rm_number }})</a>
-                     </p>
+                     <p><a class="sidebar__csv-download" href="{{ path('frameworks_lot_suppliers_csv', {'rmNumber': metadata.framework_rm_number, 'lotNumber' : metadata.lot_number }) }}">Download Supplier Contact Details</a></p>
+
+                  </div>
 
                </aside>
-
 
             </div>
 
