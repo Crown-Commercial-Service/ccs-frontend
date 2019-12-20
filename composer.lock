@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0482bb348327748b402141cc206ab28",
+    "content-hash": "4f0c531e7f44201285e0fd4fef2323a2",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -613,6 +613,61 @@
             ],
             "description": "Framework to build an efficient front-end website with content from a Headless CMS or other data sources",
             "time": "2019-12-16T15:38:25+00:00"
+        },
+        {
+            "name": "studio24/http-cache-clear",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/studio24/http-cache-clear.git",
+                "reference": "13e19f2a23daa4da45d62f29af87922ae141d5de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/studio24/http-cache-clear/zipball/13e19f2a23daa4da45d62f29af87922ae141d5de",
+                "reference": "13e19f2a23daa4da45d62f29af87922ae141d5de",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "symfony/console": "^4.2",
+                "symfony/filesystem": "^4.2"
+            },
+            "bin": [
+                "http-cache-clear"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "App\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maria",
+                    "email": "hello@studio24.net",
+                    "homepage": "https://www.studio24.net/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Simon Jones",
+                    "email": "hello@studio24.net",
+                    "homepage": "https://www.studio24.net/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Clear old cache data from the Symfony HTTP Cache (filesystem) based on an expiry time",
+            "homepage": "https://github.com/studio24/http-cache-clear",
+            "keywords": [
+                "cache",
+                "httpcache",
+                "symfony"
+            ],
+            "time": "2019-10-21T09:40:15+00:00"
         },
         {
             "name": "symfony/apache-pack",
