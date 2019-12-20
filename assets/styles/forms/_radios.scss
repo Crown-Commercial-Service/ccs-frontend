@@ -90,3 +90,15 @@
     }
 
 }
+
+
+.ccs-radios--scrollable {
+    max-height: govuk-px-to-rem(394);
+    min-height: govuk-px-to-rem(234);
+    overflow: auto;
+}
+
+
+.ccs-radios--nested {
+    max-width: 100%;
+}

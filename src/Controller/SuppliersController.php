@@ -21,6 +21,13 @@ class SuppliersController extends AbstractController
      */
     protected $api;
 
+    /**
+     * Suppliers Search Rest API data
+     *
+     * @var RestData
+     */
+    protected $searchApi;
+
     public function __construct(CacheInterface $cache)
     {
         $this->api = new RestData(
@@ -30,6 +37,15 @@ class SuppliersController extends AbstractController
         $this->api->setContentType('suppliers');
         $this->api->setCache($cache);
         $this->api->setCacheLifetime(1800);
+
+        $this->searchApi = new RestData(
+            getenv('SEARCH_API_BASE_URL'),
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
+        );
+
+        $this->searchApi->setContentType('suppliers');
+        $this->searchApi->setCache($cache);
+        $this->searchApi->setCacheLifetime(1);
     }
 
 
@@ -50,19 +66,40 @@ class SuppliersController extends AbstractController
     {
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
-        $this->api->setCacheKey($request->getRequestUri());
+        $this->searchApi->setCacheKey($request->getRequestUri());
+
+        // We are overriding the content model here
+        $this->searchApi->getContentType()->setApiEndpoint('suppliers');
 
         try {
-            $results = $this->api->list($page);
+            $results = $this->searchApi->list($page);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
 
-        $results->getPagination()->setResultsPerPage(20);
+        $limit = $request->query->has('limit') ? (int)filter_var($request->query->get('limit'),
+          FILTER_SANITIZE_NUMBER_INT) : 20;
+        $framework = $request->query->has('framework') ? filter_var($request->query->get('framework'),
+          FILTER_SANITIZE_STRING) : null;
+
+        $results->getPagination()->setResultsPerPage($limit);
+
+        $facets = $results->getMetadata()->offsetGet('facets');
 
         $data = [
-            'pagination' => $results->getPagination(),
-            'results'    => $results,
+          'page_number'         => $page,
+          'search_api_base_url' => getenv('SEARCH_API_BASE_URL'),
+          'query'      => '',
+          'limit'      => $limit,
+          'pagination' => $results->getPagination(),
+          'results'    => $results,
+          'facets'     => $facets,
+          'selected'   => [
+              'framework' => $framework,
+              'lot'       => '',
+              'rm_number' => '',
+              'lot_id'    => ''
+          ]
         ];
 
         return $this->render('suppliers/list.html.twig', $data);
@@ -102,22 +139,50 @@ class SuppliersController extends AbstractController
             $query = str_replace('-', '+', $query);
         }
 
-        $this->api->setCacheKey($request->getRequestUri());
+        $this->searchApi->setCacheKey($request->getRequestUri());
+
+        // We are overriding the content model here
+        $this->searchApi->getContentType()->setApiEndpoint('suppliers');
+
+        $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
+        $frameworkId = $request->query->has('framework') ? filter_var($request->query->get('framework'), FILTER_SANITIZE_STRING) : null;
+        $lotId = $request->query->has('lot-filter-nested') ? filter_var($request->query->get('lot-filter-nested'), FILTER_SANITIZE_STRING) : null;
+        if($lotId == 'all' || $lotId == 'filterLot') {
+            $lotId = null;
+        }
 
         try {
-            $results = $this->api->list($page, [
+            $results = $this->searchApi->list($page, [
                 'keyword'   => $query,
-                'limit'     => 20,
+                'limit'     => $limit,
+                'framework' => $frameworkId,
+                'lot'       => $lotId
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
 
+        $facets = $results->getMetadata()->offsetGet('facets');
+
+        $lotObject = $this->retrieveLotFromFacetsUsingLotId($lotId, $facets);
+        $frameworkObject = $this->retrieveFrameworkFromFacetsUsingLotId($frameworkId, $facets);
+
         $data = [
-            'query'         => $query,
-            'pagination'    => $results->getPagination(),
-            'results'       => $results,
+            'page_number'         => $page,
+            'search_api_base_url' => getenv('SEARCH_API_BASE_URL'),
+            'query'               => (!empty($query) ? $query : ''),
+            'pagination'          => $results->getPagination(),
+            'results'             => $results,
+            'facets'              => $facets,
+            'limit'               => $limit,
+            'selected'=> [
+                'framework' => $frameworkObject,
+                'rm_number' => $frameworkId,
+                'lot'       => $lotObject,
+                'lot_id'    => $lotId
+            ]
         ];
+
         return $this->render('suppliers/list.html.twig', $data);
     }
 
@@ -150,5 +215,51 @@ class SuppliersController extends AbstractController
             'supplier' => $results
         ];
         return $this->render('suppliers/show.html.twig', $data);
+    }
+
+
+    /**
+     * Attempt to retrieve the lot object for a lot from the facet data
+     * searching by lot ID
+     *
+     * @param $lotId
+     * @param $facets
+     * @return |null
+     */
+    protected function retrieveFrameworkFromFacetsUsingLotId($frameworkRmNumber, $facets) {
+        if (empty($frameworkRmNumber) || empty($facets) || !isset($facets['frameworks'])) {
+            return null;
+        }
+
+        foreach ($facets['frameworks'] as $facetFramework) {
+            if ($facetFramework['rm_number'] == $frameworkRmNumber) {
+                return $facetFramework;
+            }
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Attempt to retrieve the lot object for a lot from the facet data
+     * searching by lot ID
+     *
+     * @param $lotId
+     * @param $facets
+     * @return |null
+     */
+    protected function retrieveLotFromFacetsUsingLotId($lotId, $facets) {
+        if (empty($lotId) || empty($facets) || !isset($facets['lots'])) {
+            return null;
+        }
+
+        foreach ($facets['lots'] as $facetLot) {
+            if ($facetLot['id'] == $lotId) {
+                return $facetLot;
+            }
+        }
+
+        return null;
     }
 }
