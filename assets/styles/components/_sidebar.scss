@@ -23,6 +23,16 @@
 
 }
 
+.sidebar__csv-download {
+    width:70%;
+    margin:0 auto;
+    display:block;
+    background:transparent url('/assets/images/csv.png') no-repeat;
+    background-size:2em;
+    padding-left: 2.5em;
+}
+
+
 .sidebar__search-group {
 
     position: relative;
