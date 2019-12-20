@@ -1,0 +1,21 @@
+/*------------------------------------*\
+  #Subsearch filter
+\*------------------------------------*/
+.subsearch-filter {
+
+    margin-left: govuk-px-to-rem(- 12);
+    margin-right: govuk-px-to-rem(- 12);
+    margin-bottom: 0;
+
+    padding: govuk-px-to-rem(12);
+
+    background-color: white;
+
+}
+
+.subsearch-filter .sidebar__search-button.sidebar__search-button {
+
+    right: govuk-px-to-rem(12);
+    bottom: govuk-px-to-rem(12);
+
+}
