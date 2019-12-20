@@ -80,6 +80,17 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
         "$SCRIPTDIR/files/applogs" \
         /etc/logrotate.d/
 
+    echo "> > chown'ing cache_clear..."
+    sudo chown root:root "$SCRIPTDIR/files/cache_clear"
+
+    echo "> > chmod'ing cache_clear..."
+    sudo chmod 644 "$SCRIPTDIR/files/cache_clear"
+
+    echo "> > Moving cache_clear..."
+    sudo mv -f \
+        "$SCRIPTDIR/files/cache_clear" \
+        /etc/cron.d/
+
     echo "> > Marking first deployment tasks as completed..."
     sudo touch "$FIRST_RUN_PATH"
 fi

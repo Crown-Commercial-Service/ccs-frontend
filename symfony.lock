@@ -83,6 +83,9 @@
     "studio24/frontend": {
         "version": "dev-master"
     },
+    "studio24/http-cache-clear": {
+        "version": "v0.1.0"
+    },
     "symfony/apache-pack": {
         "version": "1.0",
         "recipe": {
