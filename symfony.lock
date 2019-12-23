@@ -48,7 +48,7 @@
         "version": "1.24.0"
     },
     "php": {
-        "version": "7.2"
+        "version": "7.3"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -174,7 +174,7 @@
         }
     },
     "symfony/http-client": {
-        "version": "v4.4.1"
+        "version": "v4.4.2"
     },
     "symfony/http-foundation": {
         "version": "v4.2.2"
