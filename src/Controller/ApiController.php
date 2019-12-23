@@ -7,7 +7,7 @@ use Psr\SimpleCache\CacheInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpClient;
 use App\Exception\ApiException;
 
 class ApiController extends AbstractController
