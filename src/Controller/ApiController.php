@@ -163,6 +163,12 @@ class ApiController extends AbstractController
                 case 'page':
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
                     break;
+                case 'pillar':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    break;
+                case 'category':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    break;
             }
         }
         return $filtered;
