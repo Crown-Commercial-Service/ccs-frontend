@@ -1,0 +1,8 @@
+{{ component.intro_intro_heading }}
+{{ component.intro_intro_content  | raw }}
+
+{% for media in component.intro_intro_media %}
+    {{ dump(media) }}
+    {{ media.video_video_video | raw }}
+{% endfor %}
+
