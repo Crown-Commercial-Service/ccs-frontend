@@ -17,9 +17,9 @@
     {% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.css?v=1.0.0">
+        <link rel="stylesheet" href="/assets/styles/styles.css?v=1.1.1">
     {% else %}
-        <link rel="stylesheet" href="/assets/styles/styles.css?v=1.0.0">
+        <link rel="stylesheet" href="/assets/styles/styles.css?v=1.1.1">
     {% endif %}
 
     {% block blocking_javascript %}
@@ -86,10 +86,10 @@
 
 {% endblock %}
 
-</body>
-
-<script src="/assets/scripts/libraries/jquery-1.11.3.js"></script>
+<script src="/assets/scripts/libraries/jquery-1.12.4.min.js"></script>
 <script src="/assets/scripts/all.js"></script>
 <script src="/assets/scripts/app.js?v=1.1"></script>
+
+</body>
 
 </html>

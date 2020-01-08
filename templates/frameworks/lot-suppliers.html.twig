@@ -11,7 +11,6 @@
 
 {% block body %}
 
-
    <!-- required wrapper 1 -->
    <div class="govuk-width-container">
 
@@ -76,10 +75,22 @@
                          <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
                              <a href="{{ path('suppliers_show', {'id': item.content.supplier_id, 'slug': slugify(item.content.supplier_name)} ) }}">{{ item.content.supplier_name }}</a></h3>
 
+
+                          {% if item.content.supplier_contact_email is not empty %}
+                              <p class="govuk-list govuk-!-font-size-17featured ccs-framework-list">
+                              {% if item.content.supplier_contact_name is not empty %}
+                                  Email {{ item.content.supplier_contact_name}} on
+                              {% endif %}
+
+                              <a href="mailto:{{ item.content.supplier_contact_email }}">{{ item.content.supplier_contact_email }}</a>
+                              </p>
+                          {% endif %}
+
+                         {#
                          <ul class="govuk-list govuk-!-font-size-17featured ccs-framework-list">
-                            {% for framework in item.content.live_frameworks %}
+                            {% for framework in item.content.live_frameworks %}#}
                                 {#<li><a href="{{ path('frameworks_show', {'rmNumber':  framework.rm_number }) }}">{{ framework.title }} ({{ framework.rm_number }})</a></li>#}
-                                <li>
+                                {#<li>
                                     <span class="ccs-framework-list__title">{{ framework.title }} ({{ framework.rm_number }})</span>
                                     {% if framework.status == 'Expired' or framework.status == 'Expired - Data Still Received' %}
                                         <span class="govuk-tag ccs-tag ccs-tag--error ccs-tag--lower-case">Expired: {{ framework.end_date.format('d/m/Y') }}</span>
@@ -87,6 +98,7 @@
                                 </li>
                             {% endfor %}
                          </ul>
+                         #}
                       </li>
                    {% endfor %}
                </ul>
@@ -112,19 +124,24 @@
 
                   <div class="apollo-enclosure">
 
-                      {#<h2 class="aside__heading">Lot description</h2>#}
+                      <h2 class="aside__heading">Framework</h2>
+                      <p class="govuk-body govuk-!-font-size-16">
+                          <a href="{{ path('frameworks_show', {'rmNumber': metadata.framework_rm_number }) }}">{{ metadata.framework_title }} ({{ metadata.framework_rm_number }})</a>
+                      </p>
 
-                      {#<p class="govuk-body govuk-!-font-size-16">#}
-                      {#Ranged connectivity services: site-to-site or site-to-cloud. Includes terrestrial, wireless and satellite solutions, network security, equipment, support, connectivity circuits, IP connectivity, ISP and internet services, broadband routing, home and teleworker packages and online storage.#}
-                      {#</p>#}
+                      {% if metadata.lot_description %}
+                          <h2 class="aside__heading">Lot description</h2>
 
-                     <h2 class="aside__heading">Framework</h2>
-                     <p class="govuk-body govuk-!-font-size-16">
-                        <a href="{{ path('frameworks_show', {'rmNumber': metadata.framework_rm_number }) }}">{{ metadata.framework_title }} ({{ metadata.framework_rm_number }})</a>
-                     </p>
+                          <p class="govuk-body govuk-!-font-size-16">
+                              {{ metadata.lot_description }}
+                          </p>
+                      {% endif %}
+
+                     <p><a class="sidebar__csv-download" href="{{ path('frameworks_lot_suppliers_csv', {'rmNumber': metadata.framework_rm_number, 'lotNumber' : metadata.lot_number }) }}">Download Supplier Contact Details</a></p>
+
+                  </div>
 
                </aside>
-
 
             </div>
 

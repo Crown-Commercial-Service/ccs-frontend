@@ -100,13 +100,36 @@ Optionally: Set up local host http://local.crowncommercial.gov.uk/ to point to t
 
 #### Clear cache
 
-Run this command from the root project directory:
+To clear the Symfony cache (e.g. compiled templates) run:
 
 ```
 bin/console cache:clear
 ```
 
+To clear the application cache (e.g. cached API data) run:
+
+```
+bin/console cache:pool:clear cache.app_clearer
+```
+
+To clear the HTTP cache run:
+
+```
+vendor/bin/http-cache-clear <path to http_cache cache folder>
+```
+
+E.g.
+
+```
+vendor/bin/http-cache-clear var/cache/prod/http_cache
+```
+
 ## Deployment
+
+### Regular maintenance time
+
+We have a regular time reserved on **Tuesdays between 8am and 9am** for routine maintenance. Please aim to undertaken 
+all maintenance tasks (e.g. software updates) during this time. 
 
 ### Testing changes
 

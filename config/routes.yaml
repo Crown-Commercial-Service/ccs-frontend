@@ -56,6 +56,10 @@ frameworks_suppliers:
   defaults:
     page: 1
 
+frameworks_lot_suppliers_csv:
+  path: /agreements/{rmNumber}:{lotNumber}/lot-suppliers/csv
+  controller: App\Controller\FrameworksController::suppliersOnLotCsv
+
 frameworks_lot_suppliers:
   path: /agreements/{rmNumber}:{lotNumber}/lot-suppliers/{page}
   controller: App\Controller\FrameworksController::suppliersOnLot
@@ -93,6 +97,18 @@ news_list:
     page: 1
   requirements:
     page: '\d+'
+
+api_suppliers:
+  path: /api/suppliers
+  controller: App\Controller\ApiController::suppliers
+  defaults:
+    _format: json
+
+api_frameworks:
+  path: /api/frameworks
+  controller: App\Controller\ApiController::frameworks
+  defaults:
+    _format: json
 
 news_page:
   path: "/news/{slug}"

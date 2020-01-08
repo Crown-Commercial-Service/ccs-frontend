@@ -27,7 +27,7 @@
                             {% set theFeaturedImage = page.featuredImage.byName('full') %}
                         {% endif %}
 
-                        style="background-size: cover; background-image: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.75) 41%, rgba(0,0,0,0.6) 71%, rgba(0,0,0,0.3) 100%), url({{ theFeaturedImage }});"
+                        style="background-size: cover; background-image: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.75) 41%, rgba(0,0,0,0.6) 71%, rgba(0,0,0,0.3) 100%), path({{ theFeaturedImage }});"
                     {% endif %}
 
                 {% endfor %}
@@ -57,7 +57,7 @@
                                 <p class="news-listing-summary--featured">{{ page.content.post_lead_text }}</p>
 
                                 <p class="news-listing-summary--featured">
-                                    <a href="{{ url('news_page', {'slug': page.urlSlug}) }}" class="govuk-!-font-weight-bold">Continue
+                                    <a href="{{ path('news_page', {'slug': page.urlSlug}) }}" class="govuk-!-font-weight-bold">Continue
                                         reading
                                         <span class="visuallyhidden">{{ page.title|raw }}</span></a>
                                 </p>
@@ -126,7 +126,7 @@
 
                                         {% if page.featuredImage %}
                                             <picture>
-                                                <a href="{{ url('news_page', {'slug': page.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
+                                                <a href="{{ path('news_page', {'slug': page.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
 
                                                     <!--[if IE 9]>
                                                     <video style="display: none;>
@@ -165,7 +165,7 @@
                                                 | {{ page.datePublished.format('jS F Y') }}
                                             </div>
                                             <h2 class="news-listing-title">
-                                                <a href="{{ url('news_page', {'slug': page.urlSlug}) }}">{{ page.title|raw }}</a>
+                                                <a href="{{ path('news_page', {'slug': page.urlSlug}) }}">{{ page.title|raw }}</a>
                                             </h2>
 
                                             {% if page.content.post_lead_text %}

@@ -63,7 +63,7 @@
 
                     <p class="govuk-body-l">Complete the form below to book a place on one of our online training sessions.</p>
 
-                    <p>The sessions are between 1 and 1.5 hours long. Log-in details will be issued in a meeting invitation sent to you about one week before the training date.</p>
+                    <p>The sessions are between 1 and 1.5 hours long. Login details will be issued in a meeting invitation sent to you about one week before the training date.</p>
 
 
 
@@ -125,12 +125,12 @@
                             <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                     <h1 class="govuk-fieldset__heading">
-                                        Are you a:
+                                        You will need to choose a training date. Are you a buyer or supplier?
                                     </h1>
                                 </legend>
                                 <div class="govuk-radios govuk-radios--conditional" data-module="radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="customer-type" type="radio" value="Buyer" data-aria-controls="conditional-how-contacted-conditional-1">
+                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="customer-type" type="radio" value="Buyer" data-aria-controls="conditional-how-contacted-conditional-1" required>
                                         <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-1">
                                             Buyer
                                         </label>
@@ -240,6 +240,35 @@
                     </form>
 
                     <script>
+
+                        /**
+                         * Only implement this if the browser supports removeAttribute
+                         */
+                        if(document.body.removeAttribute) {
+                            /**
+                             * make date radio buttons required when necessary
+                             */
+                            var buyerRadioSelect    = document.getElementById("how-contacted-conditional-1");
+                            var buyerDateFirstRadio = document.getElementById("buyer-training-dates-1");
+                            var supplierRadioSelect = document.getElementById("how-contacted-conditional-2");
+                            var SupplierDateFirstRadio = document.getElementById("supplier-training-dates-1");
+
+                            function clearRequiredRadios() {
+                                buyerDateFirstRadio.removeAttribute("required");
+                                SupplierDateFirstRadio.removeAttribute("required");
+                            }
+
+                            buyerRadioSelect.addEventListener("click", function(event) {
+                                clearRequiredRadios();
+                                buyerDateFirstRadio.required = true;
+                            });
+
+                            supplierRadioSelect.addEventListener("click", function(event) {
+                                clearRequiredRadios();
+                                SupplierDateFirstRadio.required = true;
+                            });
+                        }
+
 
                         // Collect all the radio values
                         customerTypeRadios = document.getElementsByName("customer-type");
