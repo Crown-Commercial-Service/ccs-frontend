@@ -1,0 +1,17 @@
+type: flexible
+components:
+  intro_intro:
+    intro_intro_heading:
+      type: text
+    intro_intro_content:
+      type: richtext
+    intro_intro_media:
+      type: array
+      content_fields:
+        video_video_video:
+          type: richtext
+        image_image_image:
+          type: image
+  text_text:
+    text_text_text:
+      type: richtext
