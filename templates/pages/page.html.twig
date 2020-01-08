@@ -11,17 +11,16 @@
 
 {% block body %}
 
+
+    {# Component: Hero #}
+    {# Pass all the variables along #}
+    {% include '_components/hero.html.twig' with {'image': page.content.hero_image, 'heading': page.content.hero_heading, 'content': page.content.hero_content, 'cta_label': page.content.hero_cta_label, 'cta_destination': page.content.hero_cta_destination} %}
+
+
     <!-- required wrapper 1 -->
     <div class="govuk-width-container">
 
         <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
-
-
-
-        {# Component: Hero #}
-        {# Pass all the variables along #}
-        {% include '_components/hero.html.twig' with {'image': page.content.hero_image, 'heading': page.content.hero_heading, 'content': page.content.hero_content, 'cta_label': page.content.hero_cta_label, 'cta_destination': page.content.hero_cta_destination} %}
-
 
 
         <div class="govuk-phase-banner">

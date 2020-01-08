@@ -1,0 +1,71 @@
+/*------------------------------------*\
+  #Hero
+
+  The Hero component is not part of the GOV.UK design system
+
+\*------------------------------------*/
+.hero {
+
+    background-color: #37464F;
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 0;
+
+    //min-height: 32em;
+    position: relative;
+
+    width: 100%;
+
+}
+
+.hero__picture {
+
+    display: block;
+
+}
+
+.hero__image {
+    
+    bottom: 0;
+    height: 100%;
+    //left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    vertical-align: middle;
+    width: 50%;
+    object-fit: cover;
+    
+}
+
+.hero__caption {
+
+    background-color: #37464F;
+    color: white;
+    position: relative;
+    padding: govuk-px-to-rem(50) 0;
+
+}
+
+.hero__content p {
+    color: white;
+}
+
+.hero__title {
+
+    color: white;
+    font-weight: 300;
+    margin-bottom: govuk-px-to-rem(20);
+
+}
+
+.hero__content {
+
+    border-style: solid;
+    border-width: 0 0 0 3px;
+    border-color: $ccs-colour;
+    border-color: var(--sub-color);
+    padding: 0 0 0 govuk-px-to-rem(20);
+    margin-bottom: govuk-px-to-rem(50);
+
+}

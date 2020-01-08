@@ -1,7 +1,40 @@
 {% if image %}
+    <figure class="hero">
 
-    {{ content | raw }}
-    {{ cta_label }}
-    <img src="{{ image }}" alt="">
+        <picture class="hero__picture">
+            <source media="(max-width: 768px)" srcset="{{ image.byName('medium_large') }}">
+            <source media="(min-width: 1024px)" srcset="{{ image.byName('large') }}">
+            <source media="(min-width: 1920px)" srcset="{{ image.byName('full') }}">
+            {# Fallback for browsers that don't support the picture element #}
+            <img src="{{ image.byName('medium_large') }}" role="presentation" class="hero__image" loading="lazy">
+        </picture>
 
+        <figcaption>
+
+            <div class="govuk-width-container">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+
+
+
+                        <div class="hero__caption">
+                            <h2 class="govuk-heading-xl hero__title">{{ heading }}</h2>
+
+                            <div class="hero__content">
+                                {{ content | raw }}
+                            </div>
+
+                            {% if cta_label and cta_destination %}
+                                <a href="{{ cta_destination }}" class="govuk-button">{{ cta_label }}</a>
+                            {% endif %}
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </figcaption>
+    </figure>
 {% endif %}
