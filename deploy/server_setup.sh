@@ -9,6 +9,13 @@ FIRST_RUN_PATH="/codedeploy.server_setup"
 echo "> Updating system software..."
 sudo yum update -y
 
+echo "> Set timezone..."
+    sudo -rm -f /etc/sysconfig/clock
+    sudo mv -f \
+        "$SCRIPTDIR/files/clock" \
+        /etc/sysconfig/clock
+    sudo ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
+
 if [ ! -e "$FIRST_RUN_PATH" ]; then
     echo "> Running once-only deployment tasks..."
 
@@ -25,7 +32,7 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
         "$SCRIPTDIR/files/awscli.conf" \
         "$SCRIPTDIR/files/awslogs.conf"
 
-    echo "> > Movinging awslogs config files..."
+    echo "> > Moving awslogs config files..."
     sudo mv -f \
         "$SCRIPTDIR/files/awscli.conf" \
         "$SCRIPTDIR/files/awslogs.conf" \
@@ -54,6 +61,19 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     echo "> > Moving httpd.conf..."
     sudo mv -f "$SCRIPTDIR/files/httpd.conf" /etc/httpd/conf/httpd.conf
 
+    echo "> > chown'ing php config file..."
+    sudo chown root:root \
+        "$SCRIPTDIR/files/99-custom.ini"
+        
+    echo "> > chmod'ing php config file..."
+    sudo chmod 644 \
+        "$SCRIPTDIR/files/99-custom.ini"
+
+    echo "> > Moving php config file..."
+    sudo mv -f \
+        "$SCRIPTDIR/files/99-custom.ini" \
+        /etc/php.d/
+        
     echo "> > chown'ing logrotate config files..."
     sudo chown root:root \
         "$SCRIPTDIR/files/applogs"
@@ -66,6 +86,17 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     sudo mv -f \
         "$SCRIPTDIR/files/applogs" \
         /etc/logrotate.d/
+
+    echo "> > chown'ing cache_clear..."
+    sudo chown root:root "$SCRIPTDIR/files/cache_clear"
+
+    echo "> > chmod'ing cache_clear..."
+    sudo chmod 644 "$SCRIPTDIR/files/cache_clear"
+
+    echo "> > Moving cache_clear..."
+    sudo mv -f \
+        "$SCRIPTDIR/files/cache_clear" \
+        /etc/cron.d/
 
     echo "> > Marking first deployment tasks as completed..."
     sudo touch "$FIRST_RUN_PATH"

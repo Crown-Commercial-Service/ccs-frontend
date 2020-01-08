@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Studio24\Frontend\Cms\RestData;
 use Symfony\Component\HttpFoundation\Request;
 use Studio24\Frontend\Exception\NotFoundException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FrameworksController extends AbstractController
@@ -22,6 +23,11 @@ class FrameworksController extends AbstractController
      */
     protected $api;
 
+    /**
+     * @var \Studio24\Frontend\Cms\RestData
+     */
+    protected $searchApi;
+
     public function __construct(CacheInterface $cache)
     {
         $this->api = new RestData(
@@ -31,6 +37,15 @@ class FrameworksController extends AbstractController
         $this->api->setContentType('frameworks');
         $this->api->setCache($cache);
         $this->api->setCacheLifetime(1800);
+
+        $this->searchApi = new RestData(
+            getenv('SEARCH_API_BASE_URL'),
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
+        );
+
+        $this->searchApi->setContentType('frameworks');
+        $this->searchApi->setCache($cache);
+        $this->searchApi->setCacheLifetime(1);
     }
 
     /**
@@ -101,10 +116,16 @@ class FrameworksController extends AbstractController
         }
 
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
-        $this->api->setCacheKey($request->getRequestUri());
+
+        $this->searchApi->setCacheKey($request->getRequestUri());
+
+        // We are overriding the content model here
+        $this->searchApi->getContentType()->setApiEndpoint('frameworks');
+
+        $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
 
         try {
-            $results = $this->api->list($page, ['limit' => 20]);
+            $results = $this->searchApi->list($page, ['limit' => $limit]);
 
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
@@ -183,10 +204,13 @@ class FrameworksController extends AbstractController
             $this->redirectToRoute('frameworks_list');
         }
 
-        $this->api->setCacheKey($request->getRequestUri());
+        $this->searchApi->setCacheKey($request->getRequestUri());
+
+        // We are overriding the content model here
+        $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
         try {
-            $results = $this->api->list($page, [
+            $results = $this->searchApi->list($page, [
                 'category' => $categoryName,
                 'limit' => 20
 
@@ -231,10 +255,13 @@ class FrameworksController extends AbstractController
             $this->redirectToRoute('frameworks_list');
         }
 
-        $this->api->setCacheKey($request->getRequestUri());
+        $this->searchApi->setCacheKey($request->getRequestUri());
+
+        // We are overriding the content model here
+        $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
         try {
-            $results = $this->api->list($page, [
+            $results = $this->searchApi->list($page, [
                 'pillar' => $pillarName,
                 'limit' => 20
             ]);
@@ -276,12 +303,33 @@ class FrameworksController extends AbstractController
         $query =  filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
-        $this->api->setCacheKey($request->getRequestUri());
+        $this->searchApi->setCacheKey($request->getRequestUri());
+
+        // We are overriding the content model here
+        $this->searchApi->getContentType()->setApiEndpoint('frameworks');
+
+        $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
+
+        if ($request->query->has('status')) {
+            $status = [];
+            foreach ($request->query->get('status') as $item) {
+                $status[] = filter_var($item, FILTER_SANITIZE_STRING);
+            }
+        }
+
+        if ($request->query->has('category')) {
+            $category = [];
+            foreach ($request->query->get('category') as $item) {
+                $category[] = filter_var($item, FILTER_SANITIZE_STRING);
+            }
+        }
 
         try {
-            $results = $this->api->list($page, [
+            $results = $this->searchApi->list($page, [
                 'keyword'   => $query,
-                'limit'     => 20,
+                'limit'     => $limit,
+                'status'    => $status ?? null,
+                'pillar'    => $category ?? null,
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
@@ -414,4 +462,85 @@ class FrameworksController extends AbstractController
 
         return $this->render('frameworks/lot-suppliers.html.twig', $data);
     }
+
+
+    public function suppliersOnLotCsv(Request $request, string $rmNumber, string $lotNumber)
+    {
+
+        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
+        $lotNumber = filter_var($lotNumber, FILTER_SANITIZE_STRING);
+
+
+        $this->api->getContentModel()->getContentType('framework_lot_suppliers')->setApiEndpoint(sprintf('ccs/v1/lot-suppliers/%s/lot/%s', $rmNumber, $lotNumber));
+        $this->api->setContentType('framework_lot_suppliers');
+        $this->api->setCacheKey($request->getRequestUri());
+
+        $csvData = array(
+            0 => [
+            'Supplier Name',
+            'Contact Name',
+            'Contact Email',
+            'Street',
+            'City',
+            'Postcode',
+            ]
+        );
+
+        // Iterate through suppliers and store necessary information into CSV array.
+
+        try {
+            $results = $this->api->list(1,['limit' => 10000]);
+
+            $i = 1;
+            foreach ($results as $item) {
+
+                $supplier_name = ($item->getContent()->get('supplier_name')) ? $item->getContent()->get('supplier_name')->getValue() : '';
+                $contact_name = ($item->getContent()->get('supplier_contact_name')) ? $item->getContent()->get('supplier_contact_name')->getValue() : '';
+                $contact_email = ($item->getContent()->get('supplier_contact_email')) ? $item->getContent()->get('supplier_contact_email')->getValue() : '';
+                $street = ($item->getContent()->get('supplier_street')) ? $item->getContent()->get('supplier_street')->getValue() : '';
+                $city = ($item->getContent()->get('supplier_city')) ? $item->getContent()->get('supplier_city')->getValue() : '';
+                $postcode = ($item->getContent()->get('supplier_postcode')) ? $item->getContent()->get('supplier_postcode')->getValue() : '';
+
+                $csvData[$i][] = $supplier_name;
+                $csvData[$i][] = $contact_name;
+                $csvData[$i][] = $contact_email;
+                $csvData[$i][] = $street;
+                $csvData[$i][] = $city;
+                $csvData[$i][] = $postcode;
+
+                $i++;
+            }
+
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
+        }
+
+        // Process array into CSV using memory handle (easiest way to pass it into a variable)
+
+        $csv = fopen('php://temp/maxmemory:'. (5*1024*1024), 'r+');
+
+        if ($csvData) {
+            foreach ($csvData as $row) {
+                fputcsv($csv, $row);
+            }
+        }
+
+        rewind($csv);
+        $output = stream_get_contents($csv);
+
+        // Output the CSV
+
+        $response = new Response;
+        $response->setContent($output);
+
+        $response->headers->set('Content-Type', 'text/plain');
+
+        $response->headers->set(
+            'Content-Disposition',
+            'attachment; filename="' . $rmNumber.'_Lot'.$lotNumber.'.csv' . '";'
+        );
+
+        return $response;
+    }
+
 }

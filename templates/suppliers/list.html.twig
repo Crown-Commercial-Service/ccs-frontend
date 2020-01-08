@@ -54,11 +54,7 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
 
-                    {% if query is defined %}
-                        <h1 class="govuk-heading-xl page-title">Search suppliers for {{ query }}</h1>
-                    {% else %}
-                        <h1 class="govuk-heading-xl page-title">Search suppliers</h1>
-                    {% endif %}
+                    <h1 class="govuk-heading-xl page-title">Search suppliers</h1>
 
                     <div class="govuk-warning-text">
                         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
@@ -66,227 +62,203 @@
                             <span class="govuk-warning-text__assistive">Important</span>
                             Some of our suppliers will not be displayed on this page
                         </strong>
-                        <p>Select <a href="https://supplierregistration.cabinetoffice.gov.uk/dps">Dynamic Purchasing Systems</a> or
-                            <a href="https://www.digitalmarketplace.service.gov.uk/g-cloud/suppliers">G-cloud/DOS</a> to see more suppliers for that type of agreement. To find out what a DPS, G-cloud or DOS is take a look at
-                            <a href="/help-and-support/how-to-buy/">How to buy</a>.</p>
+                        <p>Select <a href="https://supplierregistration.cabinetoffice.gov.uk/dps">Dynamic Purchasing Systems</a>, <a href="https://www.digitalmarketplace.service.gov.uk/g-cloud/suppliers">G-Cloud</a> or <a href="https://www.digitalmarketplace.service.gov.uk/buyers/frameworks/digital-outcomes-and-specialists-4/requirements/digital-outcomes">Digital Outcomes & Specialists</a> (DOS) to see suppliers for that type of agreement. To find out what a DPS, G-Cloud or DOS is take a look at <a href="/help-and-support/how-to-buy/">How to buy</a>.</p>
                     </div>
 
                 </div>
             </div>
 
 
-            <div class="govuk-grid-row">
+            <div class="govuk-grid-row" id="search-app">
                 <div class="govuk-grid-column-one-third">
 
-                    <form action="{{ path('suppliers_search') }}">
+                    <form action="{{ path('suppliers_search') }}" v-on:submit.prevent="updateResults">
 
                         <div class="govuk-form-group govuk-form-group--enclosure">
                             <div class="govuk-form-group sidebar__search-group">
-                                <label class="govuk-label" for="name">
+                                <label class="govuk-label" for="q">
                                     Search suppliers
                                 </label>
-                                <input class="govuk-input" id="q" name="q" type="text">
-                                <button class="sidebar__search-button">
+                                {% if query is defined %}
+                                    <input class="govuk-input" id="q" name="q" type="text" value="{{ query }}" />
+                                {% else %}
+                                    <input class="govuk-input" id="q" name="q" type="text" />
+                                {% endif %}
+                                <button class="sidebar__search-button govuk-input" id="submit-search-button" v-on:click="updateSearchQueryValue">
                                     <span class="visuallyhidden">Search suppliers</span>
                                 </button>
                             </div>
                         </div>
 
 
-                        {#<h2 class="govuk-heading-m">Apply filters</h2>#}
+                        <div class="ccs-filters-intro">
+                            <a href="{{ path('suppliers_list') }}" class="ccs-clear-filters" v-on:click="resetFilters">Clear Filters</a>
+                            <h2 class="govuk-heading-m">Apply filters</h2>
+                        </div>
 
 
-                        {#<div class="govuk-form-group govuk-form-group--enclosure">#}
-                        {#<fieldset class="govuk-fieldset" aria-describedby="waste-hint">#}
-                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
-                        {#<h1 class="govuk-fieldset__heading">#}
-                        {#Which types of waste do you transport?#}
-                        {#</h1>#}
-                        {#</legend>#}
-                        {#<span id="waste-hint" class="govuk-hint">#}
-                        {#Select all that apply.#}
-                        {#</span>#}
-                        {#<div class="govuk-checkboxes govuk-checkboxes--small">#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-1" name="waste" type="checkbox" value="carcasses">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="waste-1">#}
-                        {#Waste from animal carcasses#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-2" name="waste" type="checkbox" value="mines">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="waste-2">#}
-                        {#Waste from mines or quarries#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-3" name="waste" type="checkbox" value="farm">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="waste-3">#}
-                        {#Farm or agricultural waste#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#</fieldset>#}
-                        {#</div>#}
-
-
-
-
-
-                        {#<div class="govuk-form-group govuk-form-group--enclosure">#}
-                        {#<fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">#}
-                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
-                        {#<h1 class="govuk-fieldset__heading">#}
-                        {#Lot#}
-                        {#</h1>#}
-                        {#</legend>#}
-                        {#<span id="waste-hint" class="govuk-hint">#}
-                        {#Show suppliers that are on multiple lots#}
-                        {#</span>#}
-                        {#<div class="govuk-radios govuk-radios--small govuk-radios--conditional" data-module="radios">#}
-
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot" type="radio" value="england">#}
-                        {#<label class="govuk-label govuk-radios__label" for="show-all-suppliers-on-framwork-1">#}
-                        {#Show all suppliers on framework#}
-                        {#</label>#}
-                        {#</div>#}
-
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot" type="radio" value="text" data-aria-controls="conditional-how-contacted-conditional-3">#}
-                        {#<label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">#}
-                        {#Show suppliers on a specific lot#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__conditional govuk-radios__conditional--small govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-3">#}
-
-                        {#<div class="govuk-form-group">#}
-                        {#<fieldset class="govuk-fieldset">#}
-                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
-                        {#<h1 class="govuk-fieldset__heading visuallyhidden">#}
-                        {#Select lot to filter by#}
-                        {#</h1>#}
-                        {#</legend>#}
-                        {#<div class="govuk-radios govuk-radios--small">#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-1" name="where-do-you-live" type="radio" value="england">#}
-                        {#<label class="govuk-label govuk-radios__label" for="where-do-you-live-1">#}
-                        {#Lot 1 Data access services#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-2" name="where-do-you-live" type="radio" value="scotland">#}
-                        {#<label class="govuk-label govuk-radios__label" for="where-do-you-live-2">#}
-                        {#Lot 2 Local connectivity services#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-3" name="where-do-you-live" type="radio" value="wales">#}
-                        {#<label class="govuk-label govuk-radios__label" for="where-do-you-live-3">#}
-                        {#Lot 3 Voice telephony services#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="where-do-you-live-4" name="where-do-you-live" type="radio" value="northern-ireland">#}
-                        {#<label class="govuk-label govuk-radios__label" for="where-do-you-live-4">#}
-                        {#Lot 4 IP telephony services#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#</fieldset>#}
-                        {#</div>#}
-
-                        {#</div>#}
-
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-2" name="lot" type="radio" value="phone" data-aria-controls="conditional-how-contacted-conditional-2">#}
-                        {#<label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">#}
-                        {#Show suppliers that are on multiple lots#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__conditional govuk-radios__conditional--small govuk-radio__conditional--hidden" id="conditional-how-contacted-conditional-2">#}
-                        {#<div class="govuk-form-group">#}
-                        {#<fieldset class="govuk-fieldset" aria-describedby="waste-hint">#}
-                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
-                        {#<h1 class="govuk-fieldset__heading visuallyhidden">#}
-                        {#Select one or more lots to filter by#}
-                        {#</h1>#}
-                        {#</legend>#}
-                        {#<div class="govuk-checkboxes govuk-checkboxes--small">#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="multiple-lots-1" name="waste" type="checkbox" value="carcasses">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="multiple-lots-1">#}
-                        {#Lot 1 Data access services#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="multiple-lots-2" name="waste" type="checkbox" value="mines">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="multiple-lots-2">#}
-                        {#Lot 2 Local connectivity services#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="multiple-lots-3" name="waste" type="checkbox" value="farm">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="multiple-lots-3">#}
-                        {#Lot 7 Paging#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#</fieldset>#}
-                        {#</div>#}
-
-                        {#</div>#}
-
-
-
-                        {#</div>#}
-                        {#</fieldset>#}
-                        {#</div>#}
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="accordion" id="accordion-with-summary-sections">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-1">
+                                            Select framework
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
+                                    <div class="govuk-radios govuk-radios--small ccs-radios--scrollable" v-if="!frameworkList">
+                                        {% for framework in facets.frameworks %}
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="framework-{{ framework.rm_number }}" name="framework" type="radio" value="{{ framework.rm_number }}" {% if selected.rm_number == framework.rm_number %} checked {% endif %}>
+                                            <label class="govuk-label govuk-radios__label" for="framework-{{ framework.rm_number }}">
+                                                {{ framework.title }} ({{ framework.rm_number }})
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="govuk-form-group sidebar__search-group subsearch-filter" v-show="frameworkList" style="display: none;">
+                                        <label for="searchFrameworkList" class="visuallyhidden">Filter Frameworks by Title</label>
+                                        <input class="govuk-input" type="text" name="searchFrameworkList" id="searchFrameworkList" v-model="frameworkFilter" v-on:keydown.enter="frameworkFilterExecute" />
+                                        <button class="sidebar__search-button govuk-input" v-on:click="frameworkFilterExecute"><span class="visuallyhidden">Filter frameworks</span></button>
+                                    </div>
+                                    <div class="govuk-radios govuk-radios--small ccs-radios--scrollable" v-show="frameworkList" style="display: none;">
+                                        <div class="govuk-radios__item govuk-radios__item--small" v-for="framework in frameworkListFiltered">
+                                            <input class="govuk-radios__input govuk-radios__input--small" :id="'framework-' + framework.rm_number" name="framework" type="radio" :value="framework" v-model="checkedFramework" :key="framework.rm_number">
+                                            <label class="govuk-label govuk-radios__label" :for="'framework-' + framework.rm_number">
+                                                {[ framework.title ]} ({[ framework.rm_number ]})
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
 
 
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight" v-show="checkedFramework">
 
-                        {#<div class="govuk-form-group govuk-form-group--enclosure">#}
-                        {#<fieldset class="govuk-fieldset">#}
-                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
-                        {#<h1 class="govuk-fieldset__heading">#}
-                        {#Results per page#}
-                        {#</h1>#}
-                        {#</legend>#}
-                        {#<span id="waste-hint" class="govuk-hint">#}
-                        {#10 results per page#}
-                        {#</span>#}
-                        {#<div class="govuk-radios govuk-radios--small">#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-1" name="where-do-you-live" type="radio" value="england">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-1">#}
-                        {#10#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-2" name="where-do-you-live" type="radio" value="scotland">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-2">#}
-                        {#25#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-3" name="where-do-you-live" type="radio" value="wales">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-3">#}
-                        {#50#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-4" name="where-do-you-live" type="radio" value="northern-ireland">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-4">#}
-                        {#View all#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#</fieldset>#}
-                        {#</div>#}
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-2">
+                                            Lot
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2">
+                                    <div class="govuk-radios govuk-radios--small" data-module="radios">
+
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot-filter-nested" type="radio" value="all" v-on:click="checkedLot = ''; displayLotFilter = false;" {% if selected.lot is empty %}checked{% endif %}>
+                                            <label class="govuk-label govuk-radios__label" for="show-all-suppliers-on-framwork-1">
+                                                Show all suppliers on the selected framework
+                                            </label>
+                                        </div>
+
+                                        {% if facets.lots is defined %}
+                                            <div class="govuk-radios__item govuk-radios__item--small" v-if="!lotList">
+                                                {% if selected.lot is defined and selected.lot is not empty %}
+                                                    <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot-filter-nested" type="radio" value="filterLot" data-aria-controls="conditional-how-contacted-conditional-3" v-on:click="checkedLot = ''; displayLotFilter = false;" checked>
+                                                {% else %}
+                                                    <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot-filter-nested" type="radio" value="filterLot" data-aria-controls="conditional-how-contacted-conditional-3" v-on:click="checkedLot = ''; displayLotFilter = false;">
+                                                {% endif %}
+                                                <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">
+                                                    Show suppliers on a specific lot
+                                                </label>
+                                            </div>
+                                            <div class="govuk-radios__conditional govuk-radios__conditional--small" id="conditional-how-contacted-conditional-3" v-if="!lotList">
+
+                                                <div class="govuk-form-group">
+                                                    <fieldset class="govuk-fieldset">
+                                                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" style="margin-bottom: 0;">
+                                                            <h1 class="govuk-fieldset__heading visuallyhidden">
+                                                                Select lot to filter by
+                                                            </h1>
+                                                        </legend>
+                                                        <div class="govuk-radios govuk-radios--small ccs-radios--nested">
+                                                            {% for lot in facets.lots %}
+                                                                <div class="govuk-radios__item govuk-radios__item--small">
+                                                                    {% if selected.lot is defined and selected.lot is not empty %}
+                                                                        <input class="govuk-radios__input govuk-radios__input--small" id="lot-{{ lot.id }}" name="lot-filter-nested" type="radio" value="{{ lot.id }}" v-model="checkedLot" :key="Lot-1" {% if selected.lot.id == lot.id %} checked {% endif %}>
+                                                                    {% else %}
+                                                                        <input class="govuk-radios__input govuk-radios__input--small" id="lot-{{ lot.id }}" name="lot-filter-nested" type="radio" value="{{ lot.id }}" v-model="checkedLot" :key="Lot-1">
+                                                                    {% endif %}
+                                                                    <label class="govuk-label govuk-radios__label" for="lot-{{ lot.id }}">
+                                                                        Lot {{ lot.lot_number }}: {{ lot.title }}
+                                                                    </label>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+
+                                            </div>
+                                        {% endif %}
+                                        <div class="govuk-radios__item govuk-radios__item--small" v-show="lotList" style="display: none;">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="how-contacted-conditional-3" name="lot-filter-nested" type="radio" value="filterLot" v-on:click="displayLotFilter = true; checkedLot = ''">
+                                            <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">
+                                                Show suppliers on a specific lot
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__conditional govuk-radios__conditional--small" id="" v-show="displayLotFilter" style="display: none;">
+
+                                            <div class="govuk-form-group">
+                                                <fieldset class="govuk-fieldset">
+                                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" style="margin-bottom: 0;">
+                                                        <h1 class="govuk-fieldset__heading visuallyhidden">
+                                                            Select lot to filter by
+                                                        </h1>
+                                                    </legend>
+                                                    <div class="govuk-radios govuk-radios--small ccs-radios--nested">
+                                                        <div class="govuk-radios__item govuk-radios__item--small" v-for="lot in lotList">
+                                                            <input class="govuk-radios__input govuk-radios__input--small" :id="'lot-' + lot.id" name="lot-filter-nested" type="radio" :value="lot" v-model="checkedLot" :key="lot.id">
+                                                            <label class="govuk-label govuk-radios__label" :for="'lot-' + lot.id">
+                                                                Lot {[ lot.lot_number ]}: {[ lot.title ]}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
+
+
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-3">
+                                        Results per page
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
+                                    <div class="govuk-radios govuk-radios--small">
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-1" name="limit" type="radio" :value="10" value="10" {{ pagination.resultsPerPage == 10 ? 'checked' : '' }} v-model="resultsLimit">
+                                            <label class="govuk-label govuk-radios__label" for="results-per-page-1">10</label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-2" name="limit" type="radio" :value="20" value="20" {{ pagination.resultsPerPage == 20 ? 'checked' : '' }} v-model="resultsLimit">
+                                            <label class="govuk-label govuk-radios__label" for="results-per-page-2">20</label>
+                                        </div>
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-3" name="limit" type="radio" :value="50" value="50" {{ pagination.resultsPerPage == 50 ? 'checked' : '' }} v-model="resultsLimit">
+                                            <label class="govuk-label govuk-radios__label" for="results-per-page-3">50</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <button class="govuk-button" data-module="govuk-button" v-show="!javascriptVersion">
+                            Filter
+                        </button>
 
 
 
@@ -299,62 +271,152 @@
                     {#{{ dump(results) }}#}
 
 
-                    <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} suppliers found</h2>
+                    <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24" aria-live="assertive">
+                        <span v-show="javascriptVersion" style="display: none;">{[ searchResultsNumber ]} supplier(s) found</span>
+                        <span v-if="!javascriptVersion">{{ pagination.totalResults }} supplier(s) found</span>
+                    </h2>
+
+                    <div class="ccs-filters-summary">
+
+                        {% if selected.framework is defined and selected.framework is not empty %}
+                        <div class="ccs-filters-summary__facets" id="search-facets-summary" v-show="filtersSelected">
+                            <span class="ccs-filters-summary__label">In</span>
+                            <ul class="ccs-filters-summary__list ccs-filters-summary__facets__list" id="search-facets-list">
+                                <li class="ccs-filters-summary__facet" v-if="checkedFramework">
+                                    <a href="/suppliers/search?q={{ query }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearFramework">
+                                        <span v-show="checkedFramework" style="display: none;">{[ checkedFramework.title ]} ({[ checkedFramework.rm_number ]})</span>
+                                        <span v-show="!checkedFramework">{{ selected.framework.title }} ({{ selected.framework.rm_number }})</span>
+                                    </a>
+                                </li>
+
+                                {% if selected.lot is defined and selected.lot is not empty%}
+                                <li class="ccs-filters-summary__facet" v-if="checkedLot">
+                                    <a href="/suppliers/search?q={{ query }}&framework={% if selected.framework.rm_number is defined %}{{ selected.framework.rm_number }}{% endif %}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearLot">Lot {{ selected.lot.lot_number }}: {{ selected.lot.title }}</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        {% else %}
+                            <div class="ccs-filters-summary__facets" id="search-facets-summary" v-show="filtersSelected" style="display: none;">
+                                <span class="ccs-filters-summary__label">In</span>
+                                <ul class="ccs-filters-summary__list ccs-filters-summary__facets__list" id="search-facets-list">
+                                    <li class="ccs-filters-summary__facet" v-if="checkedFramework">
+                                        <a href="/suppliers/search?q={{ query }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearFramework">
+                                            <span>{[ checkedFramework.title ]} ({[ checkedFramework.rm_number ]})</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="ccs-filters-summary__facet" v-if="checkedLot">
+                                        <a href="/suppliers/search?q={{ query }}&framework={{ selected.rm_number }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearLot">Lot {[ checkedLot.lot_number ]}: {[ checkedLot.title ]}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+
+
+                        <div class="ccs-filters-summary__facets" id="search-query-summary" v-show="searchQuery" {% if query is defined and query is not empty %}style="display: block;"{% else %}style="display: none;"{% endif %}>
+                            <span class="ccs-filters-summary__label">Containing</span>
+                            <ul class="ccs-filters-summary__list" id="search-query-list">
+                                <li class="ccs-filters-summary__facet">
+                                    <a href="/suppliers/search?framework={{ selected.rm_number }}&lot-filter-nested={{ selected.lot_id }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearSearch">
+{#                                        {% if query is defined and query is not empty %}<span>{{ query }}</span>{% endif %}#}
+                                        <span v-show="searchQuery" style="display: none;">{[ searchQuery ]}</span>
+                                        <span v-show="!searchQuery">{{ query }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+
+                    {% if selected.framework.rm_number is defined and selected.lot.lot_number is defined %}
+                        <div class="ccs-search-results-cta" v-show="supplierContactPrompt">
+                            <a v-if="!javascriptVersion" href="/agreements/{{ selected.framework.rm_number }}:{{ selected.lot.lot_number }}/lot-suppliers" class="govuk-button ccs-button--tight">See supplier contact details for this lot</a>
+                            <a v-show="javascriptVersion" style="display: none;" :href="'/agreements/' + checkedFramework.rm_number + ':' + checkedLot.lot_number + '/lot-suppliers'" class="govuk-button ccs-button--tight">See supplier contact details for this lot</a>
+                        </div>
+                    {% else %}
+                        <div class="ccs-search-results-cta" v-show="supplierContactPrompt" style="display: none;">
+                            <a :href="'/agreements/' + checkedFramework.rm_number + ':' + checkedLot.lot_number + '/lot-suppliers'" class="govuk-button ccs-button--tight">See supplier contact details for this lot</a>
+                        </div>
+                    {% endif %}
+
+
+                    <div v-show="javascriptVersion" style="display: none;">
+                        <div v-if="loading" class="ccs-search-loading">Loading results ...</div>
+                    </div>
+
+                    {# we only use this search markup if JavaScript is enabled and working #}
+                    <ul class="govuk-list govuk-list--suppliers" v-show="searchResults" style="display: none;">
+                        <li v-for="result in searchResults">
+
+                            <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
+                                <a :href="result.url">{[ result.name ]}</a>
+                                <span class="ccs-subtle-notification" v-if="result.alternative_trading_names.length > 0">
+                                    Trading as
+                                    <span class="trading-name" v-for="trading_name in result.alternative_trading_names">{[ trading_name ]}</span>
+                                </span>
+                            </h3>
+
+                            <ul class="govuk-list govuk-!-font-size-17featured ccs-framework-list" v-for="framework in result.live_frameworks">
+
+                                <li><span class="ccs-framework-list__title">{[ framework.title ]} ({[ framework.rm_number ]})</span> <strong v-if="framework.status == 'Expired - Data Still Received'" class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--error">Expired</strong></li>
+
+                            </ul>
+
+                        </li>
+                    </ul>
 
 
 
                     {% if results %}
 
-                    <ul class="govuk-list govuk-list--suppliers">
+                        <ul class="govuk-list govuk-list--suppliers" v-show="!searchResults">
 
-                    {% for item in results %}
+                        {% for item in results %}
 
-                        {% set name = item.content.name %}
+                            {% set name = item.content.name %}
 
                         <li>
                             {#{{ dump(item.content) }}#}
                             <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
                                 <a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a>
-                                {% if item.content.trading_names|length > 0 %}
-                                    <span class="ccs-subtle-notification">
-                                        Trading as
-                                        {% set i = 0 %}
-                                        {% for trading_name in item.content.trading_names %}
-                                            {% set i = i + 1 %}
-                                            {{ trading_name.name }}{# this comment is necessary to remove whitespace for display purposes
-                                            #}{% if i < item.content.trading_names|length %}, {% endif %}
-                                        {% endfor %}
-                                    </span>
+                                {% if item.content.trading_name %}
+                                    <span class="ccs-subtle-notification">Trading as {{ item.content.trading_name }}</span>
                                 {% endif %}
                             </h3>
 
-                            <ul class="govuk-list govuk-!-font-size-17featured ccs-framework-list">
-                                {% for framework in item.content.live_frameworks %}
+                                {% if item.content.alternative_trading_names is not empty %}
+                                    <span class="ccs-subtle-notification">Trading as
+                                        <span class="trading-name">{{ item.content.alternative_trading_names }}</span>
+                                    </span>
+                                {% endif %}
 
-                                    <li><span class="ccs-framework-list__title">{{ framework.title }} ({{ framework.rm_number }})</span> {% if framework.status == "Expired - Data Still Received" %}<strong class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--error">Expired</strong>{% endif %}</li>
+                                <ul class="govuk-list govuk-!-font-size-17featured ccs-framework-list">
+                                    {% for framework in item.content.live_frameworks %}
 
-                                {% endfor %}
-                            </ul>
+                                        <li><span class="ccs-framework-list__title">{{ framework.title }} ({{ framework.rm_number }})</span> {% if framework.status == "Expired - Data Still Received" %}<strong class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--error">Expired</strong>{% endif %}</li>
 
-                        </li>
+                                    {% endfor %}
+                                </ul>
 
-                    {% endfor %}
+                            </li>
+
+                        {% endfor %}
 
                         </ul>
 
-                        {% endif %}
+                    {% endif %}
 
 
 
 
                     {# Pagination #}
+                    <results-pagination v-bind:total-results="searchResultsNumber" v-bind:results-per-page="resultsLimit" v-bind:current-page="currentPage" v-bind:result-pages-link-number="6" v-bind:query-url="frontendQueryUrl" v-on:update-page="updatePageValue($event)" />
 
-                    {% if query is defined %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'suppliers_search', 'options': {'q': query}} %}
-                    {% else %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'suppliers_list', 'options': {} } %}
-                    {%  endif %}
-                    
+                    {%  set pagination_data = {'pagination': pagination, 'route': 'suppliers_search', 'options': {'q': query, 'framework': selected.rm_number, 'lot-filter-nested': selected.lot_id, 'limit': limit} } %}
+
+
                     {% if pagination.totalPages > 1 %}
                         {{ include('includes/pagination.html.twig', pagination_data) }}
                     {% endif %}
@@ -368,6 +430,451 @@
 
         </main>
     </div>
+
+
+
+
+
+    <script src="/assets/scripts/libraries/vue.js"></script>
+    <script>
+        /**
+         * Function to test if the browser supports ES6 template literals
+         */
+        function supportsLiterals() {
+            try{
+                return eval("''===``");
+            }
+            catch(e){
+                return false;
+            }
+        }
+
+        if(!('Promise' in window) || !supportsLiterals() || !window.fetch) {
+            throw new Error("Your browser doesn't support the necessary JavaScript functions to use the enhanced search and has been served a non-JavaScript version");
+        }
+        /**
+         * Not the cleanest way to do this, but perhaps the simplest
+         *
+         * We use these variables to pass values from PHP to the Vue JS
+         * JavaScript application
+         */
+        var apiBaseUrl           = '{{ search_api_base_url }}';
+        var searchQuery          = '{{ query }}';
+        var resultsLimitInitial  = {{ limit }};
+
+        {% if selected.framework.rm_number is defined %}
+        var selectedFramework   = {
+            doc_count: {{ selected.framework.doc_count }},
+            rm_number: '{{ selected.framework.rm_number }}',
+            title: '{{ selected.framework.title }}'
+        };
+        {% else %}
+        var selectedFramework = '';
+        {% endif %}
+
+        {% if selected.lot.id is defined %}
+        var selectedLot         = {
+            title: '{{ selected.lot.title }}',
+            id: '{{ selected.lot.id }}',
+            description: {% if selected.lot.description is not empty %}'{{ selected.lot.description }}'{% else %}null{% endif %},
+            lot_number: '{{ selected.lot.lot_number }}'
+        };
+        {% else %}
+        var selectedLot = '';
+        {% endif %}
+
+        var totalResults        = {{ pagination.totalResults }};
+        var pageNumber          = {% if page_number is not empty %}{{ page_number }}{% else %}1{% endif %};
+
+
+
+        // Define a new component for the results pagination
+        Vue.component('results-pagination', {
+            delimiters: ['{[', ']}'],
+            props: {
+                currentPage: Number,
+                totalResults: Number,
+                resultsPerPage: Number,
+                // How many result links to display before we shorten the list
+                resultPagesLinkNumber: Number,
+                queryUrl: String
+            },
+            computed: {
+                numberOfPages: function() {
+                    return Math.ceil(this.totalResults/this.resultsPerPage);
+                },
+                nextPage: function() {
+                    if(this.currentPage == this.numberOfPages) {
+                        return this.currentPage;
+                    }
+
+                    return this.currentPage + 1;
+                },
+                previousPage: function() {
+                    if(this.currentPage == 1) {
+                        return this.currentPage;
+                    }
+
+                    return this.currentPage - 1;
+                },
+                paginationStartNumber: function() {
+                    // start page defaults to 2 (second page) because the
+                    // first page link is always output by default
+                    var linksStartPage = 1;
+
+                    // if the start page is at the beginning of the pagination
+                    // then account for this
+                    if ((this.currentPage - 2) < 2 ) {
+                        linksStartPage = 2;
+                    } else {
+                        // otherwise the start page is equal to the current
+                        // page minus 2, this means that the pagination should
+                        // have a couple of links either side of the current
+                        // page, e.g.   2 3 [4] 5 6
+                        linksStartPage = this.currentPage - 2;
+                    }
+
+                    // if the start page is very close to the last page, then
+                    // account for this
+                    if((this.currentPage + 2) > this.numberOfPages) {
+                        linksStartPage = linksStartPage - 2;
+                    }
+
+                    if(this.numberOfPages < this.resultPagesLinkNumber) {
+                        linksStartPage = 1;
+                    }
+
+                    if(linksStartPage <= 0) {
+                        linksStartPage = 1;
+                    }
+
+                    return linksStartPage;
+                },
+                paginationEndNumber: function() {
+                    var linksEndPage   = this.paginationStartNumber + 4;
+
+                    // if there aren't more pages than the number we
+                    // want to show by minimum, then the end page is just equal
+                    // to the final result page
+                    if (this.numberOfPages < this.resultPagesLinkNumber) {
+                        linksEndPage = this.totalResults;
+                    }
+
+                    if ((linksEndPage >= this.numberOfPages)) {
+                        // minus 1 because the last page is always output
+                        linksEndPage = this.numberOfPages - 1;
+                    }
+
+                    if(this.numberOfPages == 1) {
+                        linksEndPage = 1;
+                    }
+
+                    return linksEndPage;
+                }
+            },
+            methods: {
+                updatePageNumber: function(event, newPage) {
+                    event.preventDefault();
+                    this.$emit('update-page', newPage);
+                },
+                range : function (start, end) {
+                    return Array(end - start + 1).fill().map(function(_, idx) {
+                        return start + idx;
+                    });
+                }
+            },
+            template: `
+                <ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination" v-if="numberOfPages > 0">
+                    <li class="pagination__item pagination__item--previous" v-if="currentPage != 1">
+                        <a :href="'/suppliers/search' + previousPage + queryUrl" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
+                            <span class="icon">
+                                <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M6.7 0l1.4 1.4-4.3 4.3h13v2H3.9l4.2 4-1.4 1.4L0 6.7z" fill="#007194" fill-rule="evenodd"></path></svg>
+                            </span>
+                            <span>Previous</span> <span class="visuallyhidden">page</span>
+                        </a>
+                    </li>
+
+                    <li class="pagination__item" v-if="numberOfPages > 6">
+                        <span v-if="currentPage == 1"><span class="visuallyhidden">Page </span>1</span>
+                        <a v-else :href="'/suppliers/search/1' + queryUrl" v-on:click="updatePageNumber($event, 1)"><span class="visuallyhidden">Page </span>1</a>
+                    </li>
+
+                    <li class="pagination__item" v-if="paginationStartNumber > 2">…</li>
+
+                    <li class="pagination__item" v-for="page in range(paginationStartNumber, paginationEndNumber)" v-if="numberOfPages > 1">
+                        <span v-if="page == currentPage"><span class="visuallyhidden">Page </span>{[ page ]}</span>
+                        <a v-else :href="'/suppliers/search/' + page + queryUrl" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
+                    </li>
+
+                    <li class="pagination__item" v-if="(paginationEndNumber + 1) < numberOfPages">…</li>
+
+                    <li class="pagination__item" v-if="numberOfPages > 1">
+                        <span v-if="currentPage == numberOfPages"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</span>
+                        <a v-else :href="'/suppliers/search/' + numberOfPages + queryUrl" v-on:click="updatePageNumber($event, numberOfPages)"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</a>
+                    </li>
+
+                    <li class="pagination__item pagination__item--next" v-if="currentPage != numberOfPages">
+                        <a :href="'/suppliers/search/' + nextPage + queryUrl" rel="next" v-on:click="updatePageNumber($event, nextPage)">
+                            <span>Next</span> <span class="visuallyhidden">page</span>
+                            <span class="icon">
+                                <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"></path></svg>
+                            </span>
+                        </a>
+                    </li>
+                </ul>`
+        });
+
+
+
+        new Vue({
+            // we have to change the delimeted used as the default is reserved by Twig
+            delimiters: ['{[', ']}'],
+            el: '#search-app',
+            data: {
+                // an almost arbitrary variable, we use this to hide the non-js
+                // version of the search components if the Vue search is instantiated
+                javascriptVersion: true,
+                searchApiBaseUrl: apiBaseUrl,
+                searchQuery: searchQuery,
+                checkedFramework: selectedFramework,
+                checkedLot: selectedLot,
+                frameworkFilter: '',
+                frameworkList: null,
+                frameworkListFiltered: null,
+                lotList: null,
+                displayLotFilter: false,
+                searchResults: null,
+                searchResultsNumber: totalResults,
+                resultsLimit: resultsLimitInitial,
+                currentPage: pageNumber,
+                // used to display/hide the loading text as appropriate (if the
+                // search results are loading, this property is set to true)
+                loading: false,
+                popstateLoad: false
+            },
+            created: function() {
+                // unfortunately we have to update the results when we instantiate
+                // the Vue app so it hooks in all the correct event handlers etc.
+                this.updateResults();
+
+                // setup popstate event listener for History API
+                this.setupHistoryApi();
+
+                // If a lot is set to filter on page load, then show the lot filters
+                if(this.checkedLot) {
+                    this.$set(this, 'displayLotFilter', true);
+                }
+            },
+            watch: {
+                searchRequestUrl: function() {
+                    this.updateResults();
+
+                    // if the searchRequestUrl hasn't been updated by a popstate
+                    // event (back/forward button) then we push a state item to the
+                    // JS History API
+                    if(this.popstateLoad === false) {
+                        history.pushState({
+                            searchQuery: this.searchQuery,
+                            checkedFramework: this.checkedFramework,
+                            checkedLot: this.checkedLot,
+                            resultsLimit: this.resultsLimit
+                        }, 'Search suppliers - CCS', this.frontendSearchUrl);
+                    }
+
+                    // reset the popstateLoad property to false
+                    this.popstateLoad = false;
+                },
+                checkedFramework: function() {
+                    // when a framework is selected, then we must reset any
+                    // previous lot filters, as we can't guarantee they are applicable
+                    // to the newly filtered framework
+                    this.checkedLot = '';
+
+                    // select the 'who all lots suppliers' radio button
+                    document.getElementById('show-all-suppliers-on-framwork-1').checked = true;
+                    this.displayLotFilter = false;
+
+                    // go back to page 1
+                    this.currentPage = 1;
+                }
+            },
+            computed: {
+                filtersSelected: function() {
+                    return (this.checkedFramework.rm_number || this.checkedLot.id);
+                },
+                supplierContactPrompt: function() {
+                    return (this.checkedFramework.rm_number && this.checkedLot.id);
+                },
+                // the URL we use to request items from the API
+                searchRequestUrl: function() {
+                    console.log("update search URL");
+                    return this.searchApiBaseUrl + 'suppliers?keyword=' + this.searchQuery + '&framework=' + (this.checkedFramework.rm_number ? this.checkedFramework.rm_number : '') + '&lot=' + (this.checkedLot.id ? this.checkedLot.id : '') + '&limit=' + this.resultsLimit + '&page=' + this.currentPage;
+
+                    // page=
+                },
+                /**
+                 * We pass this through to the pagination component so that
+                 * we can retain the query params for each search page link
+                 */
+                frontendQueryUrl: function() {
+                    var queryUrl = '?search=true';
+
+                    if(this.searchQuery) {
+                        queryUrl += '&q=' + this.searchQuery;
+                    }
+
+                    if(this.checkedFramework.rm_number) {
+                        queryUrl += '&framework=' + this.checkedFramework.rm_number;
+                    }
+
+                    if(this.checkedLot) {
+                        queryUrl += '&lot-filter-nested=' + this.checkedLot.id;
+                    }
+
+                    if(this.resultsLimit) {
+                        queryUrl += '&limit=' + this.resultsLimit;
+                    }
+
+                    return queryUrl;
+                },
+                // the URL that we should update using the history API
+                frontendSearchUrl: function() {
+                    var searchUrl = '/suppliers/search/' + this.currentPage + this.frontendQueryUrl;
+
+                    return searchUrl;
+
+                }
+            },
+            methods: {
+                updateSearchQueryValue: function(event) {
+                    event.preventDefault();
+                    var searchTextInput = document.getElementById('q');
+                    this.searchQuery = searchTextInput.value;
+                },
+                /**
+                 * Filter an object, only return object properties that match
+                 * the search query
+                 *
+                 * @param objectArray
+                 * @param query
+                 */
+                filterObject: function(objectArray, query) {
+                    var filteredArray = Object.keys(objectArray)
+                        .filter(
+                            function(el) {
+                                return el.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+                            }
+                        )
+                        .reduce(function(obj, key) {
+                            obj[key] = objectArray[key];
+                            return obj;
+                        }, {});
+
+                    return filteredArray;
+                },
+                frameworkFilterExecute: function(event) {
+                    if(event) {
+                        event.preventDefault();
+                    }
+
+                    this.frameworkListFiltered = this.filterObject(this.frameworkList, this.frameworkFilter);
+                },
+                resetFilters: function(event) {
+                    if(event) {
+                        event.preventDefault();
+                    }
+
+                    this.searchQuery = '';
+                    this.checkedFramework = '';
+                    this.checkedLot = '';
+                    this.currentPage = 1;
+                    this.displayLotFilter = false;
+                    this.frameworkFilter = '';
+                    document.getElementById('q').value = '';
+                    this.frameworkFilterExecute();
+                },
+                clearFramework: function(event) {
+                    event.preventDefault();
+                    this.checkedFramework = '';
+                    // we also reset the lot filter, as it is dependent on a
+                    // framework filter being specified
+                    this.checkedLot = '';
+                },
+                clearLot: function(event) {
+                    event.preventDefault();
+                    this.checkedLot = '';
+                },
+                clearSearch: function(event) {
+                    event.preventDefault();
+                    this.searchQuery = '';
+                    document.getElementById('q').value = '';
+                },
+                setupHistoryApi: function() {
+                    var self = this;
+
+                    window.onpopstate = function(event) {
+                        // set the popstate variable to true so that we can
+                        // tell in other parts of the code that the state change
+                        // is being caused by the back/forward button
+                        self.popstateLoad = true;
+
+                        if(event.state == null) {
+                            self.resetFilters(null);
+                            return;
+                        }
+
+                        self.searchQuery      = event.state.searchQuery;
+                        self.checkedFramework = event.state.checkedFramework;
+                        self.checkedLot       = event.state.checkedLot;
+                        self.resultsLimit     = event.state.resultsLimit;
+                    }
+                },
+                updatePageValue: function(newPageValue) {
+                    this.currentPage = newPageValue;
+                },
+                updateResults: function() {
+                    // we have to define this variable as arrow functions are
+                    // ES6, and the `this` variable changes in the fetch promises
+                    var self = this;
+                    self.loading = true;
+
+                    var requestUrl = this.searchRequestUrl;
+
+                    console.log(requestUrl);
+
+                    fetch(requestUrl)
+                        .then(function(response) {
+                            if (!response.ok) {
+                                throw new Error('HTTP error, status = ' + response.status);
+                            }
+                            return response.json();
+                        })
+                        .then(function(jsonResponse) {
+                            // update the results property
+                            var tempResults = jsonResponse.results;
+                            for(var i = 0; i < tempResults.length; i++) {
+                                // @TODO: we need to pull through the encoded title for each supplier result
+                                tempResults[i].url = '/suppliers/' + tempResults[i].id + '/' + tempResults[i].encoded_name;
+                            }
+
+                            self.searchResults = tempResults;
+                            self.searchResultsNumber = jsonResponse.meta.total_results;
+                            self.frameworkList = jsonResponse.meta.facets.frameworks;
+                            self.frameworkFilterExecute(null);
+                            self.lotList = jsonResponse.meta.facets.lots;
+
+                            self.loading = false;
+                        })
+                        .catch(function(error) {
+                            // @TODO: handle errors
+                            console.log('An error occurred');
+                            console.log(error);
+                            self.loading = false;
+                        });
+                }
+            }
+        })
+    </script>
 
 
 
