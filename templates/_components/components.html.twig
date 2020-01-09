@@ -1,13 +1,15 @@
 {# Start of Page components #}
-<div class="wysiwyg-content">
+<div class="">
     {# Loop out all components #}
     {% for component in components %}
 
-        {{ dump(component) }}
+        {#{{ dump(component) }}#}
 
         {# Check what component it is via its `name` field #}
         {% if component.name == "intro_intro" %}
+            <div class="intro_and_description">
             {% include '_components/intro_and_description.html.twig' with {'component': component.content } %}
+            </div>
         {% endif %}
 
 

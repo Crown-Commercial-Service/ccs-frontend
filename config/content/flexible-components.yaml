@@ -7,6 +7,12 @@ components:
       type: richtext
     intro_intro_cta_label:
       type: text
+    intro_intro_cta_destination:
+      type: text
+    intro_intro_secondary_label:
+      type: text
+    intro_intro_secondary_destination:
+      type: text
     intro_intro_media:
       type: array
       content_fields:
@@ -14,6 +20,8 @@ components:
           type: richtext
         image_image_image:
           type: image
+        image_image_caption:
+          type: richtext
   text_text:
     text_text_text:
       type: richtext
