@@ -1,8 +1,75 @@
-{{ component.intro_intro_heading }}
-{{ component.intro_intro_content  | raw }}
+<div class="govuk-grid-row ccs-grid-row--loose">
 
-{% for media in component.intro_intro_media %}
-    {{ dump(media) }}
-    {{ media.video_video_video | raw }}
-{% endfor %}
+    <div class="govuk-grid-column-one-half">
 
+        <h2 class="govuk-heading-m intro__heading">{{ component.intro_intro_heading }}</h2>
+
+        <div class="wysiwyg-content intro__content">
+            {{ component.intro_intro_content  | raw }}
+        </div>
+
+
+
+        <div class="call-to-action--compact">
+
+            {% if component.intro_intro_cta_label is not empty %}
+                    <a href="{{ component.intro_intro_cta_destination }}" class="govuk-button">{{ component.intro_intro_cta_label }}</a>
+            {% endif %}
+
+            {% if component.intro_intro_secondary_label is not empty %}
+                <p class=" wysiwyg-content">
+                    <a href="{{ component.intro_intro_secondary_destination }}">{{ component.intro_intro_secondary_label }}</a>
+                </p>
+            {% endif %}
+
+        </div>
+
+
+
+
+    </div>
+
+    <div class="govuk-grid-column-one-half">
+
+        {% for media in component.intro_intro_media %}
+
+            {#{{ dump(media) }}#}
+
+
+            {% if media.video_video_video %}
+                <div class="responsive-video widescreen">
+                    {{ media.video_video_video | raw }}
+                </div>
+            {% endif %}
+
+
+
+            {% if media.image_image_image %}
+
+                <figure class="image-wrapper">
+                    <picture class="">
+                        <source media="(max-width: 768px)" srcset="{{ media.image_image_imagebyName('medium_large') }}">
+                        <source media="(min-width: 1024px)" srcset="{{ media.image_image_imagebyName('large') }}">
+                        <source media="(min-width: 1920px)" srcset="{{ media.image_image_imagebyName('full') }}">
+                        {# Fallback for browsers that don't support the picture element #}
+                        <img src="{{ media.image_image_image.byName('medium_large') }}"
+                             role="presentation"
+                             class=""
+                             loading="lazy"
+                             data-object-fit="cover"
+                             data-object-position="right center">
+                    </picture>
+                    <figcaption class="intro__caption govuk-!-font-size-16 ccs-secondary-text-color">
+                        {{ media.image_image_caption | raw }}
+                    </figcaption>
+                </figure>
+
+            {% endif %}
+
+
+
+        {% endfor %}
+
+    </div>
+
+</div>

@@ -33,3 +33,19 @@
     background-image: url(../svg/aggregation.svg);
 
 }
+
+.call-to-action--compact {
+    min-width: 17.5rem;
+
+    * + * {
+
+        margin-left: govuk-px-to-rem(20);
+    }
+
+    @include govuk-media-query($from: 641) {
+
+        display: flex;
+        align-items: baseline;
+
+    }
+}
