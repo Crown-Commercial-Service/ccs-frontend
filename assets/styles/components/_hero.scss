@@ -25,16 +25,31 @@
 }
 
 .hero__image {
-    
-    bottom: 0;
-    height: 100%;
-    //left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    vertical-align: middle;
-    width: 50%;
-    object-fit: cover;
+
+    display: none;
+
+    @include govuk-media-query($from: 641) {
+
+        display: block;
+
+        bottom: 0;
+        height: 100%;
+        //left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        vertical-align: middle;
+        width: 50%;
+        object-fit: cover;
+        object-position: right center;
+
+
+    }
+    @include govuk-media-query($from: 769) {
+
+        //width: 44%;
+
+    }
     
 }
 
@@ -43,7 +58,31 @@
     background-color: #37464F;
     color: white;
     position: relative;
-    padding: govuk-px-to-rem(50) 0;
+    padding: govuk-px-to-rem(45) 0 govuk-px-to-rem(45) 0;
+
+    @include govuk-media-query($from: 641) {
+
+        background-color: transparent;
+
+        background-image: svg-url("<svg width='240' height='240' viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'><path d='M120 240a120 120 0 100-240H0v240h120z' fill='#37474F' fill-rule='evenodd'/></svg>");
+        background-repeat: no-repeat;
+        background-size: govuk-px-to-rem(966) govuk-px-to-rem(966);
+        // 100 40 (slight horizontal offset)
+        background-position: 100% 40%;
+
+        padding: govuk-px-to-rem(90) govuk-px-to-rem(80) govuk-px-to-rem(90) 0;
+
+    }
+
+    @include govuk-media-query($from: 769) {
+
+        background-image: svg-url("<svg width='240' height='240' viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'><path d='M120 240a120 120 0 100-240H0v240h120z' fill='#37474F' fill-rule='evenodd'/></svg>");
+        background-repeat: no-repeat;
+        background-size: govuk-px-to-rem(966) govuk-px-to-rem(966);
+        // 100 40 (slight horizontal offset)
+        background-position: 100% 40%;
+
+    }
 
 }
 
