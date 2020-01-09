@@ -5,6 +5,8 @@ components:
       type: text
     intro_intro_content:
       type: richtext
+    intro_intro_cta_label:
+      type: text
     intro_intro_media:
       type: array
       content_fields:
