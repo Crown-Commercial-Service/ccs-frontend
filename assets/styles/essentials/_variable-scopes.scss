@@ -5,11 +5,11 @@
 
 \*------------------------------------*/
 :root {
-    --sub-color: yellow;
+    --sub-color: #{$ccs-colour};
 }
 
 .pillar-name-or-something {
 
-    --sub-color: green;
+    --sub-color: #{$sub-color-building};
 
 }
