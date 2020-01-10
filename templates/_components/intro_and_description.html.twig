@@ -38,7 +38,8 @@
 
             {% if media.video_video_video %}
                 <div class="responsive-video widescreen">
-                    {{ media.video_video_video | raw }}
+                    {{ media.video_video_video|replace({'youtube': 'youtube-nocookie'})|raw }}
+                    {#{{ media.video_video_video | raw }}#}
                 </div>
             {% endif %}
 
