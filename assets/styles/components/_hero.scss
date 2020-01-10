@@ -13,18 +13,14 @@
 
     //min-height: 32em;
     position: relative;
+    overflow: hidden;
 
     width: 100%;
 
 }
 
+// we position this because the object-fit polyfill needs to be able to reposition the img element itself
 .hero__picture {
-
-    display: block;
-
-}
-
-.hero__image {
 
     display: none;
 
@@ -40,9 +36,6 @@
         top: 0;
         vertical-align: middle;
         width: 50%;
-        object-fit: cover;
-        object-position: right center;
-
 
     }
     @include govuk-media-query($from: 769) {
@@ -50,7 +43,33 @@
         //width: 44%;
 
     }
-    
+
+    // crop and move the image to align with the
+    @include govuk-media-query($from: 1440) {
+
+        right: calc(50% - 510px);
+
+    }
+
+}
+
+// we use a polyfill to reposition the img element for browsers which don't support object-fit
+.hero__image {
+
+    display: block;
+
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    vertical-align: middle;
+    width: 100%;
+
+    object-fit: cover;
+    object-position: right center;
+
 }
 
 .hero__caption {
