@@ -22,6 +22,8 @@ components:
           type: image
         image_image_caption:
           type: richtext
+        video_video_caption:
+          type: richtext
   text_text:
     text_text_text:
       type: richtext
