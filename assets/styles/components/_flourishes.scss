@@ -1,0 +1,68 @@
+/*------------------------------------*\
+  #Flourishes
+\*------------------------------------*/
+
+.hero--flourish {
+
+    position: relative;
+
+    &:after {
+
+        background-color: var(--sub-color);
+        border-radius: 50%;
+        content: " ";
+        display: block;
+        height: govuk-px-to-rem(240);
+
+        position: absolute;
+        right: govuk-px-to-rem(- 100);
+
+        bottom: govuk-px-to-rem(- 60);
+        width: govuk-px-to-rem(240);
+
+        z-index: -1;
+
+    }
+
+}
+
+.footer-global {
+
+    &:before,
+    &:after {
+
+        border-radius: 50%;
+        content: " ";
+        display: block;
+        position: absolute;
+
+        z-index: -1;
+
+
+    }
+
+    // grey, left-hand side
+    &:after {
+
+        background-color: $ccs-border-colour;
+        height: govuk-px-to-rem(240);
+
+        left: govuk-px-to-rem(- 60);
+        top: govuk-px-to-rem(- 60);
+        width: govuk-px-to-rem(240);
+
+    }
+
+    // color contextual to the pillar, right-hand side
+    &:before {
+
+        background-color: var(--sub-color);
+        height: govuk-px-to-rem(320);
+
+        right: govuk-px-to-rem(- 100);
+        top: govuk-px-to-rem(- 100);
+        width: govuk-px-to-rem(320);
+
+    }
+
+}
