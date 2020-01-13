@@ -1,0 +1,28 @@
+/*------------------------------------*\
+  #Intro and description
+\*------------------------------------*/
+
+.intro_and_description {
+
+    // give component a top and bottom margin (margins collapse anyway so they'll be fine stacked after each other
+    margin-top: govuk-px-to-rem(40);
+    margin-bottom: govuk-px-to-rem(40);
+
+}
+
+.intro__heading {
+
+    margin-bottom: govuk-px-to-rem(31);
+
+}
+.intro__content {
+
+    margin-bottom: govuk-px-to-rem(60);
+
+}
+
+.intro__caption {
+
+    margin-top: govuk-px-to-rem(30);
+
+}
