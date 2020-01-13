@@ -16,6 +16,8 @@
 
     {% endblock %}
 
+    {#{% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}#}
+
     {% if app.environment == "prod" %}
         <link rel="stylesheet" href="/assets/styles/styles.css?v=1.1.1">
     {% else %}
@@ -44,7 +46,19 @@
     {% endblock %}
 </head>
 
-<body class="govuk-template__body">
+{% set flourish = "none" %}
+{% for taxonomy in page.taxonomies %}
+
+    {% for term in taxonomy %}
+        {#{{ term.slug }}#}
+        {% set flourish = term.slug %}
+    {% endfor %}
+
+{% endfor %}
+
+{#{{ [1, 2, 3]|join(',') }}#}
+
+<body class="govuk-template__body pillar--{{ flourish }}">
 {#<script>document.querySelector('body').classList.add('js-enabled');</script>#}
 
 {# Google Tag Manager (noscript) #}
