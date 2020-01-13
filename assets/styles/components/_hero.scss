@@ -45,7 +45,7 @@
     }
 
     // crop and move the image to align with the
-    @include govuk-media-query($from: 1440) {
+    @include govuk-media-query($from: 1020) {
 
         right: calc(50% - 510px);
 
