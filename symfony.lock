@@ -182,6 +182,9 @@
     "symfony/http-client": {
         "version": "v4.4.2"
     },
+    "symfony/http-client-contracts": {
+        "version": "v2.0.1"
+    },
     "symfony/http-foundation": {
         "version": "v4.2.2"
     },
