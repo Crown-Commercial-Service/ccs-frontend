@@ -9,3 +9,15 @@ page_accordion:
       type: richtext
 full_width_content:
   type: richtext
+hero_image:
+  type: image
+hero_heading:
+  type: text
+hero_content:
+  type: richtext
+hero_cta_label:
+  type: text
+hero_cta_destination:
+  type: text
+page_components_rows:
+  config: flexible-components.yaml

@@ -1,0 +1,129 @@
+/*------------------------------------*\
+  #Hero
+
+  The Hero component is not part of the GOV.UK design system
+
+\*------------------------------------*/
+.hero {
+
+    background-color: #37464F;
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 0;
+
+    //min-height: 32em;
+    position: relative;
+    overflow: hidden;
+
+    width: 100%;
+
+}
+
+// we position this because the object-fit polyfill needs to be able to reposition the img element itself
+.hero__picture {
+
+    display: none;
+
+    @include govuk-media-query($from: 641) {
+
+        display: block;
+
+        bottom: 0;
+        height: 100%;
+        //left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        vertical-align: middle;
+        width: 50%;
+
+    }
+    @include govuk-media-query($from: 769) {
+
+        //width: 44%;
+
+    }
+
+    // crop and move the image to align with the
+    @include govuk-media-query($from: 1440) {
+
+        right: calc(50% - 510px);
+
+    }
+
+}
+
+// we use a polyfill to reposition the img element for browsers which don't support object-fit
+.hero__image {
+
+    display: block;
+
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    vertical-align: middle;
+    width: 100%;
+
+    object-fit: cover;
+    object-position: right center;
+
+}
+
+.hero__caption {
+
+    background-color: #37464F;
+    color: white;
+    position: relative;
+    padding: govuk-px-to-rem(45) 0 govuk-px-to-rem(45) 0;
+
+    @include govuk-media-query($from: 641) {
+
+        background-color: transparent;
+
+        background-image: svg-url("<svg width='240' height='240' viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'><path d='M120 240a120 120 0 100-240H0v240h120z' fill='#37474F' fill-rule='evenodd'/></svg>");
+        background-repeat: no-repeat;
+        background-size: govuk-px-to-rem(966) govuk-px-to-rem(966);
+        // 100 40 (slight horizontal offset)
+        background-position: 100% 40%;
+
+        padding: govuk-px-to-rem(90) govuk-px-to-rem(80) govuk-px-to-rem(90) 0;
+
+    }
+
+    @include govuk-media-query($from: 769) {
+
+        background-image: svg-url("<svg width='240' height='240' viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'><path d='M120 240a120 120 0 100-240H0v240h120z' fill='#37474F' fill-rule='evenodd'/></svg>");
+        background-repeat: no-repeat;
+        background-size: govuk-px-to-rem(966) govuk-px-to-rem(966);
+        // 100 40 (slight horizontal offset)
+        background-position: 100% 40%;
+
+    }
+
+}
+
+.hero__content p {
+    color: white;
+}
+
+.hero__title {
+
+    color: white;
+    font-weight: 300;
+    margin-bottom: govuk-px-to-rem(20);
+
+}
+
+.hero__content {
+
+    border-style: solid;
+    border-width: 0 0 0 3px;
+    border-color: $ccs-colour;
+    border-color: var(--sub-color);
+    padding: 0 0 0 govuk-px-to-rem(20);
+    margin-bottom: govuk-px-to-rem(50);
+
+}

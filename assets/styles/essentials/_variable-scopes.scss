@@ -1,0 +1,15 @@
+/*------------------------------------*\
+  #Root
+
+  Because browsers that support that understand variables will try to use them, resulting in default black borders if the var doesn't exist
+
+\*------------------------------------*/
+:root {
+    --sub-color: #{$ccs-colour};
+}
+
+.pillar-name-or-something {
+
+    --sub-color: #{$sub-color-building};
+
+}
