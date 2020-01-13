@@ -47,14 +47,16 @@
 </head>
 
 {% set flourish = "none" %}
-{% for taxonomy in page.taxonomies %}
+{% if page is defined %}
+    {% for taxonomy in page.taxonomies %}
 
-    {% for term in taxonomy %}
-        {#{{ term.slug }}#}
-        {% set flourish = term.slug %}
+        {% for term in taxonomy %}
+            {#{{ term.slug }}#}
+            {% set flourish = term.slug %}
+        {% endfor %}
+
     {% endfor %}
-
-{% endfor %}
+{% endif %}
 
 {#{{ [1, 2, 3]|join(',') }}#}
 
@@ -87,19 +89,18 @@
 {% block nonblocking_javascript %}
 
     {% if app.environment == "THIS WILL NEVER BE TRUE" %}
-    <script type="text/javascript">
-        (function () {
-            var s = document.createElement("script");
-            s.type = "text/javascript";
-            s.async = true;
-            s.src = "//api.usersnap.com/load/5c0d7b68-6a20-4882-8277-074dd8f65f37.js";
-            var x = document.getElementsByTagName("script")[0];
-            x.parentNode.insertBefore(s, x);
-        })();</script>
+        <script type="text/javascript">
+            (function () {
+                var s = document.createElement("script");
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "//api.usersnap.com/load/5c0d7b68-6a20-4882-8277-074dd8f65f37.js";
+                var x = document.getElementsByTagName("script")[0];
+                x.parentNode.insertBefore(s, x);
+            })();</script>
     {% endif %}
 
 {% endblock %}
-
 
 
 <script src="/assets/scripts/libraries/jquery-1.12.4.min.js"></script>
