@@ -8,6 +8,9 @@
     padding-top: govuk-px-to-rem(50);
     margin-top: govuk-px-to-rem(50);
 
+    // to allow the flourish to positon itself according to the footer
+    position: relative;
+
 }
 
 .govuk-footer__list-item.govuk-footer__list-item {

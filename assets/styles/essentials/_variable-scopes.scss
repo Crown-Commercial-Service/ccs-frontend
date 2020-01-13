@@ -8,8 +8,12 @@
     --sub-color: #{$ccs-colour};
 }
 
-.pillar-name-or-something {
+/**
+ * Whereever you need to use this, use `property: var(--sub-color);`
+ * We're only changing one colour at the moment
+ */
 
-    --sub-color: #{$sub-color-building};
-
-}
+.pillar--buildings { --sub-color: #{$sub-color-building}; }
+.pillar--corporate-solutions { --sub-color: #{$sub-color-corporate-solutions}; }
+.pillar--people { --sub-color: #{$sub-color-people}; }
+.pillar--technology { --sub-color: #{$sub-color-technology}; }
