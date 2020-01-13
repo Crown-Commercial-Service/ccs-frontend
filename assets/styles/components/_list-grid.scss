@@ -1,0 +1,51 @@
+/*------------------------------------*\
+  #Links
+\*------------------------------------*/
+
+.ccs-list-grid {
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+
+.ccs-list-grid__item {
+    margin: 0 0 govuk-px-to-rem(12) 0;
+    width: 100%;
+}
+
+
+.ccs-list-grid__item__img {
+    float: left;
+}
+
+
+.ccs-list-grid__item__details {
+    font-size: govuk-px-to-rem(19);
+    overflow: hidden;
+    padding: govuk-px-to-rem(10) govuk-px-to-rem(14);
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
+
+@include govuk-media-query($from: 769) {
+    .ccs-list-grid__item {
+        float: left;
+        width: 32%;
+    }
+
+
+    .ccs-list-grid__item + .ccs-list-grid__item {
+        margin-left: 2%;
+    }
+
+
+    .ccs-list-grid__item:nth-child(3n + 1) {
+        clear: left;
+        margin-left: 0;
+    }
+}

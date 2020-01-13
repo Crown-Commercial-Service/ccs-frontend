@@ -21,3 +21,12 @@ hero_cta_destination:
   type: text
 page_components_rows:
   config: flexible-components.yaml
+resources_intro_heading:
+  type: text
+resources_intro_introduction:
+  type: text
+brochures_list_brochures_list:
+  type: array
+  content_fields:
+    brochures_list_brochure:
+      type: document
