@@ -23,7 +23,7 @@
         <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
 
-        <div class="govuk-phase-banner">
+        {#<div class="govuk-phase-banner">
             <p class="govuk-phase-banner__content">
                 <strong class="govuk-tag govuk-phase-banner__content__tag ">
                     beta </strong> <span class="govuk-phase-banner__text">
@@ -31,7 +31,7 @@
       <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.
     </span>
             </p>
-        </div>
+        </div>#}
 
 
         <div class="govuk-breadcrumbs">
@@ -180,12 +180,12 @@
                                     <ol class="ccs-list-grid brochures-list">
                                         {% for brochure in page.content.brochures_list_brochures_list %}
                                             <li class="ccs-list-grid__item">
-                                                <a href="{{ brochure.brochures_list_brochure.url }}" class="ccs-list-grid__item__img">
-                                                    <img src="https://via.placeholder.com/65x90" alt="" />
+                                                <a href="{{ brochure.brochures_list_brochure.url }}" class="ccs-list-grid__item__img ccs-list-grid__item__img--flourish">
+                                                    <img src="/assets/images/icon-document-placeholder.svg" alt="" />
                                                 </a>
                                                 <div class="ccs-list-grid__item__details">
-                                                    <a href="{{ brochure.brochures_list_brochure.url }}">{{ brochure.brochures_list_brochure.title }}</a>
-                                                    <p>PDF, {{ brochure.brochures_list_brochure.filesize }}, 4 pages</p>
+                                                    <a class="ccs-list-grid__item__link-heading" href="{{ brochure.brochures_list_brochure.url }}">{{ brochure.brochures_list_brochure.title }}</a>
+                                                    <p><span class="file-extension">{{ brochure.brochures_list_brochure.extension }}</span>, {{ brochure.brochures_list_brochure.filesize }}</p>
                                                 </div>
                                             </li>
                                         {% endfor %}
@@ -213,13 +213,13 @@
                                     <ol class="ccs-list-grid brochures-list">
                                         {% for whitepaper in page.content.whitepapers_list_whitepapers %}
                                             <li class="ccs-list-grid__item">
-                                                <a href="{{ whitepaper.post_name }}" class="ccs-list-grid__item__img">
+                                                <a href="{{ whitepaper.post_name }}" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
                                                     <img src="https://via.placeholder.com/90x65" alt="" />
                                                 </a>
-                                                <div class="ccs-list-grid__item__details">
-                                                    <a href="{{ whitepaper.post_name }}">{{ whitepaper.post_title }}</a>
-                                                    <p>PDF, 677.9 KB, 4 pages</p>
-                                                    <div>{{ dump(whitepaper.ccs_whitepaper_file) }}</div>
+                                                <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
+                                                    <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ whitepaper.post_title }}</h3>
+                                                    <p>{{ whitepaper.post_excerpt }}</p>
+                                                    <a href="{{ whitepaper.post_name }}">Learn more</a>
                                                 </div>
                                             </li>
                                         {% endfor %}
@@ -245,39 +245,43 @@
 
                                 <ol class="ccs-list-grid brochures-list">
                                     <li class="ccs-list-grid__item">
-                                        <a href="#" class="ccs-list-grid__item__img">
+                                        <a href="#" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
                                             <img src="https://via.placeholder.com/90x65" alt="" />
                                         </a>
-                                        <div class="ccs-list-grid__item__details">
-                                            <a href="#">Lorem ipsum dolor sit amet</a>
-                                            <p>PDF, 677.9 KB, 4 pages</p>
+                                        <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
+                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">Lorem do dolor</h3>
+                                            <p>Lorem ipsum dolor sit amet et do aliquam.</p>
+                                            <a href="#">Learn more</a>
                                         </div>
                                     </li>
                                     <li class="ccs-list-grid__item">
-                                        <a href="#" class="ccs-list-grid__item__img">
+                                        <a href="#" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
                                             <img src="https://via.placeholder.com/90x65" alt="" />
                                         </a>
-                                        <div class="ccs-list-grid__item__details">
-                                            <a href="#">Lorem ipsum dolor sit amet</a>
-                                            <p>PDF, 677.9 KB, 4 pages</p>
+                                        <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
+                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">Lorem do dolor</h3>
+                                            <p>Lorem ipsum dolor sit amet et do aliquam.</p>
+                                            <a href="#">Learn more</a>
                                         </div>
                                     </li>
                                     <li class="ccs-list-grid__item">
-                                        <a href="#" class="ccs-list-grid__item__img">
+                                        <a href="#" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
                                             <img src="https://via.placeholder.com/90x65" alt="" />
                                         </a>
-                                        <div class="ccs-list-grid__item__details">
-                                            <a href="#">Lorem ipsum dolor sit amet</a>
-                                            <p>PDF, 677.9 KB, 4 pages</p>
+                                        <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
+                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">Lorem do dolor</h3>
+                                            <p>Lorem ipsum dolor sit amet et do aliquam.</p>
+                                            <a href="#">Learn more</a>
                                         </div>
                                     </li>
                                     <li class="ccs-list-grid__item">
-                                        <a href="#" class="ccs-list-grid__item__img">
+                                        <a href="#" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
                                             <img src="https://via.placeholder.com/90x65" alt="" />
                                         </a>
-                                        <div class="ccs-list-grid__item__details">
-                                            <a href="#">Lorem ipsum dolor sit amet</a>
-                                            <p>PDF, 677.9 KB, 4 pages</p>
+                                        <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
+                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">Lorem do dolor</h3>
+                                            <p>Lorem ipsum dolor sit amet et do aliquam.</p>
+                                            <a href="#">Learn more</a>
                                         </div>
                                     </li>
                                 </ol>
