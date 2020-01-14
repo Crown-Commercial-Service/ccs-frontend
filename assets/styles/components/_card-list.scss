@@ -1,0 +1,36 @@
+/*------------------------------------*\
+  #Card-list
+\*------------------------------------*/
+
+.card-list {
+
+    display: flex;
+    flex-flow: row wrap;
+    list-style-type: none;
+    margin: govuk-px-to-rem(- 23);
+    padding: 0;
+
+}
+.card-list__item {
+
+    flex: 0 0 calc(33% - #{govuk-px-to-rem(46)});
+    padding: 0 govuk-px-to-rem(23) 0 govuk-px-to-rem(23);
+
+}
+
+.card-list__item + .card-list__item {
+
+    //margin-left: govuk-px-to-rem()
+
+}
+.card-list__item__wrapper {
+
+    background: white;
+    border: 1px solid #979797;
+
+    border-width: 0 1px 1px 1px;
+    padding: govuk-px-to-rem(30) govuk-px-to-rem(25) govuk-px-to-rem(30) govuk-px-to-rem(25);
+    //border: 3px solid var(--sub-color);
+    //border-width: 3px 0 0 0;
+
+}

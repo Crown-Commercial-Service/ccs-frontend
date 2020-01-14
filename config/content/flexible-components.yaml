@@ -27,3 +27,17 @@ components:
   text_text:
     text_text_text:
       type: richtext
+  subcategories_subcategories:
+    subcategories_subcategories_heading:
+      type: text
+    subcategories_subcategories_content:
+      type: richtext
+    subcategories_subcategories_links:
+      type: array
+      content_fields:
+        link_link_heading:
+          type: text
+        link_link_content:
+          type: richtext
+        link_link_link:
+          type: text
