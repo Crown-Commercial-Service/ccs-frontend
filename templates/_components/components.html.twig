@@ -12,6 +12,12 @@
             </div>
         {% endif %}
 
+        {% if component.name == "subcategories_subcategories" %}
+            <div class="subcategories">
+                {% include '_components/subcategories.html.twig' with {'component': component.content } %}
+            </div>
+        {% endif %}
+
 
     {% endfor %}
 </div>
