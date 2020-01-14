@@ -35,17 +35,12 @@
 }
 
 .call-to-action--compact {
+    align-items: baseline;
+    display: flex;
     min-width: 17.5rem;
 
     * + * {
 
         margin-left: govuk-px-to-rem(20);
-    }
-
-    @include govuk-media-query($from: 641) {
-
-        display: flex;
-        align-items: baseline;
-
     }
 }
