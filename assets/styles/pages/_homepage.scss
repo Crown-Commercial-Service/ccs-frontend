@@ -115,6 +115,19 @@
 
 }
 
+.greyed-bg {
+
+    background-color: #F8F8F8;
+    padding: govuk-px-to-rem(69) 0 govuk-px-to-rem(75) 0;
+
+    @include govuk-media-query($from: desktop) {
+
+        padding: govuk-px-to-rem(69) 0 govuk-px-to-rem(93) 0;
+
+    }
+
+}
+
 .is-home .govuk-main-wrapper {
 
     padding-bottom: 0;

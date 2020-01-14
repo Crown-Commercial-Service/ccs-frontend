@@ -47,7 +47,7 @@
 </head>
 
 {% set flourish = "none" %}
-    {% if page.taxonomies is defined %}
+{% if page.taxonomies is defined %}
     {% for taxonomy in page.taxonomies %}
 
         {% for term in taxonomy %}
@@ -89,15 +89,15 @@
 {% block nonblocking_javascript %}
 
     {% if app.environment == "THIS WILL NEVER BE TRUE" %}
-    <script type="text/javascript">
-        (function () {
-            var s = document.createElement("script");
-            s.type = "text/javascript";
-            s.async = true;
-            s.src = "//api.usersnap.com/load/5c0d7b68-6a20-4882-8277-074dd8f65f37.js";
-            var x = document.getElementsByTagName("script")[0];
-            x.parentNode.insertBefore(s, x);
-        })();</script>
+        <script type="text/javascript">
+            (function () {
+                var s = document.createElement("script");
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "//api.usersnap.com/load/5c0d7b68-6a20-4882-8277-074dd8f65f37.js";
+                var x = document.getElementsByTagName("script")[0];
+                x.parentNode.insertBefore(s, x);
+            })();</script>
     {% endif %}
 
 {% endblock %}
