@@ -210,11 +210,15 @@
                                 </div>
                                 <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">
 
-                                    <ol class="ccs-list-grid brochures-list">
+                                    <ol class="ccs-list-grid">
                                         {% for whitepaper in page.content.whitepapers_list_whitepapers %}
                                             <li class="ccs-list-grid__item">
                                                 <a href="{{ whitepaper.post_name }}" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
-                                                    <img src="https://via.placeholder.com/90x65" alt="" />
+                                                    {% if whitepaper.ccs_whitepaper_featured_image.url is defined and whitepaper.ccs_whitepaper_featured_image.alt is defined %}
+                                                        <img src="{{ whitepaper.ccs_whitepaper_featured_image.url }}" alt="{{ whitepaper.ccs_whitepaper_featured_image.alt }}" />
+                                                    {% else %}
+                                                        <img src="https://via.placeholder.com/400x250" alt="" />
+                                                    {% endif %}
                                                 </a>
                                                 <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
                                                     <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ whitepaper.post_title }}</h3>
@@ -243,7 +247,7 @@
                             </div>
                             <div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3">
 
-                                <ol class="ccs-list-grid brochures-list">
+                                <ol class="ccs-list-grid">
                                     <li class="ccs-list-grid__item">
                                         <a href="#" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
                                             <img src="https://via.placeholder.com/90x65" alt="" />
