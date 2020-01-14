@@ -47,14 +47,16 @@
 </head>
 
 {% set flourish = "none" %}
-{% for taxonomy in page.taxonomies %}
+    {% if page.taxonomies is defined %}
+    {% for taxonomy in page.taxonomies %}
 
-    {% for term in taxonomy %}
-        {#{{ term.slug }}#}
-        {% set flourish = term.slug %}
+        {% for term in taxonomy %}
+            {#{{ term.slug }}#}
+            {% set flourish = term.slug %}
+        {% endfor %}
+
     {% endfor %}
-
-{% endfor %}
+{% endif %}
 
 {#{{ [1, 2, 3]|join(',') }}#}
 
