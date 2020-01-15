@@ -13,63 +13,26 @@
 
         <div class="govuk-grid-column-full">
 
+
+
             <ul class="card-list">
 
-            {% for link in component.subcategories_subcategories_links %}
+                {% for link in component.subcategories_subcategories_links %}
+                    <li class="card-list__item">
+                        <div class="card-list__item__wrapper">
+                            <h3 class="govuk-heading-s">{{ link.link_link_heading }}</h3>
+                            <div class="wysiwyg-content">{{ link.link_link_content | raw }}</div>
+                            <p>
+                                <a href="{{ link.link_link_link }}">Learn more
+                                    <span class="visuallyhidden">about {{ link.link_link_heading }}</span></a>
+                            </p>
+                        </div>
+                    </li>
+                {% endfor %}
 
-                <li class="card-list__item">
-                    <div class="card-list__item__wrapper">
-                        <h3 class="govuk-heading-s">{{ link.link_link_heading }}</h3>
-                        <div class="wysiwyg-content">{{ link.link_link_content | raw }}</div>
-                        <p>
-                            <a href="{{ link.link_link_link }}">Learn more <span class="visuallyhidden">about {{ link.link_link_heading }}</span></a>
-                        </p>
-                    </div>
-                </li>
-
-                {#{% if media.video_video_video %}#}
-                    {#<div class="responsive-video widescreen">#}
-                        {# Replace the URL with the nocookie alternative (this should really be a custom Twig extension/filter) #}
-                        {#{{ media.video_video_video|replace({'youtube': 'youtube-nocookie'})|raw }}#}
-                        {#{{ media.video_video_video | raw }}#}
-                    {#</div>#}
-                {#{% endif %}#}
-                {#{% if media.video_video_caption %}#}
-                    {#<div class="intro__caption govuk-!-font-size-16 ccs-secondary-text-color">#}
-                        {#{{ media.video_video_caption | raw }}#}
-                    {#</div>#}
-                {#{% endif %}#}
-
-
-
-                {#{% if media.image_image_image %}#}
-
-                    {#<figure class="image-wrapper">#}
-                        {#<picture class="">#}
-                            {#<source media="(max-width: 768px)" srcset="{{ media.image_image_imagebyName('medium_large') }}">#}
-                            {#<source media="(min-width: 1024px)" srcset="{{ media.image_image_imagebyName('large') }}">#}
-                            {#<source media="(min-width: 1920px)" srcset="{{ media.image_image_imagebyName('full') }}">#}
-                            {# Fallback for browsers that don't support the picture element #}
-                            {#<img src="{{ media.image_image_image.byName('medium_large') }}"#}
-                                 {#role="presentation"#}
-                                 {#class=""#}
-                                 {#loading="lazy"#}
-                                 {#data-object-fit="cover"#}
-                                 {#data-object-position="right center">#}
-                        {#</picture>#}
-                        {#{% if media.image_image_caption %}#}
-                            {#<figcaption class="intro__caption govuk-!-font-size-16 ccs-secondary-text-color">#}
-                                {#{{ media.image_image_caption | raw }}#}
-                            {#</figcaption>#}
-                        {#{% endif %}#}
-                    {#</figure>#}
-
-                {#{% endif %}#}
-
-
-
-            {% endfor %}
             </ul>
+
+
 
         </div>
 
