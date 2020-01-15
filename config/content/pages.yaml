@@ -33,6 +33,8 @@ brochures_list_brochures_list:
 whitepapers_list_whitepapers:
   type: array
   content_fields:
+    ID:
+      type: number
     post_title:
       type: text
     post_excerpt:
@@ -46,5 +48,13 @@ whitepapers_list_whitepapers:
 webinars_list_webinars:
   type: array
   content_fields:
+    ID:
+      type: number
+    post_name:
+      type: text
     post_title:
       type: text
+    post_excerpt:
+      type: text
+    ccs_webinar_featured_image:
+      type: image

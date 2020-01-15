@@ -28,6 +28,12 @@ content_types:
   esourcing_dates:
     api_endpoint: ccs/v1/esourcing-dates
     content_fields: esourcing-dates.yaml
+  whitepapers:
+    api_endpoint: wp/v2/whitepaper
+    content_fields: whitepapers.yaml
+  webinars:
+    api_endpoint: wp/v2/webinar
+    content_fields: webinars.yaml
 
 global:
   image_sizes:

@@ -24,6 +24,12 @@
 .ccs-list-grid__item {
     margin: 0 0 govuk-px-to-rem(26) 0;
     width: 100%;
+
+    &:after {
+        clear: both;
+        content: "";
+        display: block;
+    }
 }
 
 
