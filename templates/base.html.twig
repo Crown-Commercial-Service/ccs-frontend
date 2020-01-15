@@ -19,9 +19,9 @@
     {#{% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}#}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.css?v=1.1.1">
+        <link rel="stylesheet" href="/assets/styles/styles.css?v=1.1.2">
     {% else %}
-        <link rel="stylesheet" href="/assets/styles/styles.css?v=1.1.1">
+        <link rel="stylesheet" href="/assets/styles/styles.css?v=1.1.2">
     {% endif %}
 
     {% block blocking_javascript %}
@@ -47,7 +47,7 @@
 </head>
 
 {% set flourish = "none" %}
-{% if page is defined %}
+{% if page.taxonomies is defined %}
     {% for taxonomy in page.taxonomies %}
 
         {% for term in taxonomy %}
@@ -101,6 +101,7 @@
     {% endif %}
 
 {% endblock %}
+
 
 
 <script src="/assets/scripts/libraries/jquery-1.12.4.min.js"></script>
