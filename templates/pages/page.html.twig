@@ -157,12 +157,16 @@
 
 
 
-            {% if page.content.resources_intro_heading %}
-                <div class="resources-section">
+            <div class="resources-section">
 
+                {% if page.content.resources_intro_heading %}
                     <h2 class="govuk-heading-m resources-section__heading">{{ page.content.resources_intro_heading }}</h2>
-                    {% if page.content.resources_intro_introduction %}<div class="resources-section__intro">{{ page.content.resources_intro_introduction|raw }}</div>{% endif %}
+                {% endif %}
+                {% if page.content.resources_intro_introduction %}
+                    <div class="resources-section__intro">{{ page.content.resources_intro_introduction|raw }}</div>
+                {% endif %}
 
+                {% if page.content.brochures_list_brochures_list is not empty  or  page.content.whitepapers_list_whitepapers is not empty  or  page.content.webinars_list_webinars %}
                     <div class="govuk-accordion" data-module="accordion" id="accordion-default">
                         {% if page.content.brochures_list_brochures_list is not empty %}
                             {# Start brochure section #}
@@ -215,9 +219,9 @@
                                             <li class="ccs-list-grid__item">
                                                 <a href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
                                                     {% if whitepaper.ccs_whitepaper_featured_image.url is defined and whitepaper.ccs_whitepaper_featured_image.alt is defined %}
-                                                        <img src="{{ whitepaper.ccs_whitepaper_featured_image.byName('news-size-m') }}" alt="{{ whitepaper.ccs_whitepaper_featured_image.alt }}" />
+                                                        <img src="{{ whitepaper.ccs_whitepaper_featured_image.byName('news-size-m') }}" alt="{{ whitepaper.ccs_whitepaper_featured_image.alt }}" role="presentation" />
                                                     {% else %}
-                                                        <img src="https://via.placeholder.com/400x250" alt="" />
+                                                        <img src="https://via.placeholder.com/400x250" alt="" role="presentation" />
                                                     {% endif %}
                                                 </a>
                                                 <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
@@ -255,7 +259,11 @@
                                         {% for webinar in page.content.webinars_list_webinars %}
                                         <li class="ccs-list-grid__item">
                                             <a href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
-                                                <img src="{{ webinar.ccs_webinar_featured_image.byName('news-size-m') }}" alt="" role="presentation" />
+                                                {% if webinar.ccs_webinar_featured_image.url is defined and webinar.ccs_webinar_featured_image.alt is defined %}
+                                                    <img src="{{ webinar.ccs_webinar_featured_image.byName('news-size-m') }}" alt="{{ webinar.ccs_webinar_featured_image.alt }}" role="presentation" />
+                                                {% else %}
+                                                    <img src="https://via.placeholder.com/400x250" alt="" role="presentation" />
+                                                {% endif %}
                                             </a>
                                             <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
                                                 <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ webinar.post_title }}</h3>
@@ -274,9 +282,9 @@
                             </div>
                         {% endif %}
                     </div>
+                {% endif %}
 
-                </div>
-            {% endif %}
+            </div>
 
 
 
