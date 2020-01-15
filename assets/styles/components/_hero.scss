@@ -79,6 +79,12 @@
     position: relative;
     padding: govuk-px-to-rem(45) 0 govuk-px-to-rem(45) 0;
 
+    .govuk-button {
+
+        margin-bottom: 0;
+
+    }
+
     @include govuk-media-query($from: 641) {
 
         background-color: transparent;
@@ -89,7 +95,7 @@
         // 100 40 (slight horizontal offset)
         background-position: 100% 40%;
 
-        padding: govuk-px-to-rem(90) govuk-px-to-rem(80) govuk-px-to-rem(90) 0;
+        padding: govuk-px-to-rem(90) govuk-px-to-rem(80) govuk-px-to-rem(72) 0;
 
     }
 

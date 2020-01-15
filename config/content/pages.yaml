@@ -30,3 +30,21 @@ brochures_list_brochures_list:
   content_fields:
     brochures_list_brochure:
       type: document
+whitepapers_list_whitepapers:
+  type: array
+  content_fields:
+    post_title:
+      type: text
+    post_excerpt:
+      type: text
+    post_name:
+      type: text
+    ccs_whitepaper_file:
+      type: document
+    ccs_whitepaper_featured_image:
+      type: image
+webinars_list_webinars:
+  type: array
+  content_fields:
+    post_title:
+      type: text
