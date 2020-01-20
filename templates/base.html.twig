@@ -58,10 +58,15 @@
     {% endfor %}
 {% endif %}
 
-{#{{ [1, 2, 3]|join(',') }}#}
 
-<body class="govuk-template__body pillar--{{ flourish }}">
-{#<script>document.querySelector('body').classList.add('js-enabled');</script>#}
+{#
+ # Colour flourishes are specified using the `pillar--` class on the body, different
+ # values result in different colours being used.
+ #
+ # If `show-flourishes` isn't included, then certain colour flourishes won't show
+#}
+<body class="govuk-template__body {% block flourishClasses %}show-flourishes  pillar--{{ flourish }}{% endblock %}">
+
 
 {# Google Tag Manager (noscript) #}
 <noscript>

@@ -69,7 +69,8 @@ html {
 
         border-radius: 50%;
         content: " ";
-        display: block;
+        // we only show these flourishes on pages with a `show-flourishes` class
+        display: none;
         position: absolute;
 
         z-index: -1;
@@ -109,6 +110,17 @@ html {
 
 }
 
+
+/**
+ * Only show the footer flourishes when specified
+ */
+.show-flourishes .footer-global {
+    &:before,
+    &:after {
+        display: block;
+    }
+}
+
 // This isn't ideal but the radius of the circle makes it so big that it sticks out from the bottom of the footer if we use the same css as on the other flourishes
 .pillar--buildings .footer-global:before {
     background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-building}' fill-rule='evenodd'/></svg>");
@@ -127,8 +139,8 @@ html {
  * Most colour flourishes only display on larger screen sizes
  */
 @include govuk-media-query($until: 1024) {
-    .footer-global:before,
-    .footer-global:after,
+    .show-flourishes .footer-global:before,
+    .show-flourishes .footer-global:after,
     .hero--flourish:after {
         display: none;
     }
