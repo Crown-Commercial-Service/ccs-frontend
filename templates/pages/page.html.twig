@@ -157,12 +157,16 @@
 
 
 
-            {% if page.content.resources_intro_heading %}
-                <div class="resources-section">
+            <div class="resources-section">
 
+                {% if page.content.resources_intro_heading %}
                     <h2 class="govuk-heading-m resources-section__heading">{{ page.content.resources_intro_heading }}</h2>
-                    {% if page.content.resources_intro_introduction %}<div class="resources-section__intro">{{ page.content.resources_intro_introduction|raw }}</div>{% endif %}
+                {% endif %}
+                {% if page.content.resources_intro_introduction %}
+                    <div class="resources-section__intro">{{ page.content.resources_intro_introduction|raw }}</div>
+                {% endif %}
 
+                {% if page.content.brochures_list_brochures_list is not empty  or  page.content.whitepapers_list_whitepapers is not empty  or  page.content.webinars_list_webinars %}
                     <div class="govuk-accordion" data-module="accordion" id="accordion-default">
                         {% if page.content.brochures_list_brochures_list is not empty %}
                             {# Start brochure section #}
@@ -213,16 +217,18 @@
                                     <ol class="ccs-list-grid">
                                         {% for whitepaper in page.content.whitepapers_list_whitepapers %}
                                             <li class="ccs-list-grid__item">
-                                                <a href="{{ whitepaper.post_name }}" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
+                                                <a href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
                                                     {% if whitepaper.ccs_whitepaper_featured_image.url is defined and whitepaper.ccs_whitepaper_featured_image.alt is defined %}
-                                                        <img src="{{ whitepaper.ccs_whitepaper_featured_image.url }}" alt="{{ whitepaper.ccs_whitepaper_featured_image.alt }}" />
+                                                        <img src="{{ whitepaper.ccs_whitepaper_featured_image.byName('news-size-m') }}" alt="{{ whitepaper.ccs_whitepaper_featured_image.alt }}" role="presentation" />
                                                     {% else %}
-                                                        <img src="https://via.placeholder.com/400x250" alt="" />
+                                                        <img src="https://via.placeholder.com/400x250" alt="" role="presentation" />
                                                     {% endif %}
                                                 </a>
                                                 <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
                                                     <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ whitepaper.post_title }}</h3>
-                                                    <p>{{ whitepaper.post_excerpt }}</p>
+                                                    {% if whitepaper.post_excerpt is defined and whitepaper.post_excerpt is not empty %}
+                                                        <p>{{ whitepaper.post_excerpt }}</p>
+                                                    {% endif %}
                                                     <a href="{{ whitepaper.post_name }}">Learn more</a>
                                                 </div>
                                             </li>
@@ -235,69 +241,50 @@
                             </div>
                         {% endif %}
 
-                        <div class="govuk-accordion__section ">
-                            {# Start Webinars section #}
 
-                            <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading">
-                                    <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
-                                      Webinars (1)
-                                    </span>
-                                </h2>
+                        {% if page.content.webinars_list_webinars is not empty %}
+                            <div class="govuk-accordion__section ">
+                                {# Start Webinars section #}
+
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
+                                          Webinars ({{ page.content.webinars_list_webinars|length }})
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3">
+
+                                    <ol class="ccs-list-grid">
+                                        {% for webinar in page.content.webinars_list_webinars %}
+                                        <li class="ccs-list-grid__item">
+                                            <a href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
+                                                {% if webinar.ccs_webinar_featured_image.url is defined and webinar.ccs_webinar_featured_image.alt is defined %}
+                                                    <img src="{{ webinar.ccs_webinar_featured_image.byName('news-size-m') }}" alt="{{ webinar.ccs_webinar_featured_image.alt }}" role="presentation" />
+                                                {% else %}
+                                                    <img src="https://via.placeholder.com/400x250" alt="" role="presentation" />
+                                                {% endif %}
+                                            </a>
+                                            <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
+                                                <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ webinar.post_title }}</h3>
+                                                {% if webinar.post_excerpt is defined and webinar.post_excerpt is not empty %}
+                                                    <p>{{ webinar.post_excerpt }}</p>
+                                                {% endif %}
+                                                <a href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/">Learn more</a>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ol>
+
+                                </div>
+
+                                {# End Webinars section #}
                             </div>
-                            <div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3">
-
-                                <ol class="ccs-list-grid">
-                                    <li class="ccs-list-grid__item">
-                                        <a href="#" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
-                                            <img src="https://via.placeholder.com/90x65" alt="" />
-                                        </a>
-                                        <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
-                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">Lorem do dolor</h3>
-                                            <p>Lorem ipsum dolor sit amet et do aliquam.</p>
-                                            <a href="#">Learn more</a>
-                                        </div>
-                                    </li>
-                                    <li class="ccs-list-grid__item">
-                                        <a href="#" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
-                                            <img src="https://via.placeholder.com/90x65" alt="" />
-                                        </a>
-                                        <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
-                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">Lorem do dolor</h3>
-                                            <p>Lorem ipsum dolor sit amet et do aliquam.</p>
-                                            <a href="#">Learn more</a>
-                                        </div>
-                                    </li>
-                                    <li class="ccs-list-grid__item">
-                                        <a href="#" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
-                                            <img src="https://via.placeholder.com/90x65" alt="" />
-                                        </a>
-                                        <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
-                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">Lorem do dolor</h3>
-                                            <p>Lorem ipsum dolor sit amet et do aliquam.</p>
-                                            <a href="#">Learn more</a>
-                                        </div>
-                                    </li>
-                                    <li class="ccs-list-grid__item">
-                                        <a href="#" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
-                                            <img src="https://via.placeholder.com/90x65" alt="" />
-                                        </a>
-                                        <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
-                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">Lorem do dolor</h3>
-                                            <p>Lorem ipsum dolor sit amet et do aliquam.</p>
-                                            <a href="#">Learn more</a>
-                                        </div>
-                                    </li>
-                                </ol>
-
-                            </div>
-                        </div>
-
-                        {# End Webinars section #}
+                        {% endif %}
                     </div>
+                {% endif %}
 
-                </div>
-            {% endif %}
+            </div>
 
 
 
