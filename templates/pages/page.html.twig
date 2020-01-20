@@ -229,7 +229,7 @@
                                                     {% if whitepaper.post_excerpt is defined and whitepaper.post_excerpt is not empty %}
                                                         <p>{{ whitepaper.post_excerpt }}</p>
                                                     {% endif %}
-                                                    <a href="{{ whitepaper.post_name }}">Learn more</a>
+                                                    <a href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/">Learn more</a>
                                                 </div>
                                             </li>
                                         {% endfor %}
