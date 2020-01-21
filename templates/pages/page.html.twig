@@ -229,7 +229,7 @@
                                                     {% if whitepaper.post_excerpt is defined and whitepaper.post_excerpt is not empty %}
                                                         <p>{{ whitepaper.post_excerpt }}</p>
                                                     {% endif %}
-                                                    <a href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/">Learn more</a>
+                                                    <a class="ccs-list-grid__item__cta" href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/">Learn more</a>
                                                 </div>
                                             </li>
                                         {% endfor %}
@@ -270,7 +270,7 @@
                                                 {% if webinar.post_excerpt is defined and webinar.post_excerpt is not empty %}
                                                     <p>{{ webinar.post_excerpt }}</p>
                                                 {% endif %}
-                                                <a href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/">Learn more</a>
+                                                <a class="ccs-list-grid__item__cta" href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/">Learn more</a>
                                             </div>
                                         </li>
                                         {% endfor %}

@@ -16,6 +16,12 @@
 }
 
 
+.govuk-accordion__section-content .ccs-list-grid {
+    padding-top: govuk-px-to-rem(10);
+}
+
+
+
 .brochures-list {
     padding: govuk-px-to-rem(5) govuk-px-to-rem(6);
 }
@@ -68,7 +74,7 @@
 
 .ccs-list-grid__item__details {
     overflow: hidden;
-    padding: govuk-px-to-rem(8) govuk-px-to-rem(14) govuk-px-to-rem(8) govuk-px-to-rem(20);
+    padding: govuk-px-to-rem(18) govuk-px-to-rem(14) govuk-px-to-rem(18) govuk-px-to-rem(20);
 
     p {
         color: #313131;
@@ -101,15 +107,21 @@
 }
 
 
+.ccs-list-grid__item__cta {
+    display: block;
+    margin-top: govuk-px-to-rem(6);
+}
+
+
 @include govuk-media-query($from: 769) {
     .ccs-list-grid__item {
         float: left;
-        width: 32%;
+        width: 30.6666%;
     }
 
 
     .ccs-list-grid__item + .ccs-list-grid__item {
-        margin-left: 2%;
+        margin-left: 4%;
     }
 
 
