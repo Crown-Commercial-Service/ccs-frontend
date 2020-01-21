@@ -3,17 +3,34 @@
   Uses calc() to force 100% width of window for three different breakpoints.
 \*------------------------------------*/
 
+.subcategories {
+
+	margin-bottom:40px;
+
+	.greyed-bg {		
+		padding:4%;
+
+		ul.card-list:after {
+			content:"";
+			clear:both;
+			display:block;
+		}
+	}
+
+}
+/*
+ CSS variables:
+ marginA = Initial offset
+ marginB = Divided by 2 (for each side of a centred element)
+ marginC = 0 - calculated margin, to make it negative
+
+ Allows the component to escape its parent container 
+ and fill the full width of the viewport.
+ */
+
+/*
 @supports (margin: 0 calc(100% - 40em)) {
 
-	/*
-	 CSS variables:
-	 marginA = Initial offset
-	 marginB = Divided by 2 (for each side of a centred element)
-	 marginC = 0 - calculated margin, to make it negative
-
-	 Allows the component to escape its parent container 
-	 and fill the full width of the viewport.
-	 */
 
 	.subcategories {
 		.greyed-bg {
@@ -50,3 +67,5 @@
 	}
 
 }
+
+*/
