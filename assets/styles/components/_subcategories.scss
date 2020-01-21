@@ -10,10 +10,21 @@
 	.greyed-bg {		
 		padding:4%;
 
-		ul.card-list:after {
-			content:"";
-			clear:both;
-			display:block;
+		ul.card-list {
+
+			.card-list__item__wrapper > p {
+				margin-bottom:0;
+			} 
+
+			li {
+				margin-bottom:30px;
+			}
+
+			&:after {
+				content:"";
+				clear:both;
+				display:block;
+			}
 		}
 	}
 
