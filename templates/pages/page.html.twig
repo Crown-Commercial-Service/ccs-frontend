@@ -11,12 +11,19 @@
 
 {% block body %}
 
+
+    {# Component: Hero #}
+    {# Pass all the variables along #}
+    {% include '_components/hero.html.twig' with {'image': page.content.hero_image, 'heading': page.content.hero_heading, 'content': page.content.hero_content, 'cta_label': page.content.hero_cta_label, 'cta_destination': page.content.hero_cta_destination} %}
+
+
     <!-- required wrapper 1 -->
     <div class="govuk-width-container">
 
         <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
-        <div class="govuk-phase-banner">
+
+        {#<div class="govuk-phase-banner">
             <p class="govuk-phase-banner__content">
                 <strong class="govuk-tag govuk-phase-banner__content__tag ">
                     beta </strong> <span class="govuk-phase-banner__text">
@@ -24,7 +31,7 @@
       <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.
     </span>
             </p>
-        </div>
+        </div>#}
 
 
         <div class="govuk-breadcrumbs">
@@ -49,13 +56,39 @@
 
 
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds">
-
-                    <h1 class="govuk-heading-xl page-title">{{ page.title }}</h1>
-
-                    {% if page.content.page_lead_text %}
-                        <p class="govuk-body-l">{{ page.content.page_lead_text }}</p>
+                {% if page.template == "page-templates/landing.php" %}
+                <div class="govuk-grid-column-full">
+                    {% else %}
+                    <div class="govuk-grid-column-two-thirds">
                     {% endif %}
+
+                    {#{{ dump(page) }}#}
+
+                    {#{{ page.template }}#}
+
+                    {#<h1 class="govuk-heading-xl page-title">{{ page.title }}</h1>#}
+
+                    {#{% if page.content.page_lead_text %}#}
+                        {#<p class="govuk-body-l">{{ page.content.page_lead_text }}</p>#}
+                    {#{% endif %}#}
+
+
+
+                    {#{{ dump(page.content) }}#}
+
+                    {#{{ page.content.hero_heading }}#}
+
+                     {#always filter richtext (wysiwyg content)#}
+                    {#{{ page.content.hero_content | raw }}#}
+                    {#{{ page.content.hero_cta_label }}#}
+                    {#<img src="{{ page.content.hero_image }}" alt="">#}
+
+                    {#<hr>#}
+
+
+                    {% include '_components/components.html.twig' with {'components': page.content.page_components_rows } %}
+
+
 
 
                     {# Start of WYSIWYG content #}
@@ -105,24 +138,153 @@
             </div>
 
 
-
             {% if page.content.full_width_content %}
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
 
-                    {# Start of WYSIWYG content #}
-                    <div class="wysiwyg-content">
+                        {# Start of WYSIWYG content #}
+                        <div class="wysiwyg-content">
 
-                        {{ page.content.full_width_content | raw }}
+                            {{ page.content.full_width_content | raw }}
+
+                        </div>
+                        {# End of WYSIWYG content #}
+
 
                     </div>
-                    {# End of WYSIWYG content #}
-
-
                 </div>
-            </div>
             {% endif %}
 
+
+
+            <div class="resources-section">
+
+                {% if page.content.resources_intro_heading %}
+                    <h2 class="govuk-heading-m resources-section__heading">{{ page.content.resources_intro_heading }}</h2>
+                {% endif %}
+                {% if page.content.resources_intro_introduction %}
+                    <div class="resources-section__intro">{{ page.content.resources_intro_introduction|raw }}</div>
+                {% endif %}
+
+                {% if page.content.brochures_list_brochures_list is not empty  or  page.content.whitepapers_list_whitepapers is not empty  or  page.content.webinars_list_webinars %}
+                    <div class="govuk-accordion" data-module="accordion" id="accordion-default">
+                        {% if page.content.brochures_list_brochures_list is not empty %}
+                            {# Start brochure section #}
+
+                            <div class="govuk-accordion__section ">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+                                            Brochures ({{ page.content.brochures_list_brochures_list|length }})
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+
+                                    <ol class="ccs-list-grid brochures-list">
+                                        {% for brochure in page.content.brochures_list_brochures_list %}
+                                            <li class="ccs-list-grid__item">
+                                                <a href="{{ brochure.brochures_list_brochure.url }}" class="ccs-list-grid__item__img ccs-list-grid__item__img--flourish">
+                                                    <img src="/assets/images/icon-document-placeholder.svg" alt="" />
+                                                </a>
+                                                <div class="ccs-list-grid__item__details">
+                                                    <a class="ccs-list-grid__item__link-heading" href="{{ brochure.brochures_list_brochure.url }}">{{ brochure.brochures_list_brochure.title }}</a>
+                                                    <p><span class="file-extension">{{ brochure.brochures_list_brochure.extension }}</span>, {{ brochure.brochures_list_brochure.filesize }}</p>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ol>
+                                </div>
+                            </div>
+
+                            {# End brochure section #}
+                        {% endif %}
+
+
+                        {% if page.content.whitepapers_list_whitepapers is not empty %}
+                            <div class="govuk-accordion__section ">
+                                {# Start Whitepapers section #}
+
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
+                                          Whitepapers ({{ page.content.whitepapers_list_whitepapers|length }})
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">
+
+                                    <ol class="ccs-list-grid">
+                                        {% for whitepaper in page.content.whitepapers_list_whitepapers %}
+                                            <li class="ccs-list-grid__item">
+                                                <a href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
+                                                    {% if whitepaper.ccs_whitepaper_featured_image.url is defined and whitepaper.ccs_whitepaper_featured_image.alt is defined %}
+                                                        <img src="{{ whitepaper.ccs_whitepaper_featured_image.byName('listing-thumbnail') }}" alt="{{ whitepaper.ccs_whitepaper_featured_image.alt }}" role="presentation" />
+                                                    {% else %}
+                                                        <img src="https://via.placeholder.com/400x250" alt="" role="presentation" />
+                                                    {% endif %}
+                                                </a>
+                                                <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
+                                                    <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ whitepaper.post_title }}</h3>
+                                                    {% if whitepaper.post_excerpt is defined and whitepaper.post_excerpt is not empty %}
+                                                        <p>{{ whitepaper.post_excerpt }}</p>
+                                                    {% endif %}
+                                                    <a class="ccs-list-grid__item__cta" href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/">Learn more</a>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ol>
+
+                                </div>
+
+                                {# End Whitepapers section #}
+                            </div>
+                        {% endif %}
+
+
+                        {% if page.content.webinars_list_webinars is not empty %}
+                            <div class="govuk-accordion__section ">
+                                {# Start Webinars section #}
+
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
+                                          Webinars ({{ page.content.webinars_list_webinars|length }})
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3">
+
+                                    <ol class="ccs-list-grid">
+                                        {% for webinar in page.content.webinars_list_webinars %}
+                                        <li class="ccs-list-grid__item">
+                                            <a href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
+                                                {% if webinar.ccs_webinar_featured_image.url is defined and webinar.ccs_webinar_featured_image.alt is defined %}
+                                                    <img src="{{ webinar.ccs_webinar_featured_image.byName('listing-thumbnail') }}" alt="{{ webinar.ccs_webinar_featured_image.alt }}" role="presentation" />
+                                                {% else %}
+                                                    <img src="https://via.placeholder.com/400x250" alt="" role="presentation" />
+                                                {% endif %}
+                                            </a>
+                                            <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
+                                                <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ webinar.post_title }}</h3>
+                                                {% if webinar.post_excerpt is defined and webinar.post_excerpt is not empty %}
+                                                    <p>{{ webinar.post_excerpt }}</p>
+                                                {% endif %}
+                                                <a class="ccs-list-grid__item__cta" href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/">Learn more</a>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ol>
+
+                                </div>
+
+                                {# End Webinars section #}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+            </div>
 
 
 
@@ -139,44 +301,47 @@
             </div>
 
 
-
-
         </main>
     </div>
 
 
 
     {% if page.content.full_width_content %}
-    <div class="apollo-island apollo-island--emphasised">
-        <div class="govuk-width-container">
+        <div class="apollo-island apollo-island--emphasised">
+            <div class="govuk-width-container">
 
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-half">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-one-half">
 
-                    <div class="apollo-call-to-action apollo-call-to-action--aggregation">
-                        <h3 class="govuk-heading-m">Aggregation</h3>
-                        <p>Bulk buying, also known as aggregation, offers highly
-                            competitive prices and a simple tender process.</p>
-                        <p><a href="/help-and-support/aggregation/">Learn more <span class="visuallyhidden">about aggregation</span></a></p>
+                        <div class="apollo-call-to-action apollo-call-to-action--aggregation">
+                            <h3 class="govuk-heading-m">Aggregation</h3>
+                            <p>Bulk buying, also known as aggregation, offers
+                                highly competitive prices and a simple tender
+                                process.</p>
+                            <p><a href="/help-and-support/aggregation/">Learn
+                                    more <span class="visuallyhidden">about aggregation</span></a>
+                            </p>
+                        </div>
+
                     </div>
+                    <div class="govuk-grid-column-one-half">
 
-                </div>
-                <div class="govuk-grid-column-one-half">
+                        <div class="apollo-call-to-action apollo-call-to-action--help">
+                            <h3 class="govuk-heading-m">Can't find what you're
+                                looking for?</h3>
+                            <p>If none of your requirements can be met by a CCS
+                                catalogue or framework, you can run an EU
+                                tender.</p>
+                            <p><a href="/help-and-support/eu-tender/">Learn more
+                                    <span class="visuallyhidden">EU tenders</span></a>
+                            </p>
+                        </div>
 
-                    <div class="apollo-call-to-action apollo-call-to-action--help">
-                        <h3 class="govuk-heading-m">Can't find what you're
-                            looking for?</h3>
-                        <p>If none of your requirements can be met by a CCS
-                            catalogue or framework, you can run an EU
-                            tender.</p>
-                        <p><a href="/help-and-support/eu-tender/">Learn more <span class="visuallyhidden">EU tenders</span></a></p>
                     </div>
-
                 </div>
+
             </div>
-
         </div>
-    </div>
     {% endif %}
 
 

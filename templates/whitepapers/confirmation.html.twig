@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Access Whitepaper - {{ whitepaper.title|raw }} - CCS{% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+
+{# Remove colour flourishes from this page #}
+{% block flourishClasses %}{% endblock %}
+
+
+{% block body %}
+
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
+
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
+
+
+        <div class="govuk-phase-banner">
+            <p class="govuk-phase-banner__content">
+                <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                    beta </strong> <span class="govuk-phase-banner__text">
+                  This is a new service – your
+                  <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.
+                </span>
+            </p>
+        </div>
+
+        <main class="govuk-main-wrapper">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <h1 class="govuk-heading-xl page-title">You have succesfully submitted your details</h1>
+
+                    <div class="page-intro"><p>You can now download the whitepaper.</p></div>
+
+                    {% if whitepaper.content.whitepaper_file.url is defined and whitepaper.content.whitepaper_file.url is not empty %}
+                        <p><a href="{{ whitepaper.content.whitepaper_file.url }}">{{ whitepaper.title }} ({{ whitepaper.content.whitepaper_file.filesize }})</a></p>
+
+                        <p><a href="{{ whitepaper.content.whitepaper_file.url }}" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Download</a></p>
+                    {% endif %}
+
+                    <p><a href="/">Back to the homepage</a></p>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+{% endblock %}

@@ -33,3 +33,14 @@
     background-image: url(../svg/aggregation.svg);
 
 }
+
+.call-to-action--compact {
+    align-items: baseline;
+    display: flex;
+    min-width: 17.5rem;
+
+    * + * {
+
+        margin-left: govuk-px-to-rem(20);
+    }
+}

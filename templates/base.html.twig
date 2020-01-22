@@ -16,10 +16,12 @@
 
     {% endblock %}
 
+    {#{% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}#}
+
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.css?v=1.1.1">
+        <link rel="stylesheet" href="/assets/styles/styles.css?v=1.1.2">
     {% else %}
-        <link rel="stylesheet" href="/assets/styles/styles.css?v=1.1.1">
+        <link rel="stylesheet" href="/assets/styles/styles.css?v=1.1.2">
     {% endif %}
 
     {% block blocking_javascript %}
@@ -44,8 +46,27 @@
     {% endblock %}
 </head>
 
-<body class="govuk-template__body">
-{#<script>document.querySelector('body').classList.add('js-enabled');</script>#}
+{% set flourish = "none" %}
+{% if page.taxonomies is defined %}
+    {% for taxonomy in page.taxonomies %}
+
+        {% for term in taxonomy %}
+            {#{{ term.slug }}#}
+            {% set flourish = term.slug %}
+        {% endfor %}
+
+    {% endfor %}
+{% endif %}
+
+
+{#
+ # Colour flourishes are specified using the `pillar--` class on the body, different
+ # values result in different colours being used.
+ #
+ # If `show-flourishes` isn't included, then certain colour flourishes won't show
+#}
+<body class="govuk-template__body {% block flourishClasses %}show-flourishes  pillar--{{ flourish }}{% endblock %}">
+
 
 {# Google Tag Manager (noscript) #}
 <noscript>
@@ -73,20 +94,23 @@
 {% block nonblocking_javascript %}
 
     {% if app.environment == "THIS WILL NEVER BE TRUE" %}
-    <script type="text/javascript">
-        (function () {
-            var s = document.createElement("script");
-            s.type = "text/javascript";
-            s.async = true;
-            s.src = "//api.usersnap.com/load/5c0d7b68-6a20-4882-8277-074dd8f65f37.js";
-            var x = document.getElementsByTagName("script")[0];
-            x.parentNode.insertBefore(s, x);
-        })();</script>
+        <script type="text/javascript">
+            (function () {
+                var s = document.createElement("script");
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "//api.usersnap.com/load/5c0d7b68-6a20-4882-8277-074dd8f65f37.js";
+                var x = document.getElementsByTagName("script")[0];
+                x.parentNode.insertBefore(s, x);
+            })();</script>
     {% endif %}
 
 {% endblock %}
 
+
+
 <script src="/assets/scripts/libraries/jquery-1.12.4.min.js"></script>
+<script src="/assets/scripts/libraries/objectFitPolyfill.min.js"></script>
 <script src="/assets/scripts/all.js"></script>
 <script src="/assets/scripts/app.js?v=1.1"></script>
 

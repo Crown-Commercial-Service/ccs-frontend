@@ -132,6 +132,23 @@ form_contact_thanks_complaint:
   defaults:
     template: forms/25-contact-thanks-complaint.html.twig
 
+
+whitepaper_request:
+  path: /whitepaper/request/{id}/{slug}
+  controller: App\Controller\WhitepaperController::request
+
+whitepaper_confirmation:
+  path: /whitepaper/confirmation/{id}/{slug}
+  controller: App\Controller\WhitepaperController::show
+
+webinar_request:
+  path: /webinar/request/{id}/{slug}
+  controller: App\Controller\WebinarController::request
+
+webinar_confirmation:
+  path: /webinar/confirmation/{id}/{slug}
+  controller: App\Controller\WebinarController::show
+
 #form_newsletter:
 #  path: /newsletter
 #  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController

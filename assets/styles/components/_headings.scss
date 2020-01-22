@@ -8,8 +8,44 @@
 
 }
 
+/**
+ * Can be used to add a small pre-title label
+ */
+.page-title-prepend {
+
+    color: #6F777B;
+    font-family: $govuk-font-family;
+    font-size: govuk-px-to-rem(27);
+    font-weight: 300;
+    line-height: govuk-px-to-rem(34);
+    margin-bottom: 0;
+    margin-top: 0;
+
+}
+
+
 .page-title {
 
     font-weight: 300;
 
+}
+
+.page-title--tight {
+
+    margin-bottom: govuk-px-to-rem(20);
+
+}
+
+.page-intro {
+
+    font-size: govuk-px-to-rem(24);
+    line-height: govuk-px-to-rem(31);
+    margin-bottom: govuk-px-to-rem(45);
+
+    p {
+
+        font-size: inherit;
+        line-height: inherit;
+
+    }
 }

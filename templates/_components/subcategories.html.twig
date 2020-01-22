@@ -1,0 +1,40 @@
+<div class="greyed-bg">
+    <div class="govuk-grid-row ccs-grid-row--loose">
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <h2 class="govuk-heading-m intro__heading">{{ component.subcategories_subcategories_heading }}</h2>
+
+            <div class="wysiwyg-content intro__content">
+                {{ component.subcategories_subcategories_content  | raw }}
+            </div>
+
+        </div>
+
+        <div class="govuk-grid-column-full">
+
+
+
+            <ul class="card-list">
+
+                {% for link in component.subcategories_subcategories_links %}
+                    <li class="card-list__item">
+                        <div class="card-list__item__wrapper">
+                            <h3 class="govuk-heading-s">{{ link.link_link_heading }}</h3>
+                            <div class="wysiwyg-content">{{ link.link_link_content | raw }}</div>
+                            <p>
+                                <a href="{{ link.link_link_link }}">Learn more
+                                    <span class="visuallyhidden">about {{ link.link_link_heading }}</span></a>
+                            </p>
+                        </div>
+                    </li>
+                {% endfor %}
+
+            </ul>
+
+
+
+        </div>
+
+    </div>
+</div>

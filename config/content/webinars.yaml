@@ -1,0 +1,6 @@
+featured_media:
+  type: image
+webinar_date:
+  type: datetime
+webinar_video:
+  type: text

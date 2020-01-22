@@ -1,0 +1,19 @@
+/*------------------------------------*\
+  #Root
+
+  Because browsers that support that understand variables will try to use them, resulting in default black borders if the var doesn't exist
+
+\*------------------------------------*/
+:root {
+    --sub-color: #{$ccs-colour};
+}
+
+/**
+ * Whereever you need to use this, use `property: var(--sub-color);`
+ * We're only changing one colour at the moment
+ */
+
+.pillar--buildings { --sub-color: #{$sub-color-building}; }
+.pillar--corporate-solutions { --sub-color: #{$sub-color-corporate-solutions}; }
+.pillar--people { --sub-color: #{$sub-color-people}; }
+.pillar--technology { --sub-color: #{$sub-color-technology}; }
