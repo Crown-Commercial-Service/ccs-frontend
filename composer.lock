@@ -555,16 +555,16 @@
         },
         {
             "name": "studio24/frontend",
-            "version": "0.6.4",
+            "version": "v0.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/studio24/frontend.git",
-                "reference": "e0dcacb0398fbeb73e30dc76cdd4f4532b3a64ab"
+                "reference": "9e017ffd04af2b34e74281fcc638669051df527f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/studio24/frontend/zipball/e0dcacb0398fbeb73e30dc76cdd4f4532b3a64ab",
-                "reference": "e0dcacb0398fbeb73e30dc76cdd4f4532b3a64ab",
+                "url": "https://api.github.com/repos/studio24/frontend/zipball/9e017ffd04af2b34e74281fcc638669051df527f",
+                "reference": "9e017ffd04af2b34e74281fcc638669051df527f",
                 "shasum": ""
             },
             "require": {
@@ -612,7 +612,7 @@
                 }
             ],
             "description": "Framework to build an efficient front-end website with content from a Headless CMS or other data sources",
-            "time": "2019-12-16T15:38:25+00:00"
+            "time": "2020-01-14T11:29:55+00:00"
         },
         {
             "name": "studio24/http-cache-clear",

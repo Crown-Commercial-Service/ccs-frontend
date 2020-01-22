@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Request to access Webinar - {{ webinar.title|raw }} - CCS{% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block body %}
+
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
+
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
+
+
+        <div class="govuk-phase-banner">
+            <p class="govuk-phase-banner__content">
+                <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                    beta </strong> <span class="govuk-phase-banner__text">
+                  This is a new service – your
+                  <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.
+                </span>
+            </p>
+        </div>
+
+        <a href="#" class="govuk-back-link">Back</a>
+
+        <main class="govuk-main-wrapper">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+
+                    <h1 class="page-title-prepend">Webinar</h1>
+                    <h2 class="govuk-heading-xl page-title page-title--tight">{{ webinar.title|raw }}</h2>
+
+                    {% if webinar.excerpt is defined and webinar.excerpt is not empty %}
+                        <div class="page-intro">{{ webinar.excerpt|raw }}</div>
+                    {% endif %}
+
+                    <p>To watch this webinar, we just need a few details first.</p>
+
+                    <form class="govuk-!-width-three-quarters" action="">
+                        <div class="govuk-form-group --govuk-form-group--error">
+                            <label class="govuk-label" for="name">Full name</label>
+                            <input class="govuk-input --govuk-input--error" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" />
+                        </div>
+
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="email">Email</label>
+                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="email" required="" />
+                        </div>
+
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="name">Telephone number (optional)</label>
+                            <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text" required="" />
+                        </div>
+
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="company">Organisation</label>
+                            <input class="govuk-input" id="company" maxlength="80" name="company" size="20" type="text" />
+                        </div>
+
+                        <p>Here is our <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice">privacy notice</a>.</p>
+
+                        <div class="govuk-form-group">
+                            {#<button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">
+                                Send enquiry
+                            </button>#}
+                            <a href="/webinar/confirmation/{{ webinar.ID }}/{{ webinar.urlSlug }}/" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Submit</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="govuk-grid-column-one-third">
+                    {% if webinar.featuredImage is defined and webinar.featuredImage is not empty %}
+                        <img src="{{ webinar.featuredImage.byName('news-size-m') }}" alt="" role="presentation" />
+                    {% endif %}
+
+                    <p class="ccs-subtle-notification">Streamed live {{ webinar.content.webinar_date|date('jS F Y g:ia') }}<br />An email link will be sent to you to access the webinar</p>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+{% endblock %}

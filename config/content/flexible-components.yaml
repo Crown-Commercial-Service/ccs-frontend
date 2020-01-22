@@ -1,0 +1,43 @@
+type: flexible
+components:
+  intro_intro:
+    intro_intro_heading:
+      type: text
+    intro_intro_content:
+      type: richtext
+    intro_intro_cta_label:
+      type: text
+    intro_intro_cta_destination:
+      type: text
+    intro_intro_secondary_label:
+      type: text
+    intro_intro_secondary_destination:
+      type: text
+    intro_intro_media:
+      type: array
+      content_fields:
+        video_video_video:
+          type: richtext
+        image_image_image:
+          type: image
+        image_image_caption:
+          type: richtext
+        video_video_caption:
+          type: richtext
+  text_text:
+    text_text_text:
+      type: richtext
+  subcategories_subcategories:
+    subcategories_subcategories_heading:
+      type: text
+    subcategories_subcategories_content:
+      type: richtext
+    subcategories_subcategories_links:
+      type: array
+      content_fields:
+        link_link_heading:
+          type: text
+        link_link_content:
+          type: richtext
+        link_link_link:
+          type: text

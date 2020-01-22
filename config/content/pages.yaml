@@ -9,3 +9,52 @@ page_accordion:
       type: richtext
 full_width_content:
   type: richtext
+hero_image:
+  type: image
+hero_heading:
+  type: text
+hero_content:
+  type: richtext
+hero_cta_label:
+  type: text
+hero_cta_destination:
+  type: text
+page_components_rows:
+  config: flexible-components.yaml
+resources_intro_heading:
+  type: text
+resources_intro_introduction:
+  type: text
+brochures_list_brochures_list:
+  type: array
+  content_fields:
+    brochures_list_brochure:
+      type: document
+whitepapers_list_whitepapers:
+  type: array
+  content_fields:
+    ID:
+      type: number
+    post_title:
+      type: text
+    post_excerpt:
+      type: text
+    post_name:
+      type: text
+    ccs_whitepaper_file:
+      type: document
+    ccs_whitepaper_featured_image:
+      type: image
+webinars_list_webinars:
+  type: array
+  content_fields:
+    ID:
+      type: number
+    post_name:
+      type: text
+    post_title:
+      type: text
+    post_excerpt:
+      type: text
+    ccs_webinar_featured_image:
+      type: image
