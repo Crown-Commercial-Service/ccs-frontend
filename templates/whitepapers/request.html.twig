@@ -34,7 +34,7 @@
             <div class="govuk-grid-column-two-thirds">
 
                 <h1 class="page-title-prepend">Whitepaper</h1>
-                <h2 class="govuk-heading-xl page-title page-title--tight">{{ whitepaper.title }}</h2>
+                <h2 class="govuk-heading-xl page-title page-title--tight">{{ whitepaper.title|raw }}</h2>
 
                 {% if whitepaper.excerpt is defined and whitepaper.excerpt is not empty %}
                     <div class="page-intro">{{ whitepaper.excerpt|raw }}</div>

@@ -34,7 +34,7 @@
                 <div class="govuk-grid-column-two-thirds">
 
                     <h1 class="page-title-prepend">Webinar</h1>
-                    <h2 class="govuk-heading-xl page-title page-title--tight">{{ webinar.title }}</h2>
+                    <h2 class="govuk-heading-xl page-title page-title--tight">{{ webinar.title|raw }}</h2>
 
                     {% if webinar.excerpt is defined and webinar.excerpt is not empty %}
                         <div class="page-intro">{{ webinar.excerpt|raw }}</div>
