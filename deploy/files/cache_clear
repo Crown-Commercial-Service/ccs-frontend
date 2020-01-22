@@ -1,1 +1,1 @@
-0 2 * * * apache sudo -u apache cd /var/www && /var/www/vendor/bin/http-cache-clear
+0 2 * * * apache cd /var/www && /var/www/vendor/bin/http-cache-clear
