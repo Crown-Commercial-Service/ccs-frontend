@@ -260,7 +260,7 @@
                                         <li class="ccs-list-grid__item">
                                             <a href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
                                                 {% if webinar.ccs_webinar_featured_image.url is defined and webinar.ccs_webinar_featured_image.alt is defined %}
-                                                    <img src="{{ webinar.ccs_webinar_featured_image.byName('listing-thumbnail') }}" alt="{{ webinar.ccs_webinar_featured_image.alt }}" role="presentation" />
+                                                    <img src="{{ webinar.ccs_webinar_featured_image.byName('news-size-m') }}" alt="{{ webinar.ccs_webinar_featured_image.alt }}" role="presentation" />
                                                 {% else %}
                                                     <img src="https://via.placeholder.com/400x250" alt="" role="presentation" />
                                                 {% endif %}
