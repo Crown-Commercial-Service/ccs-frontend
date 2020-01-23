@@ -219,7 +219,7 @@
                                             <li class="ccs-list-grid__item">
                                                 <a href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
                                                     {% if whitepaper.ccs_whitepaper_featured_image.url is defined and whitepaper.ccs_whitepaper_featured_image.alt is defined %}
-                                                        <img src="{{ whitepaper.ccs_whitepaper_featured_image.byName('listing-thumbnail') }}" alt="{{ whitepaper.ccs_whitepaper_featured_image.alt }}" role="presentation" />
+                                                        <img src="{{ whitepaper.ccs_whitepaper_featured_image.byName('news-size-m') }}" alt="{{ whitepaper.ccs_whitepaper_featured_image.alt }}" role="presentation" />
                                                     {% else %}
                                                         <img src="https://via.placeholder.com/400x250" alt="" role="presentation" />
                                                     {% endif %}
