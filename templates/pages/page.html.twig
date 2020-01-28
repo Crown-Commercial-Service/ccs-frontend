@@ -217,13 +217,20 @@
                                     <ol class="ccs-list-grid">
                                         {% for whitepaper in page.content.whitepapers_list_whitepapers %}
                                             <li class="ccs-list-grid__item">
-                                                <a href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
-                                                    {% if whitepaper.ccs_whitepaper_featured_image.url is defined and whitepaper.ccs_whitepaper_featured_image.alt is defined %}
-                                                        <img src="{{ whitepaper.ccs_whitepaper_featured_image.byName('news-size-m') }}" alt="{{ whitepaper.ccs_whitepaper_featured_image.alt }}" role="presentation" />
-                                                    {% else %}
-                                                        <img src="https://via.placeholder.com/400x250" alt="" role="presentation" />
-                                                    {% endif %}
-                                                </a>
+                                                {% if whitepaper.ccs_whitepaper_featured_image.url is defined %}
+                                                    <a href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
+                                                        <img
+                                                            src="{{ whitepaper.ccs_whitepaper_featured_image.byName('news-size-m') }}"
+                                                            
+                                                            {% if whitepaper.ccs_whitepaper_featured_image.alt is defined  %}
+                                                                alt="{{ whitepaper.ccs_whitepaper_featured_image.alt }}"
+                                                            {% else %}
+                                                                alt=""
+                                                                role="presentation"
+                                                            {% endif %}
+                                                        />
+                                                    </a>
+                                                {% endif %}
                                                 <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
                                                     <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ whitepaper.post_title }}</h3>
                                                     {% if whitepaper.post_excerpt is defined and whitepaper.post_excerpt is not empty %}
@@ -258,13 +265,20 @@
                                     <ol class="ccs-list-grid">
                                         {% for webinar in page.content.webinars_list_webinars %}
                                         <li class="ccs-list-grid__item">
-                                            <a href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
-                                                {% if webinar.ccs_webinar_featured_image.url is defined and webinar.ccs_webinar_featured_image.alt is defined %}
-                                                    <img src="{{ webinar.ccs_webinar_featured_image.byName('news-size-m') }}" alt="{{ webinar.ccs_webinar_featured_image.alt }}" role="presentation" />
-                                                {% else %}
-                                                    <img src="https://via.placeholder.com/400x250" alt="" role="presentation" />
-                                                {% endif %}
-                                            </a>
+                                            {% if webinar.ccs_webinar_featured_image.url is defined %}
+                                                <a href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
+                                                    <img
+                                                        src="{{ webinar.ccs_webinar_featured_image.byName('news-size-m') }}"
+
+                                                        {% if webinar.ccs_webinar_featured_image.alt is defined  %}
+                                                            alt="{{ webinar.ccs_webinar_featured_image.alt }}"
+                                                        {% else %}
+                                                            alt=""
+                                                            role="presentation"
+                                                        {% endif %}
+                                                    />
+                                                </a>
+                                            {% endif %}
                                             <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
                                                 <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ webinar.post_title }}</h3>
                                                 {% if webinar.post_excerpt is defined and webinar.post_excerpt is not empty %}
