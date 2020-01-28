@@ -2,13 +2,25 @@
   #Navigation
 \*------------------------------------*/
 
-.govuk-width-container,
 .ccs-width-container {
 
-    max-width: 1280px;
-    margin: 0 auto;
+    // On mobile, add half width gutters
+    margin: 0 $govuk-gutter-half;
+
+    // On tablet, add full width gutters
+    @include govuk-media-query($from: tablet) {
+        margin: 0 $govuk-gutter;
+    }
+
+    // As soon as the viewport is greater than the width of the page plus the
+    // gutters, just centre the content instead of adding gutters.
+    @include govuk-media-query($and: "(min-width: #{($govuk-page-width + $govuk-gutter * 2)})") {
+        margin: 0 auto;
+        max-width: $govuk-page-width;
+    }
 
 }
+
 
 .nav-wrapper {
 
@@ -19,14 +31,8 @@
         display: flex;
         flex-flow: row nowrap;
         align-items: flex-end;
-        padding: govuk-px-to-rem(22) 30px govuk-px-to-rem(26) 30px;
-        text-align: right;
-
-    }
-
-    @include govuk-media-query($from: 960+60) {
-
         padding: govuk-px-to-rem(22) 0 govuk-px-to-rem(26) 0;
+        text-align: right;
 
     }
 

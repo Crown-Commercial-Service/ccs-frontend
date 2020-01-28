@@ -58,3 +58,6 @@ webinars_list_webinars:
       type: text
     ccs_webinar_featured_image:
       type: image
+    link_text:
+      type: text
+
