@@ -30,21 +30,7 @@
 
 .govuk-phase-banner {
 
-    padding-left: 15px;
-    padding-right: 15px;
-
-    @include govuk-media-query($from: 641) {
-
-        padding-left: 30px;
-        padding-right: 30px;
-
-    }
-
-    @include govuk-media-query($from: 960+60) {
-
-        padding-left: 0;
-        padding-right: 0;
-
-    }
+    padding-left: 0;
+    padding-right: 0;
 
 }
