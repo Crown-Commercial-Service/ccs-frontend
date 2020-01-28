@@ -4,3 +4,5 @@ webinar_date:
   type: datetime
 webinar_video:
   type: text
+link_text:
+  type: text
