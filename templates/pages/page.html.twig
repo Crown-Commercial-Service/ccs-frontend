@@ -221,7 +221,7 @@
                                                     <a href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
                                                         <img
                                                             src="{{ whitepaper.ccs_whitepaper_featured_image.byName('news-size-m') }}"
-                                                            
+
                                                             {% if whitepaper.ccs_whitepaper_featured_image.alt is defined  %}
                                                                 alt="{{ whitepaper.ccs_whitepaper_featured_image.alt }}"
                                                             {% else %}
