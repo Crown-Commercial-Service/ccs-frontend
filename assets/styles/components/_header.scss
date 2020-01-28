@@ -60,14 +60,7 @@
 
 .header-global .logo {
 
-    padding-left: 15px;
     padding-top: govuk-px-to-rem(20);
-
-    @include govuk-media-query($from: 641) {
-
-        padding-left: 30px;
-
-    }
 
     @include govuk-media-query($from: desktop) {
 
@@ -75,7 +68,6 @@
         float: left;
 
         padding-top: 0;
-        padding-left: 0;
         margin-right: auto;
 
     }
