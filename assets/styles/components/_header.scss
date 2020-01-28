@@ -71,6 +71,9 @@
 
     @include govuk-media-query($from: desktop) {
 
+        // IE9 Fix
+        float: left;
+
         padding-top: 0;
         padding-left: 0;
         margin-right: auto;
@@ -78,6 +81,13 @@
     }
 
 }
+
+
+.logo img {
+    // IE9 Fix
+    border: 0 none;
+}
+
 
 .footer-global .logo {
 
