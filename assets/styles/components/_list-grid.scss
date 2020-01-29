@@ -132,7 +132,7 @@
 }
 
 
-@include govuk-media-query($from: desktop) {
+@include govuk-media-query($from: 1025) {
     .ccs-list-grid__item {
         width: 30.6666%;
     }
