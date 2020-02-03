@@ -329,13 +329,16 @@
 
 
 
-            {% if page.template == "page-templates/landing.php" %}
+            {% if page.template == "page-templates/landing.php" and page.content.contact_form_show_contact_form.value == true %}
                 <div class="govuk-grid-row ccs-inline-contact-form">
-                    <h2 class="govuk-grid-column-two-thirds govuk-heading-m">Get in touch</h2>
+                    {% if page.content.contact_form_form_heading %}
+                        <h2 class="govuk-grid-column-two-thirds govuk-heading-m">{{ page.content.contact_form_form_heading }}</h2>
+                    {% endif %}
 
                     <div class="govuk-grid-column-two-thirds">
-                        <p>Not to sure what building solutions are right for your organisation?</p>
-                        <p>Form code goes in here</p>
+                        {% if page.content.contact_form_form_sub_heading %}
+                            <p>{{ page.content.contact_form_form_sub_heading }}</p>
+                        {% endif %}
 
                         <form class="govuk-!-width-three-quarters" action="">
                             <div class="govuk-form-group">
@@ -374,13 +377,14 @@
                         </form>
                     </div>
 
+                    {#
                     <div class="govuk-grid-column-one-third apollo-enclosure">
                         <h3 class="govuk-heading-s">Talk to us</h3>
                         <p>CCS customer services team is available Monday to Friday, 9am to 5pm.</p>
 
                         <h3 class="govuk-heading-s" style="margin-bottom: 0;">Talk to us</h3>
                         <p>0345 410 2222</p>
-                    </div>
+                    </div>#}
                 </div>
             {% endif %}
 
