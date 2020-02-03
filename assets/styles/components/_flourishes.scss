@@ -37,25 +37,22 @@ html {
 }
 
 
-.hero--flourish {
+.hero__flourish {
 
-    position: relative;
+    bottom: govuk-px-to-rem(-136);
+    content: "";
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    width: govuk-px-to-rem(171);
+    z-index: -1;
 
     &:after {
-
-        background-color: #9b1a47;
-        background-color: var(--sub-color);
+        border: govuk-px-to-rem(192) solid #9b1a47;
+        border-color: var(--sub-color);
         border-radius: 50%;
-        content: " ";
+        content: "";
         display: block;
-        height: govuk-px-to-rem(416);
-
-        position: absolute;
-        right: govuk-px-to-rem(- 245);
-
-        bottom: govuk-px-to-rem(- 124);
-        width: govuk-px-to-rem(416);
-
         z-index: -1;
 
     }
