@@ -236,7 +236,13 @@
                                                     {% if whitepaper.post_excerpt is defined and whitepaper.post_excerpt is not empty %}
                                                         <p>{{ whitepaper.post_excerpt }}</p>
                                                     {% endif %}
-                                                    <a class="ccs-list-grid__item__cta" href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/">Learn more</a>
+                                                    <a class="ccs-list-grid__item__cta" href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/">
+                                                        {% if whitepaper.link_text is not empty %}
+                                                            {{ whitepaper.link_text }}
+                                                        {% else %}
+                                                            Learn more
+                                                        {% endif %}
+                                                    </a>
                                                 </div>
                                             </li>
                                         {% endfor %}

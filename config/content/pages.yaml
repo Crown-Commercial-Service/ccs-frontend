@@ -45,6 +45,8 @@ whitepapers_list_whitepapers:
       type: document
     ccs_whitepaper_featured_image:
       type: image
+    link_text:
+      type: text
 webinars_list_webinars:
   type: array
   content_fields:
