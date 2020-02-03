@@ -1,2 +1,4 @@
 whitepaper_file:
   type: document
+link_text:
+  type: text
