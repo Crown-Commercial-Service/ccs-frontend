@@ -30,7 +30,7 @@ class WebinarController extends AbstractController
         );
         $this->api->setContentType('webinars');
         $this->api->setCache($cache);
-        $this->api->setCacheLifetime(1800);
+        $this->api->setCacheLifetime(300);
     }
 
     public function request($id, $slug, Request $request)
