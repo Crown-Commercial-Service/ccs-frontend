@@ -30,6 +30,7 @@
 .download-file-link[href*='.xlsx']:before {
     background-color: #007831;
     content: ".XLSX";
+    width: 44px;
 }
 
 .download-file-link[href*='.csv']:before {
@@ -45,6 +46,7 @@
 .download-file-link[href*='.docx']:before {
     background-color: #0d0da0;
     content: ".DOCX";
+    width: 44px;
 }
 
 .download-file-link[href*='.pdf']:before {
