@@ -6,7 +6,7 @@
 
     list-style-type: none;
     margin: govuk-px-to-rem(- 23);
-    padding: 0;
+    padding: 0 govuk-px-to-rem(22);
 
     @include govuk-media-query($from: desktop) {
 
@@ -18,12 +18,29 @@
 }
 .card-list__item {
 
-    flex: 0 0 calc(50% - #{govuk-px-to-rem(46)});
-    padding: 0 govuk-px-to-rem(23) 0 govuk-px-to-rem(23);
-
     @include govuk-media-query($from: tablet) {
 
-        flex: 0 0 calc(33% - #{govuk-px-to-rem(46)});
+        float: left;
+        margin-right: 2%;
+        width: 49%;
+
+        &:nth-child(2n) {
+            margin-right: 0;
+        }
+
+    }
+
+    @include govuk-media-query($from: 900) {
+
+        width: 32%;
+
+        &:nth-child(2n) {
+            margin-right: 2%;
+        }
+
+        &:nth-child(3n) {
+            margin-right: 0;
+        }
 
     }
 
@@ -33,7 +50,7 @@
 
     margin-top: govuk-px-to-rem(15);
 
-    @include govuk-media-query($from: desktop) {
+    @include govuk-media-query($from: tablet) {
 
         margin-top: 0;
 
@@ -44,11 +61,8 @@
 
     background: white;
     border: 1px solid #979797;
-
     border-width: 0 1px 1px 1px;
     padding: govuk-px-to-rem(30) govuk-px-to-rem(25) govuk-px-to-rem(30) govuk-px-to-rem(25);
-    //border: 3px solid var(--sub-color);
-    //border-width: 3px 0 0 0;
 
     position: relative;
 
