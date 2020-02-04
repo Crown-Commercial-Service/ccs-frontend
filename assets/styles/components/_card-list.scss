@@ -5,8 +5,14 @@
 .card-list {
 
     list-style-type: none;
-    margin: govuk-px-to-rem(- 23);
+    margin: govuk-px-to-rem(-23) govuk-px-to-rem(-23) 0 govuk-px-to-rem(-23);
     padding: 0 govuk-px-to-rem(22);
+
+    &:after {
+        content: "";
+        clear: both;
+        display: block;
+    }
 
     @include govuk-media-query($from: desktop) {
 
@@ -16,10 +22,13 @@
     }
 
 }
+
+
 .card-list__item {
 
     @include govuk-media-query($from: tablet) {
 
+        margin-bottom: govuk-px-to-rem(40);
         float: left;
         margin-right: 2%;
         width: 49%;
@@ -30,12 +39,14 @@
 
     }
 
-    @include govuk-media-query($from: 900) {
+    @include govuk-media-query($from: 940) {
 
-        width: 32%;
+        margin-bottom: govuk-px-to-rem(70);
+        margin-right: 4%;
+        width: 30.6666%;
 
         &:nth-child(2n) {
-            margin-right: 2%;
+            margin-right: 4%;
         }
 
         &:nth-child(3n) {
@@ -48,7 +59,7 @@
 
 .card-list__item + .card-list__item {
 
-    margin-top: govuk-px-to-rem(15);
+    margin-top: govuk-px-to-rem(20);
 
     @include govuk-media-query($from: tablet) {
 
@@ -57,6 +68,8 @@
     }
 
 }
+
+
 .card-list__item__wrapper {
 
     background: white;
@@ -77,6 +90,10 @@
         height: 5px;
         background-color: var(--sub-color);
         
+    }
+
+    > p {
+        margin-bottom: 0;
     }
 
 }
