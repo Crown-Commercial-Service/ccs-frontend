@@ -37,25 +37,22 @@ html {
 }
 
 
-.hero--flourish {
+.hero__flourish {
 
-    position: relative;
+    bottom: govuk-px-to-rem(-136);
+    content: "";
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    width: govuk-px-to-rem(171);
+    z-index: -1;
 
     &:after {
-
-        background-color: #9b1a47;
-        background-color: var(--sub-color);
+        border: govuk-px-to-rem(192) solid #9b1a47;
+        border-color: var(--sub-color);
         border-radius: 50%;
-        content: " ";
+        content: "";
         display: block;
-        height: govuk-px-to-rem(416);
-
-        position: absolute;
-        right: govuk-px-to-rem(- 245);
-
-        bottom: govuk-px-to-rem(- 124);
-        width: govuk-px-to-rem(416);
-
         z-index: -1;
 
     }
@@ -112,9 +109,20 @@ html {
 
 
 /**
+ * Add extra padding to accommodate the hero colour flourish
+ */
+.show-flourishes .govuk-main-wrapper {
+    padding-top: govuk-px-to-rem(50);
+}
+
+
+/**
  * Only show the footer flourishes when specified
  */
 .show-flourishes .footer-global {
+    // add extra margin for the colour flourishes
+    margin-top: 170px;
+
     &:before,
     &:after {
         display: block;
@@ -135,10 +143,16 @@ html {
     background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-technology}' fill-rule='evenodd'/></svg>");
 }
 
-/**
- * Most colour flourishes only display on larger screen sizes
- */
+
+
 @include govuk-media-query($until: 1024) {
+    .show-flourishes .footer-global {
+        margin-top: 0;
+    }
+
+    /**
+     * Most colour flourishes only display on larger screen sizes
+     */
     .show-flourishes .footer-global:before,
     .show-flourishes .footer-global:after,
     .hero--flourish:after {
