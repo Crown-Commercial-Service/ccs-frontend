@@ -18,6 +18,12 @@
             </div>
         {% endif %}
 
+        {% if component.name == "accordion_accordion" %}
+            <div class="accordion">
+                {% include '_components/accordion.html.twig' with {'component': component.content } %}
+            </div>
+        {% endif %}
+
 
     {% endfor %}
 </div>
