@@ -46,7 +46,10 @@ class WebinarController extends AbstractController
         }
 
         $data = [
-            'webinar' => $webinar
+          'webinar'       => $webinar,
+          'site_url'      => getenv('APP_BASE_URL'),
+          'tracking_code' => 'TECH19/20WP2',
+          'form_action'   => 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8'
         ];
         return $this->render('webinars/request.html.twig', $data);
     }
