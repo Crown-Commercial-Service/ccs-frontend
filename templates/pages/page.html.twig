@@ -328,6 +328,67 @@
             </div>
 
 
+
+            {% if page.template == "page-templates/landing.php" and page.content.contact_form_show_contact_form.value == true %}
+                <div class="govuk-grid-row ccs-inline-contact-form">
+                    {% if page.content.contact_form_form_heading %}
+                        <h2 class="govuk-grid-column-two-thirds govuk-heading-m">{{ page.content.contact_form_form_heading }}</h2>
+                    {% endif %}
+
+                    <div class="govuk-grid-column-two-thirds">
+                        {% if page.content.contact_form_form_sub_heading %}
+                            <p>{{ page.content.contact_form_form_sub_heading }}</p>
+                        {% endif %}
+
+                        <form class="govuk-!-width-three-quarters" action="">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="form-fullname">Full name</label>
+                                <input class="govuk-input" id="form-fullname" maxlength="80" name="fulform-fullnamelname" size="20" type="text" required="">
+                            </div>
+
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="form-email">Email address</label>
+                                <input class="govuk-input" id="form-email" maxlength="80" name="form-email" size="20" type="email" pattern=".+@.+\..+" required="">
+                            </div>
+
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="form-telephone">Telephone number (optional)</label>
+                                <input class="govuk-input" id="form-telephone" maxlength="80" name="form-telephone" size="20" type="text">
+                            </div>
+
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="form-organisation">Organisation</label>
+                                <input class="govuk-input" id="form-organisation" maxlength="80" name="form-organisation" size="20" type="email" required="">
+                            </div>
+
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" for="form-more-detail">Is there anything specific we can help you with?</label>
+                                <span id="form-more-detail-hint" class="govuk-hint">
+                                    Do not include personal or financial information, like your National Insurance number or credit card details.
+                                </span>
+                                <textarea class="govuk-textarea" id="form-more-detail" name="form-more-detail" rows="5" aria-describedby="form-more-detail"></textarea>
+                            </div>
+
+                            <p>Here is our <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice">privacy notice</a>.</p>
+
+                            <div class="govuk-form-group">
+                                <button class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    {#
+                    <div class="govuk-grid-column-one-third apollo-enclosure">
+                        <h3 class="govuk-heading-s">Talk to us</h3>
+                        <p>CCS customer services team is available Monday to Friday, 9am to 5pm.</p>
+
+                        <h3 class="govuk-heading-s" style="margin-bottom: 0;">Talk to us</h3>
+                        <p>0345 410 2222</p>
+                    </div>#}
+                </div>
+            {% endif %}
+
+
         </main>
     </div>
 
