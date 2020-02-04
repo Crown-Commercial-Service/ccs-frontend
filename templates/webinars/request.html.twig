@@ -42,44 +42,8 @@
 
                     <p>To watch this webinar, we just need a few details first.</p>
 
-                    <form class="govuk-!-width-three-quarters" action="{{ form_action }}">
-                        <div class="govuk-form-group --govuk-form-group--error">
-                            <label class="govuk-label" for="name">Full name</label>
-                            <input class="govuk-input --govuk-input--error" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" required="required"/>
-                        </div>
+                    {% include 'forms/gated-form.html.twig' %}
 
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="email">Email</label>
-                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="email" required="required"/>
-                        </div>
-
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="name">Telephone number (optional)</label>
-                            <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text"/>
-                        </div>
-
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="company">Organisation</label>
-                            <input class="govuk-input" id="company" maxlength="80" name="company" size="20" type="text" required="required"/>
-                        </div>
-
-                        <input type="hidden" name="retUrl" value="{{ site_url }}/webinar/confirmation/{{ webinar.ID }}/{{ webinar.urlSlug }}/">
-                        <input type="hidden" name="subject" value="{{ tracking_code }}">
-                        <input type="hidden" name="00Nb0000009IXEW" value="{{ tracking_code }}">
-                        <input type="hidden" name="00Nb0000009IXEn" value="1">
-                        <input type="hidden" name="recordType" value="012b00000005NWC">
-                        <input type="hidden" name="priority" value="Green">
-                        <input type="hidden" name="description" value="Webinar request for {{ webinar.title }}">
-
-                        <p>Here is our <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice">privacy notice</a>.</p>
-
-                        <div class="govuk-form-group">
-                            <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">
-                                Send enquiry
-                            </button>
-{#                            <a href="/webinar/confirmation/{{ webinar.ID }}/{{ webinar.urlSlug }}/" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Submit</a>#}
-                        </div>
-                    </form>
                 </div>
                 <div class="govuk-grid-column-one-third">
                     {% if webinar.featuredImage is defined and webinar.featuredImage is not empty %}
@@ -98,42 +62,6 @@
 {% block nonblocking_javascript %}
     {{ parent() }}
 
-    <script type="text/javascript">
-
-        var elementIdsToRemember = ['name', 'email', 'phone', 'company'];
-
-        function wipeAllValues() {
-            elementIdsToRemember.forEach(function (id) {
-                localStorage.removeItem(id);
-            });
-        }
-
-        function prepareInputs(id) {
-            var $element = document.getElementById(id);
-            $element.addEventListener('change', function (event) {
-                localStorage.setItem(id, this.value);
-            });
-
-            var date = new Date();
-
-            if (localStorage.getItem('_saved') === null)
-            {
-                localStorage.setItem('_saved', date.getTime())
-                return;
-            }
-
-            var OneWeekInMs = 604800000;
-            if (localStorage.getItem('_saved') <= date.getTime() - OneWeekInMs)
-            {
-                wipeAllValues();
-            }
-
-            $element.value = localStorage.getItem(id);
-            localStorage.setItem('_saved', date.getTime())
-        }
-
-        elementIdsToRemember.forEach(prepareInputs);
-
-    </script>
+    <script src="/assets/scripts/gated-form.js"></script>
 
 {% endblock %}

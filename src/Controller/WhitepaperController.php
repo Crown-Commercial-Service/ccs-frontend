@@ -41,14 +41,19 @@ class WhitepaperController extends AbstractController
         $this->api->setCacheKey($request->getRequestUri());
 
         try {
-            $whitepaper = $this->api->getPageByUrl('/news/whitepapers/' . $slug);
+            $whitepaper = $this->api->getPageByUrl('/news/whitepapers/' . $sanitisedSlug);
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Whitepaper not found', $e);
         }
 
         $data = [
-            'whitepaper' => $whitepaper
+          'whitepaper'    => $whitepaper,
+          'campaign_code' => $whitepaper->getContent()->get('campaign_code')->getValue(),
+          'form_action'   => getenv('APP_BASE_URL') === 'prod' ? 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8' : 'https://crowncommercial--preprod.cs86.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8',
+          'description'   => 'Whitepaper request for ' . $whitepaper->getTitle(),
+          'return_url'    => getenv('APP_BASE_URL') . '/whitepaper/confirmation/' . $whitepaper->getId() . '/' . $whitepaper->getUrlSlug() . '/'
         ];
+
         return $this->render('whitepapers/request.html.twig', $data);
     }
 

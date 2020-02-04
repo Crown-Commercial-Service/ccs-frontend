@@ -6,3 +6,5 @@ webinar_video:
   type: text
 link_text:
   type: text
+campaign_code:
+  type: text
