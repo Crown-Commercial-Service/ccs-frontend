@@ -1,0 +1,62 @@
+/*------------------------------------*\
+  #Download icons
+\*------------------------------------*/
+
+.download-file-link {
+    display: inline-block;
+    position: relative;
+    min-height: 33px;
+    padding-left: 50px;
+}
+
+.download-file-link:before {
+    position: absolute;
+    left: 0;
+    top: -6px;
+    display: inline-block;
+    width: 40px;
+    height: 30px;
+    background: #777777 url('../images/corner-curl.png') 100% -1px no-repeat;
+    color: #FFF;
+    background-size: 9px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 2.45;
+    text-transform: uppercase;
+    font-weight: 500;
+    content: "";
+}
+
+.download-file-link[href*='.xlsx']:before {
+    background-color: #007831;
+    content: ".XLSX";
+    width: 44px;
+}
+
+.download-file-link[href*='.csv']:before {
+    background-color: #007831;
+    content: ".CSV";
+}
+
+.download-file-link[href*='.doc']:before {
+    background-color: #0d0da0;
+    content: ".DOC";
+}
+
+.download-file-link[href*='.docx']:before {
+    background-color: #0d0da0;
+    content: ".DOCX";
+    width: 44px;
+}
+
+.download-file-link[href*='.pdf']:before {
+    background-color: #df1a1a;
+    content: ".PDF";
+}
+
+
+@include govuk-media-query($from: tablet) {
+    .download-file-link:before {
+        top: -2px;
+    }
+}

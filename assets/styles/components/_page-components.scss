@@ -1,0 +1,13 @@
+/*------------------------------------*\
+  #Intro and description
+\*------------------------------------*/
+
+.component {
+    margin: govuk-px-to-rem(40) 0;
+}
+
+@include govuk-media-query($from: desktop) {
+    .component {
+        margin: govuk-px-to-rem(80) 0;
+    }
+}

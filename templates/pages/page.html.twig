@@ -88,6 +88,8 @@
 
                     {% include '_components/components.html.twig' with {'components': page.content.page_components_rows } %}
 
+                    {% include '_components/resources-section.html.twig' %}
+
 
 
 
@@ -157,164 +159,6 @@
 
 
 
-            <div class="resources-section">
-
-                {% if page.content.resources_intro_heading %}
-                    <h2 class="govuk-heading-m resources-section__heading">{{ page.content.resources_intro_heading }}</h2>
-                {% endif %}
-                {% if page.content.resources_intro_introduction %}
-                    <div class="resources-section__intro">{{ page.content.resources_intro_introduction|raw }}</div>
-                {% endif %}
-
-                {% if page.content.brochures_list_brochures_list is not empty  or  page.content.whitepapers_list_whitepapers is not empty  or  page.content.webinars_list_webinars %}
-                    <div class="govuk-accordion" data-module="accordion" id="accordion-default">
-                        {% if page.content.brochures_list_brochures_list is not empty %}
-                            {# Start brochure section #}
-
-                            <div class="govuk-accordion__section ">
-                                <div class="govuk-accordion__section-header">
-                                    <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
-                                            Brochures ({{ page.content.brochures_list_brochures_list|length }})
-                                        </span>
-                                    </h2>
-                                </div>
-                                <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
-
-                                    <ol class="ccs-list-grid brochures-list">
-                                        {% for brochure in page.content.brochures_list_brochures_list %}
-                                            <li class="ccs-list-grid__item">
-                                                <a href="{{ brochure.brochures_list_brochure.url }}" class="ccs-list-grid__item__img ccs-list-grid__item__img--flourish">
-                                                    <img src="/assets/images/icon-document-placeholder.svg" alt="" />
-                                                </a>
-                                                <div class="ccs-list-grid__item__details">
-                                                    <a class="ccs-list-grid__item__link-heading" href="{{ brochure.brochures_list_brochure.url }}">{{ brochure.brochures_list_brochure.title }}</a>
-                                                    <p><span class="file-extension">{{ brochure.brochures_list_brochure.extension }}</span>, {{ brochure.brochures_list_brochure.filesize }}</p>
-                                                </div>
-                                            </li>
-                                        {% endfor %}
-                                    </ol>
-                                </div>
-                            </div>
-
-                            {# End brochure section #}
-                        {% endif %}
-
-
-                        {% if page.content.whitepapers_list_whitepapers is not empty %}
-                            <div class="govuk-accordion__section ">
-                                {# Start Whitepapers section #}
-
-                                <div class="govuk-accordion__section-header">
-                                    <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
-                                          Whitepapers ({{ page.content.whitepapers_list_whitepapers|length }})
-                                        </span>
-                                    </h2>
-                                </div>
-                                <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">
-
-                                    <ol class="ccs-list-grid">
-                                        {% for whitepaper in page.content.whitepapers_list_whitepapers %}
-                                            <li class="ccs-list-grid__item">
-                                                {% if whitepaper.ccs_whitepaper_featured_image.url is defined %}
-                                                    <a href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
-                                                        <img
-                                                            src="{{ whitepaper.ccs_whitepaper_featured_image.byName('news-size-m') }}"
-
-                                                            {% if whitepaper.ccs_whitepaper_featured_image.alt is defined  %}
-                                                                alt="{{ whitepaper.ccs_whitepaper_featured_image.alt }}"
-                                                            {% else %}
-                                                                alt=""
-                                                                role="presentation"
-                                                            {% endif %}
-                                                        />
-                                                    </a>
-                                                {% endif %}
-                                                <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
-                                                    <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ whitepaper.post_title }}</h3>
-                                                    {% if whitepaper.post_excerpt is defined and whitepaper.post_excerpt is not empty %}
-                                                        <p>{{ whitepaper.post_excerpt }}</p>
-                                                    {% endif %}
-                                                    <a class="ccs-list-grid__item__cta" href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/">
-                                                        {% if whitepaper.link_text is not empty %}
-                                                            {{ whitepaper.link_text }}
-                                                        {% else %}
-                                                            Learn more
-                                                        {% endif %}
-                                                    </a>
-                                                </div>
-                                            </li>
-                                        {% endfor %}
-                                    </ol>
-
-                                </div>
-
-                                {# End Whitepapers section #}
-                            </div>
-                        {% endif %}
-
-
-                        {% if page.content.webinars_list_webinars is not empty %}
-                            <div class="govuk-accordion__section ">
-                                {# Start Webinars section #}
-
-                                <div class="govuk-accordion__section-header">
-                                    <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
-                                          Webinars ({{ page.content.webinars_list_webinars|length }})
-                                        </span>
-                                    </h2>
-                                </div>
-                                <div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3">
-
-                                    <ol class="ccs-list-grid">
-                                        {% for webinar in page.content.webinars_list_webinars %}
-                                        <li class="ccs-list-grid__item">
-                                            {% if webinar.ccs_webinar_featured_image.url is defined %}
-                                                <a href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
-                                                    <img
-                                                        src="{{ webinar.ccs_webinar_featured_image.byName('news-size-m') }}"
-
-                                                        {% if webinar.ccs_webinar_featured_image.alt is defined  %}
-                                                            alt="{{ webinar.ccs_webinar_featured_image.alt }}"
-                                                        {% else %}
-                                                            alt=""
-                                                            role="presentation"
-                                                        {% endif %}
-                                                    />
-                                                </a>
-                                            {% endif %}
-                                            <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
-                                                <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ webinar.post_title }}</h3>
-                                                {% if webinar.post_excerpt is defined and webinar.post_excerpt is not empty %}
-                                                    <p>{{ webinar.post_excerpt }}</p>
-                                                {% endif %}
-
-                                                <a class="ccs-list-grid__item__cta" href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/">
-                                                    {% if webinar.link_text is not empty %}
-                                                        {{ webinar.link_text }}
-                                                    {% else %}
-                                                        Learn more
-                                                    {% endif %}
-                                                </a>
-                                            </div>
-                                        </li>
-                                        {% endfor %}
-                                    </ol>
-
-                                </div>
-
-                                {# End Webinars section #}
-                            </div>
-                        {% endif %}
-                    </div>
-                {% endif %}
-
-            </div>
-
-
-
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
 
@@ -326,6 +170,69 @@
 
                 </div>
             </div>
+
+
+
+            {% if page.content.contact_form_show_contact_form is not empty %}
+                {% if page.template == "page-templates/landing.php" and page.content.contact_form_show_contact_form.value == true %}
+                    <div class="govuk-grid-row ccs-inline-contact-form">
+                        {% if page.content.contact_form_form_heading %}
+                            <h2 class="govuk-grid-column-two-thirds govuk-heading-m">{{ page.content.contact_form_form_heading }}</h2>
+                        {% endif %}
+
+                        <div class="govuk-grid-column-two-thirds">
+                            {% if page.content.contact_form_form_sub_heading %}
+                                <p>{{ page.content.contact_form_form_sub_heading }}</p>
+                            {% endif %}
+
+                            <form class="govuk-!-width-three-quarters" action="">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label" for="form-fullname">Full name</label>
+                                    <input class="govuk-input" id="form-fullname" maxlength="80" name="fulform-fullnamelname" size="20" type="text" required="">
+                                </div>
+
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label" for="form-email">Email address</label>
+                                    <input class="govuk-input" id="form-email" maxlength="80" name="form-email" size="20" type="email" pattern=".+@.+\..+" required="">
+                                </div>
+
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label" for="form-telephone">Telephone number (optional)</label>
+                                    <input class="govuk-input" id="form-telephone" maxlength="80" name="form-telephone" size="20" type="text">
+                                </div>
+
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label" for="form-organisation">Organisation</label>
+                                    <input class="govuk-input" id="form-organisation" maxlength="80" name="form-organisation" size="20" type="email" required="">
+                                </div>
+
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label" for="form-more-detail">Is there anything specific we can help you with?</label>
+                                    <span id="form-more-detail-hint" class="govuk-hint">
+                                        Do not include personal or financial information, like your National Insurance number or credit card details.
+                                    </span>
+                                    <textarea class="govuk-textarea" id="form-more-detail" name="form-more-detail" rows="5" aria-describedby="form-more-detail"></textarea>
+                                </div>
+
+                                <p>Here is our <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice">privacy notice</a>.</p>
+
+                                <div class="govuk-form-group">
+                                    <button class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        {#
+                        <div class="govuk-grid-column-one-third apollo-enclosure">
+                            <h3 class="govuk-heading-s">Talk to us</h3>
+                            <p>CCS customer services team is available Monday to Friday, 9am to 5pm.</p>
+
+                            <h3 class="govuk-heading-s" style="margin-bottom: 0;">Talk to us</h3>
+                            <p>0345 410 2222</p>
+                        </div>#}
+                    </div>
+                {% endif %}
+            {% endif %}
 
 
         </main>
