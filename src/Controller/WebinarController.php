@@ -46,7 +46,11 @@ class WebinarController extends AbstractController
         }
 
         $data = [
-            'webinar' => $webinar
+          'webinar'       => $webinar,
+          'campaign_code' => $whitepaper->getContent()->get('campaign_code')->getValue(),
+          'form_action'   => getenv('APP_BASE_URL') === 'prod' ? 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8' : 'https://crowncommercial--preprod.cs86.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8',
+          'description'   => 'Whitepaper request for ' . $webinar->getTitle(),
+          'return_url'    => getenv('APP_BASE_URL') . '/webinar/confirmation/' . $webinar->getId() . '/' . $webinar->getUrlSlug() . '/'
         ];
         return $this->render('webinars/request.html.twig', $data);
     }
