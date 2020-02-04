@@ -1,0 +1,34 @@
+<div class="resources-section">
+
+    {% if component.accordion_accordion_heading %}
+        <h2 class="govuk-heading-m resources-section__heading">{{ component.accordion_accordion_heading }}</h2>
+    {% endif %}
+    {% if component.accordion_accordion_introduction %}
+        <div class="resources-section__intro">{{ component.accordion_accordion_introduction|raw }}</div>
+    {% endif %}
+
+    <div class="govuk-accordion govuk-!-margin-top-4" data-module="accordion" id="accordion-default">
+
+        {% for accordion_item in component.accordion_accordion_items %}
+            <div class="govuk-accordion__section ">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading">
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ loop.index }}">
+                      {{ accordion_item.items_title }}
+                    </span>
+                    </h2>
+                </div>
+                <div id="accordion-default-content-{{ loop.index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ loop.index }}">
+
+                    <div class="wysiwyg-content">
+
+                        {{ accordion_item.items_content | raw }}
+
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>

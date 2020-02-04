@@ -4,31 +4,12 @@
 \*------------------------------------*/
 
 .subcategories {
-
-	margin-bottom:40px;
-
-	.greyed-bg {		
-		padding:4%;
-
-		ul.card-list {
-
-			.card-list__item__wrapper > p {
-				margin-bottom:0;
-			} 
-
-			li {
-				margin-bottom:30px;
-			}
-
-			&:after {
-				content:"";
-				clear:both;
-				display:block;
-			}
-		}
+	.greyed-bg {
+		padding: 4% 4% 5% 4%;
 	}
-
 }
+
+
 /*
  CSS variables:
  marginA = Initial offset

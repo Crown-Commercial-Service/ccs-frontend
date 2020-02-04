@@ -15,9 +15,14 @@
     margin-bottom: govuk-px-to-rem(31);
 
 }
+
 .intro__content {
 
-    margin-bottom: govuk-px-to-rem(60);
+    margin-bottom: govuk-px-to-rem(26);
+
+    @include govuk-media-query($from: tablet) {
+        margin-bottom: govuk-px-to-rem(60);
+    }
 
 }
 
