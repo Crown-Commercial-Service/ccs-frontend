@@ -1,2 +1,6 @@
 whitepaper_file:
   type: document
+link_text:
+  type: text
+campaign_code:
+  type: text

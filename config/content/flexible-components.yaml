@@ -41,3 +41,17 @@ components:
           type: richtext
         link_link_link:
           type: text
+        link_link_link_text:
+          type: text
+  accordion_accordion:
+    accordion_accordion_heading:
+      type: text
+    accordion_accordion_introduction:
+      type: richtext
+    accordion_accordion_items:
+      type: array
+      content_fields:
+        items_title:
+          type: text
+        items_content:
+          type: richtext
