@@ -1,4 +1,4 @@
-<form class="govuk-!-width-three-quarters" action="{{ form_action }}">
+<form class="govuk-!-width-three-quarters" action="{{ form_action }}" method="post">
     <div class="govuk-form-group --govuk-form-group--error">
         <label class="govuk-label" for="name">Full name</label>
         <input class="govuk-input --govuk-input--error" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" required="required"/>
@@ -20,6 +20,7 @@
     </div>
 
     <input type="hidden" name="retUrl" value="{{ return_url }}">
+    <input type="hidden" name="orgid" value="00D7E0000001TXW">
     <input type="hidden" name="subject" value="{{ campaign_code }}">
     <input type="hidden" name="00Nb0000009IXEW" value="{{ campaign_code }}">
     <input type="hidden" name="00Nb0000009IXEn" value="1">
