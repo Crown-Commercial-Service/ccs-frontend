@@ -35,17 +35,13 @@
         <main class="govuk-main-wrapper">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <h1 class="govuk-heading-xl page-title">You have succesfully submitted your details</h1>
+                    <h1 class="govuk-heading-xl page-title page-title--tight">Download the whitepaper</h1>
 
-                    <div class="page-intro"><p>You can now download the whitepaper.</p></div>
+                    <div class="page-intro page-intro--tight"><p>Your details have been submitted and you can now download the whitepaper.</p></div>
 
                     {% if whitepaper.content.whitepaper_file.url is defined and whitepaper.content.whitepaper_file.url is not empty %}
-                        <p><a href="{{ whitepaper.content.whitepaper_file.url }}">{{ whitepaper.title }} ({{ whitepaper.content.whitepaper_file.filesize }})</a></p>
-
-                        <p><a href="{{ whitepaper.content.whitepaper_file.url }}" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Download</a></p>
+                        <p><a class="download-file-link" href="{{ whitepaper.content.whitepaper_file.url }}">{{ whitepaper.title }} ({{ whitepaper.content.whitepaper_file.filesize }})</a></p>
                     {% endif %}
-
-                    <p><a href="/">Back to the homepage</a></p>
                 </div>
             </div>
         </main>
