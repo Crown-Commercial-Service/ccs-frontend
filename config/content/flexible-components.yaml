@@ -28,6 +28,8 @@ components:
     text_text_text:
       type: richtext
   subcategories_subcategories:
+    subcategories_subcategories_optional_icon:
+      type: image
     subcategories_subcategories_heading:
       type: text
     subcategories_subcategories_content:
