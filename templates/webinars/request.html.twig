@@ -9,6 +9,10 @@
     {% endembed %}
 {% endblock %}
 
+
+{% block flourishClasses %}{% endblock %}
+
+
 {% block body %}
 
     <!-- required wrapper 1 -->
@@ -33,7 +37,7 @@
 
                     <h1 class="page-title-prepend">Webinar</h1>
                     <h2 class="govuk-heading-xl page-title page-title--tight">{{ webinar.title|raw }}</h2>
-                    
+
                     {% if webinar.content.form_introduction is defined and webinar.content.form_introduction is not empty %}
                         <div class="page-intro">{{ webinar.content.form_introduction|raw }}</div>
                     {% endif %}
