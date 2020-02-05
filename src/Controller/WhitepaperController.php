@@ -50,7 +50,7 @@ class WhitepaperController extends AbstractController
           'whitepaper'    => $whitepaper,
           'campaign_code' => $whitepaper->getContent()->get('campaign_code') ? $whitepaper->getContent()->get('campaign_code')->getValue() : '',
           'form_action'   => getenv('APP_BASE_URL') === 'prod' ? 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8' : 'https://crowncommercial--preprod.cs86.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8',
-          'description'   => 'Whitepaper request for ' . $whitepaper->getTitle(),
+          'description'   => $whitepaper->getContent()->get('description') ? $whitepaper->getContent()->get('description')->getValue() : '',
           'return_url'    => getenv('APP_BASE_URL') . '/whitepaper/confirmation/' . $whitepaper->getId() . '/' . $whitepaper->getUrlSlug() . '/'
         ];
 
