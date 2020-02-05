@@ -1,30 +1,27 @@
 {# Start of Page components #}
-<div class="">
-    {# Loop out all components #}
-    {% for component in components %}
+{% for component in components %}
 
-        {#{{ dump(component) }}#}
+    {#{{ dump(component) }}#}
 
-        {# Check what component it is via its `name` field #}
-        {% if component.name == "intro_intro" %}
-            <div class="intro_and_description">
-            {% include '_components/intro_and_description.html.twig' with {'component': component.content } %}
-            </div>
-        {% endif %}
+    {# Check what component it is via its `name` field #}
+    {% if component.name == "intro_intro" %}
+        <div class="component intro_and_description">
+        {% include '_components/intro_and_description.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
 
-        {% if component.name == "subcategories_subcategories" %}
-            <div class="subcategories">
-                {% include '_components/subcategories.html.twig' with {'component': component.content } %}
-            </div>
-        {% endif %}
+    {% if component.name == "subcategories_subcategories" %}
+        <div class="component subcategories">
+            {% include '_components/subcategories.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
 
-        {% if component.name == "accordion_accordion" %}
-            <div class="accordion">
-                {% include '_components/accordion.html.twig' with {'component': component.content } %}
-            </div>
-        {% endif %}
+    {% if component.name == "accordion_accordion" %}
+        <div class="component accordion">
+            {% include '_components/accordion.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
 
 
-    {% endfor %}
-</div>
+{% endfor %}
 {# End of Page components #}
