@@ -68,3 +68,5 @@ contact_form_form_heading:
   type: text
 contact_form_form_sub_heading:
   type: text
+contact_form_form_campaign_code:
+  type: text
