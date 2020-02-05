@@ -1,7 +1,7 @@
 featured_media:
   type: image
-webinar_date:
-  type: datetime
+additional_text:
+  type: text
 webinar_video:
   type: text
 link_text:

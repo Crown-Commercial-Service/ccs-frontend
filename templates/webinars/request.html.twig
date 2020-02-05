@@ -50,7 +50,9 @@
                         <img src="{{ webinar.featuredImage.byName('news-size-m') }}" alt="" role="presentation" />
                     {% endif %}
 
-                    <p class="ccs-subtle-notification">Streamed live {{ webinar.content.webinar_date|date('jS F Y g:ia') }}<br />An email link will be sent to you to access the webinar</p>
+                    {% if webinar.content.additional_text is not empty %}
+                        <p class="ccs-subtle-notification">{{ webinar.content.additional_text }}</p>
+                    {% endif%}
                 </div>
             </div>
         </main>
