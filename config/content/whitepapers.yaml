@@ -4,3 +4,5 @@ link_text:
   type: text
 campaign_code:
   type: text
+description:
+  type: text
