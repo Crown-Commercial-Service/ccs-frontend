@@ -33,9 +33,9 @@
 
                     <h1 class="page-title-prepend">Webinar</h1>
                     <h2 class="govuk-heading-xl page-title page-title--tight">{{ webinar.title|raw }}</h2>
-
-                    {% if webinar.excerpt is defined and webinar.excerpt is not empty %}
-                        <div class="page-intro">{{ webinar.excerpt|raw }}</div>
+                    
+                    {% if webinar.content.form_introduction is defined and webinar.content.form_introduction is not empty %}
+                        <div class="page-intro">{{ webinar.content.form_introduction|raw }}</div>
                     {% endif %}
 
                     <p>To watch this webinar, we just need a few details first.</p>

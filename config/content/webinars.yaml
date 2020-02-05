@@ -1,5 +1,7 @@
 featured_media:
   type: image
+form_introduction:
+  type: richtext
 additional_text:
   type: text
 webinar_video:
