@@ -34,7 +34,7 @@ class NewsController extends AbstractController
         $this->api->setCacheLifetime(1800);
     }
 
-    public function list($page = 1, Request $request)
+    public function list(Request $request, $page = 1)
     {
         $page = (int) filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
