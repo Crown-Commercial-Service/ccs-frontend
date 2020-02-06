@@ -187,34 +187,80 @@
                                 <p>{{ page.content.contact_form_form_sub_heading }}</p>
                             {% endif %}
 
-                            <form class="govuk-!-width-three-quarters" action="">
+                            <form id="js-contact-form" class="govuk-!-width-three-quarters" action="https://crowncommercial--preprod.cs86.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="post">
+
+                                <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+
                                 <div class="govuk-form-group">
                                     <label class="govuk-label" for="form-fullname">Full name</label>
-                                    <input class="govuk-input" id="form-fullname" maxlength="80" name="fulform-fullnamelname" size="20" type="text" required="">
+                                    <input class="govuk-input" id="form-fullname" maxlength="80" name="name" size="20" type="text" required="">
                                 </div>
 
                                 <div class="govuk-form-group">
                                     <label class="govuk-label" for="form-email">Email address</label>
-                                    <input class="govuk-input" id="form-email" maxlength="80" name="form-email" size="20" type="email" pattern=".+@.+\..+" required="">
+                                    <input class="govuk-input" id="form-email" maxlength="80" name="email" size="20" type="email" pattern=".+@.+\..+" required="">
                                 </div>
 
                                 <div class="govuk-form-group">
                                     <label class="govuk-label" for="form-telephone">Telephone number (optional)</label>
-                                    <input class="govuk-input" id="form-telephone" maxlength="80" name="form-telephone" size="20" type="text">
+                                    <input class="govuk-input" id="form-telephone" maxlength="80" name="phone" size="20" type="text">
                                 </div>
 
                                 <div class="govuk-form-group">
                                     <label class="govuk-label" for="form-organisation">Organisation</label>
-                                    <input class="govuk-input" id="form-organisation" maxlength="80" name="form-organisation" size="20" type="email" required="">
+                                    <input class="govuk-input" id="form-organisation" maxlength="80" name="company" size="20" type="text" required="">
                                 </div>
 
                                 <div class="govuk-form-group">
-                                    <label class="govuk-label" for="form-more-detail">Is there anything specific we can help you with?</label>
-                                    <span id="form-more-detail-hint" class="govuk-hint">
-                                        Do not include personal or financial information, like your National Insurance number or credit card details.
-                                    </span>
-                                    <textarea class="govuk-textarea" id="form-more-detail" name="form-more-detail" rows="5" aria-describedby="form-more-detail"></textarea>
+                                    <label class="govuk-label" for="form-organisation">I would like someone to call me back</label>
+                                    <input class="govuk-radios" id="form-organisation" name="00Nb0000009IXEg" type="checkbox" value="1">
                                 </div>
+
+                                {% if page.content.contact_form_show_find_out_more_aggregation is defined and page.content.contact_form_show_find_out_more_aggregation.value %}
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label" for="form-organisation">Find out more about aggregation opportunities</label>
+                                    <input class="govuk-checkboxes" id="form-organisation" name="00Nb0000009IXEd" type="checkbox" value="1">
+                                </div>
+                                {% endif %}
+
+
+                                {% if page.content.contact_form_show_what_areas_aggregation is defined and page.content.contact_form_show_what_areas_aggregation.value %}
+                                <div class="govuk-form-group">
+                                    <legend class="govuk-fieldset__legend">What areas of aggregation are you interested in?</legend>
+
+                                    <label class="govuk-label">Technology
+                                        <input class="govuk-radios" name="subject" type="radio" value="Technology">
+                                    </label>
+
+                                    <label class="govuk-label">Science
+                                        <input class="govuk-radios" name="subject" type="radio" value="Science">
+                                    </label>
+                                </div>
+                                {% endif %}
+
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label" for="form-more-detail">
+                                        {% if page.content.contact_form_message_question_title is defined and page.content.contact_form_message_question_title is not empty %}
+                                            {{ page.content.contact_form_message_question_title }}
+                                        {% else %}
+                                            Is there anything specific we can help you with?
+                                        {% endif %}
+                                    </label>
+                                    <span id="form-more-detail-hint" class="govuk-hint">
+                                        {% if page.content.contact_form_message_question_description is defined and page.content.contact_form_message_question_description is not empty %}
+                                            {{ page.content.contact_form_message_question_description }}
+                                        {% else %}
+                                            Please give us as much detail as possible, including the framework name and number
+                                        {% endif %}
+                                    </span>
+                                    <textarea class="govuk-textarea" id="form-more-detail" name="description" rows="5" aria-describedby="form-more-detail"></textarea>
+                                </div>
+
+                                <input type="hidden" name="orgid" value="00D7E0000001TXW">
+                                <input type="hidden" name="retURL" value="http://local.crowncommercial.gov.uk/buckland/test">
+                                <input type="hidden" name="recordType" value="012b00000005NWC">
+                                <input type="hidden" name="priority" value="Green">
+
 
                                 <p>Here is our <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice">privacy notice</a>.</p>
 
@@ -222,6 +268,19 @@
                                     <button class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Submit</button>
                                 </div>
                             </form>
+
+                            <div id="js-contact-form-success-container" style="display: none;">
+                                <h4>Message sent</h4>
+                                <p>A dedicated team member will respond to you within 24-48 hours</p>
+                                <a id="js-reset-form-b" href="">Send another message</a>
+                            </div>
+
+                            <div id="js-contact-form-error-container" style="display: none;">
+                                <h4>Sorry, an error occured</h4>
+                                <p>Please try sending your message again</p>
+                                <a id="js-reset-form-a" href="">Try again</a>
+                            </div>
+
                         </div>
 
                         {#
@@ -281,5 +340,97 @@
     {% endif %}
 
 
+
+{% endblock %}
+
+
+{% block nonblocking_javascript %}
+    {{ parent() }}
+
+    <script>
+
+        var $contactForm = null;
+        var $successContainer = null;
+        var $errorContainer = null;
+
+        function checkFormExists() {
+            $contactForm = document.getElementById('js-contact-form');
+            if (document.body.contains($contactForm)) {
+                applyFormEnhancement();
+            }
+        }
+
+        function resetForm() {
+            $contactForm.style.display = 'block';
+            $successContainer.style.display = 'none';
+            $errorContainer.style.display = 'none';
+        }
+
+        function applyFormEnhancement() {
+            $contactForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                var url = $contactForm.action;
+
+                var elements = $contactForm.elements;
+                var paramArray = [];
+                for ( var i = 0; i < elements.length; i++ ) {
+                   var element = elements[i];
+
+                   // Dont include elements without names, or elements which are disabled
+                   if (!element.name || element.disabled) {
+                       continue;
+                   }
+
+                   // Don't include checkboxes which aren't checked
+                   if (element.type && element.type  === 'checkbox' && element.checked === false) {
+                       continue;
+                   }
+
+                   paramArray.push(encodeURIComponent(element.name) + "=" + encodeURIComponent(element.value));
+                }
+                var params = paramArray.join("&");
+
+                xhttp = new XMLHttpRequest();
+                xhttp.open("POST", url, true);
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhttp.onload = function () {
+                    if (xhttp.readyState == 4 && xhttp.status === 200 && xhttp.responseText) {
+                        $contactForm.reset();
+                        $successContainer = document.getElementById('js-contact-form-success-container');
+                        $contactForm.style.display = 'none';
+                        $successContainer.style.display = 'block';
+                    } else if (xhttp.status !== 200 || !xhttp.responseText) {
+                        $contactForm.reset();
+                        $errorContainer = document.getElementById('js-contact-form-error-container');
+                        $contactForm.style.display = 'none';
+                        $errorContainer.style.display = 'block';
+
+                    }
+                };
+                xhttp.send(params);
+
+            });
+
+            document.getElementById('js-reset-form-a').addEventListener('click', function (event) {
+                event.preventDefault();
+                resetForm();
+            });
+
+            document.getElementById('js-reset-form-b').addEventListener('click', function (event) {
+                event.preventDefault();
+                resetForm();
+            });
+
+        };
+
+
+        window.onload = function () {
+            checkFormExists();
+        };
+
+
+    </script>
 
 {% endblock %}
