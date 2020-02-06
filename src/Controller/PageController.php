@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -79,7 +80,6 @@ class PageController extends AbstractController
         try {
             $this->api->setCacheKey($request->getRequestUri());
             $page = $this->api->getPageByUrl($request->getRequestUri());
-
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
