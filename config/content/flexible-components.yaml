@@ -41,7 +41,7 @@ components:
           type: text
         link_link_content:
           type: richtext
-        link_link_link:
+        link_link_link_url:
           type: text
         link_link_link_text:
           type: text
