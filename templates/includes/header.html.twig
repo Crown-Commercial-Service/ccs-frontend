@@ -29,12 +29,12 @@
 
                 {{ render(controller(
                     'App\\Controller\\MenuController::menu',
-                    { 'id': 22, 'templatePath': 'menus/secondary-menu.html.twig', 'currentPath': app.request.pathinfo }
+                    { 'id': 22, 'currentPath': app.request.pathinfo, 'templatePath': 'menus/secondary-menu.html.twig' }
                 )) }}
 
                 {{ render(controller(
                     'App\\Controller\\MenuController::menu',
-                    { 'id': 21, 'templatePath': 'menus/primary-menu.html.twig', 'currentPath': app.request.pathinfo }
+                    { 'id': 21, 'currentPath': app.request.pathinfo, 'templatePath': 'menus/primary-menu.html.twig' }
                 )) }}
 
             </nav>

@@ -62,7 +62,7 @@ class SuppliersController extends AbstractController
      * @throws \Studio24\Frontend\Exception\PaginationException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function list(int $page = 1, Request $request)
+    public function list(Request $request, int $page = 1)
     {
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
