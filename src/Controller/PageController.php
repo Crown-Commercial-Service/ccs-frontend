@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -79,7 +80,6 @@ class PageController extends AbstractController
         try {
             $this->api->setCacheKey($request->getRequestUri());
             $page = $this->api->getPageByUrl($request->getRequestUri());
-
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
@@ -99,6 +99,7 @@ class PageController extends AbstractController
         return $this->render('pages/page.html.twig', [
             'page'               => $page,
             'breadcrumb_parents' => $breadcrumb,
+            'page_query_string' => filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING)
         ]);
     }
 

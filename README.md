@@ -7,14 +7,8 @@ Please see [further web documentation](https://github.com/Crown-Commercial-Servi
 ## Table of contents
 
 - [Getting started](#getting-started)
-  - [Requirements](#requirements)
-  - [Installation](#installation)
-  - [Local dev](#local-dev)
 - [Deployment](#deployment)
 - [Continuous integration](#continuous-integration)
-  - [PHP Unit](#php-unit)
-  - [Behat](#behat)
-  - [PHP CodeSniffer](#php-codesniffer)
 - [Built with](#built-with)
 - [Acknowledgments](#acknowledgments)
 
@@ -24,7 +18,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Requirements
 
-* PHP 7.2+
+* PHP 7.3+
 * NPM 8.9.4
 
 ### Installation
@@ -115,13 +109,7 @@ bin/console cache:pool:clear cache.app_clearer
 To clear the HTTP cache run:
 
 ```
-vendor/bin/http-cache-clear <path to http_cache cache folder>
-```
-
-E.g.
-
-```
-vendor/bin/http-cache-clear var/cache/prod/http_cache
+rm -Rf var/cache/prod/http_cache
 ```
 
 ## Deployment
@@ -158,25 +146,13 @@ Post launch, we will have a number of deployment checks before merging new code 
 
 We use [Travis CI](https://travis-ci.org/Crown-Commercial-Service/ccs-frontend) to run automated tests on all merges into development, preprod and master. 
 
-### PHP Unit
-
-Create unit tests in `tests/` and run via `bin/phpunit`
-
-See [Getting Started with PHPUnit](https://phpunit.de/getting-started/phpunit-7.html)
-
-### Behat
-
-Create Behat tests in `features/`
- 
-To run first ensure you are running the local server via `bin/console server:run`
-
-Run Behat tests via: `bin/behat` 
-
-See [quick start](http://docs.behat.org/en/latest/quick_start.html) and [Behat and Mink](http://docs.behat.org/en/v2.5/cookbook/behat_and_mink.html).
-
 ### PHP CodeSniffer
 
-You can test coding standards ([PSR2](https://www.php-fig.org/psr/psr-2/)) via:
+Application code must meet the ([PSR12](https://www.php-fig.org/psr/psr-12/)) coding standard. 
+We currently ignore long line lengths, though we can fix this in the future if desired. PHPCS configuration can be found 
+in `phpcs.xml.dist`.
+ 
+You can test for this via:
 
 ```
 # Summary report
@@ -191,6 +167,25 @@ Where possible you can auto-fix code via:
 ```
 vendor/bin/phpcbf
 ```
+
+### PHP Unit
+
+Create unit tests in `tests/` and run via `bin/phpunit`
+
+See [Getting Started with PHPUnit](https://phpunit.de/getting-started/phpunit-7.html)
+
+### Behat
+
+_Please note_: Behat is not currently used in CI but has a basic setup.
+
+Create Behat tests in `features/`
+ 
+To run first ensure you are running the local server via `bin/console server:run`
+
+Run Behat tests via: `bin/behat` 
+
+See [quick start](http://docs.behat.org/en/latest/quick_start.html) and [Behat and Mink](http://docs.behat.org/en/v2.5/cookbook/behat_and_mink.html).
+
 
 ## Built with
 
