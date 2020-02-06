@@ -70,3 +70,11 @@ contact_form_form_sub_heading:
   type: text
 contact_form_form_campaign_code:
   type: text
+contact_form_message_question_title:
+  type: text
+contact_form_message_question_description:
+  type: text
+contact_form_show_find_out_more_aggregation:
+  type: boolean
+contact_form_show_what_areas_aggregation:
+  type: boolean

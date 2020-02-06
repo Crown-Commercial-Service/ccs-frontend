@@ -9,6 +9,10 @@
     {% endembed %}
 {% endblock %}
 
+
+{% block flourishClasses %}{% endblock %}
+
+
 {% block body %}
 
     <!-- required wrapper 1 -->
@@ -27,8 +31,6 @@
             </p>
         </div>
 
-        <a href="#" class="govuk-back-link">Back</a>
-
         <main class="govuk-main-wrapper">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
@@ -36,8 +38,8 @@
                     <h1 class="page-title-prepend">Webinar</h1>
                     <h2 class="govuk-heading-xl page-title page-title--tight">{{ webinar.title|raw }}</h2>
 
-                    {% if webinar.excerpt is defined and webinar.excerpt is not empty %}
-                        <div class="page-intro">{{ webinar.excerpt|raw }}</div>
+                    {% if webinar.content.form_introduction is defined and webinar.content.form_introduction is not empty %}
+                        <div class="page-intro">{{ webinar.content.form_introduction|raw }}</div>
                     {% endif %}
 
                     <p>To watch this webinar, we just need a few details first.</p>
@@ -50,7 +52,9 @@
                         <img src="{{ webinar.featuredImage.byName('news-size-m') }}" alt="" role="presentation" />
                     {% endif %}
 
-                    <p class="ccs-subtle-notification">Streamed live {{ webinar.content.webinar_date|date('jS F Y g:ia') }}<br />An email link will be sent to you to access the webinar</p>
+                    {% if webinar.content.additional_text is not empty %}
+                        <p class="ccs-subtle-notification">{{ webinar.content.additional_text }}</p>
+                    {% endif%}
                 </div>
             </div>
         </main>
