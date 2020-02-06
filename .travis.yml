@@ -17,9 +17,10 @@ language: php
 # @link http://docs.travis-ci.com/user/build-configuration/
 matrix:
   fast_finish: true
-
   include:
     - php: '7.3'
+      env: SNIFF=1
+    - php: '7.4'
 
 before_install:
   - composer self-update;
@@ -27,11 +28,12 @@ before_install:
 
 script:
   # Search for PHP syntax errors
-  - find -L . -path ./vendor -prune -o -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
-  # Run PHPCS (todo)
-  #- if [[ "$SNIFF" == "1" ]]; then vendor/bin/phpcs; fi
+  - vendor/bin/phplint
+  # Run PHPCS
+  - if [[ "$SNIFF" == "1" ]]; then vendor/bin/phpcs; fi
   # Run PHP Unit
   - bin/phpunit
+  - bin/phpunit vendor/studio24/frontend/tests
 
 notifications:
   on_success: never
