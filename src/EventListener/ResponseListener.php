@@ -26,5 +26,4 @@ class ResponseListener
             $response->headers->addCacheControlDirective('must-revalidate', true);
         }
     }
-
 }

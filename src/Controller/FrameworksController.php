@@ -126,7 +126,6 @@ class FrameworksController extends AbstractController
 
         try {
             $results = $this->searchApi->list($page, ['limit' => $limit]);
-
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
@@ -161,7 +160,6 @@ class FrameworksController extends AbstractController
         // @todo At present need to pass fake ID since API method is intended to return one item with an ID, review this
         try {
             $results = $this->api->getOne(0);
-
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
@@ -366,7 +364,6 @@ class FrameworksController extends AbstractController
 
         try {
             $results = $this->api->getOne($rmNumber);
-
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Framework agreement not found', $e);
         }
@@ -406,7 +403,6 @@ class FrameworksController extends AbstractController
 
         try {
             $results = $this->api->list($page, ['limit' => 20]);
-
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
@@ -449,7 +445,6 @@ class FrameworksController extends AbstractController
 
         try {
             $results = $this->api->list($page, ['limit' => 20]);
-
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
@@ -489,11 +484,10 @@ class FrameworksController extends AbstractController
         // Iterate through suppliers and store necessary information into CSV array.
 
         try {
-            $results = $this->api->list(1,['limit' => 10000]);
+            $results = $this->api->list(1, ['limit' => 10000]);
 
             $i = 1;
             foreach ($results as $item) {
-
                 $supplier_name = ($item->getContent()->get('supplier_name')) ? $item->getContent()->get('supplier_name')->getValue() : '';
                 $contact_name = ($item->getContent()->get('supplier_contact_name')) ? $item->getContent()->get('supplier_contact_name')->getValue() : '';
                 $contact_email = ($item->getContent()->get('supplier_contact_email')) ? $item->getContent()->get('supplier_contact_email')->getValue() : '';
@@ -510,14 +504,13 @@ class FrameworksController extends AbstractController
 
                 $i++;
             }
-
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
 
         // Process array into CSV using memory handle (easiest way to pass it into a variable)
 
-        $csv = fopen('php://temp/maxmemory:'. (5*1024*1024), 'r+');
+        $csv = fopen('php://temp/maxmemory:' . (5 * 1024 * 1024), 'r+');
 
         if ($csvData) {
             foreach ($csvData as $row) {
@@ -530,17 +523,16 @@ class FrameworksController extends AbstractController
 
         // Output the CSV
 
-        $response = new Response;
+        $response = new Response();
         $response->setContent($output);
 
         $response->headers->set('Content-Type', 'text/plain');
 
         $response->headers->set(
             'Content-Disposition',
-            'attachment; filename="' . $rmNumber.'_Lot'.$lotNumber.'.csv' . '";'
+            'attachment; filename="' . $rmNumber . '_Lot' . $lotNumber . '.csv' . '";'
         );
 
         return $response;
     }
-
 }

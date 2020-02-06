@@ -62,7 +62,7 @@ class SuppliersController extends AbstractController
      * @throws \Studio24\Frontend\Exception\PaginationException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function list(int $page = 1, Request $request)
+    public function list(Request $request, int $page = 1)
     {
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
@@ -77,10 +77,14 @@ class SuppliersController extends AbstractController
             throw new NotFoundHttpException('Page not found', $e);
         }
 
-        $limit = $request->query->has('limit') ? (int)filter_var($request->query->get('limit'),
-          FILTER_SANITIZE_NUMBER_INT) : 20;
-        $framework = $request->query->has('framework') ? filter_var($request->query->get('framework'),
-          FILTER_SANITIZE_STRING) : null;
+        $limit = $request->query->has('limit') ? (int)filter_var(
+            $request->query->get('limit'),
+            FILTER_SANITIZE_NUMBER_INT
+        ) : 20;
+        $framework = $request->query->has('framework') ? filter_var(
+            $request->query->get('framework'),
+            FILTER_SANITIZE_STRING
+        ) : null;
 
         $results->getPagination()->setResultsPerPage($limit);
 
@@ -147,7 +151,7 @@ class SuppliersController extends AbstractController
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
         $frameworkId = $request->query->has('framework') ? filter_var($request->query->get('framework'), FILTER_SANITIZE_STRING) : null;
         $lotId = $request->query->has('lot-filter-nested') ? filter_var($request->query->get('lot-filter-nested'), FILTER_SANITIZE_STRING) : null;
-        if($lotId == 'all' || $lotId == 'filterLot') {
+        if ($lotId == 'all' || $lotId == 'filterLot') {
             $lotId = null;
         }
 
@@ -175,7 +179,7 @@ class SuppliersController extends AbstractController
             'results'             => $results,
             'facets'              => $facets,
             'limit'               => $limit,
-            'selected'=> [
+            'selected' => [
                 'framework' => $frameworkObject,
                 'rm_number' => $frameworkId,
                 'lot'       => $lotObject,
@@ -226,7 +230,8 @@ class SuppliersController extends AbstractController
      * @param $facets
      * @return |null
      */
-    protected function retrieveFrameworkFromFacetsUsingLotId($frameworkRmNumber, $facets) {
+    protected function retrieveFrameworkFromFacetsUsingLotId($frameworkRmNumber, $facets)
+    {
         if (empty($frameworkRmNumber) || empty($facets) || !isset($facets['frameworks'])) {
             return null;
         }
@@ -249,7 +254,8 @@ class SuppliersController extends AbstractController
      * @param $facets
      * @return |null
      */
-    protected function retrieveLotFromFacetsUsingLotId($lotId, $facets) {
+    protected function retrieveLotFromFacetsUsingLotId($lotId, $facets)
+    {
         if (empty($lotId) || empty($facets) || !isset($facets['lots'])) {
             return null;
         }

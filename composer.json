@@ -71,6 +71,7 @@
         "symfony/debug-pack": "^1.0",
         "symfony/phpunit-bridge": "^4.4",
         "symfony/web-server-bundle": "^4.4",
-        "squizlabs/php_codesniffer": "3.*"
+        "squizlabs/php_codesniffer": "3.*",
+        "overtrue/phplint": "dev-master"
     }
 }
