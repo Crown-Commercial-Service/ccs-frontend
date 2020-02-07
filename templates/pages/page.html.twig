@@ -260,6 +260,8 @@
                                 <input type="hidden" name="retURL" value="http://local.crowncommercial.gov.uk/form-thank-you/test?{{ page_query_string }}">
                                 <input type="hidden" name="recordType" value="012b00000005NWC">
                                 <input type="hidden" name="priority" value="Green">
+                                <input type="hidden" name="00Nb0000009IXEW" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+
 
 
                                 <p>Here is our <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice">privacy notice</a>.</p>
@@ -340,97 +342,5 @@
     {% endif %}
 
 
-
-{% endblock %}
-
-
-{% block nonblocking_javascript %}
-    {{ parent() }}
-
-    <script>
-
-        var $contactForm = null;
-        var $successContainer = null;
-        var $errorContainer = null;
-
-        function checkFormExists() {
-            $contactForm = document.getElementById('js-contact-form');
-            if (document.body.contains($contactForm)) {
-                applyFormEnhancement();
-            }
-        }
-
-        function resetForm() {
-            $contactForm.style.display = 'block';
-            $successContainer.style.display = 'none';
-            $errorContainer.style.display = 'none';
-        }
-
-        function applyFormEnhancement() {
-            $contactForm.addEventListener('submit', function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-
-                var url = $contactForm.action;
-
-                var elements = $contactForm.elements;
-                var paramArray = [];
-                for ( var i = 0; i < elements.length; i++ ) {
-                   var element = elements[i];
-
-                   // Dont include elements without names, or elements which are disabled
-                   if (!element.name || element.disabled) {
-                       continue;
-                   }
-
-                   // Don't include checkboxes which aren't checked
-                   if (element.type && element.type  === 'checkbox' && element.checked === false) {
-                       continue;
-                   }
-
-                   paramArray.push(encodeURIComponent(element.name) + "=" + encodeURIComponent(element.value));
-                }
-                var params = paramArray.join("&");
-
-                xhttp = new XMLHttpRequest();
-                xhttp.open("POST", url, true);
-                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhttp.onload = function () {
-                    if (xhttp.readyState == 4 && xhttp.status === 200 && xhttp.responseText) {
-                        $contactForm.reset();
-                        $successContainer = document.getElementById('js-contact-form-success-container');
-                        $contactForm.style.display = 'none';
-                        $successContainer.style.display = 'block';
-                    } else if (xhttp.status !== 200 || !xhttp.responseText) {
-                        $contactForm.reset();
-                        $errorContainer = document.getElementById('js-contact-form-error-container');
-                        $contactForm.style.display = 'none';
-                        $errorContainer.style.display = 'block';
-
-                    }
-                };
-                xhttp.send(params);
-
-            });
-
-            document.getElementById('js-reset-form-a').addEventListener('click', function (event) {
-                event.preventDefault();
-                resetForm();
-            });
-
-            document.getElementById('js-reset-form-b').addEventListener('click', function (event) {
-                event.preventDefault();
-                resetForm();
-            });
-
-        };
-
-
-        window.onload = function () {
-            checkFormExists();
-        };
-
-
-    </script>
 
 {% endblock %}
