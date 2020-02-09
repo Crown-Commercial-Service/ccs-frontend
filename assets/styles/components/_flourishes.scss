@@ -109,14 +109,6 @@ html {
 
 
 /**
- * Add extra padding to accommodate the hero colour flourish
- */
-.show-flourishes .govuk-main-wrapper {
-    padding-top: govuk-px-to-rem(50);
-}
-
-
-/**
  * Only show the footer flourishes when specified
  */
 .show-flourishes .footer-global {
@@ -155,7 +147,16 @@ html {
      */
     .show-flourishes .footer-global:before,
     .show-flourishes .footer-global:after,
-    .hero--flourish:after {
+    .show-flourishes .hero__flourish {
         display: none;
+    }
+}
+
+@include govuk-media-query($from: 1024) {
+    /**
+     * Add extra padding to accommodate the hero colour flourish
+     */
+    .show-flourishes .govuk-main-wrapper {
+        padding-top: govuk-px-to-rem(50);
     }
 }
