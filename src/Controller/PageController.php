@@ -99,6 +99,8 @@ class PageController extends AbstractController
         return $this->render('pages/page.html.twig', [
             'page'               => $page,
             'breadcrumb_parents' => $breadcrumb,
+            'page_query_string'  => filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING),
+            'query_string_type'  => isset($_GET['type']) ? filter_var($_GET['type'], FILTER_SANITIZE_STRING) : null
         ]);
     }
 
