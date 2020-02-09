@@ -35,6 +35,7 @@
 
 }
 
+
 .govuk-form-group--enclosure {
 
     padding: govuk-px-to-rem(15) govuk-px-to-rem(20) govuk-px-to-rem(20) govuk-px-to-rem(20);
@@ -74,4 +75,15 @@
 
 .ccs-results-notification {
     margin-bottom: govuk-px-to-rem(20);
+}
+
+
+@include govuk-media-query($from: 1000) {
+
+    .apollo-enclosure--padded {
+
+        padding: govuk-px-to-rem(34) govuk-px-to-rem(29) govuk-px-to-rem(46) govuk-px-to-rem(46);
+
+    }
+
 }
