@@ -56,9 +56,9 @@
                             <h3 class="govuk-heading-s">Date and time</h3>
 
                             {% if event.content.start_datetime|date('D, j F Y') == event.content.end_datetime|date('D, j F Y') %}
-                                <p>{{ event.content.start_datetime|date('D, j F Y') }} - {{ event.content.end_datetime|date('H:i') }} GMT</p>
+                                <p>{{ event.content.start_datetime|date('D, j F Y H:i') }} - {{ event.content.end_datetime|date('H:i') }}</p>
                             {% else %}
-                                <p>{{ event.content.start_datetime|date('D, j F Y H:i') }} - {{ event.content.end_datetime|date('D, j F Y H:i') }} GMT</p>
+                                <p>{{ event.content.start_datetime|date('D, j F Y H:i') }} - {{ event.content.end_datetime|date('D, j F Y H:i') }}</p>
                             {% endif %}
                         </div>
 
