@@ -22,6 +22,12 @@
         </div>
     {% endif %}
 
+    {% if component.name == "feature_news_feature_news" %}
+        <div class="component feature-news">
+            {% include '_components/feature_news.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
 
 {% endfor %}
 {# End of Page components #}
