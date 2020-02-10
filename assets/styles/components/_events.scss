@@ -1,0 +1,27 @@
+/*------------------------------------*\
+  #Events
+\*------------------------------------*/
+
+.event-detail__content {
+}
+
+.event-detail__aside {
+    .govuk-button {
+        margin-bottom: 0;
+    }
+}
+
+
+@include govuk-media-query($from: desktop) {
+    .event-detail__content {
+        padding-right: govuk-px-to-rem(48);
+    }
+
+    .event-detail__aside {
+        padding-left: govuk-px-to-rem(50);
+    }
+
+    .event-detail__location {
+        margin-top: govuk-px-to-rem(40);
+    }
+}

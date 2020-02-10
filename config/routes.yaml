@@ -149,6 +149,10 @@ webinar_confirmation:
   path: /webinar/confirmation/{id}/{slug}
   controller: App\Controller\WebinarController::show
 
+event_show:
+  path: /events/{id}/{slug}
+  controller: App\Controller\EventsController::show
+
 #form_newsletter:
 #  path: /newsletter
 #  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController

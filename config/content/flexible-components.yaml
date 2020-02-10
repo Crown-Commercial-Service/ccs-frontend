@@ -57,3 +57,6 @@ components:
           type: text
         items_content:
           type: richtext
+  feature_news_feature_news:
+    feature_news_feature_news_brick_class:
+      type: text

@@ -9,19 +9,21 @@
         </div>
 
 
-        <div class="call-to-action--compact">
+        {% if component.intro_intro_cta_label is not empty or component.intro_intro_secondary_label is not empty %}
+            <div class="call-to-action--compact">
 
-            {% if component.intro_intro_cta_label is not empty %}
-                <a href="{{ component.intro_intro_cta_destination }}" class="govuk-button">{{ component.intro_intro_cta_label }}</a>
-            {% endif %}
+                {% if component.intro_intro_cta_label is not empty %}
+                    <a href="{{ component.intro_intro_cta_destination }}" class="govuk-button">{{ component.intro_intro_cta_label }}</a>
+                {% endif %}
 
-            {% if component.intro_intro_secondary_label is not empty %}
-                <p class=" wysiwyg-content">
-                    <a href="{{ component.intro_intro_secondary_destination }}">{{ component.intro_intro_secondary_label }}</a>
-                </p>
-            {% endif %}
+                {% if component.intro_intro_secondary_label is not empty %}
+                    <p class=" wysiwyg-content">
+                        <a href="{{ component.intro_intro_secondary_destination }}">{{ component.intro_intro_secondary_label }}</a>
+                    </p>
+                {% endif %}
 
-        </div>
+            </div>
+        {% endif %}
 
 
     </div>
