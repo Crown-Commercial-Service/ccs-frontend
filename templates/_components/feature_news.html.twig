@@ -1,5 +1,7 @@
-{% if component.articles %}
-    <h2 class="govuk-heading-l">Related articles</h2>
+{% if component.articles is not empty %}
+    {% if component.feature_news_feature_news_heading is not empty %}
+        <h2 class="govuk-heading-l">{{ component.feature_news_feature_news_heading }}</h2>
+    {% endif %}
 
     <ol class="featured-news news-listing">
         {% for article in component.articles %}

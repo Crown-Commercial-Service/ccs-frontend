@@ -58,6 +58,8 @@ components:
         items_content:
           type: richtext
   feature_news_feature_news:
+    feature_news_feature_news_heading:
+      type: text
     articles:
       type: relation_array
       content_type:
