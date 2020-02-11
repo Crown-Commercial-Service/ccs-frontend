@@ -4,6 +4,17 @@ Symfony application to generate the Crown Commercial public website at [https://
 
 Please see [further web documentation](https://github.com/Crown-Commercial-Service/ccsweb-docs/tree/master/web) (this is a private repo).
 
+##Pardot test notes
+The server for Pardot testing is an EC2 t2-micro server running the ccs-frontend, ccs-wordpress and MySQL locally.
+
+### Test URLs
+ccs-frontend: https://ccs-dev-pardot-fe.studio24.dev  
+ccs-wordpress: https://ccs-dev-pardot-wp.studio24.dev 
+
+Note: There is no Elasticsearch server setup for this environment.  
+
+Database details are stored in 1Password.
+
 ## Table of contents
 
 - [Getting started](#getting-started)
