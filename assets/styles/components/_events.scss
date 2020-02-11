@@ -2,7 +2,14 @@
   #Events
 \*------------------------------------*/
 
+.govuk-template__body .event-detail {
+    padding-top: govuk-px-to-rem(10);
+}
+
 .event-detail__content {
+    > .page-title {
+        margin-top: govuk-px-to-rem(15);
+    }
 }
 
 .event-detail__aside {
