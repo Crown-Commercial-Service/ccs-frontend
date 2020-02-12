@@ -211,30 +211,28 @@
                                     <input class="govuk-input" id="form-organisation" maxlength="80" name="company" size="20" type="text" required="">
                                 </div>
 
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label" for="form-organisation">I would like someone to call me back</label>
-                                    <input class="govuk-radios" id="form-organisation" name="00Nb0000009IXEg" type="checkbox" value="1">
-                                </div>
-
-                                {% if page.content.contact_form_show_find_out_more_aggregation is defined and page.content.contact_form_show_find_out_more_aggregation.value %}
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label" for="form-organisation">Find out more about aggregation opportunities</label>
-                                    <input class="govuk-checkboxes" id="form-organisation" name="00Nb0000009IXEd" type="checkbox" value="1">
-                                </div>
-                                {% endif %}
-
 
                                 {% if page.content.contact_form_show_what_areas_aggregation is defined and page.content.contact_form_show_what_areas_aggregation.value %}
                                 <div class="govuk-form-group">
-                                    <legend class="govuk-fieldset__legend">What areas of aggregation are you interested in?</legend>
+                                    <fieldset class="govuk-fieldset">
+                                        <legend class="govuk-fieldset__legend">
+                                            <h3 class="govuk-fieldset__heading">
+                                                What areas of aggregation are you interested in?
+                                            </h3>
+                                        </legend>
 
-                                    <label class="govuk-label">Technology
-                                        <input class="govuk-radios" name="subject" type="radio" value="Technology">
-                                    </label>
+                                        <div class="govuk-radios govuk-radios--small">
+                                            {% for aggregationOption in page.content.contact_form_aggregation_options %}
 
-                                    <label class="govuk-label">Science
-                                        <input class="govuk-radios" name="subject" type="radio" value="Science">
-                                    </label>
+                                                <div class="govuk-radios__item">
+                                                    <input class="govuk-radios__input aggregation-radio-input" id="option-{{ slugify(aggregationOption.aggregation_options_name) }}" name="subject" type="radio" value="{{ aggregationOption.aggregation_options_name }}" data-campaign-code="{{ aggregationOption.aggregation_options_campaign_code }}">
+                                                    <label class="govuk-label govuk-radios__label" for="option-{{ slugify(aggregationOption.aggregation_options_name) }}">
+                                                        {{ aggregationOption.aggregation_options_name }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </fieldset>
                                 </div>
                                 {% endif %}
 
@@ -256,11 +254,22 @@
                                     <textarea class="govuk-textarea" id="form-more-detail" name="description" rows="5" aria-describedby="form-more-detail"></textarea>
                                 </div>
 
+                                <div class="govuk-form-group">
+                                    <div class="govuk-checkboxes govuk-checkboxes--small">
+                                        <div class="govuk-checkboxes__item">
+                                            <input class="govuk-checkboxes__input" id="form-callback" name="00Nb0000009IXEg" type="checkbox" value="1" />
+                                            <label class="govuk-label govuk-checkboxes__label" for="form-callback">
+                                                I would like someone to call me back
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <input type="hidden" name="orgid" value="00D7E0000001TXW">
                                 <input type="hidden" name="retURL" value="http://local.crowncommercial.gov.uk/form-thank-you/test?{{ page_query_string }}">
                                 <input type="hidden" name="recordType" value="012b00000005NWC">
                                 <input type="hidden" name="priority" value="Green">
-                                <input type="hidden" name="00Nb0000009IXEW" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+                                <input type="hidden" name="00Nb0000009IXEW" id="campaign-code-hidden-input" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
 
 
 
@@ -282,6 +291,18 @@
                                 <p>Please try sending your message again</p>
                                 <a id="js-reset-form-a" href="">Try again</a>
                             </div>
+
+                            <script>
+                                var campaignCodeInput  = document.getElementById('campaign-code-hidden-input');
+                                var aggregationOptions = document.getElementsByClassName('aggregation-radio-input');
+
+                                for(var i = 0; i < aggregationOptions.length; i++) {
+                                    aggregationOptions[i].addEventListener('click', function(event) {
+                                        var campaignCode = this.getAttribute('data-campaign-code');
+                                        campaignCodeInput.setAttribute('value', campaignCode);
+                                    });
+                                }
+                            </script>
 
                         </div>
 
