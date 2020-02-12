@@ -78,3 +78,10 @@ contact_form_show_find_out_more_aggregation:
   type: boolean
 contact_form_show_what_areas_aggregation:
   type: boolean
+contact_form_aggregation_options:
+  type: array
+  content_fields:
+    aggregation_options_name:
+      type: text
+    aggregation_options_campaign_code:
+      type: text
