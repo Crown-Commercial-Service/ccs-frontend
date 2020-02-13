@@ -149,6 +149,15 @@ webinar_confirmation:
   path: /webinar/confirmation/{id}/{slug}
   controller: App\Controller\WebinarController::show
 
+
+events_list:
+  path: "/events/{page}"
+  controller: App\Controller\EventsController::list
+  defaults:
+    page: 1
+  requirements:
+    page: '\d+'
+
 event_show:
   path: /events/{id}/{slug}
   controller: App\Controller\EventsController::show
@@ -164,6 +173,10 @@ event_show:
 #  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
 #  defaults:
 #    template: forms/28-newsletter-thanks.html.twig
+
+form_thank_you:
+  path: /form-thank-you
+  controller: App\Controller\FormController::thankYou
 
 form_esourcing_training:
   path: /esourcing-training
