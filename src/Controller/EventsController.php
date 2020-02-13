@@ -31,7 +31,25 @@ class EventsController extends AbstractController
         );
         $this->api->setContentType('events');
         $this->api->setCache($cache);
-        $this->api->setCacheLifetime(1800);
+        $this->api->setCacheLifetime(300);
+    }
+
+    public function list(Request $request, $page = 1)
+    {
+        $page = (int) filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+
+        $this->api->setCacheKey($request->getRequestUri());
+
+        try {
+            $list = $this->api->listPages($page);
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Events page not found', $e);
+        }
+
+        return $this->render('events/list.html.twig', [
+            'url' => sprintf('/events/page/%s', $page),
+            'events' => $list
+        ]);
     }
 
     public function show($slug, Request $request)
