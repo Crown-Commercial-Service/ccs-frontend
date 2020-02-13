@@ -32,7 +32,7 @@ class WhitepaperController extends AbstractController
         );
         $this->api->setContentType('whitepapers');
         $this->api->setCache($cache);
-        $this->api->setCacheLifetime(1800);
+        $this->api->setCacheLifetime(300);
     }
 
     public function request($id, $slug, Request $request)
