@@ -100,7 +100,8 @@ class PageController extends AbstractController
             'page'               => $page,
             'breadcrumb_parents' => $breadcrumb,
             'page_query_string'  => filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING),
-            'query_string_type'  => isset($_GET['type']) ? filter_var($_GET['type'], FILTER_SANITIZE_STRING) : null
+            'query_string_type'  => isset($_GET['type']) ? filter_var($_GET['type'], FILTER_SANITIZE_STRING) : null,
+            'site_base_url'      => getenv('APP_BASE_URL')
         ]);
     }
 

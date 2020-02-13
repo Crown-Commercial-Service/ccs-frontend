@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Events - CCS{% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+
+{% block flourishClasses %}show-flourishes  pillar--{{ flourish }}{% endblock %}
+
+
+{% block body %}
+
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
+
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
+
+
+        {#<div class="govuk-phase-banner">
+            <p class="govuk-phase-banner__content">
+                <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                    beta </strong> <span class="govuk-phase-banner__text">
+      This is a new service – your
+      <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.
+    </span>
+            </p>
+        </div>#}
+
+
+        <div class="govuk-breadcrumbs">
+            <ol class="govuk-breadcrumbs__list">
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
+                </li>
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                    Events
+                </li>
+            </ol>
+        </div>
+
+
+        <!-- required wrapper 2 -->
+        <main id="main-content" role="main" class="govuk-main-wrapper">
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <h1 class="govuk-heading-xl page-title page-title--tight">Events</h1>
+                    <p>Lorem ipsum dolor sit amet et do aliquam adipiscing do amet sit dolor lorem ipsum dolor sit amet.</p>
+
+                    {% if events %}
+                        <ol class="events-list">
+                            {% for event in events %}
+                                <li>
+                                    {#{{ dump(event) }}#}
+                                    <div>{{ event.title }}</div>
+                                    <div>{{ event.content.start_datetime }}</div>
+                                    <div>{{ event.content.end_datetime }}</div>
+                                    <div>{{ event.content.image }}</div>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    {% endif %}
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+{% endblock %}
