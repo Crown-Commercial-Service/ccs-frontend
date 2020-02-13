@@ -90,6 +90,24 @@
 <script src="/assets/scripts/all.js"></script>
 <script src="/assets/scripts/app.js?v=1.1"></script>
 
+<!-- Pardot -->
+<!-- @todo Wrap around Cookie Manager JS to ensure we have user consent before this is run -->
+<script type="text/javascript">
+    piAId = '812733';
+    piCId = '60267';
+    piHostname = 'pi.pardot.com';
+
+    (function() {
+        function async_load(){
+            var s = document.createElement('script'); s.type = 'text/javascript';
+            s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js';
+            var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c);
+        }
+        if(window.attachEvent) { window.attachEvent('onload', async_load); }
+        else { window.addEventListener('load', async_load, false); }
+    })();
+</script>
+
 </body>
 
 </html>
