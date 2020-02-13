@@ -225,7 +225,7 @@
                                             {% for aggregationOption in page.content.contact_form_aggregation_options %}
 
                                                 <div class="govuk-radios__item">
-                                                    <input class="govuk-radios__input aggregation-radio-input" id="option-{{ slugify(aggregationOption.aggregation_options_name) }}" name="subject" type="radio" value="{{ aggregationOption.aggregation_options_name }}" data-campaign-code="{{ aggregationOption.aggregation_options_campaign_code }}">
+                                                    <input class="govuk-radios__input aggregation-radio-input" id="option-{{ slugify(aggregationOption.aggregation_options_name) }}" name="subject" type="radio" value="{{ aggregationOption.aggregation_options_name }}" data-campaign-code="{{ aggregationOption.aggregation_options_campaign_code }}" required="">
                                                     <label class="govuk-label govuk-radios__label" for="option-{{ slugify(aggregationOption.aggregation_options_name) }}">
                                                         {{ aggregationOption.aggregation_options_name }}
                                                     </label>
@@ -291,18 +291,6 @@
                                 <p>Please try sending your message again</p>
                                 <a id="js-reset-form-a" href="">Try again</a>
                             </div>
-
-                            <script>
-                                var campaignCodeInput  = document.getElementById('campaign-code-hidden-input');
-                                var aggregationOptions = document.getElementsByClassName('aggregation-radio-input');
-
-                                for(var i = 0; i < aggregationOptions.length; i++) {
-                                    aggregationOptions[i].addEventListener('click', function(event) {
-                                        var campaignCode = this.getAttribute('data-campaign-code');
-                                        campaignCodeInput.setAttribute('value', campaignCode);
-                                    });
-                                }
-                            </script>
 
                         </div>
 
