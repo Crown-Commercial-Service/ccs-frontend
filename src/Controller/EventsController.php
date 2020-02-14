@@ -48,7 +48,8 @@ class EventsController extends AbstractController
 
         return $this->render('events/list.html.twig', [
             'url' => sprintf('/events/page/%s', $page),
-            'events' => $list
+            'events' => $list,
+            'pagination' => $list->getPagination(),
         ]);
     }
 
