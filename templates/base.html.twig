@@ -46,6 +46,7 @@
 
 <body class="govuk-template__body">
 {#<script>document.querySelector('body').classList.add('js-enabled');</script>#}
+{{ staging_banner(app.environment, 'This is the <strong>Pardot test</strong> environment') }}
 
 {# Google Tag Manager (noscript) #}
 <noscript>
