@@ -27,7 +27,7 @@
  */
 
 .events-list-container {
-    padding: govuk-px-to-rem(20) 0 0 0;
+    padding-top: govuk-px-to-rem(20);
 }
 
 .events-list {
@@ -52,6 +52,7 @@
 
 
 .event-list__image {
+    display: block;
     float: left;
     margin: 0 govuk-px-to-rem(19) 0 0;
     max-width: govuk-px-to-rem(160);
@@ -84,7 +85,7 @@
 
 @include govuk-media-query($from: tablet) {
     .events-list-container {
-        padding: govuk-px-to-rem(40) 0 0 0;
+        padding-top: govuk-px-to-rem(40);
     }
 }
 

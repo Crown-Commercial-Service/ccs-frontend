@@ -10,7 +10,7 @@
 {% endblock %}
 
 
-{% block flourishClasses %}show-flourishes  pillar--{{ flourish }}{% endblock %}
+{% block flourishClasses %}{% endblock %}
 
 
 {% block body %}
@@ -45,12 +45,14 @@
 
 
         <!-- required wrapper 2 -->
-        <main id="main-content" role="main" class="govuk-main-wrapper">
+        <main id="main-content" role="main" class="govuk-main-wrapper govuk-main-wrapper--tight">
 
-            <h1 class="govuk-heading-xl page-title page-title--tight">Events</h1>
-            <p>Lorem ipsum dolor sit amet et do aliquam adipiscing do amet sit dolor lorem ipsum dolor sit amet.</p>
+            <div class="page-introduction">
+                <h1 class="govuk-heading-xl page-title page-title--tight">Events</h1>
+                <p>Lorem ipsum dolor sit amet et do aliquam adipiscing do amet sit dolor lorem ipsum dolor sit amet.</p>
+            </div>
 
-            <div class="govuk-grid-row">
+            <div class="govuk-grid-row events-page-listing">
                 <div class="govuk-grid-column-one-quarter">
                     <h2 class="govuk-heading-m">Apply filters</h2>
                 </div>
@@ -66,9 +68,9 @@
                             {% for event in events %}
                                 <li class="event-list__item">
                                     {% if event.content.image %}
-                                        <div class="event-list__image">
+                                        <a class="event-list__image" href="/events/{{ event.id }}/{{ slugify(event.title) }}">
                                             <img src="{{ event.content.image.byName('news-size-s') }}" alt="" />
-                                        </div>
+                                        </a>
                                     {% endif %}
 
                                     <div class="event-list__details">
