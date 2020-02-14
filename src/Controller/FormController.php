@@ -57,4 +57,11 @@ class FormController extends AbstractController
 
         return $this->render('forms/31-esourcing-training.html.twig', $data);
     }
+
+    public function thankYou(Request $request)
+    {
+        $data = [];
+
+        return $this->render('forms/thank-you.html.twig', $data);
+    }
 }

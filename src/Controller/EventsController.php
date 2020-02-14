@@ -31,7 +31,7 @@ class EventsController extends AbstractController
         );
         $this->api->setContentType('events');
         $this->api->setCache($cache);
-        $this->api->setCacheLifetime(300);
+        $this->api->setCacheLifetime(120);
     }
 
     public function list(Request $request, $page = 1)
@@ -48,7 +48,8 @@ class EventsController extends AbstractController
 
         return $this->render('events/list.html.twig', [
             'url' => sprintf('/events/page/%s', $page),
-            'events' => $list
+            'events' => $list,
+            'pagination' => $list->getPagination(),
         ]);
     }
 
