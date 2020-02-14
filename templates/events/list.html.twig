@@ -47,24 +47,52 @@
         <!-- required wrapper 2 -->
         <main id="main-content" role="main" class="govuk-main-wrapper">
 
+            <h1 class="govuk-heading-xl page-title page-title--tight">Events</h1>
+            <p>Lorem ipsum dolor sit amet et do aliquam adipiscing do amet sit dolor lorem ipsum dolor sit amet.</p>
+
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <h1 class="govuk-heading-xl page-title page-title--tight">Events</h1>
-                    <p>Lorem ipsum dolor sit amet et do aliquam adipiscing do amet sit dolor lorem ipsum dolor sit amet.</p>
+                <div class="govuk-grid-column-one-quarter">
+                    <h2 class="govuk-heading-m">Apply filters</h2>
+                </div>
+                <div class="govuk-grid-column-three-quarters events-list-container">
+                    {% if pagination.totalResults == 1 %}
+                        <h2 class="govuk-heading-m">{{ pagination.totalResults }} event found</h2>
+                    {% else %}
+                        <h2 class="govuk-heading-m">{{ pagination.totalResults }} events found</h2>
+                    {% endif %}
 
                     {% if events %}
                         <ol class="events-list">
                             {% for event in events %}
-                                <li>
-                                    {#{{ dump(event) }}#}
-                                    <div>{{ event.title }}</div>
-                                    <div>{{ event.content.start_datetime }}</div>
-                                    <div>{{ event.content.end_datetime }}</div>
-                                    <div>{{ event.content.image }}</div>
+                                <li class="event-list__item">
+                                    {% if event.content.image %}
+                                        <div class="event-list__image">
+                                            <img src="{{ event.content.image.byName('news-size-s') }}" alt="" />
+                                        </div>
+                                    {% endif %}
+
+                                    <div class="event-list__details">
+                                        <p class="event-list__meta">
+                                            {% if event.content.start_datetime|date('j F Y') == event.content.end_datetime|date('j F Y') %}
+                                                {{ event.content.start_datetime|date('j F Y') }}
+                                            {% else %}
+                                                {{ event.content.start_datetime|date('j F Y') }} - {{ event.content.end_datetime|date('j F Y') }}
+                                            {% endif %}
+                                        </p>
+
+                                        <h3 class="event-list__title">
+                                            <a href="/events/{{ event.id }}/{{ slugify(event.title) }}">{{ event.title }}</a>
+                                        </h3>
+                                    </div>
+
                                 </li>
                             {% endfor %}
                         </ol>
                     {% endif %}
+
+                    <div class="events-pagination">
+                        {{ include('includes/pagination.html.twig', {'pagination': pagination, 'route': 'events_list', 'options': {}}) }}
+                    </div>
                 </div>
             </div>
 
