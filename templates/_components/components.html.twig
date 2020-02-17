@@ -34,6 +34,12 @@
         </div>
     {% endif %}
 
+    {% if component.name == "pillars_pillars" %}
+        <div class="component pillars">
+            {% include '_components/pillars.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
 
 {% endfor %}
 {# End of Page components #}

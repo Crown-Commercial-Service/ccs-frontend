@@ -73,3 +73,18 @@ components:
       type: relation_array
       content_type:
         - events
+  pillars_pillars:
+    pillars_pillars_heading:
+      type: text
+    pillars_pillars_pillars:
+      type: array
+      content_fields:
+        pillars_icon:
+          type: image
+        pillars_taxonomy:
+          type: plainarray
+        pillars_title:
+          type: text
+        pillars_content:
+          type: richtext
+
