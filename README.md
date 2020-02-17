@@ -20,6 +20,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 * PHP 7.3+
 * NPM 8.9.4
+* Elasticsearch 7.x+
 
 ### Installation
 
@@ -38,6 +39,12 @@ To install PHP packages for Staging and Production, run:
 ```
 composer install --no-dev --optimize-autoloader
 ```
+
+#### Elasticsearch
+
+[Installation instructions for Elasticsearch](https://www.elastic.co/downloads/elasticsearch).
+
+Run `bin/elasticsearch` (from Elasticsearch root directory) to make Frameworks and Suppliers search work.
 
 #### Environment config
 
