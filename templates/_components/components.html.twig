@@ -28,6 +28,12 @@
         </div>
     {% endif %}
 
+    {% if component.name == "feature_events_feature_events" %}
+        <div class="component feature-events">
+            {% include '_components/feature_events.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
 
 {% endfor %}
 {# End of Page components #}
