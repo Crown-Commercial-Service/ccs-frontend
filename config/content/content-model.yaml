@@ -38,6 +38,7 @@ content_types:
   events:
     api_endpoint: wp/v2/event
     content_fields: events.yaml
+    source_content_type: event
 
 global:
   image_sizes:
