@@ -53,7 +53,7 @@
             </div>
 
             <div class="govuk-grid-row events-page-listing">
-                <form class="govuk-grid-column-one-quarter" action="" method="get">
+                <div class="govuk-grid-column-one-quarter">
                     <h2 class="govuk-heading-m">Apply filters</h2>
 
                     {% if products_services is not empty %}
@@ -67,28 +67,16 @@
                                     </h3>
                                 </div>
                                 <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="products-services-accordion-heading">
-                                    <div class="govuk-radios govuk-radios--small ccs-radios--small--fullwidth ccs-radios--scrollable">
-                                        <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input
-                                                class="govuk-radios__input govuk-radios__input--small" id="product-service-empty" name="product_service" type="radio" value=""
-                                                {% if filters.products_services is empty %} checked {% endif %}
-                                            />
-                                            <label class="govuk-label govuk-radios__label" for="product-service-empty">
-                                                All Categories
-                                            </label>
-                                        </div>
+                                    <ul class="ccs-link-filter-list">
+                                        <li><a href="/events">All Categories</a></li>
                                         {% for item in products_services %}
-                                            <div class="govuk-radios__item govuk-radios__item--small">
-                                                <input
-                                                    class="govuk-radios__input govuk-radios__input--small" id="product-service-{{ item.id }}" name="product_service" type="radio" value="{{ item.id }}"
-                                                    {% if filters.products_services == item.id %} checked {% endif %}
-                                                />
-                                                <label class="govuk-label govuk-radios__label" for="product-service-{{ item.id }}">
-                                                    {{ item.name }}
-                                                </label>
-                                            </div>
+                                            {% if filters.products_services == item.id %}
+                                                <li>{{ item.name }}</li>
+                                            {% else %}
+                                                <li><a href="/events?product_service={{ item.id }}">{{ item.name }}</a></li>
+                                            {% endif %}
                                         {% endfor %}
-                                    </div>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -107,39 +95,20 @@
                                     </h3>
                                 </div>
                                 <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="sectors-accordion-heading">
-                                    <div class="govuk-radios govuk-radios--small ccs-radios--small--fullwidth ccs-radios--scrollable">
-                                        <div class="govuk-radios__item govuk-radios__item--small">
-                                            <input
-                                                class="govuk-radios__input govuk-radios__input--small" id="sector-empty" name="sector" type="radio" value=""
-                                                {% if filters.products_services is empty %} checked {% endif %}
-                                            />
-                                            <label class="govuk-label govuk-radios__label" for="sector-empty">
-                                                All Sectors
-                                            </label>
-                                        </div>
+                                    <ul class="ccs-link-filter-list">
+                                        <li><a href="/events">All Sectors</a></li>
                                         {% for sector in sectors %}
-                                            <div class="govuk-radios__item govuk-radios__item--small">
-                                                <input
-                                                    class="govuk-radios__input govuk-radios__input--small" id="sector-{{ sector.id }}" name="sector" type="radio" value="{{ sector.id }}"
-                                                    {% if filters.sectors == sector.id %} checked {% endif %}
-                                                />
-                                                <label class="govuk-label govuk-radios__label" for="sector-{{ sector.id }}">
-                                                    {{ sector.name }}
-                                                </label>
-                                            </div>
+                                            {% if filters.sectors == sector.id %}
+                                                <li>{{ sector.name }}</li>
+                                            {% else %}
+                                                <li><a href="/events?sector={{ sector.id }}">{{ sector.name }}</a></li>
+                                            {% endif %}
                                         {% endfor %}
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     {% endif %}
-
-                    <div class="govuk-form-group">
-                        <button class="govuk-button" data-module="govuk-button">
-                            Search
-                        </button>
-                    </div>
-                </form>
+                </div>
                 <div class="govuk-grid-column-three-quarters events-list-container">
                     {% if pagination.totalResults == 1 %}
                         <h2 class="govuk-heading-m">{{ pagination.totalResults }} event found</h2>
