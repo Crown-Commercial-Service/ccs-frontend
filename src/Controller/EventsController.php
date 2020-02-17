@@ -40,8 +40,25 @@ class EventsController extends AbstractController
 
         $this->api->setCacheKey($request->getRequestUri());
 
+        /**
+         * Get taxonomies for filtering results
+         */
+        $sectors = $this->api->getAllTerms('sectors');
+        $productsServices = $this->api->getAllTerms('products_services');
+
+        $productServiceFilter = $request->query->get('product_service');
+        $sectorFilter         = $request->query->get('sector');
+
+        /**
+         * Define options for Rest API query
+         */
+        $options = [
+            'products_services' => $productServiceFilter,
+            'sectors' => $sectorFilter,
+        ];
+
         try {
-            $list = $this->api->listPages($page);
+            $list = $this->api->listPages($page, $options);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Events page not found', $e);
         }
@@ -50,6 +67,9 @@ class EventsController extends AbstractController
             'url' => sprintf('/events/page/%s', $page),
             'events' => $list,
             'pagination' => $list->getPagination(),
+            'sectors' => $sectors,
+            'products_services' => $productsServices,
+            'filters' => $options
         ]);
     }
 
