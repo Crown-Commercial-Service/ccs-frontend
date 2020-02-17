@@ -53,9 +53,93 @@
             </div>
 
             <div class="govuk-grid-row events-page-listing">
-                <div class="govuk-grid-column-one-quarter">
+                <form class="govuk-grid-column-one-quarter" action="" method="get">
                     <h2 class="govuk-heading-m">Apply filters</h2>
-                </div>
+
+                    {% if products_services is not empty %}
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="accordion" id="products-services-accordion">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                                <div class="govuk-accordion__section-header">
+                                    <h3 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="products-services-accordion-heading">
+                                            Category
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="products-services-accordion-heading">
+                                    <div class="govuk-radios govuk-radios--small ccs-radios--small--fullwidth ccs-radios--scrollable">
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input
+                                                class="govuk-radios__input govuk-radios__input--small" id="product-service-empty" name="product_service" type="radio" value=""
+                                                {% if filters.products_services is empty %} checked {% endif %}
+                                            />
+                                            <label class="govuk-label govuk-radios__label" for="product-service-empty">
+                                                All Categories
+                                            </label>
+                                        </div>
+                                        {% for item in products_services %}
+                                            <div class="govuk-radios__item govuk-radios__item--small">
+                                                <input
+                                                    class="govuk-radios__input govuk-radios__input--small" id="product-service-{{ item.id }}" name="product_service" type="radio" value="{{ item.id }}"
+                                                    {% if filters.products_services == item.id %} checked {% endif %}
+                                                />
+                                                <label class="govuk-label govuk-radios__label" for="product-service-{{ item.id }}">
+                                                    {{ item.name }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+
+                    {% if sectors is not empty %}
+
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="accordion" id="sectors-accordion">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                                <div class="govuk-accordion__section-header">
+                                    <h3 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="sectors-accordion-heading">
+                                            Sectors
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="sectors-accordion-heading">
+                                    <div class="govuk-radios govuk-radios--small ccs-radios--small--fullwidth ccs-radios--scrollable">
+                                        <div class="govuk-radios__item govuk-radios__item--small">
+                                            <input
+                                                class="govuk-radios__input govuk-radios__input--small" id="sector-empty" name="sector" type="radio" value=""
+                                                {% if filters.products_services is empty %} checked {% endif %}
+                                            />
+                                            <label class="govuk-label govuk-radios__label" for="sector-empty">
+                                                All Sectors
+                                            </label>
+                                        </div>
+                                        {% for sector in sectors %}
+                                            <div class="govuk-radios__item govuk-radios__item--small">
+                                                <input
+                                                    class="govuk-radios__input govuk-radios__input--small" id="sector-{{ sector.id }}" name="sector" type="radio" value="{{ sector.id }}"
+                                                    {% if filters.sectors == sector.id %} checked {% endif %}
+                                                />
+                                                <label class="govuk-label govuk-radios__label" for="sector-{{ sector.id }}">
+                                                    {{ sector.name }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="govuk-form-group">
+                        <button class="govuk-button" data-module="govuk-button">
+                            Search
+                        </button>
+                    </div>
+                </form>
                 <div class="govuk-grid-column-three-quarters events-list-container">
                     {% if pagination.totalResults == 1 %}
                         <h2 class="govuk-heading-m">{{ pagination.totalResults }} event found</h2>
