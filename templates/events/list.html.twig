@@ -136,7 +136,7 @@
                                         </p>
 
                                         <h3 class="event-list__title">
-                                            <a href="/events/{{ event.id }}/{{ slugify(event.title) }}">{{ event.title }}</a>
+                                            <a href="/events/{{ event.id }}/{{ slugify(event.title) }}">{{ event.title|raw }}</a>
                                         </h3>
                                     </div>
 
