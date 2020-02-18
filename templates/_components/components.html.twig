@@ -46,6 +46,12 @@
         </div>
     {% endif %}
 
+    {% if component.name == "sectors_sectors" %}
+        <div class="component sectors">
+            {% include '_components/sectors.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
 
 {% endfor %}
 {# End of Page components #}

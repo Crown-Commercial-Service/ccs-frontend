@@ -60,7 +60,10 @@
 
 
             <div class="govuk-grid-row">
-                {% if page.template == "page-templates/landing.php" or page.template == "page-templates/products-and-services.php" %}
+                {% if
+                    page.template == "page-templates/landing.php" or
+                    page.template == "page-templates/products-and-services.php" or
+                    page.template == "page-templates/sectors.php" %}
                 <div class="govuk-grid-column-full">
                     {% else %}
                     {#<div class="govuk-grid-column-full">#}
@@ -71,7 +74,9 @@
 
                         {#{{ page.template }}#}
 
-                        {% if page.template == "page-templates/products-and-services.php" %}
+                        {% if
+                            page.template == "page-templates/products-and-services.php" or
+                            page.template == "page-templates/sectors.php" %}
 
                             <div class="govuk-width-container">
                                 <div class="govuk-grid-row">
