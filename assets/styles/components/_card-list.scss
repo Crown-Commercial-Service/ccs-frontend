@@ -59,6 +59,37 @@
 
 
 
+.card-list--two-on-large .card-list__item {
+
+    @include govuk-media-query($from: tablet) {
+
+        margin-bottom: govuk-px-to-rem(70);
+        margin-right: 2%;
+        width: 49%;
+
+        &:nth-child(2n) {
+            margin-right: 0;
+        }
+
+    }
+
+    @include govuk-media-query($from: 940) {
+
+        margin-bottom: govuk-px-to-rem(40);
+        float: left;
+        margin-right: 3.5%;
+        width: 48.25%;
+
+        &:nth-child(2n) {
+            margin-right: 0;
+        }
+
+    }
+
+}
+
+
+
 .card-list--four-on-large .card-list__item {
 
     @include govuk-media-query($from: tablet) {
@@ -78,7 +109,7 @@
 
         margin-bottom: govuk-px-to-rem(70);
         margin-right: 3.5%;
-        width: 22.125%;
+        width: 22.375%;
 
         &:nth-child(2n) {
             margin-right: 3.5%;
