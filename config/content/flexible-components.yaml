@@ -87,4 +87,14 @@ components:
           type: text
         pillars_content:
           type: richtext
+  cards_cards:
+    cards_cards_heading:
+      type: text
+    cards_cards_cards:
+      type: array
+      content_fields:
+        cards_title:
+          type: text
+        cards_content:
+          type: richtext
 

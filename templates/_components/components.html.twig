@@ -40,6 +40,12 @@
         </div>
     {% endif %}
 
+    {% if component.name == "cards_cards" %}
+        <div class="component cards">
+            {% include '_components/card_list.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
 
 {% endfor %}
 {# End of Page components #}
