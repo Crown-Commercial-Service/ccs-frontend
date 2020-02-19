@@ -2,6 +2,7 @@ content_types:
   page:
     api_endpoint: wp/v2/pages
     content_fields: pages.yaml
+    source_content_type: page
     taxonomies:
       - pillars
   news:
