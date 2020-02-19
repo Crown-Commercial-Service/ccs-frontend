@@ -79,11 +79,13 @@
 
                     {#{{ page.template }}#}
 
-                    {#<h1 class="govuk-heading-xl page-title">{{ page.title }}</h1>#}
+                    {% if page.template != "page-templates/landing.php" %}
+                        <h1 class="govuk-heading-xl page-title">{{ page.title }}</h1>
 
-                    {#{% if page.content.page_lead_text %}#}
-                        {#<p class="govuk-body-l">{{ page.content.page_lead_text }}</p>#}
-                    {#{% endif %}#}
+                        {% if page.content.page_lead_text %}
+                            <p class="govuk-body-l">{{ page.content.page_lead_text }}</p>
+                        {% endif %}
+                    {% endif %}
 
 
 
@@ -99,55 +101,61 @@
                     {#<hr>#}
 
 
-                    <div class="page-components">
-                        {% include '_components/components.html.twig' with {'components': page.content.page_components_rows } %}
+                    {% if page.template == "page-templates/landing.php" %}
+                        <div class="page-components">
+                            {% include '_components/components.html.twig' with {'components': page.content.page_components_rows } %}
 
-                        {% include '_components/resources-section.html.twig' %}
-                    </div>
-
-
-
-
-                    {# Start of WYSIWYG content #}
-                    <div class="wysiwyg-content">
-
-                        {{ page.content.content | raw }}
-
-                    </div>
-                    {# End of WYSIWYG content #}
+                            {% include '_components/resources-section.html.twig' %}
+                        </div>
+                    {% endif %}
 
 
 
 
-                    {% if page.content.page_accordion %}
-                        <div class="govuk-accordion govuk-!-margin-top-6" data-module="accordion" id="accordion-default">
+                    {% if page.template != "page-templates/landing.php" %}
+                        {# Start of WYSIWYG content #}
+                        <div class="wysiwyg-content">
 
-
-                            {% for accordion_item in page.content.page_accordion %}
-                                <div class="govuk-accordion__section ">
-                                    <div class="govuk-accordion__section-header">
-                                        <h2 class="govuk-accordion__section-heading">
-        <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ loop.index }}">
-          {{ accordion_item.page_accordion_page_accordion_item_title }}
-        </span>
-                                        </h2>
-                                    </div>
-                                    <div id="accordion-default-content-{{ loop.index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ loop.index }}">
-
-                                        {# Start of WYSIWYG content #}
-                                        <div class="wysiwyg-content">
-
-                                            {{ accordion_item.page_accordion_page_accordion_item_content | raw }}
-
-                                        </div>
-                                        {# End of WYSIWYG content #}
-
-                                    </div>
-                                </div>
-                            {% endfor %}
-
+                            {{ page.content.content | raw }}
 
                         </div>
+                        {# End of WYSIWYG content #}
+                    {% endif %}
+
+
+
+
+                    {% if page.template != "page-templates/landing.php" %}
+                        {% if page.content.page_accordion %}
+                            <div class="govuk-accordion govuk-!-margin-top-6" data-module="accordion" id="accordion-default">
+
+
+                                {% for accordion_item in page.content.page_accordion %}
+                                    <div class="govuk-accordion__section ">
+                                        <div class="govuk-accordion__section-header">
+                                            <h2 class="govuk-accordion__section-heading">
+                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ loop.index }}">
+                                                  {{ accordion_item.page_accordion_page_accordion_item_title }}
+                                                </span>
+                                            </h2>
+                                        </div>
+                                        <div id="accordion-default-content-{{ loop.index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ loop.index }}">
+
+                                            {# Start of WYSIWYG content #}
+                                            <div class="wysiwyg-content">
+
+                                                {{ accordion_item.page_accordion_page_accordion_item_content | raw }}
+
+                                            </div>
+                                            {# End of WYSIWYG content #}
+
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+
+                            </div>
+                        {% endif %}
                     {% endif %}
 
 
