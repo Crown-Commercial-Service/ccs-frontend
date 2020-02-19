@@ -1,0 +1,30 @@
+<div class="govuk-width-container">
+    <div class="--greyed-bg">
+        <div class="govuk-grid-row ccs-grid-row--loose">
+
+            <div class="govuk-grid-column-full">
+
+                <h2 class="govuk-heading-l intro__heading">{{ component.cards_cards_heading }}</h2>
+
+                <ul class="card-list govuk-!-margin-top-6 card-list--two-on-large">
+
+                    {% for card in component.cards_cards_cards %}
+                        <li class="card-list__item">
+                            <div class="card-list__item__wrapper">
+
+                                <h3 class="govuk-heading-m">{{ card.cards_title }}</h3>
+
+                                <div class="wysiwyg-content">{{ card.cards_content | raw }}</div>
+
+                            </div>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
