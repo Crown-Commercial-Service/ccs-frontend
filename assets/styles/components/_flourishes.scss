@@ -137,6 +137,32 @@ html {
 
 
 
+.sector--local-government .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#CC5A13' fill-rule='evenodd'/></svg>");
+}
+.sector--health .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#0057B8' fill-rule='evenodd'/></svg>");
+}
+.sector--universities-and-colleges .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#834CB1' fill-rule='evenodd'/></svg>");
+}
+.sector--schools-and-academies .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#879637' fill-rule='evenodd'/></svg>");
+}
+.sector--devolved .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#CC5A13' fill-rule='evenodd'/></svg>");
+}
+.sector--police-and-emergency-services .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#ECAC00' fill-rule='evenodd'/></svg>");
+}
+.sector--charities .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#57BAB7' fill-rule='evenodd'/></svg>");
+}
+.sector--local-housing-associations .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#879637' fill-rule='evenodd'/></svg>");
+}
+
+
 @include govuk-media-query($until: 1024) {
     .show-flourishes .footer-global {
         margin-top: 0;
