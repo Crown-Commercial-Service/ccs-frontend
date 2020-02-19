@@ -9,7 +9,9 @@
                 <ul class="card-list govuk-!-margin-top-6 card-list--four-on-large">
 
                     {% for sector in component.sectors_sectors_sectors %}
-                        <li class="card-list__item [ sector--{{ sector.sectors_taxonomy.value.slug }} ]">
+                        <li class="card-list__item {#
+                        This is limited to one (1) in fewbricks. It always returns an array anywa
+                        #}{% for link in sector.sectors_taxonomy %}[ sector--{{ link.content.urlSlug }} ]{% endfor %}">
                             <div class="card-list__item__wrapper">
 
                                 <h3 class="govuk-heading-m">{{ sector.sectors_title }}</h3>

@@ -104,7 +104,9 @@ components:
       type: array
       content_fields:
         sectors_taxonomy:
-          type: plainarray
+          type: relation_array
+          content_type:
+            - page
         sectors_title:
           type: text
         sectors_content:
