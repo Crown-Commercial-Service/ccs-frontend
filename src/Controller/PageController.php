@@ -101,7 +101,8 @@ class PageController extends AbstractController
             'breadcrumb_parents' => $breadcrumb,
             'page_query_string'  => filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING),
             'query_string_type'  => isset($_GET['type']) ? filter_var($_GET['type'], FILTER_SANITIZE_STRING) : null,
-            'site_base_url'      => getenv('APP_BASE_URL')
+            'site_base_url'      => getenv('APP_BASE_URL'),
+            'form_action'        => getenv('APP_BASE_URL') === 'prod' ? 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8' : 'https://crowncommercial--preprod.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8',
         ]);
     }
 
