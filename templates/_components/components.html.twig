@@ -22,6 +22,36 @@
         </div>
     {% endif %}
 
+    {% if component.name == "feature_news_feature_news" %}
+        <div class="component feature-news">
+            {% include '_components/feature_news.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+    {% if component.name == "feature_events_feature_events" %}
+        <div class="component feature-events">
+            {% include '_components/feature_events.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+    {% if component.name == "pillars_pillars" %}
+        <div class="component pillars">
+            {% include '_components/pillars.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+    {% if component.name == "cards_cards" %}
+        <div class="component cards">
+            {% include '_components/card_list.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+    {% if component.name == "sectors_sectors" %}
+        <div class="component sectors">
+            {% include '_components/sectors.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
 
 {% endfor %}
 {# End of Page components #}

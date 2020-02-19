@@ -9,6 +9,14 @@
 	}
 }
 
+.subcategories__intro {
+	margin-bottom: govuk-px-to-rem(50);
+
+	@include govuk-media-query($from: tablet) {
+		margin-bottom: govuk-px-to-rem(60);
+	}
+}
+
 
 .subcategories__icon {
 	margin-bottom: govuk-px-to-rem(26);

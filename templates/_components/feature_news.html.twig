@@ -1,0 +1,63 @@
+{% if component.articles is not empty %}
+    {% if component.feature_news_feature_news_heading is not empty %}
+        <h2 class="govuk-heading-l">{{ component.feature_news_feature_news_heading }}</h2>
+    {% endif %}
+
+    <ol class="featured-news news-listing">
+        {% for article in component.articles %}
+            <li class="feature-news__item news-listing__item">
+                {% if article.content.featuredImage %}
+                <picture>
+                    <a href="{{ path('news_page', {'slug': article.content.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
+
+                        <!--[if IE 9]>
+                        <video style="display: none;>
+                                                                <![endif]-->
+                        {% if article.content.featuredImage.byName('news-size-s') %}
+                            <source media="(max-width: 320px)" srcset="{{ article.content.featuredImage.byName('news-size-s') }}" data-srcset="{{ article.content.featuredImage.byName('news-size-s') }}">
+                        {% endif %}
+
+                        {% if article.content.featuredImage.byName('news-size-m') %}
+                            <source media="(max-width: 768px)" srcset="{{ article.content.featuredImage.byName('news-size-m') }}" data-srcset="{{ article.content.featuredImage.byName('news-size-m') }}">
+                        {% endif %}
+
+                        {% if article.content.featuredImage.byName('news-size-l') %}
+                            <source media="(max-width: 1280px)" srcset="{{ article.content.featuredImage.byName('news-size-l') }}" data-srcset="{{ article.content.featuredImage.byName('news-size-l') }}">
+                        {% endif %}
+                        <!--[if IE 9]></video>
+                        <![endif]-->
+                        <!-- Fallback -->
+                        {% if article.content.featuredImage.byName('news-size-m') %}
+                            <img src="{{ article.content.featuredImage.byName('news-size-m') }}" alt="" role="presentation" aria-hidden="true">
+                        {% else %}
+                            <img src="{{ article.content.featuredImage.byName('full') }}" alt="" role="presentation" aria-hidden="true">
+                        {% endif %}
+
+                    </a>
+                </picture>
+                {% endif %}
+
+                <div class="feature-news__item__details news-listing__item__caption">
+                    <div class="news-listing-meta">
+                        {% if article.content.taxonomies.categories %}
+                            {% for category in article.content.taxonomies.categories %}
+                                {{ category.name }}{% if loop.index < article.content.taxonomies.categories|length %}, {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        | {{ article.content.datePublished.format('jS F Y') }}
+                    </div>
+                    <h2 class="news-listing-title">
+                        <a href="{{ path('news_page', {'slug': article.content.urlSlug}) }}">{{ article.content.title|raw }}</a>
+                    </h2>
+
+                    {% if article.content.content.post_lead_text %}
+                        <p class="news-listing-summary">
+                            {{ article.content.content.post_lead_text }}
+                        </p>
+                    {% endif %}
+
+                </div>
+            </li>
+        {% endfor %}
+    </ol>
+{% endif %}

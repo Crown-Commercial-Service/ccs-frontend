@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Access Webinar - {{ webinar.title|raw }} - CCS{% endblock %}
+{% block title %}Thank you for submitting your information - CCS{% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -35,13 +35,9 @@
         <main class="govuk-main-wrapper">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <h1 class="govuk-heading-xl page-title">You have succesfully submitted your details</h1>
+                    <h1 class="govuk-heading-xl page-title page-title--tight">Thank you for submitting your information</h1>
 
-                    <div class="page-intro"><p>You can now view the webinar below.</p></div>
-
-                    {% if webinar.content.webinar_video is defined and webinar.content.webinar_video is not empty %}
-                        <div class="responsive-video widescreen">{{ webinar.content.webinar_video|raw }}</div>
-                    {% endif %}
+                    <div class="page-intro page-intro--tight"><p>We have received your message and one of our team will be in contact with you as soon as possible.</p></div>
                 </div>
             </div>
         </main>

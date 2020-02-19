@@ -31,7 +31,7 @@ class NewsController extends AbstractController
         );
         $this->api->setContentType('news');
         $this->api->setCache($cache);
-        $this->api->setCacheLifetime(300);
+        $this->api->setCacheLifetime(120);
     }
 
     public function list(Request $request, $page = 1)
