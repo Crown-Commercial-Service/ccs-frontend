@@ -57,7 +57,9 @@
 </head>
 
 {% set flourish = "none" %}
+{% set taxonomy = "pillar" %}
 {% if page.taxonomies is defined %}
+
     {% for taxonomy in page.taxonomies %}
 
         {% for term in taxonomy %}
@@ -66,6 +68,14 @@
         {% endfor %}
 
     {% endfor %}
+
+    {% if "sectors" in page.taxonomies|keys %}
+        {% set taxonomy = "sector" %}
+    {% endif %}
+    {% if "pillar" in page.taxonomies|keys %}
+        {% set taxonomy = "pillar" %}
+    {% endif %}
+
 {% endif %}
 
 
@@ -75,7 +85,7 @@
  #
  # If `show-flourishes` isn't included, then certain colour flourishes won't show
 #}
-<body class="govuk-template__body {% block flourishClasses %}show-flourishes  pillar--{{ flourish }}{% endblock %}">
+<body class="govuk-template__body {% block flourishClasses %}show-flourishes  {{ taxonomy }}--{{ flourish }}{% endblock %}">
 
 
 {# Google Tag Manager (noscript) #}

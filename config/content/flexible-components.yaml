@@ -87,4 +87,26 @@ components:
           type: text
         pillars_content:
           type: richtext
+  cards_cards:
+    cards_cards_heading:
+      type: text
+    cards_cards_cards:
+      type: array
+      content_fields:
+        cards_title:
+          type: text
+        cards_content:
+          type: richtext
+  sectors_sectors:
+    sectors_sectors_heading:
+      type: text
+    sectors_sectors_sectors:
+      type: array
+      content_fields:
+        sectors_taxonomy:
+          type: plainarray
+        sectors_title:
+          type: text
+        sectors_content:
+          type: richtext
 
