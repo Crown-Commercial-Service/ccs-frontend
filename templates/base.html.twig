@@ -3,7 +3,18 @@
 
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}CCS{% endblock %}</title>
+
+    {#
+     # The minus is to remove whitespace
+     # https://twig.symfony.com/doc/2.x/templates.html#whitespace-control
+     #}
+    <title>{%- block title %}
+        {%- if page.head.title is not empty -%}
+            {{ page.head.title }}
+        {%- else -%}
+            CCS
+        {%- endif -%}
+    {% endblock -%}</title>
 
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
@@ -11,7 +22,6 @@
             H.className = H.className.replace(/\bno-js\b/, 'js')
         })(document.documentElement)</script>
     {% block head %}
-        <meta property="og:description" name="description" content="{% block metadescription %}{% endblock %}"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     {% endblock %}
