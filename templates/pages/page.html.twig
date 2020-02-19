@@ -56,7 +56,7 @@
 
 
         <!-- required wrapper 2 -->
-        <main id="main-content" role="main" class="govuk-main-wrapper">
+        <main id="main-content" role="main" class="govuk-main-wrapper" data-template="{{ page.template }}">
 
 
             <div class="govuk-grid-row">
@@ -115,10 +115,12 @@
 
 
                         {# Start of WYSIWYG content #}
-                        <div class="wysiwyg-content">
+                        <div class="govuk-width-container">
+                            <div class="wysiwyg-content">
 
-                            {{ page.content.content | raw }}
+                                {{ page.content.content | raw }}
 
+                            </div>
                         </div>
                         {# End of WYSIWYG content #}
 
@@ -164,18 +166,20 @@
 
 
                 {% if page.content.full_width_content %}
-                    <div class="govuk-grid-row">
-                        <div class="govuk-grid-column-full">
+                    <div class="govuk-width-container">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
 
-                            {# Start of WYSIWYG content #}
-                            <div class="wysiwyg-content">
+                                {# Start of WYSIWYG content #}
+                                <div class="wysiwyg-content">
 
-                                {{ page.content.full_width_content | raw }}
+                                    {{ page.content.full_width_content | raw }}
+
+                                </div>
+                                {# End of WYSIWYG content #}
+
 
                             </div>
-                            {# End of WYSIWYG content #}
-
-
                         </div>
                     </div>
                 {% endif %}
@@ -197,140 +201,152 @@
 
 
                 {% if page.content.contact_form_show_contact_form is not empty %}
-                    {% if page.template == "page-templates/landing.php" and page.content.contact_form_show_contact_form.value == true %}
-                        <div class="govuk-grid-row ccs-inline-contact-form">
-                            {% if page.content.contact_form_form_heading %}
-                                <h2 class="govuk-grid-column-two-thirds govuk-heading-m">{{ page.content.contact_form_form_heading }}</h2>
-                            {% endif %}
+                    <div class="govuk-width-container">
 
-                            <div class="govuk-grid-column-two-thirds">
-                                {% if page.content.contact_form_form_sub_heading %}
-                                    <p>{{ page.content.contact_form_form_sub_heading }}</p>
+                        {% if page.template == "page-templates/landing.php" and page.content.contact_form_show_contact_form.value == true %}
+                            <div class="govuk-grid-row ccs-inline-contact-form">
+                                {% if page.content.contact_form_form_heading %}
+                                    <h2 class="govuk-grid-column-two-thirds govuk-heading-m">{{ page.content.contact_form_form_heading }}</h2>
                                 {% endif %}
 
-                                <form id="js-contact-form" class="govuk-!-width-three-quarters" action="https://crowncommercial--preprod.cs86.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="post">
-
-                                    <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
-
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="form-fullname">Full
-                                            name</label>
-                                        <input class="govuk-input" id="form-fullname" maxlength="80" name="name" size="20" type="text" required="">
-                                    </div>
-
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="form-email">Email
-                                            address</label>
-                                        <input class="govuk-input" id="form-email" maxlength="80" name="email" size="20" type="email" pattern=".+@.+\..+" required="">
-                                    </div>
-
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="form-telephone">Telephone
-                                            number</label>
-                                        <input class="govuk-input" id="form-telephone" maxlength="80" name="phone" size="20" type="text" required="">
-                                    </div>
-
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="form-organisation">Organisation</label>
-                                        <input class="govuk-input" id="form-organisation" maxlength="80" name="company" size="20" type="text" required="">
-                                    </div>
-
-
-                                    {% if page.content.contact_form_show_what_areas_aggregation is defined and page.content.contact_form_show_what_areas_aggregation.value %}
-                                        <div class="govuk-form-group">
-                                            <fieldset class="govuk-fieldset">
-                                                <legend class="govuk-fieldset__legend">
-                                                    <h3 class="govuk-fieldset__heading">
-                                                        What areas of
-                                                        aggregation are you
-                                                        interested in?
-                                                    </h3>
-                                                </legend>
-
-                                                <div class="govuk-radios govuk-radios--small">
-                                                    {% for aggregationOption in page.content.contact_form_aggregation_options %}
-                                                        <div class="govuk-radios__item govuk-radios__item--small ccs-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="option-{{ slugify(aggregationOption.aggregation_options_name) }}" name="subject" type="radio" value="{{ aggregationOption.aggregation_options_campaign_code }}" data-campaign-code="{{ aggregationOption.aggregation_options_campaign_code }}" required="">
-                                                            <label class="govuk-label govuk-radios__label" for="option-{{ slugify(aggregationOption.aggregation_options_name) }}">
-                                                                {{ aggregationOption.aggregation_options_name }}
-                                                            </label>
-                                                        </div>
-                                                    {% endfor %}
-                                                </div>
-                                            </fieldset>
-                                        </div>
+                                <div class="govuk-grid-column-two-thirds">
+                                    {% if page.content.contact_form_form_sub_heading %}
+                                        <p>{{ page.content.contact_form_form_sub_heading }}</p>
                                     {% endif %}
 
-                                    <div class="govuk-form-group">
-                                        <label class="govuk-label" for="form-more-detail">
-                                            {% if page.content.contact_form_message_question_title is defined and page.content.contact_form_message_question_title is not empty %}
-                                                {{ page.content.contact_form_message_question_title }}
-                                            {% else %}
-                                                Is there anything specific we can help you with?
-                                            {% endif %}
-                                        </label>
-                                        <span id="form-more-detail-hint" class="govuk-hint">
+                                    <form id="js-contact-form" class="govuk-!-width-three-quarters" action="https://crowncommercial--preprod.cs86.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="post">
+
+                                        <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="form-fullname">Full
+                                                name</label>
+                                            <input class="govuk-input" id="form-fullname" maxlength="80" name="name" size="20" type="text" required="">
+                                        </div>
+
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="form-email">Email
+                                                address</label>
+                                            <input class="govuk-input" id="form-email" maxlength="80" name="email" size="20" type="email" pattern=".+@.+\..+" required="">
+                                        </div>
+
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="form-telephone">Telephone
+                                                number</label>
+                                            <input class="govuk-input" id="form-telephone" maxlength="80" name="phone" size="20" type="text" required="">
+                                        </div>
+
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="form-organisation">Organisation</label>
+                                            <input class="govuk-input" id="form-organisation" maxlength="80" name="company" size="20" type="text" required="">
+                                        </div>
+
+
+                                        {% if page.content.contact_form_show_what_areas_aggregation is defined and page.content.contact_form_show_what_areas_aggregation.value %}
+                                            <div class="govuk-form-group">
+                                                <fieldset class="govuk-fieldset">
+                                                    <legend class="govuk-fieldset__legend">
+                                                        <h3 class="govuk-fieldset__heading">
+                                                            What areas of
+                                                            aggregation are you
+                                                            interested in?
+                                                        </h3>
+                                                    </legend>
+
+                                                    <div class="govuk-radios govuk-radios--small">
+                                                        {% for aggregationOption in page.content.contact_form_aggregation_options %}
+                                                            <div class="govuk-radios__item govuk-radios__item--small ccs-radios__item--small">
+                                                                <input class="govuk-radios__input govuk-radios__input--small" id="option-{{ slugify(aggregationOption.aggregation_options_name) }}" name="subject" type="radio" value="{{ aggregationOption.aggregation_options_campaign_code }}" data-campaign-code="{{ aggregationOption.aggregation_options_campaign_code }}" required="">
+                                                                <label class="govuk-label govuk-radios__label" for="option-{{ slugify(aggregationOption.aggregation_options_name) }}">
+                                                                    {{ aggregationOption.aggregation_options_name }}
+                                                                </label>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        {% endif %}
+
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="form-more-detail">
+                                                {% if page.content.contact_form_message_question_title is defined and page.content.contact_form_message_question_title is not empty %}
+                                                    {{ page.content.contact_form_message_question_title }}
+                                                {% else %}
+                                                    Is there anything specific we can help you with?
+                                                {% endif %}
+                                            </label>
+                                            <span id="form-more-detail-hint" class="govuk-hint">
                                         {% if page.content.contact_form_message_question_description is defined and page.content.contact_form_message_question_description is not empty %}
                                             {{ page.content.contact_form_message_question_description }}
                                         {% else %}
                                             Please give us as much detail as possible, including the framework name and number
                                         {% endif %}
                                     </span>
-                                        <textarea class="govuk-textarea" id="form-more-detail" name="description" rows="5" aria-describedby="form-more-detail"></textarea>
-                                    </div>
-
-                                    <div class="govuk-form-group">
-                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
-                                            <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-callback" name="00Nb0000009IXEg" type="checkbox" value="1"/>
-                                            <label class="govuk-label govuk-checkboxes__label" for="form-callback">
-                                                I would like someone to call me
-                                                back </label>
+                                            <textarea class="govuk-textarea" id="form-more-detail" name="description" rows="5" aria-describedby="form-more-detail"></textarea>
                                         </div>
+
+                                        <div class="govuk-form-group">
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
+                                                <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-callback" name="00Nb0000009IXEg" type="checkbox" value="1"/>
+                                                <label class="govuk-label govuk-checkboxes__label" for="form-callback">
+                                                    I would like someone to call
+                                                    me back </label>
+                                            </div>
+                                        </div>
+
+                                        <input type="hidden" name="orgid" value="00D7E0000001TXW">
+                                        <input type="hidden" name="retURL" value="{{ site_base_url }}/form-thank-you?{{ page_query_string }}">
+                                        <input type="hidden" name="recordType" value="012b00000005NWC">
+                                        <input type="hidden" name="priority" value="Green">
+                                        <input type="hidden" name="00Nb0000009IXEW" id="campaign-code-hidden-input" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+
+
+                                        <p>For information about how we use your
+                                            data, you can read our
+                                            <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice">privacy
+                                                notice</a>. We will only use
+                                            your personal data where you have
+                                            opted in to receive newsletters or
+                                            information about our products and
+                                            services.</p>
+
+                                        <div class="govuk-form-group">
+                                            <button class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <div id="js-contact-form-success-container" style="display: none;">
+                                        <h4>Message sent</h4>
+                                        <p>A dedicated team member will respond
+                                            to you within 24-48 hours</p>
+                                        <a id="js-reset-form-b" href="">Send
+                                            another message</a>
                                     </div>
 
-                                    <input type="hidden" name="orgid" value="00D7E0000001TXW">
-                                    <input type="hidden" name="retURL" value="{{ site_base_url }}/form-thank-you?{{ page_query_string }}">
-                                    <input type="hidden" name="recordType" value="012b00000005NWC">
-                                    <input type="hidden" name="priority" value="Green">
-                                    <input type="hidden" name="00Nb0000009IXEW" id="campaign-code-hidden-input" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
-
-
-                                    <p>For information about how we use your data, you can read our <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice">privacy notice</a>. We will only use your personal data where you have opted in to receive newsletters or information about our products and services.</p>
-
-                                    <div class="govuk-form-group">
-                                        <button class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">
-                                            Submit
-                                        </button>
+                                    <div id="js-contact-form-error-container" style="display: none;">
+                                        <h4>Sorry, an error occured</h4>
+                                        <p>Please try sending your message
+                                            again</p>
+                                        <a id="js-reset-form-a" href="">Try
+                                            again</a>
                                     </div>
-                                </form>
 
-                                <div id="js-contact-form-success-container" style="display: none;">
-                                    <h4>Message sent</h4>
-                                    <p>A dedicated team member will respond to
-                                        you within 24-48 hours</p>
-                                    <a id="js-reset-form-b" href="">Send another
-                                        message</a>
                                 </div>
 
-                                <div id="js-contact-form-error-container" style="display: none;">
-                                    <h4>Sorry, an error occured</h4>
-                                    <p>Please try sending your message again</p>
-                                    <a id="js-reset-form-a" href="">Try
-                                        again</a>
-                                </div>
+                                {#
+                                <div class="govuk-grid-column-one-third apollo-enclosure">
+                                    <h3 class="govuk-heading-s">Talk to us</h3>
+                                    <p>CCS customer services team is available Monday to Friday, 9am to 5pm.</p>
 
+                                    <h3 class="govuk-heading-s" style="margin-bottom: 0;">Talk to us</h3>
+                                    <p>0345 410 2222</p>
+                                </div>#}
                             </div>
+                        {% endif %}
 
-                            {#
-                            <div class="govuk-grid-column-one-third apollo-enclosure">
-                                <h3 class="govuk-heading-s">Talk to us</h3>
-                                <p>CCS customer services team is available Monday to Friday, 9am to 5pm.</p>
-
-                                <h3 class="govuk-heading-s" style="margin-bottom: 0;">Talk to us</h3>
-                                <p>0345 410 2222</p>
-                            </div>#}
-                        </div>
-                    {% endif %}
+                    </div>
                 {% endif %}
 
 
