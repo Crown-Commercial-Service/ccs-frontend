@@ -193,7 +193,7 @@
 
     // GDS uses an 8-key font scale which predefines which sizes are available.
     // This allows fonts to scale with breakpoints
-    @include govuk-font(20, $weight: regular);
+    @include govuk-font(20, $weight: bold);
 
 }
 

@@ -2,11 +2,13 @@ content_types:
   page:
     api_endpoint: wp/v2/pages
     content_fields: pages.yaml
+    source_content_type: page
     taxonomies:
       - pillars
   news:
     api_endpoint: wp/v2/posts
     content_fields: news.yaml
+    source_content_type: post
     taxonomies:
       - categories
       - tags
@@ -34,6 +36,10 @@ content_types:
   webinars:
     api_endpoint: wp/v2/webinar
     content_fields: webinars.yaml
+  events:
+    api_endpoint: wp/v2/event
+    content_fields: events.yaml
+    source_content_type: event
 
 global:
   image_sizes:

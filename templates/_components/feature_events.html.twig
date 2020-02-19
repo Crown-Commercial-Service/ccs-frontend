@@ -1,0 +1,37 @@
+{% if component.articles is not empty %}
+    {% if component.feature_events_feature_events_heading is not empty %}
+        <h2 class="govuk-heading-l">{{ component.feature_events_feature_events_heading }}</h2>
+    {% endif %}
+
+    <ol class="events-list events-list--brief">
+        {% for article in component.articles %}
+
+            <li>{{ dump(article.content) }}</li>
+
+            {#
+            <li class="event-list__item">
+                {% if article.content.image is not empty %}
+                    <a class="event-list__image" href="/events/{{ article.content.id }}/{{ slugify(article.content.title) }}">
+                        <img src="{{ article.content.image.byName('news-size-s') }}" alt="" />
+                    </a>
+                {% endif %}
+
+                <div class="event-list__details">
+                    <p class="event-list__meta">
+                        {% if article.content.start_datetime|date('j F Y') == article.content.end_datetime|date('j F Y') %}
+                            {{ article.content.start_datetime|date('j F Y') }}
+                        {% else %}
+                            {{ article.content.start_datetime|date('j F Y') }} - {{ article.content.end_datetime|date('j F Y') }}
+                        {% endif %}
+                    </p>
+
+                    <h3 class="event-list__title">
+                        <a href="/events/{{ article.content.id }}/{{ slugify(article.content.title) }}">{{ article.content.title }}</a>
+                    </h3>
+                </div>
+
+            </li>
+            #}
+        {% endfor %}
+    </ol>
+{% endif %}
