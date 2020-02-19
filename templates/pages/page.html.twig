@@ -1,6 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ page.title|raw }} - CCS{% endblock %}
+
+
+{#
+ # The minus is to remove whitespace
+ # https://twig.symfony.com/doc/2.x/templates.html#whitespace-control
+ #}
+{%- block title %}
+    {%- if page.head.title is not empty -%}
+        {{ page.head.title }}
+    {%- else -%}
+        {{ page.title|raw }} - CCS
+    {%- endif -%}
+{% endblock -%}
+
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
