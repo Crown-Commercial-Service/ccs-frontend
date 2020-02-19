@@ -2,8 +2,10 @@ content_types:
   page:
     api_endpoint: wp/v2/pages
     content_fields: pages.yaml
+    source_content_type: page
     taxonomies:
       - pillars
+      - sectors
   news:
     api_endpoint: wp/v2/posts
     content_fields: news.yaml

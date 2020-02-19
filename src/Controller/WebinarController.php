@@ -49,7 +49,7 @@ class WebinarController extends AbstractController
         $data = [
           'webinar'       => $webinar,
           'campaign_code' => $webinar->getContent()->get('campaign_code') ? $webinar->getContent()->get('campaign_code')->getValue() : '',
-          'form_action'   => getenv('APP_BASE_URL') === 'prod' ? 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8' : 'https://crowncommercial--preprod.cs86.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8',
+          'form_action'   => getenv('APP_BASE_URL') === 'prod' ? 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8' : 'https://crowncommercial--preprod.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8',
           'description'   => $webinar->getContent()->get('description') ? $webinar->getContent()->get('description')->getValue() : '',
           'return_url'    => getenv('APP_BASE_URL') . '/webinar/confirmation/' . $webinar->getId() . '/' . $webinar->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING)
         ];
