@@ -1,3 +1,19 @@
+/**
+ * Feature test for local storage
+ * @returns {boolean}
+ */
+function lsTest(){
+    var test = 'lsTest';
+    try {
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+    } catch(e) {
+        return false;
+    }
+}
+
+
 var elementIdsToRemember = ['name', 'email', 'phone', 'company'];
 
 function wipeAllValues() {
@@ -24,8 +40,20 @@ function prepareInputs(id) {
         wipeAllValues();
     }
 
-    $element.value = localStorage.getItem(id);
-    localStorage.setItem('_saved', date.getTime())
+    // Fix for IE9
+    var valueToUse = localStorage.getItem(id);
+    if(valueToUse == null) {
+        valueToUse = '';
+    }
+
+    $element.value = valueToUse;
+    localStorage.setItem('_saved', date.getTime());
 }
 
-elementIdsToRemember.forEach(prepareInputs);
+
+/**
+ * Only run if local storage is available
+ */
+if(lsTest() === true){
+    elementIdsToRemember.forEach(prepareInputs);
+}
