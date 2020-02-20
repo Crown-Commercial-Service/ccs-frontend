@@ -58,6 +58,8 @@
                             </p>
                         {% endif %}
 
+                        <a href="{{ path('news_page', {'slug': article.content.urlSlug}) }}">Read more <span class="visuallyhidden">about {{ article.content.title|raw }}</span></a>
+
                     </div>
                 </li>
             {% endfor %}
