@@ -193,6 +193,15 @@
                 {% endif %}
 
 
+
+
+                {% if
+                    page.template == "page-templates/landing.php" or
+                    page.template == "page-templates/products-and-services.php" or
+                    page.template == "page-templates/sectors.php" %}
+                    {% else %}
+                    {# This is used for the Default template which otherwise sit flushed with the left-side edge on larger viewports #}
+
                 <div class="govuk-width-container">
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-two-thirds">
@@ -206,6 +215,9 @@
                         </div>
                     </div>
                 </div>
+                        {% endif %}
+
+
 
 
                 {% if page.content.contact_form_show_contact_form is not empty %}
