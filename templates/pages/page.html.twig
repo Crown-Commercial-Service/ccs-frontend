@@ -19,7 +19,15 @@
 
     {# each section will need their own wrapper from now on #}
     <!-- required wrapper 1 -->
-    <div class="--govuk-width-container">
+    {% if
+    page.template == "page-templates/landing.php" or
+    page.template == "page-templates/products-and-services.php" or
+    page.template == "page-templates/sectors.php" %}
+        <div>
+    {% else %}
+            {# This is used for the Default template which otherwise sit flushed with the left-side edge on larger viewports #}
+    <div class="govuk-width-container">
+        {% endif %}
 
         <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
@@ -185,6 +193,15 @@
                 {% endif %}
 
 
+
+
+                {% if
+                    page.template == "page-templates/landing.php" or
+                    page.template == "page-templates/products-and-services.php" or
+                    page.template == "page-templates/sectors.php" %}
+                    {% else %}
+                    {# This is used for the Default template which otherwise sit flushed with the left-side edge on larger viewports #}
+
                 <div class="govuk-width-container">
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-two-thirds">
@@ -198,6 +215,9 @@
                         </div>
                     </div>
                 </div>
+                        {% endif %}
+
+
 
 
                 {% if page.content.contact_form_show_contact_form is not empty %}
@@ -309,6 +329,7 @@
                                             opted in to receive newsletters or
                                             information about our products and
                                             services.</p>
+                                        <p>When you click to send your details you will receive an email. You can unsubscribe using the link in the email.</p>
 
                                         <div class="govuk-form-group">
                                             <button class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">
@@ -354,43 +375,46 @@
     </div>
 
 
+    {% if page.template == "page-templates/products-and-services.php" %}
+    {# Don't display it #}
+    {% else %}
+        {% if page.content.full_width_content %}
+            <div class="apollo-island apollo-island--emphasised">
+                <div class="govuk-width-container">
 
-    {% if page.content.full_width_content %}
-        <div class="apollo-island apollo-island--emphasised">
-            <div class="govuk-width-container">
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-one-half">
 
-                <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-one-half">
+                            <div class="apollo-call-to-action apollo-call-to-action--aggregation">
+                                <h3 class="govuk-heading-m">Aggregation</h3>
+                                <p>Bulk buying, also known as aggregation,
+                                    offers highly competitive prices and a
+                                    simple tender process.</p>
+                                <p><a href="/help-and-support/aggregation/">Learn
+                                        more <span class="visuallyhidden">about aggregation</span></a>
+                                </p>
+                            </div>
 
-                        <div class="apollo-call-to-action apollo-call-to-action--aggregation">
-                            <h3 class="govuk-heading-m">Aggregation</h3>
-                            <p>Bulk buying, also known as aggregation, offers
-                                highly competitive prices and a simple tender
-                                process.</p>
-                            <p><a href="/help-and-support/aggregation/">Learn
-                                    more <span class="visuallyhidden">about aggregation</span></a>
-                            </p>
                         </div>
+                        <div class="govuk-grid-column-one-half">
 
-                    </div>
-                    <div class="govuk-grid-column-one-half">
+                            <div class="apollo-call-to-action apollo-call-to-action--help">
+                                <h3 class="govuk-heading-m">Can't find what
+                                    you're looking for?</h3>
+                                <p>If none of your requirements can be met by a
+                                    CCS catalogue or framework, you can run an
+                                    EU tender.</p>
+                                <p><a href="/help-and-support/eu-tender/">Learn
+                                        more <span class="visuallyhidden">EU tenders</span></a>
+                                </p>
+                            </div>
 
-                        <div class="apollo-call-to-action apollo-call-to-action--help">
-                            <h3 class="govuk-heading-m">Can't find what you're
-                                looking for?</h3>
-                            <p>If none of your requirements can be met by a CCS
-                                catalogue or framework, you can run an EU
-                                tender.</p>
-                            <p><a href="/help-and-support/eu-tender/">Learn more
-                                    <span class="visuallyhidden">EU tenders</span></a>
-                            </p>
                         </div>
-
                     </div>
+
                 </div>
-
             </div>
-        </div>
+        {% endif %}
     {% endif %}
 
 
