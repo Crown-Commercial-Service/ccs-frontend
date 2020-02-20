@@ -49,12 +49,12 @@
 
             <div class="page-introduction">
                 <h1 class="govuk-heading-xl page-title page-title--tight">Events</h1>
-                <p>Lorem ipsum dolor sit amet et do aliquam adipiscing do amet sit dolor lorem ipsum dolor sit amet.</p>
+                <p>Take a look at our upcoming events. You can filter them by category or sector. Click on the event to see more details and how to register to attend.</p>
             </div>
 
             <div class="govuk-grid-row events-page-listing">
                 <div class="govuk-grid-column-one-quarter">
-                    <h2 class="govuk-heading-m">Apply filters</h2>
+                    <h2 class="govuk-heading-m">Filter events list</h2>
 
                     {% if products_services is not empty %}
                         <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="accordion" id="products-services-accordion">
@@ -62,7 +62,7 @@
                                 <div class="govuk-accordion__section-header">
                                     <h3 class="govuk-accordion__section-heading">
                                         <span class="govuk-accordion__section-button ccs-accordion__section-button" id="products-services-accordion-heading">
-                                            Category
+                                            Products and services
                                         </span>
                                     </h3>
                                 </div>
@@ -111,9 +111,9 @@
                 </div>
                 <div class="govuk-grid-column-three-quarters events-list-container">
                     {% if pagination.totalResults == 1 %}
-                        <h2 class="govuk-heading-m">{{ pagination.totalResults }} event found</h2>
+                        <h2 class="govuk-heading-m">{{ pagination.totalResults }} event(s) found</h2>
                     {% else %}
-                        <h2 class="govuk-heading-m">{{ pagination.totalResults }} events found</h2>
+                        <h2 class="govuk-heading-m">{{ pagination.totalResults }} event(s) found</h2>
                     {% endif %}
 
                     {% if events %}
