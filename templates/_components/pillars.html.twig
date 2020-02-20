@@ -11,8 +11,8 @@
                     {% for pillar in component.pillars_pillars_pillars %}
                         <li class="card-list__item [ pillar--{{ pillar.pillars_taxonomy.value.slug }} ]">
                             <div class="card-list__item__wrapper">
-
-                                {#{{ dump(pillar.pillars_taxonomy.value.slug) }}#}
+                                {#{{ pillar.pillars_taxonomy.value.slug }}#}
+                                {#{{ dump(pillar.pillars_taxonomy) }}#}
 
                                 {% if pillar.pillars_icon is not empty %}
                                     <div class="card-list__icon">
