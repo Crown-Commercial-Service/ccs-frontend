@@ -35,9 +35,9 @@
         <main class="govuk-main-wrapper">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <h1 class="govuk-heading-xl page-title">You have succesfully submitted your details</h1>
+                    <h1 class="govuk-heading-xl page-title">You can now watch the webinar below</h1>
 
-                    <div class="page-intro"><p>You can now view the webinar below.</p></div>
+                    {#<div class="page-intro"><p>You can now view the webinar below.</p></div>#}
 
                     {% if webinar.content.webinar_video is defined and webinar.content.webinar_video is not empty %}
                         <div class="responsive-video widescreen">{{ webinar.content.webinar_video|raw }}</div>
