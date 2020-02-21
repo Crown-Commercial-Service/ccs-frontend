@@ -43,6 +43,15 @@
     padding: govuk-px-to-rem(24) govuk-px-to-rem(2) govuk-px-to-rem(28) govuk-px-to-rem(2);
 }
 
+.event-list__item--column {
+    border-bottom: 0 none;
+
+    @include govuk-media-query($from: tablet) {
+        padding-bottom: 0;
+        padding-top: govuk-px-to-rem(10);
+    }
+}
+
 
 .event-list__meta {
     font-size: govuk-px-to-rem(16);
@@ -59,7 +68,9 @@
 }
 
 
-.event-list__details {}
+.event-list__details {
+    padding-right: govuk-px-to-rem(20);
+}
 
 
 .event-list__title {

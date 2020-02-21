@@ -9,6 +9,16 @@
 	}
 }
 
+.greyed-bg__heading {
+	display: inline-block;
+}
+
+.greyed-bg__heading-link {
+	display: inline-block;
+	margin: 0 0 govuk-px-to-rem(3) govuk-px-to-rem(10);
+	vertical-align: text-bottom;
+}
+
 .subcategories__intro {
 	margin-bottom: govuk-px-to-rem(50);
 
