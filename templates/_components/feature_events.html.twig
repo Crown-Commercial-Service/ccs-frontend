@@ -19,7 +19,7 @@
                         <div class="event-list__details">
                             <p class="event-list__meta">
                                 {% if article.content.content.start_datetime|date('j F Y') == article.content.content.end_datetime|date('j F Y') %}
-                                    {{ article.content.start_datetime|date('j F Y') }}
+                                    {{ article.content.content.start_datetime|date('j F Y') }}
                                 {% else %}
                                     {{ article.content.content.start_datetime|date('j F Y') }} - {{ article.content.content.end_datetime|date('j F Y') }}
                                 {% endif %}

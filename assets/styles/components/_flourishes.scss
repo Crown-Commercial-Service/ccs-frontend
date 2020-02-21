@@ -121,6 +121,8 @@ html {
     }
 }
 
+
+
 // This isn't ideal but the radius of the circle makes it so big that it sticks out from the bottom of the footer if we use the same css as on the other flourishes
 .pillar--buildings .footer-global:before {
     background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-building}' fill-rule='evenodd'/></svg>");
@@ -138,28 +140,28 @@ html {
 
 
 .sector--local-government .footer-global:before {
-    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#CC5A13' fill-rule='evenodd'/></svg>");
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-local-government}' fill-rule='evenodd'/></svg>");
 }
 .sector--health .footer-global:before {
-    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#0057B8' fill-rule='evenodd'/></svg>");
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-health}' fill-rule='evenodd'/></svg>");
 }
 .sector--universities-and-colleges .footer-global:before {
-    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#834CB1' fill-rule='evenodd'/></svg>");
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-universities-and-colleges}' fill-rule='evenodd'/></svg>");
 }
 .sector--schools-and-academies .footer-global:before {
-    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#879637' fill-rule='evenodd'/></svg>");
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-schools-and-academies}' fill-rule='evenodd'/></svg>");
 }
 .sector--devolved .footer-global:before {
-    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#CC5A13' fill-rule='evenodd'/></svg>");
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-devolved}' fill-rule='evenodd'/></svg>");
 }
 .sector--police-and-emergency-services .footer-global:before {
-    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#ECAC00' fill-rule='evenodd'/></svg>");
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-police-and-emergency-services}' fill-rule='evenodd'/></svg>");
 }
 .sector--charities .footer-global:before {
-    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#57BAB7' fill-rule='evenodd'/></svg>");
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-charities}' fill-rule='evenodd'/></svg>");
 }
 .sector--local-housing-associations .footer-global:before {
-    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#879637' fill-rule='evenodd'/></svg>");
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-local-housing-associations}' fill-rule='evenodd'/></svg>");
 }
 
 
