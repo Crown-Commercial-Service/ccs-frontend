@@ -4,13 +4,13 @@
 
             <div class="govuk-grid-column-full">
 
-                <h2 class="govuk-heading-l intro__heading">{{ component.sectors_sectors_heading }}</h2>
+                {#<h2 class="govuk-heading-l intro__heading">{{ component.sectors_sectors_heading }}</h2>#}
 
-                <ul class="card-list govuk-!-margin-top-6 card-list--four-on-large">
+                <ul class="card-list card-list--four-on-large">
 
                     {% for sector in component.sectors_sectors_sectors %}
                         <li class="card-list__item {#
-                        This is limited to one (1) in fewbricks. It always returns an array anywa
+
                         #}[ sector--{{ sector.sectors_taxonomy.value.slug }} ]">
                             <div class="card-list__item__wrapper">
 

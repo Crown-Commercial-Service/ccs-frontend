@@ -55,6 +55,8 @@ class EventsController extends AbstractController
         $options = [
             'products_services' => $productServiceFilter,
             'sectors' => $sectorFilter,
+            'orderby'    => 'start_datetime',
+            'order'      => 'asc',
         ];
 
         try {

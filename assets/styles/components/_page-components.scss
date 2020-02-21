@@ -19,3 +19,11 @@
         }
     }
 }
+
+
+.component.pillars + .component.cards {
+
+    // This isn't ideal but currently the card list has a margin-bottom on each card to push down its next row so we offset that here
+    margin-top: govuk-px-to-rem(- 70);
+
+}
