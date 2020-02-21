@@ -37,6 +37,10 @@
             margin-right: 0;
         }
 
+        &:nth-child(2n+1) {
+            clear: left;
+        }
+
     }
 
     @include govuk-media-query($from: 940) {
@@ -49,8 +53,16 @@
             margin-right: 4%;
         }
 
+        &:nth-child(2n+1) {
+            clear: none;
+        }
+
         &:nth-child(3n) {
             margin-right: 0;
+        }
+
+        &:nth-child(3n+1) {
+            clear: left
         }
 
     }
@@ -157,8 +169,9 @@
         position: absolute;
         top: -5px;
         left: -1px;
-        width: calc(100% + 2px);
+        right: -1px;
         height: 5px;
+        background-color: $ccs-colour;
         background-color: var(--sub-color);
         
     }
