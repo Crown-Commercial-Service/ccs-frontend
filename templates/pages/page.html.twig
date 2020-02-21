@@ -82,9 +82,8 @@
 
                         {#{{ page.template }}#}
 
-                        {% if
-                            page.template == "page-templates/products-and-services.php" or
-                            page.template == "page-templates/sectors.php" %}
+                        {% if page.content.hero_heading %}
+                            {% else %}
 
                             <div class="govuk-width-container">
                                 <div class="govuk-grid-row">
