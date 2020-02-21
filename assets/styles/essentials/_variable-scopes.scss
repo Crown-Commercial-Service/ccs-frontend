@@ -18,11 +18,11 @@
 .pillar--people { --sub-color: #{$sub-color-people}; }
 .pillar--technology { --sub-color: #{$sub-color-technology}; }
 
-.sector--local-government { --sub-color: #CC5A13; }
-.sector--health { --sub-color: #0057B8; }
-.sector--universities-and-colleges { --sub-color: #834CB1; }
-.sector--schools-and-academies { --sub-color: #879637; }
-.sector--devolved { --sub-color: #CC5A13; }
-.sector--police-and-emergency-services { --sub-color: #ECAC00; }
-.sector--charities { --sub-color: #57BAB7; }
-.sector--local-housing-associations { --sub-color: #879637; }
+.sector--local-government { --sub-color: #{$sub-color-local-government}; }
+.sector--health { --sub-color: #{$sub-color-health}; }
+.sector--universities-and-colleges { --sub-color: #{$sub-color-universities-and-colleges}; }
+.sector--schools-and-academies { --sub-color: #{$sub-color-schools-and-academies}; }
+.sector--devolved { --sub-color: #{$sub-color-devolved}; }
+.sector--police-and-emergency-services { --sub-color: #{$sub-color-police-and-emergency-services}; }
+.sector--charities { --sub-color: #{$sub-color-charities}; }
+.sector--local-housing-associations { --sub-color: #{$sub-color-local-housing-associations}; }

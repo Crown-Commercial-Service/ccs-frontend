@@ -235,7 +235,9 @@
 
                                     <form id="js-contact-form" class="govuk-!-width-three-quarters" action="{{ form_action }}" method="post">
 
+                                        {% if not page.content.contact_form_aggregation_options %}
                                         <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+                                        {% endif %}
 
                                         <div class="govuk-form-group">
                                             <label class="govuk-label" for="form-fullname">Full
@@ -336,6 +338,7 @@
                                             </button>
                                         </div>
                                     </form>
+
 
                                     <div id="js-contact-form-success-container" style="display: none;">
                                         <h4>Message sent</h4>
