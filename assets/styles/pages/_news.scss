@@ -51,6 +51,14 @@
     margin-top: 0;
     padding: 0;
 
+    &:before {
+
+        clear: both;
+        content: " ";
+        display: block;
+
+    }
+
     @include govuk-media-query($from: tablet) {
 
         margin-left: -22px;
@@ -78,6 +86,7 @@
 
     border: 1px solid #E7E7E7;
     flex: 1 0 auto;
+    float: left;
     margin-top: 44px;
     max-width: 100%;
     width: 100%;
