@@ -5,8 +5,18 @@
 
 .subcategories {
 	.greyed-bg {
-		padding: 4% 4% 5% 4%;
+		//padding: 4% 4% 5% 4%;
 	}
+}
+
+.greyed-bg__heading {
+	display: inline-block;
+}
+
+.greyed-bg__heading-link {
+	display: inline-block;
+	margin: 0 0 govuk-px-to-rem(3) govuk-px-to-rem(10);
+	vertical-align: text-bottom;
 }
 
 .subcategories__intro {

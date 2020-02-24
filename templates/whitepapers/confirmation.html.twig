@@ -22,22 +22,22 @@
         <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
 
-        <div class="govuk-phase-banner">
-            <p class="govuk-phase-banner__content">
-                <strong class="govuk-tag govuk-phase-banner__content__tag ">
-                    beta </strong> <span class="govuk-phase-banner__text">
-                  This is a new service – your
-                  <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.
-                </span>
-            </p>
-        </div>
+        {#<div class="govuk-phase-banner">#}
+            {#<p class="govuk-phase-banner__content">#}
+                {#<strong class="govuk-tag govuk-phase-banner__content__tag ">#}
+                    {#beta </strong> <span class="govuk-phase-banner__text">#}
+                  {#This is a new service – your#}
+                  {#<a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.#}
+                {#</span>#}
+            {#</p>#}
+        {#</div>#}
 
         <main class="govuk-main-wrapper">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <h1 class="govuk-heading-xl page-title page-title--tight">Download the whitepaper</h1>
+                    <h1 class="govuk-heading-xl page-title page-title--tight">You can now download this whitepaper</h1>
 
-                    <div class="page-intro page-intro--tight"><p>Your details have been submitted and you can now download the whitepaper.</p></div>
+                    {#<div class="page-intro page-intro--tight"><p>Your details have been submitted and you can now download the whitepaper.</p></div>#}
 
                     {% if whitepaper.content.whitepaper_file.url is defined and whitepaper.content.whitepaper_file.url is not empty %}
                         <p><a class="download-file-link" href="{{ whitepaper.content.whitepaper_file.url }}">{{ whitepaper.title }} ({{ whitepaper.content.whitepaper_file.filesize }})</a></p>

@@ -55,6 +55,8 @@ class EventsController extends AbstractController
         $options = [
             'products_services' => $productServiceFilter,
             'sectors' => $sectorFilter,
+            'orderby'    => 'start_datetime',
+            'order'      => 'asc',
         ];
 
         try {
@@ -73,14 +75,25 @@ class EventsController extends AbstractController
         ]);
     }
 
-    public function show($slug, Request $request)
+    /**
+     * @param $id
+     * @param $slug
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PermissionException
+     */
+    public function show($id, $slug, Request $request)
     {
         $sanitisedSlug = filter_var($slug, FILTER_SANITIZE_STRING);
 
         $this->api->setCacheKey($request->getRequestUri());
 
         try {
-            $event = $this->api->getPageByUrl('/news/events/' . $sanitisedSlug);
+            $event = $this->api->getPage((int) $id);
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Event not found', $e);
         }
