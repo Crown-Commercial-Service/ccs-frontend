@@ -21,15 +21,15 @@
     <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
 
-    <div class="govuk-phase-banner">
-        <p class="govuk-phase-banner__content">
-            <strong class="govuk-tag govuk-phase-banner__content__tag ">
-                beta </strong> <span class="govuk-phase-banner__text">
-                  This is a new service – your
-                  <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.
-                </span>
-        </p>
-    </div>
+    {#<div class="govuk-phase-banner">#}
+        {#<p class="govuk-phase-banner__content">#}
+            {#<strong class="govuk-tag govuk-phase-banner__content__tag ">#}
+                {#beta </strong> <span class="govuk-phase-banner__text">#}
+                  {#This is a new service – your#}
+                  {#<a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.#}
+                {#</span>#}
+        {#</p>#}
+    {#</div>#}
 
     <main class="govuk-main-wrapper">
         <div class="govuk-grid-row">
@@ -42,7 +42,7 @@
                     <div class="page-intro">{{ whitepaper.excerpt|raw }}</div>
                 {% endif %}
 
-                <p>To read this case study, we just need a few details first.</p>
+                <p>To read this whitepaper, we need a few details.</p>
 
                 {% include 'forms/gated-form.html.twig' %}
 

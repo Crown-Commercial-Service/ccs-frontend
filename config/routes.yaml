@@ -161,6 +161,8 @@ events_list:
 event_show:
   path: /events/{id}/{slug}
   controller: App\Controller\EventsController::show
+  requirements:
+    id: '\d+'
 
 #form_newsletter:
 #  path: /newsletter
