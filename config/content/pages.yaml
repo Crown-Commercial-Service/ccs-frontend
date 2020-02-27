@@ -74,6 +74,8 @@ contact_form_message_question_title:
   type: text
 contact_form_message_question_description:
   type: text
+contact_form_find_out_more_aggregation:
+  type: boolean
 contact_form_show_what_areas_aggregation:
   type: boolean
 contact_form_aggregation_options:
