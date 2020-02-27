@@ -1,6 +1,6 @@
 # System routes
 healthcheck:
-  path: /healthcheck_r53
+  path: /health
   controller: App\Controller\PageController::healthcheck
 
 # Page routes
