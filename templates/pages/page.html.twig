@@ -18,29 +18,40 @@
 
 
     {# each section will need their own wrapper from now on #}
-    <!-- required wrapper 1 -->
-    {% if
+<!-- required wrapper 1 -->
+{% if
     page.template == "page-templates/landing.php" or
     page.template == "page-templates/products-and-services.php" or
     page.template == "page-templates/sectors.php" %}
-        <div>
+<div>
     {% else %}
-            {# This is used for the Default template which otherwise sit flushed with the left-side edge on larger viewports #}
+    {# This is used for the Default template which otherwise sit flushed with the left-side edge on larger viewports #}
     <div class="govuk-width-container">
         {% endif %}
 
         <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
 
-        {#<div class="govuk-phase-banner">
-            <p class="govuk-phase-banner__content">
-                <strong class="govuk-tag govuk-phase-banner__content__tag ">
-                    beta </strong> <span class="govuk-phase-banner__text">
+        {% if
+            page.template == "page-templates/products-and-services.php" or
+            page.template == "page-templates/sectors.php" %}
+
+            <div class="govuk-phase-banner">
+                <p class="govuk-phase-banner__content">
+                    <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                        beta </strong> <span class="govuk-phase-banner__text">
       This is a new service – your
       <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.
     </span>
-            </p>
-        </div>#}
+                </p>
+            </div>
+
+        {% else %}
+
+            {# DONT SHOW BANNER #}
+
+        {% endif %}
+
 
         <div class="govuk-width-container">
 
@@ -83,20 +94,13 @@
                         {#{{ page.template }}#}
 
                         {% if page.content.hero_heading %}
-                            {% else %}
+                        {% else %}
 
-                            <div class="govuk-width-container">
-                                <div class="govuk-grid-row">
-                                    <div class="govuk-grid-column-two-thirds">
-                                        <h1 class="govuk-heading-xl page-title page-title--tight">{{ page.title }}</h1>
+                            <h1 class="govuk-heading-xl page-title page-title--tight">{{ page.title }}</h1>
 
-                                        {% if page.content.page_lead_text %}
-                                            <p class="govuk-body-l">{{ page.content.page_lead_text }}</p>
-                                        {% endif %}
-
-                                    </div>
-                                </div>
-                            </div>
+                            {% if page.content.page_lead_text %}
+                                <p class="govuk-body-l">{{ page.content.page_lead_text }}</p>
+                            {% endif %}
 
                         {% endif %}
 
@@ -198,23 +202,23 @@
                     page.template == "page-templates/landing.php" or
                     page.template == "page-templates/products-and-services.php" or
                     page.template == "page-templates/sectors.php" %}
-                    {% else %}
+                {% else %}
                     {# This is used for the Default template which otherwise sit flushed with the left-side edge on larger viewports #}
 
-                <div class="govuk-width-container">
-                    <div class="govuk-grid-row">
-                        <div class="govuk-grid-column-two-thirds">
+                    <div class="govuk-width-container">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-two-thirds">
 
-                            <div class="app-c-print-link">
-                                <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">
-                                    Print this page
-                                </button>
+                                <div class="app-c-print-link">
+                                    <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">
+                                        Print this page
+                                    </button>
+                                </div>
+
                             </div>
-
                         </div>
                     </div>
-                </div>
-                        {% endif %}
+                {% endif %}
 
 
 
@@ -236,7 +240,6 @@
                                     <form id="js-contact-form" class="govuk-!-width-three-quarters" action="{{ form_action }}" method="post">
 
 
-
                                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                                         {% if app.debug %}
                                             <input type="hidden" name="debug" value=1>
@@ -245,8 +248,8 @@
 
 
                                         {% if not page.content.contact_form_aggregation_options %}
-                                        <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
-                                        <input type="hidden" name="00Nb0000009IXEW" id="campaign-code-hidden-input" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+                                            <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+                                            <input type="hidden" name="00Nb0000009IXEW" id="campaign-code-hidden-input" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
                                         {% endif %}
 
                                         <input type="hidden" name="orgid" value="00D8E000000E4zz">
@@ -255,21 +258,21 @@
                                         <input type="hidden" name="priority" value="Green">
 
 
-
-
-
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="form-fullname">Full name</label>
+                                            <label class="govuk-label" for="form-fullname">Full
+                                                name</label>
                                             <input class="govuk-input" id="form-fullname" maxlength="80" name="name" size="20" type="text" required="">
                                         </div>
 
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="form-email">Email address</label>
+                                            <label class="govuk-label" for="form-email">Email
+                                                address</label>
                                             <input class="govuk-input" id="form-email" maxlength="80" name="email" size="20" type="email" pattern=".+@.+\..+" required="">
                                         </div>
 
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="form-telephone">Telephone number</label>
+                                            <label class="govuk-label" for="form-telephone">Telephone
+                                                number</label>
                                             <input class="govuk-input" id="form-telephone" maxlength="80" name="phone" size="20" type="text" required="">
                                         </div>
 
@@ -283,8 +286,9 @@
                                                 <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
                                                     <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-aggregation-general" name="00Nb0000009IXEd" type="checkbox" value="1"/>
                                                     <label class="govuk-label govuk-checkboxes__label" for="form-aggregation-general">
-                                                        Find out about aggregation opportunities
-                                                    </label>
+                                                        Find out about
+                                                        aggregation
+                                                        opportunities </label>
                                                 </div>
                                             </div>
                                         {% endif %}
@@ -337,8 +341,8 @@
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
                                                 <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-callback" name="00Nb0000009IXEg" type="checkbox" value="1"/>
                                                 <label class="govuk-label govuk-checkboxes__label" for="form-callback">
-                                                    I would like someone to call me back
-                                                </label>
+                                                    I would like someone to call
+                                                    me back </label>
                                             </div>
                                         </div>
 
@@ -351,7 +355,10 @@
                                             opted in to receive newsletters or
                                             information about our products and
                                             services.</p>
-                                        <p>When you click to send your details you will receive an email. You can unsubscribe using the link in the email.</p>
+                                        <p>When you click to send your details
+                                            you will receive an email. You can
+                                            unsubscribe using the link in the
+                                            email.</p>
 
                                         <div class="govuk-form-group">
                                             {# Please do not remove the gtm--submit-aggregation-form class as this is used to track submissions in Google Analytics! #}
@@ -400,7 +407,7 @@
 
 
     {% if page.template == "page-templates/products-and-services.php" %}
-    {# Don't display it #}
+        {# Don't display it #}
     {% else %}
         {% if page.content.full_width_content %}
             <div class="apollo-island apollo-island--emphasised">
@@ -443,4 +450,4 @@
 
 
 
-{% endblock %}
+    {% endblock %}
