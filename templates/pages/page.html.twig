@@ -240,20 +240,17 @@
                                         {% endif %}
 
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="form-fullname">Full
-                                                name</label>
+                                            <label class="govuk-label" for="form-fullname">Full name</label>
                                             <input class="govuk-input" id="form-fullname" maxlength="80" name="name" size="20" type="text" required="">
                                         </div>
 
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="form-email">Email
-                                                address</label>
+                                            <label class="govuk-label" for="form-email">Email address</label>
                                             <input class="govuk-input" id="form-email" maxlength="80" name="email" size="20" type="email" pattern=".+@.+\..+" required="">
                                         </div>
 
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="form-telephone">Telephone
-                                                number</label>
+                                            <label class="govuk-label" for="form-telephone">Telephone number</label>
                                             <input class="govuk-input" id="form-telephone" maxlength="80" name="phone" size="20" type="text" required="">
                                         </div>
 
@@ -261,6 +258,17 @@
                                             <label class="govuk-label" for="form-organisation">Organisation</label>
                                             <input class="govuk-input" id="form-organisation" maxlength="80" name="company" size="20" type="text" required="">
                                         </div>
+
+                                        {% if page.content.contact_form_find_out_more_aggregation.value %}
+                                            <div class="govuk-form-group">
+                                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
+                                                    <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-aggregation-general" name="00Nb0000009IXEd" type="checkbox" value="1"/>
+                                                    <label class="govuk-label govuk-checkboxes__label" for="form-aggregation-general">
+                                                        Find out about aggregation opportunities
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        {% endif %}
 
 
                                         {% if page.content.contact_form_show_what_areas_aggregation is defined and page.content.contact_form_show_what_areas_aggregation.value %}
@@ -297,12 +305,12 @@
                                                 {% endif %}
                                             </label>
                                             <span id="form-more-detail-hint" class="govuk-hint">
-                                        {% if page.content.contact_form_message_question_description is defined and page.content.contact_form_message_question_description is not empty %}
-                                            {{ page.content.contact_form_message_question_description }}
-                                        {% else %}
-                                            Please give us as much detail as possible, including the framework name and number
-                                        {% endif %}
-                                    </span>
+                                                {% if page.content.contact_form_message_question_description is defined and page.content.contact_form_message_question_description is not empty %}
+                                                    {{ page.content.contact_form_message_question_description }}
+                                                {% else %}
+                                                    Please give us as much detail as possible, including the framework name and number
+                                                {% endif %}
+                                            </span>
                                             <textarea class="govuk-textarea" id="form-more-detail" name="description" rows="5" aria-describedby="form-more-detail"></textarea>
                                         </div>
 
@@ -310,8 +318,8 @@
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
                                                 <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-callback" name="00Nb0000009IXEg" type="checkbox" value="1"/>
                                                 <label class="govuk-label govuk-checkboxes__label" for="form-callback">
-                                                    I would like someone to call
-                                                    me back </label>
+                                                    I would like someone to call me back
+                                                </label>
                                             </div>
                                         </div>
 
