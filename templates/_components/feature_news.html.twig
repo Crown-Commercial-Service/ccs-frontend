@@ -3,7 +3,7 @@
     <div class="govuk-width-container">
 
         {% if component.feature_news_feature_news_heading is not empty %}
-            <h2 class="govuk-heading-l">{{ component.feature_news_feature_news_heading }}</h2>
+            <h2 class="govuk-heading-l">{{ component.feature_news_feature_news_heading|raw }}</h2>
         {% endif %}
 
         <ol class="featured-news news-listing">
@@ -43,7 +43,7 @@
                         <div class="news-listing-meta">
                             {% if article.content.taxonomies.categories %}
                                 {% for category in article.content.taxonomies.categories %}
-                                    {{ category.name }}{% if loop.index < article.content.taxonomies.categories|length %}, {% endif %}
+                                    {{ category.name|raw }}{% if loop.index < article.content.taxonomies.categories|length %}, {% endif %}
                                 {% endfor %}
                             {% endif %}
                             | {{ article.content.datePublished.format('jS F Y') }}
@@ -54,7 +54,7 @@
 
                         {% if article.content.content.post_lead_text %}
                             <p class="news-listing-summary">
-                                {{ article.content.content.post_lead_text }}
+                                {{ article.content.content.post_lead_text|raw }}
                             </p>
                         {% endif %}
 
