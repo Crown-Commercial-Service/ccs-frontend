@@ -68,7 +68,7 @@
                         </li>
                     {% endfor %}
                     <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                        {{ page.title }}
+                        {{ page.title|raw }}
                     </li>
                 </ol>
             </div>
@@ -301,7 +301,7 @@
                                             <input class="govuk-input" id="form-organisation" maxlength="80" name="company" size="20" type="text" required="">
                                         </div>
 
-                                        {% if page.content.contact_form_find_out_more_aggregation.value %}
+                                        {% if page.content.contact_form_find_out_more_aggregation.value is defined and page.content.contact_form_find_out_more_aggregation.value %}
                                             <div class="govuk-form-group">
                                                 <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
                                                     <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-aggregation-general" name="00Nb0000009IXEd" type="checkbox" value="1"/>
