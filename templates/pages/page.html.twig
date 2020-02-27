@@ -235,25 +235,41 @@
 
                                     <form id="js-contact-form" class="govuk-!-width-three-quarters" action="{{ form_action }}" method="post">
 
-                                        {% if not page.content.contact_form_aggregation_options %}
-                                        <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+
+
+                                        {# See https://symfony.com/doc/current/templating/app_variable.html #}
+                                        {% if app.debug %}
+                                            <input type="hidden" name="debug" value=1>
+                                            <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
                                         {% endif %}
 
+
+                                        {% if not page.content.contact_form_aggregation_options %}
+                                        <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+                                        <input type="hidden" name="00Nb0000009IXEW" id="campaign-code-hidden-input" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+                                        {% endif %}
+
+                                        <input type="hidden" name="orgid" value="00D8E000000E4zz">
+                                        <input type="hidden" name="retURL" value="{{ site_base_url }}/form-thank-you?{{ page_query_string }}">
+                                        <input type="hidden" name="recordType" value="012b00000005NWC">
+                                        <input type="hidden" name="priority" value="Green">
+
+
+
+
+
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="form-fullname">Full
-                                                name</label>
+                                            <label class="govuk-label" for="form-fullname">Full name</label>
                                             <input class="govuk-input" id="form-fullname" maxlength="80" name="name" size="20" type="text" required="">
                                         </div>
 
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="form-email">Email
-                                                address</label>
+                                            <label class="govuk-label" for="form-email">Email address</label>
                                             <input class="govuk-input" id="form-email" maxlength="80" name="email" size="20" type="email" pattern=".+@.+\..+" required="">
                                         </div>
 
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label" for="form-telephone">Telephone
-                                                number</label>
+                                            <label class="govuk-label" for="form-telephone">Telephone number</label>
                                             <input class="govuk-input" id="form-telephone" maxlength="80" name="phone" size="20" type="text" required="">
                                         </div>
 
@@ -261,6 +277,17 @@
                                             <label class="govuk-label" for="form-organisation">Organisation</label>
                                             <input class="govuk-input" id="form-organisation" maxlength="80" name="company" size="20" type="text" required="">
                                         </div>
+
+                                        {% if page.content.contact_form_find_out_more_aggregation.value %}
+                                            <div class="govuk-form-group">
+                                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
+                                                    <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-aggregation-general" name="00Nb0000009IXEd" type="checkbox" value="1"/>
+                                                    <label class="govuk-label govuk-checkboxes__label" for="form-aggregation-general">
+                                                        Find out about aggregation opportunities
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        {% endif %}
 
 
                                         {% if page.content.contact_form_show_what_areas_aggregation is defined and page.content.contact_form_show_what_areas_aggregation.value %}
@@ -277,7 +304,7 @@
                                                     <div class="govuk-radios govuk-radios--small">
                                                         {% for aggregationOption in page.content.contact_form_aggregation_options %}
                                                             <div class="govuk-radios__item govuk-radios__item--small ccs-radios__item--small">
-                                                                <input class="govuk-radios__input govuk-radios__input--small" id="option-{{ slugify(aggregationOption.aggregation_options_name) }}" name="subject" type="radio" value="{{ aggregationOption.aggregation_options_campaign_code }}" data-campaign-code="{{ aggregationOption.aggregation_options_campaign_code }}" required="">
+                                                                <input class="govuk-radios__input govuk-radios__input--small" id="option-{{ slugify(aggregationOption.aggregation_options_name) }}" name="00Nb0000009IXEW" type="radio" value="{{ aggregationOption.aggregation_options_campaign_code }}" data-campaign-code="{{ aggregationOption.aggregation_options_campaign_code }}" required="">
                                                                 <label class="govuk-label govuk-radios__label" for="option-{{ slugify(aggregationOption.aggregation_options_name) }}">
                                                                     {{ aggregationOption.aggregation_options_name }}
                                                                 </label>
@@ -297,12 +324,12 @@
                                                 {% endif %}
                                             </label>
                                             <span id="form-more-detail-hint" class="govuk-hint">
-                                        {% if page.content.contact_form_message_question_description is defined and page.content.contact_form_message_question_description is not empty %}
-                                            {{ page.content.contact_form_message_question_description }}
-                                        {% else %}
-                                            Please give us as much detail as possible, including the framework name and number
-                                        {% endif %}
-                                    </span>
+                                                {% if page.content.contact_form_message_question_description is defined and page.content.contact_form_message_question_description is not empty %}
+                                                    {{ page.content.contact_form_message_question_description }}
+                                                {% else %}
+                                                    Please give us as much detail as possible, including the framework name and number
+                                                {% endif %}
+                                            </span>
                                             <textarea class="govuk-textarea" id="form-more-detail" name="description" rows="5" aria-describedby="form-more-detail"></textarea>
                                         </div>
 
@@ -310,16 +337,10 @@
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
                                                 <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-callback" name="00Nb0000009IXEg" type="checkbox" value="1"/>
                                                 <label class="govuk-label govuk-checkboxes__label" for="form-callback">
-                                                    I would like someone to call
-                                                    me back </label>
+                                                    I would like someone to call me back
+                                                </label>
                                             </div>
                                         </div>
-
-                                        <input type="hidden" name="orgid" value="00D8E000000E4zz">
-                                        <input type="hidden" name="retURL" value="{{ site_base_url }}/form-thank-you?{{ page_query_string }}">
-                                        <input type="hidden" name="recordType" value="012b00000005NWC">
-                                        <input type="hidden" name="priority" value="Green">
-                                        <input type="hidden" name="00Nb0000009IXEW" id="campaign-code-hidden-input" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
 
 
                                         <p>For information about how we use your
@@ -333,7 +354,8 @@
                                         <p>When you click to send your details you will receive an email. You can unsubscribe using the link in the email.</p>
 
                                         <div class="govuk-form-group">
-                                            <button class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">
+                                            {# Please do not remove the gtm--submit-aggregation-form class as this is used to track submissions in Google Analytics! #}
+                                            <button class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm--submit-aggregation-form">
                                                 Submit
                                             </button>
                                         </div>
