@@ -36,6 +36,7 @@
             page.template == "page-templates/products-and-services.php" or
             page.template == "page-templates/sectors.php" %}
 
+        <div class="govuk-width-container">
             <div class="govuk-phase-banner">
                 <p class="govuk-phase-banner__content">
                     <strong class="govuk-tag govuk-phase-banner__content__tag ">
@@ -44,6 +45,7 @@
       <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.
     </span>
                 </p>
+            </div>
             </div>
 
         {% else %}
@@ -96,10 +98,28 @@
                         {% if page.content.hero_heading %}
                         {% else %}
 
+
+
+                            {% if
+                                page.template == "page-templates/landing.php" or
+                                page.template == "page-templates/products-and-services.php" or
+                                page.template == "page-templates/sectors.php" %}
+                                <div class="govuk-width-container">
+                                <div class="govuk-grid-row">
+                                <div class="govuk-grid-column-two-thirds">
+                            {% endif %}
+
                             <h1 class="govuk-heading-xl page-title page-title--tight">{{ page.title }}</h1>
 
                             {% if page.content.page_lead_text %}
                                 <p class="govuk-body-l">{{ page.content.page_lead_text }}</p>
+                            {% endif %}
+
+                            {% if
+                                page.template == "page-templates/landing.php" or
+                                page.template == "page-templates/products-and-services.php" or
+                                page.template == "page-templates/sectors.php" %}
+                                </div></div></div>
                             {% endif %}
 
                         {% endif %}
@@ -354,7 +374,8 @@
                                             your personal data where you have
                                             opted in to receive newsletters or
                                             information about our products and
-                                            services.</p>
+                                            services.
+                                        </p>
                                         <p>When you click to send your details
                                             you will receive an email. You can
                                             unsubscribe using the link in the
