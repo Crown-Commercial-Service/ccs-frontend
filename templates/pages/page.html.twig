@@ -406,7 +406,7 @@
     </div>
 
 
-    {% if page.template == "page-templates/products-and-services.php" %}
+    {% if page.template == "page-templates/products-and-services.php" or page.template == "page-templates/landing.php" %}
         {# Don't display it #}
     {% else %}
         {% if page.content.full_width_content %}
