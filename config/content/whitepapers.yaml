@@ -1,5 +1,7 @@
 whitepaper_file:
   type: document
+form_introduction:
+  type: text
 link_text:
   type: text
 campaign_code:
