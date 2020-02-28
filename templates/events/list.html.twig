@@ -121,8 +121,8 @@
                             {% for event in events %}
                                 <li class="event-list__item">
                                     {% if event.content.image %}
-                                        <a class="event-list__image" href="/events/{{ event.id }}/{{ slugify(event.title) }}">
-                                            <img src="{{ event.content.image.byName('news-size-s') }}" alt="" />
+                                        <a class="event-list__image" aria-hidden="true"  href="/events/{{ event.id }}/{{ slugify(event.title) }}">
+                                            <img src="{{ event.content.image.byName('news-size-s') }}" alt="{{ event.title|raw }}" />
                                         </a>
                                     {% endif %}
 
