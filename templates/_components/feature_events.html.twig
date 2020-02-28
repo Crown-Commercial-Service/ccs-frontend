@@ -11,8 +11,8 @@
                 {% for article in component.articles %}
                     <li class="event-list__item event-list__item--column govuk-grid-column-one-half">
                         {% if article.content.content.image is not empty %}
-                            <a class="event-list__image" href="/events/{{ article.content.content.id }}/{{ slugify(article.content.content.title) }}">
-                                <img src="{{ article.content.content.image.byName('news-size-s') }}" alt="" />
+                            <a class="event-list__image" aria-hidden="true" href="/events/{{ article.content.content.id }}/{{ slugify(article.content.content.title) }}">
+                                <img src="{{ article.content.content.image.byName('news-size-s') }}" alt="{{ article.content.title|raw }}" />
                             </a>
                         {% endif %}
 

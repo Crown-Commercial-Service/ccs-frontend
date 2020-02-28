@@ -66,7 +66,7 @@
                                         </span>
                                     </h3>
                                 </div>
-                                <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="products-services-accordion-heading">
+                                <div id="products-services-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="products-services-accordion-heading">
                                     <ul class="ccs-link-filter-list">
                                         <li><a href="/events">All Categories</a></li>
                                         {% for item in products_services %}
@@ -94,7 +94,7 @@
                                         </span>
                                     </h3>
                                 </div>
-                                <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="sectors-accordion-heading">
+                                <div id="sectors-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="sectors-accordion-heading">
                                     <ul class="ccs-link-filter-list">
                                         <li><a href="/events">All Sectors</a></li>
                                         {% for sector in sectors %}
@@ -121,8 +121,8 @@
                             {% for event in events %}
                                 <li class="event-list__item">
                                     {% if event.content.image %}
-                                        <a class="event-list__image" href="/events/{{ event.id }}/{{ slugify(event.title) }}">
-                                            <img src="{{ event.content.image.byName('news-size-s') }}" alt="" />
+                                        <a class="event-list__image" aria-hidden="true"  href="/events/{{ event.id }}/{{ slugify(event.title) }}">
+                                            <img src="{{ event.content.image.byName('news-size-s') }}" alt="{{ event.title|raw }}" />
                                         </a>
                                     {% endif %}
 
