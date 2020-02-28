@@ -38,8 +38,8 @@
                 <h1 class="page-title-prepend">Whitepaper</h1>
                 <h2 class="govuk-heading-xl page-title page-title--tight">{{ whitepaper.title|raw }}</h2>
 
-                {% if whitepaper.form_introduction is defined and whitepaper.form_introduction is not empty %}
-                    <div class="page-intro">{{ whitepaper.form_introduction|raw }}</div>
+                {% if whitepaper.content.form_introduction is defined and whitepaper.content.form_introduction is not empty %}
+                    <div class="page-intro">{{ whitepaper.content.form_introduction|raw }}</div>
                 {% endif %}
 
                 <p>To read this whitepaper, we need a few details.</p>
