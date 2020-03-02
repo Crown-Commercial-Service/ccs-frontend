@@ -77,7 +77,7 @@ npm run build
 
 We import the GOV.UK Frontend styles into the main Sass file in our project. All our own Sass variables are placed before `@import "node_modules/govuk-frontend/all";` to make sure the right settings have been set before we compile the Sass to CSS.
 
-The JavaScript is copied from `node_modules/govuk-frontend/all.js` to `public/assets/scripts/all.js`, where it is referenced in all templates.
+The JavaScript is copied from `node_modules/govuk-frontend/all.js` to `public/assets/scripts/all.js` (and `public/assets/scripts/all.min.js`), where it is referenced in all templates.
 
 As the GOV.UK Frontend does not initialise any scripts by default; all scripts are initialised, using `initAll`, in `app.js`.
 
