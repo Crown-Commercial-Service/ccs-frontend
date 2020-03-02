@@ -28,7 +28,7 @@ class MenuController extends AbstractController
             getenv('APP_API_BASE_URL')
         );
         $this->api->setCache($cache);
-        $this->api->setCacheLifetime(300);
+        $this->api->setCacheLifetime(1800);
     }
 
 
