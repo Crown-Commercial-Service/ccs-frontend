@@ -36,7 +36,7 @@ class FrameworksController extends AbstractController
         );
         $this->api->setContentType('frameworks');
         $this->api->setCache($cache);
-        $this->api->setCacheLifetime(300);
+        $this->api->setCacheLifetime(1800);
 
         $this->searchApi = new RestData(
             getenv('SEARCH_API_BASE_URL'),
