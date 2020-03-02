@@ -1,7 +1,7 @@
 whitepaper_file:
   type: document
 form_introduction:
-  type: text
+  type: richtext
 link_text:
   type: text
 campaign_code:

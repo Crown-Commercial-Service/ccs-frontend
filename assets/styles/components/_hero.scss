@@ -19,13 +19,25 @@
 
 }
 
+
+.ccs-hero-text-container {
+    box-sizing: border-box;
+    padding: 0 15px;
+
+    @include govuk-media-query($from: 900) {
+        float: left;
+        width: 50%;
+    }
+}
+
+
 // we position this because the object-fit polyfill needs to be able to reposition the img element itself
 .hero__picture {
 
     display: none;
-    max-width: $govuk-page-width;
+    max-width: govuk-px-to-rem(860);
 
-    @include govuk-media-query($from: 641) {
+    @include govuk-media-query($from: 900) {
 
         display: block;
 
@@ -37,11 +49,6 @@
         top: 0;
         vertical-align: middle;
         width: 50%;
-
-    }
-    @include govuk-media-query($from: 769) {
-
-        //width: 44%;
 
     }
 
@@ -78,7 +85,7 @@
     background-color: #37464F;
     color: white;
     position: relative;
-    padding: govuk-px-to-rem(45) 0 govuk-px-to-rem(45) 0;
+    padding: govuk-px-to-rem(26) 0 govuk-px-to-rem(26) 0;
 
     .govuk-button {
 
@@ -86,7 +93,7 @@
 
     }
 
-    @include govuk-media-query($from: 641) {
+    @include govuk-media-query($from: 900) {
 
         background-color: transparent;
 
@@ -96,17 +103,13 @@
         // 100 40 (slight horizontal offset)
         background-position: 100% 40%;
 
-        padding: govuk-px-to-rem(90) govuk-px-to-rem(80) govuk-px-to-rem(72) 0;
+        padding: govuk-px-to-rem(45) govuk-px-to-rem(80) govuk-px-to-rem(45) 0;
 
     }
 
-    @include govuk-media-query($from: 769) {
+    @include govuk-media-query($from: 1040) {
 
-        background-image: svg-url("<svg width='240' height='240' viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'><path d='M120 240a120 120 0 100-240H0v240h120z' fill='#37474F' fill-rule='evenodd'/></svg>");
-        background-repeat: no-repeat;
-        background-size: govuk-px-to-rem(966) govuk-px-to-rem(966);
-        // 100 40 (slight horizontal offset)
-        background-position: 100% 40%;
+        padding: govuk-px-to-rem(90) govuk-px-to-rem(80) govuk-px-to-rem(72) 0;
 
     }
 
@@ -131,6 +134,9 @@
     border-color: $ccs-colour;
     border-color: var(--sub-color);
     padding: 0 0 0 govuk-px-to-rem(20);
-    margin-bottom: govuk-px-to-rem(50);
+    margin-bottom: 0;
 
+    @include govuk-media-query($from: 900) {
+        margin-bottom: govuk-px-to-rem(50);
+    }
 }

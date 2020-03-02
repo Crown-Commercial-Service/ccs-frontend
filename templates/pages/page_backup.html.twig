@@ -1,0 +1,463 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ page.title|raw }} - CCS{% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block body %}
+
+
+    {# Component: Hero #}
+    {# Pass all the variables along #}
+    {% include '_components/hero.html.twig' with {'image': page.content.hero_image, 'heading': page.content.hero_heading, 'content': page.content.hero_content, 'cta_label': page.content.hero_cta_label, 'cta_destination': page.content.hero_cta_destination} %}
+
+
+    {# each section will need their own wrapper from now on #}
+<!-- required wrapper 1 -->
+{% if
+    page.template == "page-templates/landing.php" or
+    page.template == "page-templates/products-and-services.php" or
+    page.template == "page-templates/sectors.php" %}
+<div>
+    {% else %}
+    {# This is used for the Default template which otherwise sit flushed with the left-side edge on larger viewports #}
+    <div class="govuk-width-container">
+        {% endif %}
+
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
+
+
+        {% if
+            page.template == "page-templates/products-and-services.php" or
+            page.template == "page-templates/sectors.php" %}
+
+            <div class="govuk-width-container">
+                <div class="govuk-phase-banner">
+                    <p class="govuk-phase-banner__content">
+                        <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                            beta </strong> <span class="govuk-phase-banner__text">
+      This is a new service – your
+      <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.
+    </span>
+                    </p>
+                </div>
+            </div>
+
+        {% else %}
+
+            {# DONT SHOW BANNER #}
+
+        {% endif %}
+
+
+        <div class="govuk-width-container">
+
+            <div class="govuk-breadcrumbs">
+                <ol class="govuk-breadcrumbs__list">
+                    <li class="govuk-breadcrumbs__list-item">
+                        <a class="govuk-breadcrumbs__link" href="/">Home</a>
+                    </li>
+                    {% for link, item in breadcrumb_parents %}
+                        <li class="govuk-breadcrumbs__list-item">
+                            <a class="govuk-breadcrumbs__link" href="{{ link }}">{{ item }}</a>
+                        </li>
+                    {% endfor %}
+                    <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                        {{ page.title|raw }}
+                    </li>
+                </ol>
+            </div>
+
+        </div>
+
+
+        <!-- required wrapper 2 -->
+        <main id="main-content" role="main" class="govuk-main-wrapper">
+
+
+            <div class="govuk-grid-row">
+                {% if
+                    page.template == "page-templates/landing.php" or
+                    page.template == "page-templates/products-and-services.php" or
+                    page.template == "page-templates/sectors.php" %}
+                <div class="govuk-grid-column-full">
+                    {% else %}
+                    {#<div class="govuk-grid-column-full">#}
+                    <div class="govuk-grid-column-two-thirds">
+                        {% endif %}
+
+                        {#{{ dump(page) }}#}
+
+                        {#{{ page.template }}#}
+
+                        {% if page.content.hero_heading and page.template != 'page.php' %}
+                        {% else %}
+
+
+
+                            {% if
+                                page.template == "page-templates/landing.php" or
+                                page.template == "page-templates/products-and-services.php" or
+                                page.template == "page-templates/sectors.php" %}
+                                <div class="govuk-width-container">
+                                <div class="govuk-grid-row">
+                                <div class="govuk-grid-column-two-thirds">
+                            {% endif %}
+
+                            <h1 class="govuk-heading-xl page-title page-title--tight">{{ page.title }}</h1>
+
+                            {% if page.content.page_lead_text %}
+                                <p class="govuk-body-l">{{ page.content.page_lead_text }}</p>
+                            {% endif %}
+
+                            {% if
+                                page.template == "page-templates/landing.php" or
+                                page.template == "page-templates/products-and-services.php" or
+                                page.template == "page-templates/sectors.php" %}
+                                </div></div></div>
+                            {% endif %}
+
+                        {% endif %}
+
+
+
+                        {#{{ dump(page.content) }}#}
+
+                        {#{{ page.content.hero_heading }}#}
+
+                        {#always filter richtext (wysiwyg content)#}
+                        {#{{ page.content.hero_content | raw }}#}
+                        {#{{ page.content.hero_cta_label }}#}
+                        {#<img src="{{ page.content.hero_image }}" alt="">#}
+
+                        {#<hr>#}
+
+
+                        <div class="page-components">
+                            {% include '_components/components.html.twig' with {'components': page.content.page_components_rows } %}
+
+                            {% include '_components/resources-section.html.twig' %}
+                        </div>
+
+
+                        {# Start of WYSIWYG content #}
+                        <div class="govuk-width-container">
+                            <div class="wysiwyg-content">
+
+                                {{ page.content.content | raw }}
+
+                            </div>
+                        </div>
+                        {# End of WYSIWYG content #}
+
+
+
+
+                        {% if page.content.page_accordion %}
+                            <div class="govuk-width-container">
+                                <div class="govuk-accordion govuk-!-margin-top-6" data-module="accordion" id="accordion-default">
+
+
+                                    {% for accordion_item in page.content.page_accordion %}
+                                        <div class="govuk-accordion__section ">
+                                            <div class="govuk-accordion__section-header">
+                                                <h2 class="govuk-accordion__section-heading">
+        <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ loop.index }}">
+          {{ accordion_item.page_accordion_page_accordion_item_title }}
+        </span>
+                                                </h2>
+                                            </div>
+                                            <div id="accordion-default-content-{{ loop.index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ loop.index }}">
+
+                                                {# Start of WYSIWYG content #}
+                                                <div class="wysiwyg-content">
+
+                                                    {{ accordion_item.page_accordion_page_accordion_item_content | raw }}
+
+                                                </div>
+                                                {# End of WYSIWYG content #}
+
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+
+
+                                </div>
+                            </div>
+                        {% endif %}
+
+
+                    </div>
+                </div>
+
+
+                {% if page.content.full_width_content %}
+                    <div class="govuk-width-container">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+
+                                {# Start of WYSIWYG content #}
+                                <div class="wysiwyg-content">
+
+                                    {{ page.content.full_width_content | raw }}
+
+                                </div>
+                                {# End of WYSIWYG content #}
+
+
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+
+
+
+                {% if
+                    page.template == "page-templates/landing.php" or
+                    page.template == "page-templates/products-and-services.php" or
+                    page.template == "page-templates/sectors.php" %}
+                {% else %}
+                    {# This is used for the Default template which otherwise sit flushed with the left-side edge on larger viewports #}
+
+                    <div class="govuk-width-container">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-two-thirds">
+
+                                <div class="app-c-print-link">
+                                    <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">
+                                        Print this page
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+
+
+
+                {% if page.content.contact_form_show_contact_form is not empty %}
+                    <div class="govuk-width-container">
+
+                        {% if page.template == "page-templates/landing.php" and page.content.contact_form_show_contact_form.value == true %}
+                            <div class="govuk-grid-row ccs-inline-contact-form">
+                                {% if page.content.contact_form_form_heading %}
+                                    <h2 class="govuk-grid-column-two-thirds govuk-heading-m">{{ page.content.contact_form_form_heading }}</h2>
+                                {% endif %}
+
+                                <div class="govuk-grid-column-two-thirds">
+                                    {% if page.content.contact_form_form_sub_heading %}
+                                        <p>{{ page.content.contact_form_form_sub_heading }}</p>
+                                    {% endif %}
+
+                                    <form id="js-contact-form" class="govuk-!-width-three-quarters" action="{{ form_action }}" method="post">
+
+
+                                        {# See https://symfony.com/doc/current/templating/app_variable.html #}
+                                        {% if app.debug %}
+                                            <input type="hidden" name="debug" value=1>
+                                            <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
+                                        {% endif %}
+
+
+                                        {% if not page.content.contact_form_aggregation_options %}
+                                            <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+                                            <input type="hidden" name="00Nb0000009IXEW" id="campaign-code-hidden-input" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+                                        {% endif %}
+
+                                        <input type="hidden" name="orgid" value="00D8E000000E4zz">
+                                        <input type="hidden" name="retURL" value="{{ site_base_url }}/form-thank-you?{{ page_query_string }}">
+                                        <input type="hidden" name="recordType" value="012b00000005NWC">
+                                        <input type="hidden" name="priority" value="Green">
+
+
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="form-fullname">Full
+                                                name</label>
+                                            <input class="govuk-input" id="form-fullname" maxlength="80" name="name" size="20" type="text" required="">
+                                        </div>
+
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="form-email">Email
+                                                address</label>
+                                            <input class="govuk-input" id="form-email" maxlength="80" name="email" size="20" type="email" pattern=".+@.+\..+" required="">
+                                        </div>
+
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="form-telephone">Telephone
+                                                number</label>
+                                            <input class="govuk-input" id="form-telephone" maxlength="80" name="phone" size="20" type="text" required="">
+                                        </div>
+
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="form-organisation">Organisation</label>
+                                            <input class="govuk-input" id="form-organisation" maxlength="80" name="company" size="20" type="text" required="">
+                                        </div>
+
+                                        {% if page.content.contact_form_find_out_more_aggregation.value is defined and page.content.contact_form_find_out_more_aggregation.value %}
+                                            <div class="govuk-form-group">
+                                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
+                                                    <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-aggregation-general" name="00Nb0000009IXEd" type="checkbox" value="1"/>
+                                                    <label class="govuk-label govuk-checkboxes__label" for="form-aggregation-general">
+                                                        Find out about
+                                                        aggregation
+                                                        opportunities </label>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+
+                                        {% if page.content.contact_form_show_what_areas_aggregation is defined and page.content.contact_form_show_what_areas_aggregation.value %}
+                                            <div class="govuk-form-group">
+                                                <fieldset class="govuk-fieldset">
+                                                    <legend class="govuk-fieldset__legend">
+                                                        <h3 class="govuk-fieldset__heading">
+                                                            What areas of
+                                                            aggregation are you
+                                                            interested in?
+                                                        </h3>
+                                                    </legend>
+
+                                                    <div class="govuk-radios govuk-radios--small">
+                                                        {% for aggregationOption in page.content.contact_form_aggregation_options %}
+                                                            <div class="govuk-radios__item govuk-radios__item--small ccs-radios__item--small">
+                                                                <input class="govuk-radios__input govuk-radios__input--small" id="option-{{ slugify(aggregationOption.aggregation_options_name) }}" name="00Nb0000009IXEW" type="radio" value="{{ aggregationOption.aggregation_options_campaign_code }}" data-campaign-code="{{ aggregationOption.aggregation_options_campaign_code }}" required="">
+                                                                <label class="govuk-label govuk-radios__label" for="option-{{ slugify(aggregationOption.aggregation_options_name) }}">
+                                                                    {{ aggregationOption.aggregation_options_name }}
+                                                                </label>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        {% endif %}
+
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label" for="form-more-detail">
+                                                {% if page.content.contact_form_message_question_title is defined and page.content.contact_form_message_question_title is not empty %}
+                                                    {{ page.content.contact_form_message_question_title }}
+                                                {% else %}
+                                                    Is there anything specific we can help you with?
+                                                {% endif %}
+                                            </label>
+                                            <span id="form-more-detail-hint" class="govuk-hint">
+                                                {% if page.content.contact_form_message_question_description is defined and page.content.contact_form_message_question_description is not empty %}
+                                                    {{ page.content.contact_form_message_question_description }}
+                                                {% else %}
+                                                    Please give us as much detail as possible, including the framework name and number
+                                                {% endif %}
+                                            </span>
+                                            <textarea class="govuk-textarea" id="form-more-detail" name="description" rows="5" aria-describedby="form-more-detail"></textarea>
+                                        </div>
+
+                                        <div class="govuk-form-group">
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
+                                                <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-callback" name="00Nb0000009IXEg" type="checkbox" value="1"/>
+                                                <label class="govuk-label govuk-checkboxes__label" for="form-callback">
+                                                    I want someone to call me
+                                                </label>
+                                            </div>
+                                        </div>
+
+
+                                        <p>For information about how we use your data, you can read our <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice">privacy notice</a>. When you submit this form we will add you to our mailing list and send you our newsletters, or information about our products and services.</p>
+                                        <p>You will receive an email when you submit your details. You can unsubscribe using the link in the email.</p>
+
+                                        <div class="govuk-form-group">
+                                            {# Please do not remove the gtm--submit-aggregation-form class as this is used to track submissions in Google Analytics! #}
+                                            <button class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm--submit-aggregation-form">
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </form>
+
+
+                                    <div id="js-contact-form-success-container" style="display: none;">
+                                        <h4>Message sent</h4>
+                                        <p>A dedicated team member will respond
+                                            to you within 24-48 hours</p>
+                                        <a id="js-reset-form-b" href="">Send
+                                            another message</a>
+                                    </div>
+
+                                    <div id="js-contact-form-error-container" style="display: none;">
+                                        <h4>Sorry, an error occured</h4>
+                                        <p>Please try sending your message
+                                            again</p>
+                                        <a id="js-reset-form-a" href="">Try
+                                            again</a>
+                                    </div>
+
+                                </div>
+
+                                {#
+                                <div class="govuk-grid-column-one-third apollo-enclosure">
+                                    <h3 class="govuk-heading-s">Talk to us</h3>
+                                    <p>CCS customer services team is available Monday to Friday, 9am to 5pm.</p>
+
+                                    <h3 class="govuk-heading-s" style="margin-bottom: 0;">Talk to us</h3>
+                                    <p>0345 410 2222</p>
+                                </div>#}
+                            </div>
+                        {% endif %}
+
+                    </div>
+                {% endif %}
+
+
+        </main>
+    </div>
+
+
+    {% if page.template == "page-templates/products-and-services.php" or page.template == "page-templates/landing.php" %}
+        {# Don't display it #}
+    {% else %}
+        {% if page.content.full_width_content %}
+            <div class="apollo-island apollo-island--emphasised">
+                <div class="govuk-width-container">
+
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-one-half">
+
+                            <div class="apollo-call-to-action apollo-call-to-action--aggregation">
+                                <h3 class="govuk-heading-m">Aggregation</h3>
+                                <p>Bulk buying, also known as aggregation,
+                                    offers highly competitive prices and a
+                                    simple tender process.</p>
+                                <p><a href="/help-and-support/aggregation/">Learn
+                                        more <span class="visuallyhidden">about aggregation</span></a>
+                                </p>
+                            </div>
+
+                        </div>
+                        <div class="govuk-grid-column-one-half">
+
+                            <div class="apollo-call-to-action apollo-call-to-action--help">
+                                <h3 class="govuk-heading-m">Can't find what
+                                    you're looking for?</h3>
+                                <p>If none of your requirements can be met by a
+                                    CCS catalogue or framework, you can run an
+                                    EU tender.</p>
+                                <p><a href="/help-and-support/eu-tender/">Learn
+                                        more <span class="visuallyhidden">EU tenders</span></a>
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+
+
+    {% endblock %}
