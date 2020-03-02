@@ -9,10 +9,10 @@
      # https://twig.symfony.com/doc/2.x/templates.html#whitespace-control
      #}
     <title>{%- block title %}
-        {%- if page.head.title is not empty -%}
+        {%- if page.head.title is not empty and page.head.title != page.title -%}
             {{ page.head.title }}
         {%- else -%}
-            CCS
+            {{ page.title|raw }} - CCS
         {%- endif -%}
     {% endblock -%}</title>
 

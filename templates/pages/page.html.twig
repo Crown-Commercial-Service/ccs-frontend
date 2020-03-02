@@ -1,6 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ page.title|raw }} - CCS{% endblock %}
+{#
+ # The minus is to remove whitespace
+ # https://twig.symfony.com/doc/2.x/templates.html#whitespace-control
+ #}
+{% block title %}
+    {%- if page.head.title is not empty and page.head.title != page.title -%}
+        {{ page.head.title }}
+    {%- else -%}
+        {{ page.title|raw }} - CCS
+    {%- endif -%}
+{% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -250,7 +260,7 @@
                                                     {# See https://symfony.com/doc/current/templating/app_variable.html #}
                                                     {% if app.debug %}
                                                         <input type="hidden" name="debug" value=1>
-                                                        <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
+{#                                                        <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">#}
                                                     {% endif %}
 
 
