@@ -22,9 +22,8 @@ class ResponseListener
 
         // Add caching layer for Production (30 min cache on all pages)
         if (getenv('APP_ENV') === 'prod') {
-            $response->setSharedMaxAge(1800);
+            $response->setSharedMaxAge(300);
             $response->headers->addCacheControlDirective('must-revalidate', true);
         }
     }
-
 }

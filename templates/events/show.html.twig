@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Event - {{ event.title|raw }} - CCS{% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+
+{# Remove colour flourishes from event detail page #}
+{% block flourishClasses %}{% endblock %}
+
+
+{% block body %}
+
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
+
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
+
+
+        <div class="govuk-phase-banner">
+            <p class="govuk-phase-banner__content">
+                <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                    beta </strong> <span class="govuk-phase-banner__text">
+                  This is a new service – your
+                  <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.
+                </span>
+            </p>
+        </div>
+
+
+        <div class="govuk-breadcrumbs">
+            <ol class="govuk-breadcrumbs__list">
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
+                </li>
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/events">Events</a>
+                </li>
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                    {{ event.title }}
+                </li>
+            </ol>
+        </div>
+
+
+        <main class="govuk-main-wrapper event-detail">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds-from-desktop event-detail__content govuk-clearfix">
+                    <a href="/events" class="govuk-back-link">Back <span class="visuallyhidden">to events page</span></a>
+
+                    <h1 class="govuk-heading-xl page-title page-title--tight">{{ event.title|raw }}</h1>
+
+                    {% if event.content.description is not empty %}
+                        <h2 class="govuk-heading-m">About this event</h2>
+
+                        <div>{{ event.content.description|raw }}</div>
+                    {% endif %}
+
+                    {% if event.content.cta_destination is not empty and event.content.cta_label is not empty %}
+                        <p><a class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button" href="{{ event.content.cta_destination|raw }}">{{ event.content.cta_label|raw }}</a></p>
+                    {% endif %}
+                </div>
+                <aside class="govuk-grid-column-one-third-from-desktop event-detail__aside">
+                    <div class="apollo-enclosure apollo-enclosure--padded event-detail__aside__inner">
+                        <div class="event-detail__date-time">
+                            <h3 class="govuk-heading-s">Date and time</h3>
+
+                            {% if event.content.start_datetime|date('D, j F Y') == event.content.end_datetime|date('D, j F Y') %}
+                                <p>{{ event.content.start_datetime|date('D, j F Y H:i') }} - {{ event.content.end_datetime|date('H:i') }}</p>
+                            {% else %}
+                                <p>{{ event.content.start_datetime|date('D, j F Y H:i') }} - <br />{{ event.content.end_datetime|date('D, j F Y H:i') }}</p>
+                            {% endif %}
+                        </div>
+
+                        {% if event.content.location %}
+                            <div class="event-detail__location">
+                                <h2 class="govuk-heading-s">Location</h2>
+                                <p>{{ event.content.location|raw }}</p>
+                            </div>
+                        {% endif %}
+
+                        {% if event.content.secondary_cta_destination is not empty and event.content.secondary_cta_label is not empty %}
+                            <a class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button" href="{{ event.content.secondary_cta_destination }}">{{ event.content.secondary_cta_label }}</a>
+                        {% endif %}
+                    </div>
+                </aside>
+            </div>
+        </main>
+
+    </div>
+
+{% endblock %}

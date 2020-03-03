@@ -1,6 +1,6 @@
 # System routes
 healthcheck:
-  path: /health
+  path: /healthcheck_r53
   controller: App\Controller\PageController::healthcheck
 
 # Page routes
@@ -132,6 +132,38 @@ form_contact_thanks_complaint:
   defaults:
     template: forms/25-contact-thanks-complaint.html.twig
 
+
+whitepaper_request:
+  path: /whitepaper/request/{id}/{slug}
+  controller: App\Controller\WhitepaperController::request
+
+whitepaper_confirmation:
+  path: /whitepaper/confirmation/{id}/{slug}
+  controller: App\Controller\WhitepaperController::show
+
+webinar_request:
+  path: /webinar/request/{id}/{slug}
+  controller: App\Controller\WebinarController::request
+
+webinar_confirmation:
+  path: /webinar/confirmation/{id}/{slug}
+  controller: App\Controller\WebinarController::show
+
+
+events_list:
+  path: "/events/{page}"
+  controller: App\Controller\EventsController::list
+  defaults:
+    page: 1
+  requirements:
+    page: '\d+'
+
+event_show:
+  path: /events/{id}/{slug}
+  controller: App\Controller\EventsController::show
+  requirements:
+    id: '\d+'
+
 #form_newsletter:
 #  path: /newsletter
 #  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
@@ -143,6 +175,10 @@ form_contact_thanks_complaint:
 #  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
 #  defaults:
 #    template: forms/28-newsletter-thanks.html.twig
+
+form_thank_you:
+  path: /form-thank-you
+  controller: App\Controller\FormController::thankYou
 
 form_esourcing_training:
   path: /esourcing-training

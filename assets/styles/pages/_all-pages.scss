@@ -1,0 +1,33 @@
+/*------------------------------------*\
+  #All pages
+\*------------------------------------*/
+.govuk-widthless-container {
+
+    //@extend .govuk-width-container;
+    //
+    //max-width: none;
+
+}
+
+
+.govuk-main-wrapper--tight {
+    padding-top: govuk-px-to-rem(10);
+
+    @include govuk-media-query($from: tablet) {
+        padding-top: govuk-px-to-rem(20);
+    }
+
+    @include govuk-media-query($from: desktop) {
+        padding-top: govuk-px-to-rem(30);
+    }
+}
+
+
+
+.page-introduction {
+    padding-bottom: govuk-px-to-rem(10);
+
+    @include govuk-media-query($from: tablet) {
+        padding-bottom: govuk-px-to-rem(20);
+    }
+}

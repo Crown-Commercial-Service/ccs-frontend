@@ -1,0 +1,190 @@
+/*------------------------------------*\
+  #Flourishes
+\*------------------------------------*/
+
+html {
+
+    // to hide flourishes
+    overflow-x: hidden;
+
+}
+
+/**
+ * Generic class that can be used to create an offset box-shadow type effect
+ * on square/rectangular elements of the page
+ *
+ * Colour inherits from the pillar the page is assigned to
+ */
+.flourish-box-effect {
+    position: relative;
+
+    &:before {
+        background-color: #9b1a47;
+        background-color: var(--sub-color);
+        bottom: 0;
+        content: "";
+        left: 0;
+        position: absolute;
+        right: 0;
+        transform: rotate(8deg);
+        top: 0;
+
+    }
+}
+
+.flourish-box-effect__inner {
+    position: relative;
+}
+
+
+.hero__flourish {
+
+    bottom: govuk-px-to-rem(-136);
+    content: "";
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    width: govuk-px-to-rem(171);
+    z-index: -1;
+
+    &:after {
+        border: govuk-px-to-rem(192) solid #9b1a47;
+        border-color: var(--sub-color);
+        border-radius: 50%;
+        content: "";
+        display: block;
+        z-index: -1;
+
+    }
+
+}
+
+.footer-global {
+
+    &:before,
+    &:after {
+
+        border-radius: 50%;
+        content: " ";
+        // we only show these flourishes on pages with a `show-flourishes` class
+        display: none;
+        position: absolute;
+
+        z-index: -1;
+
+
+    }
+
+    // grey, left-hand side
+    &:after {
+
+        background-color: #F2F2F2;
+        height: govuk-px-to-rem(416);
+
+        left: govuk-px-to-rem(- 113);
+        top: govuk-px-to-rem(- 124);
+        width: govuk-px-to-rem(416);
+
+    }
+
+    // color contextual to the pillar, right-hand side
+    &:before {
+
+        // This isn't ideal but the radius of the circle makes it so big that it sticks out from the bottom of the footer if we use the same css as on the other flourishes
+        border-radius: 0;
+        background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$ccs-colour}' fill-rule='evenodd'/></svg>");
+        background-size: govuk-px-to-rem(274) govuk-px-to-rem(182);
+        background-position: 100% 100%;
+        background-repeat: no-repeat;
+
+        height: govuk-px-to-rem(189);
+
+        right: 0;
+        top: govuk-px-to-rem(- 189);
+        width: govuk-px-to-rem(345);
+
+    }
+
+}
+
+
+/**
+ * Only show the footer flourishes when specified
+ */
+.show-flourishes .footer-global {
+    // add extra margin for the colour flourishes
+    margin-top: 188px;
+
+    &:before,
+    &:after {
+        display: block;
+    }
+}
+
+
+
+// This isn't ideal but the radius of the circle makes it so big that it sticks out from the bottom of the footer if we use the same css as on the other flourishes
+.pillar--buildings .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-building}' fill-rule='evenodd'/></svg>");
+}
+.pillar--corporate-solutions .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-corporate-solutions}' fill-rule='evenodd'/></svg>");
+}
+.pillar--people .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-people}' fill-rule='evenodd'/></svg>");
+}
+.pillar--technology .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-technology}' fill-rule='evenodd'/></svg>");
+}
+
+
+
+.sector--local-government .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-local-government}' fill-rule='evenodd'/></svg>");
+}
+.sector--health .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-health}' fill-rule='evenodd'/></svg>");
+}
+.sector--universities-and-colleges .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-universities-and-colleges}' fill-rule='evenodd'/></svg>");
+}
+.sector--schools-and-academies .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-schools-and-academies}' fill-rule='evenodd'/></svg>");
+}
+.sector--devolved .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-devolved}' fill-rule='evenodd'/></svg>");
+}
+.sector--police-and-emergency-services .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-police-and-emergency-services}' fill-rule='evenodd'/></svg>");
+}
+.sector--charities .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-charities}' fill-rule='evenodd'/></svg>");
+}
+.sector--local-housing-associations .footer-global:before {
+    background-image: svg-url("<svg width='274' height='182' viewBox='0 0 274 182' xmlns='http://www.w3.org/2000/svg'><path d='M274 .5V182H.5A425.3 425.3 0 01274 .5z' fill='#{$sub-color-local-housing-associations}' fill-rule='evenodd'/></svg>");
+}
+
+
+@include govuk-media-query($until: 1024) {
+    .show-flourishes .footer-global {
+        margin-top: 0;
+    }
+
+    /**
+     * Most colour flourishes only display on larger screen sizes
+     */
+    .show-flourishes .footer-global:before,
+    .show-flourishes .footer-global:after,
+    .show-flourishes .hero__flourish {
+        display: none;
+    }
+}
+
+@include govuk-media-query($from: 1024) {
+    /**
+     * Add extra padding to accommodate the hero colour flourish
+     */
+    .show-flourishes .govuk-main-wrapper {
+        padding-top: govuk-px-to-rem(50);
+    }
+}

@@ -1,0 +1,58 @@
+/*------------------------------------*\
+  #Footer
+\*------------------------------------*/
+
+/**
+ * Fix to remove top border (believe this is fixed in newer versions of the Gov
+ * UK Frontend)
+ */
+.govuk-radios__item--small + .ccs-radios__item--small,
+.govuk-radios__conditional--small + .ccs-radios__item--small {
+    border-top: 0 none;
+}
+
+
+/**
+ * Fix so that checkbox left-aligns properly (fixed in newer versions of the
+ * Gov UK Frontend)
+ */
+.ccs-checkboxes__item--small {
+    padding-left: 24px;
+
+    .govuk-checkboxes__input--small {
+        left: 0;
+    }
+
+    .govuk-checkboxes__label {
+        padding-left: 10px;
+        
+        &:before {
+            left: 0;
+        }
+
+        &:after {
+            left: 5.4px;
+        }
+    }
+}
+
+.ccs-radios__item--small {
+    padding-left: govuk-px-to-rem(24);
+
+    .govuk-radios__input--small {
+        left: 0;
+    }
+
+    .govuk-radios__label {
+        padding-left: 10px;
+
+        &:before {
+            left: 0;
+        }
+
+        &:after {
+            left: 6px;
+        }
+    }
+}
+

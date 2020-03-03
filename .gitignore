@@ -27,3 +27,4 @@ node_modules
 ###< squizlabs/php_codesniffer ###
 
 .idea
+.phplint-cache

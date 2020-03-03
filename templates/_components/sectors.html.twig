@@ -1,0 +1,32 @@
+<div class="govuk-width-container">
+    <div class="--greyed-bg">
+        <div class="govuk-grid-row ccs-grid-row--loose">
+
+            <div class="govuk-grid-column-full">
+
+                {#<h2 class="govuk-heading-l intro__heading">{{ component.sectors_sectors_heading }}</h2>#}
+
+                <ul class="card-list card-list--four-on-large">
+
+                    {% for sector in component.sectors_sectors_sectors %}
+                        <li class="card-list__item {#
+
+                        #}[ sector--{{ sector.sectors_taxonomy.value.slug }} ]">
+                            <div class="card-list__item__wrapper">
+
+                                <h3 class="govuk-heading-m">{{ sector.sectors_title }}</h3>
+
+                                <div class="wysiwyg-content">{{ sector.sectors_content | raw }}</div>
+
+                            </div>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+{# Start of Page components #}
+{% for component in components %}
+
+    {#{{ dump(component) }}#}
+
+    {# Check what component it is via its `name` field #}
+    {% if component.name == "intro_intro" %}
+        <div class="component intro_and_description">
+        {% include '_components/intro_and_description.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+    {% if component.name == "subcategories_subcategories" %}
+        <div class="component subcategories">
+            {% include '_components/subcategories.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+    {% if component.name == "accordion_accordion" %}
+        <div class="component accordion">
+            {% include '_components/accordion.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+    {% if component.name == "feature_news_feature_news" %}
+        <div class="component feature-news">
+            {% include '_components/feature_news.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+    {% if component.name == "feature_events_feature_events" %}
+        <div class="component feature-events">
+            {% include '_components/feature_events.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+    {% if component.name == "pillars_pillars" %}
+        <div class="component pillars">
+            {% include '_components/pillars.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+    {% if component.name == "cards_cards" %}
+        <div class="component cards">
+            {% include '_components/card_list.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+    {% if component.name == "sectors_sectors" %}
+        <div class="component sectors">
+            {% include '_components/sectors.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+
+{% endfor %}
+{# End of Page components #}

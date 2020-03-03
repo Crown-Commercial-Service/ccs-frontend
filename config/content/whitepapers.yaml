@@ -1,0 +1,10 @@
+whitepaper_file:
+  type: document
+form_introduction:
+  type: richtext
+link_text:
+  type: text
+campaign_code:
+  type: text
+description:
+  type: text
