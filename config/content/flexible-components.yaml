@@ -1,0 +1,112 @@
+type: flexible
+components:
+  intro_intro:
+    intro_intro_heading:
+      type: text
+    intro_intro_content:
+      type: richtext
+    intro_intro_cta_label:
+      type: text
+    intro_intro_cta_destination:
+      type: text
+    intro_intro_secondary_label:
+      type: text
+    intro_intro_secondary_destination:
+      type: text
+    intro_intro_media:
+      type: array
+      content_fields:
+        video_video_video:
+          type: richtext
+        image_image_image:
+          type: image
+        image_image_caption:
+          type: richtext
+        video_video_caption:
+          type: richtext
+  text_text:
+    text_text_text:
+      type: richtext
+  subcategories_subcategories:
+    subcategories_subcategories_optional_icon:
+      type: image
+    subcategories_subcategories_heading:
+      type: text
+    subcategories_subcategories_content:
+      type: richtext
+    subcategories_subcategories_links:
+      type: array
+      content_fields:
+        link_link_heading:
+          type: text
+        link_link_content:
+          type: richtext
+        link_link_link_url:
+          type: text
+        link_link_link_text:
+          type: text
+  accordion_accordion:
+    accordion_accordion_heading:
+      type: text
+    accordion_accordion_introduction:
+      type: richtext
+    accordion_accordion_items:
+      type: array
+      content_fields:
+        items_title:
+          type: text
+        items_content:
+          type: richtext
+  feature_news_feature_news:
+    feature_news_feature_news_heading:
+      type: text
+    articles:
+      type: relation_array
+      content_type:
+        - news
+      post_lead_text:
+        type: text
+  feature_events_feature_events:
+    feature_events_feature_events_heading:
+      type: text
+    articles:
+      type: relation_array
+      content_type:
+        - events
+  pillars_pillars:
+    pillars_pillars_heading:
+      type: text
+    pillars_pillars_pillars:
+      type: array
+      content_fields:
+        pillars_icon:
+          type: image
+        pillars_taxonomy:
+          type: plainarray
+        pillars_title:
+          type: text
+        pillars_content:
+          type: richtext
+  cards_cards:
+    cards_cards_heading:
+      type: text
+    cards_cards_cards:
+      type: array
+      content_fields:
+        cards_title:
+          type: text
+        cards_content:
+          type: richtext
+  sectors_sectors:
+    sectors_sectors_heading:
+      type: text
+    sectors_sectors_sectors:
+      type: array
+      content_fields:
+        sectors_taxonomy:
+          type: plainarray
+        sectors_title:
+          type: text
+        sectors_content:
+          type: richtext
+

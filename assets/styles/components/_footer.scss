@@ -1,12 +1,16 @@
 /*------------------------------------*\
   #Footer
 \*------------------------------------*/
+
 .footer-global {
 
     background-color: $ccs-footer-colour;
     color: govuk-colour("white");
     padding-top: govuk-px-to-rem(50);
     margin-top: govuk-px-to-rem(50);
+
+    // to allow the flourish to positon itself according to the footer
+    position: relative;
 
 }
 

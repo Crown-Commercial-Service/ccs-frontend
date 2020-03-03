@@ -2,9 +2,14 @@ content_types:
   page:
     api_endpoint: wp/v2/pages
     content_fields: pages.yaml
+    source_content_type: page
+    taxonomies:
+      - pillars
+      - sectors
   news:
     api_endpoint: wp/v2/posts
     content_fields: news.yaml
+    source_content_type: post
     taxonomies:
       - categories
       - tags
@@ -26,6 +31,16 @@ content_types:
   esourcing_dates:
     api_endpoint: ccs/v1/esourcing-dates
     content_fields: esourcing-dates.yaml
+  whitepapers:
+    api_endpoint: wp/v2/whitepaper
+    content_fields: whitepapers.yaml
+  webinars:
+    api_endpoint: wp/v2/webinar
+    content_fields: webinars.yaml
+  events:
+    api_endpoint: wp/v2/event
+    content_fields: events.yaml
+    source_content_type: event
 
 global:
   image_sizes:

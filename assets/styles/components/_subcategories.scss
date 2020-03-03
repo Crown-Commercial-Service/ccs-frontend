@@ -1,0 +1,87 @@
+/*------------------------------------*\
+  .Subcategories
+  Uses calc() to force 100% width of window for three different breakpoints.
+\*------------------------------------*/
+
+.subcategories {
+	.greyed-bg {
+		//padding: 4% 4% 5% 4%;
+	}
+}
+
+.greyed-bg__heading {
+	display: inline-block;
+}
+
+.greyed-bg__heading-link {
+	display: inline-block;
+	margin: 0 0 govuk-px-to-rem(3) govuk-px-to-rem(10);
+	vertical-align: text-bottom;
+}
+
+.subcategories__intro {
+	margin-bottom: govuk-px-to-rem(50);
+
+	@include govuk-media-query($from: tablet) {
+		margin-bottom: govuk-px-to-rem(60);
+	}
+}
+
+
+.subcategories__icon {
+	margin-bottom: govuk-px-to-rem(26);
+	max-width: govuk-px-to-rem(150);
+}
+
+
+/*
+ CSS variables:
+ marginA = Initial offset
+ marginB = Divided by 2 (for each side of a centred element)
+ marginC = 0 - calculated margin, to make it negative
+
+ Allows the component to escape its parent container 
+ and fill the full width of the viewport.
+ */
+
+/*
+@supports (margin: 0 calc(100% - 40em)) {
+
+
+	.subcategories {
+		.greyed-bg {
+			padding:5%;
+			width:100vw;
+			box-sizing: border-box;
+			--marginA: 30px;
+			--marginB: calc(var(--marginA) / 2);
+			--marginC: calc(0px - var(--marginB));
+			margin:0 var(--marginC)!important;
+		}
+	}
+
+	@media only screen and (min-width: 40.0625em) {
+	 	.subcategories {
+			.greyed-bg {
+				--marginA: 60px;
+				--marginB: calc(var(--marginA) / 2);
+				--marginC: calc(0px - var(--marginB));
+				margin:0 var(--marginC)!important;
+			}
+		}
+	}
+
+	@media only screen and (min-width: 1080px) {
+	  .subcategories {
+	  	.greyed-bg {
+			--marginA: calc(100vw - 1020px);
+			--marginB: calc(var(--marginA) / 2);
+			--marginC: calc(0px - var(--marginB));
+			margin:0 var(--marginC)!important;
+		}
+	  }
+	}
+
+}
+
+*/

@@ -2,73 +2,54 @@
   #Card
 \*------------------------------------*/
 
-.apollo-card.apollo-card {
+.apollo-card {
+    margin-bottom: govuk-px-to-rem(20);
 
-    background-color: $ccs-subtle-colour;
-    border: 1px solid #DBDBDB;
-    margin-top: 30px;
-    padding: govuk-px-to-rem(20);
-
-    @include govuk-media-query($from: desktop) {
-
-        margin-top: 0;
-
-    }
-
-}
-
-.apollo-card__heading.apollo-card__heading {
-
-    background-color: $ccs-button-colour;
-    color: white;
-    margin: govuk-px-to-rem(- 20) govuk-px-to-rem(- 20) govuk-px-to-rem(20) govuk-px-to-rem(- 20);
-    padding: govuk-px-to-rem(13) govuk-px-to-rem(20) govuk-px-to-rem(9) govuk-px-to-rem(20);
-
-}
-
-.apollo-list--definition--card.apollo-list--definition--card dt {
-
-    margin-bottom: 5px;
-
-    @include govuk-font(16, $weight: bold);
-    font-weight: 700;
-
-    &:after {
-
-        content: ":";
-
-    }
-
-}
-.apollo-list--definition--card.apollo-list--definition--card dd {
-
-    border-bottom: 1px solid #DBDBDB;
-    margin: 0;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-
-    @include govuk-font(16, $weight: regular);
-
-    // Target the penultimate DD (which isn't last-child)
-    &:nth-last-of-type(2) {
-
-        margin-bottom: 20px;
-
-    }
-
-    &:last-of-type {
-
-        border: 0;
+    &:last-child {
         margin-bottom: 0;
-        padding-bottom: 0;
-
     }
-
 }
 
-.apollo-list--definition--card.apollo-list--definition--card .govuk-list {
+.apollo-card__inner {
+    border: 1px solid #E7E7E7;
+    font-family: $govuk-font-family;
+    position: relative;
+}
 
-    @include govuk-font(16, $weight: regular);
-    margin-bottom: 0;
 
+.apollo-card__heading {
+    font-size: govuk-px-to-rem(22);
+    line-height: govuk-px-to-rem(28);
+    margin: govuk-px-to-rem(5) 0 govuk-px-to-rem(6) 0;
+
+    > a {
+        color: #007194;
+        text-decoration: none;
+    }
+    
+    > a:after {
+        bottom: 0;
+        content: "";
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+}
+
+
+.apollo-card__details {
+    padding: govuk-px-to-rem(20) govuk-px-to-rem(22) govuk-px-to-rem(30) govuk-px-to-rem(22);
+}
+
+
+.apollo-card__details__meta {
+    font-weight: 600;
+}
+
+
+@include govuk-media-query($from: tablet) {
+    .apollo-card {
+        margin-bottom: 0;
+    }
 }

@@ -1,4 +1,5 @@
 twig:
+    auto_reload: '%kernel.debug%'
     # Salesforce Web-to-case form variables
     globals:
         # No trailing slash on site_url please

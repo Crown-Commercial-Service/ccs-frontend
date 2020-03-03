@@ -1,0 +1,56 @@
+<div class="greyed-bg">
+
+    <div class="govuk-width-container">
+
+        <div class="govuk-grid-row ccs-grid-row--loose">
+
+            <div class="govuk-grid-column-two-thirds">
+
+                {% if component.subcategories_subcategories_optional_icon is not empty %}
+                    <div class="subcategories__icon">
+                        <img src="{{ component.subcategories_subcategories_optional_icon }}" alt=""/>
+                    </div>
+                {% endif %}
+
+                <h2 class="govuk-heading-m intro__heading">{{ component.subcategories_subcategories_heading }}</h2>
+
+                <div class="wysiwyg-content subcategories__intro">
+                    {{ component.subcategories_subcategories_content  | raw }}
+                </div>
+
+            </div>
+
+            <div class="govuk-grid-column-full">
+
+
+                <ul class="card-list">
+
+                    {% for link in component.subcategories_subcategories_links %}
+                        <li class="card-list__item">
+                            <div class="card-list__item__wrapper">
+                                <h3 class="govuk-heading-s">{{ link.link_link_heading }}</h3>
+                                <div class="wysiwyg-content">{{ link.link_link_content | raw }}</div>
+                                {% if link.link_link_link_url is not empty %}
+                                    <p>
+                                        <a href="{{ link.link_link_link_url }}">
+                                            {% if link.link_link_link_text is not empty %}
+                                                {{ link.link_link_link_text }}
+                                            {% else %}
+                                                Read more
+                                                <span class="visuallyhidden">about {{ link.link_link_heading }}</span>
+                                            {% endif %}
+                                        </a>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

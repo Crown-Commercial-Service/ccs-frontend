@@ -1,0 +1,201 @@
+/*------------------------------------*\
+  #Card-list
+\*------------------------------------*/
+
+.card-list {
+
+    list-style-type: none;
+    margin: 0 govuk-px-to-rem(-23) 0 govuk-px-to-rem(-23);
+    padding: 0 govuk-px-to-rem(22);
+
+    &:after {
+        content: "";
+        clear: both;
+        display: block;
+    }
+
+    @include govuk-media-query($from: desktop) {
+
+        display: flex;
+        flex-flow: row wrap;
+
+    }
+
+}
+
+
+.card-list__item {
+
+    @include govuk-media-query($from: tablet) {
+
+        margin-bottom: govuk-px-to-rem(40);
+        float: left;
+        margin-right: 2%;
+        width: 49%;
+
+        &:nth-child(2n) {
+            margin-right: 0;
+        }
+
+        &:nth-child(2n+1) {
+            clear: left;
+        }
+
+    }
+
+    @include govuk-media-query($from: 940) {
+
+        margin-bottom: govuk-px-to-rem(70);
+        margin-right: 4%;
+        width: 30.6666%;
+
+        &:nth-child(2n) {
+            margin-right: 4%;
+        }
+
+        &:nth-child(2n+1) {
+            clear: none;
+        }
+
+        &:nth-child(3n) {
+            margin-right: 0;
+        }
+
+        &:nth-child(3n+1) {
+            clear: left
+        }
+
+    }
+
+}
+
+
+
+.card-list--two-on-large .card-list__item {
+
+    @include govuk-media-query($from: tablet) {
+
+        margin-bottom: govuk-px-to-rem(70);
+        margin-right: 2%;
+        width: 49%;
+
+        &:nth-child(2n) {
+            margin-right: 0;
+        }
+
+    }
+
+    @include govuk-media-query($from: 940) {
+
+        margin-bottom: govuk-px-to-rem(40);
+        float: left;
+        margin-right: 3.5%;
+        width: 48.25%;
+
+        &:nth-child(2n) {
+            margin-right: 0;
+        }
+
+    }
+
+}
+
+
+
+.card-list--four-on-large .card-list__item {
+
+    @include govuk-media-query($from: tablet) {
+
+        margin-bottom: govuk-px-to-rem(40);
+        float: left;
+        margin-right: 2%;
+        width: 49%;
+
+        &:nth-child(2n) {
+            margin-right: 0;
+        }
+
+    }
+
+    @include govuk-media-query($from: 940) {
+
+        margin-bottom: govuk-px-to-rem(70);
+        margin-right: 3.5%;
+        max-width: 22.37%;
+        width: 22.37%;
+
+        &:nth-child(2n) {
+            margin-right: 3.5%;
+        }
+
+        &:nth-child(3n+1),
+        &:nth-child(2n+1) {
+            clear: none;
+        }
+
+        &:nth-child(3n) {
+            margin-right: 3.5%;
+        }
+
+        &:nth-child(4n) {
+            margin-right: 0;
+        }
+
+        &:nth-child(4n + 1) {
+            clear: left;
+        }
+
+    }
+
+}
+
+
+
+.card-list__item + .card-list__item {
+
+    margin-top: govuk-px-to-rem(20);
+
+    @include govuk-media-query($from: tablet) {
+
+        margin-top: 0;
+
+    }
+
+}
+
+
+.card-list__item__wrapper {
+
+    background: white;
+    border: 1px solid #979797;
+    border-width: 0 1px 1px 1px;
+    padding: govuk-px-to-rem(30) govuk-px-to-rem(25) govuk-px-to-rem(30) govuk-px-to-rem(25);
+
+    position: relative;
+
+    &:before {
+        
+        content: " ";
+        display: block;
+        position: absolute;
+        top: -5px;
+        left: -1px;
+        right: -1px;
+        height: 5px;
+        background-color: $ccs-colour;
+        background-color: var(--sub-color);
+        
+    }
+
+    > p {
+        margin-bottom: 0;
+    }
+
+}
+
+.card-list__icon {
+
+    max-width: govuk-px-to-rem(41);
+    margin-bottom: 20px;
+
+}

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -55,5 +56,12 @@ class FormController extends AbstractController
         $data = ['esourcingDates' => $results];
 
         return $this->render('forms/31-esourcing-training.html.twig', $data);
+    }
+
+    public function thankYou(Request $request)
+    {
+        $data = [];
+
+        return $this->render('forms/thank-you.html.twig', $data);
     }
 }

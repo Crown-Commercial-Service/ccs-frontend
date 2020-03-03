@@ -1,0 +1,13 @@
+.ccs-grid-row--loose {
+    margin-right: -22px;
+    margin-left: -22px;
+
+    // Find any class that starts with "govuk-grid-column"
+    [class^="govuk-grid-column"] {
+
+        //half of 44px
+        padding: 0 22px;
+
+    }
+
+}

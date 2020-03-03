@@ -1,0 +1,18 @@
+image:
+  type: image
+description:
+  type: richtext
+cta_label:
+  type: text
+cta_destination:
+  type: text
+start_datetime:
+  type: datetime
+end_datetime:
+  type: datetime
+location:
+  type: text
+secondary_cta_label:
+  type: text
+secondary_cta_destination:
+  type: text
