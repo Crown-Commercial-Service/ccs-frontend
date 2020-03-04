@@ -52,7 +52,8 @@ class WhitepaperController extends AbstractController
           'campaign_code' => $whitepaper->getContent()->get('campaign_code') ? $whitepaper->getContent()->get('campaign_code')->getValue() : '',
           'form_action'   => getenv('APP_BASE_URL') === 'prod' ? 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8' : 'https://crowncommercial--preprod.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8',
           'description'   => $whitepaper->getContent()->get('description') ? $whitepaper->getContent()->get('description')->getValue() : '',
-          'return_url'    => getenv('APP_BASE_URL') . '/whitepaper/confirmation/' . $whitepaper->getId() . '/' . $whitepaper->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING)
+          'return_url'    => getenv('APP_BASE_URL') . '/whitepaper/confirmation/' . $whitepaper->getId() . '/' . $whitepaper->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING),
+          'org_id'        => getenv('APP_BASE_URL') === 'prod' ? '00Db0000000egy4' : '00D8E000000E4zz',
         ];
 
         return $this->render('whitepapers/request.html.twig', $data);
