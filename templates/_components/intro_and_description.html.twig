@@ -59,7 +59,7 @@
                             <source media="(min-width: 1024px)" srcset="{{ media.image_image_imagebyName('large') }}">
                             <source media="(min-width: 1920px)" srcset="{{ media.image_image_imagebyName('full') }}">
                             {# Fallback for browsers that don't support the picture element #}
-                            <img src="{{ media.image_image_image.byName('medium_large') }}"
+                            <img src="{{ media.image_image_image }}"
                                  role="presentation"
                                  class=""
                                  loading="lazy"/>
