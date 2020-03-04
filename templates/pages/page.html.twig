@@ -90,7 +90,7 @@
 
                                 {% if page.content.hero_heading is empty %}
 
-                                    <h1 class="govuk-heading-xl page-title page-title--tight">{{ page.title }}</h1>
+                                    <h1 class="govuk-heading-xl page-title page-title--tight">{{ page.title|raw }}</h1>
 
                                     {% if page.content.page_lead_text %}
                                         <p class="govuk-body-l">{{ page.content.page_lead_text }}</p>{% endif %}
