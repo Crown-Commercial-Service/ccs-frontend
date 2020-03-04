@@ -49,10 +49,10 @@ class WebinarController extends AbstractController
         $data = [
           'webinar'       => $webinar,
           'campaign_code' => $webinar->getContent()->get('campaign_code') ? $webinar->getContent()->get('campaign_code')->getValue() : '',
-          'form_action'   => getenv('APP_BASE_URL') === 'prod' ? 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8' : 'https://crowncommercial--preprod.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8',
+          'form_action'   => getenv('APP_ENV') === 'prod' ? 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8' : 'https://crowncommercial--preprod.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8',
           'description'   => $webinar->getContent()->get('description') ? $webinar->getContent()->get('description')->getValue() : '',
           'return_url'    => getenv('APP_BASE_URL') . '/webinar/confirmation/' . $webinar->getId() . '/' . $webinar->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING),
-          'org_id'        => getenv('APP_BASE_URL') === 'prod' ? '00Db0000000egy4' : '00D8E000000E4zz',
+          'org_id'        => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D8E000000E4zz',
         ];
         return $this->render('webinars/request.html.twig', $data);
     }
