@@ -40,7 +40,7 @@
                     {#<div class="page-intro page-intro--tight"><p>Your details have been submitted and you can now download the whitepaper.</p></div>#}
 
                     {% if whitepaper.content.whitepaper_file.url is defined and whitepaper.content.whitepaper_file.url is not empty %}
-                        <p><a class="download-file-link" href="{{ whitepaper.content.whitepaper_file.url }}">{{ whitepaper.title }} ({{ whitepaper.content.whitepaper_file.filesize }})</a></p>
+                        <p><a class="download-file-link" href="{{ whitepaper.content.whitepaper_file.url }}">{{ whitepaper.title|raw }} ({{ whitepaper.content.whitepaper_file.filesize }})</a></p>
                     {% endif %}
                 </div>
             </div>
