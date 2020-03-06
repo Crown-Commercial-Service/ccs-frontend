@@ -178,6 +178,11 @@ form_insurance_services_nda_thanks:
   defaults:
     template: forms/35-insurance-services-thanks.html.twig
 
+# pardot test gated download form
+form_pardot_test:
+  path: /pardot-test-gated-content
+  controller: App\Controller\FormController::pardotTestGatedDownloadForm
+
 page:
   path: /{slug}
   controller: App\Controller\PageController::page
