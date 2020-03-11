@@ -52,6 +52,11 @@
         </div>
     {% endif %}
 
+    {% if component.name == "quote_and_image_quote_and_image" %}
+        <div class="component quote-and-image">
+            {% include '_components/quote_and_image.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
 
 {% endfor %}
 {# End of Page components #}
