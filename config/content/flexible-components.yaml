@@ -109,4 +109,10 @@ components:
           type: text
         sectors_content:
           type: richtext
+  quote_and_image_quote_and_image:
+    image:
+      type: image
+    quote:
+      type: richtext
+  
 
