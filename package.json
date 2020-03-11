@@ -36,7 +36,7 @@
     "autoprefixer-cli": "^1.0.0",
     "babel-preset-vue": "^2.0.2",
     "govuk-frontend": "^2.6.0",
-    "imagemin-cli": "^3.0.0",
+    "imagemin-cli": "^5.1.0",
     "node": "^8.11.1",
     "node-sass": "^4.9.0",
     "npm-run-all": "^4.1.3",

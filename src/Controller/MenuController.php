@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Dotenv\Dotenv;
 
 class MenuController extends AbstractController
 {
@@ -24,13 +25,14 @@ class MenuController extends AbstractController
 
     public function __construct(CacheInterface $cache)
     {
+        $dotenv = new Dotenv(); 
+        $dotenv->load('C:\xampp\htdocs\ccs-frontend\.env');
         $this->api = new Wordpress(
             getenv('APP_API_BASE_URL')
         );
         $this->api->setCache($cache);
         $this->api->setCacheLifetime(1800);
     }
-
 
     /**
      * Generic menu controller
@@ -66,4 +68,5 @@ class MenuController extends AbstractController
             'currentPath' => $currentPath,
         ]);
     }
+
 }
