@@ -555,16 +555,16 @@
         },
         {
             "name": "studio24/frontend",
-            "version": "v0.6.7",
+            "version": "v0.6.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/strata/frontend.git",
-                "reference": "3175df13e16e4ea5cbdbdc196b8437f0ecd7c3a2"
+                "reference": "b1eb4f9463eb300c7251ba7d00a37f135f135bdb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/strata/frontend/zipball/3175df13e16e4ea5cbdbdc196b8437f0ecd7c3a2",
-                "reference": "3175df13e16e4ea5cbdbdc196b8437f0ecd7c3a2",
+                "url": "https://api.github.com/repos/strata/frontend/zipball/b1eb4f9463eb300c7251ba7d00a37f135f135bdb",
+                "reference": "b1eb4f9463eb300c7251ba7d00a37f135f135bdb",
                 "shasum": ""
             },
             "require": {
@@ -612,7 +612,7 @@
                 }
             ],
             "description": "Framework to build an efficient front-end website with content from a Headless CMS or other data sources",
-            "time": "2020-02-28T15:04:04+00:00"
+            "time": "2020-03-11T11:51:29+00:00"
         },
         {
             "name": "studio24/http-cache-clear",
