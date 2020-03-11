@@ -110,7 +110,7 @@ var docCookies = {
         },
         {
             title: "Cookies that help with our communications and marketing",
-            description: "These cookies may be set by third party websites and do things like measure how you view YouTube videos that are on HS2.org.uk.",
+            description: "These cookies may be set by third party websites and do things like measure how you view YouTube videos that are on Crown Commercial Service (CCS).",
             cookie_type: "marketing",
             enabled: null,
             adjustable: true,
