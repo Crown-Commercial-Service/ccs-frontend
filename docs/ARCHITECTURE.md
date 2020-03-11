@@ -39,6 +39,16 @@ object, pagination, and navigation.
 Studio 24 maintain and develop the Frontend app externally from the CCS project and any new features will be integrated 
 into CCS in the future as part of our maintenance work. 
 
+### How to file bugs for the Frontend dependency
+
+Studio 24 maintain a list of bugs on GitHub at https://github.com/strata/frontend/issues
+
+You can review this list to see if your issue is known, or you can create a new bug report by selecting “New issue” and “Bug report.” It’s important to include details on what the issue is, how to reproduce it, and what you think expected behaviour should be. Please note this is a public issue list, so please do not post any sensitive or confidential details to GitHub issues.
+
+If you believe you can fix the issue, please do so in a branch in Git and submit a Pull Request to fix this. Please ensure you write a unit test to help confirm the fix and help future maintenance of the project. Please note Studio 24 will need to approve the PR before it can be merged into master and a new release created (which can then be loaded via a composer update).
+
+The Frontend project is an open source project maintained by Studio 24. Issues are fixed in priority order, if you need to chase a support issue please contact Studio 24 via the normal support channels.
+
 ### WordPress CMS
 
 [WordPress](https://wordpress.org/) is used as the Content Management System (CMS) and is used to manage page content 
