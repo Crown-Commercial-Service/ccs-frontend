@@ -7,8 +7,9 @@
 * [Caching](CACHING.md)
 * [Continuous intergration](CONTINUOUS_INTEGRATION.md)
 * [Security](SECURITY.md)
-* [ELASTICSEARCH.md](ELASTICSEARCH.md)
-* [ELASTICSEARCH.md](WORDPRESS_REST_API.md)
+* [Elastic Search](ELASTICSEARCH.md)
+* [WordPress Rest API](WORDPRESS_REST_API.md)
+* [User Roles](USER_ROLES.md)
 
 ## Other docs
 
