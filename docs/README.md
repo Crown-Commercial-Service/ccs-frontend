@@ -9,7 +9,6 @@
 * [Security](SECURITY.md)
 * [Elastic Search](ELASTICSEARCH.md)
 * [WordPress Rest API](WORDPRESS_REST_API.md)
-* [User Roles](USER_ROLES.md)
 
 ## Other docs
 
