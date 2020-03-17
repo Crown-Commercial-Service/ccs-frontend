@@ -202,18 +202,6 @@ form_esourcing_register_thanks:
   defaults:
     template: forms/30-esourcing-register-thanks.html.twig
 
-form_insurance_services_nda:
-  path: /insurance-services-nda
-  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-  defaults:
-    template: forms/34-insurance-services.html.twig
-
-form_insurance_services_nda_thanks:
-  path: /insurance-services-nda/thanks
-  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-  defaults:
-    template: forms/35-insurance-services-thanks.html.twig
-
 page:
   path: /{slug}
   controller: App\Controller\PageController::page
