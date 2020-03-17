@@ -2,6 +2,8 @@
 
 Cookies are managed through vanilla JavaScript and a small third-party framwork which gives us date range and full unicode support.
 
+Please note: All work for this is on `feature/cookie-updates` branch.
+
 ## Requirements
 
 - NPM v.8.9.4
