@@ -12,6 +12,10 @@ Please see [further web documentation](https://github.com/Crown-Commercial-Servi
 - [Built with](#built-with)
 - [Acknowledgments](#acknowledgments)
 
+## Additional documentation
+
+- [Cookies](/docs/COOKIES.md)
+
 ## Getting started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [Deployment](#deployment) for notes on how to deploy the project on a live system.
