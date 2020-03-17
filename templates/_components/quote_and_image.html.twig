@@ -1,9 +1,38 @@
-<div>
-    {% if component.quote_and_image_quote_and_image.image %}
-        <img src="{{ component.quote_and_image_quote_and_image.image }}"/>
-    {% endif %}
-</div>
-<P>BYE</p>
-<div>
-    {{ component.quote_and_image_quote_and_image.quote | raw }}
+<div class="govuk-grid-row">
+    <div>
+        <div class="govuk-grid-column-one-quarter govuk-heading-xl govuk-!-margin-0" style="color: var(--sub-color); text-align: right">“</div>
+    </div>
+    <div class="govuk-grid-column-one-half govuk-!-padding-left-0 govuk-!-width-one-half">
+        <div class="govuk-hint">
+        “{{ component.quote_and_image_quote_and_image_quote | striptags }}”
+        </div>
+        <div class="govuk-body-s govuk-!-font-weight-bold govuk-!-margin-0">
+        {{ component.quote_and_image_quote_and_image_name | striptags }}
+        </div>
+        <div class="govuk-body-s">
+        {{ component.quote_and_image_quote_and_image_job | striptags }}
+        </div>
+    </div>
+    <div class="govuk-grid-column-one-quarter govuk-!-width-one-quarter">
+        {% if component.quote_and_image_quote_and_image_image %}
+            <figure class="image-wrapper">
+                <picture class="">
+                    <source component="(max-width: 768px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('medium_large') }}">
+                    <source component="(min-width: 1024px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('large') }}">
+                    <source component="(min-width: 1920px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('full') }}">
+                    {# Fallback for browsers that don't support the picture element #}
+                    <img src="{{ component.quote_and_image_quote_and_image_image }}"
+                            role="presentation"
+                            class=""
+                            style="border-radius:50%; position: relative; width: 200px; height: 200px; overflow: hidden;"
+                            loading="lazy"/>
+                </picture>
+            </figure>
+            <div class="circle_flourish"></div>
+        {% endif %}
+    </div>
+
+{#<div>
+    {{ dump(component.quote_and_image_quote_and_image_image) }}
+</div>#}
 </div>
