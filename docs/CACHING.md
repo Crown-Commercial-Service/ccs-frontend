@@ -30,10 +30,33 @@ A request is generated in the following way:
 
 ### Web pages
 
-The default cache lifetime is set to **30 minutes** for all web pages. 
+The default cache lifetime is set to **15 minutes** for all web pages. 
 
 This is the same for the full page cache (HTTP Cache) and the data layer cache used when requesting live data from the 
 API. This is a trade off between freshness of data and an attempt to ensure the site can cope with higher traffic levels.
+
+#### Modifying Web Page Cache Lifetimes
+
+Cache lifetimes for the HTTP cache can be modified in the individual controllers found in `src/Controller`.
+
+The cache lifetime should be set in the ``__constructor`` method, alongside the content type for the controller.
+
+For example, see the constructor method for the events controller:
+
+```php
+    public function __construct(CacheInterface $cache)
+    {
+        $this->api = new Wordpress(
+            getenv('APP_API_BASE_URL'),
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
+        );
+        $this->api->setContentType('events');
+        $this->api->setCache($cache);
+        $this->api->setCacheLifetime(900);
+    }
+```
+
+You can see on the second last line that the cache lifetime is set to 900 seconds (15 minutes). This value can be changed as desired.
 
 ### Static assets
 
