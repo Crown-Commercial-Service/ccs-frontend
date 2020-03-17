@@ -2,7 +2,7 @@
 
 Symfony application to generate the Crown Commercial public website at [https://www.crowncommercial.gov.uk/](https://www.crowncommercial.gov.uk/)
 
-Please see [further web documentation](https://github.com/Crown-Commercial-Service/ccsweb-docs/tree/master/web) (this is a private repo).
+Please see [further web documentation](https://github.com/Crown-Commercial-Service/ccsweb-docs/tree/master/web) (this is a private repo), or check the documentation in the [docs directory of this repo](docs/README.md).
 
 ## Table of contents
 
@@ -11,10 +11,6 @@ Please see [further web documentation](https://github.com/Crown-Commercial-Servi
 - [Continuous integration](#continuous-integration)
 - [Built with](#built-with)
 - [Acknowledgments](#acknowledgments)
-
-## Additional documentation
-
-- [Cookies](/docs/COOKIES.md)
 
 ## Getting started
 
