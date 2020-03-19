@@ -118,5 +118,10 @@ components:
       type: richtext
     quote_and_image_quote_and_image_job:
       type: richtext
+  achievement_and_image_achievement_and_image:
+    achievement_and_image_achievement_and_image_image:
+      type: image
+    achievement_and_image_achievement_and_image_text:
+      type: richtext
   
 

@@ -58,5 +58,11 @@
         </div>
     {% endif %}
 
+    {% if component.name == "achievement_and_image_achievement_and_image" %}
+        <div class="component achievement-and-image">
+            {% include '_components/achievement_and_image.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
 {% endfor %}
 {# End of Page components #}
