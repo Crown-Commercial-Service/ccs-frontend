@@ -52,9 +52,15 @@
         </div>
     {% endif %}
 
+
     {% if component.name == "free_text_free_text" %}
         <div class="component free-text">
             {% include '_components/free_text.html.twig' with {'component': component.content } %}
+
+    {% if component.name == "quote_and_image_quote_and_image" %}
+        <div class="component quote-and-image">
+            {% include '_components/quote_and_image.html.twig' with {'component': component.content } %}
+
         </div>
     {% endif %}
 

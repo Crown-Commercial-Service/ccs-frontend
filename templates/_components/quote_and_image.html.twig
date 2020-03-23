@@ -1,0 +1,9 @@
+<div>
+    {% if component.quote_and_image_quote_and_image.image %}
+        <img src="{{ component.quote_and_image_quote_and_image.image }}"/>
+    {% endif %}
+</div>
+<P>BYE</p>
+<div>
+    {{ component.quote_and_image_quote_and_image.quote | raw }}
+</div>
