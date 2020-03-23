@@ -1,0 +1,51 @@
+/*------------------------------------*\
+  #Footer
+\*------------------------------------*/
+
+.govuk-margin-free-text{
+
+    margin-bottom: 40%;
+}
+
+.govuk-border-right-free-text{
+    border-right-width: 5px;
+    border-color: $ccs-colour;
+    border-color: var(--sub-color);
+    border-right-style: solid;
+    
+}
+
+.wysiwyg-content-free-text{
+    font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 23px;
+    color: #0b0c0c;
+    margin-top: 100px;
+    margin-bottom: 50px;  
+}
+
+.font-free-text{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.wysiwyg-content-free-text-left-banner{
+    font-family: Helvetica, Arial, sans-serif; font-size: 20px; line-height: 15px;
+    color: #0b0c0c;
+    margin-top: 100px;
+}
+
+
+
+.wysiwyg-content-free-text-content-field{
+    font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 23px;
+    color: #0b0c0c;
+
+}
+
+
+.govuk-border-free-text{
+    border:16px 
+    solid #FF0000; 
+    border-radius: 0px; 
+    margin-top:100px; 
+    margin-bottom:2000px;
+}
