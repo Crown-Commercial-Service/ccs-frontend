@@ -1,0 +1,30 @@
+<div class="govuk-width-container">
+    <main class="govuk-main-wrapper">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-quarter govuk-!-width-one-quarter">
+                {% if component.achievement_and_image_achievement_and_image_image %}
+                    <figure class="image-wrapper">
+                        <picture class="">
+                            <source component="(max-width: 768px)" srcset="{{ component.achievement_and_image_achievement_and_image_image.byName('medium_large') }}">
+                            <source component="(min-width: 1024px)" srcset="{{ component.achievement_and_image_achievement_and_image_image.byName('large') }}">
+                            <source component="(min-width: 1920px)" srcset="{{ component.achievement_and_image_achievement_and_image_image.byName('full') }}">
+                            {# Fallback for browsers that don't support the picture element #}
+                            <img src="{{ component.achievement_and_image_achievement_and_image_image }}"
+                                    role="presentation"
+                                    class=""
+                                    style="border-radius:50%; position: relative; width: 200px; height: 200px; overflow: hidden;"
+                                    loading="lazy"/>
+                        </picture>
+                    </figure>
+                {% endif %}
+            </div>
+            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-1 govuk-!-padding-top-9 govuk-!-width-one-half">
+                <div style="border-left-style: solid; border-color: var(--sub-color); border-width: 2px;">
+                    <div class="govuk-heading-m govuk-!-padding-left-3">
+                    {{ component.achievement_and_image_achievement_and_image_text | striptags }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
