@@ -58,5 +58,11 @@
         </div>
     {% endif %}
 
+    {% if component.name == "free_text_free_text" %}
+        <div class="component free-text">
+            {% include '_components/free_text.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
 {% endfor %}
 {# End of Page components #}
