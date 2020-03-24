@@ -1,0 +1,60 @@
+/*------------------------------------*\
+    #Cookie Message
+\*------------------------------------*/
+
+.js .cookie-message {
+    display: none;
+}
+
+.cookie-message {
+    background: #FCFAF7;
+    //color: #462170;
+    margin-top: 0;
+}
+
+
+.cookie-message__inner {
+    //display: flex;
+    padding: govuk-px-to-rem(30) govuk-px-to-rem(20) 0 govuk-px-to-rem(20);
+
+    @include govuk-media-query($from: desktop) {
+        //display: flex;
+        //justify-content: space-between;
+
+        * + * {
+            //margin-top: 0;
+        }
+    }
+}
+
+.cookie-message__inner--accepted {
+
+    padding: govuk-px-to-rem(30) govuk-px-to-rem(20) govuk-px-to-rem(10) govuk-px-to-rem(20);
+
+}
+
+.cookie-message__heading {
+    padding-right: govuk-px-to-rem(70);
+}
+
+
+.cookie-message__intro {
+    //padding-right: govuk-px-to-rem(70);
+}
+
+
+.cookie-message__actions {
+
+    display: flex;
+    min-width: govuk-px-to-rem(280);
+
+    * + * {
+        margin-left: govuk-px-to-rem(20);
+    }
+
+    @include govuk-media-query($from: desktop) {
+
+        align-items: baseline;
+
+    }
+}
