@@ -109,4 +109,28 @@ components:
           type: text
         sectors_content:
           type: richtext
+  quote_and_image_quote_and_image:
+    quote_and_image_quote_and_image_image:
+      type: image
+    quote_and_image_quote_and_image_quote:
+      type: richtext
+    quote_and_image_quote_and_image_name:
+      type: richtext
+    quote_and_image_quote_and_image_job:
+      type: richtext
+  achievement_and_image_achievement_and_image:
+    achievement_and_image_achievement_and_image_image:
+      type: image
+    achievement_and_image_achievement_and_image_text:
+      type: richtext
+  free_text_free_text:
+    free_text_free_text_right_content_new:
+      type: richtext
+    free_text_free_text_left_content_new:
+      type: richtext
+    free_text_free_text_right_content_banner_new:
+      type: richtext
+    free_text_free_text_left_content_banner_new:
+      type: richtext
+  
 
