@@ -42,10 +42,13 @@
 @import "components/card";
 @import "components/card-list";
 @import "components/download-icons";
+@import "components/cookie-message";
 @import "components/enclosure";
 @import "components/events";
 @import "components/forms";
 @import "components/hero";
+@import "components/headings";
+@import "components/hints";
 @import "components/icons";
 @import "components/images";
 @import "components/inline-contact-form";
@@ -65,6 +68,9 @@
 @import "components/search";
 @import "components/subcategories";
 @import "components/free-text";
+
+@import "components/quote_and_image";
+
 
 @import "pages/homepage";
 @import "pages/all-pages";
