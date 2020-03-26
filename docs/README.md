@@ -11,6 +11,7 @@
 * [WordPress Rest API](WORDPRESS_REST_API.md)
 * [Suppliers Listing](SUPPLIERS_LISTING.md)
 * [Cookies](COOKIES.md)
+* [Pardot integration](pardot.md)
 
 ## Other docs
 
