@@ -17,7 +17,7 @@ Add a [Form Handler](https://pi.pardot.com/formHandler) to Pardot to accept inco
 submissions. You need to enable a mode on the form called "Kiosk/Data Entry mode" to support data being sent from the 
 server.   
 
-Add the Form Handler submission URL to your `.env.local` file in the `PARDOT_FORM_URL` variable.
+Add the Form Handler submission URL to your `.env.local` file in the `PARDOT_EMAIL_FORM_HANDLER_URL` variable.
 
 Example `.env.local` file (replace the URL with the actual Form Handler submission URL).
 
