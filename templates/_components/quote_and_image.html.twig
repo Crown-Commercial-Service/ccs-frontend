@@ -4,13 +4,13 @@
     </div>
     <div class="govuk-grid-column-one-quarter govuk-!-padding-left-5">
         <div class="govuk-hint">
-        “{{ component.quote_and_image_quote_and_image_quote | striptags }}”
+        “{{ component.quote_and_image_quote_and_image_quote | striptags | raw }}”
         </div>
         <div class="govuk-body-s govuk-!-font-weight-bold govuk-!-margin-0">
-        {{ component.quote_and_image_quote_and_image_name | striptags }}
+        {{ component.quote_and_image_quote_and_image_name | striptags | raw }}
         </div>
         <div class="govuk-body-s">
-        {{ component.quote_and_image_quote_and_image_job | striptags }}
+        {{ component.quote_and_image_quote_and_image_job | striptags | raw }}
         </div>
     </div>
     <div class="govuk-grid-column-one-quarter govuk-!-width-one-quarter">
