@@ -21,7 +21,7 @@
             <div class="govuk-grid-column-one-quarter govuk-!-padding-left-1 govuk-!-padding-top-9 govuk-!-width-one-half">
                 <div style="border-left-style: solid; border-color: var(--sub-color); border-width: 2px;">
                     <div class="govuk-heading-m govuk-!-padding-left-3">
-                    {{ component.achievement_and_image_achievement_and_image_text | striptags }}
+                    {{ component.achievement_and_image_achievement_and_image_text | striptags | raw }}
                     </div>
                 </div>
             </div>
