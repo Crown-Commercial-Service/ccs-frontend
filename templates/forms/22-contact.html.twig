@@ -73,8 +73,10 @@
                                 <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a>
                             </p>
                         </div>
+
                     </div>
 
+                    {# Remove phone number temporarily during COVID-19 pandemic
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-one-quarter">
                             <h2 class="govuk-heading-m">Phone:</h2>
@@ -86,7 +88,7 @@
                                 Friday, 9am to 5pm.</p>
                         </div>
                     </div>
-
+                    #}
 
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
@@ -185,7 +187,7 @@
                             </fieldset>
                         </div>
                         <div class="govuk-form-group">
-                            <label class="govuk-label" for="name"> Telephone
+                            <label class="govuk-label" for="phone"> Telephone
                                 number</label>
                             <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text" required/>
                         </div>
