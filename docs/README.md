@@ -2,6 +2,7 @@
 
 ## Table of contents
 
+* [Git workflow](git-workflow.md)
 * [Architecture](ARCHITECTURE.md)
 * [Content Structure and Setup](CONTENT_STRUCTURE_AND_SETUP.md)
 * [Caching](CACHING.md)
