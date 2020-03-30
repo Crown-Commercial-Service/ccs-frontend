@@ -132,5 +132,9 @@ components:
       type: richtext
     free_text_free_text_left_content_banner_new:
       type: richtext
+    free_text_free_text_cta_label:
+      type: text
+    free_text_free_text_cta_destination:
+      type: text
   
 
