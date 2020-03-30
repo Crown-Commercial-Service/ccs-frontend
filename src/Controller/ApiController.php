@@ -226,11 +226,9 @@ class ApiController extends AbstractController
         $pardot = new Pardot();
         if ($pardot->submitEmail($pardotFormUrl, $email, $extraData)) {
             return new JsonResponse(['message' => 'OK']);
-
         } else {
             $response = $pardot->getLastResponse();
             throw new PardotException(sprintf('Error sending email data to Pardot. HTTP status code: %s, Message: %s', $response->getStatusCode(), $response->getContent()));
         }
     }
-
 }

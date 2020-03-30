@@ -62,5 +62,4 @@ class Pardot
     {
         return $this->lastResponse;
     }
-
 }
