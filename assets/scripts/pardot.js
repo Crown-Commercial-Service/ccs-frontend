@@ -1,9 +1,18 @@
+var pardotSubmitted = false;
+
 document.addEventListener("DOMContentLoaded", function (event) {
 
     /**
      * Send email address (and other data) to Pardot
      */
     $('form.pardot-submit').submit(function(event) {
+        
+        if (pardotSubmitted) {
+            return true;
+        }
+
+        console.log('Sending to Pardot.');
+
         event.preventDefault();
 
         var email = $("form.pardot-submit input.pardot-email").val();
@@ -24,7 +33,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
             method: "POST",
             data: JSON.stringify(data),
             complete: function(){
-                $("form.pardot-submit").submit();
+                pardotSubmitted = true;
+                console.log('Proceeding with submission.');
+                $("form.pardot-submit button[type=submit]").click();
             }
         });
     });

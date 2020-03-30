@@ -51,12 +51,25 @@ Run `bin/elasticsearch` (from Elasticsearch root directory) to make Frameworks a
 Add a file called `env.local` with the following configuration settings:
 
 ```
-APP_API_BASE_URL='ENTER URL'
+APP_ENV=dev
+
+APP_API_BASE_URL='http://wordpress-domain.com/wp-json/'
+APP_CMS_BASE_URL='http://wordpress-domain.com/'
+APP_BASE_URL='http://frontend-domain.com'
+
+SEARCH_API_BASE_URL='http://wordpress-domain.com/api'
+
+PARDOT_EMAIL_FORM_HANDLER_URL='http://go.pardot.com/l/path'
 ```
 
 To explain these settings:
 
+* APP_ENV - Environment (dev = local development)
 * APP_API_BASE_URL - Base URL to WordPress site suffixed with /wp-json/ (e.g. `https://cms.crowncommercial.local/wp-json/`)
+* APP_CMS_BASE_URL - Base URL to WordPress site (without any suffix)
+* APP_BASE_URL - Base URL to front-end site
+* SEARCH_API_BASE_URL - Base API URL for [Elasticsearch](docs/ELASTICSEARCH.md) queries
+* PARDOT_EMAIL_FORM_HANDLER_URL - [Pardot form handler](docs/pardot.md) to send email addresses to
 
 #### NPM
 Use NPM to compile Javascript modules and Sass into CSS. Install the long-term support (LTS) version of [Node.js](https://nodejs.org/en/), which includes NPM. The minimum version of Node required is 8.9.4. We recommend using [`nvm`](https://github.com/creationix/nvm) for managing versions of Node.
