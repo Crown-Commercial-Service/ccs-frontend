@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", function (event) {
 
+    /**
+     * Send email address (and other data) to Pardot
+     */
     $('form.pardot-submit').submit(function(event) {
-
-        // temp disable form during testing
         event.preventDefault();
 
         var email = $("form.pardot-submit input.pardot-email").val();
@@ -21,9 +22,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
         $.ajax({
             url: "/api/pardot-email",
             method: "POST",
-            data: JSON.stringify(data)
+            data: JSON.stringify(data),
+            complete: function(){
+                $("form.pardot-submit").submit();
+            }
         });
-
     });
 
 });
