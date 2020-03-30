@@ -1,13 +1,13 @@
 <div class="govuk-grid-row govuk-!-padding-9">
-    <div class="govuk-grid-column-one-quarter govuk-heading-xl" style="color: var(--sub-color); text-align: right; width: 5%;">“</div>
+    <div class="govuk-grid-column-one-quarter govuk-heading-xl govuk-!-padding-left-5" style="color: var(--sub-color); text-align: right; width: 5%;">“</div>
     <div class="govuk-grid-column-one-third" style="width:70%;">
-        <div class="govuk-hint">
-        “{{ component.quote_and_image_quote_and_image_quote | striptags | raw }}”
+        <div class="govuk-hint govuk-!-font-size-24">
+        {{ component.quote_and_image_quote_and_image_quote | striptags | raw }}
         </div>
-        <div class="govuk-body-s govuk-!-font-weight-bold govuk-!-margin-0">
+        <div class="govuk-body govuk-!-font-size-20 govuk-!-font-weight-bold govuk-!-margin-0">
         {{ component.quote_and_image_quote_and_image_name | striptags | raw }}
         </div>
-        <div class="govuk-body-s">
+        <div class="govuk-body govuk-!-font-size-20">
         {{ component.quote_and_image_quote_and_image_job | striptags | raw }}
         </div>
     </div>
@@ -22,7 +22,7 @@
                     <img src="{{ component.quote_and_image_quote_and_image_image }}"
                             role="presentation"
                             class=""
-                            style="border-radius:50%; position: relative; width: 300px; height: 300px; overflow: hidden; object-fit: cover;"
+                            style="border-radius:50%; position: relative; width: 250px; height: 250px; overflow: hidden; object-fit: cover;"
                             loading="lazy"/>
                 </picture>
             </figure>
