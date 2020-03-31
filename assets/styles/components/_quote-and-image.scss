@@ -1,0 +1,35 @@
+.circle_flourish {
+    background: var(--sub-color);
+    border-radius: 50%;
+    content: "";
+    height: 150px;
+    width: 150px;
+    position: relative;
+    right: 25px;
+    bottom: 130px;
+    z-index: -1;
+}
+
+.quote {
+    color: var(--sub-color); 
+    text-align: right; 
+    width: 5%;
+}
+
+.quote_image {
+    position: relative; 
+    top: -70px;
+}
+
+.quote_img {
+    border-radius:50%;
+    position: relative;
+    width: 250px;
+    height: 250px;
+    overflow: hidden; 
+    object-fit: cover;
+}
+
+.quote_image_width {
+    width:70%;
+}
