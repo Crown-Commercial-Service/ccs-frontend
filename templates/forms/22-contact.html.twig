@@ -73,8 +73,10 @@
                                 <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a>
                             </p>
                         </div>
+
                     </div>
 
+                    {# Remove phone number temporarily during COVID-19 pandemic
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-one-quarter">
                             <h2 class="govuk-heading-m">Phone:</h2>
@@ -86,11 +88,11 @@
                                 Friday, 9am to 5pm.</p>
                         </div>
                     </div>
-
+                    #}
 
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-                    <form class="govuk-!-width-three-quarters" action="{{ web_to_case_post_url }}" method="POST">
+                    <form class="govuk-!-width-three-quarters pardot-submit" action="{{ web_to_case_post_url }}" method="POST">
 
                         {# Change these field types to hidden for Production #}
                         <input type="hidden" name="orgid" value="{{ web_to_case_orgid }}">
@@ -164,7 +166,7 @@
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="email">
                                 Email </label>
-                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="email" required/>
+                            <input class="govuk-input pardot-email" id="email" maxlength="80" name="email" size="20" type="email" required/>
                         </div>
 
 
@@ -185,7 +187,7 @@
                             </fieldset>
                         </div>
                         <div class="govuk-form-group">
-                            <label class="govuk-label" for="name"> Telephone
+                            <label class="govuk-label" for="phone"> Telephone
                                 number</label>
                             <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text" required/>
                         </div>
@@ -194,7 +196,7 @@
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="company">
                                 Organisation </label>
-                            <input class="govuk-input" id="company" maxlength="80" name="company" size="20" type="text"/>
+                            <input class="govuk-input pardot-field" id="company" maxlength="80" name="company" size="20" type="text"/>
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="00Nb0000009IXEs">
@@ -337,4 +339,9 @@
         </main>
     </div>
 
+{% endblock %}
+
+{% block nonblocking_javascript %}
+    {{ parent() }}
+    <script src="/assets/scripts/pardot.js"></script>
 {% endblock %}

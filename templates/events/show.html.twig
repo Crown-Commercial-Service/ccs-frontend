@@ -58,7 +58,7 @@
                     {% if event.content.description is not empty %}
                         <h2 class="govuk-heading-m">About this event</h2>
 
-                        <div>{{ event.content.description|raw }}</div>
+                        <div class="wysiwyg-content">{{ event.content.description|raw }}</div>
                     {% endif %}
 
                     {% if event.content.cta_destination is not empty and event.content.cta_label is not empty %}
