@@ -1,7 +1,7 @@
 <div class="govuk-width-container">
     <main class="govuk-main-wrapper">
         <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-quarter govuk-!-width-one-quarter">
+            <div class="govuk-grid-column-one-quarter govuk-!-width-one-quarter" style="position: relative; height: 200px;">
                 {% if component.achievement_and_image_achievement_and_image_image %}
                     <figure class="image-wrapper">
                         <picture class="">
@@ -12,15 +12,15 @@
                             <img src="{{ component.achievement_and_image_achievement_and_image_image }}"
                                     role="presentation"
                                     class=""
-                                    style="border-radius:50%; position: relative; width: 200px; height: 200px; overflow: hidden; object-fit: cover;"
+                                    style="border-radius:50%; position: relative; width: 250px; height: 250px; overflow: hidden; object-fit: cover;"
                                     loading="lazy"/>
                         </picture>
                     </figure>
                 {% endif %}
             </div>
-            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-1 govuk-!-padding-top-9 govuk-!-width-one-half">
-                <div style="border-left-style: solid; border-color: var(--sub-color); border-width: 2px;">
-                    <div class="govuk-heading-m govuk-!-padding-left-3">
+            <div class="govuk-grid-column-three-quarters govuk-!-padding-left-1 govuk-!-padding-top-9" style="margin-left: 5%; max-width: 600px;">
+                <div style="border-left-style: solid; border-color: var(--sub-color); border-width: 4px;">
+                    <div class="govuk-!-font-size-25 govuk-heading-m govuk-!-padding-left-3">
                     {{ component.achievement_and_image_achievement_and_image_text | striptags | raw }}
                     </div>
                 </div>
