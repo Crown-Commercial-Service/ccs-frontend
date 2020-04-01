@@ -1,28 +1,27 @@
-<div class="govuk-grid-row govuk-!-padding-3">
-    <div class="govuk-grid-column-one-quarter govuk-heading-xl" style="color: var(--sub-color); text-align: right; width: 5%;">“</div>
-    <div class="govuk-grid-column-one-third" style="width:70%;">
-        <div class="govuk-hint">
-        “{{ component.quote_and_image_quote_and_image_quote | striptags | raw }}”
+<div class="govuk-grid-row govuk-!-padding-9">
+    <div class="govuk-grid-column-one-quarter govuk-heading-xl govuk-!-padding-left-5 quote">“</div>
+    <div class="govuk-grid-column-one-third quote_image_width">
+        <div class="govuk-hint govuk-!-font-size-24">
+        {{ component.quote_and_image_quote_and_image_quote | striptags | raw }}
         </div>
-        <div class="govuk-body-s govuk-!-font-weight-bold govuk-!-margin-0">
+        <div class="govuk-body govuk-!-font-size-20 govuk-!-font-weight-bold govuk-!-margin-0">
         {{ component.quote_and_image_quote_and_image_name | striptags | raw }}
         </div>
-        <div class="govuk-body-s">
+        <div class="govuk-body govuk-!-font-size-20">
         {{ component.quote_and_image_quote_and_image_job | striptags | raw }}
         </div>
     </div>
-    <div class="govuk-grid-column-one-quarter govuk-!-width-one-quarter" style="position: relative; top: -100px; height: 200px;">
+    <div class="govuk-grid-column-one-quarter govuk-!-width-one-quarter quote_image">
         {% if component.quote_and_image_quote_and_image_image %}
             <figure class="image-wrapper">
                 <picture class="">
-                    <source component="(max-width: 768px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('medium_large') }}">
-                    <source component="(min-width: 1024px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('large') }}">
-                    <source component="(min-width: 1920px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('full') }}">
+                    <source media="(min-width: 1920px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('full') }}">
+                    <source media="(min-width: 1024px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('large') }}">
+                    <source media="(max-width: 768px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('medium_large') }}">
                     {# Fallback for browsers that don't support the picture element #}
                     <img src="{{ component.quote_and_image_quote_and_image_image }}"
                             role="presentation"
-                            class=""
-                            style="border-radius:50%; position: relative; width: 300px; height: 300px; overflow: hidden; object-fit: cover;"
+                            class="quote_img"
                             loading="lazy"/>
                 </picture>
             </figure>
