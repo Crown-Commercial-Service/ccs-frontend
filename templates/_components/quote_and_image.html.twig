@@ -15,9 +15,9 @@
         {% if component.quote_and_image_quote_and_image_image %}
             <figure class="image-wrapper">
                 <picture class="">
-                    <source component="(max-width: 768px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('medium_large') }}">
-                    <source component="(min-width: 1024px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('large') }}">
-                    <source component="(min-width: 1920px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('full') }}">
+                    <source media="(min-width: 1920px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('full') }}">
+                    <source media="(min-width: 1024px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('large') }}">
+                    <source media="(max-width: 768px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('medium_large') }}">
                     {# Fallback for browsers that don't support the picture element #}
                     <img src="{{ component.quote_and_image_quote_and_image_image }}"
                             role="presentation"
