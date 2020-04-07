@@ -2,7 +2,7 @@
 
 Symfony application to generate the Crown Commercial public website at [https://www.crowncommercial.gov.uk/](https://www.crowncommercial.gov.uk/)
 
-Please see [further web documentation](https://github.com/Crown-Commercial-Service/ccsweb-docs/tree/master/web) (this is a private repo).
+Please see [further web documentation](https://github.com/Crown-Commercial-Service/ccsweb-docs/tree/master/web) (this is a private repo), or check the documentation in the [docs directory of this repo](docs/README.md).
 
 ## Table of contents
 
@@ -98,13 +98,15 @@ npm run watch
 
 ### Local dev
 
-To view the website at http://127.0.0.1:8000, run:
+Set up local host http://local.crowncommercial.gov.uk/ to point to the `public/` folder.
+
+Optionally, you can view the website at http://127.0.0.1:8000, by running run:
 
 ```
 bin/console server:run
 ```
 
-Optionally: Set up local host http://local.crowncommercial.gov.uk/ to point to the `public/` folder.
+Although we wouldn't recommend using this method long-term as the environment is less customisable and reliable.
 
 #### Clear cache
 
@@ -126,12 +128,9 @@ To clear the HTTP cache run:
 rm -Rf var/cache/prod/http_cache
 ```
 
+For more information about the caching setup for the site please read [CACHING.md](CACHING.md).
+
 ## Deployment
-
-### Regular maintenance time
-
-We have a regular time reserved on **Tuesdays between 8am and 9am** for routine maintenance. Please aim to undertaken 
-all maintenance tasks (e.g. software updates) during this time. 
 
 ### Testing changes
 
@@ -147,11 +146,13 @@ all maintenance tasks (e.g. software updates) during this time.
 3. Email internal-it@crowncommercial.gov.uk to ask approval of this PR.
 4. Once approved, merge into master. This deploys to Production. 
 
+For more information on deployment please [read the relevant docs](https://github.com/Crown-Commercial-Service/ccsweb-docs/blob/master/web/DEPLOYMENT.md) (private repo).
+
 See details on [Environments](https://github.com/Crown-Commercial-Service/ccsweb-docs/blob/master/web/ENVIRONMENTS.md) (private docs).
 
 ### Production checks
 
-Post launch, we will have a number of deployment checks before merging new code into production, notably:
+There are a few deployment checks that are required to pass before merging new code into production, notably:
 
 * Code must pass static code analysis tests & automated tests (Travis).
 * Manual review by CCS TechOps to approve Pull Request.
