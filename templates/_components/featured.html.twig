@@ -1,0 +1,36 @@
+<div class="govuk-width-container">
+    <div class="govuk-grid-row">
+        <div class="govuk-heading-m govuk-!-padding-3">
+            {{ component.featured_featured_section_heading | striptags | raw }}
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+            <div class="govuk-heading-s">
+                {{ component.featured_featured_heading_1 | striptags | raw }}
+            </div>
+            <div class="govuk-body">
+                {{ component.featured_featured_body_1 | striptags | raw }}
+            </div>
+            <a href={{ component.featured_featured_link_1_destination }} class="govuk-link">{{ component.featured_featured_link_1_title | striptags | raw }}</a>
+        </div>
+        <div class="govuk-grid-column-one-third">
+            <div class="govuk-heading-s">
+                {{ component.featured_featured_heading_2 | striptags | raw }}
+            </div>
+            <div class="govuk-body">
+                {{ component.featured_featured_body_2 | striptags | raw }}
+            </div>
+            <a href={{ component.featured_featured_link_2_destination }} class="govuk-link">{{ component.featured_featured_link_2_title | striptags | raw }}</a>
+        </div>
+        <div class="govuk-grid-column-one-third">
+            <div class="govuk-heading-s">
+                {{ component.featured_featured_heading_3 | striptags | raw }}
+            </div>
+            <div class="govuk-body">
+                {{ component.featured_featured_body_3 | striptags | raw }}
+            </div>
+            <a href={{ component.featured_featured_link_3_destination }} class="govuk-link">{{ component.featured_featured_link_3_title | striptags | raw }}</a>
+        </div>
+    </div>
+</div>

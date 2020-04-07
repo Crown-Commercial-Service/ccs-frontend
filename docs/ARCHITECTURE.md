@@ -54,6 +54,25 @@ The Frontend project is an open source project maintained by Studio 24. Issues a
 [WordPress](https://wordpress.org/) is used as the Content Management System (CMS) and is used to manage page content 
 on the CCS website and rich text content for the Frameworks and Suppliers section of the website. 
 
+#### WordPress CMS Rest API
+
+The frontend receives data from WordPress via the [WordPress Rest API](https://developer.wordpress.org/rest-api/). You can 
+view all of the endpoints for the rest API by visiting [cms-url]/wp-json/wp/v2/
+
+Firefox formats this data in an easily readable format. Chrome by default outputs this data in a raw format, but you can install 
+extensions to format this data for better readability, for example:
+
+[https://chrome.google.com/webstore/detail/json-formatter/](https://chrome.google.com/webstore/detail/json-formatter/)
+
+It is strongly recommended that you have some easy and clear way of reading the data from this URL as it is key to understanding the 
+data that is coming from WordPress.
+
+There are also some custom endpoints defined for the project that exist under:
+
+[cms-url]/wp-json/ccs/v1/ 
+
+You can read more about the Rest API at [WORDPRESS_REST_API.md](WORDPRESS_REST_API.md)
+
 ### AWS Aurora database
 
 WordPress content and data synchronised from Salesforce is stored in a MySQL-compatible AWS Aurora database.
@@ -63,7 +82,7 @@ WordPress content and data synchronised from Salesforce is stored in a MySQL-com
 Salesforce is used by CCS to manage their supplier and framework data and content is exposed to the CCS website via 
 standard Salesforce APIs. 
 
-### Data sync process
+#### Data sync process
 
 The data sync process imports data from standard Salesforce APIs and imports this into custom
  database tables in Aurora DB. This data is then used to power the website, so no website requests query live 
