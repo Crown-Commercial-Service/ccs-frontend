@@ -1,25 +1,18 @@
-
 <div class="govuk-width-container">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-half" >
-            <div class="govuk-border-right-free-text" style="height:110px ; padding-left:50px ; margin-left:80px ">
+        <div class="govuk-grid-column-one-half govuk-border-right-free-text" >
             <div>{{ component.free_text_free_text_left_content_banner_new | raw}}</div>
-            <div style="margin-top: 50px ; font-size:2px; line-height: 3px ; margin-right:8px">{{ component.free_text_free_text_left_content_new| raw}}</div>
+            <div style="margin-top: 50px">{{ component.free_text_free_text_left_content_new| raw}}</div>
             {% if component.free_text_free_text_cta_label|trim is not empty and component.free_text_free_text_cta_destination|trim is not empty %}
                 <a href="{{ component.free_text_free_text_cta_destination }}" class="govuk-button">{{ component.free_text_free_text_cta_label }}</a>
-            {% endif %}
-            </div>
+            {% endif %} 
         </div>
 
 
         <div class="govuk-grid-column-one-half">
             <div style="margin-right:31px"> {{component.free_text_free_text_right_content_banner_new | raw}}</div>
-            <div class="wysiwyg-content-free-text" style="margin-top:60px ; margin-bottom: 60px ; position: left;">{{ component.free_text_free_text_right_content_new | raw}}</div>
+            <div class="wysiwyg-content-free-text" style="margin-top:60px ; margin-bottom: 60px">{{ component.free_text_free_text_right_content_new | raw}}</div>
         </div> 
     </div>
- </div>
-
-
-
-
+</div> 
 
