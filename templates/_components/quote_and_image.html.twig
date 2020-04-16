@@ -1,6 +1,5 @@
 <div class="govuk-grid-row govuk-!-padding-9">
-    <div class="govuk-grid-column-one-quarter govuk-heading-xl govuk-!-padding-left-5 quote">“</div>
-    <div class="govuk-grid-column-one-third quote_image_width">
+    <div class="govuk-grid-column-three-quarters quote_image_width">
         <div class="govuk-hint govuk-!-font-size-24">
         {{ component.quote_and_image_quote_and_image_quote | striptags | raw }}
         </div>
@@ -11,7 +10,7 @@
         {{ component.quote_and_image_quote_and_image_job | striptags | raw }}
         </div>
     </div>
-    <div class="govuk-grid-column-one-quarter govuk-!-width-one-quarter quote_image">
+    <div class="govuk-grid-column-one-quarter govuk-!-width-one-quarter">
         {% if component.quote_and_image_quote_and_image_image %}
             <figure class="image-wrapper">
                 <picture class="">
