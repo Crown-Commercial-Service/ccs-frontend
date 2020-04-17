@@ -1,29 +1,34 @@
 <div class="govuk-width-container">
-    <main class="govuk-main-wrapper">
-        <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-quarter govuk-!-width-one-quarter achievement_image">
-                {% if component.achievement_and_image_achievement_and_image_image %}
-                    <figure class="image-wrapper">
-                        <picture class="">
-                            <source media="(min-width: 1920px)" srcset="{{ component.achievement_and_image_achievement_and_image_image.byName('full') }}">
-                            <source media="(min-width: 1024px)" srcset="{{ component.achievement_and_image_achievement_and_image_image.byName('large') }}">
-                            <source media="(max-width: 768px)" srcset="{{ component.achievement_and_image_achievement_and_image_image.byName('medium_large') }}">
-                            {# Fallback for browsers that don't support the picture element #}
-                            <img src="{{ component.achievement_and_image_achievement_and_image_image }}"
-                                    role="presentation"
-                                    class="achievement_img"
-                                    loading="lazy"/>
-                        </picture>
-                    </figure>
-                {% endif %}
-            </div>
-            <div class="govuk-grid-column-three-quarters govuk-!-padding-left-1 govuk-!-padding-top-9 achievement_text">
-                <div class="achievement_border">
-                    <div class="govuk-!-font-size-25 govuk-heading-m govuk-!-padding-left-3">
-                    {{ component.achievement_and_image_achievement_and_image_text | striptags | raw }}
-                    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third achievement_grid">
+            {% if component.achievement_and_image_achievement_and_image_image %}
+                    <picture class="">
+                        <source media="(min-width: 1920px)" srcset="{{ component.achievement_and_image_achievement_and_image_image.byName('full') }}">
+                        <source media="(min-width: 1024px)" srcset="{{ component.achievement_and_image_achievement_and_image_image.byName('large') }}">
+                        <source media="(max-width: 768px)" srcset="{{ component.achievement_and_image_achievement_and_image_image.byName('medium_large') }}">
+                        {# Fallback for browsers that don't support the picture element #}
+                        <img src="{{ component.achievement_and_image_achievement_and_image_image }}"
+                                role="presentation"
+                                class="achievement_img"
+                                id="achievement_img"
+                                loading="lazy"/>
+                    </picture>
+            {% endif %}
+        </div>
+        <div class="govuk-grid-column-two-thirds govuk-!-padding-left-3 achievement_text_grid">
+            <div class="achievement_border" id="achievement_border">
+                <div class="govuk-!-font-size-25 govuk-heading-m govuk-!-padding-left-3">
+                {{ component.achievement_and_image_achievement_and_image_text | striptags | raw }}
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 </div>
+<script>
+window.addEventListener('load', function () {
+    var image = document.getElementById('achievement_img');
+    var border = document.getElementById('achievement_border');
+    console.log(image);
+    console.log(border);
+});
+</script>
