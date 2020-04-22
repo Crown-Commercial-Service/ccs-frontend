@@ -374,7 +374,7 @@ var docCookies = {
         var cookieMessageInner = document.createElement('div');
         cookieMessageInner.classList.add('cookie-message__inner', 'govuk-width-container');
         cookieMessageInner.classList.add('site-container');
-        cookieMessageInner.innerHTML = '<div class="cookie-message__intro"><p>We use non-essential cookies to help us improve this website and our services and any data collected is anonymised. Are you happy to help us improve our website and services by allowing us to use cookies on this website?</p></div>';
+        cookieMessageInner.innerHTML = '<div class="cookie-message__intro"><p>We use cookies to collect information about how you use crowncommercial.gov.uk. We use this information to make the website work as well as possible and improve government services.</p></div>';
 
         var optInButton = document.createElement('button');
         optInButton.classList.add('govuk-!-font-size-18', 'govuk-!-font-weight-bold', 'govuk-button', 'gtm--accept-cookies-in-banner');
