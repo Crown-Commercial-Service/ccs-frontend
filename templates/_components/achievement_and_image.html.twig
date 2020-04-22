@@ -1,6 +1,6 @@
 <div class="govuk-width-container">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-third achievement_grid">
+        <div class="govuk-grid-column-one-third achievement_img_grid">
             {% if component.achievement_and_image_achievement_and_image_image %}
                     <picture class="">
                         <source media="(min-width: 1920px)" srcset="{{ component.achievement_and_image_achievement_and_image_image.byName('full') }}">
@@ -15,8 +15,8 @@
                     </picture>
             {% endif %}
         </div>
-        <div class="govuk-grid-column-two-thirds govuk-!-padding-left-3 achievement_text_grid">
-            <div class="achievement_border" id="achievement_border">
+        <div class="govuk-grid-column-two-thirds govuk-!-padding-left-3 achievement_text_grid" id="achievement_text_grid">
+            <div class="achievement_border">
                 <div class="govuk-!-font-size-25 govuk-heading-m govuk-!-padding-left-3">
                 {{ component.achievement_and_image_achievement_and_image_text | striptags | raw }}
                 </div>
@@ -24,11 +24,3 @@
         </div>
     </div>
 </div>
-<script>
-window.addEventListener('load', function () {
-    var image = document.getElementById('achievement_img');
-    var border = document.getElementById('achievement_border');
-    console.log(image);
-    console.log(border);
-});
-</script>
