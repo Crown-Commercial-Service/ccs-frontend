@@ -1,0 +1,112 @@
+/*------------------------------------*\
+  #Footer
+\*------------------------------------*/
+
+::after{
+    box-sizing: border-box;
+}
+.govuk-margin-free-text{
+
+    margin-bottom: 40%;
+}
+
+.free-wid{
+ 
+    position: relative;
+}
+
+.row {
+    clear: both;
+    content: "";
+    display: block;
+    width: 100%;
+  }
+
+.grid{
+    float: left;
+    padding: 10px;
+}
+
+.grids{
+    float: right;
+    padding: 10px;
+    position: relative;
+
+}
+.grid--half{
+    width: 50%;
+}
+
+.free-overflow{
+    position: relative;
+    width: auto;
+    height: auto;
+    overflow: hidden; 
+    object-fit: cover;
+}
+
+
+
+.govuk-border-left-free-text{
+    left:0;
+    top: 0;
+    content: "";
+    height: 100px;
+    border-left-width: 5px;
+    height: 10px;
+    position: relative;
+    padding-left: 20px;
+    border-color: $ccs-colour;
+    border-color: var(--sub-color);
+    border-left-style: solid;
+
+    @include govuk-media-query($from: 900) {
+        margin-bottom: govuk-px-to-rem(50);
+    }
+    
+}
+
+.wysiwyg-content-free-text-heading{
+    font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 23px;
+    color: #0b0c0c;
+    overflow: hidden;
+    white-space: normal; 
+}
+
+.wysiwyg-content-free-text{
+    color: #0b0c0c;
+    margin-top: 100px;
+    margin-bottom: 50px;  
+}
+
+.font-free-text{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.wysiwyg-content-free-text-left-banner{
+    font-family: Helvetica, Arial, sans-serif; font-size: 40px; line-height: 20px;
+    color: #0b0c0c;
+    margin-top: 100px;
+}
+
+
+
+.wysiwyg-content-free-text-content-field{
+    font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 23px;
+    color: #0b0c0c;
+
+}
+
+.govuk-overflow-freetext{
+    overflow: hidden; 
+}
+
+.govuk-border-free-text{
+    border:16px 
+    solid #FF0000; 
+    height: 110px;
+    border-radius: 0px; 
+    margin-top:100px; 
+    margin-bottom:2000px;
+}
