@@ -398,15 +398,16 @@
 
                                             </div>
 
-                                            {#
-                                            <div class="govuk-grid-column-one-third apollo-enclosure">
-                                                <h3 class="govuk-heading-s">Talk to us</h3>
-                                                <p>CCS customer services team is available Monday to Friday, 9am to 5pm.</p>
+                                            
+                                                <div class="govuk-grid-column-one-third">
+                                                    <div class="govuk-talk-to-us">
+								                        <p class="govuk-!-font-size-14px"><strong>Talk to us </strong></p><br />
+								                        <p>CCS customer services team is available <br />Monday to Friday, 9am to 5pm.</p><br />
+								                        <p><b>Email:</b><br /><a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a></p>
+							                        </div>    
+                                                </div>
+                                            </div>
 
-                                                <h3 class="govuk-heading-s" style="margin-bottom: 0;">Talk to us</h3>
-                                                <p>0345 410 2222</p>
-                                            </div>#}
-                                        </div>
                                     {% endif %}
 
                                 </div>
@@ -423,10 +424,9 @@
         {% if page.content.full_width_content %}
             <div class="apollo-island apollo-island--emphasised">
                 <div class="govuk-width-container">
-
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-one-half">
-
+                            <h2 class="visuallyhidden">You might also be interested in:</h2>
                             <div class="apollo-call-to-action apollo-call-to-action--aggregation">
                                 <h3 class="govuk-heading-m">Aggregation</h3>
                                 <p>Bulk buying, also known as aggregation,
@@ -436,10 +436,9 @@
                                         more <span class="visuallyhidden">about aggregation</span></a>
                                 </p>
                             </div>
-
                         </div>
-                        <div class="govuk-grid-column-one-half">
-
+                    <div class="govuk-grid-column-one-half">
+                        <h2 class="visuallyhidden">You might also be interested in:</h2>
                             <div class="apollo-call-to-action apollo-call-to-action--help">
                                 <h3 class="govuk-heading-m">Can't find what
                                     you're looking for?</h3>
@@ -450,11 +449,9 @@
                                         more <span class="visuallyhidden">EU tenders</span></a>
                                 </p>
                             </div>
-
                         </div>
                     </div>
-
-                </div>
+                <div>
             </div>
         {% endif %}
     {% endif %}
