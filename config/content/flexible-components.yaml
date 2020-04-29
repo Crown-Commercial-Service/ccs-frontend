@@ -128,13 +128,40 @@ components:
       type: richtext
     free_text_free_text_left_content_new:
       type: richtext
-    free_text_free_text_right_content_banner_new:
+    free_text_free_text_right_heading:
       type: richtext
-    free_text_free_text_left_content_banner_new:
+    free_text_free_text_left_heading:
       type: richtext
     free_text_free_text_cta_label:
       type: text
     free_text_free_text_cta_destination:
       type: text
+  featured_featured:
+    featured_featured_section_heading:
+      type: richtext
+    featured_featured_heading_1:
+      type: richtext
+    featured_featured_heading_2:
+      type: richtext
+    featured_featured_heading_3:
+      type: richtext
+    featured_featured_body_1:
+      type: richtext
+    featured_featured_body_2:
+      type: richtext
+    featured_featured_body_3:
+      type: richtext
+    featured_featured_link_1_title:
+      type: richtext
+    featured_featured_link_2_title:
+      type: richtext
+    featured_featured_link_3_title:
+      type: richtext
+    featured_featured_link_1_destination:
+      type: richtext
+    featured_featured_link_2_destination:
+      type: richtext
+    featured_featured_link_3_destination:
+      type: richtext
   
 
