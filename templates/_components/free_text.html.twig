@@ -4,8 +4,8 @@
             <h2 class="govuk-heading-m intro__heading">
                 {{ component.free_text_free_text_left_heading | striptags | raw}}
             </h2>
-            <div class="govuk-body govuk-!-font-size-18" style="margin-top: 50px">
-                {{ component.free_text_free_text_left_content_new | striptags | raw}}
+            <div class="govuk-body govuk-!-font-size-19" style="margin-top: 50px">
+                {{ component.free_text_free_text_left_content_new | raw}}
             </div>
             {% if component.free_text_free_text_cta_label|trim is not empty and component.free_text_free_text_cta_destination|trim is not empty %}
                 <a href="{{ component.free_text_free_text_cta_destination }}" class="govuk-button">{{ component.free_text_free_text_cta_label }}</a>
@@ -15,7 +15,7 @@
             <h2 class="govuk-heading-m intro__heading" style="margin-right:31px">
                  {{component.free_text_free_text_right_heading | striptags | raw}}
             </h2>
-            <div class="govuk-body govuk-!-font-size-18">
+            <div class="govuk-body govuk-!-font-size-19">
                 {{ component.free_text_free_text_right_content_new | raw}}
             </div>
         </div> 
