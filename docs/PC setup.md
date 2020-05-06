@@ -56,7 +56,7 @@ wp salesforce import updateSupplierSearchIndex
 
 - if environment variables are still the issue do a variable dump to the determine if it’s picking up the environment variables from the system or the .env file if its picking up the system variables you may need a library to force the use of the .env file recommended as it has worked with the project is dotenv
 
-###### Access Frontend and Wordpress URL
+###### Access Frontend and Wordpress URL in local 
 
 - to test that the frontend and wordpress are communicating together run the follwoing URL:
     - Frontend URL: http://local.crowncommercial.gov.uk
