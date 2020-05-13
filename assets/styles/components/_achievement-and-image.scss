@@ -1,0 +1,30 @@
+.achievement_img_grid {
+    min-width: max-content;
+    min-height: max-content;
+}
+
+.achievement_img {
+    border-radius:50%; 
+    position: relative; 
+    width: 20rem; 
+    height: 20rem; 
+    overflow: hidden; 
+    object-fit: cover;
+}
+
+.achievement_border {
+    border-left-style: solid;
+    border-color: var(--sub-color); 
+    border-width: 4px;
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-content: center;
+}
+
+.achievement_text_grid {
+    position: relative; 
+    height: 20rem;
+}

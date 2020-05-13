@@ -52,6 +52,29 @@
         </div>
     {% endif %}
 
+    {% if component.name == "quote_and_image_quote_and_image" %}
+        <div class="component quote-and-image">
+            {% include '_components/quote_and_image.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+    {% if component.name == "free_text_free_text" %}
+        <div class="component free-text">
+            {% include '_components/free_text.html.twig' with {'component': component.content } %}
+         </div>
+    {% endif %}
+
+    {% if component.name == "achievement_and_image_achievement_and_image" %}
+        <div class="component achievement-and-image">
+            {% include '_components/achievement_and_image.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+    {% if component.name == "featured_featured" %}
+        <div class="component featured">
+            {% include '_components/featured.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
 
 {% endfor %}
 {# End of Page components #}
