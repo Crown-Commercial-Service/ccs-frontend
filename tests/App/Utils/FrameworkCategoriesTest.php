@@ -31,13 +31,13 @@ class FrameworkCategoriesTest extends TestCase
     public function testCategories()
     {
         $categories = FrameworkCategories::getAll();
-        $this->assertEquals(17, count($categories));
+        $this->assertEquals(18, count($categories));
         $first = current($categories);
         $this->assertEquals('construction', $first);
         $last = end($categories);
         $this->assertEquals('workplace', $last);
 
-        $this->assertEquals('utilities-fuels', FrameworkCategories::getSlug('Utilities & Fuels'));
+        $this->assertEquals('energy', FrameworkCategories::getSlug('energy'));
         $this->assertEquals('document-management-logistics', FrameworkCategories::getSlug('Document Management & Logistics'));
         $this->assertEquals('Technology Products & Services', FrameworkCategories::getNameBySlug('technology-products-services'));
         $this->assertEquals('Marcomms & Research', FrameworkCategories::getNameBySlug('marcomms-research'));
