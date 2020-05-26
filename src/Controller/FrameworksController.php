@@ -77,7 +77,7 @@ class FrameworksController extends AbstractController
                 case 'im_field_category:20':
                     return $this->redirectToRoute('frameworks_list_by_pillar', ['pillar' => 'buildings']);
                 case 'im_field_category:9':
-                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'utilities-fuels']);
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'energy']);
                 case 'im_field_category:10':
                     return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'marcomms-research']);
                 case 'im_field_category:19':
