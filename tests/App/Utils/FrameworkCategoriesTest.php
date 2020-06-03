@@ -31,7 +31,7 @@ class FrameworkCategoriesTest extends TestCase
     public function testCategories()
     {
         $categories = FrameworkCategories::getAll();
-        $this->assertEquals(18, count($categories));
+        $this->assertEquals(17, count($categories));
         $first = current($categories);
         $this->assertEquals('construction', $first);
         $last = end($categories);

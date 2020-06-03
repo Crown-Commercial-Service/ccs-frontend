@@ -17,10 +17,6 @@ pillars:
         db_value: 'Workplace'
         slug: 'workplace'
 
-      - name: 'Commodities and Innovation'
-        db_value: 'Commodities and Innovation'
-        slug: 'commodities-and-innovation'
-
   - name: 'Corporate Solutions'
     db_value: 'Corporate Solutions'
     slug: 'corporate-solutions'
