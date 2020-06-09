@@ -58,12 +58,13 @@
     border-color: $ccs-colour;
     border-color: var(--sub-color);
     border-left-style: solid;
-
-    @include govuk-media-query($from: 900) {
-        margin-bottom: govuk-px-to-rem(50);
-    }
-    
 }
+
+    @media screen and (max-width: 600px) {
+        .govuk-border-left-free-text{
+        margin-bottom: govuk-px-to-rem(300);     
+        }
+    }
 
 .wysiwyg-content-free-text-heading{
     font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 23px;
