@@ -286,12 +286,13 @@
                                                             address</label>
                                                         <input class="govuk-input" id="form-email" maxlength="80" name="email" size="20" type="email" pattern=".+@.+\..+" required="">
                                                     </div>
-
+                                                    {% if page.content.contact_form_show_newsletter_form is not empty and page.content.contact_form_show_newsletter_form.value == false %}
                                                     <div class="govuk-form-group">
                                                         <label class="govuk-label" for="form-telephone">Telephone
                                                             number</label>
                                                         <input class="govuk-input" id="form-telephone" maxlength="80" name="phone" size="20" type="text" required="">
                                                     </div>
+                                                    {% endif %}
 
                                                     <div class="govuk-form-group">
                                                         <label class="govuk-label" for="form-organisation">Organisation</label>
@@ -340,6 +341,7 @@
                                                         </div>
                                                     {% endif %}
 
+                                                    {% if page.content.contact_form_show_newsletter_form is not empty and page.content.contact_form_show_newsletter_form.value == false %}
                                                     <div class="govuk-form-group">
                                                         <label class="govuk-label" for="form-more-detail">
                                                             {% if page.content.contact_form_message_question_title is defined and page.content.contact_form_message_question_title is not empty %}
@@ -357,7 +359,9 @@
                                             </span>
                                                         <textarea class="govuk-textarea" id="form-more-detail" name="description" rows="5" aria-describedby="form-more-detail"></textarea>
                                                     </div>
+                                                    {% endif %}
 
+                                                    {% if page.content.contact_form_show_newsletter_form is not empty and page.content.contact_form_show_newsletter_form.value == false %}
                                                     <div class="govuk-form-group">
                                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
                                                             <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-callback" name="00Nb0000009IXEg" type="checkbox" value="1"/>
@@ -365,6 +369,7 @@
                                                                 I want someone to call me</label>
                                                         </div>
                                                     </div>
+                                                    {% endif %}
 
                                                     <p>For information about how we use your data, you can read our <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice">privacy notice</a>. When you submit this form we will add you to our mailing list and send you our newsletters, or information about our products and services.</p>
                                                     <p>You will receive an email when you submit your details. You can unsubscribe using the link in the email.</p>
