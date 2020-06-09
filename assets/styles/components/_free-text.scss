@@ -2,9 +2,7 @@
   #Footer
 \*------------------------------------*/
 
-::after{
-    box-sizing: border-box;
-}
+
 .govuk-margin-free-text{
 
     margin-bottom: 40%;
@@ -65,6 +63,7 @@
         margin-bottom: govuk-px-to-rem(300);     
         }
     }
+
 
 .wysiwyg-content-free-text-heading{
     font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 23px;
