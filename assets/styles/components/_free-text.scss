@@ -58,13 +58,11 @@
     border-left-style: solid;
 }
 
-    @media screen and (max-width: 600px) {
-        .govuk-border-left-free-text{
-        margin-bottom: govuk-px-to-rem(50);
-        overflow: hidden;        
-        }
-    }
-    
+@media screen and (max-width: 600px) {
+   .govuk-border-left-free-text{
+      margin-bottom: govuk-px-to-rem(300);     
+  }
+}
 
 
 .wysiwyg-content-free-text-heading{
