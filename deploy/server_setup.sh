@@ -45,6 +45,7 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     echo "> > Installing web packages..."
     sudo amazon-linux-extras enable php7.3
     sudo yum -y install \
+        httpd \
         php \
         php-mysqlnd.x86_64 \
         php-opcache.x86_64 \
@@ -55,8 +56,7 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
         php-mbstring.x86_64 \
         php-bcmath.x86_64 \
         php-soap.x86_64 \
-        php-json.x86_64 \
-        httpd
+        php-json.x86_64 
 
     echo "> > Moving httpd.conf..."
     sudo mv -f "$SCRIPTDIR/files/httpd.conf" /etc/httpd/conf/httpd.conf
