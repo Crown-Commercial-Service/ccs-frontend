@@ -55,7 +55,8 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
         php-mbstring.x86_64 \
         php-bcmath.x86_64 \
         php-soap.x86_64 \
-        php-json.x86_64
+        php-json.x86_64 \
+        httpd
 
     echo "> > Moving httpd.conf..."
     sudo mv -f "$SCRIPTDIR/files/httpd.conf" /etc/httpd/conf/httpd.conf
