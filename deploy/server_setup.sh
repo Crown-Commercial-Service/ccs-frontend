@@ -10,7 +10,7 @@ echo "> Updating system software..."
 sudo yum update -y
 
 echo "> Set timezone..."
-    sudo -rm -f /etc/sysconfig/clock
+    sudo rm -f /etc/sysconfig/clock
     sudo mv -f \
         "$SCRIPTDIR/files/clock" \
         /etc/sysconfig/clock
@@ -40,7 +40,7 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
 
     echo "> > Adding additional package repos..."
     sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-    sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+    sudo yum install -y https://repo.ius.io/ius-release-el$(rpm -E '%{rhel}').rpm
 
     echo "> > Installing web packages..."
     sudo amazon-linux-extras enable php7.3
