@@ -10,7 +10,7 @@ echo "> Updating system software..."
 sudo yum update -y
 
 echo "> Set timezone..."
-    sudo -rm -f /etc/sysconfig/clock
+    sudo rm -f /etc/sysconfig/clock
     sudo mv -f \
         "$SCRIPTDIR/files/clock" \
         /etc/sysconfig/clock
@@ -40,23 +40,23 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
 
     echo "> > Adding additional package repos..."
     sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-    sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+    sudo yum install -y https://repo.ius.io/ius-release-el$(rpm -E '%{rhel}').rpm
 
     echo "> > Installing web packages..."
+    sudo amazon-linux-extras enable php7.3
     sudo yum -y install \
         httpd \
-        mod_php73 \
-        php73-cli \
-        php73-mysqlnd.x86_64 \
-        php73-opcache \
-        php73-xml \
-        php73-gd \
-        php73-devel \
-        php73-intl \
-        php73-mbstring \
-        php73-bcmath \
-        php73-soap \
-        php73-json
+        php \
+        php-mysqlnd.x86_64 \
+        php-opcache.x86_64 \
+        php-xml.x86_64 \
+        php-gd.x86_64 \
+        php-devel.x86_64 \
+        php-intl.x86_64 \
+        php-mbstring.x86_64 \
+        php-bcmath.x86_64 \
+        php-soap.x86_64 \
+        php-json.x86_64 
 
     echo "> > Moving httpd.conf..."
     sudo mv -f "$SCRIPTDIR/files/httpd.conf" /etc/httpd/conf/httpd.conf
