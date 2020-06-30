@@ -122,7 +122,7 @@ class FrameworksController extends AbstractController
         // We are overriding the content model here
         $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
-        $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
+        $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 50;
 
         try {
             $results = $this->searchApi->list($page, ['limit' => $limit]);
