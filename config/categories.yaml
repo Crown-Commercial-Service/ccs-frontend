@@ -9,9 +9,9 @@ pillars:
         db_value: 'Construction'
         slug: 'construction'
 
-      - name: 'Utilities & Fuels'
-        db_value: 'Utilities & Fuels'
-        slug: 'utilities-fuels'
+      - name: 'Energy'
+        db_value: 'Energy'
+        slug: 'energy'
 
       - name: 'Workplace'
         db_value: 'Workplace'
