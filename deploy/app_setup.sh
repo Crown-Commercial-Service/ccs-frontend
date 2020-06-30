@@ -39,6 +39,9 @@ echo "> Preparing new web deployment files..."
     sudo ln -s "$WEB_CURRENT/public" "$WEB_CURRENT/html"
 ) || rollback
 
+echo "> Moving httpd.conf..."
+    sudo mv -f "$DEPLOY_PATH/files/httpd.conf" /etc/httpd/conf/httpd.conf
+
 # Set permissions
 echo "> Setting web deployment permissions..."
 (sudo chown -R ec2-user:ec2-user /var/www &&
