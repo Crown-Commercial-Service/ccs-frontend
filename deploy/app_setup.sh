@@ -31,6 +31,9 @@ if [ -e "$WEB_CURRENT" ]; then
     ) || rollback
 fi
 
+echo "> Moving httpd.conf..."
+    sudo mv -f "$DEPLOY_PATH/files/httpd.conf" /etc/httpd/conf/httpd.conf
+
 # Prepare & move files into place
 echo "> Preparing new web deployment files..."
 (sudo rm -f "$DEPLOY_PATH/appspec.yml" &&
@@ -38,9 +41,6 @@ echo "> Preparing new web deployment files..."
     sudo mv -f "$DEPLOY_PATH/.env" "$DEPLOY_PATH/.env.test" "$DEPLOY_PATH/"* "$WEB_CURRENT" &&
     sudo ln -s "$WEB_CURRENT/public" "$WEB_CURRENT/html"
 ) || rollback
-
-echo "> Moving httpd.conf..."
-    sudo mv -f "$DEPLOY_PATH/files/httpd.conf" /etc/httpd/conf/httpd.conf
 
 # Set permissions
 echo "> Setting web deployment permissions..."
