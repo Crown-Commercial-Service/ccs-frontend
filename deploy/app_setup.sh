@@ -31,6 +31,9 @@ if [ -e "$WEB_CURRENT" ]; then
     ) || rollback
 fi
 
+echo "> Moving httpd.conf..."
+    sudo mv -f "$DEPLOY_PATH/deploy/files/httpd.conf" /etc/httpd/conf/httpd.conf
+
 # Prepare & move files into place
 echo "> Preparing new web deployment files..."
 (sudo rm -f "$DEPLOY_PATH/appspec.yml" &&
