@@ -12,7 +12,7 @@
 
 {% block body %}
 
-
+{% if flag is defined %}
 
     <!-- required wrapper 1 -->
     <div class="govuk-width-container">
@@ -113,83 +113,192 @@
                             {% endfor %}
                         </ul>
 
+                    </form>
 
-                        {#<div class="govuk-form-group govuk-form-group--enclosure">#}
-                        {#<fieldset class="govuk-fieldset" aria-describedby="waste-hint">#}
-                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
-                        {#<h1 class="govuk-fieldset__heading">#}
-                        {#Status#}
-                        {#</h1>#}
-                        {#</legend>#}
-                        {#<span id="waste-hint" class="govuk-hint">#}
-                        {#2 selected#}
-                        {#</span>#}
-                        {#<div class="govuk-checkboxes govuk-checkboxes--small">#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-1" name="waste" type="checkbox" value="carcasses">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="waste-1">#}
-                        {#Live#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-2" name="waste" type="checkbox" value="mines">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="waste-2">#}
-                        {#Expired#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#</fieldset>#}
-                        {#</div>#}
+                </div>
+                {% if query is defined %}
+                <div class="govuk-grid-column-two-thirds guided-match-background">
+                    {% if pagination.totalResults == 1 %}
+                        <h2 class="govuk-heading-l ccs-font-weight-semibold text-white govuk-!-margin-1">Get help finding the right framework</h2>
+                        <h2 class="govuk-heading-s ccs-font-weight-semibold text-white">There are {{ pagination.totalResults }} found for {{ query }}. Depending on your requirements, some of these frameworks maybe better suited than others.</h2>
+                    {% else %}
+                        <h2 class="govuk-heading-l ccs-font-weight-semibold text-white govuk-!-margin-1">Get help finding the right framework</h2>
+                        <h2 class="govuk-heading-s ccs-font-weight-semibold text-white">There are {{ pagination.totalResults }} found for {{ query }}. Depending on your requirements, some of these frameworks maybe better suited than others.</h2>
+                    {% endif %}
+
+                    <a href="#" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+                        Start now
+                        <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+                        </svg>
+                    </a>
+                </div>
+                {% else %}
+                <div class="govuk-grid-column-two-thirds">
+
+                    {% if pagination.totalResults == 1 %}
+                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }}
+                            framework found</h2>
+                    {% else %}
+                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }}
+                            frameworks found</h2>
+                    {% endif %}
+                
+                </div>
+                {% endif %}
+                <div class="govuk-grid-column-two-thirds">
+                    {# see https://studio24.github.io/frontend/templating/content-fields.html #}
+
+                    <ul class="govuk-list govuk-list--frameworks">
+                        {% for item in results %}
+                            <li>
+                                <h3 class="govuk-heading-m ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22">
+                                    <a href="{{ path('frameworks_show', {'rmNumber':  item.content.rm_number }) }}">{{ item.content.title }}</a> {# <strong class="govuk-tag govuk-tag--subtle">{{ item.content.status }}</strong> #}
+                                    {% if item.content.status == 'Expired - Data Still Received' %}
+                                        <span class="govuk-tag ccs-tag ccs-tag--error">Expired: {{ item.content.end_date.format('d/m/Y') }}</span>
+                                    {% endif %}
+                                </h3>
+                                <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                    <li><strong>Framework
+                                            ID:</strong> {{ item.content.rm_number }}
+                                    </li>
+                                    <li><strong>Start
+                                            Date:</strong> {{ item.content.start_date.format('d/m/Y') }}
+                                    </li>
+                                    {% if item.content.status != 'Expired - Data Still Received' %}
+                                        <li><strong>End
+                                                Date:</strong> {{ item.content.end_date.format('d/m/Y') }}
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                                <p class="govuk-body-s">{{ item.content.summary | striptags | raw }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
 
 
+                    {# Pagination #}
+                    {% if pillar is defined %}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_pillar', 'options': {'pillar': pillar_slug}} %}
+                    {% elseif category is defined %}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_category', 'options': {'category': category_slug}} %}
+                    {% elseif query is defined %}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'q': query}} %}
+                    {% else %}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list', 'options': {}} %}
+                    {% endif %}
+
+                    {% if pagination.totalPages > 1 %}
+                        {{ include('includes/pagination.html.twig', pagination_data) }}
+                    {% endif %}
+
+                </div>
+            </div>
 
 
+        </main>
+    </div>
+
+{% else %}
+
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
+
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
+
+        <div class="govuk-phase-banner">
+            <p class="govuk-phase-banner__content">
+                <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                    beta </strong> <span class="govuk-phase-banner__text">
+      This is a new service – your
+      <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.
+    </span>
+            </p>
+        </div>
 
 
+        <div class="govuk-breadcrumbs">
+            <ol class="govuk-breadcrumbs__list">
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
+                </li>
+                <!--<li class="govuk-breadcrumbs__list-item">-->
+                <!--<a class="govuk-breadcrumbs__link" href="2-3-frameworks-search-result">Search frameworks</a>-->
+                <!--</li>-->
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                    Search frameworks
+                </li>
+            </ol>
+        </div>
 
 
+        <!-- required wrapper 2 -->
+        <main id="main-content" role="main" class="govuk-main-wrapper">
 
 
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
 
-                        {#<div class="govuk-form-group govuk-form-group--enclosure">#}
-                        {#<fieldset class="govuk-fieldset">#}
-                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
-                        {#<h1 class="govuk-fieldset__heading">#}
-                        {#Results per page#}
-                        {#</h1>#}
-                        {#</legend>#}
-                        {#<span id="waste-hint" class="govuk-hint">#}
-                        {#10 results per page#}
-                        {#</span>#}
-                        {#<div class="govuk-radios govuk-radios--small">#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-1" name="where-do-you-live" type="radio" value="england">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-1">#}
-                        {#10#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-2" name="where-do-you-live" type="radio" value="scotland">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-2">#}
-                        {#25#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-3" name="where-do-you-live" type="radio" value="wales">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-3">#}
-                        {#50#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-4" name="where-do-you-live" type="radio" value="northern-ireland">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-4">#}
-                        {#View all#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#</fieldset>#}
-                        {#</div>#}
+                    {% if category is defined %}
+                        <h1 class="govuk-heading-xl page-title">Frameworks in
+                            the {{ category }} category</h1>
+                    {% elseif pillar is defined %}
+                        <h1 class="govuk-heading-xl page-title">Frameworks in
+                            the {{ pillar }} category</h1>
+                    {% elseif query is defined %}
+                        <h1 class="govuk-heading-xl page-title">Search frameworks for {{ query }}</h1>
+                    {% else %}
+                        <h1 class="govuk-heading-xl page-title">Search frameworks</h1>
+                    {% endif %}
 
+                </div>
+            </div>
+
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-third">
+
+                    <form action="{{ path('frameworks_search') }}" method="GET">
+
+                        <div class="govuk-form-group govuk-form-group--enclosure">
+                            <div class="govuk-form-group sidebar__search-group">
+                                <label class="govuk-label" for="q"> Search
+                                    frameworks </label>
+                                <input class="govuk-input" id="q" name="q" type="text">
+                                <button type="submit" class="sidebar__search-button govuk-input">
+                                    <span class="visuallyhidden">Search frameworks</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        {# see https://studio24.github.io/frontend/templating/content-fields.html #}
+                        <h2 class="govuk-heading-m">Browse by category</h2>
+                        <ul class="govuk-list">
+
+                            {% for pillar_item in pillars.pillars %}
+                                <li>
+                                    {% if pillar is defined and pillar == pillar_item.name %}
+                                        <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug}) }}">{{ pillar_item.name }}</a>
+                                    {% else %}
+                                        <a href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug}) }}">{{ pillar_item.name }}</a>
+                                    {% endif %}
+
+
+                                    <ul class="govuk-list">
+                                        {% for category_item in pillar_item.categories %}
+                                            <li>
+                                                {% if category is defined and category == category_item.name %}
+                                                    <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_category', {'category': category_item.slug}) }}">{{ category_item.name }}</a>
+                                                {% else %}
+                                                    <a href="{{ path('frameworks_list_by_category', {'category': category_item.slug}) }}">{{ category_item.name }}</a>
+                                                {% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                </li>
+                            {% endfor %}
+                        </ul>
 
                     </form>
 
@@ -257,6 +366,6 @@
         </main>
     </div>
 
-
+{% endif %}
 
 {% endblock %}

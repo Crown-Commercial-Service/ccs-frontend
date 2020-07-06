@@ -297,6 +297,10 @@ class FrameworksController extends AbstractController
      */
     public function search(Request $request, int $page = 1)
     {
+        // Get feature flag if it exists &feature=True
+        $flag = filter_var($request->query->get('feature'), FILTER_SANITIZE_STRING);
+
+
         // Get search query
         $query =  filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
@@ -332,14 +336,24 @@ class FrameworksController extends AbstractController
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
-
-        $data = [
-            'query'         => $query,
-            'pagination'    => $results->getPagination(),
-            'results'       => $results,
-            'categories'    => FrameworkCategories::getAll(),
-            'pillars'       => FrameworkCategories::getAllPillars()
-        ];
+        if ($flag == 'True'){
+            $data = [
+                'query'         => $query,
+                'pagination'    => $results->getPagination(),
+                'results'       => $results,
+                'categories'    => FrameworkCategories::getAll(),
+                'pillars'       => FrameworkCategories::getAllPillars(),
+                'flag'          => $flag
+            ];
+        } else {
+            $data = [
+                'query'         => $query,
+                'pagination'    => $results->getPagination(),
+                'results'       => $results,
+                'categories'    => FrameworkCategories::getAll(),
+                'pillars'       => FrameworkCategories::getAllPillars()
+            ];
+        }
         return $this->render('frameworks/list.html.twig', $data);
     }
 
