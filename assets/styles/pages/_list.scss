@@ -5,3 +5,31 @@
 .guided-match-background{
     background-color: #78256E;
 }
+
+.text-purple{
+    color: #78256E;
+}
+
+.guided-match-area{
+
+    .govuk-button {
+
+        background-color: white;
+        border-radius: govuk-px-to-rem(3);
+        box-shadow: 0 3px 0 #003618;
+        color: #78256E;
+        padding-left: govuk-px-to-rem(30);
+        padding-right: govuk-px-to-rem(30);
+
+        width: auto;
+        
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: #78256E; 
+            background-color: white;
+
+        }
+    }
+}
