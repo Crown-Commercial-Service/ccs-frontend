@@ -334,7 +334,7 @@ class FrameworksController extends AbstractController
                 'pillar'    => $category ?? null,
             ]);
         } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
+            throw new NotFoundHttpException('Page not found', $e) ;
         }
         if ($flag == 'guidedmatch'){
             $data = [
@@ -345,7 +345,7 @@ class FrameworksController extends AbstractController
                 'pillars'                    => FrameworkCategories::getAllPillars(),
                 'guided_match_flag'          => $flag,
                 'keywords'                   => ['linen', 'laptop', 'legal'],
-                'match_url'                  => getenv('GUIDED_MATCH_URL').$query 
+                'match_url'                  => getenv('GUIDED_MATCH_URL') . $query
             ];
         } else {
             $data = [
