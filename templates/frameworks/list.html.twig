@@ -122,7 +122,6 @@
                         {% else %}
                             <h2 class="govuk-heading-l ccs-font-weight-semibold text-white govuk-!-margin-1">Get help finding the right framework</h2>
                             <h2 class="govuk-heading-s ccs-font-weight-semibold text-white">There are "{{ pagination.totalResults }}" results found for {{ query }}. Depending on your requirements, some of these frameworks maybe better suited than others.</h2>
-                        {% endif %}
 
                         <a href={{ match_url }} role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-bottom-3" data-module="govuk-button">
                             Start now
@@ -130,18 +129,12 @@
                             <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
                             </svg>
                         </a>
+                        {% endif %}
                     </div>
                     {% else %}
                     <div class="govuk-grid-column-two-thirds">
-
-                        {% if pagination.totalResults == 1 %}
                             <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }}
                                 framework found</h2>
-                        {% else %}
-                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }}
-                                frameworks found</h2>
-                        {% endif %}
-                    
                     </div>
                     {% endif %}
                 {% else %}
