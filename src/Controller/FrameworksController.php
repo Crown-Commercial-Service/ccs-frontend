@@ -297,7 +297,7 @@ class FrameworksController extends AbstractController
      */
     public function search(Request $request, int $page = 1)
     {
-        // Get feature flag if it exists &feature=Scale
+        // Get feature flag if it exists &feature=guidedmatch
         $flag = filter_var($request->query->get('feature'), FILTER_SANITIZE_STRING);
 
 
@@ -338,13 +338,13 @@ class FrameworksController extends AbstractController
         }
         if ($flag == 'guidedmatch'){
             $data = [
-                'query'         => $query,
-                'pagination'    => $results->getPagination(),
-                'results'       => $results,
-                'categories'    => FrameworkCategories::getAll(),
-                'pillars'       => FrameworkCategories::getAllPillars(),
-                'flag'          => $flag,
-                'match_url'     => getenv('GUIDED_MATCH_URL').$query 
+                'query'                      => $query,
+                'pagination'                 => $results->getPagination(),
+                'results'                    => $results,
+                'categories'                 => FrameworkCategories::getAll(),
+                'pillars'                    => FrameworkCategories::getAllPillars(),
+                'guided_match_flag'          => $flag,
+                'match_url'                  => getenv('GUIDED_MATCH_URL').$query 
             ];
         } else {
             $data = [
