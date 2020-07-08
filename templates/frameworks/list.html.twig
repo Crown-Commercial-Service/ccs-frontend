@@ -115,7 +115,7 @@
 
                 </div>
                 {% if guided_match_flag is defined %}
-                    {% if query is defined %}
+                    {% if query is defined and query in keywords%}
                     <div class="govuk-grid-column-two-thirds guided-match-background govuk-!-margin-bottom-2 guided-match-area">
                         {% if pagination.totalResults == 1 %}
                             <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} framework found</h2>

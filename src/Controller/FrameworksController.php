@@ -344,6 +344,7 @@ class FrameworksController extends AbstractController
                 'categories'                 => FrameworkCategories::getAll(),
                 'pillars'                    => FrameworkCategories::getAllPillars(),
                 'guided_match_flag'          => $flag,
+                'keywords'                   => ['linen', 'laptop', 'legal'],
                 'match_url'                  => getenv('GUIDED_MATCH_URL').$query 
             ];
         } else {
