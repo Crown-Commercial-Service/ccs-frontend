@@ -334,9 +334,9 @@ class FrameworksController extends AbstractController
                 'pillar'    => $category ?? null,
             ]);
         } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e) ;
+            throw new NotFoundHttpException('Page not found', $e);
         }
-        if ($flag == 'guidedmatch'){
+        if ($flag == 'guidedmatch') {
             $data = [
                 'query'                      => $query,
                 'pagination'                 => $results->getPagination(),
@@ -344,7 +344,7 @@ class FrameworksController extends AbstractController
                 'categories'                 => FrameworkCategories::getAll(),
                 'pillars'                    => FrameworkCategories::getAllPillars(),
                 'guided_match_flag'          => $flag,
-                'keywords'                   => ['linen', 'laptop', 'legal'],
+                'keywords'                   => ['linen', 'laptop', 'legal', 'laundry'],
                 'match_url'                  => getenv('GUIDED_MATCH_URL') . $query
             ];
         } else {

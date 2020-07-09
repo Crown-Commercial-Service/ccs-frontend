@@ -117,9 +117,6 @@
                 {% if guided_match_flag is defined %}
                     {% if query is defined and query in keywords%}
                     <div class="govuk-grid-column-two-thirds guided-match-background govuk-!-margin-bottom-2 guided-match-area">
-                        {% if pagination.totalResults == 1 %}
-                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} framework found</h2>
-                        {% else %}
                             <h2 class="govuk-heading-l ccs-font-weight-semibold text-white govuk-!-margin-1">Get help finding the right framework</h2>
                             <h2 class="govuk-heading-s ccs-font-weight-semibold text-white">There are "{{ pagination.totalResults }}" results found for {{ query }}. Depending on your requirements, some of these frameworks maybe better suited than others.</h2>
 
@@ -129,17 +126,19 @@
                             <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
                             </svg>
                         </a>
-                        {% endif %}
                     </div>
                     {% else %}
                     <div class="govuk-grid-column-two-thirds">
-                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }}
-                                framework found</h2>
+                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} framework found</h2>
                     </div>
                     {% endif %}
                 {% else %}
                     <div class="govuk-grid-column-two-thirds">
+                    {% if pagination.totalResults == 1 %}
                         <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} framework found</h2>
+                    {% else %}
+                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} frameworks found</h2>
+                    {% endif %}
                     </div>
                 {% endif %}
                 <div class="govuk-grid-column-two-thirds">
