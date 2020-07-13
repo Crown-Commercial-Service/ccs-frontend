@@ -73,6 +73,11 @@ You can manually clear the cache via the command-line via:
 ```
 bin/console cache:clear
 ```
+If the above command doesnt work then try:
+
+```
+php bin/console cache:pool:clear cache.global_clearer
+```
 
 ### Static assets
 
