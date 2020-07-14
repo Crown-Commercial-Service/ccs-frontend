@@ -64,6 +64,8 @@ webinars_list_webinars:
       type: text
 contact_form_show_contact_form:
   type: boolean
+contact_form_show_newsletter_form:
+  type: boolean
 contact_form_form_heading:
   type: text
 contact_form_form_sub_heading:
