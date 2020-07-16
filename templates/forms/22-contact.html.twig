@@ -156,19 +156,30 @@
                         {# wrapper class for error states; `govuk-form-group--error`  #}
                         <div class="govuk-form-group --govuk-form-group--error">
                             <label class="govuk-label" for="name">Name</label>
-                            {#<span id="full-name-error" class="govuk-error-message">#}
+                            <span id="full-name-error" class="govuk-error-message">
                             {#Descriptive and helpful error message#}
-                            {#</span>#}
+                            </span>
                             {# input class for error states; `govuk-input--error`  #}
                             <input class="govuk-input --govuk-input--error" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text"/>
                         </div>
-                        <div class="govuk-form-group">
+
+                        {# wrapper class for error states; `govuk-form-group--error`  #}
+                        <div class="govuk-form-group govuk-form-group--error">
                             <label class="govuk-label" for="email">
-                                Email </label>
-                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="email" required/>
+                              Email
+                            </label>
+                            <span id="email-hint" class="govuk-hint">
+                            {#We’ll only use this to send you a receipt
+                            </span>
+                            <span id="email-error" class="govuk-error-message">
+                             <span class="govuk-visually-hidden">Error:</span> Enter an email address in the correct format, like name@example.com
+                            </span>
+                            <input class="govuk-input govuk-input--error" id="email" name="email" type="email" size="20" maxlength="80" value="Not an email address" aria-describedby="email-hint email-error" autocomplete="email" spellcheck="false">
                         </div>
 
+                    
 
+                 
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
@@ -185,11 +196,15 @@
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="phone"> Telephone
-                                number</label>
-                            <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text" required/>
-                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+  <label class="govuk-label" for="phone">
+  Telephone Number
+  </label>
+  <span id="telephone-number-error" class="govuk-error-message">
+    <span class="govuk-visually-hidden">Error:</span> Enter a UK telephone number
+  </span>
+  <input class="govuk-input govuk-input--width-20 govuk-input--error" id="phone" name="phone" type="tel" aria-describedby="telephone-number-error" autocomplete="tel">
+</div>
 
 
                         <div class="govuk-form-group">
