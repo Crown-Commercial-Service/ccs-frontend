@@ -105,7 +105,7 @@
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
                             <input type="hidden" name="debug" value=1>
-                            <input type="hidden" name="debugEmail" value="hellow">
+                            <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
                         {% endif %}
 
 
