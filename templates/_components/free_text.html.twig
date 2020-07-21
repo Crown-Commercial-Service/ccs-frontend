@@ -11,11 +11,12 @@
                 <a href="{{ component.free_text_free_text_cta_destination }}" class="govuk-button">{{ component.free_text_free_text_cta_label }}</a>
             {% endif %} 
         </div>
-        <div class="govuk-grid-column-one-half govuk-!-padding-right-15 govuk-!-padding-top-20 free-wid">
-            <h2 class="govuk-heading-m intro__heading" style="margin-right:31px">
+
+        <div class="govuk-grid-column-one-half govuk-border-left-free-text govuk-!-padding-left-15 govuk-!-padding-top-20 free-wid">
+            <h2 class="govuk-heading-m intro__heading" style="margin-left:15px">
                  {{component.free_text_free_text_right_heading | striptags | raw}}
             </h2>
-            <div class="govuk-body govuk-!-font-size-19" style="overflow:hidden">
+            <div class="govuk-body govuk-!-font-size-19" style="margin-left:15px">
                 {{ component.free_text_free_text_right_content_new | raw}}
             </div>
         </div> 
