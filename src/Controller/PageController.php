@@ -56,7 +56,7 @@ class PageController extends AbstractController
 
         return $this->render('pages/home.html.twig', [
             'news' => $news,
-            'flag' => $flag
+            'guided_match_flag' => $flag
         ]);
     }
 
