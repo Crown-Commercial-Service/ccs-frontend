@@ -49,12 +49,15 @@ class PageController extends AbstractController
     public function home(Request $request)
     {
         $this->api->setCacheKey($request->getRequestUri());
+        $flag = filter_var($request->query->get('feature'), FILTER_SANITIZE_STRING);
 
         $this->api->setContentType('news');
         $news = $this->api->listPages(1, ['limit' => 3]);
 
         return $this->render('pages/home.html.twig', [
-            'news' => $news
+            'news' => $news,
+            'guided_match_flag' => $flag
+
         ]);
     }
 

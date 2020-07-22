@@ -77,7 +77,7 @@ class FrameworksController extends AbstractController
                 case 'im_field_category:20':
                     return $this->redirectToRoute('frameworks_list_by_pillar', ['pillar' => 'buildings']);
                 case 'im_field_category:9':
-                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'utilities-fuels']);
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'energy']);
                 case 'im_field_category:10':
                     return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'marcomms-research']);
                 case 'im_field_category:19':
@@ -201,9 +201,7 @@ class FrameworksController extends AbstractController
         if ($categoryName === null) {
             $this->redirectToRoute('frameworks_list');
         }
-
         $this->searchApi->setCacheKey($request->getRequestUri());
-
         // We are overriding the content model here
         $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
@@ -297,6 +295,10 @@ class FrameworksController extends AbstractController
      */
     public function search(Request $request, int $page = 1)
     {
+        // Get feature flag if it exists &feature=guidedmatch
+        $flag = filter_var($request->query->get('feature'), FILTER_SANITIZE_STRING);
+
+
         // Get search query
         $query =  filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
@@ -332,14 +334,26 @@ class FrameworksController extends AbstractController
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
-
-        $data = [
-            'query'         => $query,
-            'pagination'    => $results->getPagination(),
-            'results'       => $results,
-            'categories'    => FrameworkCategories::getAll(),
-            'pillars'       => FrameworkCategories::getAllPillars()
-        ];
+        if ($flag == 'guidedmatch') {
+            $data = [
+                'query'                      => $query,
+                'pagination'                 => $results->getPagination(),
+                'results'                    => $results,
+                'categories'                 => FrameworkCategories::getAll(),
+                'pillars'                    => FrameworkCategories::getAllPillars(),
+                'guided_match_flag'          => $flag,
+                'keywords'                   => ['linen', 'laptop', 'legal', 'laundry'],
+                'match_url'                  => getenv('GUIDED_MATCH_URL') . $query
+            ];
+        } else {
+            $data = [
+                'query'         => $query,
+                'pagination'    => $results->getPagination(),
+                'results'       => $results,
+                'categories'    => FrameworkCategories::getAll(),
+                'pillars'       => FrameworkCategories::getAllPillars()
+            ];
+        }
         return $this->render('frameworks/list.html.twig', $data);
     }
 

@@ -12,8 +12,6 @@
 
 {% block body %}
 
-
-
     <!-- required wrapper 1 -->
     <div class="govuk-width-container">
 
@@ -113,98 +111,31 @@
                             {% endfor %}
                         </ul>
 
-
-                        {#<div class="govuk-form-group govuk-form-group--enclosure">#}
-                        {#<fieldset class="govuk-fieldset" aria-describedby="waste-hint">#}
-                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
-                        {#<h1 class="govuk-fieldset__heading">#}
-                        {#Status#}
-                        {#</h1>#}
-                        {#</legend>#}
-                        {#<span id="waste-hint" class="govuk-hint">#}
-                        {#2 selected#}
-                        {#</span>#}
-                        {#<div class="govuk-checkboxes govuk-checkboxes--small">#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-1" name="waste" type="checkbox" value="carcasses">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="waste-1">#}
-                        {#Live#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-checkboxes__item govuk-checkboxes__item--small">#}
-                        {#<input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="waste-2" name="waste" type="checkbox" value="mines">#}
-                        {#<label class="govuk-label govuk-checkboxes__label" for="waste-2">#}
-                        {#Expired#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#</fieldset>#}
-                        {#</div>#}
-
-
-
-
-
-
-
-
-
-
-
-                        {#<div class="govuk-form-group govuk-form-group--enclosure">#}
-                        {#<fieldset class="govuk-fieldset">#}
-                        {#<legend class="govuk-fieldset__legend govuk-fieldset__legend--m">#}
-                        {#<h1 class="govuk-fieldset__heading">#}
-                        {#Results per page#}
-                        {#</h1>#}
-                        {#</legend>#}
-                        {#<span id="waste-hint" class="govuk-hint">#}
-                        {#10 results per page#}
-                        {#</span>#}
-                        {#<div class="govuk-radios govuk-radios--small">#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-1" name="where-do-you-live" type="radio" value="england">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-1">#}
-                        {#10#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-2" name="where-do-you-live" type="radio" value="scotland">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-2">#}
-                        {#25#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-3" name="where-do-you-live" type="radio" value="wales">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-3">#}
-                        {#50#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#<div class="govuk-radios__item govuk-radios__item--small">#}
-                        {#<input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-4" name="where-do-you-live" type="radio" value="northern-ireland">#}
-                        {#<label class="govuk-label govuk-radios__label" for="results-per-page-4">#}
-                        {#View all#}
-                        {#</label>#}
-                        {#</div>#}
-                        {#</div>#}
-                        {#</fieldset>#}
-                        {#</div>#}
-
-
                     </form>
 
                 </div>
-                <div class="govuk-grid-column-two-thirds">
-
+                {% if (guided_match_flag is defined) and (query is defined and query in keywords) and (pagination.totalResults > 1) %}
+                    <div class="govuk-grid-column-two-thirds guided-match-background govuk-!-margin-bottom-2 guided-match-area">
+                            <label class="govuk-heading-l ccs-font-weight-semibold text-white">Get help finding the right framework</label>
+                            <label class="govuk-heading-m ccs-font-weight-semibold text-white">We have found {{ pagination.totalResults }} agreements based on your search "{{ query }}".</label>
+                            <label class="govuk-heading-s ccs-font-weight-semibold text-white">If your search results contain multiple agreements, answer some simple questions first to help find the best one for your needs.</label>
+                        <a href={{ match_url }} role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-bottom-3" data-module="govuk-button">
+                            Start now
+                            <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                            <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+                            </svg>
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="govuk-grid-column-two-thirds">
                     {% if pagination.totalResults == 1 %}
-                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }}
-                            framework found</h2>
+                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} framework found</h2>
                     {% else %}
-                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }}
-                            frameworks found</h2>
+                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} frameworks found</h2>
                     {% endif %}
-
-
+                    </div>
+                {% endif %}
+                <div class="govuk-grid-column-two-thirds">
                     {# see https://studio24.github.io/frontend/templating/content-fields.html #}
 
                     <ul class="govuk-list govuk-list--frameworks">
@@ -256,7 +187,5 @@
 
         </main>
     </div>
-
-
 
 {% endblock %}
