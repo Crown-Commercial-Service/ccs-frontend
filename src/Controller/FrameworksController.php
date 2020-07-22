@@ -196,7 +196,7 @@ class FrameworksController extends AbstractController
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
         $category = filter_var($category, FILTER_SANITIZE_STRING);
 
-        if ($category == "utilities-fuels"){
+        if ($category == "utilities-fuels") {
             return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'energy']);
         }
 
