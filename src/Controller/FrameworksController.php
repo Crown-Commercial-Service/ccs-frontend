@@ -196,6 +196,10 @@ class FrameworksController extends AbstractController
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
         $category = filter_var($category, FILTER_SANITIZE_STRING);
 
+        if ($category == "utilities-fuels"){
+            return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'energy']);
+        }
+
         // Map category slug to category db value
         $categoryName = FrameworkCategories::getDbValueBySlug($category);
         if ($categoryName === null) {
