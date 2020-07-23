@@ -116,7 +116,7 @@
                 </div>
                 {% if (guided_match_flag is defined) and (query is defined and query in keywords) and (pagination.totalResults > 1) %}
                     <div class="govuk-grid-column-two-thirds guided-match-background govuk-!-margin-bottom-2 guided-match-area">
-                            <label class="govuk-heading-l ccs-font-weight-semibold text-white">Get help finding the right framework</label>
+                            <label class="govuk-heading-l ccs-font-weight-semibold govuk-!-margin-top-1 text-white">Get help finding the right framework</label>
                             <label class="govuk-heading-m ccs-font-weight-semibold text-white">We have found {{ pagination.totalResults }} agreements based on your search "{{ query }}".</label>
                             <label class="govuk-heading-s ccs-font-weight-semibold text-white">If your search results contain multiple agreements, answer some simple questions first to help find the best one for your needs.</label>
                         <a href={{ match_url }} role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-bottom-3" data-module="govuk-button">
