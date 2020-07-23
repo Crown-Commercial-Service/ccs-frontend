@@ -300,7 +300,7 @@ class FrameworksController extends AbstractController
     public function search(Request $request, int $page = 1)
     {
         // Get feature flag if it exists &feature=guidedmatch
-        $flag = filter_var($request->query->get('feature'), FILTER_SANITIZE_STRING);
+        $flag = "guidedmatch";
 
 
         // Get search query

@@ -49,7 +49,7 @@ class PageController extends AbstractController
     public function home(Request $request)
     {
         $this->api->setCacheKey($request->getRequestUri());
-        $flag = filter_var($request->query->get('feature'), FILTER_SANITIZE_STRING);
+        $flag = "guidedmatch";
 
         $this->api->setContentType('news');
         $news = $this->api->listPages(1, ['limit' => 3]);
