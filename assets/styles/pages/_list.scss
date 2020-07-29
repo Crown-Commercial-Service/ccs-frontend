@@ -14,8 +14,7 @@
         border-radius: govuk-px-to-rem(3);
         box-shadow: 0 3px 0 #003618;
         color: #78256E;
-        padding-left: govuk-px-to-rem(30);
-        padding-right: govuk-px-to-rem(30);
+        padding: 8px 10px 7px;
 
         width: auto;
         
@@ -28,4 +27,15 @@
 
         }
     }
+
+    .govuk-button__start-icon {
+        margin-left: govuk-spacing(1);
+    
+        @include govuk-media-query($from: desktop) {
+          margin-left: govuk-spacing(2);
+        }
+        vertical-align: middle;
+        flex-shrink: 0;
+        align-self: center;
+      }
 }
