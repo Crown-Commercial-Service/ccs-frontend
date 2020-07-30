@@ -76,6 +76,9 @@
                                 <label class="govuk-label" for="q"> Search
                                     frameworks </label>
                                 <input class="govuk-input" id="q" name="q" type="text">
+                                {% if guided_match_flag is defined %}
+                                <input class="visuallyhidden" id="feature" name="feature" type="text" value="guidedmatch">
+                                {% endif %}
                                 <button type="submit" class="sidebar__search-button govuk-input">
                                     <span class="visuallyhidden">Search frameworks</span>
                                 </button>
