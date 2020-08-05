@@ -58,6 +58,21 @@ class FormController extends AbstractController
         return $this->render('forms/31-esourcing-training.html.twig', $data);
     }
 
+    public function sumbitcontact(Request $request) {
+       
+
+        $request_params = $request->request->all();
+        $email = $request_params['email'];
+        var_dump($email);
+        
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo("$email is a valid email address");
+          } else {
+            echo("$email is not a valid email address");
+          }
+          exit;
+    }
+
     public function thankYou(Request $request)
     {
         $data = [];
