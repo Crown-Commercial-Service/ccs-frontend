@@ -347,7 +347,7 @@ class FrameworksController extends AbstractController
         $guidedMatchResponse= $this->guidedMatchApiClient->request('GET', $query, [
             'headers' => [
                 'Content-Type: application/json',
-                'x-api-key'  => getenv('GUIDED_MATCH_KEY')
+                'x-api-key'  => getenv('GUIDED_MATCH_API_KEY')
             ]
         ]);
 
