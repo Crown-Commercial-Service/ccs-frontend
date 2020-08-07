@@ -344,14 +344,16 @@ class FrameworksController extends AbstractController
             throw new NotFoundHttpException('Page not found', $e);
         }
 
-        $guidedMatchResponse= $this->guidedMatchApiClient->request('GET', $query, [
-            'headers' => [
-                'Content-Type: application/json',
-                'x-api-key'  => getenv('GUIDED_MATCH_API_KEY')
-            ]
-        ]);
-
-        $guidedMatchJsonResult = json_decode($guidedMatchResponse->getBody()->getContents());
+        if (!empty($query)){
+            $guidedMatchResponse= $this->guidedMatchApiClient->request('GET', $query, [
+                'headers' => [
+                    'Content-Type: application/json',
+                    'x-api-key'  => getenv('GUIDED_MATCH_API_KEY')
+                ]
+            ]);
+    
+            $guidedMatchJsonResult = json_decode($guidedMatchResponse->getBody()->getContents());
+        }
 
         if ($flag == 'guidedmatch' && !empty($guidedMatchJsonResult)) {
             $data = [
