@@ -344,8 +344,8 @@ class FrameworksController extends AbstractController
             throw new NotFoundHttpException('Page not found', $e);
         }
 
-        if (!empty($query) &&  $flag == 'guidedmatch'){
-            $guidedMatchResponse= $this->guidedMatchApiClient->request('GET', $query, [
+        if (!empty($query) &&  $flag == 'guidedmatch') {
+            $guidedMatchResponse = $this->guidedMatchApiClient->request('GET', $query, [
                 'headers' => [
                     'Content-Type: application/json',
                     'x-api-key'  => getenv('GUIDED_MATCH_API_KEY')
