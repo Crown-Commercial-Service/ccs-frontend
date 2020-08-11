@@ -6,8 +6,9 @@ namespace App\Tests\App\Utils;
 
 use App\Utils\FrameworkCategories;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class FrameworkCategoriesTest extends TestCase
+class FrameworkCategoriesTest extends WebTestCase
 {
 
     public function testFind()
@@ -49,5 +50,16 @@ class FrameworkCategoriesTest extends TestCase
         $this->assertEquals('Buildings', FrameworkCategories::getDbValue('Buildings'));
         $this->assertEquals('People', FrameworkCategories::getDbValue('People'));
         $this->assertEquals('Marcomms & Research', FrameworkCategories::getDbValue('Marcomms & Research'));
+    }
+
+    public function testRedirectFromUtilitiesFuelsToEnergy()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/agreements/category/utilities-fuels');
+        $response = $client->getResponse();
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->assertResponseRedirects('/agreements/category/energy');
     }
 }
