@@ -8,6 +8,7 @@ use Studio24\Frontend\ContentModel\ContentModel;
 use Studio24\Frontend\Exception\PaginationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Studio24\Frontend\Cms\RestData;
+use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Studio24\Frontend\Exception\NotFoundException;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,6 +47,10 @@ class FrameworksController extends AbstractController
         $this->searchApi->setContentType('frameworks');
         $this->searchApi->setCache($cache);
         $this->searchApi->setCacheLifetime(1);
+
+        $this->guidedMatchApiClient = new Client([
+            'base_uri' => getenv('GUIDED_MATCH_END_POINT'),
+        ]);
     }
 
     /**
@@ -338,7 +343,19 @@ class FrameworksController extends AbstractController
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
-        if ($flag == 'guidedmatch') {
+
+        if (!empty($query) &&  $flag == 'guidedmatch') {
+            $guidedMatchResponse = $this->guidedMatchApiClient->request('GET', $query, [
+                'headers' => [
+                    'Content-Type: application/json',
+                    'x-api-key'  => getenv('GUIDED_MATCH_API_KEY')
+                ]
+            ]);
+    
+            $guidedMatchJsonResult = json_decode($guidedMatchResponse->getBody()->getContents());
+        }
+
+        if ($flag == 'guidedmatch' && !empty($guidedMatchJsonResult)) {
             $data = [
                 'query'                      => $query,
                 'pagination'                 => $results->getPagination(),
@@ -346,7 +363,6 @@ class FrameworksController extends AbstractController
                 'categories'                 => FrameworkCategories::getAll(),
                 'pillars'                    => FrameworkCategories::getAllPillars(),
                 'guided_match_flag'          => $flag,
-                'keywords'                   => ['linen', 'laptop', 'legal', 'laundry'],
                 'match_url'                  => getenv('GUIDED_MATCH_URL') . $query
             ];
         } else {
