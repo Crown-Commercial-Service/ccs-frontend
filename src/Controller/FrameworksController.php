@@ -363,7 +363,7 @@ class FrameworksController extends AbstractController
                 'categories'                 => FrameworkCategories::getAll(),
                 'pillars'                    => FrameworkCategories::getAllPillars(),
                 'guided_match_flag'          => $flag,
-                'match_url'                  => getenv('GUIDED_MATCH_URL') . $query
+                'match_url'                  => getenv('GUIDED_MATCH_URL') . rawurlencode($query)
             ];
         } else {
             $data = [
