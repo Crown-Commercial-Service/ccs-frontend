@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67e8c852e32bee807cda7deb74997b2a",
+    "content-hash": "bb7d47c9ce916d26fb11a1d96100b074",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -1623,16 +1623,16 @@
         },
         {
             "name": "symfony/http-client",
-            "version": "v4.4.4",
+            "version": "v4.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "250c5363e4d67f8e3c9cdf3362f134e040e69612"
+                "reference": "65ccb6ca4a5a7bf7c244b8a28195fa188521b3d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/250c5363e4d67f8e3c9cdf3362f134e040e69612",
-                "reference": "250c5363e4d67f8e3c9cdf3362f134e040e69612",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/65ccb6ca4a5a7bf7c244b8a28195fa188521b3d2",
+                "reference": "65ccb6ca4a5a7bf7c244b8a28195fa188521b3d2",
                 "shasum": ""
             },
             "require": {
@@ -1687,7 +1687,7 @@
             ],
             "description": "Symfony HttpClient component",
             "homepage": "https://symfony.com",
-            "time": "2020-01-31T09:11:17+00:00"
+            "time": "2020-02-25T13:55:11+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
