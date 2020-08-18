@@ -205,7 +205,7 @@ See [quick start](http://docs.behat.org/en/latest/quick_start.html) and [Behat a
 ## Built with
 
 * [GOV.UK Design System](https://design-system.service.gov.uk/) - Frontend design system
- 
+
 ## Acknowledgments
 
 * [GDS](https://www.gov.uk/government/organisations/government-digital-service)
