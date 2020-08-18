@@ -354,10 +354,10 @@ class FrameworksController extends AbstractController
             ]);
     
             $guidedMatchJsonResult = json_decode($guidedMatchResponse->getBody()->getContents());
-            $guidedMatcStatusCode  = $guidedMatchResponse->getStatusCode();
+            $guidedMatchStatusCode  = $guidedMatchResponse->getStatusCode();
         }
 
-        if ($flag == 'guidedmatch' && !empty($guidedMatchJsonResult) && $guidedMatcStatusCode == 200) {
+        if ($flag == 'guidedmatch' && !empty($guidedMatchJsonResult) && $guidedMatchStatusCode == 200) {
             $data = [
                 'query'                      => $query,
                 'pagination'                 => $results->getPagination(),
