@@ -84,6 +84,31 @@
                         </div>
                     {% endif %}
 
+                    {% if audience_tag is not empty %}
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="accordion" id="audience-tag-accordion">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                                <div class="govuk-accordion__section-header">
+                                    <h3 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="audience-tag-accordion-heading">
+                                            Event audience
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div id="audience-tag-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="audience-tag-accordion-heading">
+                                    <ul class="ccs-link-filter-list">
+                                        <li><a href="/events">All Event Audiences</a></li>
+                                        {% for item in audience_tag %}
+                                            {% if filters.audience_tag == item.id %}
+                                                <li>{{ item.name }}</li>
+                                            {% else %}
+                                                <li><a href="/events?audience_tag={{ item.id }}">{{ item.name }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
 
                     {% if sectors is not empty %}
 
