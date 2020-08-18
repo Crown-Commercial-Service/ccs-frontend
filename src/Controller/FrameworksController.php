@@ -349,13 +349,15 @@ class FrameworksController extends AbstractController
                 'headers' => [
                     'Content-Type: application/json',
                     'x-api-key'  => getenv('GUIDED_MATCH_API_KEY')
-                ]
+                ],
+                'http_errors' => false
             ]);
     
             $guidedMatchJsonResult = json_decode($guidedMatchResponse->getBody()->getContents());
+            $guidedMatcStatusCode  = $guidedMatchResponse->getStatusCode();
         }
 
-        if ($flag == 'guidedmatch' && !empty($guidedMatchJsonResult)) {
+        if ($flag == 'guidedmatch' && !empty($guidedMatchJsonResult) && $guidedMatcStatusCode == 200) {
             $data = [
                 'query'                      => $query,
                 'pagination'                 => $results->getPagination(),
