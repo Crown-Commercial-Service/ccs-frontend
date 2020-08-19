@@ -48,9 +48,11 @@ class FrameworksController extends AbstractController
         $this->searchApi->setCache($cache);
         $this->searchApi->setCacheLifetime(1);
 
-        $this->guidedMatchApiClient = new Client([
-            'base_uri' => getenv('GUIDED_MATCH_END_POINT'),
-        ]);
+        if (getenv('GUIDED_MATCH_END_POINT') != false) {
+            $this->guidedMatchApiClient = new Client([
+                'base_uri' => getenv('GUIDED_MATCH_END_POINT'),
+            ]);
+        }
     }
 
     /**
@@ -344,7 +346,7 @@ class FrameworksController extends AbstractController
             throw new NotFoundHttpException('Page not found', $e);
         }
 
-        if (!empty($query) &&  $flag == 'guidedmatch') {
+        if (!empty($query) && $flag == 'guidedmatch' && isset($this->guidedMatchApiClient)) {
             $guidedMatchResponse = $this->guidedMatchApiClient->request('GET', $query, [
                 'headers' => [
                     'Content-Type: application/json',
