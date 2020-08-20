@@ -1,9 +1,10 @@
 <div class="govuk-width-container">
  <div class="govuk-grid-row ccs-grid-row--tight">
         <div class="govuk-grid-column-one-half govuk-!-padding-right-15 govuk-!-padding-top-20 free-wid">
-            <h2 class="govuk-heading-m intro__heading">
-                {{ component.free_text_free_text_left_heading | striptags | raw}}
-            </h2>
+        {# remove h2 to allow multiple different heading styles #}
+            <div class="intro-freetext-heading">
+                {{ component.free_text_free_text_left_heading | raw}}
+            </div>
             <div class="govuk-body govuk-!-font-size-19" style="margin-top: 50px">
                 {{ component.free_text_free_text_left_content_new | raw}}
             </div>
@@ -13,10 +14,10 @@
         </div>
 
         <div class="govuk-grid-column-one-half govuk-border-left-free-text govuk-!-padding-left-15 govuk-!-padding-top-20 free-wid">
-            <h2 class="govuk-heading-m intro__heading" style="margin-left:15px">
-                 {{component.free_text_free_text_right_heading | striptags | raw}}
-            </h2>
-            <div class="govuk-body govuk-!-font-size-19" style="margin-left:15px">
+            <div class="intro-freetext-heading">
+                 {{component.free_text_free_text_right_heading | raw}}
+            </div>
+            <div class="govuk-body govuk-!-font-size-19">
                 {{ component.free_text_free_text_right_content_new | raw}}
             </div>
         </div> 
