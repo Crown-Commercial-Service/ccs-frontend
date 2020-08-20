@@ -8,6 +8,11 @@
     margin-top:0px;
 }
 
+/* paddding right to match right column padding*/
+.left-freetext-column-padding-right {
+    padding-right:35px;
+}
+
 .govuk-margin-free-text{
 
     margin-bottom: 40%;
@@ -49,19 +54,25 @@
     object-fit: cover;
 }
 
+.govuk-padding-left-35 {
+    padding-left:35px;
+}
 
+// display span border and div side by side
+.intro-freetext-heading-right  {
+    display: inline-block;
+    position: relative;
+}
 
 .govuk-border-left-free-text{
-    left:0;
-    top: 0;
-    content: "";
-    height: 100px;
+    display: inline;
     border-left-width: 5px;
-    position: relative;
-    padding-left: 35px;
+    position: absolute;
+    height: 100px;
     border-color: $ccs-colour;
     border-color: var(--sub-color);
     border-left-style: solid;
+    left: -5px;
 }
 
 @media screen and (max-width: 600px) {
