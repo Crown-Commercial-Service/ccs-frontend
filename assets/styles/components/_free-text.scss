@@ -4,10 +4,15 @@
 \*------------------------------------*/
 
 
+.intro-freetext-heading p,h2,h3,h4 {
+    margin-top:0px;
+}
+
 .govuk-margin-free-text{
 
     margin-bottom: 40%;
 }
+
 
 .free-wid{
  
@@ -53,7 +58,7 @@
     height: 100px;
     border-left-width: 5px;
     position: relative;
-    padding-left: 20px;
+    padding-left: 35px;
     border-color: $ccs-colour;
     border-color: var(--sub-color);
     border-left-style: solid;
