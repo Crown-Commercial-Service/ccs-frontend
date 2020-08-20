@@ -1,11 +1,10 @@
 <div class="govuk-width-container">
  <div class="govuk-grid-row ccs-grid-row--tight">
         <div class="govuk-grid-column-one-half govuk-!-padding-right-15 govuk-!-padding-top-20 left-freetext-column-padding-right free-wid">
-        {# remove h2 to allow multiple different heading styles #}
             <div class="intro-freetext-heading">
                 {{ component.free_text_free_text_left_heading | raw}}
             </div>
-            <div class="govuk-body govuk-!-font-size-19" style="margin-top: 50px">
+            <div class="govuk-body govuk-!-font-size-19">
                 {{ component.free_text_free_text_left_content_new | raw}}
             </div>
             {% if component.free_text_free_text_cta_label|trim is not empty and component.free_text_free_text_cta_destination|trim is not empty %}
@@ -14,7 +13,9 @@
         </div>
 
         <div class="govuk-grid-column-one-half govuk-padding-left-35 govuk-!-padding-left-15 govuk-!-padding-top-20 free-wid">
-            <div class="intro-freetext-heading govuk-border-left-free-text">
+         {# span for left border #}
+            <span class="govuk-border-left-free-text"></span>
+            <div class="intro-freetext-heading intro-freetext-heading-right">
                  {{component.free_text_free_text_right_heading | raw}}
             </div>
             <div class="govuk-body govuk-!-font-size-19">
