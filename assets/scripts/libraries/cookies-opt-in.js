@@ -135,8 +135,8 @@ var docCookies = {
     // Set the default cookies. This JSON Object is saved as the cookie, but we use `initial_cookie_preferences` to maintain structure and various sanity checks
     var cookie_preferences = {
         essentials: true,
-        usage: true,
-        marketing: true,
+        usage: false,
+        marketing: false,
     };
 
 
@@ -378,12 +378,13 @@ var docCookies = {
 
         var optInButton = document.createElement('button');
         optInButton.classList.add('govuk-!-font-size-18', 'govuk-!-font-weight-bold', 'govuk-button', 'gtm--accept-cookies-in-banner');
-        optInButton.innerHTML = "Accept cookies";
+        optInButton.innerHTML = "Accept all cookies";
         optInButton.addEventListener('click', optUserIn);
 
         var settingsButton = document.createElement('a');
+        settingsButton.classList.add('govuk-!-font-size-18', 'govuk-!-font-weight-bold', 'govuk-button');
         settingsButton.setAttribute('href', "/cookie-settings");
-        settingsButton.innerHTML = "Cookie settings";
+        settingsButton.innerHTML = "Set cookie preferences";
         // optOutButton.classList.add('button');
         // optOutButton.classList.add('button--tight');
         // optOutButton.classList.add('button--deny');
