@@ -2,7 +2,9 @@
 /*------------------------------------*\
   #Footer
 \*------------------------------------*/
-
+// get rid of padding on ul
+// allow multiple head styles
+// make mobile view better
 
 .intro-freetext-heading p,h2,h3,h4 {
     margin-top:0px;
@@ -130,4 +132,8 @@
     border-radius: 0px; 
     margin-top:100px; 
     margin-bottom:2000px;
+}
+
+.freetext-cta-btn {
+    margin-top:30px;
 }

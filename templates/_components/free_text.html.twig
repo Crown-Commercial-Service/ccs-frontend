@@ -8,7 +8,7 @@
                 {{ component.free_text_free_text_left_content_new | raw}}
             </div>
             {% if component.free_text_free_text_cta_label|trim is not empty and component.free_text_free_text_cta_destination|trim is not empty %}
-                <a href="{{ component.free_text_free_text_cta_destination }}" class="govuk-button">{{ component.free_text_free_text_cta_label }}</a>
+                <a href="{{ component.free_text_free_text_cta_destination }}" class="govuk-button freetext-cta-btn">{{ component.free_text_free_text_cta_label }}</a>
             {% endif %} 
         </div>
 
