@@ -82,11 +82,19 @@
     left: -5px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
    .govuk-border-left-free-text{
       margin-bottom: govuk-px-to-rem(300);     
   }
+
+//   padding 0 on mobile to align with left free text
+  .freetext-right {
+    padding-left: 15px !important;
+    margin-top:20px;
+  }
+
 }
+
 
 
 .wysiwyg-content-free-text-heading{
