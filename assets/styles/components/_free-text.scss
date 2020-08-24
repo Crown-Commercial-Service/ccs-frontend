@@ -2,31 +2,17 @@
 /*------------------------------------*\
   #Footer
 \*------------------------------------*/
-// get rid of padding on ul
-// allow multiple head styles
-// make mobile view better
 
-.intro-freetext-heading p,h2,h3,h4 {
+.freetext-component .intro-freetext-heading p,h2,h3,h4 {
     margin-top:0px;
 }
 
-.intro-freetext-heading h2,h3,h4 {
+.freetext-component .intro-freetext-heading h2,h3,h4 {
     font-family: "Source Sans Pro","HelveticaNeue","Helvetica Neue","Arial","Helvetica",sans-serif;
     font-weight: 600;
 }
 
-/* paddding right to match right column padding*/
-.left-freetext-column-padding-right {
-    padding-right:35px;
-}
-
-.govuk-margin-free-text{
-
-    margin-bottom: 40%;
-}
-
-
-.free-wid{
+.freetext-component .free-wid{
  
     position: relative;
 }
@@ -61,8 +47,13 @@
     object-fit: cover;
 }
 
-.govuk-padding-left-35 {
+.freetext-component .govuk-padding-left-35 {
     padding-left:35px;
+}
+
+/* paddding right to match right column padding*/
+.freetext-component .left-freetext-column-padding-right {
+    padding-right:35px;
 }
 
 // display span border and div side by side
@@ -71,6 +62,7 @@
     position: relative;
 }
 
+// red border
 .govuk-border-left-free-text{
     display: inline;
     border-left-width: 5px;
@@ -82,13 +74,14 @@
     left: -5px;
 }
 
+// free text mobile view
 @media screen and (max-width: 640px) {
    .govuk-border-left-free-text{
       margin-bottom: govuk-px-to-rem(300);     
   }
 
-//   padding 0 on mobile to align with left free text
-  .freetext-right {
+//   padding 15px on mobile to align with left free text
+  .freetext-component .freetext-right {
     padding-left: 15px !important;
     margin-top:20px;
   }
@@ -96,9 +89,10 @@
 }
 
 
-
 .wysiwyg-content-free-text-heading{
-    font-family: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 23px;
+    font-family: Helvetica, Arial, sans-serif; 
+    font-size: 14px; 
+    line-height: 23px;
     color: #0b0c0c;
     overflow: hidden;
     white-space: normal; 
@@ -116,15 +110,18 @@
 }
 
 .wysiwyg-content-free-text-left-banner{
-    font-family: Helvetica, Arial, sans-serif; font-size: 40px; line-height: 20px;
+    font-family: Helvetica, Arial, sans-serif; 
+    font-size: 40px; 
+    line-height: 20px;
     color: #0b0c0c;
     margin-top: 100px;
 }
 
 
-
 .wysiwyg-content-free-text-content-field{
-    font-family: Helvetica, Arial, sans-serif; font-size: 18px; line-height: 23px;
+    font-family: Helvetica, Arial, sans-serif; 
+    font-size: 18px; 
+    line-height: 23px;
     color: #0b0c0c;
 
 }
