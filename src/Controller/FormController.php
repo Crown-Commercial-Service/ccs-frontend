@@ -8,6 +8,8 @@ use Studio24\Frontend\Cms\RestData;
 use Studio24\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpFoundation\Response;
 use Psr\SimpleCache\CacheInterface;
 
 /**
@@ -23,6 +25,8 @@ class FormController extends AbstractController
      */
     protected $api;
 
+    protected $client;
+
     public function __construct(CacheInterface $cache)
     {
         $this->api = new RestData(
@@ -31,6 +35,7 @@ class FormController extends AbstractController
         );
         $this->api->setContentType('frameworks');
         $this->api->setCache($cache);
+        $this->client = HttpClient::create();
     }
 
     /**
@@ -63,5 +68,26 @@ class FormController extends AbstractController
         $data = [];
 
         return $this->render('forms/thank-you.html.twig', $data);
+    }
+
+    public function sendToSalesforce(Request $request)
+    {
+
+        $params = $request->query;
+        
+        $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+            // these values are automatically encoded before including them in the URL
+            'query' => $params->all(),
+        ]);
+
+        if (!is_null($params->get('debug'))) {
+            return new Response(
+                $response->getContent()
+            );
+        } elseif ($params->get('origin') == 'Website - Enquiry') {
+            return $this->redirectToRoute('form_contact_thanks');
+        } else {
+            return $this->redirectToRoute('form_contact_thanks_complaint');
+        }
     }
 }
