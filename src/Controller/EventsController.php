@@ -90,7 +90,7 @@ class EventsController extends AbstractController
      * @throws \Studio24\Frontend\Exception\FailedRequestException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function show($id, $slug, Request $request)
+    public function show($id, $slug, Request $request) 
     {
         $sanitisedSlug = filter_var($slug, FILTER_SANITIZE_STRING);
 
