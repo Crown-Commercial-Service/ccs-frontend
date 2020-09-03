@@ -60,7 +60,7 @@
             var cookiePreferences = JSON.parse(readCookie('cookie_preferences'));
             if (cookiePreferences !== null) {
                 if (cookiePreferences.usage === true) {
-
+                    // pardot cookie js
                     (function (w, d, s, l, i) {
                         w[l] = w[l] || [];
                         w[l].push({
@@ -184,15 +184,23 @@ End Usersnap code #}
     piCId = '63961';
     piHostname = 'pi.pardot.com';
 
-    (function() {
-        function async_load(){
-            var s = document.createElement('script'); s.type = 'text/javascript';
-            s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js';
-            var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c);
+    var cookie_preferences = JSON.parse(readCookie('cookie_preferences'));
+
+    if (cookie_preferences !== null) {
+        if (cookie_preferences.marketing === true) {
+              (function() {
+                function async_load(){
+                    var s = document.createElement('script'); s.type = 'text/javascript';
+                    s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js';
+                    var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c);
+                }
+                if(window.attachEvent) { window.attachEvent('onload', async_load); }
+                else { window.addEventListener('load', async_load, false); }
+               })();
         }
-        if(window.attachEvent) { window.attachEvent('onload', async_load); }
-        else { window.addEventListener('load', async_load, false); }
-    })();
+    }
+
+  
 </script>
 
 </body>
