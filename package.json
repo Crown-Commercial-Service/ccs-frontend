@@ -42,6 +42,7 @@
     "imagemin-cli": "^3.0.0",
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.19",
+    "lodash.template": "^4.5.0",
     "minimist": "^1.2.3",
     "node": "^8.11.1",
     "node-sass": "^4.9.0",
