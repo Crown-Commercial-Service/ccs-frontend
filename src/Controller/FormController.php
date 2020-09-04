@@ -73,7 +73,7 @@ class FormController extends AbstractController
     public function sendToSalesforce(Request $request)
     {
 
-        $params = $request->query;
+        $params = $request->request;
         
         $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
             // these values are automatically encoded before including them in the URL
