@@ -91,7 +91,7 @@
 
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-                    <form class="govuk-!-width-three-quarters" action="/contact/sendToSalesforce" method="POST">
+                    <form class="govuk-!-width-three-quarters" action="/contact/sendToSalesforce" method="POST" novalidate>
 
                         {# Change these field types to hidden for Production #}
                         <input type="hidden" name="orgid" value="{{ web_to_case_orgid }}">
@@ -157,16 +157,29 @@
                         {# wrapper class for error states; `govuk-form-group--error`  #}
                         <div class="govuk-form-group --govuk-form-group--error">
                             <label class="govuk-label" for="name">Name</label>
-                            {#<span id="full-name-error" class="govuk-error-message">#}
+
+                            {% if formErrors.nameErr is defined %}
+                                {% for error in formErrors.nameErr %}
+                                    <span id="full-name-error" class="govuk-error-message">{{error}}</span>
+                                {% endfor %}
+                            {% endif %}
+
                             {#Descriptive and helpful error message#}
-                            {#</span>#}
+                            {#</span>
                             {# input class for error states; `govuk-input--error`  #}
-                            <input class="govuk-input --govuk-input--error" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text"/>
+                            <input class="govuk-input --govuk-input--error" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}"/>
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="email">
                                 Email </label>
-                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="email" required/>
+
+                            {% if formErrors.emailErr is defined %}
+                                {% for error in formErrors.emailErr %}
+                                    <span id="email-error" class="govuk-error-message">{{error}}</span>
+                                {% endfor %}                         
+                            {% endif %}    
+
+                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="email" value="{{formErrors is defined ? formData.email}}" required/>
                         </div>
 
 
@@ -189,24 +202,52 @@
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="phone"> Telephone
                                 number</label>
-                            <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text" required/>
+
+                            {% if formErrors.phoneErr is defined %}
+                                {% for error in formErrors.phoneErr %}
+                                    <span id="phone-error" class="govuk-error-message">{{error}}</span>
+                                {% endfor %}                           
+                            {% endif %}
+
+                            <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text" value="{{formErrors is defined ? formData.phone}}" required/>
                         </div>
 
 
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="company">
                                 Organisation </label>
-                            <input class="govuk-input" id="company" maxlength="80" name="company" size="20" type="text"/>
+
+                            {% if formErrors.companyErr is defined %}
+                                {% for error in formErrors.companyErr %}
+                                    <span id="email-error" class="govuk-error-message">{{error}}</span>
+                                {% endfor %}                            
+                            {% endif %}   
+
+                            <input class="govuk-input" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}"/>
                         </div>
                         <div class="govuk-form-group">
                             <label class="govuk-label" for="00Nb0000009IXEs">
                                 Job title </label>
-                            <input class="govuk-input" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text"/>
+
+                            {% if formErrors.jobTitleErr is defined %}
+                                {% for error in formErrors.jobTitleErr %}
+                                    <span id="email-error" class="govuk-error-message">{{error}}</span>
+                                {% endfor %}                           
+                            {% endif %} 
+
+                            <input class="govuk-input" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}"/>
                         </div>
                         <div class="govuk-form-group govuk-!-width-one-half">
                             <label class="govuk-label" for="post-code">
                                 Organisation post code </label>
-                            <input class="govuk-input" id="post-code" maxlength="100" name="post-code" size="20" type="text"/>
+
+                            {% if formErrors.postCodeErr is defined %}
+                                {% for error in formErrors.postCodeErr %}
+                                    <span id="email-error" class="govuk-error-message">{{error}}</span>
+                                {% endfor %}                           
+                            {% endif %} 
+
+                            <input class="govuk-input" id="post-code" maxlength="100" name="post-code" size="20" type="text" value="{{formErrors is defined ? formData.postCode}}"/>
                         </div>
 
 
@@ -243,10 +284,17 @@
                         <div class="govuk-form-group">
                             <label id="more-detail-label" class="govuk-label" for="more-detail">Can
                                 you provide more detail?</label>
+
+                            {% if formErrors.moreDetailErr is defined %}
+                                {% for error in formErrors.moreDetailErr %}
+                                    <span id="more-detail-error" class="govuk-error-message">{{error}}</span>
+                                {% endfor %}                      
+                            {% endif %}
+                            
                             <span id="more-detail-hint" class="govuk-hint">
     Do not include personal or financial information, like your credit card details.
   </span>
-                            <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint" required></textarea>
+                            <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint" required>{{formErrors is defined ? formData.moreDetail}}</textarea>
                         </div>
 
                         {# Catch-all field for additional Salesforce data #}
