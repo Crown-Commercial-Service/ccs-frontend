@@ -155,7 +155,7 @@
 
 
                         {# wrapper class for error states; `govuk-form-group--error`  #}
-                        <div class="govuk-form-group --govuk-form-group--error">
+                        <div class="govuk-form-group {{formErrors.nameErr is defined ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="name">Name</label>
 
                             {% if formErrors.nameErr is defined %}
@@ -167,9 +167,9 @@
                             {#Descriptive and helpful error message#}
                             {#</span>
                             {# input class for error states; `govuk-input--error`  #}
-                            <input class="govuk-input --govuk-input--error" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}"/>
+                            <input class="govuk-input {{formErrors.nameErr is defined ? 'govuk-input--error' : null }}" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
                         </div>
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group {{formErrors.emailErr is defined ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="email">
                                 Email </label>
 
@@ -179,7 +179,7 @@
                                 {% endfor %}                         
                             {% endif %}    
 
-                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="email" value="{{formErrors is defined ? formData.email}}" required/>
+                            <input class="govuk-input {{formErrors.emailErr is defined ? 'govuk-input--error' : null }}" id="email" maxlength="80" name="email" size="20" type="email" value="{{formErrors is defined ? formData.email}}" autocomplete="email" required/>
                         </div>
 
 
@@ -199,7 +199,7 @@
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group {{formErrors.phoneErr is defined ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="phone"> Telephone
                                 number</label>
 
@@ -209,11 +209,11 @@
                                 {% endfor %}                           
                             {% endif %}
 
-                            <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text" value="{{formErrors is defined ? formData.phone}}" required/>
+                            <input class="govuk-input {{formErrors.phoneErr is defined ? 'govuk-input--error' : null }}" id="phone" maxlength="40" name="phone" size="20" type="text" value="{{formErrors is defined ? formData.phone}}" autocomplete="tel" required/>
                         </div>
 
 
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group {{formErrors.companyErr is defined ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="company">
                                 Organisation </label>
 
@@ -223,9 +223,9 @@
                                 {% endfor %}                            
                             {% endif %}   
 
-                            <input class="govuk-input" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}"/>
+                            <input class="govuk-input {{formErrors.companyErr is defined ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization"/>
                         </div>
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group {{formErrors.jobTitleErr is defined ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="00Nb0000009IXEs">
                                 Job title </label>
 
@@ -235,9 +235,9 @@
                                 {% endfor %}                           
                             {% endif %} 
 
-                            <input class="govuk-input" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}"/>
+                            <input class="govuk-input {{formErrors.jobTitleErr is defined ? 'govuk-input--error' : null }}" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="organization-title"/>
                         </div>
-                        <div class="govuk-form-group govuk-!-width-one-half">
+                        <div class="govuk-form-group govuk-!-width-one-half {{formErrors.postCodeErr is defined ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="post-code">
                                 Organisation post code </label>
 
@@ -247,7 +247,7 @@
                                 {% endfor %}                           
                             {% endif %} 
 
-                            <input class="govuk-input" id="post-code" maxlength="100" name="post-code" size="20" type="text" value="{{formErrors is defined ? formData.postCode}}"/>
+                            <input class="govuk-input {{formErrors.postCodeErr is defined ? 'govuk-input--error' : null }}" id="post-code" maxlength="100" name="post-code" size="20" type="text" value="{{formErrors is defined ? formData.postCode}}" autocomplete="postal-code"/>
                         </div>
 
 
@@ -281,7 +281,7 @@
                         </div>
 
 
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group {{formErrors.moreDetailErr is defined ? 'govuk-form-group--error' : null }}">
                             <label id="more-detail-label" class="govuk-label" for="more-detail">Can
                                 you provide more detail?</label>
 
@@ -290,11 +290,11 @@
                                     <span id="more-detail-error" class="govuk-error-message">{{error}}</span>
                                 {% endfor %}                      
                             {% endif %}
-                            
+
                             <span id="more-detail-hint" class="govuk-hint">
     Do not include personal or financial information, like your credit card details.
   </span>
-                            <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint" required>{{formErrors is defined ? formData.moreDetail}}</textarea>
+                            <textarea class="govuk-textarea {{formErrors.moreDetailErr is defined ? 'govuk-input--error' : null }}" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint" required>{{formErrors is defined ? formData.moreDetail}}</textarea>
                         </div>
 
                         {# Catch-all field for additional Salesforce data #}
