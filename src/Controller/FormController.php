@@ -75,19 +75,122 @@ class FormController extends AbstractController
 
         $params = $request->request;
         
-        $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
-            // these values are automatically encoded before including them in the URL
-            'query' => $params->all(),
-        ]);
+        // form data used for validation and to remember values when user submits form
+        $formData = [
+            'name' => $params->get('name'),
+            'email' => $params->get('email'),
+            'phone' => $params->get('phone'),
+            'company' => $params->get('company'),
+            'jobTitle' => $params->get('00Nb0000009IXEs'),
+            'postCode' => $params->get('post-code'),
+            'moreDetail' => $params->get('more-detail'),
+        ];
 
-        if (!is_null($params->get('debug'))) {
-            return new Response(
-                $response->getContent()
-            );
-        } elseif ($params->get('origin') == 'Website - Enquiry') {
-            return $this->redirectToRoute('form_contact_thanks');
+        // check for submitted data
+        if (!empty($formData)) {
+            $formErrors = $this->validateForm($formData);
+
+            // if there are errors re-render form with errors and form values
+            if($formErrors) {
+                return $this->render('forms/22-contact.html.twig', [
+                    'formErrors' => $formErrors,
+                    'formData' => $formData,
+                ]);
+            } else {
+                // send to salesforce
+                $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                    // these values are automatically encoded before including them in the URL
+                    'query' => $params->all(),
+                ]);
+        
+                if (!is_null($params->get('debug'))) {
+                    return new Response(
+                        $response->getContent()
+                    );
+                } elseif ($params->get('origin') == 'Website - Enquiry') {
+                    return $this->redirectToRoute('form_contact_thanks');
+                } else {
+                    return $this->redirectToRoute('form_contact_thanks_complaint');
+                }
+            }
+           
+        } 
+        
+       
+    }
+
+    public function validateForm(array $data)
+    {
+        $errorMessages = array();
+
+        // validation
+
+        // name
+        if (empty($data['name'])) {
+            $errorMessages['nameErr'][0] = 'Enter your name'; 
+        }
+
+        if (strlen($data['name']) > 80) {
+            $errorMessages['nameErr'][1] = 'Name must be 80 characters or fewer'; 
+        }
+
+        // email
+        if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $errorMessages['emailErr'][0] = 'Enter an email address in the correct format, like name@example.com';
+        }
+
+        if (strlen($data['email']) > 80) {
+            $errorMessages['emailErr'][1] = 'Email address must be 80 characters or fewer'; 
+        }
+        
+        // phone
+        if (empty($data['phone'])) {
+            $errorMessages['phoneErr'][0] = 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192';
+        }
+
+        if (strlen($data['phone']) > 20) {
+            $errorMessages['phoneErr'][1] = 'Telephone number must be 20 characters or fewer'; 
+        }
+
+        // company
+        if (empty($data['company'])) {
+            $errorMessages['companyErr'][0] = 'Enter an organisation';
+        }
+
+        if (strlen($data['company']) > 80) {
+            $errorMessages['companyErr'][1] = 'Organisation must be 80 characters or fewer'; 
+        }
+
+        // job title
+        if (empty($data['jobTitle'])) {
+            $errorMessages['jobTitleErr'][0] = 'Enter a job title';
+        }
+
+        if (strlen($data['jobTitle']) > 100) {
+            $errorMessages['jobTitleErr'][1] = 'Job title must be 100 characters or fewer'; 
+        }
+
+        // postcode
+        if (empty($data['postCode'])) {
+            $errorMessages['postCodeErr'][0] = 'Enter a postcode';
+        }
+
+        if (strlen($data['postCode']) > 100) {
+            $errorMessages['postCodeErr'][1] = 'Postcode must be 100 characters or fewer'; 
+        }
+
+        // more detail
+        if (empty($data['moreDetail'])) {
+            $errorMessages['moreDetailErr'][0] = 'Enter more detail';
+        }
+
+        // if there are errors
+        if (!empty($errorMessages)) {
+            return $errorMessages;
         } else {
-            return $this->redirectToRoute('form_contact_thanks_complaint');
+            return false;
         }
     }
 }
+
+
