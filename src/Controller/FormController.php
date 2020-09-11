@@ -77,6 +77,7 @@ class FormController extends AbstractController
         
         // form data used for validation and to remember values when user submits form
         $formData = [
+            'enquiryType' => $params->get('origin'),
             'name' => $params->get('name'),
             'email' => $params->get('email'),
             'phone' => $params->get('phone'),
@@ -85,7 +86,17 @@ class FormController extends AbstractController
             'postCode' => $params->get('post-code'),
             'moreDetail' =>  $params->get('more-detail'),
         ];
+        
+        // check if callback checkbox has been set and add to form data
+        if ($params->get('00Nb0000009IXEg') == '1') {
+            $formData['callback'] = $params->get('00Nb0000009IXEg');
+        }
 
+        // check if complaint type exists and add to form data
+        if ($params->get('complaint')) {
+            $formData['complaint'] = $params->get('complaint');
+        }
+        dump($params);
         // check for submitted data
         if (!empty($formData)) {
             $formErrors = $this->validateForm($formData);
