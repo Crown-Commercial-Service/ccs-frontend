@@ -77,7 +77,7 @@ class FormController extends AbstractController
         
         // form data used for validation and to remember values when user submits form
         $formData = [
-            'name' => $params->get('name'),    
+            'name' => $params->get('name'),
             'email' => $params->get('email'),
             'phone' => $params->get('phone'),
             'company' => $params->get('company'),
@@ -91,7 +91,7 @@ class FormController extends AbstractController
             $formErrors = $this->validateForm($formData);
 
             // if there are errors re-render contact form with errors and form values
-            if($formErrors) {
+            if ($formErrors) {
                 return $this->render('forms/22-contact.html.twig', [
                     'formErrors' => $formErrors,
                     'formData' => $formData,
@@ -113,10 +113,7 @@ class FormController extends AbstractController
                     return $this->redirectToRoute('form_contact_thanks_complaint');
                 }
             }
-           
-        } 
-        
-       
+        }
     }
 
     public function validateForm(array $data)
@@ -156,11 +153,11 @@ class FormController extends AbstractController
 
         // name
         if (empty($data['name'])) {
-            $errorMessages['nameErr']['errors'][] = 'Enter your name'; 
+            $errorMessages['nameErr']['errors'][] = 'Enter your name';
         }
 
         if (strlen($data['name']) > 80) {
-            $errorMessages['nameErr']['errors'][] = 'Name must be 80 characters or fewer'; 
+            $errorMessages['nameErr']['errors'][] = 'Name must be 80 characters or fewer';
         }
 
         // email
@@ -169,7 +166,7 @@ class FormController extends AbstractController
         }
 
         if (strlen($data['email']) > 80) {
-            $errorMessages['emailErr']['errors'][] = 'Email address must be 80 characters or fewer'; 
+            $errorMessages['emailErr']['errors'][] = 'Email address must be 80 characters or fewer';
         }
         
         // phone
@@ -178,7 +175,7 @@ class FormController extends AbstractController
         }
 
         if (strlen($data['phone']) > 20) {
-            $errorMessages['phoneErr']['errors'][] = 'Telephone number must be 20 characters or fewer'; 
+            $errorMessages['phoneErr']['errors'][] = 'Telephone number must be 20 characters or fewer';
         }
 
         // company
@@ -187,7 +184,7 @@ class FormController extends AbstractController
         }
 
         if (strlen($data['company']) > 80) {
-            $errorMessages['companyErr']['errors'][] = 'Organisation must be 80 characters or fewer'; 
+            $errorMessages['companyErr']['errors'][] = 'Organisation must be 80 characters or fewer';
         }
 
         // job title
@@ -196,7 +193,7 @@ class FormController extends AbstractController
         }
 
         if (strlen($data['jobTitle']) > 100) {
-            $errorMessages['jobTitleErr']['errors'][] = 'Job title must be 100 characters or fewer'; 
+            $errorMessages['jobTitleErr']['errors'][] = 'Job title must be 100 characters or fewer';
         }
 
         // postcode
@@ -205,7 +202,7 @@ class FormController extends AbstractController
         }
 
         if (strlen($data['postCode']) > 100) {
-            $errorMessages['postCodeErr']['errors'][] = 'Postcode must be 100 characters or fewer'; 
+            $errorMessages['postCodeErr']['errors'][] = 'Postcode must be 100 characters or fewer';
         }
 
         // more detail
@@ -214,14 +211,12 @@ class FormController extends AbstractController
         }
 
         // loop through and check for errors
-       foreach($errorMessages as $type => $value) {
-           if (!empty($errorMessages[$type]['errors'])) {
-               return $errorMessages;
-           }
-       }
+        foreach ($errorMessages as $type => $value) {
+            if (!empty($errorMessages[$type]['errors'])) {
+                return $errorMessages;
+            }
+        }
 
-       return false;
+        return false;
     }
 }
-
-
