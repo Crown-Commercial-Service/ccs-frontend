@@ -120,6 +120,10 @@ form_contact:
   defaults:
     template: forms/22-contact.html.twig
 
+form_contact_sends:
+  path: /contact/sendToSalesforce
+  controller: App\Controller\FormController::sendToSalesforce
+
 form_contact_thanks:
   path: /contact/thanks
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
