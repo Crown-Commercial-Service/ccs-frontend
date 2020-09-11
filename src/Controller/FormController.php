@@ -77,20 +77,20 @@ class FormController extends AbstractController
         
         // form data used for validation and to remember values when user submits form
         $formData = [
-            'name' => $params->get('name'),
+            'name' => $params->get('name'),    
             'email' => $params->get('email'),
             'phone' => $params->get('phone'),
             'company' => $params->get('company'),
             'jobTitle' => $params->get('00Nb0000009IXEs'),
             'postCode' => $params->get('post-code'),
-            'moreDetail' => $params->get('more-detail'),
+            'moreDetail' =>  $params->get('more-detail'),
         ];
 
         // check for submitted data
         if (!empty($formData)) {
             $formErrors = $this->validateForm($formData);
 
-            // if there are errors re-render form with errors and form values
+            // if there are errors re-render contact form with errors and form values
             if($formErrors) {
                 return $this->render('forms/22-contact.html.twig', [
                     'formErrors' => $formErrors,
@@ -121,75 +121,106 @@ class FormController extends AbstractController
 
     public function validateForm(array $data)
     {
-        $errorMessages = array();
+        $errorMessages = [
+            'nameErr' => [
+                'errors' => [],
+                'link' => '#name',
+            ],
+            'emailErr' => [
+                'errors' => [],
+                'link' => '#email',
+            ],
+            'phoneErr' => [
+                'errors' => [],
+                'link' => '#phone',
+            ],
+            'companyErr' => [
+                'errors' => [],
+                'link' => '#company',
+            ],
+            'jobTitleErr' => [
+                'errors' => [],
+                'link' => '#00Nb0000009IXEs',
+            ],
+            'postCodeErr' => [
+                'errors' => [],
+                'link' => '#post-code',
+            ],
+            'moreDetailErr' => [
+                'errors' => [],
+                'link' => '#more-detail',
+            ],
+        ];
 
         // validation
 
         // name
         if (empty($data['name'])) {
-            $errorMessages['nameErr'][0] = 'Enter your name'; 
+            $errorMessages['nameErr']['errors'][] = 'Enter your name'; 
         }
 
         if (strlen($data['name']) > 80) {
-            $errorMessages['nameErr'][1] = 'Name must be 80 characters or fewer'; 
+            $errorMessages['nameErr']['errors'][] = 'Name must be 80 characters or fewer'; 
         }
 
         // email
         if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $errorMessages['emailErr'][0] = 'Enter an email address in the correct format, like name@example.com';
+            $errorMessages['emailErr']['errors'][] = 'Enter an email address in the correct format, like name@example.com';
         }
 
         if (strlen($data['email']) > 80) {
-            $errorMessages['emailErr'][1] = 'Email address must be 80 characters or fewer'; 
+            $errorMessages['emailErr']['errors'][] = 'Email address must be 80 characters or fewer'; 
         }
         
         // phone
         if (empty($data['phone'])) {
-            $errorMessages['phoneErr'][0] = 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192';
+            $errorMessages['phoneErr']['errors'][] = 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192';
         }
 
         if (strlen($data['phone']) > 20) {
-            $errorMessages['phoneErr'][1] = 'Telephone number must be 20 characters or fewer'; 
+            $errorMessages['phoneErr']['errors'][] = 'Telephone number must be 20 characters or fewer'; 
         }
 
         // company
         if (empty($data['company'])) {
-            $errorMessages['companyErr'][0] = 'Enter an organisation';
+            $errorMessages['companyErr']['errors'][] = 'Enter an organisation';
         }
 
         if (strlen($data['company']) > 80) {
-            $errorMessages['companyErr'][1] = 'Organisation must be 80 characters or fewer'; 
+            $errorMessages['companyErr']['errors'][] = 'Organisation must be 80 characters or fewer'; 
         }
 
         // job title
         if (empty($data['jobTitle'])) {
-            $errorMessages['jobTitleErr'][0] = 'Enter a job title';
+            $errorMessages['jobTitleErr']['errors'][] = 'Enter a job title';
         }
 
         if (strlen($data['jobTitle']) > 100) {
-            $errorMessages['jobTitleErr'][1] = 'Job title must be 100 characters or fewer'; 
+            $errorMessages['jobTitleErr']['errors'][] = 'Job title must be 100 characters or fewer'; 
         }
 
         // postcode
         if (empty($data['postCode'])) {
-            $errorMessages['postCodeErr'][0] = 'Enter a postcode';
+            $errorMessages['postCodeErr']['errors'][] = 'Enter a postcode';
         }
 
         if (strlen($data['postCode']) > 100) {
-            $errorMessages['postCodeErr'][1] = 'Postcode must be 100 characters or fewer'; 
+            $errorMessages['postCodeErr']['errors'][] = 'Postcode must be 100 characters or fewer'; 
         }
 
         // more detail
         if (empty($data['moreDetail'])) {
-            $errorMessages['moreDetailErr'][0] = 'Enter more detail';
+            $errorMessages['moreDetailErr']['errors'][] = 'Enter more detail';
         }
 
-        // if there are errors
-        if (!empty($errorMessages)) {
-            return $errorMessages;
-        } else {
-            return false;
-        }
+        // loop through and check for errors
+       foreach($errorMessages as $type => $value) {
+           if (!empty($errorMessages[$type]['errors'])) {
+               return $errorMessages;
+           }
+       }
+
+       return false;
     }
 }
 
