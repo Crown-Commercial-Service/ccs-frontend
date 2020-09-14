@@ -96,7 +96,6 @@ class FormController extends AbstractController
         if ($params->get('complaint')) {
             $formData['complaint'] = $params->get('complaint');
         }
-        dump($params);
         // check for submitted data
         if (!empty($formData)) {
             $formErrors = $this->validateForm($formData);
