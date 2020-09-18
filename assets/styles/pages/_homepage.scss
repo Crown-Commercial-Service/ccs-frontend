@@ -99,9 +99,17 @@
         color: white
         
     }
+}
 
-     a {
-        font-size:1.5rem;
+.govuk-hero-caption {
+
+    .govuk-caption-link {
+        font-size:1.3rem;
+    }
+
+    .govuk-caption-content {
+        color: white;
+        font-size:1.3rem;
     }
 }
 
@@ -176,8 +184,8 @@
             
         }
     
-        a {
-            font-size: 1.2rem;
+        .govuk-caption-link {
+            font-size: 1.3rem;
             color: white;
         }
     
@@ -193,7 +201,6 @@
         background-color:transparent;
     }
 }
-
 
 .homepage-hero__search-button {
 
