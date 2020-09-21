@@ -11,10 +11,6 @@
             header-global header-global--home
         {% endblock %}
 
-        {% block headerstyles %}
-            style="background-size: cover; background-image: path(/assets/images/header.jpg);"
-        {% endblock %}
-
         {% block featuredcontent %}
                 <div class="homepage-hero govuk-homepage-hero-full-width">
 
@@ -90,7 +86,7 @@
 
 
         {# required wrapper 2 #}
-        <main id="main-content" role="main" class="govuk-main-wrapper">
+        <main id="main-content" class="govuk-main-wrapper">
 
 
             <div class="apollo-island">
@@ -195,7 +191,6 @@
 
                                             {% if news_item.featuredImage %}
                                             <picture>
-                                                <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link"></a>
 
                                                         <!--[if IE 9]>
                                                         <video style="display: none;><![endif]-->
@@ -216,8 +211,11 @@
                                                             <img src="{{ news_item.featuredImage.byName('news-size-m') }}" alt="" role="presentation" aria-hidden="true">
                                                         {% else %}
                                                             <img src="{{ news_item.featuredImage.byName('full') }}" alt="" role="presentation" aria-hidden="true">
-                                                        {% endif %}                                     
+                                                        {% endif %}
+
                                             </picture>
+                                            <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link"></a>
+
                                             {% endif %}
 
                                             <div class="news-listing__item__caption">
