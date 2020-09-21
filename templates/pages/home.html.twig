@@ -54,17 +54,19 @@
                         </div>
                         <div class="govuk-grid-column-one-half">
 
-                            <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage">
-                                <div class="govuk-form-group homepage-hero__search-group">
-                                    <label class="govuk-label" for="framework_q">Search
-                                        frameworks</label>
-                                    <input class="govuk-input" id="framework_q" name="q" type="text">
-                                    {# {% if guided_match_flag is defined and guided_match_flag == "guidedmatch" %}
-                                    <input class="visuallyhidden" id="feature" name="feature" type="hidden" value="guidedmatch">
-                                    {% endif %} #}
-                                    <button class="homepage-hero__search-button">
-                                        <span class="visuallyhidden">Search frameworks</span>
-                                    </button>
+
+                            <form action="{{ path('suppliers_search') }}" method="GET">
+
+                                <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage govuk-bg-mobile-color">
+                                    <div class="govuk-form-group homepage-hero__search-group">
+                                        <label class="govuk-label" for="supplier_q">Search
+                                            suppliers</label>
+                                        <input class="govuk-input" id="supplier_q" name="q" type="text">
+                                        <button class="homepage-hero__search-button">
+                                            <span class="visuallyhidden">Search suppliers</span>
+                                        </button>
+                                    </div>
+
                                 </div>
 
                             </form>
