@@ -346,7 +346,7 @@ class FrameworksController extends AbstractController
             throw new NotFoundHttpException('Page not found', $e);
         }
 
-        if (!empty($query) && $flag == 'guidedmatch' && isset($this->guidedMatchApiClient)) {
+        if (!empty($query) && isset($this->guidedMatchApiClient)) {
             $guidedMatchResponse = $this->guidedMatchApiClient->request('GET', $query, [
                 'headers' => [
                     'Content-Type: application/json',
@@ -354,12 +354,12 @@ class FrameworksController extends AbstractController
                 ],
                 'http_errors' => false
             ]);
-    
+
             $guidedMatchJsonResult = json_decode($guidedMatchResponse->getBody()->getContents());
             $guidedMatchStatusCode  = $guidedMatchResponse->getStatusCode();
         }
 
-        if ($flag == 'guidedmatch' && !empty($guidedMatchJsonResult) && $guidedMatchStatusCode == 200) {
+        if (!empty($guidedMatchJsonResult) && $guidedMatchStatusCode == 200) {
             $data = [
                 'query'                      => $query,
                 'pagination'                 => $results->getPagination(),
