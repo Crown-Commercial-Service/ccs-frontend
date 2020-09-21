@@ -34,13 +34,13 @@
           <a class="govuk-breadcrumbs__link" href="/">Home</a>
         </li>
         <li class="govuk-breadcrumbs__list-item">
-          <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_list') }}">Search frameworks</a>
+          <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_list') }}">Search agreements</a>
         </li>
         <li class="govuk-breadcrumbs__list-item">
           <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_show', {'rmNumber':  metadata.framework_rm_number }) }}">{{  metadata.framework_title }}</a>
         </li>
         <li class="govuk-breadcrumbs__list-item" aria-current="page">
-          Suppliers on framework
+          Suppliers on agreement
         </li>
       </ol>
     </div>
@@ -63,7 +63,7 @@
           {#{{ dump(metadata) }}#}
           {#{{ dump(results) }}#}
 
-          <p class="govuk-body-l govuk-!-font-weight-bold">{{ pagination.totalResults }} suppliers on this framework</p>
+          <p class="govuk-body-l govuk-!-font-weight-bold">{{ pagination.totalResults }} suppliers on this agreement</p>
 
           <ul class="govuk-list govuk-list--suppliers">
 
