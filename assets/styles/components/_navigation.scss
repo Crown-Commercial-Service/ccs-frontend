@@ -87,7 +87,7 @@
 
 .nav-list--primary {
 
-    order: 1;
+    order: 2;
 
     @include govuk-media-query($from: desktop) {
 
@@ -102,7 +102,7 @@
 .nav-list--secondary {
 
     // put this list after the primary one on mobile
-    order: 2;
+    order: 1;
     padding-top: govuk-px-to-rem(30);
 
     position: relative;
