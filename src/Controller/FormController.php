@@ -77,24 +77,24 @@ class FormController extends AbstractController
         
         // form data used for validation and to remember values when user submits form
         $formData = [
-            'enquiryType' => $params->get('origin'),
-            'name' => $params->get('name'),
-            'email' => $params->get('email'),
-            'phone' => $params->get('phone'),
-            'company' => $params->get('company'),
-            'jobTitle' => $params->get('00Nb0000009IXEs'),
-            'postCode' => $params->get('post-code'),
-            'moreDetail' =>  $params->get('more-detail'),
+            'enquiryType' => $params->get('origin', null),
+            'name' => $params->get('name', null),
+            'email' => $params->get('email', null),
+            'phone' => $params->get('phone', null),
+            'company' => $params->get('company', null),
+            'jobTitle' => $params->get('00Nb0000009IXEs', null),
+            'postCode' => $params->get('post-code', null),
+            'moreDetail' =>  $params->get('more-detail', null),
         ];
         
         // check if callback checkbox has been set and add to form data
         if ($params->get('00Nb0000009IXEg') == '1') {
-            $formData['callback'] = $params->get('00Nb0000009IXEg');
+            $formData['callback'] = $params->get('00Nb0000009IXEg', null);
         }
 
         // check if complaint type exists and add to form data
         if ($params->get('complaint')) {
-            $formData['complaint'] = $params->get('complaint');
+            $formData['complaint'] = $params->get('complaint', null);
         }
         // check for submitted data
         if (!empty($formData)) {
@@ -180,10 +180,6 @@ class FormController extends AbstractController
         }
         
         // phone
-        if (empty($data['phone'])) {
-            $errorMessages['phoneErr']['errors'][] = 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192';
-        }
-
         if (strlen($data['phone']) > 20) {
             $errorMessages['phoneErr']['errors'][] = 'Telephone number must be 20 characters or fewer';
         }
@@ -202,14 +198,11 @@ class FormController extends AbstractController
             $errorMessages['jobTitleErr']['errors'][] = 'Enter a job title';
         }
 
-        if (strlen($data['jobTitle']) > 100) {
-            $errorMessages['jobTitleErr']['errors'][] = 'Job title must be 100 characters or fewer';
+        if (strlen($data['jobTitle']) > 80) {
+            $errorMessages['jobTitleErr']['errors'][] = 'Job title must be 80 characters or fewer';
         }
 
         // postcode
-        if (empty($data['postCode'])) {
-            $errorMessages['postCodeErr']['errors'][] = 'Enter a postcode';
-        }
 
         if (strlen($data['postCode']) > 100) {
             $errorMessages['postCodeErr']['errors'][] = 'Postcode must be 100 characters or fewer';
