@@ -174,7 +174,9 @@
 
                             {% if formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 %}
                                 {% for error in formErrors.nameErr.errors %}
-                                    <span id="full-name-error" class="govuk-error-message">{{error}}</span>
+                                     <span id="full-name-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                     </span>
                                 {% endfor %}
                             {% endif %}
 
@@ -189,7 +191,9 @@
 
                             {% if formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 %}
                                 {% for error in formErrors.emailErr.errors %}
-                                    <span id="email-error" class="govuk-error-message">{{error}}</span>
+                                    <span id="email-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
                                 {% endfor %}                         
                             {% endif %}    
 
@@ -219,7 +223,9 @@
 
                             {% if formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 %}
                                 {% for error in formErrors.phoneErr.errors %}
-                                    <span id="phone-error" class="govuk-error-message">{{error}}</span>
+                                    <span id="phone-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
                                 {% endfor %}                           
                             {% endif %}
 
@@ -233,7 +239,9 @@
 
                             {% if formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 %}
                                 {% for error in formErrors.companyErr.errors %}
-                                    <span id="email-error" class="govuk-error-message">{{error}}</span>
+                                    <span id="company-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
                                 {% endfor %}                            
                             {% endif %}   
 
@@ -245,7 +253,9 @@
 
                             {% if formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 %}
                                 {% for error in formErrors.jobTitleErr.errors %}
-                                    <span id="email-error" class="govuk-error-message">{{error}}</span>
+                                    <span id="job-title-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
                                 {% endfor %}                           
                             {% endif %} 
 
@@ -257,7 +267,9 @@
 
                             {% if formErrors.postCodeErr is defined and formErrors.postCodeErr.errors|length > 0 %}
                                 {% for error in formErrors.postCodeErr.errors %}
-                                    <span id="email-error" class="govuk-error-message">{{error}}</span>
+                                    <span id="post-code-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
                                 {% endfor %}                           
                             {% endif %} 
 
@@ -301,7 +313,9 @@
 
                             {% if formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 %}
                                 {% for error in formErrors.moreDetailErr.errors %}
-                                    <span id="more-detail-error" class="govuk-error-message">{{error}}</span>
+                                    <span id="more-detail-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
                                 {% endfor %}                      
                             {% endif %}
 
@@ -399,7 +413,7 @@
 
                         // if form errors exist reset focus to error summary
                         var errorSummary = document.getElementsByClassName('govuk-error-summary');
-                        
+
                         if (errorSummary.length > 0) {
                             document.querySelector('.govuk-error-summary').focus();
                         }
