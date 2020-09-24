@@ -163,54 +163,57 @@ class FormController extends AbstractController
 
         // name
         if (empty($data['name'])) {
-            $errorMessages['nameErr']['errors'][] = 'Enter your name';
+            $errorMessages['nameErr']['errors'][0] = 'Enter your name';
         }
 
         if (strlen($data['name']) > 80) {
-            $errorMessages['nameErr']['errors'][] = 'Name must be 80 characters or fewer';
+            $errorMessages['nameErr']['errors'][0] = 'Name must be 80 characters or fewer';
         }
 
         // email
         if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $errorMessages['emailErr']['errors'][] = 'Enter an email address in the correct format, like name@example.com';
+            $errorMessages['emailErr']['errors'][0] = 'Enter an email address in the correct format, like name@example.com';
         }
 
         if (strlen($data['email']) > 80) {
-            $errorMessages['emailErr']['errors'][] = 'Email address must be 80 characters or fewer';
+            $errorMessages['emailErr']['errors'][0] = 'Email address must be 80 characters or fewer';
         }
         
         // phone
+        if (empty($data['phone'])) {
+            $errorMessages['phoneErr']['errors'][0] = 'Enter a phone number';
+        }
         if (strlen($data['phone']) > 20) {
-            $errorMessages['phoneErr']['errors'][] = 'Telephone number must be 20 characters or fewer';
+            $errorMessages['phoneErr']['errors'][0] = 'Telephone number must be 20 characters or fewer';
         }
 
         // company
         if (empty($data['company'])) {
-            $errorMessages['companyErr']['errors'][] = 'Enter an organisation';
+            $errorMessages['companyErr']['errors'][0] = 'Enter an organisation';
         }
 
         if (strlen($data['company']) > 80) {
-            $errorMessages['companyErr']['errors'][] = 'Organisation must be 80 characters or fewer';
+            $errorMessages['companyErr']['errors'][0] = 'Organisation must be 80 characters or fewer';
         }
 
         // job title
         if (empty($data['jobTitle'])) {
-            $errorMessages['jobTitleErr']['errors'][] = 'Enter a job title';
+            $errorMessages['jobTitleErr']['errors'][0] = 'Enter a job title';
         }
 
         if (strlen($data['jobTitle']) > 80) {
-            $errorMessages['jobTitleErr']['errors'][] = 'Job title must be 80 characters or fewer';
+            $errorMessages['jobTitleErr']['errors'][0] = 'Job title must be 80 characters or fewer';
         }
 
         // postcode
 
         if (strlen($data['postCode']) > 100) {
-            $errorMessages['postCodeErr']['errors'][] = 'Postcode must be 100 characters or fewer';
+            $errorMessages['postCodeErr']['errors'][0] = 'Postcode must be 100 characters or fewer';
         }
 
         // more detail
         if (empty($data['moreDetail'])) {
-            $errorMessages['moreDetailErr']['errors'][] = 'Enter more detail';
+            $errorMessages['moreDetailErr']['errors'][0] = 'Enter more detail';
         }
 
         // loop through and check for errors
