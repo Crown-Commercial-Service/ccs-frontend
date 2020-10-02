@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact Crown Commercial Services - CCS{% endblock %}
+{% block title %} Contact Crown Commercial Services - CCS {% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -45,6 +45,20 @@
         <!-- required wrapper 2 -->
         <main id="main-content" role="main" class="govuk-main-wrapper">
 
+            {% if formErrors is defined %}
+            <div class="govuk-error-summary govuk-grid-column-three-quarters" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+                <h2 class="govuk-error-summary__title" id="error-summary-title"> There is a problem</h2>
+                <div class="govuk-error-summary__body">
+                    <ul class="govuk-list govuk-error-summary__list">
+                     {% for errorType in formErrors %}
+                        {% for error in errorType.errors %}
+                            <a href={{errorType.link}}><li>{{error}}</li></a>
+                        {% endfor %}
+                     {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
 
             {#<div class="govuk-grid-row">#}
             {#<div class="govuk-grid-column-full">#}
@@ -91,7 +105,7 @@
 
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-                    <form class="govuk-!-width-three-quarters" action="/contact/sendToSalesforce" method="POST">
+                    <form class="govuk-!-width-three-quarters" action="/contact/sendToSalesforce" method="POST" novalidate>
 
                         {# Change these field types to hidden for Production #}
                         <input type="hidden" name="orgid" value="{{ web_to_case_orgid }}">
@@ -123,12 +137,12 @@
     </span>
                                 <div class="govuk-radios govuk-radios--conditional" data-module="radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="origin" type="radio" value="Website - Enquiry" data-aria-controls="conditional-how-contacted-conditional-1" checked>
+                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="origin" type="radio" value="Website - Enquiry" data-aria-controls="conditional-how-contacted-conditional-1" {{ formData is defined and formData.enquiryType is same as('Website - Complaint') ? null : 'checked' }}>
                                         <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-1">
                                             General enquiry </label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-2" name="origin" type="radio" value="Website - Complaint" data-aria-controls="conditional-how-contacted-conditional-2">
+                                        <input class="govuk-radios__input" id="how-contacted-conditional-2" name="origin" type="radio" value="Website - Complaint" data-aria-controls="conditional-how-contacted-conditional-2" {{ formData is defined and formData.enquiryType is same as('Website - Complaint') ? 'checked' : null }}>
                                         <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">
                                             Feedback </label>
                                     </div>
@@ -155,18 +169,35 @@
 
 
                         {# wrapper class for error states; `govuk-form-group--error`  #}
-                        <div class="govuk-form-group --govuk-form-group--error">
+                        <div class="govuk-form-group {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="name">Name</label>
-                            {#<span id="full-name-error" class="govuk-error-message">#}
+
+                            {% if formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 %}
+                                {% for error in formErrors.nameErr.errors %}
+                                     <span id="full-name-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                     </span>
+                                {% endfor %}
+                            {% endif %}
+
                             {#Descriptive and helpful error message#}
-                            {#</span>#}
+                            {#</span>
                             {# input class for error states; `govuk-input--error`  #}
-                            <input class="govuk-input --govuk-input--error" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text"/>
+                            <input class="govuk-input {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
                         </div>
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group {{formErrors.emailErr.errors is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="email">
                                 Email </label>
-                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="email" required/>
+
+                            {% if formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 %}
+                                {% for error in formErrors.emailErr.errors %}
+                                    <span id="email-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
+                                {% endfor %}                         
+                            {% endif %}    
+
+                            <input class="govuk-input {{formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="email" maxlength="80" name="email" size="20" type="email" value="{{formErrors is defined ? formData.email}}" autocomplete="email" required/>
                         </div>
 
 
@@ -179,34 +210,70 @@
                                 </legend>
                                 <div class="govuk-checkboxes">
                                     <div class="govuk-checkboxes__item">
-                                        <input class="govuk-checkboxes__input" id="00Nb0000009IXEg" name="00Nb0000009IXEg" type="checkbox" value="1"/>
+                                        <input class="govuk-checkboxes__input" id="00Nb0000009IXEg" name="00Nb0000009IXEg" type="checkbox" value="1" {{ formData.callback is defined ? 'checked' : null }}/>
                                         <label class="govuk-label govuk-checkboxes__label" for="00Nb0000009IXEg">
                                             Yes </label>
                                     </div>
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="phone"> Telephone
                                 number</label>
-                            <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text" required/>
+
+                            {% if formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 %}
+                                {% for error in formErrors.phoneErr.errors %}
+                                    <span id="phone-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
+                                {% endfor %}                           
+                            {% endif %}
+
+                            <input class="govuk-input {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="phone" maxlength="40" name="phone" size="20" type="text" value="{{formErrors is defined ? formData.phone}}" autocomplete="tel" required/>
                         </div>
 
 
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="company">
                                 Organisation </label>
-                            <input class="govuk-input" id="company" maxlength="80" name="company" size="20" type="text"/>
+
+                            {% if formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 %}
+                                {% for error in formErrors.companyErr.errors %}
+                                    <span id="company-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
+                                {% endfor %}                            
+                            {% endif %}   
+
+                            <input class="govuk-input {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization"/>
                         </div>
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="00Nb0000009IXEs">
                                 Job title </label>
-                            <input class="govuk-input" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text"/>
+
+                            {% if formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 %}
+                                {% for error in formErrors.jobTitleErr.errors %}
+                                    <span id="job-title-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
+                                {% endfor %}                           
+                            {% endif %} 
+
+                            <input class="govuk-input {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="organization-title"/>
                         </div>
-                        <div class="govuk-form-group govuk-!-width-one-half">
+                        <div class="govuk-form-group govuk-!-width-one-half {{formErrors.postCodeErr is defined and formErrors.postCodeErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="post-code">
                                 Organisation post code </label>
-                            <input class="govuk-input" id="post-code" maxlength="100" name="post-code" size="20" type="text"/>
+
+                            {% if formErrors.postCodeErr is defined and formErrors.postCodeErr.errors|length > 0 %}
+                                {% for error in formErrors.postCodeErr.errors %}
+                                    <span id="post-code-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
+                                {% endfor %}                           
+                            {% endif %} 
+
+                            <input class="govuk-input {{formErrors.postCodeErr is defined and formErrors.postCodeErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="post-code" maxlength="100" name="post-code" size="20" type="text" value="{{formErrors is defined ? formData.postCode}}" autocomplete="postal-code"/>
                         </div>
 
 
@@ -220,17 +287,17 @@
                                     </legend>
                                     <div class="govuk-checkboxes">
                                         <div class="govuk-checkboxes__item">
-                                            <input class="govuk-checkboxes__input" id="complaint-1" name="complaint" type="checkbox" value="Service">
+                                            <input class="govuk-checkboxes__input" id="complaint-1" name="complaint" type="checkbox" value="Service" {{ formData.complaint is defined and formData.complaint is same as('Service') ? 'checked' : null }}>
                                             <label class="govuk-label govuk-checkboxes__label" for="complaint-1">
                                                 Service </label>
                                         </div>
                                         <div class="govuk-checkboxes__item">
-                                            <input class="govuk-checkboxes__input" id="complaint-2" name="complaint" type="checkbox" value="Supplier staff">
+                                            <input class="govuk-checkboxes__input" id="complaint-2" name="complaint" type="checkbox" value="Supplier staff" {{ formData.complaint is defined and formData.complaint is same as('Supplier staff') ? 'checked' : null }}>
                                             <label class="govuk-label govuk-checkboxes__label" for="complaint-2">
                                                 Supplier staff </label>
                                         </div>
                                         <div class="govuk-checkboxes__item">
-                                            <input class="govuk-checkboxes__input" id="complaint-3" name="complaint" type="checkbox" value="Other">
+                                            <input class="govuk-checkboxes__input" id="complaint-3" name="complaint" type="checkbox" value="Other" {{ formData.complaint is defined and formData.complaint is same as('Other') ? 'checked' : null }}>
                                             <label class="govuk-label govuk-checkboxes__label" for="complaint-3">
                                                 Other </label>
                                         </div>
@@ -240,13 +307,22 @@
                         </div>
 
 
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group {{formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label id="more-detail-label" class="govuk-label" for="more-detail">Can
                                 you provide more detail?</label>
+
+                            {% if formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 %}
+                                {% for error in formErrors.moreDetailErr.errors %}
+                                    <span id="more-detail-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
+                                {% endfor %}                      
+                            {% endif %}
+
                             <span id="more-detail-hint" class="govuk-hint">
     Do not include personal or financial information, like your credit card details.
   </span>
-                            <textarea class="govuk-textarea" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint" required></textarea>
+                            <textarea class="govuk-textarea" style="{{formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 ? 'border: 4px solid #b10e1e' : null }}" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint" required>{{formErrors is defined ? formData.moreDetail}}</textarea>
                         </div>
 
                         {# Catch-all field for additional Salesforce data #}
@@ -284,6 +360,13 @@
                         condtionalFields = document.getElementById("conditional-fields");
                         generalEnquiryReturnURL = "{{ site_url }}/contact/thanks";
                         complaintReturnURL = "{{ site_url }}/contact/thanks-complaint";
+
+                        // if "Website - Complaint" is already selected for instance if there are errors and page has reloaded load additional fields
+                        if (document.getElementById('how-contacted-conditional-2').checked) {
+                                    retURLfield.value = complaintReturnURL;
+                                    condtionalFields.classList.remove("govuk-radios__conditional--hidden");
+                                    labelMoreDetail.textContent = "Briefly state your feedback:";
+                        }
 
                         for (var i = 0; i < fieldCheckboxes.length; i++) {
 
@@ -326,6 +409,14 @@
                             dataCollectionFieldForSalesforce.value += " " + fieldMoreDetail.name + ": " + fieldMoreDetail.value;
 
                         }, false);
+
+
+                        // if form errors exist reset focus to error summary
+                        var errorSummary = document.getElementsByClassName('govuk-error-summary');
+
+                        if (errorSummary.length > 0) {
+                            document.querySelector('.govuk-error-summary').focus();
+                        }
 
                     </script>
 
