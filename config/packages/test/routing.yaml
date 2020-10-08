@@ -1,3 +1,10 @@
+rollbar:
+  access_token: '%env(ROLLBAR_ACCESS_TOKEN)%'
+  environment: uat
 framework:
     router:
         strict_requirements: true
+    rollbar:
+            type: service
+            id: Rollbar\Monolog\Handler\RollbarHandler
+
