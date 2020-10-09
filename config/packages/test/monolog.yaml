@@ -1,3 +1,6 @@
+rollbar:
+  access_token: '%env(ROLLBAR_ACCESS_TOKEN)%'
+  environment: uat
 monolog:
     handlers:
         main:
@@ -5,3 +8,7 @@ monolog:
             path: "%kernel.logs_dir%/symfony.log"
             level: debug
             channels: ["!event"]
+        rollbar:
+            type: service
+            id: Rollbar\Monolog\Handler\RollbarHandler
+
