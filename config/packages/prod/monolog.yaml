@@ -1,6 +1,6 @@
 rollbar:
   access_token: '%env(ROLLBAR_ACCESS_TOKEN)%'
-  environment: prod
+  environment: '%env(APP_ENV)%'
 monolog:
     handlers:
         main:
