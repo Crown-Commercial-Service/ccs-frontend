@@ -123,26 +123,20 @@ class ApiController extends AbstractController
 
         // Build query and input filter params
         $client = HttpClient::create();
+        $response = $client->request(
+            'GET',
+            $apiUrl,
+            [
+                'query' => $this->filterFrameworkParams($request->query->all())
+            ]
+        );
 
-        $responses = [];
-        for ($i = 0; $i < 379; ++$i) {
-            $responses[] = $client->request(
-                'GET',
-                $apiUrl,
-                [
-                    'query' => $this->filterFrameworkParams($request->query->all())
-                ]
-            );
+        if ($response->getStatusCode() !== 200) {
+            throw new ApiException(sprintf('Error with Search Framework API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getMessage()));
         }
-        
-        foreach ($responses as $response) {
-            if ($response->getStatusCode() !== 200) {
-                throw new ApiException(sprintf('Error with Search Framework API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getMessage()));
-            }
 
-            $responseFinal = json_decode($response->getContent());
-            return new JsonResponse($responseFinal);
-        }
+        $responseFinal = json_decode($response->getContent());
+        return new JsonResponse($responseFinal);
     }
 
     /**
