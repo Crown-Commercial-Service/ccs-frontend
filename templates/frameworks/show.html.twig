@@ -80,7 +80,7 @@
                 </li>
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_list') }}">Search
-                        frameworks</a>
+                        agreements</a>
                 </li>
                 <li class="govuk-breadcrumbs__list-item" aria-current="page">
                     {{ framework.content.title }}
@@ -106,7 +106,7 @@
                                 <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
                                 <strong class="govuk-warning-text__text">
                                     <span class="govuk-warning-text__assistive">Important</span>
-                                    Expired framework - This information is for
+                                    Expired agreement - This information is for
                                     reference only</strong>
                             </div>
                         {% endif %}
@@ -231,21 +231,21 @@
                                         <p>Please read the 'How to buy' tab
                                             below for detailed instructions on
                                             how to find out which suppliers are
-                                            on this framework.</p>
+                                            on this agreement.</p>
 
                                     {% elseif framework.content.type == "G-cloud/DOS" %}
                                         <p>
                                             <a href="https://www.digitalmarketplace.service.gov.uk/">Digital
                                                 Marketplace</a> has the
                                             constantly updated list of the
-                                            suppliers on this framework.</p>
+                                            suppliers on this agreement.</p>
 
                                         {# Only link to suppliers if the item is not DPS or G-cloud #}
                                     {% else %}
 
                                         <p>There are
                                             <a href="{{ path('frameworks_suppliers', {'rmNumber': framework.content.rm_number }) }}">{{ framework.content.total_suppliers }}
-                                                suppliers</a> on this framework
+                                                suppliers</a> on this agreement
                                         </p>
 
                                     {% endif %}
@@ -423,7 +423,7 @@
                                 <h2 class="aside__heading">Key facts</h2>
 
                                 <dl class="govuk-list govuk-list--definition">
-                                    <dt>Framework ID</dt>
+                                    <dt>Agreement ID</dt>
                                     <dd class="apollo-list--definition__value">
                                         {{ framework.content.rm_number }}
                                     </dd>
