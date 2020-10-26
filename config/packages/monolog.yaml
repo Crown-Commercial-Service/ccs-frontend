@@ -1,8 +1,0 @@
-rollbar:
-  access_token: '%env(ROLLBAR_ACCESS_TOKEN)%'
-  environment: '%env(APP_ENV)%'
-monolog:
-    handlers:
-        rollbar:
-            type: service
-            id: Rollbar\Monolog\Handler\RollbarHandler
