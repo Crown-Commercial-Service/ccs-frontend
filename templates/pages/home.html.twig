@@ -11,10 +11,6 @@
             header-global header-global--home
         {% endblock %}
 
-        {% block headerstyles %}
-            style="background-size: cover; background-image: path(/assets/images/header.jpg);"
-        {% endblock %}
-
         {% block featuredcontent %}
                 <div class="homepage-hero govuk-homepage-hero-full-width">
 
@@ -90,7 +86,7 @@
 
 
         {# required wrapper 2 #}
-        <main id="main-content" role="main" class="govuk-main-wrapper">
+        <main id="main-content" class="govuk-main-wrapper">
 
 
             <div class="apollo-island">
@@ -195,7 +191,6 @@
 
                                             {% if news_item.featuredImage %}
                                             <picture>
-                                                <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
 
                                                         <!--[if IE 9]>
                                                         <video style="display: none;><![endif]-->
@@ -218,8 +213,9 @@
                                                             <img src="{{ news_item.featuredImage.byName('full') }}" alt="" role="presentation" aria-hidden="true">
                                                         {% endif %}
 
-                                                </a>
                                             </picture>
+                                            <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link"></a>
+
                                             {% endif %}
 
                                             <div class="news-listing__item__caption">
@@ -249,7 +245,7 @@
                             <h2 class="govuk-heading-m">Learn about CCS</h2>
 
                             <p class="responsive-video widescreen">
-                                <iframe title="An overview of CCS in 30 seconds video" width="560" height="315" src="https://www.youtube-nocookie.com/embed/_p61ZX4zQHU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <iframe title="An overview of CCS in 30 seconds video" width="560" height="315" src="https://www.youtube-nocookie.com/embed/_p61ZX4zQHU" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             </p>
                             <p><a href="/help-and-support/">Browse all help and
                                     support guides</a></p>

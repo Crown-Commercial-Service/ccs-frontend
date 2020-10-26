@@ -3,12 +3,6 @@ rollbar:
   environment: '%env(APP_ENV)%'
 monolog:
     handlers:
-        main:
-            type: stream
-            path: "%kernel.logs_dir%/symfony.log"
-            level: debug
-            channels: ["!event"]
         rollbar:
             type: service
             id: Rollbar\Monolog\Handler\RollbarHandler
-
