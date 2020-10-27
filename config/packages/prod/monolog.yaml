@@ -1,31 +1,31 @@
-rollbar:
-  access_token: '%env(ROLLBAR_ACCESS_TOKEN)%'
-  environment: '%env(APP_ENV)%'
-monolog:
-    handlers:
-        main:
-            type: fingers_crossed
-            action_level: error
-            handler: nested
-            excluded_404s:
-                # regex: exclude all 404 errors from the logs
-                - ^/
-        nested:
-            type: stream
-            path: "%kernel.logs_dir%/symfony.log"
-            level: debug
-        console:
-            type: console
-            process_psr_3_messages: false
-            channels: ["!event", "!doctrine"]
-        deprecation:
-            type: stream
-            path: "%kernel.logs_dir%/symfony.log"
-        deprecation_filter:
-            type: filter
-            handler: deprecation
-            max_level: info
-            channels: ["php"]
-        rollbar:
-            type: service
-            id: Rollbar\Monolog\Handler\RollbarHandler
+# rollbar:
+#   access_token: '%env(ROLLBAR_ACCESS_TOKEN)%'
+#   environment: '%env(APP_ENV)%'
+# monolog:
+#     handlers:
+#         main:
+#             type: fingers_crossed
+#             action_level: error
+#             handler: nested
+#             excluded_404s:
+#                 # regex: exclude all 404 errors from the logs
+#                 - ^/
+#         nested:
+#             type: stream
+#             path: "%kernel.logs_dir%/symfony.log"
+#             level: debug
+#         console:
+#             type: console
+#             process_psr_3_messages: false
+#             channels: ["!event", "!doctrine"]
+#         deprecation:
+#             type: stream
+#             path: "%kernel.logs_dir%/symfony.log"
+#         deprecation_filter:
+#             type: filter
+#             handler: deprecation
+#             max_level: info
+#             channels: ["php"]
+#         rollbar:
+#             type: service
+#             id: Rollbar\Monolog\Handler\RollbarHandler
