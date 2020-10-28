@@ -74,7 +74,7 @@ class FormController extends AbstractController
     {
 
         $params = $request->request;
-        
+
         // form data used for validation and to remember values when user submits form
         $formData = [
             'enquiryType' => $params->get('origin', null),
@@ -86,7 +86,6 @@ class FormController extends AbstractController
             'postCode' => $params->get('post-code', null),
             'moreDetail' =>  $params->get('more-detail', null),
         ];
-        
         // check if callback checkbox has been set and add to form data
         if ($params->get('00Nb0000009IXEg') == '1') {
             $formData['callback'] = $params->get('00Nb0000009IXEg', null);
@@ -112,7 +111,6 @@ class FormController extends AbstractController
                     // these values are automatically encoded before including them in the URL
                     'query' => $params->all(),
                 ]);
-        
                 if (!is_null($params->get('debug'))) {
                     return new Response(
                         $response->getContent()
@@ -178,7 +176,7 @@ class FormController extends AbstractController
         if (strlen($data['email']) > 80) {
             $errorMessages['emailErr']['errors'][0] = 'Email address must be 80 characters or fewer';
         }
-        
+
         // phone
         if (empty($data['phone'])) {
             $errorMessages['phoneErr']['errors'][0] = 'Enter a phone number';

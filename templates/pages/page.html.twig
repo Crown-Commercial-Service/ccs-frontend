@@ -120,8 +120,9 @@
                     <div class="page-components">
                         {% include '_components/components.html.twig' with {'components': page.content.page_components_rows } %}
 
-                        {% include '_components/resources-section.html.twig' %}
-                        
+                        {% if page.content.brochures_list_brochures_list is not empty  or  page.content.whitepapers_list_whitepapers is not empty  or  page.content.webinars_list_webinars is not empty %}
+                            {% include '_components/resources-section.html.twig' %}
+                        {% endif %}
                     </div>
 
 
