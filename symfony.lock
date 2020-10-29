@@ -20,18 +20,6 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
-    "container-interop/container-interop": {
-        "version": "1.2.0"
-    },
-    "easycorp/easy-log-handler": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
-        }
-    },
     "fabpot/goutte": {
         "version": "v3.2.3"
     },
@@ -76,6 +64,12 @@
     },
     "roave/security-advisories": {
         "version": "dev-master"
+    },
+    "rollbar/rollbar": {
+        "version": "v1.8.1"
+    },
+    "rollbar/rollbar-php-symfony-bundle": {
+        "version": "v3.1.2"
     },
     "squizlabs/php_codesniffer": {
         "version": "3.0",
@@ -244,6 +238,9 @@
             "version": "4.2",
             "ref": "5374e24d508ba8fd6ba9eb15170255fdb778316a"
         }
+    },
+    "symfony/serializer": {
+        "version": "v4.4.15"
     },
     "symfony/service-contracts": {
         "version": "v2.0.1"

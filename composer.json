@@ -7,6 +7,7 @@
         "php": "^7.3.8",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "rollbar/rollbar-php-symfony-bundle": "v3.1.2",
         "studio24/frontend": "0.6.*",
         "studio24/http-cache-clear": "^0.2",
         "symfony/apache-pack": "^1.0",
