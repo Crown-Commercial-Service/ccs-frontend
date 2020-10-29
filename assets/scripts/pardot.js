@@ -20,9 +20,7 @@ if (cookiePreferences !== null) {
             event.preventDefault();
 
             var email = $("form.pardot-submit input.pardot-email").val();
-            if (email.length == 0) {
-                return;
-            }
+            
             var data = { "email": email };
 
             var otherFields = $("input.pardot-field");
