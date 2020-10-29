@@ -405,7 +405,7 @@ class FrameworksController extends AbstractController
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Framework agreement not found', $e);
         }
-
+        
         $data = [
             'framework' => $results
         ];
