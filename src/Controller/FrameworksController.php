@@ -11,6 +11,9 @@ use Studio24\Frontend\Cms\RestData;
 use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Studio24\Frontend\Exception\NotFoundException;
+use GuzzleHttp\Exception\RequestException;
+use Rollbar\Rollbar;
+use Rollbar\Payload\Level;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -347,22 +350,40 @@ class FrameworksController extends AbstractController
         }
 
         if (!empty($query) && isset($this->guidedMatchApiClient)) {
-            $guidedMatchResponse = $this->guidedMatchApiClient->request('GET', $query, [
-                'headers' => [
-                    'Content-Type: application/json',
-                    'x-api-key'  => getenv('GUIDED_MATCH_API_KEY')
-                ],
-                'http_errors' => false
-            ]);
+            try {
+                $guidedMatchResponse = $this->guidedMatchApiClient->request('GET', $query, [
+                    'headers' => [
+                        'Content-Type: application/json',
+                        'x-api-key'  => getenv('GUIDED_MATCH_API_KEY')
+                    ],
+                    'http_errors' => false
+                ]);
 
-            $guidedMatchJsonResult = json_decode($guidedMatchResponse->getBody()->getContents());
-            $guidedMatchStatusCode  = $guidedMatchResponse->getStatusCode();
+                $connected = true;
+            } catch (RequestException $e) {
+                Rollbar::log(
+                    Level::ERROR,
+                    'Guided Match API is refused to connect, GM banner will not show',
+                    $e
+                );
 
-            $headersForEndPoint = @get_headers(getenv('GUIDED_MATCH_URL') . rawurlencode($query))[0];
-            $statusCodeForEndPoint = intval(explode(" ", $headersForEndPoint)[1]);
+                $connected = false;
+            }
+
+            if ($connected) {
+                $guidedMatchJsonResult = json_decode($guidedMatchResponse->getBody()->getContents());
+                $guidedMatchStatusCode  = $guidedMatchResponse->getStatusCode();
+
+                $headersForLandingPage = @get_headers(getenv('GUIDED_MATCH_URL') . rawurlencode($query))[0];
+                $statusCodeForLandingPage = intval(explode(" ", $headersForLandingPage)[1]);
+            } else {
+                $guidedMatchJsonResult = [];
+                $guidedMatchStatusCode = 400;
+                $statusCodeForLandingPage = 400;
+            }
         }
 
-        if (!empty($guidedMatchJsonResult) && $guidedMatchStatusCode == 200 && $statusCodeForEndPoint == 200) {
+        if (!empty($guidedMatchJsonResult) && $guidedMatchStatusCode == 200 && $statusCodeForLandingPage == 200) {
             $data = [
                 'query'                      => $query,
                 'pagination'                 => $results->getPagination(),
