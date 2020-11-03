@@ -374,8 +374,8 @@ class FrameworksController extends AbstractController
                 $guidedMatchJsonResult = json_decode($guidedMatchResponse->getBody()->getContents());
                 $guidedMatchStatusCode  = $guidedMatchResponse->getStatusCode();
 
-                $headersForLandingPage = @get_headers(getenv('GUIDED_MATCH_URL') . rawurlencode($query))[0];
-                $statusCodeForLandingPage = intval(explode(" ", $headersForLandingPage)[1]);
+                $responseForLandingPage = $this->guidedMatchApiClient->get(getenv('GUIDED_MATCH_URL') . rawurlencode($query));
+                $statusCodeForLandingPage = $responseForLandingPage->getStatusCode();
             } else {
                 $guidedMatchJsonResult = [];
                 $guidedMatchStatusCode = 400;
