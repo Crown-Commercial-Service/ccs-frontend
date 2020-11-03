@@ -2,6 +2,7 @@
 
 ## Table of contents
 
+* [Git workflow](git-workflow.md)
 * [Architecture](ARCHITECTURE.md)
 * [Content Structure and Setup](CONTENT_STRUCTURE_AND_SETUP.md)
 * [Caching](CACHING.md)
@@ -11,6 +12,7 @@
 * [WordPress Rest API](WORDPRESS_REST_API.md)
 * [Suppliers Listing](SUPPLIERS_LISTING.md)
 * [Cookies](COOKIES.md)
+* [Pardot integration](pardot.md)
 
 ## Other docs
 
