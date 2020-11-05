@@ -1,7 +1,4 @@
 framework:
-    http_client:
-        default_options:
-            http_version: "1.1"
     test: true
     session:
         storage_id: session.storage.mock_file
