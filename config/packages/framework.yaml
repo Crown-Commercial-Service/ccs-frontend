@@ -1,4 +1,8 @@
 framework:
+    http_client:
+        default_options:
+            http_version: "1.1"
+
     secret: '%env(APP_SECRET)%'
     #default_locale: en
     #csrf_protection: true
