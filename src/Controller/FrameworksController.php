@@ -16,6 +16,7 @@ use Rollbar\Rollbar;
 use Rollbar\Payload\Level;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use \Exception;
 
 class FrameworksController extends AbstractController
 {
@@ -136,8 +137,10 @@ class FrameworksController extends AbstractController
 
         try {
             $results = $this->searchApi->list($page, ['limit' => $limit]);
-        } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
+        } catch (Exception $e) {
+            // refresh page on 500 error
+            header('Location: '.$_SERVER['REQUEST_URI']);
+            exit;
         }
 
         $data = [
@@ -345,8 +348,10 @@ class FrameworksController extends AbstractController
                 'status'    => $status ?? null,
                 'pillar'    => $category ?? null,
             ]);
-        } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
+        } catch (Exception $e) {
+            // refresh page on 500 error
+            header('Location: '.$_SERVER['REQUEST_URI']);
+            exit;
         }
 
         if (!empty($query) && isset($this->guidedMatchApiClient)) {
