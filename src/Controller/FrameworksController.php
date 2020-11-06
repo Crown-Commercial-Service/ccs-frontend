@@ -12,6 +12,7 @@ use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Studio24\Frontend\Exception\NotFoundException;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
 use Rollbar\Rollbar;
 use Rollbar\Payload\Level;
 use Symfony\Component\HttpFoundation\Response;
@@ -379,8 +380,12 @@ class FrameworksController extends AbstractController
                 $guidedMatchJsonResult = json_decode($guidedMatchResponse->getBody()->getContents());
                 $guidedMatchStatusCode  = $guidedMatchResponse->getStatusCode();
 
-                $responseForLandingPage = $this->guidedMatchApiClient->get(getenv('GUIDED_MATCH_URL') . rawurlencode($query));
-                $statusCodeForLandingPage = $responseForLandingPage->getStatusCode();
+                try{
+                    $responseForLandingPage = $this->guidedMatchApiClient->request('GET', getenv('GUIDED_MATCH_URL') . rawurlencode($query));              
+                    $statusCodeForLandingPage = $responseForLandingPage->getStatusCode();
+                } catch(ServerException $e){
+                    $statusCodeForLandingPage = 502;
+                }
             } else {
                 $guidedMatchJsonResult = [];
                 $guidedMatchStatusCode = 400;
