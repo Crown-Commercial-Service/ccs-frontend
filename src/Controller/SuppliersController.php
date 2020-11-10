@@ -10,6 +10,7 @@ use Studio24\Frontend\Cms\RestData;
 use Symfony\Component\HttpFoundation\Request;
 use Studio24\Frontend\Exception\NotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Exception;
 
 class SuppliersController extends AbstractController
 {
@@ -73,8 +74,10 @@ class SuppliersController extends AbstractController
 
         try {
             $results = $this->searchApi->list($page);
-        } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
+        } catch (Exception $e) {
+             // refresh page on 500 error
+             header('Location: ' . $_SERVER['REQUEST_URI']);
+             exit;
         }
 
         $limit = $request->query->has('limit') ? (int)filter_var(
@@ -162,8 +165,10 @@ class SuppliersController extends AbstractController
                 'framework' => $frameworkId,
                 'lot'       => $lotId
             ]);
-        } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
+        } catch (Exception $e) {
+             // refresh page on 500 error
+             header('Location: ' . $_SERVER['REQUEST_URI']);
+             exit;
         }
 
         $facets = $results->getMetadata()->offsetGet('facets');
