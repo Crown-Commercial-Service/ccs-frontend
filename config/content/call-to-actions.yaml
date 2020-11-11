@@ -1,0 +1,18 @@
+first_call_to_action:
+  type: array
+  content_fields:
+    title:
+      type: text
+    description:
+      type: text
+    link:
+      type: text
+second_call_to_action:
+  type: array
+  content_fields:
+    title:
+      type: text
+    description:
+      type: text
+    link:
+      type: text
