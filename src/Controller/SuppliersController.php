@@ -76,8 +76,7 @@ class SuppliersController extends AbstractController
             $results = $this->searchApi->list($page);
         } catch (Exception $e) {
              // refresh page on 500 error
-             header('Location: ' . $_SERVER['REQUEST_URI']);
-             exit;
+             return $this->redirect($request->getUri());
         }
 
         $limit = $request->query->has('limit') ? (int)filter_var(
@@ -167,8 +166,7 @@ class SuppliersController extends AbstractController
             ]);
         } catch (Exception $e) {
              // refresh page on 500 error
-             header('Location: ' . $_SERVER['REQUEST_URI']);
-             exit;
+             return $this->redirect($request->getUri());
         }
 
         $facets = $results->getMetadata()->offsetGet('facets');
