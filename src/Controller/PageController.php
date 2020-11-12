@@ -12,6 +12,7 @@ use Studio24\Frontend\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageController extends AbstractController
@@ -99,6 +100,21 @@ class PageController extends AbstractController
             $breadcrumb[$link] = $name;
         }
 
+        // request to call to action api
+        $ctaUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/call-to-actions/0';
+        $ctaContent = null;
+        
+        $client = HttpClient::create();
+        $response = $client->request(
+            'GET',
+            $ctaUrl,
+        );
+
+        if ($response->getStatusCode() == 200) {
+            $ctaContent = json_decode($response->getContent());
+            // dd($ctaContent);
+        }    
+
         return $this->render('pages/page.html.twig', [
             'page'               => $page,
             'breadcrumb_parents' => $breadcrumb,
@@ -107,6 +123,23 @@ class PageController extends AbstractController
             'site_base_url'      => getenv('APP_BASE_URL'),
             'form_action'        => getenv('APP_ENV') === 'prod' ? 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8' : 'https://crowncommercial--preprod.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8',
             'org_id' => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D8E000000E4zz',
+            'call_to_action' => $ctaContent,
+         ]);
+    }
+
+    // get page call to actions
+
+    public function get_page_call_to_actions(Request $request)
+    {
+        $this->api->setContentType('call_to_actions');
+        $this->api->setCacheKey($request->getRequestUri());
+
+        // $results = $this->api->getOne(0);
+
+        // $data = ['pageCallToAction' => $results];
+
+        return $this->render('pages/page.html.twig', [
+            'pageCallToAction' => 'test',
         ]);
     }
 
