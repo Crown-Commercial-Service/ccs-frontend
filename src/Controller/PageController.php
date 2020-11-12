@@ -127,21 +127,6 @@ class PageController extends AbstractController
          ]);
     }
 
-    // get page call to actions
-
-    public function get_page_call_to_actions(Request $request)
-    {
-        $this->api->setContentType('call_to_actions');
-        $this->api->setCacheKey($request->getRequestUri());
-
-        // $results = $this->api->getOne(0);
-
-        // $data = ['pageCallToAction' => $results];
-
-        return $this->render('pages/page.html.twig', [
-            'pageCallToAction' => 'test',
-        ]);
-    }
 
     /**
      * Simple healthcheck
