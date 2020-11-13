@@ -379,8 +379,8 @@ class FrameworksController extends AbstractController
                 $guidedMatchStatusCode  = $guidedMatchResponse->getStatusCode();
 
                 try {
-                    // $responseForLandingPage = $this->guidedMatchApiClient->request('GET', getenv('GUIDED_MATCH_URL') . rawurlencode($query));
-                    $statusCodeForLandingPage = 200;
+                    $responseForLandingPage = $this->guidedMatchApiClient->request('GET', getenv('GUIDED_MATCH_URL') . rawurlencode($query));
+                    $statusCodeForLandingPage = $responseForLandingPage->getStatusCode();
                 } catch (ServerException $e) {
                     $statusCodeForLandingPage = 502;
                 }
