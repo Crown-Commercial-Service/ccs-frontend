@@ -384,6 +384,9 @@
                                 {% if item.content.trading_name %}
                                     <span class="ccs-subtle-notification">Trading as {{ item.content.trading_name }}</span>
                                 {% endif %}
+                                {% if item.content.have_guarantor.value == true %}
+                                    <span class="govuk-tag govuk-tag--subtle ccs-tag">has Guarantor</span>
+                                {% endif %}
                             </h3>
 
                                 {% if item.content.alternative_trading_names is not empty %}
