@@ -101,19 +101,21 @@ class PageController extends AbstractController
         }
 
         // request to call to action api
-        $ctaUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/call-to-actions/0';
-        $ctaContent = null;
+        $optionCardsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/option-cards/0';
+        $optionCardsContent = null;
         
         $client = HttpClient::create();
         $response = $client->request(
             'GET',
-            $ctaUrl,
+            $optionCardsUrl,
         );
 
         if ($response->getStatusCode() == 200) {
-            $ctaContent = json_decode($response->getContent());
+            $optionCardsContent = json_decode($response->getContent());
             // dd($ctaContent);
-        }    
+        } else {
+            $optionCardsContent = null;
+        }
 
         return $this->render('pages/page.html.twig', [
             'page'               => $page,
@@ -123,7 +125,7 @@ class PageController extends AbstractController
             'site_base_url'      => getenv('APP_BASE_URL'),
             'form_action'        => getenv('APP_ENV') === 'prod' ? 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8' : 'https://crowncommercial--preprod.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8',
             'org_id' => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D8E000000E4zz',
-            'call_to_action' => $ctaContent,
+            'option_cards' => $optionCardsContent,
          ]);
     }
 
