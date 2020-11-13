@@ -12,10 +12,12 @@ use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Studio24\Frontend\Exception\NotFoundException;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
 use Rollbar\Rollbar;
 use Rollbar\Payload\Level;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Exception;
 
 class FrameworksController extends AbstractController
 {
@@ -136,8 +138,9 @@ class FrameworksController extends AbstractController
 
         try {
             $results = $this->searchApi->list($page, ['limit' => $limit]);
-        } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
+        } catch (Exception $e) {
+            // refresh page on 500 error
+            return $this->redirect($request->getUri());
         }
 
         $data = [
@@ -345,8 +348,9 @@ class FrameworksController extends AbstractController
                 'status'    => $status ?? null,
                 'pillar'    => $category ?? null,
             ]);
-        } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
+        } catch (Exception $e) {
+            // refresh page on 500 error
+            return $this->redirect($request->getUri());
         }
 
         if (!empty($query) && isset($this->guidedMatchApiClient)) {
@@ -374,8 +378,12 @@ class FrameworksController extends AbstractController
                 $guidedMatchJsonResult = json_decode($guidedMatchResponse->getBody()->getContents());
                 $guidedMatchStatusCode  = $guidedMatchResponse->getStatusCode();
 
-                $responseForLandingPage = $this->guidedMatchApiClient->get(getenv('GUIDED_MATCH_URL') . rawurlencode($query));
-                $statusCodeForLandingPage = $responseForLandingPage->getStatusCode();
+                try {
+                    $responseForLandingPage = $this->guidedMatchApiClient->request('GET', getenv('GUIDED_MATCH_URL') . rawurlencode($query));
+                    $statusCodeForLandingPage = $responseForLandingPage->getStatusCode();
+                } catch (ServerException $e) {
+                    $statusCodeForLandingPage = 502;
+                }
             } else {
                 $guidedMatchJsonResult = [];
                 $guidedMatchStatusCode = 400;
