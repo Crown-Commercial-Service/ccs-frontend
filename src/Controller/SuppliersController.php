@@ -218,8 +218,11 @@ class SuppliersController extends AbstractController
             throw new NotFoundHttpException('Supplier not found', $e);
         }
 
+        $listOfGuarantor = $this->getListOfGuarantor($results);
+
         $data = [
-            'supplier' => $results
+            'supplier' => $results,
+            'listOfGuarantor' => $listOfGuarantor
         ];
         return $this->render('suppliers/show.html.twig', $data);
     }
@@ -270,5 +273,24 @@ class SuppliersController extends AbstractController
         }
 
         return null;
+    }
+
+    protected function getListOfGuarantor($resultsFromCmdEndpoint)
+    {
+        $ListOfguarantorName = [];
+
+        $agreements = $resultsFromCmdEndpoint->getContent()['live_frameworks']->getValue();
+
+        foreach ($agreements as $agreement) {
+            $lots = $agreement['lots']->getValue();
+
+            foreach ($lots as $lot) {
+                if (array_key_exists('guarantor_name', $lot)) {
+                    $ListOfguarantorName[] = $lot['guarantor_name']->getValue();
+                }
+            }
+        }
+
+        return $ListOfguarantorName;
     }
 }
