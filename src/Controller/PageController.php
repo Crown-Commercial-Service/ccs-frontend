@@ -100,7 +100,7 @@ class PageController extends AbstractController
             $breadcrumb[$link] = $name;
         }
 
-        // request to call to action api
+        // request to option cards api
         $optionCardsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/option-cards/0';
         $optionCardsContent = null;
         
