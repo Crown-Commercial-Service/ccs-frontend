@@ -41,9 +41,6 @@ content_types:
     api_endpoint: wp/v2/event
     content_fields: events.yaml
     source_content_type: event
-  call_to_actions:
-    api_endpoint: ccs/v1/call-to-actions
-    content_fields: call-to-actions.yaml
 
 global:
   image_sizes:
