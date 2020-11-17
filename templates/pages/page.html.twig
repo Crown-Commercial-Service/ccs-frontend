@@ -426,37 +426,33 @@
                                 {# Don't display it #}
                             {% else %}
                                 {% if page.content.full_width_content %}
-                                    <div class="apollo-island apollo-island--emphasised">
-                                        <div class="govuk-width-container">
-                                            <div class="govuk-grid-row">
+                                    {% if page.content.option_cards.value|default(null) %}
+                                    {# display if option cards exists and is true #}
+                                        <div class="apollo-island apollo-island--emphasised">
+                                            <div class="govuk-width-container">
+                                                <div class="govuk-grid-row">
+                                                    <div class="govuk-grid-column-one-half">
+                                                        <h2 class="visuallyhidden">You might also be interested in:</h2>
+                                                        <div class="apollo-call-to-action apollo-call-to-action--aggregation">
+                                                            <h3 class="govuk-heading-m">{{ option_cards.first_option_card.title }}</h3>
+                                                            <p>{{ option_cards.first_option_card.description }}</p>
+                                                            <p><a href="/help-and-support/aggregation/">{{ option_cards.first_option_card.link }}<span class="visuallyhidden">about aggregation</span></a>
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 <div class="govuk-grid-column-one-half">
                                                     <h2 class="visuallyhidden">You might also be interested in:</h2>
-                                                    <div class="apollo-call-to-action apollo-call-to-action--aggregation">
-                                                        <h3 class="govuk-heading-m">Aggregation</h3>
-                                                        <p>Bulk buying, also known as aggregation,
-                                                            offers highly competitive prices and a
-                                                            simple tender process.</p>
-                                                        <p><a href="/help-and-support/aggregation/">Learn
-                                                                more <span class="visuallyhidden">about aggregation</span></a>
-                                                        </p>
+                                                        <div class="apollo-call-to-action apollo-call-to-action--help">
+                                                            <h3 class="govuk-heading-m">{{ option_cards.second_option_card.title }}</h3>
+                                                            <p>{{ option_cards.second_option_card.description }}</p>
+                                                            <p><a href="/help-and-support/eu-tender/">{{ option_cards.second_option_card.link }}<span class="visuallyhidden">EU tenders</span></a>
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            <div class="govuk-grid-column-one-half">
-                                                <h2 class="visuallyhidden">You might also be interested in:</h2>
-                                                    <div class="apollo-call-to-action apollo-call-to-action--help">
-                                                        <h3 class="govuk-heading-m">Can't find what
-                                                            you're looking for?</h3>
-                                                        <p>If none of your requirements can be met by a
-                                                            CCS catalogue or agreement, you can run an
-                                                            EU tender.</p>
-                                                        <p><a href="/help-and-support/eu-tender/">Learn
-                                                                more <span class="visuallyhidden">EU tenders</span></a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <div>
-                                    </div>
+                                            <div>
+                                        </div>
+                                    {% endif %}
                                 {% endif %}
                             {% endif %}
 
