@@ -140,8 +140,7 @@ class FrameworksController extends AbstractController
             $results = $this->searchApi->list($page, ['limit' => $limit]);
         } catch (Exception $e) {
             // refresh page on 500 error
-            header('Location: ' . $_SERVER['REQUEST_URI']);
-            exit;
+            return $this->redirect($request->getUri());
         }
 
         $data = [
@@ -351,8 +350,7 @@ class FrameworksController extends AbstractController
             ]);
         } catch (Exception $e) {
             // refresh page on 500 error
-            header('Location: ' . $_SERVER['REQUEST_URI']);
-            exit;
+            return $this->redirect($request->getUri());
         }
 
         if (!empty($query) && isset($this->guidedMatchApiClient)) {
