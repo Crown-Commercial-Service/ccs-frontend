@@ -102,7 +102,6 @@ class PageController extends AbstractController
 
         // request to option cards api
         $optionCardsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/option-cards/0';
-        
 
         $client = HttpClient::create();
         $response = $client->request(
