@@ -272,7 +272,11 @@
                                                     {% endif %}
 
                                                     <input type="hidden" name="orgid" value="{{ org_id }}">
-                                                    <input type="hidden" name="retURL" value="{{ site_base_url }}/form-thank-you?{{ page_query_string }}">
+                                                    {% if page.content.contact_form_show_newsletter_form is not empty and page.content.contact_form_show_newsletter_form.value == true %}
+                                                        <input type="hidden" name="retURL" value="{{ site_base_url }}/thank-you-page-newsletters">
+                                                    {% else %}
+                                                        <input type="hidden" name="retURL" value="{{ site_base_url }}/form-thank-you?{{ page_query_string }}">
+                                                    {% endif %}
                                                     <input type="hidden" name="recordType" value="012b00000005NWC">
                                                     <input type="hidden" name="priority" value="Green">
 
@@ -428,30 +432,32 @@
                                 {% if page.content.full_width_content %}
                                     {% if page.content.option_cards.value|default(null) %}
                                     {# display if option cards exists and is true #}
-                                        <div class="apollo-island apollo-island--emphasised">
-                                            <div class="govuk-width-container">
-                                                <div class="govuk-grid-row">
+                                        {% if option_cards %}
+                                            <div class="apollo-island apollo-island--emphasised">
+                                                <div class="govuk-width-container">
+                                                    <div class="govuk-grid-row">
+                                                        <div class="govuk-grid-column-one-half">
+                                                            <h2 class="visuallyhidden">You might also be interested in:</h2>
+                                                            <div class="apollo-call-to-action apollo-call-to-action--aggregation">
+                                                                <h3 class="govuk-heading-m">{{ option_cards.first_option_card.title }}</h3>
+                                                                <p>{{ option_cards.first_option_card.description }}</p>
+                                                                <p><a href="{{option_cards.first_option_card.link_url}}">{{ option_cards.first_option_card.link }}<span class="visuallyhidden">{{ option_cards.first_option_card.title }}</span></a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
                                                     <div class="govuk-grid-column-one-half">
                                                         <h2 class="visuallyhidden">You might also be interested in:</h2>
-                                                        <div class="apollo-call-to-action apollo-call-to-action--aggregation">
-                                                            <h3 class="govuk-heading-m">{{ option_cards.first_option_card.title }}</h3>
-                                                            <p>{{ option_cards.first_option_card.description }}</p>
-                                                            <p><a href="{{option_cards.first_option_card.link_url}}">{{ option_cards.first_option_card.link }}<span class="visuallyhidden">{{ option_cards.first_option_card.title }}</span></a>
-                                                            </p>
+                                                            <div class="apollo-call-to-action apollo-call-to-action--help">
+                                                                <h3 class="govuk-heading-m">{{ option_cards.second_option_card.title }}</h3>
+                                                                <p>{{ option_cards.second_option_card.description }}</p>
+                                                                <p><a href="{{option_cards.second_option_card.link_url}}">{{ option_cards.second_option_card.link }}<span class="visuallyhidden">{{ option_cards.second_option_card.title }}</span></a>
+                                                                </p>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                <div class="govuk-grid-column-one-half">
-                                                    <h2 class="visuallyhidden">You might also be interested in:</h2>
-                                                        <div class="apollo-call-to-action apollo-call-to-action--help">
-                                                            <h3 class="govuk-heading-m">{{ option_cards.second_option_card.title }}</h3>
-                                                            <p>{{ option_cards.second_option_card.description }}</p>
-                                                            <p><a href="{{option_cards.second_option_card.link_url}}">{{ option_cards.second_option_card.link }}<span class="visuallyhidden">{{ option_cards.second_option_card.title }}</span></a>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            <div>
-                                        </div>
+                                                <div>
+                                            </div>
+                                        {% endif %}
                                     {% endif %}
                                 {% endif %}
                             {% endif %}
