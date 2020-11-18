@@ -102,7 +102,7 @@ class PageController extends AbstractController
 
         // request to option cards api
         $optionCardsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/option-cards/0';
-        $optionCardsContent = null;
+        
 
         $client = HttpClient::create();
         $response = $client->request(
@@ -110,12 +110,12 @@ class PageController extends AbstractController
             $optionCardsUrl,
         );
 
+        $optionCardsContent = null;
+
         if ($response->getStatusCode() == 200) {
             $optionCardsContent = json_decode($response->getContent());
             // dd($ctaContent);
-        } else {
-            $optionCardsContent = null;
-        }
+        } 
 
         return $this->render('pages/page.html.twig', [
             'page'               => $page,
