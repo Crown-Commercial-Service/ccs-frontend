@@ -113,7 +113,7 @@ class PageController extends AbstractController
 
         if ($response->getStatusCode() == 200) {
             $optionCardsContent = json_decode($response->getContent());
-        } 
+        }
 
         return $this->render('pages/page.html.twig', [
             'page'               => $page,
