@@ -1,6 +1,6 @@
 # Crown Commercial Service - Frontend Documentation
 
-## Table of contents
+## Table of contents 
 
 * [Git workflow](git-workflow.md)
 * [Architecture](ARCHITECTURE.md)
