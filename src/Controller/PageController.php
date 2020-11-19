@@ -12,6 +12,7 @@ use Studio24\Frontend\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageController extends AbstractController
@@ -99,6 +100,21 @@ class PageController extends AbstractController
             $breadcrumb[$link] = $name;
         }
 
+        // request to option cards api
+        $optionCardsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/option-cards/0';
+
+        $client = HttpClient::create();
+        $response = $client->request(
+            'GET',
+            $optionCardsUrl,
+        );
+
+        $optionCardsContent = null;
+
+        if ($response->getStatusCode() == 200) {
+            $optionCardsContent = json_decode($response->getContent());
+        }
+
         return $this->render('pages/page.html.twig', [
             'page'               => $page,
             'breadcrumb_parents' => $breadcrumb,
@@ -107,8 +123,10 @@ class PageController extends AbstractController
             'site_base_url'      => getenv('APP_BASE_URL'),
             'form_action'        => getenv('APP_ENV') === 'prod' ? 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8' : 'https://crowncommercial--preprod.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8',
             'org_id' => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D8E000000E4zz',
-        ]);
+            'option_cards' => $optionCardsContent,
+         ]);
     }
+
 
     /**
      * Simple healthcheck
