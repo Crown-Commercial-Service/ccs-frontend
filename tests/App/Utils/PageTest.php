@@ -18,7 +18,7 @@ class PageTest extends WebTestCase
 
         $client = static::createClient();
         $client->request('GET', $url);
-
+        var_dump($client->getResponse());
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 

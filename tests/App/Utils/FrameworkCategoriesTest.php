@@ -54,8 +54,6 @@ class FrameworkCategoriesTest extends WebTestCase
 
     public function testRedirectFromUtilitiesFuelsToEnergy()
     {
-        var_dump(getenv('APP_CMS_BASE_URL'));
-
         $client = static::createClient();
         $client->request('GET', '/agreements/category/utilities-fuels');
         $response = $client->getResponse();
