@@ -11,10 +11,6 @@
             header-global header-global--home
         {% endblock %}
 
-        {% block headerstyles %}
-            style="background-size: cover; background-image: path(/assets/images/header.jpg);"
-        {% endblock %}
-
         {% block featuredcontent %}
                 <div class="homepage-hero govuk-homepage-hero-full-width">
 
@@ -38,13 +34,13 @@
                                 <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage govuk-bg-mobile-color">
                                     <div class="govuk-form-group homepage-hero__search-group">
                                         <label class="govuk-label" for="framework_q">Search
-                                            frameworks</label>
+                                            agreements</label>
                                         <input class="govuk-input" id="framework_q" name="q" type="text">
                                         {# {% if guided_match_flag is defined and guided_match_flag == "guidedmatch" %}
                                         <input class="visuallyhidden" id="feature" name="feature" type="hidden" value="guidedmatch">
                                         {% endif %} #}
                                         <button class="homepage-hero__search-button">
-                                            <span class="visuallyhidden">Search frameworks</span>
+                                            <span class="visuallyhidden">Search agreements</span>
                                         </button>
                                     </div>
                                 </div>
@@ -53,6 +49,7 @@
 
                         </div>
                         <div class="govuk-grid-column-one-half">
+
 
                             <form action="{{ path('suppliers_search') }}" method="GET">
 
@@ -65,6 +62,7 @@
                                             <span class="visuallyhidden">Search suppliers</span>
                                         </button>
                                     </div>
+
                                 </div>
 
                             </form>
@@ -88,7 +86,7 @@
 
 
         {# required wrapper 2 #}
-        <main id="main-content" role="main" class="govuk-main-wrapper">
+        <main id="main-content" class="govuk-main-wrapper">
 
 
             <div class="apollo-island">
@@ -101,7 +99,7 @@
                                 to buy</h2>
                             <p class="govuk-body govuk-!-font-size-17featured">
                                 CCS has a wide range of commercial agreements you can
-                                access in several ways: frameworks, catalogues,
+                                access in several ways: agreements, catalogues,
                                 portals and aggregation. Learn about the buying
                                 routes and what you can buy from each.</p>
                             <p class="govuk-body govuk-!-font-size-17featured">
@@ -113,16 +111,16 @@
                         <div class="govuk-grid-column-one-quarter">
 
                             <h2 class="govuk-heading-m govuk-!-font-size-24">
-                                Frameworks</h2>
+                                Agreements</h2>
                             <p class="govuk-body govuk-!-font-size-17featured">
-                                Frameworks are for common but complex
+                                Agreements are for common but complex
                                 requirements. They comprise a list of suppliers
-                                and standardised contract terms. Frameworks are
+                                and standardised contract terms. Agreements are
                                 often divided into lots by product or service
                                 type.</p>
                             <p class="govuk-body govuk-!-font-size-17featured">
                                 <a href="/buy-and-supply/frameworks/">Learn
-                                    more <span class="visuallyhidden">about Frameworks</span></a>
+                                    more <span class="visuallyhidden">about Agreements</span></a>
                             </p>
 
                         </div>
@@ -193,7 +191,6 @@
 
                                             {% if news_item.featuredImage %}
                                             <picture>
-                                                <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
 
                                                         <!--[if IE 9]>
                                                         <video style="display: none;><![endif]-->
@@ -216,8 +213,9 @@
                                                             <img src="{{ news_item.featuredImage.byName('full') }}" alt="" role="presentation" aria-hidden="true">
                                                         {% endif %}
 
-                                                </a>
                                             </picture>
+                                            <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link"></a>
+
                                             {% endif %}
 
                                             <div class="news-listing__item__caption">
@@ -247,7 +245,7 @@
                             <h2 class="govuk-heading-m">Learn about CCS</h2>
 
                             <p class="responsive-video widescreen">
-                                <iframe title="An overview of CCS in 30 seconds video" width="560" height="315" src="https://www.youtube-nocookie.com/embed/_p61ZX4zQHU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <iframe title="An overview of CCS in 30 seconds video" width="560" height="315" src="https://www.youtube-nocookie.com/embed/_p61ZX4zQHU" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             </p>
                             <p><a href="/buy-and-supply/">Browse all help and
                                     support guides</a></p>

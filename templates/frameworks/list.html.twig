@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Search frameworks - CCS{% endblock %}
-{% block metadescription %}This list provides a summary of the CCS frameworks currently available through which government, public and third sector organisations can buy common goods and services. It includes details of when each framework is due to expire and a web link to the full framework information.{% endblock %}
+{% block title %}Search agreements - CCS{% endblock %}
+{% block metadescription %}This list provides a summary of the CCS agreements currently available through which government, public and third sector organisations can buy common goods and services. It includes details of when each agreement is due to expire and a web link to the full agreement information.{% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -37,29 +37,29 @@
                 <!--<a class="govuk-breadcrumbs__link" href="2-3-frameworks-search-result">Search frameworks</a>-->
                 <!--</li>-->
                 <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                    Search frameworks
+                    Search agreements
                 </li>
             </ol>
         </div>
 
 
         <!-- required wrapper 2 -->
-        <main id="main-content" role="main" class="govuk-main-wrapper">
+        <main id="main-content" class="govuk-main-wrapper">
 
 
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
 
                     {% if category is defined %}
-                        <h1 class="govuk-heading-xl page-title">Frameworks in
+                        <h1 class="govuk-heading-xl page-title">Agreements in
                             the {{ category }} category</h1>
                     {% elseif pillar is defined %}
-                        <h1 class="govuk-heading-xl page-title">Frameworks in
+                        <h1 class="govuk-heading-xl page-title">Agreements in
                             the {{ pillar }} category</h1>
                     {% elseif query is defined %}
-                        <h1 class="govuk-heading-xl page-title">Search frameworks for {{ query }}</h1>
+                        <h1 class="govuk-heading-xl page-title">Search agreements for {{ query }}</h1>
                     {% else %}
-                        <h1 class="govuk-heading-xl page-title">Search frameworks</h1>
+                        <h1 class="govuk-heading-xl page-title">Search agreements</h1>
                     {% endif %}
 
                 </div>
@@ -74,13 +74,13 @@
                         <div class="govuk-form-group govuk-form-group--enclosure">
                             <div class="govuk-form-group sidebar__search-group">
                                 <label class="govuk-label" for="q"> Search
-                                    frameworks </label>
+                                    agreements </label>
                                 <input class="govuk-input" id="q" name="q" type="text">
                                 {# {% if guided_match_flag is defined and guided_match_flag == "guidedmatch" %}
                                 <input class="visuallyhidden" id="feature" name="feature" type="hidden" value="guidedmatch">
                                 {% endif %} #}
                                 <button type="submit" class="sidebar__search-button govuk-input">
-                                    <span class="visuallyhidden">Search frameworks</span>
+                                    <span class="visuallyhidden">Search agreements</span>
                                 </button>
                             </div>
                         </div>
@@ -119,9 +119,9 @@
                 </div>
                 {% if (guided_match_flag is defined) %}
                     <div class="govuk-grid-column-two-thirds guided-match-background govuk-!-margin-bottom-2 guided-match-area">
-                            <label class="govuk-heading-l ccs-font-weight-semibold govuk-!-margin-top-1 govuk-!-margin-bottom-1 text-white">Get help finding the right framework</label>
+                            <label class="govuk-heading-l ccs-font-weight-semibold govuk-!-margin-top-1 govuk-!-margin-bottom-1 text-white">Get help finding the right agreement</label>
                             <label class="govuk-heading-s ccs-font-weight-semibold text-white govuk-!-margin-bottom-1">There are {{ pagination.totalResults }} results for "{{ query }}".</label>
-                            <label class="govuk-body text-white">Answer some simple questions to find the best framework for your needs</br></label>
+                            <label class="govuk-body text-white">Answer some simple questions to find the best agreement for your needs</br></label>
                         <a href={{ match_url }} role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-3 govuk-!-margin-bottom-3" data-module="govuk-button">
                             Start now
                             <svg class="govuk-!-padding-left-2" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
@@ -132,9 +132,9 @@
                 {% else %}
                     <div class="govuk-grid-column-two-thirds">
                     {% if pagination.totalResults == 1 %}
-                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} framework found</h2>
+                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreement found</h2>
                     {% else %}
-                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} frameworks found</h2>
+                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreements found</h2>
                     {% endif %}
                     </div>
                 {% endif %}
@@ -151,7 +151,7 @@
                                     {% endif %}
                                 </h3>
                                 <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
-                                    <li><strong>Framework
+                                    <li><strong>Agreement
                                             ID:</strong> {{ item.content.rm_number }}
                                     </li>
                                     <li><strong>Start
