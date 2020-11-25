@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Studio24\Frontend\Cms\RestData;
 use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpClient\HttpClient;
 use Studio24\Frontend\Exception\NotFoundException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ServerException;
@@ -177,12 +178,28 @@ class FrameworksController extends AbstractController
             throw new NotFoundHttpException('Page not found', $e);
         }
 
+         // request to upcoming deals information api for titles and description
+         $upcomingDealsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/upcoming-deals-page/0';
+
+         $client = HttpClient::create();
+         $response = $client->request(
+             'GET',
+             $upcomingDealsUrl,
+         );
+ 
+         $upcomingDealsContent = null;
+ 
+         if ($response->getStatusCode() == 200) {
+             $upcomingDealsContent = json_decode($response->getContent());
+         }
+
         $data = [
             'awarded_pipeline'              => $results->getContent()->get('awarded_pipeline'),
             'underway_pipeline'             => $results->getContent()->get('underway_pipeline'),
             'dynamic_purchasing_systems'    => $results->getContent()->get('dynamic_purchasing_systems'),
             'planned_pipeline'              => $results->getContent()->get('planned_pipeline'),
             'future_pipeline'               => $results->getContent()->get('future_pipeline'),
+            'upcoming_deals_content'        => $upcomingDealsContent,
         ];
 
         return $this->render('frameworks/upcoming-list.html.twig', $data);
