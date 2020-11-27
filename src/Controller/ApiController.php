@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Exception\PardotException;
+use App\Utils\Pardot;
 use Psr\SimpleCache\CacheInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -173,5 +175,60 @@ class ApiController extends AbstractController
             }
         }
         return $filtered;
+    }
+
+    /**
+     * Send email address to Pardot
+     *
+     * This sends submitted email addresses to a Pardot form to help with marketing tracking
+     *
+     * We're only expecting AJAX POST requests to this controller action with a POST variable 'email'
+     *
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
+    public function pardotEmail(Request $request)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            return new JsonResponse(['message' => 'You can only send AJAX (XMLHttpRequest) requests to this URL'], 400);
+        }
+
+        $data = json_decode($request->getContent());
+
+        if (is_null($data) || !isset($data->email)) {
+            return new JsonResponse(['message' => 'You must pass an email variable with this request'], 400);
+        }
+
+        $email = $data->email;
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return new JsonResponse(['message' => 'An invalid email has been passed'], 400);
+        }
+
+        $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_URL');
+        if (empty($pardotFormUrl) || !filter_var($pardotFormUrl, FILTER_VALIDATE_URL)) {
+            return new JsonResponse(['message' => 'Please set PARDOT_EMAIL_FORM_HANDLER_URL or ensure this is a valid URL'], 400);
+        }
+
+        // Build extra data to send to Pardot
+        $extraData = [];
+        foreach ($data as $key => $val) {
+            if ($key == 'email') {
+                continue;
+            }
+            $extraData[$key] = $val;
+        }
+
+        // Send Pardot form handler request
+        $pardot = new Pardot();
+        if ($pardot->submitEmail($pardotFormUrl, $email, $extraData)) {
+            return new JsonResponse(['message' => 'OK']);
+        } else {
+            $response = $pardot->getLastResponse();
+            throw new PardotException(sprintf('Error sending email data to Pardot. HTTP status code: %s, Message: %s', $response->getStatusCode(), $response->getContent()));
+        }
     }
 }

@@ -54,6 +54,9 @@
 
                     <h1 class="govuk-heading-xl page-title">
                         {{ name }}
+                        {% if listOfGuarantor|length > 0 %}
+                             <span class="govuk-tag govuk-tag--subtle ccs-tag">has Guarantor</span>
+                        {% endif %}
 
                         {% if supplier.content.trading_names|length > 0 %}
                             <span class="govuk-caption-l">
@@ -71,8 +74,14 @@
                 </div>
             </div>
 
-
-            <div class="govuk-grid-row">
+                {% if listOfGuarantor|length > 0 %}
+                    <div class="govuk-details__text govuk-body">
+                    This supplier has a guarantor, which means they Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ipsum a est malesuada sollicitudin. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed nec urna nulla. Donec dolor quam, rhoncus nec felis non, euismod volutpat urna. Mauris venenatis sodales volutpat.           
+                    The name of the guarantor is <b>{{ listOfGuarantor|join(', ', ' and ') }}</b>
+                    </div>                
+                {% endif %}
+                
+                <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
 
 

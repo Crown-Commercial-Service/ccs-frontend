@@ -110,6 +110,15 @@ api_frameworks:
   defaults:
     _format: json
 
+api_pardot_email:
+  path: /api/pardot-email
+  controller: App\Controller\ApiController::pardotEmail
+  methods: POST
+  requirements:
+    _format: json
+  defaults:
+    _format: json
+
 news_page:
   path: "/news/{slug}"
   controller: App\Controller\NewsController::show

@@ -10,6 +10,7 @@ use Studio24\Frontend\Cms\RestData;
 use Symfony\Component\HttpFoundation\Request;
 use Studio24\Frontend\Exception\NotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Exception;
 
 class SuppliersController extends AbstractController
 {
@@ -73,8 +74,9 @@ class SuppliersController extends AbstractController
 
         try {
             $results = $this->searchApi->list($page);
-        } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
+        } catch (Exception $e) {
+             // refresh page on 500 error
+             return $this->redirect($request->getUri());
         }
 
         $limit = $request->query->has('limit') ? (int)filter_var(
@@ -162,8 +164,9 @@ class SuppliersController extends AbstractController
                 'framework' => $frameworkId,
                 'lot'       => $lotId
             ]);
-        } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
+        } catch (Exception $e) {
+             // refresh page on 500 error
+             return $this->redirect($request->getUri());
         }
 
         $facets = $results->getMetadata()->offsetGet('facets');
@@ -215,8 +218,11 @@ class SuppliersController extends AbstractController
             throw new NotFoundHttpException('Supplier not found', $e);
         }
 
+        $listOfGuarantor = $this->getListOfGuarantor($results);
+
         $data = [
-            'supplier' => $results
+            'supplier' => $results,
+            'listOfGuarantor' => $listOfGuarantor
         ];
         return $this->render('suppliers/show.html.twig', $data);
     }
@@ -267,5 +273,24 @@ class SuppliersController extends AbstractController
         }
 
         return null;
+    }
+
+    protected function getListOfGuarantor($resultsFromCmdEndpoint)
+    {
+        $ListOfguarantorName = [];
+
+        $agreements = $resultsFromCmdEndpoint->getContent()['live_frameworks']->getValue();
+
+        foreach ($agreements as $agreement) {
+            $lots = $agreement['lots']->getValue();
+
+            foreach ($lots as $lot) {
+                if (array_key_exists('guarantor_name', $lot)) {
+                    $ListOfguarantorName[] = $lot['guarantor_name']->getValue();
+                }
+            }
+        }
+
+        return $ListOfguarantorName;
     }
 }

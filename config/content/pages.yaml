@@ -87,3 +87,5 @@ contact_form_aggregation_options:
       type: text
     aggregation_options_campaign_code:
       type: text
+option_cards:
+  type: boolean
