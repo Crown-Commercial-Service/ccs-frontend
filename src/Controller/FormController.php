@@ -86,7 +86,6 @@ class FormController extends AbstractController
             'postCode' => $params->get('post-code', null),
             'moreDetail' =>  $params->get('more-detail', null),
         ];
-
         // check if callback checkbox has been set and add to form data
         if ($params->get('00Nb0000009IXEg') == '1') {
             $formData['callback'] = $params->get('00Nb0000009IXEg', null);
@@ -112,7 +111,6 @@ class FormController extends AbstractController
                     // these values are automatically encoded before including them in the URL
                     'query' => $params->all(),
                 ]);
-
                 if (!is_null($params->get('debug'))) {
                     return new Response(
                         $response->getContent()
