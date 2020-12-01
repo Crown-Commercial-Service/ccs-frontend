@@ -186,12 +186,12 @@ class FrameworksController extends AbstractController
              'GET',
              $upcomingDealsUrl,
          );
- 
+
          $upcomingDealsContent = null;
- 
-         if ($response->getStatusCode() == 200) {
-             $upcomingDealsContent = json_decode($response->getContent());
-         }
+
+        if ($response->getStatusCode() == 200) {
+            $upcomingDealsContent = json_decode($response->getContent());
+        }
 
         $data = [
             'awarded_pipeline'              => $results->getContent()->get('awarded_pipeline'),
