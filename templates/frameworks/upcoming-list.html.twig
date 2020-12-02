@@ -91,8 +91,12 @@
                     {% if awarded_pipeline|length >= 1 %}
 
                         <table class="govuk-table ccs-table--upcoming-deals">
-                            {#<caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.#}
-                            {#</caption>#}
+                            {% if upcoming_deals_content and upcoming_deals_content.table_0.caption|length > 0 %}
+
+                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_0.caption }}</caption>
+
+                            {% endif %}
+
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
@@ -240,8 +244,12 @@
                     {% if dynamic_purchasing_systems|length >= 1 %}
 
                         <table class="govuk-table ccs-table--upcoming-deals">
-                            {#<caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.#}
-                            {#</caption>#}
+                            {% if upcoming_deals_content and upcoming_deals_content.table_2.caption|length > 0 %}
+
+                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_2.caption }}</caption>
+
+                            {% endif %}
+
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
@@ -305,8 +313,13 @@
                     {% if planned_pipeline|length >= 1 %}
 
                         <table class="govuk-table ccs-table--upcoming-deals">
-                            {#<caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.#}
-                            {#</caption>#}
+
+                            {% if upcoming_deals_content and upcoming_deals_content.table_3.caption|length > 0 %}
+
+                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_3.caption }}</caption>
+
+                            {% endif %}
+
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
@@ -377,8 +390,13 @@
                     {% if future_pipeline|length >= 1 %}
 
                         <table class="govuk-table ccs-table--upcoming-deals">
-                            {#<caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.#}
-                            {#</caption>#}
+
+                            {% if upcoming_deals_content and upcoming_deals_content.table_4.caption|length > 0 %}
+
+                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_4.caption }}</caption>
+
+                            {% endif %}
+
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
