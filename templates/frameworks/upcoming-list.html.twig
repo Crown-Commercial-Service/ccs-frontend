@@ -52,11 +52,21 @@
                 <div class="govuk-grid-column-full">
 
 
+                    {% if upcoming_deals_content and upcoming_deals_content.upcomingDealsInfo.title and upcoming_deals_content.upcomingDealsInfo.page_description  %}
 
-                    <h1 class="govuk-heading-xl page-title">Upcoming deals</h1>
+                        <h1 class="govuk-heading-xl page-title">{{upcoming_deals_content.upcomingDealsInfo.title}}</h1>
 
-                    <p class="govuk-body-l govuk-!-width-three-quarters">If you would like to find out more about the scope of any of these procurements please
-                        <a href="/contact">contact us</a>.</p>
+                        {# raw html #}
+                        {{upcoming_deals_content.upcomingDealsInfo.page_description | raw }}
+
+                    {% else %}
+
+                        <h1 class="govuk-heading-xl page-title">Upcoming Deals</h1>
+
+                        <p class="govuk-body-l govuk-!-width-three-quarters">If you would like to find out more about the scope of any of these procurements please
+                            <a href="/contact">contact us</a>.</p>
+
+                    {% endif %}
 
 
 
@@ -68,15 +78,25 @@
                     {#{{ dump(planned_pipeline) }}#}
                     {#{{ dump(future_pipeline) }}#}
 
+                    {% if upcoming_deals_content and upcoming_deals_content.table_0.title %}
 
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_0.title }}</h2>
 
-                    <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements recently awarded</h2>
+                    {% else %}
 
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements recently awarded</h2>
+
+                    {% endif %}
+                    
                     {% if awarded_pipeline|length >= 1 %}
 
                         <table class="govuk-table ccs-table--upcoming-deals">
-                            {#<caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.#}
-                            {#</caption>#}
+                            {% if upcoming_deals_content and upcoming_deals_content.table_0.caption|length > 0 %}
+
+                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_0.caption }}</caption>
+
+                            {% endif %}
+
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
@@ -129,14 +149,31 @@
                     {% endif %}
 
 
+                    {% if upcoming_deals_content and upcoming_deals_content.table_1.title %}
 
-                    <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements in progress</h2>
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_1.title }}</h2>
+
+                    {% else %}
+
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements in progress</h2>
+
+                    {% endif %}
 
                     {% if underway_pipeline|length >= 1 %}
 
                         <table class="govuk-table ccs-table--upcoming-deals">
-                            <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">The links provided in the agreement section below give further information about the procurement, including the OJEU notice and details on how to tender for interested suppliers.
-                            </caption>
+
+                            {% if upcoming_deals_content and upcoming_deals_content.table_1.caption %}
+
+                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_1.caption }}</caption>
+
+                            {% else %}
+
+                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">The links provided in the agreement section below give further information about the procurement, including the OJEU notice and details on how to tender for interested suppliers.
+                                </caption>
+
+                            {% endif %}
+
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
@@ -194,14 +231,25 @@
 
 
 
+                    {% if upcoming_deals_content and upcoming_deals_content.table_2.title %}
 
-                    <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Dynamic Purchasing Systems currently open</h2>
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_2.title }}</h2>
+
+                    {% else %}
+
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Dynamic Purchasing Systems currently open</h2>
+
+                    {% endif %}
 
                     {% if dynamic_purchasing_systems|length >= 1 %}
 
                         <table class="govuk-table ccs-table--upcoming-deals">
-                            {#<caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.#}
-                            {#</caption>#}
+                            {% if upcoming_deals_content and upcoming_deals_content.table_2.caption|length > 0 %}
+
+                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_2.caption }}</caption>
+
+                            {% endif %}
+
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
@@ -252,14 +300,26 @@
 
 
 
+                    {% if upcoming_deals_content and upcoming_deals_content.table_3.title %}
 
-                    <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Planned procurements</h2>
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_3.title }}</h2>
+
+                    {% else %}
+
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Planned procurements</h2>
+
+                    {% endif %}
 
                     {% if planned_pipeline|length >= 1 %}
 
                         <table class="govuk-table ccs-table--upcoming-deals">
-                            {#<caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.#}
-                            {#</caption>#}
+
+                            {% if upcoming_deals_content and upcoming_deals_content.table_3.caption|length > 0 %}
+
+                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_3.caption }}</caption>
+
+                            {% endif %}
+
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
@@ -317,14 +377,26 @@
 
 
 
+                    {% if upcoming_deals_content and upcoming_deals_content.table_4.title %}
 
-                    <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Future pipeline</h2>
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_4.title }}</h2>
+
+                    {% else %}
+
+                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Future pipeline</h2>
+
+                    {% endif %}
 
                     {% if future_pipeline|length >= 1 %}
 
                         <table class="govuk-table ccs-table--upcoming-deals">
-                            {#<caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">Describe a table in the same way you would use a heading. A caption helps users find, navigate and understand tables.#}
-                            {#</caption>#}
+
+                            {% if upcoming_deals_content and upcoming_deals_content.table_4.caption|length > 0 %}
+
+                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_4.caption }}</caption>
+
+                            {% endif %}
+
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
