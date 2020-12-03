@@ -8,10 +8,11 @@ namespace App\Validation;
  * Class to do validation for form submition before sending it to Salesforce
  * @package App\Validation
  */
-class FormValidation{
+class FormValidation
+{
 
-    public static function validationName($name){
-
+    public static function validationName($name)
+    {
         $returnArray  = [
             'errors' => [],
             'link' => '#name',
@@ -24,12 +25,10 @@ class FormValidation{
         }
 
         return $returnArray;
-
- 
     }
 
-    public static function validationEmail($email){
-
+    public static function validationEmail($email)
+    {
         $returnArray  = [
             'errors' => [],
             'link' => '#email',
@@ -44,8 +43,8 @@ class FormValidation{
         return $returnArray;
     }
 
-    public static function validationPhone($phone){
-
+    public static function validationPhone($phone)
+    {
         $returnArray  = [
             'errors' => [],
             'link' => '#phone',
@@ -60,8 +59,8 @@ class FormValidation{
         return $returnArray;
     }
 
-    public static function validationCompany($company){
-
+    public static function validationCompany($company)
+    {
         $returnArray  = [
             'errors' => [],
             'link' => '#company',
@@ -76,8 +75,8 @@ class FormValidation{
         return $returnArray;
     }
 
-    public static function validationDescription($description){
-
+    public static function validationDescription($description)
+    {
         $returnArray  = [
             'errors' => [],
             'link' => '#description',
@@ -89,9 +88,9 @@ class FormValidation{
 
         return $returnArray;
     }
-    
-    public static function validationAggregationOption($aggregationOption){
 
+    public static function validationAggregationOption($aggregationOption)
+    {
         $returnArray  = [
             'errors' => [],
             'link' => '#aggregationOption',
@@ -103,5 +102,4 @@ class FormValidation{
 
         return $returnArray;
     }
-    
 }

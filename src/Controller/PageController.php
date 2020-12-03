@@ -120,16 +120,14 @@ class PageController extends AbstractController
 
         $formErrors = null;
         $formData = $this->getFromData($request->request);
-        
+
         if ($request->isMethod('POST')) {
             $formErrors = $this->sendToSalesforce($request->request, $formData);
-            
+
             if ($formErrors instanceof Response) {
                 return $formErrors;
             }
         }
-
-        
 
         return $this->render('pages/page.html.twig', [
             'page'               => $page,
@@ -148,15 +146,15 @@ class PageController extends AbstractController
     private function sendToSalesforce($params, $formData)
     {
 
-        if(strpos($params->get('retURL'), 'thank-you-page-newsletters')){
+        if (strpos($params->get('retURL'), 'thank-you-page-newsletters')) {
             $formErrors = $this->validateNewsletterForm($formData);
-        }else{
+        } else {
             $formErrors = $this->validateForm($formData);
         }
-        
+
         if ($formErrors) {
             return $formErrors;
-        }else{
+        } else {
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                             // these values are automatically encoded before including them in the URL
                             'query' => $params->all(),
@@ -168,18 +166,18 @@ class PageController extends AbstractController
                 );
             }
 
-            return $this->redirect( $params->get('retURL'));
+            return $this->redirect($params->get('retURL'));
         }
     }
 
-    private function validateNewsletterForm($data){
-
+    private function validateNewsletterForm($data)
+    {
         $errorMessages = [];
 
         $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
         $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
         $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
-        
+
         foreach ($errorMessages as $type => $value) {
             if (!empty($errorMessages[$type]['errors'])) {
                 return $errorMessages;
@@ -189,8 +187,8 @@ class PageController extends AbstractController
         return false;
     }
 
-    private function validateForm($data){
-
+    private function validateForm($data)
+    {
         $errorMessages = [];
 
         $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
@@ -202,7 +200,6 @@ class PageController extends AbstractController
 
         $errorMessages['descriptionErr'] = FormValidation::validationDescription($data['description']);
 
-        
         foreach ($errorMessages as $type => $value) {
             if (!empty($errorMessages[$type]['errors'])) {
                 return $errorMessages;
@@ -212,7 +209,8 @@ class PageController extends AbstractController
         return false;
     }
 
-    private function getFromData($params){
+    private function getFromData($params)
+    {
         return [
             'name' => $params->get('name'),
             'email' => $params->get('email'),
