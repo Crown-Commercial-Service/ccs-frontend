@@ -247,6 +247,26 @@
 
                                     {% if page.template == "page-templates/landing.php" and page.content.contact_form_show_contact_form.value == true %}
                                         <div class="govuk-grid-row ccs-inline-contact-form">
+                                            {% if formErrors is not null %}
+                                                <script>
+                                                    document.addEventListener("DOMContentLoaded", function (event) {
+                                                        window.location = '#error-summary';
+                                                        document.querySelector('.govuk-error-summary').focus();
+                                                    });
+                                                </script>
+                                                <div class="govuk-error-summary govuk-grid-column-two-thirds" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary" id="error-summary">
+                                                    <h2 class="govuk-error-summary__title" id="error-summary-title"> There is a problem</h2>
+                                                    <div class="govuk-error-summary__body">
+                                                        <ul class="govuk-list govuk-error-summary__list">
+                                                        {% for errorType in formErrors %}
+                                                            {% for error in errorType.errors %}
+                                                                <a href={{errorType.link}}><li>{{error}}</li></a>
+                                                            {% endfor %}
+                                                        {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
                                             {% if page.content.contact_form_form_heading %}
                                                 <h2 class="govuk-grid-column-two-thirds govuk-heading-m">{{ page.content.contact_form_form_heading }}</h2>
                                             {% endif %}
@@ -256,7 +276,7 @@
                                                     <p>{{ page.content.contact_form_form_sub_heading }}</p>
                                                 {% endif %}
 
-                                                <form id="js-contact-form" class="govuk-!-width-three-quarters" action="{{ form_action }}" method="post">
+                                                <form id="js-contact-form" class="govuk-!-width-three-quarters" action="/{{slug}}" method="post">
 
 
                                                     {# See https://symfony.com/doc/current/templating/app_variable.html #}
@@ -280,35 +300,67 @@
                                                     <input type="hidden" name="recordType" value="012b00000005NWC">
                                                     <input type="hidden" name="priority" value="Green">
 
-
-                                                    <div class="govuk-form-group">
-                                                        <label class="govuk-label" for="form-fullname">Full
-                                                            name</label>
-                                                        <input class="govuk-input" id="form-fullname" maxlength="80" name="name" size="20" type="text" required="">
+                                                    <div class="govuk-form-group {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                                        <label class="govuk-label" for="name">Name</label>
+                                                        {% if formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 %}
+                                                            {% for error in formErrors.nameErr.errors %}
+                                                                <span id="full-name-error" class="govuk-error-message">
+                                                                    <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                                                </span>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                        <input class="govuk-input pardot-field {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
                                                     </div>
 
-                                                    <div class="govuk-form-group">
-                                                        <label class="govuk-label" for="form-email">Email
-                                                            address</label>
-                                                        <input class="govuk-input" id="form-email" maxlength="80" name="email" size="20" type="email" pattern=".+@.+\..+" required="">
+                                                    <div class="govuk-form-group {{formErrors.emailErr.errors is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                                        <label class="govuk-label" for="email">Email </label>
+
+                                                        {% if formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 %}
+                                                            {% for error in formErrors.emailErr.errors %}
+                                                                <span id="email-error" class="govuk-error-message">
+                                                                    <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                                                </span>
+                                                            {% endfor %}                         
+                                                        {% endif %}    
+                                                        <input class="govuk-input pardot-email {{formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="email" maxlength="80" name="email" size="20" type="email" value="{{formErrors is defined ? formData.email}}" autocomplete="email" >
                                                     </div>
+
                                                     {% if page.content.contact_form_show_newsletter_form is not empty and page.content.contact_form_show_newsletter_form.value == false %}
-                                                    <div class="govuk-form-group">
-                                                        <label class="govuk-label" for="form-telephone">Telephone
-                                                            number</label>
-                                                        <input class="govuk-input" id="form-telephone" maxlength="80" name="phone" size="20" type="text" required="">
-                                                    </div>
+                                                        <div class="govuk-form-group {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                                            <label class="govuk-label" for="phone"> Telephone
+                                                                number</label>
+
+                                                            {% if formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 %}
+                                                                {% for error in formErrors.phoneErr.errors %}
+                                                                    <span id="phone-error" class="govuk-error-message">
+                                                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                                                    </span>
+                                                                {% endfor %}                           
+                                                            {% endif %}
+
+                                                            <input class="govuk-input {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="phone" maxlength="40" name="phone" size="20" type="text" value="{{formErrors is defined ? formData.phone}}" autocomplete="tel" />
+                                                        </div>
                                                     {% endif %}
 
-                                                    <div class="govuk-form-group">
-                                                        <label class="govuk-label" for="form-organisation">Organisation</label>
-                                                        <input class="govuk-input" id="form-organisation" maxlength="80" name="company" size="20" type="text" required="">
+                                                    <div class="govuk-form-group {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                                        <label class="govuk-label" for="company">
+                                                            Organisation </label>
+
+                                                        {% if formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 %}
+                                                            {% for error in formErrors.companyErr.errors %}
+                                                                <span id="company-error" class="govuk-error-message">
+                                                                    <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                                                </span>
+                                                            {% endfor %}                            
+                                                        {% endif %}   
+
+                                                        <input class="govuk-input pardot-field {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization"/>
                                                     </div>
 
                                                     {% if page.content.contact_form_find_out_more_aggregation.value is defined and page.content.contact_form_find_out_more_aggregation.value %}
                                                         <div class="govuk-form-group">
                                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
-                                                                <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-aggregation-general" name="00Nb0000009IXEd" type="checkbox" value="1"/>
+                                                                <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-aggregation-general" name="00Nb0000009IXEd" type="checkbox" value="1" {{ formData.aggregationCheckbox is not null ? 'checked' : null }}/>
                                                                 <label class="govuk-label govuk-checkboxes__label" for="form-aggregation-general">
                                                                     Find out
                                                                     about
@@ -334,21 +386,37 @@
                                                                 </legend>
 
                                                                 <div class="govuk-radios govuk-radios--small">
-                                                                    {% for aggregationOption in page.content.contact_form_aggregation_options %}
-                                                                        <div class="govuk-radios__item govuk-radios__item--small ccs-radios__item--small">
-                                                                            <input class="govuk-radios__input govuk-radios__input--small" id="option-{{ slugify(aggregationOption.aggregation_options_name) }}" name="00Nb0000009IXEW" type="radio" value="{{ aggregationOption.aggregation_options_campaign_code }}" data-campaign-code="{{ aggregationOption.aggregation_options_campaign_code }}" required="">
-                                                                            <label class="govuk-label govuk-radios__label" for="option-{{ slugify(aggregationOption.aggregation_options_name) }}">
-                                                                                {{ aggregationOption.aggregation_options_name }}
-                                                                            </label>
-                                                                        </div>
-                                                                    {% endfor %}
+                                                                    <div class="govuk-form-group {{formErrors.aggregationOptionErr is defined and formErrors.aggregationOptionErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                                                        {% if formErrors.aggregationOptionErr is defined and formErrors.aggregationOptionErr.errors|length > 0 %}
+                                                                            {% for error in formErrors.aggregationOptionErr.errors %}
+                                                                                <span id="aggregation-option-error" class="govuk-error-message" >
+                                                                                    <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                                                                </span>
+                                                                            {% endfor %}                      
+                                                                        {% endif %}
+                                                                        {% for aggregationOption in page.content.contact_form_aggregation_options %}
+                                                                            <div class="govuk-radios__item govuk-radios__item--small ccs-radios__item--small" id="aggregationOption">
+                                                                                <input class="govuk-radios__input govuk-radios__input--small" id="option-{{ slugify(aggregationOption.aggregation_options_name) }}" name="00Nb0000009IXEW" type="radio" value="{{ aggregationOption.aggregation_options_campaign_code }}" data-campaign-code="{{ aggregationOption.aggregation_options_campaign_code }}" {{ formData.aggregationOption == aggregationOption.aggregation_options_campaign_code ? 'checked' : null }} >
+                                                                                <label class="govuk-label govuk-radios__label" for="option-{{ slugify(aggregationOption.aggregation_options_name) }}">
+                                                                                    {{ aggregationOption.aggregation_options_name }}
+                                                                                </label>
+                                                                            </div>
+                                                                        {% endfor %}
+                                                                    </div>
                                                                 </div>
                                                             </fieldset>
                                                         </div>
                                                     {% endif %}
 
                                                     {% if page.content.contact_form_show_newsletter_form is not empty and page.content.contact_form_show_newsletter_form.value == false %}
-                                                    <div class="govuk-form-group">
+                                                        <div class="govuk-form-group {{formErrors.descriptionErr is defined and formErrors.descriptionErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                                        {% if formErrors.descriptionErr is defined and formErrors.descriptionErr.errors|length > 0 %}
+                                                            {% for error in formErrors.descriptionErr.errors %}
+                                                                <span id="more-detail-error" class="govuk-error-message">
+                                                                    <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                                                </span>
+                                                            {% endfor %}                      
+                                                        {% endif %}
                                                         <label class="govuk-label" for="form-more-detail">
                                                             {% if page.content.contact_form_message_question_title is defined and page.content.contact_form_message_question_title is not empty %}
                                                                 {{ page.content.contact_form_message_question_title }}
@@ -363,14 +431,14 @@
                                                     Please give us as much detail as possible, including the agreement name and number
                                                 {% endif %}
                                             </span>
-                                                        <textarea class="govuk-textarea" id="form-more-detail" name="description" rows="5" aria-describedby="form-more-detail"></textarea>
+                                                    <textarea class="govuk-textarea" style="{{formErrors.descriptionErr is defined and formErrors.descriptionErr.errors|length > 0 ? 'border: 4px solid #b10e1e' : null }}" id="description" name="description" rows="5" aria-describedby="more-detail-hint">{{formErrors is defined ? formData.description}}</textarea>
                                                     </div>
                                                     {% endif %}
 
                                                     {% if page.content.contact_form_show_newsletter_form is not empty and page.content.contact_form_show_newsletter_form.value == false %}
                                                     <div class="govuk-form-group">
                                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
-                                                            <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-callback" name="00Nb0000009IXEg" type="checkbox" value="1"/>
+                                                            <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-callback" name="00Nb0000009IXEg" type="checkbox" value="1" {{ formData.callback is not null ? 'checked' : null }}/>
                                                             <label class="govuk-label govuk-checkboxes__label" for="form-callback">
                                                                 I want someone to call me</label>
                                                         </div>
