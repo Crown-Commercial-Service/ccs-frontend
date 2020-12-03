@@ -33,9 +33,17 @@
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="/">Home</a>
                 </li>
-                <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                    Upcoming deals
-                </li>
+                {% if upcoming_deals_content and upcoming_deals_content.upcomingDealsInfo.title %}
+
+                    <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                        {{upcoming_deals_content.upcomingDealsInfo.title}}
+                    </li>
+
+                {% else %}
+                    <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                        Upcoming deals
+                    </li>
+                {% endif %}
             </ol>
         </div>
 
