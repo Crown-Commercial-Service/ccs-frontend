@@ -212,15 +212,15 @@ class PageController extends AbstractController
     private function getFromData($params)
     {
         return [
-            'name' => $params->get('name'),
-            'email' => $params->get('email'),
-            'phone' => $params->get('phone'),
-            'company' => $params->get('company'),
-            'aggregationOption' =>  $params->get('00Nb0000009IXEW'),
-            'callback' => $params->get('00Nb0000009IXEg'),
-            'description' =>  $params->get('description'),
-            'aggregationCheckbox' => $params->get('00Nb0000009IXEd'),
-            'returnLink' => $params->get('retURL'),
+            'name' => $params->get('name', null),
+            'email' => $params->get('email', null),
+            'phone' => $params->get('phone', null),
+            'company' => $params->get('company', null),
+            'aggregationOption' =>  $params->get('00Nb0000009IXEW', null),
+            'callback' => $params->get('00Nb0000009IXEg', null),
+            'description' =>  $params->get('description', null),
+            'aggregationCheckbox' => $params->get('00Nb0000009IXEd', null),
+            'returnLink' => $params->get('retURL', null),
         ];
     }
 
