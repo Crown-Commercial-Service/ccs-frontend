@@ -54,9 +54,6 @@
 
                     <h1 class="govuk-heading-xl page-title">
                         {{ name }}
-                        {% if listOfGuarantor|length > 0 %}
-                             <span class="govuk-tag govuk-tag--subtle ccs-tag">has Guarantor</span>
-                        {% endif %}
 
                         {% if supplier.content.trading_names|length > 0 %}
                             <span class="govuk-caption-l">
@@ -74,10 +71,9 @@
                 </div>
             </div>
 
-                {% if listOfGuarantor|length > 0 %}
+                {% if listOfFrameworkWithGuarantor|length > 0 %}
                     <div class="govuk-details__text govuk-body">
-                    This supplier has a guarantor, which means they Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu ipsum a est malesuada sollicitudin. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed nec urna nulla. Donec dolor quam, rhoncus nec felis non, euismod volutpat urna. Mauris venenatis sodales volutpat.           
-                    The name of the guarantor is <b>{{ listOfGuarantor|join(', ', ' and ') }}</b>
+                    This supplier has a CCS-approved guarantor who will ensure that the supplier delivers the services outlined in the final agreement. You will need to include the supplier and guarantor’s details in the additional guarantor call-off schedule (joint schedule 8) in the bid pack. If you would like to receive the guarantor’s details please contact the customer service centre at <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a>, you can also call them on <a href="tel:0345%20410%202222">0345 410 2222</a>.
                     </div>                
                 {% endif %}
                 
@@ -116,6 +112,9 @@
                                         <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ loop.index }}">
                                           {{ framework.title }} {% if framework.status == "Expired - Data Still Received" %}
                                                 <strong class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--error">Expired</strong>{% endif %}
+                                        {% if framework.rm_number in listOfFrameworkWithGuarantor %}
+                                            <span class="govuk-tag govuk-tag--subtle ccs-tag--lower-case">Guarantor Recommended</span>
+                                        {% endif %}
                                         </span>
                                     </h2>
                                 </div>
@@ -154,8 +153,12 @@
 
                                             {% for lot in framework.lots %}
                                                 <tr class="govuk-table__row">
-                                                    <td class="govuk-table__cell govuk-table__cell--width-30 govuk-!-font-size-18">
+                                                    <td class="govuk-table__cell govuk-table__cell--width-30 govuk-!-font-size-18" style="padding-right: 0px;">
                                                         {{ lot.lot_number }}
+                                                        <br>
+                                                        {% if lot.guarantor_name and lot.guarantor_name is not null %}
+                                                            <span class="govuk-tag govuk-tag--subtle ccs-tag--lower-case">Guarantor recommended</span>
+                                                        {% endif %}
                                                     </td>
                                                     <td class="govuk-table__cell">
 
