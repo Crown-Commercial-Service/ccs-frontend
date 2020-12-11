@@ -218,7 +218,7 @@ class SuppliersController extends AbstractController
             throw new NotFoundHttpException('Supplier not found', $e);
         }
 
-        $listOfFrameworkWithGuarantor = $this->getFrameworkWithGuarantor($results);	
+        $listOfFrameworkWithGuarantor = $this->getFrameworkWithGuarantor($results);
 
         $data = [
             'supplier' => $results,
