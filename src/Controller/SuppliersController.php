@@ -218,11 +218,11 @@ class SuppliersController extends AbstractController
             throw new NotFoundHttpException('Supplier not found', $e);
         }
 
-        $listOfFrameworkWithGuarantor = $this->getFrameworkWithGuarantor($results);
+        $listOfGuarantor = $this->getListOfGuarantor($results);
 
         $data = [
             'supplier' => $results,
-            'listOfFrameworkWithGuarantor' => $listOfFrameworkWithGuarantor
+            'listOfGuarantor' => $listOfGuarantor
         ];
         return $this->render('suppliers/show.html.twig', $data);
     }
@@ -275,9 +275,9 @@ class SuppliersController extends AbstractController
         return null;
     }
 
-    protected function getFrameworkWithGuarantor($resultsFromCmdEndpoint)
+    protected function getListOfGuarantor($resultsFromCmdEndpoint)
     {
-        $ListOfFramework = [];
+        $ListOfguarantorName = [];
 
         $agreements = $resultsFromCmdEndpoint->getContent()['live_frameworks']->getValue();
 
@@ -286,11 +286,11 @@ class SuppliersController extends AbstractController
 
             foreach ($lots as $lot) {
                 if (array_key_exists('guarantor_name', $lot)) {
-                    $ListOfFramework[] = $agreement['rm_number'];
+                    $ListOfguarantorName[] = $lot['guarantor_name']->getValue();
                 }
             }
         }
 
-        return array_unique($ListOfFramework);
+        return $ListOfguarantorName;
     }
 }
