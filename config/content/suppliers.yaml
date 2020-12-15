@@ -81,7 +81,11 @@ live_frameworks:
           type: date
         supplier_contact_name:
           type: text
+        guarantor_name:
+          type: text
         supplier_contact_email:
           type: text
         supplier_trading_name:
           type: text
+have_guarantor:
+  type: boolean
