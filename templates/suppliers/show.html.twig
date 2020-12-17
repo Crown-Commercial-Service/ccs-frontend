@@ -100,8 +100,9 @@
 
 
                         {% for framework in supplier.content.live_frameworks %}
+                            {% if framework.terms == "DPS" %}
 
-                            {% if framework.status != "Expired" %}
+                            {% elseif framework.status != "Expired" %}
 
                             {#{{ dump(framework) }}#}
 
