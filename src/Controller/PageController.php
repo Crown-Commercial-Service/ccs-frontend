@@ -58,9 +58,25 @@ class PageController extends AbstractController
         $this->api->setContentType('news');
         $news = $this->api->listPages(1, ['limit' => 3]);
 
+        // request to homepage components
+        $homepageCompUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/homepage-components/0';
+
+        $client = HttpClient::create();
+        $response = $client->request(
+            'GET',
+            $homepageCompUrl,
+        );
+
+        $homepageContent = null;
+
+        if ($response->getStatusCode() == 200) {
+            $homepageContent = json_decode($response->getContent());
+        }
+
         return $this->render('pages/home.html.twig', [
             'news' => $news,
-            'guided_match_flag' => $flag
+            'guided_match_flag' => $flag,
+            'homepageContent' => $homepageContent,
 
         ]);
     }

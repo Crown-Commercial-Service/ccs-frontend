@@ -90,84 +90,203 @@
 
 
             <div class="apollo-island">
-                <div class="govuk-width-container">
+                {% if homepageContent %}
+                    <div class="govuk-width-container">
 
-                    <div class="govuk-grid-row">
-                        <div class="govuk-grid-column-one-quarter">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-one-quarter">
+                                <h2 class="govuk-heading-m govuk-!-font-size-24">
+                                    {{ homepageContent.how_to_buy.title is defined ? 
+                                    homepageContent.how_to_buy.title : "How to Buy" }}
+                                </h2>
+                                <p class="govuk-body govuk-!-font-size-17featured">
+                                    {{homepageContent.how_to_buy.description is defined ? 
+                                    homepageContent.how_to_buy.description : 
+                                    "CCS has a wide range of commercial agreements you can
+                                    access in several ways: agreements, catalogues,
+                                    portals and aggregation. Learn about the buying
+                                    routes and what you can buy from each."}}
+                                    </p>
+                                <p class="govuk-body govuk-!-font-size-17featured">
+                                    <a href="{{homepageContent.how_to_buy.link_url is defined ? homepageContent.how_to_buy.link_url : '/buy-and-supply/how-to-buy/'}}">
+                                        {{homepageContent.how_to_buy.link_text is defined ? homepageContent.how_to_buy.link_text : "Learn more"}} 
+                                        <span class="visuallyhidden">about How to buy</span>
+                                    </a>
+                                </p>
 
-                            <h2 class="govuk-heading-m govuk-!-font-size-24">How
-                                to buy</h2>
-                            <p class="govuk-body govuk-!-font-size-17featured">
-                                CCS has a wide range of commercial agreements you can
-                                access in several ways: agreements, catalogues,
-                                portals and aggregation. Learn about the buying
-                                routes and what you can buy from each.</p>
-                            <p class="govuk-body govuk-!-font-size-17featured">
-                                <a href="/buy-and-supply/how-to-buy/">Learn
-                                    more <span class="visuallyhidden">about How to buy</span></a>
-                            </p>
+                            </div>
+                            <div class="govuk-grid-column-one-quarter">
 
+                                <h2 class="govuk-heading-m govuk-!-font-size-24">
+                                    {{ homepageContent.agreements.title is defined ? 
+                                    homepageContent.agreements.title : "Agreements" }}
+                                </h2>
+                                <p class="govuk-body govuk-!-font-size-17featured">
+                                    {{ homepageContent.agreements.description is defined ? 
+                                    homepageContent.agreements.description : 
+                                    "Agreements are for common but complex
+                                    requirements. They comprise a list of suppliers
+                                    and standardised contract terms. Agreements are
+                                    often divided into lots by product or service
+                                    type." }}
+                                    </p>
+                                <p class="govuk-body govuk-!-font-size-17featured">
+                                    <a href="{{homepageContent.agreements.link_url is defined ? homepageContent.agreements.link_url : '/buy-and-supply/frameworks/'}}">
+                                    {{homepageContent.agreements.link_text is defined ? homepageContent.agreements.link_text : "Learn more"}}  
+                                    <span class="visuallyhidden">about Agreements</span>
+                                    </a>
+                                </p>
+
+                            </div>
+                            <div class="govuk-grid-column-one-quarter">
+
+                                <h2 class="govuk-heading-m govuk-!-font-size-24">
+                                    {{ homepageContent.upcoming_deals.title is defined ? 
+                                    homepageContent.upcoming_deals.title : "Upcoming deals" }}
+                                </h2>
+                                <p class="govuk-body govuk-!-font-size-17featured">
+                                    {{ homepageContent.upcoming_deals.description is defined ? 
+                                    homepageContent.upcoming_deals.description : 
+                                    "CCS plans to launch new commercial agreements
+                                    and renew some existing ones. Learn which
+                                    agreements are still open to suppliers to
+                                    tender, and when they will be ready to buy
+                                    from." }}
+                                    </p>
+                                <p class="govuk-body govuk-!-font-size-17featured">
+                                    <a href="{{homepageContent.upcoming_deals.link_url is defined ? homepageContent.upcoming_deals.link_url : '/agreements/upcoming'}}">
+                                    {{homepageContent.upcoming_deals.link_text is defined ? homepageContent.upcoming_deals.link_text : "Learn more"}}
+                                        <span class="visuallyhidden">about Upcoming deals</span>
+                                    </a>
+                                </p>
+
+                            </div>
+                            <div class="govuk-grid-column-one-quarter">
+
+                                <h2 class="govuk-heading-m govuk-!-font-size-24">
+                                    {{homepageContent.catalogues.title is defined ?
+                                     homepageContent.catalogues.title : "Catalogues" }}
+                                </h2>
+                                <p class="govuk-body govuk-!-margin-bottom-0">
+                                    <a href="{{ homepageContent.catalogue1.link_url is defined ? homepageContent.catalogue1.link_url : '/buy-and-supply/purchasing-platform/'}}">
+                                    {{homepageContent.catalogue1.title is defined ?
+                                     homepageContent.catalogue1.title : "Purchasing Platform" }}
+                                    </a>
+                                </p>
+                                <p class="govuk-body govuk-!-font-size-16">
+                                    {{homepageContent.catalogue1.description is defined ?
+                                     homepageContent.catalogue1.description : 
+                                     "Technology products, office supplies, multifunctional devices" }}
+                                </p>
+                                <p class="govuk-body govuk-!-margin-bottom-0">
+                                    <a href="{{ homepageContent.catalogue2.link_url is defined ? homepageContent.catalogue2.link_url : '/buy-and-supply/digital-marketplace/'}}">
+                                    {{homepageContent.catalogue2.title is defined ?
+                                     homepageContent.catalogue2.title : "Digital marketplace" }}
+                                     </a>
+                                </p>
+                                <p class="govuk-body govuk-!-font-size-16">
+                                    {{homepageContent.catalogue2.description is defined ?
+                                     homepageContent.catalogue2.description : 
+                                     "Cloud hosting, digital specialists, data centre space, user research" }}
+                                </p>
+                                <p class="govuk-body govuk-!-margin-bottom-0">
+                                    <a href="{{ homepageContent.catalogue3.link_url is defined ? homepageContent.catalogue3.link_url : '/buy-and-supply/emarketplace/'}}">
+                                    {{homepageContent.catalogue3.title is defined ?
+                                     homepageContent.catalogue3.title : "eMarketplace" }}
+                                     </a>
+                                </p>
+                                <p class="govuk-body govuk-!-font-size-16">
+                                    {{homepageContent.catalogue3.description is defined ?
+                                     homepageContent.catalogue3.description : 
+                                     "Local authority software, wider public sector office
+                                    supplies" }}
+                                </p>
+
+                            </div>
                         </div>
-                        <div class="govuk-grid-column-one-quarter">
 
-                            <h2 class="govuk-heading-m govuk-!-font-size-24">
-                                Agreements</h2>
-                            <p class="govuk-body govuk-!-font-size-17featured">
-                                Agreements are for common but complex
-                                requirements. They comprise a list of suppliers
-                                and standardised contract terms. Agreements are
-                                often divided into lots by product or service
-                                type.</p>
-                            <p class="govuk-body govuk-!-font-size-17featured">
-                                <a href="/buy-and-supply/frameworks/">Learn
-                                    more <span class="visuallyhidden">about Agreements</span></a>
-                            </p>
-
-                        </div>
-                        <div class="govuk-grid-column-one-quarter">
-
-                            <h2 class="govuk-heading-m govuk-!-font-size-24">
-                                Upcoming deals</h2>
-                            <p class="govuk-body govuk-!-font-size-17featured">
-                                CCS plans to launch new commercial agreements
-                                and renew some existing ones. Learn which
-                                agreements are still open to suppliers to
-                                tender, and when they will be ready to buy
-                                from.</p>
-                            <p class="govuk-body govuk-!-font-size-17featured">
-                                <a href="/agreements/upcoming">Learn more
-                                    <span class="visuallyhidden">about Upcoming deals</span></a>
-                            </p>
-
-                        </div>
-                        <div class="govuk-grid-column-one-quarter">
-
-                            <h2 class="govuk-heading-m govuk-!-font-size-24">
-                                Catalogues</h2>
-                            <p class="govuk-body govuk-!-margin-bottom-0">
-                                <a href="/buy-and-supply/purchasing-platform/">Purchasing
-                                    platform</a></p>
-                            <p class="govuk-body govuk-!-font-size-16">
-                                Technology products, office supplies,
-                                multifunctional devices</p>
-                            <p class="govuk-body govuk-!-margin-bottom-0">
-                                <a href="/buy-and-supply/digital-marketplace/">Digital
-                                    marketplace</a></p>
-                            <p class="govuk-body govuk-!-font-size-16">Cloud
-                                hosting, digital specialists, data centre space,
-                                user research</p>
-                            <p class="govuk-body govuk-!-margin-bottom-0">
-                                <a href="/buy-and-supply/emarketplace/">eMarketplace</a>
-                            </p>
-                            <p class="govuk-body govuk-!-font-size-16">Local
-                                authority software, wider public sector office
-                                supplies</p>
-
-                        </div>
                     </div>
+                 {% else %}   
+                    <div class="govuk-width-container">
 
-                </div>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-one-quarter">
+
+                                <h2 class="govuk-heading-m govuk-!-font-size-24">How
+                                    to buy</h2>
+                                <p class="govuk-body govuk-!-font-size-17featured">
+                                    CCS has a wide range of commercial agreements you can
+                                    access in several ways: agreements, catalogues,
+                                    portals and aggregation. Learn about the buying
+                                    routes and what you can buy from each.</p>
+                                <p class="govuk-body govuk-!-font-size-17featured">
+                                    <a href="/buy-and-supply/how-to-buy/">Learn
+                                        more <span class="visuallyhidden">about How to buy</span></a>
+                                </p>
+
+                            </div>
+                            <div class="govuk-grid-column-one-quarter">
+
+                                <h2 class="govuk-heading-m govuk-!-font-size-24">
+                                    Agreements</h2>
+                                <p class="govuk-body govuk-!-font-size-17featured">
+                                    Agreements are for common but complex
+                                    requirements. They comprise a list of suppliers
+                                    and standardised contract terms. Agreements are
+                                    often divided into lots by product or service
+                                    type.</p>
+                                <p class="govuk-body govuk-!-font-size-17featured">
+                                    <a href="/buy-and-supply/frameworks/">Learn
+                                        more <span class="visuallyhidden">about Agreements</span></a>
+                                </p>
+
+                            </div>
+                            <div class="govuk-grid-column-one-quarter">
+
+                                <h2 class="govuk-heading-m govuk-!-font-size-24">
+                                    Upcoming deals</h2>
+                                <p class="govuk-body govuk-!-font-size-17featured">
+                                    CCS plans to launch new commercial agreements
+                                    and renew some existing ones. Learn which
+                                    agreements are still open to suppliers to
+                                    tender, and when they will be ready to buy
+                                    from.</p>
+                                <p class="govuk-body govuk-!-font-size-17featured">
+                                    <a href="/agreements/upcoming">Learn more
+                                        <span class="visuallyhidden">about Upcoming deals</span></a>
+                                </p>
+
+                            </div>
+                            <div class="govuk-grid-column-one-quarter">
+
+                                <h2 class="govuk-heading-m govuk-!-font-size-24">
+                                    Catalogues</h2>
+                                <p class="govuk-body govuk-!-margin-bottom-0">
+                                    <a href="/buy-and-supply/purchasing-platform/">Purchasing
+                                        platform</a></p>
+                                <p class="govuk-body govuk-!-font-size-16">
+                                    Technology products, office supplies,
+                                    multifunctional devices</p>
+                                <p class="govuk-body govuk-!-margin-bottom-0">
+                                    <a href="/buy-and-supply/digital-marketplace/">Digital
+                                        marketplace</a></p>
+                                <p class="govuk-body govuk-!-font-size-16">Cloud
+                                    hosting, digital specialists, data centre space,
+                                    user research</p>
+                                <p class="govuk-body govuk-!-margin-bottom-0">
+                                    <a href="/buy-and-supply/emarketplace/">eMarketplace</a>
+                                </p>
+                                <p class="govuk-body govuk-!-font-size-16">Local
+                                    authority software, wider public sector office
+                                    supplies</p>
+
+                            </div>
+                        </div>
+
+                    </div>
+                {% endif %}
             </div>
+            
 
 
             <div class="apollo-island apollo-island--emphasised">
@@ -242,14 +361,17 @@
                         </div>
                         <div class="govuk-grid-column-one-half">
 
-                            <h2 class="govuk-heading-m">Learn about CCS</h2>
+                            <h2 class="govuk-heading-m">{{ homepageContent.video.title is defined ? homepageContent.video.title : "Learn about CCS" }}</h2>
 
                             <p class="responsive-video widescreen">
-                                <iframe title="An overview of CCS in 30 seconds video" width="560" height="315" src="https://www.youtube-nocookie.com/embed/_p61ZX4zQHU" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <iframe title="{{ homepageContent.video.video_caption is defined ? homepageContent.video.video_caption : 'An overview of CCS in 30 seconds' }}" width="560" height="315" src="{{homepageContent.video.video_link is defined ? homepageContent.video.video_link : 'https://www.youtube-nocookie.com/embed/_p61ZX4zQHU' }}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             </p>
-                            <p><a href="/buy-and-supply/">Browse all help and
-                                    support guides</a></p>
-
+                            <p>
+                                <a href=" {{ homepageContent.video.link_url is defined ? homepageContent.video.link_url : '/buy-and-supply/' }}">
+                                {{ homepageContent.video.link_text is defined ?
+                                 homepageContent.video.link_text : "Browse all help and support guides" }}
+                                </a>
+                            </p>
 
                         </div>
                     </div>
