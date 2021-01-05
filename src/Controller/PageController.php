@@ -237,9 +237,6 @@ class PageController extends AbstractController
         ];
     }
 
-         ]);
-    }
-
 
     /**
      * Simple healthcheck
