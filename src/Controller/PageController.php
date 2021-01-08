@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class PageController extends AbstractController
 {
@@ -274,5 +275,50 @@ class PageController extends AbstractController
         }
 
         return new JsonResponse(['message' => 'OK']);
+    }
+
+    public function statuscheck()
+    {
+        $client = HttpClient::create(['verify_peer' => false, 'verify_host' => false, 'timeout' => 5]);
+        $listOfUrlToCheck = $this->getHeaderAndFooterListFromCMS($client, getenv('APP_CMS_BASE_URL'));
+        $results = [];
+
+        foreach ($listOfUrlToCheck as $url) {
+            try {
+                $response = $client->request('GET', $url);
+                $results[$url] = $response->getstatuscode();
+            } catch (TransportExceptionInterface $e) {
+            }
+        }
+        return $this->render('pages/status_check.html.twig', [
+            'results'           => $results,
+            'totalLinks'        => count($listOfUrlToCheck)
+         ]);
+    }
+
+
+    public function getHeaderAndFooterListFromCMS($client, $APP_CMS_BASE_URL)
+    {
+
+        $numbers = ['21','22','23','24','25'];
+        $returnList = [];
+
+        foreach ($numbers as $number) {
+            $apiUrl = $APP_CMS_BASE_URL . '/wp-json/wp-api-menus/v2/menus/' . $number;
+            $CMSresponse = $client->request('GET', $apiUrl);
+
+            if ($CMSresponse->getStatusCode() == 200) {
+                $jsonObjects = json_decode($CMSresponse->getContent())->items;
+
+                foreach ($jsonObjects as $jsonObject) {
+                    $url = $jsonObject->url;
+
+                    if (substr($url, 0, 4) == 'http') {
+                        $returnList[] = $url;
+                    }
+                }
+            }
+        }
+        return array_unique($returnList);
     }
 }
