@@ -313,7 +313,7 @@ class PageController extends AbstractController
                 foreach ($jsonObjects as $jsonObject) {
                     $url = $jsonObject->url;
 
-                    if (substr($url, 0, 4) == 'http') {
+                    if (filter_var($url, FILTER_VALIDATE_URL)) {
                         $returnList[] = $url;
                     }
                 }
