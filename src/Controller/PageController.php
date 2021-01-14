@@ -98,7 +98,13 @@ class PageController extends AbstractController
      */
     public function page(string $slug, Request $request)
     {
+        $client = HttpClient::create();
         $slug = filter_var($slug, FILTER_SANITIZE_STRING);
+        $redirectedLink = $this->checkRedirect($client, $slug);
+
+        if ($redirectedLink != '') {
+            return $this->redirect($redirectedLink);
+        }
 
         // @todo May need to look at mapping URLs to page IDs in the future
         try {
@@ -123,7 +129,6 @@ class PageController extends AbstractController
         // request to option cards api
         $optionCardsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/option-cards/0';
 
-        $client = HttpClient::create();
         $response = $client->request(
             'GET',
             $optionCardsUrl,
@@ -158,6 +163,30 @@ class PageController extends AbstractController
             'formErrors'         => $formErrors,
             'formData'           => $formData,
          ]);
+    }
+
+    private function checkRedirect($client, $slug)
+    {
+
+        $slug = strtolower($slug);
+        $listOfRedirectUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/redirection';
+
+        $response = $client->request('GET', $listOfRedirectUrl);
+
+        if ($response->getStatusCode() == 200) {
+            $listOfRedirect = json_decode($response->getContent())->results;
+
+            foreach ($listOfRedirect as $redirect) {
+                $shortenUrl = $redirect->shortUrl;
+                $longUrl = getenv('APP_BASE_URL') . "/" . $redirect->longUrl;
+
+                if ($shortenUrl == $slug && $client->request('GET', $longUrl)->getStatusCode() == 200) {
+                    return $redirect->longUrl;
+                }
+            }
+        }
+
+        return '';
     }
 
     private function sendToSalesforce($params, $formData)
