@@ -271,5 +271,4 @@ class SuppliersController extends AbstractController
 
         return null;
     }
-
 }
