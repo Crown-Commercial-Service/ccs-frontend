@@ -35,6 +35,9 @@
     "monolog/monolog": {
         "version": "1.24.0"
     },
+    "n98/junit-xml": {
+        "version": "1.0.0"
+    },
     "overtrue/phplint": {
         "version": "dev-master"
     },

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Validation\FormValidation;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
 use Studio24\Frontend\ContentModel\ContentModel;
@@ -12,6 +13,8 @@ use Studio24\Frontend\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageController extends AbstractController
@@ -32,6 +35,7 @@ class PageController extends AbstractController
         $this->api->setContentType('page');
         $this->api->setCache($cache);
         $this->api->setCacheLifetime(900);
+        $this->client = HttpClient::create();
     }
 
     /**
@@ -54,9 +58,25 @@ class PageController extends AbstractController
         $this->api->setContentType('news');
         $news = $this->api->listPages(1, ['limit' => 3]);
 
+        // request to homepage components
+        $homepageCompUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/homepage-components/0';
+
+        $client = HttpClient::create();
+        $response = $client->request(
+            'GET',
+            $homepageCompUrl,
+        );
+
+        $homepageContent = null;
+
+        if ($response->getStatusCode() == 200) {
+            $homepageContent = json_decode($response->getContent());
+        }
+
         return $this->render('pages/home.html.twig', [
             'news' => $news,
-            'guided_match_flag' => $flag
+            'guided_match_flag' => $flag,
+            'homepageContent' => $homepageContent,
 
         ]);
     }
@@ -99,16 +119,124 @@ class PageController extends AbstractController
             $breadcrumb[$link] = $name;
         }
 
+        // request to option cards api
+        $optionCardsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/option-cards/0';
+
+        $client = HttpClient::create();
+        $response = $client->request(
+            'GET',
+            $optionCardsUrl,
+        );
+
+        $optionCardsContent = null;
+
+        if ($response->getStatusCode() == 200) {
+            $optionCardsContent = json_decode($response->getContent());
+        }
+
+        $formErrors = null;
+        $formData = $this->getFromData($request->request);
+
+        if ($request->isMethod('POST')) {
+            $formErrors = $this->sendToSalesforce($request->request, $formData);
+
+            if ($formErrors instanceof Response) {
+                return $formErrors;
+            }
+        }
+
         return $this->render('pages/page.html.twig', [
             'page'               => $page,
             'breadcrumb_parents' => $breadcrumb,
             'page_query_string'  => filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING),
             'query_string_type'  => isset($_GET['type']) ? filter_var($_GET['type'], FILTER_SANITIZE_STRING) : null,
             'site_base_url'      => getenv('APP_BASE_URL'),
-            'form_action'        => getenv('APP_ENV') === 'prod' ? 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8' : 'https://crowncommercial--preprod.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8',
             'org_id' => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D8E000000E4zz',
-        ]);
+            'option_cards' => $optionCardsContent,
+            'slug'               => $slug,
+            'formErrors'         => $formErrors,
+            'formData'           => $formData,
+         ]);
     }
+
+    private function sendToSalesforce($params, $formData)
+    {
+
+        if (strpos($params->get('retURL'), 'thank-you-page-newsletters')) {
+            $formErrors = $this->validateNewsletterForm($formData);
+        } else {
+            $formErrors = $this->validateForm($formData);
+        }
+
+        if ($formErrors) {
+            return $formErrors;
+        } else {
+            $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                            // these values are automatically encoded before including them in the URL
+                            'query' => $params->all(),
+                        ]);
+
+            if (!is_null($params->get('debug'))) {
+                return new Response(
+                    $response->getContent()
+                );
+            }
+
+            return $this->redirect($params->get('retURL'));
+        }
+    }
+
+    private function validateNewsletterForm($data)
+    {
+        $errorMessages = [];
+
+        $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
+        $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
+        $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
+
+        foreach ($errorMessages as $type => $value) {
+            if (!empty($errorMessages[$type]['errors'])) {
+                return $errorMessages;
+            }
+        }
+
+        return false;
+    }
+
+    private function validateForm($data)
+    {
+        $errorMessages = [];
+
+        $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
+        $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
+        $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
+        $errorMessages['aggregationOptionErr'] = FormValidation::validationAggregationOption($data['aggregationOption']);
+
+        foreach ($errorMessages as $type => $value) {
+            if (!empty($errorMessages[$type]['errors'])) {
+                return $errorMessages;
+            }
+        }
+
+        return false;
+    }
+
+    private function getFromData($params)
+    {
+        return [
+            'name' => $params->get('name', null),
+            'email' => $params->get('email', null),
+            'phone' => $params->get('phone', null),
+            'company' => $params->get('company', null),
+            'aggregationOption' =>  $params->get('00Nb0000009IXEW', null),
+            'callback' => $params->get('00Nb0000009IXEg', null),
+            'description' =>  $params->get('description', null),
+            'aggregationCheckbox' => $params->get('00Nb0000009IXEd', null),
+            'returnLink' => $params->get('retURL', null),
+        ];
+    }
+
 
     /**
      * Simple healthcheck

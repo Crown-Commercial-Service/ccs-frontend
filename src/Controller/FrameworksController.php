@@ -10,9 +10,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Studio24\Frontend\Cms\RestData;
 use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpClient\HttpClient;
 use Studio24\Frontend\Exception\NotFoundException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
+use Rollbar\Rollbar;
+use Rollbar\Payload\Level;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Exception;
 
 class FrameworksController extends AbstractController
 {
@@ -133,8 +139,9 @@ class FrameworksController extends AbstractController
 
         try {
             $results = $this->searchApi->list($page, ['limit' => $limit]);
-        } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
+        } catch (Exception $e) {
+            // refresh page on 500 error
+            return $this->redirect($request->getUri());
         }
 
         $data = [
@@ -171,12 +178,28 @@ class FrameworksController extends AbstractController
             throw new NotFoundHttpException('Page not found', $e);
         }
 
+         // request to upcoming deals information api for titles and description
+         $upcomingDealsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/upcoming-deals-page/0';
+
+         $client = HttpClient::create();
+         $response = $client->request(
+             'GET',
+             $upcomingDealsUrl,
+         );
+
+         $upcomingDealsContent = null;
+
+        if ($response->getStatusCode() == 200) {
+            $upcomingDealsContent = json_decode($response->getContent());
+        }
+
         $data = [
             'awarded_pipeline'              => $results->getContent()->get('awarded_pipeline'),
             'underway_pipeline'             => $results->getContent()->get('underway_pipeline'),
             'dynamic_purchasing_systems'    => $results->getContent()->get('dynamic_purchasing_systems'),
             'planned_pipeline'              => $results->getContent()->get('planned_pipeline'),
             'future_pipeline'               => $results->getContent()->get('future_pipeline'),
+            'upcoming_deals_content'        => $upcomingDealsContent,
         ];
 
         return $this->render('frameworks/upcoming-list.html.twig', $data);
@@ -342,24 +365,50 @@ class FrameworksController extends AbstractController
                 'status'    => $status ?? null,
                 'pillar'    => $category ?? null,
             ]);
-        } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
+        } catch (Exception $e) {
+            // refresh page on 500 error
+            return $this->redirect($request->getUri());
         }
 
         if (!empty($query) && isset($this->guidedMatchApiClient)) {
-            $guidedMatchResponse = $this->guidedMatchApiClient->request('GET', $query, [
-                'headers' => [
-                    'Content-Type: application/json',
-                    'x-api-key'  => getenv('GUIDED_MATCH_API_KEY')
-                ],
-                'http_errors' => false
-            ]);
+            try {
+                $guidedMatchResponse = $this->guidedMatchApiClient->request('GET', $query, [
+                    'headers' => [
+                        'Content-Type: application/json',
+                        'x-api-key'  => getenv('GUIDED_MATCH_API_KEY')
+                    ],
+                    'http_errors' => false
+                ]);
 
-            $guidedMatchJsonResult = json_decode($guidedMatchResponse->getBody()->getContents());
-            $guidedMatchStatusCode  = $guidedMatchResponse->getStatusCode();
+                $connected = true;
+            } catch (RequestException $e) {
+                Rollbar::log(
+                    Level::ERROR,
+                    'Guided Match API is refused to connect, GM banner will not show',
+                    $e
+                );
+
+                $connected = false;
+            }
+
+            if ($connected) {
+                $guidedMatchJsonResult = json_decode($guidedMatchResponse->getBody()->getContents());
+                $guidedMatchStatusCode  = $guidedMatchResponse->getStatusCode();
+
+                try {
+                    $responseForLandingPage = $this->guidedMatchApiClient->request('GET', getenv('GUIDED_MATCH_URL') . rawurlencode($query));
+                    $statusCodeForLandingPage = $responseForLandingPage->getStatusCode();
+                } catch (ServerException $e) {
+                    $statusCodeForLandingPage = 502;
+                }
+            } else {
+                $guidedMatchJsonResult = [];
+                $guidedMatchStatusCode = 400;
+                $statusCodeForLandingPage = 400;
+            }
         }
 
-        if (!empty($guidedMatchJsonResult) && $guidedMatchStatusCode == 200) {
+        if (!empty($guidedMatchJsonResult) && $guidedMatchStatusCode == 200 && $statusCodeForLandingPage == 200) {
             $data = [
                 'query'                      => $query,
                 'pagination'                 => $results->getPagination(),

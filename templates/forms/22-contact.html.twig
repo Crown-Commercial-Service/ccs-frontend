@@ -75,7 +75,8 @@
                     <h1 class="govuk-heading-xl page-title">Contact CCS</h1>
 
 
-                    <p class="govuk-body-l">You can contact us by email or by using the form below.</p>
+                    <p class="govuk-body-l">You can contact us by email, phone
+                        or using the enquiry form below.</p>
 
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-one-quarter">
@@ -101,11 +102,11 @@
                                 Friday, 9am to 5pm.</p>
                         </div>
                     </div>
-                    
+
 
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-                    <form class="govuk-!-width-three-quarters" action="/contact/sendToSalesforce" method="POST" novalidate>
+                    <form class="govuk-!-width-three-quarters pardot-submit" action="/contact/sendToSalesforce" method="POST" novalidate>
 
                         {# Change these field types to hidden for Production #}
                         <input type="hidden" name="orgid" value="{{ web_to_case_orgid }}">
@@ -183,7 +184,7 @@
                             {#Descriptive and helpful error message#}
                             {#</span>
                             {# input class for error states; `govuk-input--error`  #}
-                            <input class="govuk-input {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
+                            <input class="govuk-input pardot-field {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
                         </div>
                         <div class="govuk-form-group {{formErrors.emailErr.errors is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="email">
@@ -197,7 +198,7 @@
                                 {% endfor %}                         
                             {% endif %}    
 
-                            <input class="govuk-input {{formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="email" maxlength="80" name="email" size="20" type="email" value="{{formErrors is defined ? formData.email}}" autocomplete="email" required/>
+                            <input class="govuk-input pardot-email {{formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="email" maxlength="80" name="email" size="20" type="email" value="{{formErrors is defined ? formData.email}}" autocomplete="email" required/>
                         </div>
 
 
@@ -245,7 +246,7 @@
                                 {% endfor %}                            
                             {% endif %}   
 
-                            <input class="govuk-input {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization"/>
+                            <input class="govuk-input pardot-field {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization"/>
                         </div>
                         <div class="govuk-form-group {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="00Nb0000009IXEs">
@@ -430,4 +431,9 @@
         </main>
     </div>
 
+{% endblock %}
+
+{% block nonblocking_javascript %}
+    {{ parent() }}
+    <script src="/assets/scripts/pardot.js"></script>
 {% endblock %}
