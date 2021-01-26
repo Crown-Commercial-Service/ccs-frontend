@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Validation\FormValidation;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
+use Studio24\Frontend\Cms\RestData;
 use Studio24\Frontend\ContentModel\ContentModel;
 use Studio24\Frontend\Exception\FailedRequestException;
 use Studio24\Frontend\Exception\NotFoundException;
@@ -27,6 +28,13 @@ class PageController extends AbstractController
      */
     protected $api;
 
+     /**
+     * Frameworks Rest API data
+     *
+     * @var RestData
+     */
+    protected $redirectionApi;
+
     public function __construct(CacheInterface $cache)
     {
         $this->api = new Wordpress(
@@ -37,6 +45,13 @@ class PageController extends AbstractController
         $this->api->setCache($cache);
         $this->api->setCacheLifetime(900);
         $this->client = HttpClient::create();
+
+        $this->redirectionApi = new RestData(
+            getenv('APP_API_BASE_URL'),
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
+        );
+        $this->redirectionApi->setContentType('redirections');
+        $this->redirectionApi->setCache($cache);
     }
 
     /**
@@ -98,9 +113,8 @@ class PageController extends AbstractController
      */
     public function page(string $slug, Request $request)
     {
-        $client = HttpClient::create();
         $slug = filter_var($slug, FILTER_SANITIZE_STRING);
-        $redirectedLink = $this->checkRedirect($client, $slug);
+        $redirectedLink = $this->checkRedirect($slug);
 
         if ($redirectedLink != '') {
             return $this->redirect($redirectedLink);
@@ -129,7 +143,7 @@ class PageController extends AbstractController
         // request to option cards api
         $optionCardsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/option-cards/0';
 
-        $response = $client->request(
+        $response = $this->client->request(
             'GET',
             $optionCardsUrl,
         );
@@ -165,24 +179,25 @@ class PageController extends AbstractController
          ]);
     }
 
-    private function checkRedirect($client, $slug)
+    private function checkRedirect($slug)
     {
-
         $slug = strtolower($slug);
-        $listOfRedirectUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/redirection';
 
-        $response = $client->request('GET', $listOfRedirectUrl);
+        try {
+            // @todo At present need to pass fake ID since API method is intended to return one item with an ID, review this
+            $results = $this->redirectionApi->getOne(0);
+        } catch (NotFoundException $e) {
+            throw new NotFoundHttpException('Redirection API broken', $e);
+        }
 
-        if ($response->getStatusCode() == 200) {
-            $listOfRedirect = json_decode($response->getContent())->results;
+        $listOfRedirection = $results->getContent()->get('results')->getValue();
 
-            foreach ($listOfRedirect as $redirect) {
-                $shortenUrl = $redirect->shortUrl;
-                $longUrl = getenv('APP_BASE_URL') . "/" . $redirect->longUrl;
+        foreach ($listOfRedirection as $redirection) {
+            $shortenUrl = $redirection->get('shortUrl')->getValue();
+            $longUrl = getenv('APP_BASE_URL') . "/" . $redirection->get('longUrl')->getValue();
 
-                if ($shortenUrl == $slug && $client->request('GET', $longUrl)->getStatusCode() == 200) {
-                    return $redirect->longUrl;
-                }
+            if ($shortenUrl == $slug) {
+                return $longUrl;
             }
         }
 
