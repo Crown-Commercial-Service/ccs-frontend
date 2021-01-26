@@ -51,7 +51,6 @@ class PageController extends AbstractController
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->redirectionApi->setContentType('redirections');
-        $this->redirectionApi->setCache($cache);
     }
 
     /**
