@@ -41,7 +41,9 @@ content_types:
     api_endpoint: wp/v2/event
     content_fields: events.yaml
     source_content_type: event
-
+  redirections:
+    api_endpoint: ccs/v1/redirections
+    content_fields: redirections.yaml
 global:
   image_sizes:
     - thumbnail
