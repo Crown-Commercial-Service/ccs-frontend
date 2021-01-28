@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Validation\FormValidation;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
+use Studio24\Frontend\Cms\RestData;
 use Studio24\Frontend\ContentModel\ContentModel;
 use Studio24\Frontend\Exception\FailedRequestException;
 use Studio24\Frontend\Exception\NotFoundException;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class PageController extends AbstractController
 {
@@ -25,6 +27,13 @@ class PageController extends AbstractController
      * @var Wordpress
      */
     protected $api;
+
+     /**
+     * Frameworks Rest API data
+     *
+     * @var RestData
+     */
+    protected $redirectionApi;
 
     public function __construct(CacheInterface $cache)
     {
@@ -36,6 +45,12 @@ class PageController extends AbstractController
         $this->api->setCache($cache);
         $this->api->setCacheLifetime(900);
         $this->client = HttpClient::create();
+
+        $this->redirectionApi = new RestData(
+            getenv('APP_API_BASE_URL'),
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
+        );
+        $this->redirectionApi->setContentType('redirections');
     }
 
     /**
@@ -58,9 +73,25 @@ class PageController extends AbstractController
         $this->api->setContentType('news');
         $news = $this->api->listPages(1, ['limit' => 3]);
 
+        // request to homepage components
+        $homepageCompUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/homepage-components/0';
+
+        $client = HttpClient::create();
+        $response = $client->request(
+            'GET',
+            $homepageCompUrl,
+        );
+
+        $homepageContent = null;
+
+        if ($response->getStatusCode() == 200) {
+            $homepageContent = json_decode($response->getContent());
+        }
+
         return $this->render('pages/home.html.twig', [
             'news' => $news,
-            'guided_match_flag' => $flag
+            'guided_match_flag' => $flag,
+            'homepageContent' => $homepageContent,
 
         ]);
     }
@@ -82,6 +113,11 @@ class PageController extends AbstractController
     public function page(string $slug, Request $request)
     {
         $slug = filter_var($slug, FILTER_SANITIZE_STRING);
+        $redirectedLink = $this->checkRedirect($slug);
+
+        if ($redirectedLink != '') {
+            return $this->redirect($redirectedLink);
+        }
 
         // @todo May need to look at mapping URLs to page IDs in the future
         try {
@@ -106,8 +142,7 @@ class PageController extends AbstractController
         // request to option cards api
         $optionCardsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/option-cards/0';
 
-        $client = HttpClient::create();
-        $response = $client->request(
+        $response = $this->client->request(
             'GET',
             $optionCardsUrl,
         );
@@ -141,6 +176,31 @@ class PageController extends AbstractController
             'formErrors'         => $formErrors,
             'formData'           => $formData,
          ]);
+    }
+
+    private function checkRedirect($slug)
+    {
+        $slug = strtolower($slug);
+
+        try {
+            // @todo At present need to pass fake ID since API method is intended to return one item with an ID, review this
+            $results = $this->redirectionApi->getOne(0);
+        } catch (NotFoundException $e) {
+            throw new NotFoundHttpException('Redirection API broken', $e);
+        }
+
+        $listOfRedirection = $results->getContent()->get('results')->getValue();
+
+        foreach ($listOfRedirection as $redirection) {
+            $shortenUrl = $redirection->get('shortUrl')->getValue();
+            $longUrl = getenv('APP_BASE_URL') . "/" . $redirection->get('longUrl')->getValue();
+
+            if ($shortenUrl == $slug) {
+                return $longUrl;
+            }
+        }
+
+        return '';
     }
 
     private function sendToSalesforce($params, $formData)
@@ -258,5 +318,50 @@ class PageController extends AbstractController
         }
 
         return new JsonResponse(['message' => 'OK']);
+    }
+
+    public function statuscheck()
+    {
+        $client = HttpClient::create(['verify_peer' => false, 'verify_host' => false, 'timeout' => 5]);
+        $listOfUrlToCheck = $this->getHeaderAndFooterListFromCMS($client, getenv('APP_CMS_BASE_URL'));
+        $results = [];
+
+        foreach ($listOfUrlToCheck as $url) {
+            try {
+                $response = $client->request('GET', $url);
+                $results[$url] = $response->getstatuscode();
+            } catch (TransportExceptionInterface $e) {
+            }
+        }
+        return $this->render('pages/status_check.html.twig', [
+            'results'           => $results,
+            'totalLinks'        => count($listOfUrlToCheck)
+         ]);
+    }
+
+
+    public function getHeaderAndFooterListFromCMS($client, $APP_CMS_BASE_URL)
+    {
+
+        $numbers = ['21','22','23','24','25'];
+        $returnList = [];
+
+        foreach ($numbers as $number) {
+            $apiUrl = $APP_CMS_BASE_URL . '/wp-json/wp-api-menus/v2/menus/' . $number;
+            $CMSresponse = $client->request('GET', $apiUrl);
+
+            if ($CMSresponse->getStatusCode() == 200) {
+                $jsonObjects = json_decode($CMSresponse->getContent())->items;
+
+                foreach ($jsonObjects as $jsonObject) {
+                    $url = $jsonObject->url;
+
+                    if (filter_var($url, FILTER_VALIDATE_URL)) {
+                        $returnList[] = $url;
+                    }
+                }
+            }
+        }
+        return array_unique($returnList);
     }
 }
