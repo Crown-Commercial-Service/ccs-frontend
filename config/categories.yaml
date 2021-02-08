@@ -40,9 +40,9 @@ pillars:
         db_value: 'Marcomms & Research'
         slug: 'marcomms-research'
 
-      - name: 'Travel'
-        db_value: 'Travel'
-        slug: 'travel'
+      - name: 'Office and Travel'
+        db_value: 'Office and Travel'
+        slug: 'office-and-travel'
 
   - name: 'People'
     db_value: 'People'
