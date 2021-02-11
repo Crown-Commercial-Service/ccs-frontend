@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Status Check - CCS{% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="govuk-width-container">
+        <div class="govuk-phase-banner">
+            <p class="govuk-phase-banner__content">
+                <strong class="govuk-tag govuk-phase-banner__content__tag "> beta </strong> 
+                        <span class="govuk-phase-banner__text"> This is a new service – your
+                            <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.
+                        </span>
+            </p>
+        </div>
+    </div>
+    <main id="main-content" role="main" class="govuk-main-wrapper">
+        <div class="govuk-width-container">
+            <h1 class="govuk-heading-xl page-title">Status code for header and footer URL</h1>
+            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24"> {{ results|length }} links checked out of {{ totalLinks }}</h2>
+            <table class="govuk-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
+                            Link
+                        </th>
+                        <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody class="govuk-table__body">
+
+                    {% for link, statusCode in results %}
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell govuk-!-font-size-16">
+                                <a href={{ link }}> {{ link }}</a>
+                            </td>
+                            <td class="govuk-table__cell govuk-!-font-size-16">
+                                {% if statusCode == '200' or statusCode == 200 %}
+                                    <p style="color:green;">OK</p>
+                                {% else %}
+                                <p style="color:red;">{{ statusCode }}</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+    </main>
+{% endblock %}

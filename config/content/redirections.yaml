@@ -1,0 +1,12 @@
+meta:
+  type: array
+  content_fields:
+    total_results:
+      type: number
+results:
+  type: array
+  content_fields:
+    shortUrl:
+      type: text
+    longUrl:
+      type: text
