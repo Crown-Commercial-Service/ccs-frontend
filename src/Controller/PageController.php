@@ -206,10 +206,10 @@ class PageController extends AbstractController
     private function sendToSalesforce($params, $formData)
     {
 
-        if (strpos($params->get('retURL'), 'thank-you-page-newsletters')) {
-            $formErrors = $this->validateNewsletterForm($formData);
-        } else {
+        if ($params->get('validateAggregationOption')) {
             $formErrors = $this->validateForm($formData);
+        } else {
+            $formErrors = $this->validateNewsletterForm($formData);
         }
 
         if ($formErrors) {
@@ -278,6 +278,7 @@ class PageController extends AbstractController
             'description' =>  $params->get('description', null),
             'aggregationCheckbox' => $params->get('00Nb0000009IXEd', null),
             'returnLink' => $params->get('retURL', null),
+            'validateAggregationOption' => $params->get('validateAggregationOption', null),
         ];
     }
 
