@@ -53,7 +53,6 @@ class FrameworksController extends AbstractController
         $this->searchApi->setContentType('frameworks');
         $this->searchApi->setCache($cache);
         $this->searchApi->setCacheLifetime(1);
-
     }
 
     /**
