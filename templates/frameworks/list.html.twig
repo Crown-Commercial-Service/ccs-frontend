@@ -127,6 +127,14 @@
                             </svg>
                         </a>
                     </div>
+                {% else %}
+                    <div class="govuk-grid-column-two-thirds">
+                    {% if pagination.totalResults == 1 %}
+                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreement found</h2>
+                    {% else %}
+                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreements found</h2>
+                    {% endif %}
+                    </div>
                 {% endif %}
 
                 <div class="govuk-grid-column-two-thirds">
