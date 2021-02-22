@@ -208,7 +208,30 @@ class ApiController extends AbstractController
             return new JsonResponse(['message' => 'An invalid email has been passed'], 400);
         }
 
-        $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_URL');
+        if (is_null($data) || !isset($data->subject)) {
+            return new JsonResponse(['message' => 'You must pass a subject variable with this request'], 400);
+        }
+
+        $subject = $data->subject;
+
+        // set PARDOT FORM URL
+            switch($subject) {
+                case 'TECH':
+                    $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_TECH_URL');
+                    break;
+                case 'People':
+                    $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_PEOPLE_URL');
+                    break;
+                case 'CS20/21':
+                    $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_CORPORATE_URL');
+                    break;
+                case 'Buildings':
+                    $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_BUILDINGS_URL');
+                    break;
+                default:
+                    $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_URL');
+            }
+        
         if (empty($pardotFormUrl) || !filter_var($pardotFormUrl, FILTER_VALIDATE_URL)) {
             return new JsonResponse(['message' => 'Please set PARDOT_EMAIL_FORM_HANDLER_URL or ensure this is a valid URL'], 400);
         }
@@ -216,7 +239,7 @@ class ApiController extends AbstractController
         // Build extra data to send to Pardot
         $extraData = [];
         foreach ($data as $key => $val) {
-            if ($key == 'email') {
+            if ($key == 'email' || $key == 'subject') {
                 continue;
             }
             $extraData[$key] = $val;

@@ -21,7 +21,7 @@ if (cookiePreferences !== null) {
 
             var email = $("form.pardot-submit input.pardot-email").val();
             
-            var data = { "email": email };
+            var data = { "email": email};
 
             var otherFields = $("input.pardot-field");
             if (otherFields.length > 0) {
@@ -30,13 +30,19 @@ if (cookiePreferences !== null) {
                 });
             }
 
+            if ($("input[name=subject]") != undefined) {
+                var subject = $("input[name=subject]").val();
+
+                data['subject'] = subject;
+            }
+ 
             $.ajax({
                 url: "/api/pardot-email",
                 method: "POST",
                 data: JSON.stringify(data),
                 complete: function(){
                     pardotSubmitted = true;
-                    console.log('Proceeding with submission.');
+                    console.log('sending pardot data');
                     $("form.pardot-submit button[type=submit]").click();
                 }
             });
