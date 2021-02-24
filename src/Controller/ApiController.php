@@ -232,7 +232,7 @@ class ApiController extends AbstractController
         } elseif (strpos($subject, 'tech') !== false) {
             $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_TECH_URL');
         }
-        
+
         if (empty($pardotFormUrl) || !filter_var($pardotFormUrl, FILTER_VALIDATE_URL)) {
             return new JsonResponse(['message' => 'Please set PARDOT_EMAIL_FORM_HANDLER_URL or ensure this is a valid URL'], 400);
         }
