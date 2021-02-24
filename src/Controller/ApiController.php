@@ -214,23 +214,24 @@ class ApiController extends AbstractController
 
         $subject = $data->subject;
 
+        // strip out all whitespace
+        $subject = preg_replace('/\s*/', '', $subject);
+        // convert the string to all lowercase
+        $subject = strtolower($subject);
+
         // set PARDOT FORM URL
-            switch($subject) {
-                case 'TECH':
-                    $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_TECH_URL');
-                    break;
-                case 'People':
-                    $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_PEOPLE_URL');
-                    break;
-                case 'CS20/21':
-                    $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_CORPORATE_URL');
-                    break;
-                case 'Buildings':
-                    $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_BUILDINGS_URL');
-                    break;
-                default:
-                    $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_URL');
-            }
+        // check if campaign code is within subject
+        if (strpos($subject, 'contact') !== false) {
+            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_URL');
+        } elseif (strpos($subject, 'people') !== false) {
+            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_PEOPLE_URL');
+        } elseif (strpos($subject, 'cs') !== false) {
+            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_CORPORATE_URL');
+        } elseif (strpos($subject, 'buildings') !== false) {
+            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_BUILDINGS_URL');
+        } elseif (strpos($subject, 'tech') !== false) {
+            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_TECH_URL');
+        }
         
         if (empty($pardotFormUrl) || !filter_var($pardotFormUrl, FILTER_VALIDATE_URL)) {
             return new JsonResponse(['message' => 'Please set PARDOT_EMAIL_FORM_HANDLER_URL or ensure this is a valid URL'], 400);
