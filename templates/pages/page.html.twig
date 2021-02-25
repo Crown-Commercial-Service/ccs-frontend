@@ -286,7 +286,7 @@
                                                     {% endif %}
 
 
-                                                    {% if not page.content.contact_form_aggregation_options %}
+                                                    {% if not page.content.contact_form_show_what_areas_aggregation.value %}
                                                         <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
                                                         <input type="hidden" name="00Nb0000009IXEW" id="campaign-code-hidden-input" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
                                                     {% endif %}
