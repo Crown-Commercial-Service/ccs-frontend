@@ -212,26 +212,7 @@ class ApiController extends AbstractController
             return new JsonResponse(['message' => 'You must pass a subject variable with this request'], 400);
         }
 
-        $subject = $data->subject;
-
-        // strip out all whitespace
-        $subject = preg_replace('/\s*/', '', $subject);
-        // convert the string to all lowercase
-        $subject = strtolower($subject);
-
-        // set PARDOT FORM URL
-        // check if campaign code is within subject
-        if (strpos($subject, 'contact') !== false) {
-            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_URL');
-        } elseif (strpos($subject, 'people') !== false) {
-            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_PEOPLE_URL');
-        } elseif (strpos($subject, 'cs') !== false) {
-            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_CORPORATE_URL');
-        } elseif (strpos($subject, 'buildings') !== false) {
-            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_BUILDINGS_URL');
-        } elseif (strpos($subject, 'tech') !== false) {
-            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_TECH_URL');
-        }
+        $pardotFormUrl = $this->setPardotFormURL($data->subject);
 
         if (empty($pardotFormUrl) || !filter_var($pardotFormUrl, FILTER_VALIDATE_URL)) {
             return new JsonResponse(['message' => 'Please set PARDOT_EMAIL_FORM_HANDLER_URL or ensure this is a valid URL'], 400);
@@ -254,5 +235,35 @@ class ApiController extends AbstractController
             $response = $pardot->getLastResponse();
             throw new PardotException(sprintf('Error sending email data to Pardot. HTTP status code: %s, Message: %s', $response->getStatusCode(), $response->getContent()));
         }
+    }
+
+    /**
+     * 
+     * sets pardot form URL based on campaign code (subject)
+     * @param string $subject
+     * @return string
+    */
+    public function setPardotFormURL (string $subject) 
+    {
+        // strip out all whitespace
+        $subject = preg_replace('/\s*/', '', $subject);
+        // convert the string to all lowercase
+        $subject = strtolower($subject);
+
+        // set PARDOT FORM URL
+        // check if campaign code is within subject
+        if (strpos($subject, 'contact') !== false) {
+            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_URL');
+        } elseif (strpos($subject, 'people') !== false) {
+            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_PEOPLE_URL');
+        } elseif (strpos($subject, 'cs') !== false) {
+            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_CORPORATE_URL');
+        } elseif (strpos($subject, 'buildings') !== false) {
+            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_BUILDINGS_URL');
+        } elseif (strpos($subject, 'tech') !== false) {
+            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_TECH_URL');
+        }
+
+        return $pardotFormUrl;
     }
 }
