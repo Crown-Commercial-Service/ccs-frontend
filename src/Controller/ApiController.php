@@ -238,12 +238,12 @@ class ApiController extends AbstractController
     }
 
     /**
-     * 
+     *
      * sets pardot form URL based on campaign code (subject)
      * @param string $subject
      * @return string
     */
-    public function setPardotFormURL (string $subject) 
+    public function setPardotFormURL(string $subject)
     {
         // strip out all whitespace
         $subject = preg_replace('/\s*/', '', $subject);
@@ -275,7 +275,6 @@ class ApiController extends AbstractController
                 $pardotFormUrl = $url;
                 break;
             }
-
         }
 
         return $pardotFormUrl;
