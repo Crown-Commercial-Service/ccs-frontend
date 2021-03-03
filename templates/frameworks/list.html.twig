@@ -115,7 +115,7 @@
                     </form>
 
                 </div>
-                {% if query is defined %}	
+                {% if query is defined and query|trim is not empty %}	
                     <div class="govuk-grid-column-two-thirds guided-match-background govuk-!-margin-bottom-2 guided-match-area">
                             <label class="govuk-heading-l ccs-font-weight-semibold govuk-!-margin-top-1 govuk-!-margin-bottom-1 text-white">Get help finding the right agreement</label>
                             <label class="govuk-heading-s ccs-font-weight-semibold text-white govuk-!-margin-bottom-1">There are {{ pagination.totalResults }} results for "{{ query }}".</label>
