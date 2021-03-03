@@ -250,18 +250,32 @@ class ApiController extends AbstractController
         // convert the string to all lowercase
         $subject = strtolower($subject);
 
-        // set PARDOT FORM URL
-        // check if campaign code is within subject
-        if (strpos($subject, 'contact') !== false) {
-            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_URL');
-        } elseif (strpos($subject, 'people') !== false) {
-            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_PEOPLE_URL');
-        } elseif (strpos($subject, 'cs') !== false) {
-            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_CORPORATE_URL');
-        } elseif (strpos($subject, 'buildings') !== false) {
-            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_BUILDINGS_URL');
-        } elseif (strpos($subject, 'tech') !== false) {
-            $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_TECH_URL');
+        // campaign codes and form handler url
+        $codes = [
+            'contact'   => getenv('PARDOT_EMAIL_FORM_HANDLER_URL'),
+            'people'    => getenv('PARDOT_EMAIL_FORM_HANDLER_PEOPLE_URL'),
+            'corpsol'   => getenv('PARDOT_EMAIL_FORM_HANDLER_CORPORATE_URL'),
+            'buildings' => getenv('PARDOT_EMAIL_FORM_HANDLER_BUILDINGS_URL'),
+            'tech'      => getenv('PARDOT_EMAIL_FORM_HANDLER_TECH_URL'),
+            'cnz'       => getenv('PARDOT_EMAIL_FORM_HANDLER_CNZ_URL'),
+            'digitransformation' => getenv('PARDOT_EMAIL_FORM_HANDLER_DIGITRANS_URL'),
+            'digilg'    => getenv('PARDOT_EMAIL_FORM_HANDLER_DIGILG_URL'),
+            'diginhs'   => getenv('PARDOT_EMAIL_FORM_HANDLER_DIGINHS_URL'),
+            'estates'   => getenv('PARDOT_EMAIL_FORM_HANDLER_ESTATES_URL'),
+            'covidrecovery'     => getenv('PARDOT_EMAIL_FORM_HANDLER_COVIDRECOVERY_URL'),
+            'agg'       => getenv('PARDOT_EMAIL_FORM_HANDLER_AGG_URL'),
+            'event'     => getenv('PARDOT_EMAIL_FORM_HANDLER_EVENT_URL'),
+        ];
+
+        $pardotFormUrl = null;
+
+        foreach ($codes as $code => $url) {
+            // check if campaign code is within subject
+            if (strpos($subject, $code) !== false) {
+                $pardotFormUrl = $url;
+                break;
+            }
+
         }
 
         return $pardotFormUrl;
