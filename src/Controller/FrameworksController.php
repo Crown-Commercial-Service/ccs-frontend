@@ -327,9 +327,6 @@ class FrameworksController extends AbstractController
      */
     public function search(Request $request, int $page = 1)
     {
-        // Get feature flag if it exists &feature=guidedmatch
-        $flag = filter_var($request->query->get('feature'), FILTER_SANITIZE_STRING);
-
 
         // Get search query
         $query =  filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
@@ -349,19 +346,25 @@ class FrameworksController extends AbstractController
             }
         }
 
+        $pillarName = null;
+        $categoryName = null;
         if ($request->query->has('category')) {
-            $category = [];
-            foreach ($request->query->get('category') as $item) {
-                $category[] = filter_var($item, FILTER_SANITIZE_STRING);
-            }
+            $category = filter_var($request->query->get('category'), FILTER_SANITIZE_STRING);
+            $categoryName = FrameworkCategories::getDbValueBySlug($category);
+        }
+
+        if ($request->query->has('pillar')) {
+            $pillar = filter_var($request->query->get('pillar'), FILTER_SANITIZE_STRING);
+            $pillarName = FrameworkCategories::getDbValueBySlug($pillar);
         }
 
         try {
             $results = $this->searchApi->list($page, [
-                'keyword'   => $query,
+                'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
                 'limit'     => $limit,
                 'status'    => $status ?? null,
-                'pillar'    => $category ?? null,
+                'category'  => $categoryName ?? null,
+                'pillar'    => $pillarName ?? null,
             ]);
         } catch (Exception $e) {
             // refresh page on 500 error
@@ -374,6 +377,10 @@ class FrameworksController extends AbstractController
             'results'       => $results,
             'categories'    => FrameworkCategories::getAll(),
             'pillars'       => FrameworkCategories::getAllPillars(),
+            'category'      => (!empty($categoryName) ? $categoryName : ''),
+            'category_slug' => (!empty($category) ? $category : ''),
+            'pillar'        => (!empty($pillarName) ? $pillarName : ''),
+            'pillar_slug'   => (!empty($pillar) ? $pillar : ''),
             'match_url'     => getenv('GUIDED_MATCH_URL') . rawurldecode($query)
         ];
 
