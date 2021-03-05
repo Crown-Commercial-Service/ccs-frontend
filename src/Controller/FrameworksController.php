@@ -535,7 +535,7 @@ class FrameworksController extends AbstractController
                 $postcode = ($item->getContent()->get('supplier_postcode')) ? $item->getContent()->get('supplier_postcode')->getValue() : '';
 
                 $csvData[$i][] = $supplier_name;
-                $csvData[$i][] = $haveGuarantor == true ? 'Yes' : '';
+                $csvData[$i][] = $haveGuarantor == true ? 'Yes. Read the guarantor guidance on the supplier details page' : '';
                 $csvData[$i][] = $contact_name;
                 $csvData[$i][] = $contact_email;
                 $csvData[$i][] = $street;
