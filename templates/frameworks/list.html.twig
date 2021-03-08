@@ -141,7 +141,7 @@
                                 <span class="ccs-filters-summary__label">Containing</span>
                                 <ul class="ccs-filters-summary__list">
                                     <li class="ccs-filters-summary__facet">
-                                        <a href="{{ category is defined ? "/agreements/category/" : "/agreements"}}" class="ccs-filters-summary__facet__cancel">
+                                        <a href="{{ category is not null ? "/agreements/category/#{category}"|lower : "/agreements"}}" class="ccs-filters-summary__facet__cancel">
                                             <span>{{ query }}</span>
                                         </a>
                                     </li>
