@@ -327,9 +327,6 @@ class FrameworksController extends AbstractController
      */
     public function search(Request $request, int $page = 1)
     {
-        // Get feature flag if it exists &feature=guidedmatch
-        $flag = filter_var($request->query->get('feature'), FILTER_SANITIZE_STRING);
-
 
         // Get search query
         $query =  filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
@@ -349,19 +346,16 @@ class FrameworksController extends AbstractController
             }
         }
 
-        if ($request->query->has('category')) {
-            $category = [];
-            foreach ($request->query->get('category') as $item) {
-                $category[] = filter_var($item, FILTER_SANITIZE_STRING);
-            }
-        }
+        $categoryName = $this-> getPillarOrCategoryName($request, 'category');
+        $pillarName = $this-> getPillarOrCategoryName($request, 'pillar');
 
         try {
             $results = $this->searchApi->list($page, [
-                'keyword'   => $query,
+                'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
                 'limit'     => $limit,
                 'status'    => $status ?? null,
-                'pillar'    => $category ?? null,
+                'category'  => $categoryName ?? null,
+                'pillar'    => $pillarName ?? null,
             ]);
         } catch (Exception $e) {
             // refresh page on 500 error
@@ -374,6 +368,10 @@ class FrameworksController extends AbstractController
             'results'       => $results,
             'categories'    => FrameworkCategories::getAll(),
             'pillars'       => FrameworkCategories::getAllPillars(),
+            'category'      => (!empty($categoryName) ? $categoryName : null),
+            'category_slug' => (!empty($category) ? $category : null),
+            'pillar'        => (!empty($pillarName) ? $pillarName : null),
+            'pillar_slug'   => (!empty($pillar) ? $pillar : null),
             'match_url'     => getenv('GUIDED_MATCH_URL') . rawurldecode($query)
         ];
 
@@ -574,5 +572,17 @@ class FrameworksController extends AbstractController
         );
 
         return $response;
+    }
+
+    private function getPillarOrCategoryName(Request $request, string $PillarOrCategory)
+    {
+
+        if ($request->query->has($PillarOrCategory)) {
+            $category = filter_var($request->query->get($PillarOrCategory), FILTER_SANITIZE_STRING);
+            $categoryName = FrameworkCategories::getDbValueBySlug($category);
+            return $categoryName;
+        }
+
+        return null;
     }
 }
