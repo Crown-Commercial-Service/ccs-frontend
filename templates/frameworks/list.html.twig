@@ -33,12 +33,20 @@
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="/">Home</a>
                 </li>
-                <!--<li class="govuk-breadcrumbs__list-item">-->
-                <!--<a class="govuk-breadcrumbs__link" href="2-3-frameworks-search-result">Search frameworks</a>-->
-                <!--</li>-->
-                <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                    Search agreements
-                </li>
+                    {% if category is defined or pillar is defined %}
+                    <li class="govuk-breadcrumbs__list-item">
+                        <a class="govuk-breadcrumbs__link" href="/agreements">Search agreements </a>
+                    </li>
+                    {% if category is defined and category|trim is not empty  %}
+                        <li class="govuk-breadcrumbs__list-item" aria-current="page">{{ category }}</li>
+                    {% elseif pillar is defined and pillar|trim is not empty %}
+                        <li class="govuk-breadcrumbs__list-item" aria-current="page">{{ pillar }}</li>
+                    {% endif %}
+                {% else %}
+                    <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                        Search agreements
+                    </li>
+                {% endif %}
             </ol>
         </div>
 
@@ -50,13 +58,11 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
 
-                    {% if category is defined %}
-                        <h1 class="govuk-heading-xl page-title">Agreements in
-                            the {{ category }} category</h1>
-                    {% elseif pillar is defined %}
-                        <h1 class="govuk-heading-xl page-title">Agreements in
-                            the {{ pillar }} category</h1>
-                    {% elseif query is defined %}
+                    {% if category is defined and category|trim is not empty  %}
+                        <h1 class="govuk-heading-xl page-title">{{ query is defined and query|trim is not empty ? "Search agreements for #{query} in #{category} category" : "Search agreements in #{category} category" }}</h1>
+                    {% elseif pillar is defined and pillar|trim is not empty %}
+                        <h1 class="govuk-heading-xl page-title">{{ query is defined and query|trim is not empty ? "Search agreements for #{query} in #{pillar} category" : "Search agreements in #{pillar} category" }}</h1>
+                    {% elseif query is defined and query|trim is not empty %}
                         <h1 class="govuk-heading-xl page-title">Search agreements for {{ query }}</h1>
                     {% else %}
                         <h1 class="govuk-heading-xl page-title">Search agreements</h1>
@@ -76,7 +82,12 @@
                                 <label class="govuk-label" for="q"> Search
                                     agreements </label>
                                 <input class="govuk-input" id="q" name="q" type="text">
-
+                                {% if category is defined and category|trim is not empty  %}
+                                    <input type="hidden" name="category" value={{ category_slug }}>
+                                {% endif %}
+                                {% if pillar is defined and pillar|trim is not empty %}
+                                    <input type="hidden" name="pillar" value={{ pillar_slug }}>
+                                {% endif %}
                                 <button type="submit" class="sidebar__search-button govuk-input">
                                     <span class="visuallyhidden">Search agreements</span>
                                 </button>
