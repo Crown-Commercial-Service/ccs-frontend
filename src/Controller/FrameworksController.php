@@ -508,6 +508,7 @@ class FrameworksController extends AbstractController
         $csvData = array(
             0 => [
             'Supplier Name',
+            'Guarantor Recommended',
             'Contact Name',
             'Contact Email',
             'Street',
@@ -524,6 +525,7 @@ class FrameworksController extends AbstractController
             $i = 1;
             foreach ($results as $item) {
                 $supplier_name = ($item->getContent()->get('supplier_name')) ? $item->getContent()->get('supplier_name')->getValue() : '';
+                $haveGuarantor = ($item->getContent()->get('supplier_have_guarantor')) ? $item->getContent()->get('supplier_have_guarantor')->getValue() : '';
                 $contact_name = ($item->getContent()->get('supplier_contact_name')) ? $item->getContent()->get('supplier_contact_name')->getValue() : '';
                 $contact_email = ($item->getContent()->get('supplier_contact_email')) ? $item->getContent()->get('supplier_contact_email')->getValue() : '';
                 $street = ($item->getContent()->get('supplier_street')) ? $item->getContent()->get('supplier_street')->getValue() : '';
@@ -531,6 +533,7 @@ class FrameworksController extends AbstractController
                 $postcode = ($item->getContent()->get('supplier_postcode')) ? $item->getContent()->get('supplier_postcode')->getValue() : '';
 
                 $csvData[$i][] = $supplier_name;
+                $csvData[$i][] = $haveGuarantor == true ? 'Yes. Read the guarantor guidance on the supplier details page' : '';
                 $csvData[$i][] = $contact_name;
                 $csvData[$i][] = $contact_email;
                 $csvData[$i][] = $street;
