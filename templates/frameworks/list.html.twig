@@ -76,9 +76,7 @@
                                 <label class="govuk-label" for="q"> Search
                                     agreements </label>
                                 <input class="govuk-input" id="q" name="q" type="text">
-                                {# {% if guided_match_flag is defined and guided_match_flag == "guidedmatch" %}
-                                <input class="visuallyhidden" id="feature" name="feature" type="hidden" value="guidedmatch">
-                                {% endif %} #}
+
                                 <button type="submit" class="sidebar__search-button govuk-input">
                                     <span class="visuallyhidden">Search agreements</span>
                                 </button>
@@ -117,7 +115,7 @@
                     </form>
 
                 </div>
-                {% if (guided_match_flag is defined) %}
+                {% if query is defined and query|trim is not empty %}	
                     <div class="govuk-grid-column-two-thirds guided-match-background govuk-!-margin-bottom-2 guided-match-area">
                             <label class="govuk-heading-l ccs-font-weight-semibold govuk-!-margin-top-1 govuk-!-margin-bottom-1 text-white">Get help finding the right agreement</label>
                             <label class="govuk-heading-s ccs-font-weight-semibold text-white govuk-!-margin-bottom-1">There are {{ pagination.totalResults }} results for "{{ query }}".</label>
@@ -138,6 +136,7 @@
                     {% endif %}
                     </div>
                 {% endif %}
+
                 <div class="govuk-grid-column-two-thirds">
                     {# see https://studio24.github.io/frontend/templating/content-fields.html #}
 
