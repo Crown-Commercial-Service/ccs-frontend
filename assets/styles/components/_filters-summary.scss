@@ -10,9 +10,13 @@
     padding: govuk-px-to-rem(2) 0 govuk-px-to-rem(20) 0;
 }
 
-
 .ccs-filters-summary__facets {
     margin: govuk-px-to-rem(14) 0 govuk-px-to-rem(6) 0;
+}
+
+.ccs-filter-summary-frameworks {
+    border:none;
+    padding-bottom: 0;
 }
 
 .ccs-filters-summary__list {
