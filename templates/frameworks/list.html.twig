@@ -125,12 +125,12 @@
                         {% endif %}
                     </div>
                     <div class="govuk-grid-column-two-thirds">
-                        <div class="ccs-filters-summary">
-                            <div class="ccs-filters-summary__facets" id="search-query-summary" {% if query is defined and query is not empty %}style="display: block;"{% else %}style="display: none;"{% endif %}>
+                        <div class="ccs-filters-summary ccs-filter-summary-frameworks">
+                            <div class="ccs-filters-summary__facets" {% if query is defined and query is not empty %}style="display: block; margin-top:0"{% else %}style="display: none;"{% endif %}>
                                 <span class="ccs-filters-summary__label">Containing</span>
-                                <ul class="ccs-filters-summary__list" id="search-query-list">
+                                <ul class="ccs-filters-summary__list">
                                     <li class="ccs-filters-summary__facet">
-                                        <a href="/agreements" class="ccs-filters-summary__facet__cancel">
+                                        <a href="{{ category is defined ? "/agreements/category/" : "/agreements"}}" class="ccs-filters-summary__facet__cancel">
                                             <span>{{ query }}</span>
                                         </a>
                                     </li>
