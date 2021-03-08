@@ -346,17 +346,8 @@ class FrameworksController extends AbstractController
             }
         }
 
-        $pillarName = null;
-        $categoryName = null;
-        if ($request->query->has('category')) {
-            $category = filter_var($request->query->get('category'), FILTER_SANITIZE_STRING);
-            $categoryName = FrameworkCategories::getDbValueBySlug($category);
-        }
-
-        if ($request->query->has('pillar')) {
-            $pillar = filter_var($request->query->get('pillar'), FILTER_SANITIZE_STRING);
-            $pillarName = FrameworkCategories::getDbValueBySlug($pillar);
-        }
+        $categoryName = $this-> getPillarOrCategoryName($request, 'category');
+        $pillarName = $this-> getPillarOrCategoryName($request, 'pillar');
 
         try {
             $results = $this->searchApi->list($page, [
@@ -377,10 +368,10 @@ class FrameworksController extends AbstractController
             'results'       => $results,
             'categories'    => FrameworkCategories::getAll(),
             'pillars'       => FrameworkCategories::getAllPillars(),
-            'category'      => (!empty($categoryName) ? $categoryName : ''),
-            'category_slug' => (!empty($category) ? $category : ''),
-            'pillar'        => (!empty($pillarName) ? $pillarName : ''),
-            'pillar_slug'   => (!empty($pillar) ? $pillar : ''),
+            'category'      => (!empty($categoryName) ? $categoryName : null),
+            'category_slug' => (!empty($category) ? $category : null),
+            'pillar'        => (!empty($pillarName) ? $pillarName : null),
+            'pillar_slug'   => (!empty($pillar) ? $pillar : null),
             'match_url'     => getenv('GUIDED_MATCH_URL') . rawurldecode($query)
         ];
 
@@ -578,5 +569,17 @@ class FrameworksController extends AbstractController
         );
 
         return $response;
+    }
+
+    private function getPillarOrCategoryName(Request $request, string $PillarOrCategory)
+    {
+
+        if ($request->query->has($PillarOrCategory)) {
+            $category = filter_var($request->query->get($PillarOrCategory), FILTER_SANITIZE_STRING);
+            $categoryName = FrameworkCategories::getDbValueBySlug($category);
+            return $categoryName;
+        }
+
+        return null;
     }
 }
