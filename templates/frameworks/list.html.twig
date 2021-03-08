@@ -115,10 +115,31 @@
                     </form>
 
                 </div>
-                {% if query is defined and query|trim is not empty %}	
+
+                {% if query is defined and query|trim is not empty %}
+                    <div class="govuk-grid-column-two-thirds">
+                        {% if pagination.totalResults == 1 %}
+                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreement found</h2>
+                        {% else %}
+                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreements found</h2>
+                        {% endif %}
+                    </div>
+                    <div class="govuk-grid-column-two-thirds">
+                        <div class="ccs-filters-summary">
+                            <div class="ccs-filters-summary__facets" id="search-query-summary" {% if query is defined and query is not empty %}style="display: block;"{% else %}style="display: none;"{% endif %}>
+                                <span class="ccs-filters-summary__label">Containing</span>
+                                <ul class="ccs-filters-summary__list" id="search-query-list">
+                                    <li class="ccs-filters-summary__facet">
+                                        <a href="/agreements" class="ccs-filters-summary__facet__cancel">
+                                            <span>{{ query }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div class="govuk-grid-column-two-thirds guided-match-background govuk-!-margin-bottom-2 guided-match-area">
                             <label class="govuk-heading-l ccs-font-weight-semibold govuk-!-margin-top-1 govuk-!-margin-bottom-1 text-white">Get help finding the right agreement</label>
-                            <label class="govuk-heading-s ccs-font-weight-semibold text-white govuk-!-margin-bottom-1">There are {{ pagination.totalResults }} results for "{{ query }}".</label>
                             <label class="govuk-body text-white">Answer some simple questions to find the best agreement for your needs</br></label>
                         <a href={{ match_url }} role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-3 govuk-!-margin-bottom-3" data-module="govuk-button">
                             Start now
@@ -136,6 +157,7 @@
                     {% endif %}
                     </div>
                 {% endif %}
+
 
                 <div class="govuk-grid-column-two-thirds">
                     {# see https://studio24.github.io/frontend/templating/content-fields.html #}
