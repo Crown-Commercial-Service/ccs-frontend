@@ -346,6 +346,8 @@ class FrameworksController extends AbstractController
             }
         }
 
+        $category =  filter_var($request->query->get('category'), FILTER_SANITIZE_STRING);
+        $pillar =  filter_var($request->query->get('pillar'), FILTER_SANITIZE_STRING);
         $categoryName = $this-> getPillarOrCategoryName($request, 'category');
         $pillarName = $this-> getPillarOrCategoryName($request, 'pillar');
 
