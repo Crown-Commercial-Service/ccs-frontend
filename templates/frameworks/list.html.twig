@@ -126,10 +126,42 @@
                     </form>
 
                 </div>
-                {% if query is defined and query|trim is not empty %}	
+
+                 <div class="govuk-grid-column-two-thirds">
+                        {% if pagination.totalResults == 1 %}
+                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreement found</h2>
+                        {% else %}
+                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreements found</h2>
+                        {% endif %}
+                 </div>
+
+                {% if query is defined and query|trim is not empty %}
+                    <div class="govuk-grid-column-two-thirds">
+                        <div class="ccs-filters-summary ccs-filter-summary-frameworks">
+                            <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
+                                <span class="ccs-filters-summary__label">Containing</span>
+                                <ul class="ccs-filters-summary__list">
+                                    <li class="ccs-filters-summary__facet">
+                                        {% if category is defined and category|trim is not empty %}
+                                            <a href="{{"/agreements/category/#{category}"|lower}}" class="ccs-filters-summary__facet__cancel">
+                                                <span>{{ query }}</span>
+                                            </a>
+                                        {% elseif pillar is defined and pillar|trim is not empty %}
+                                            <a href="{{"/agreements/pillar/#{pillar}"|lower}}" class="ccs-filters-summary__facet__cancel">
+                                                <span>{{ query }}</span>
+                                            </a>
+                                        {% else %}
+                                            <a href="/agreements" class="ccs-filters-summary__facet__cancel">
+                                                <span>{{ query }}</span>
+                                            </a>
+                                        {% endif %}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div class="govuk-grid-column-two-thirds guided-match-background govuk-!-margin-bottom-2 guided-match-area">
                             <label class="govuk-heading-l ccs-font-weight-semibold govuk-!-margin-top-1 govuk-!-margin-bottom-1 text-white">Get help finding the right agreement</label>
-                            <label class="govuk-heading-s ccs-font-weight-semibold text-white govuk-!-margin-bottom-1">There are {{ pagination.totalResults }} results for "{{ query }}".</label>
                             <label class="govuk-body text-white">Answer some simple questions to find the best agreement for your needs</br></label>
                         <a href={{ match_url }} role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-3 govuk-!-margin-bottom-3" data-module="govuk-button">
                             Start now
@@ -137,14 +169,6 @@
                             <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
                             </svg>
                         </a>
-                    </div>
-                {% else %}
-                    <div class="govuk-grid-column-two-thirds">
-                    {% if pagination.totalResults == 1 %}
-                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreement found</h2>
-                    {% else %}
-                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreements found</h2>
-                    {% endif %}
                     </div>
                 {% endif %}
 
