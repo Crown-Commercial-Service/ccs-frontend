@@ -127,23 +127,34 @@
 
                 </div>
 
-                {% if query is defined and query|trim is not empty %}
-                    <div class="govuk-grid-column-two-thirds">
+                 <div class="govuk-grid-column-two-thirds">
                         {% if pagination.totalResults == 1 %}
                             <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreement found</h2>
                         {% else %}
                             <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreements found</h2>
                         {% endif %}
-                    </div>
+                 </div>
+
+                {% if query is defined and query|trim is not empty %}
                     <div class="govuk-grid-column-two-thirds">
                         <div class="ccs-filters-summary ccs-filter-summary-frameworks">
-                            <div class="ccs-filters-summary__facets" {% if query is defined and query is not empty %}style="display: block; margin-top:0"{% else %}style="display: none;"{% endif %}>
+                            <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
                                 <span class="ccs-filters-summary__label">Containing</span>
                                 <ul class="ccs-filters-summary__list">
                                     <li class="ccs-filters-summary__facet">
-                                        <a href="{{ category is not null ? "/agreements/category/#{category}"|lower : "/agreements"}}" class="ccs-filters-summary__facet__cancel">
-                                            <span>{{ query }}</span>
-                                        </a>
+                                        {% if category is defined and category|trim is not empty %}
+                                            <a href="{{"/agreements/category/#{category}"|lower}}" class="ccs-filters-summary__facet__cancel">
+                                                <span>{{ query }}</span>
+                                            </a>
+                                        {% elseif pillar is defined and pillar|trim is not empty %}
+                                            <a href="{{"/agreements/pillar/#{pillar}"|lower}}" class="ccs-filters-summary__facet__cancel">
+                                                <span>{{ query }}</span>
+                                            </a>
+                                        {% else %}
+                                            <a href="/agreements" class="ccs-filters-summary__facet__cancel">
+                                                <span>{{ query }}</span>
+                                            </a>
+                                        {% endif %}
                                     </li>
                                 </ul>
                             </div>
@@ -158,14 +169,6 @@
                             <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
                             </svg>
                         </a>
-                    </div>
-                {% else %}
-                    <div class="govuk-grid-column-two-thirds">
-                    {% if pagination.totalResults == 1 %}
-                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreement found</h2>
-                    {% else %}
-                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreements found</h2>
-                    {% endif %}
                     </div>
                 {% endif %}
 
