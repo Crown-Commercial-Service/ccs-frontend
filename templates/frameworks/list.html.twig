@@ -204,11 +204,11 @@
 
 
                     {# Pagination #}
-                    {% if pillar is defined %}
+                    {% if pillar is defined and pillar|trim is not empty %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_pillar', 'options': {'pillar': pillar_slug}} %}
-                    {% elseif category is defined %}
+                    {% elseif category is defined and category|trim is not empty %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_category', 'options': {'category': category_slug}} %}
-                    {% elseif query is defined %}
+                    {% elseif query is defined and query|trim is not empty %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'q': query}} %}
                     {% else %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list', 'options': {}} %}
