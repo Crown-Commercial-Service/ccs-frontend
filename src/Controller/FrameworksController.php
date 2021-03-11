@@ -535,7 +535,8 @@ class FrameworksController extends AbstractController
                 $postcode = ($item->getContent()->get('supplier_postcode')) ? $item->getContent()->get('supplier_postcode')->getValue() : '';
 
                 $csvData[$i][] = $supplier_name;
-                $csvData[$i][] = $haveGuarantor == true ? stripslashes("=HYPERLINK(\"https://www.crowncommercial.gov.uk/buy-and-supply/guarantor-customer-guidance\",\"Yes: click this cell for more information about guarantors\")") : '';                $csvData[$i][] = $contact_name;
+                $csvData[$i][] = $haveGuarantor == true ? stripslashes("=HYPERLINK(\"https://www.crowncommercial.gov.uk/buy-and-supply/guarantor-customer-guidance\",\"Yes: click this cell for more information about guarantors\")") : '';
+                $csvData[$i][] = $contact_name;
                 $csvData[$i][] = $contact_email;
                 $csvData[$i][] = $street;
                 $csvData[$i][] = $city;
