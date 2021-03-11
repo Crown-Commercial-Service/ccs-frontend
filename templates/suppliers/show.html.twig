@@ -74,6 +74,13 @@
                 <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
 
+                     {% if listOfFrameworkWithGuarantor|length > 0 %}
+                        <div class="govuk-details__text govuk-body">
+                        This supplier has a CCS-approved guarantor. You will need to include the supplier and guarantor’s details in the additional guarantor call-off schedule (joint schedule 8) in the bid pack. To get the details of the guarantor contact the customer service centre at <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a>, or call <a href="tel:0345%20410%202222">0345 410 2222</a>.
+                        <br /> <br />
+                        Find out more information about <a href=" https://www.crowncommercial.gov.uk/buy-and-supply/guarantor-customer-guidance">suppliers with guarantors</a>
+                        </div>                
+                    {% endif %}
                     <p class="govuk-body-l">Agreements and lots supplied to:</p>
 
 
