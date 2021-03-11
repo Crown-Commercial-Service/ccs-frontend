@@ -182,6 +182,14 @@
                                     <a href="{{ path('frameworks_show', {'rmNumber':  item.content.rm_number }) }}">{{ item.content.title }}</a> {# <strong class="govuk-tag govuk-tag--subtle">{{ item.content.status }}</strong> #}
                                     {% if item.content.status == 'Expired - Data Still Received' %}
                                         <span class="govuk-tag ccs-tag ccs-tag--error">Expired: {{ item.content.end_date.format('d/m/Y') }}</span>
+                                    {% elseif item.content.status == 'Future (Pipeline)'%}
+                                        <span class="govuk-tag govuk-tag--subtle">FUTURE</span>
+                                    {% elseif item.content.status == 'Planned (Pipeline)'%}
+                                        <span class="govuk-tag govuk-tag--subtle">PLANNED</span>
+                                    {% elseif item.content.status == 'Underway (Pipeline)'%}
+                                        <span class="govuk-tag govuk-tag--subtle">UNDERWAY</span>
+                                    {% elseif item.content.status == 'Awarded (Pipeline)'%}
+                                        <span class="govuk-tag govuk-tag--subtle">AWARDED</span>
                                     {% endif %}
                                 </h3>
                                 <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
