@@ -31,6 +31,13 @@ class FrameworksController extends AbstractController
     protected $api;
 
     /**
+     * Default filter for agreement statuses
+     *
+     * @var string[]
+     */
+    const defaultStatus = ['all'];
+
+    /**
      * @var \Studio24\Frontend\Cms\RestData
      */
     protected $searchApi;
@@ -132,7 +139,7 @@ class FrameworksController extends AbstractController
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
 
         try {
-            $results = $this->searchApi->list($page, ['limit' => $limit]);
+            $results = $this->searchApi->list($page, ['limit' => $limit, 'status' => implode(",", $this::defaultStatus) ]);
         } catch (Exception $e) {
             // refresh page on 500 error
             return $this->redirect($request->getUri());
@@ -142,7 +149,8 @@ class FrameworksController extends AbstractController
             'pagination' => $results->getPagination(),
             'results'    => $results,
             'categories' => FrameworkCategories::getAll(),
-            'pillars'       => FrameworkCategories::getAllPillars()
+            'pillars'       => FrameworkCategories::getAllPillars(),
+            'statuses'      => $this::defaultStatus
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
@@ -253,7 +261,8 @@ class FrameworksController extends AbstractController
             'pagination'    => $results->getPagination(),
             'results'       => $results,
             'categories'    => FrameworkCategories::getAll(),
-            'pillars'       => FrameworkCategories::getAllPillars()
+            'pillars'       => FrameworkCategories::getAllPillars(),
+            'statuses'        => $this::defaultStatus
         ];
         return $this->render('frameworks/list.html.twig', $data);
     }
@@ -303,7 +312,8 @@ class FrameworksController extends AbstractController
             'pagination'    => $results->getPagination(),
             'results'       => $results,
             'categories'    => FrameworkCategories::getAll(),
-            'pillars'       => FrameworkCategories::getAllPillars()
+            'pillars'       => FrameworkCategories::getAllPillars(),
+            'statuses'        => $this::defaultStatus
         ];
         return $this->render('frameworks/list.html.twig', $data);
     }
@@ -339,10 +349,18 @@ class FrameworksController extends AbstractController
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
 
-        if ($request->query->has('status')) {
-            $status = [];
-            foreach ($request->query->get('status') as $item) {
-                $status[] = filter_var($item, FILTER_SANITIZE_STRING);
+        $statuses = [];
+        if ($request->query->has('statuses')) {
+            foreach ($request->query->get('statuses') as $item) {
+                if ($item == 'all') {
+                    $statuses = ['all'];
+                    break;
+                }
+                $statuses[] = filter_var($item, FILTER_SANITIZE_STRING);
+            }
+
+            if (count($statuses) == 3) {
+                $statuses = ['all'];
             }
         }
 
@@ -355,9 +373,9 @@ class FrameworksController extends AbstractController
             $results = $this->searchApi->list($page, [
                 'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
                 'limit'     => $limit,
-                'status'    => $status ?? null,
                 'category'  => $categoryName ?? null,
                 'pillar'    => $pillarName ?? null,
+                'status'    => (!empty($statuses) ? implode(",", $statuses) : implode(",", $this::defaultStatus)),
             ]);
         } catch (Exception $e) {
             // refresh page on 500 error
@@ -374,7 +392,8 @@ class FrameworksController extends AbstractController
             'category_slug' => (!empty($category) ? $category : null),
             'pillar'        => (!empty($pillarName) ? $pillarName : null),
             'pillar_slug'   => (!empty($pillar) ? $pillar : null),
-            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurldecode($query)
+            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurldecode($query),
+            'statuses'        => (!empty($statuses) ? $statuses : $this::defaultStatus)
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
