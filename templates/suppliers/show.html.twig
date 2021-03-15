@@ -70,11 +70,9 @@
 
                 </div>
             </div>
-
-
-            <div class="govuk-grid-row">
+                
+                <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
-
 
                     <p class="govuk-body-l">Agreements and lots supplied to:</p>
 
@@ -107,6 +105,9 @@
                                         <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ loop.index }}">
                                           {{ framework.title }} {% if framework.status == "Expired - Data Still Received" %}
                                                 <strong class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--error">Expired</strong>{% endif %}
+                                            {% if framework.rm_number in listOfFrameworkWithGuarantor %}	
+                                                <span class="govuk-tag govuk-tag--subtle ccs-tag--lower-case govuk-!-margin" style="font-weight:700; letter-spacing:0; margin-left: 10px;">Guarantor recommended</span>	
+                                            {% endif %}
                                         </span>
                                     </h2>
                                 </div>
@@ -147,6 +148,10 @@
                                                 <tr class="govuk-table__row">
                                                     <td class="govuk-table__cell govuk-table__cell--width-30 govuk-!-font-size-18">
                                                         {{ lot.lot_number }}
+                                                        <br>	
+                                                        {% if lot.guarantor_name and lot.guarantor_name is not null %}	
+                                                            <span class="govuk-tag govuk-tag--subtle ccs-tag--lower-case" style="font-weight:700; letter-spacing:0;">Guarantor recommended</span>	
+                                                        {% endif %}
                                                     </td>
                                                     <td class="govuk-table__cell">
 

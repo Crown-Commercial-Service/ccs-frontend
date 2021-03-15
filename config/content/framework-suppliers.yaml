@@ -18,6 +18,8 @@ supplier_contact_email:
   type: text
 supplier_website:
   type: text
+supplier_have_guarantor:
+  type: boolean
 live_frameworks:
   type: array
   content_fields:

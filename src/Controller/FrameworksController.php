@@ -53,12 +53,6 @@ class FrameworksController extends AbstractController
         $this->searchApi->setContentType('frameworks');
         $this->searchApi->setCache($cache);
         $this->searchApi->setCacheLifetime(1);
-
-        if (getenv('GUIDED_MATCH_END_POINT') != false) {
-            $this->guidedMatchApiClient = new Client([
-                'base_uri' => getenv('GUIDED_MATCH_END_POINT'),
-            ]);
-        }
     }
 
     /**
@@ -228,6 +222,10 @@ class FrameworksController extends AbstractController
 
         if ($category == "utilities-fuels") {
             return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'energy']);
+        }
+
+        if ($category == "travel") {
+            return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'office-and-travel']);
         }
 
         // Map category slug to category db value
@@ -560,6 +558,7 @@ class FrameworksController extends AbstractController
         $csvData = array(
             0 => [
             'Supplier Name',
+            'Guarantor Recommended',
             'Contact Name',
             'Contact Email',
             'Street',
@@ -576,6 +575,7 @@ class FrameworksController extends AbstractController
             $i = 1;
             foreach ($results as $item) {
                 $supplier_name = ($item->getContent()->get('supplier_name')) ? $item->getContent()->get('supplier_name')->getValue() : '';
+                $haveGuarantor = ($item->getContent()->get('supplier_have_guarantor')) ? $item->getContent()->get('supplier_have_guarantor')->getValue() : '';
                 $contact_name = ($item->getContent()->get('supplier_contact_name')) ? $item->getContent()->get('supplier_contact_name')->getValue() : '';
                 $contact_email = ($item->getContent()->get('supplier_contact_email')) ? $item->getContent()->get('supplier_contact_email')->getValue() : '';
                 $street = ($item->getContent()->get('supplier_street')) ? $item->getContent()->get('supplier_street')->getValue() : '';
@@ -583,6 +583,7 @@ class FrameworksController extends AbstractController
                 $postcode = ($item->getContent()->get('supplier_postcode')) ? $item->getContent()->get('supplier_postcode')->getValue() : '';
 
                 $csvData[$i][] = $supplier_name;
+                $csvData[$i][] = $haveGuarantor == true ? stripslashes("=HYPERLINK(\"https://www.crowncommercial.gov.uk/buy-and-supply/guarantor-customer-guidance\",\"Yes: click this cell for more information about guarantors\")") : '';
                 $csvData[$i][] = $contact_name;
                 $csvData[$i][] = $contact_email;
                 $csvData[$i][] = $street;
