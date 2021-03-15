@@ -73,12 +73,7 @@
 
                       <li>
                          <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
-                              <a href="{{ path('suppliers_show', {'id': item.content.supplier_id, 'slug': slugify(item.content.supplier_name)} ) }}">{{ item.content.supplier_name }}</a>
-                              {% if item.content.supplier_have_guarantor.value == true %}	
-                                 <span class="govuk-tag govuk-tag--subtle ccs-tag--lower-case govuk-!-margin" style="font-weight:700; letter-spacing:0; margin-left: 10px;">Guarantor recommended</span>	
-                              {% endif %}
-                         </h3>
-                              
+                             <a href="{{ path('suppliers_show', {'id': item.content.supplier_id, 'slug': slugify(item.content.supplier_name)} ) }}">{{ item.content.supplier_name }}</a></h3>
 
 
                           {% if item.content.supplier_contact_email is not empty %}
