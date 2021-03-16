@@ -33,9 +33,9 @@ class FrameworksController extends AbstractController
     /**
      * Default filter for agreement statuses
      *
-     * @var string[]
+     * @var string
      */
-    protected const DEFAULTSTATUS = ['all'];
+    protected const DEFAULTSTATUS = 'all';
 
     /**
      * @var \Studio24\Frontend\Cms\RestData
@@ -139,7 +139,7 @@ class FrameworksController extends AbstractController
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
 
         try {
-            $results = $this->searchApi->list($page, ['limit' => $limit, 'status' => implode(",", $this::DEFAULTSTATUS) ]);
+            $results = $this->searchApi->list($page, ['limit' => $limit, 'status' => $this::DEFAULTSTATUS ]);
         } catch (Exception $e) {
             // refresh page on 500 error
             return $this->redirect($request->getUri());
@@ -375,7 +375,7 @@ class FrameworksController extends AbstractController
                 'limit'     => $limit,
                 'category'  => $categoryName ?? null,
                 'pillar'    => $pillarName ?? null,
-                'status'    => (!empty($statuses) ? implode(",", $statuses) : implode(",", $this::DEFAULTSTATUS)),
+                'status'    => (!empty($statuses) ? $statuses : $this::DEFAULTSTATUS),
             ]);
         } catch (Exception $e) {
             // refresh page on 500 error
