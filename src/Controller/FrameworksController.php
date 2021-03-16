@@ -230,6 +230,10 @@ class FrameworksController extends AbstractController
             return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'energy']);
         }
 
+        if ($category == "travel") {
+            return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'office-and-travel']);
+        }
+
         // Map category slug to category db value
         $categoryName = FrameworkCategories::getDbValueBySlug($category);
         if ($categoryName === null) {

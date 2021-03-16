@@ -90,3 +90,12 @@ pillars:
       - name: 'Technology Products & Services'
         db_value: 'Technology Products & Services'
         slug: 'technology-products-services'
+
+  - name: 'General Common Goods and Services'
+    db_value: 'General Common Goods and Services'
+    slug: 'general-common-goods-and-services'
+
+    categories:
+      - name: 'Below Threshold'
+        db_value: 'Below Threshold'
+        slug: 'below-threshold'
