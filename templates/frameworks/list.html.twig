@@ -111,7 +111,6 @@
                                 <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
 
-                                            {# modify this section if changes are made to defaultStatus in framework controller #}
                                             {% if 'all' in statuses or ( 'all' in statuses and statuses|length > 1) %}
                                                 <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="all" name="" type="checkbox" checked >
                                             {% else %}
