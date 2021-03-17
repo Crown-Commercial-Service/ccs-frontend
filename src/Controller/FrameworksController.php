@@ -142,7 +142,7 @@ class FrameworksController extends AbstractController
             'pagination' => $results->getPagination(),
             'results'    => $results,
             'categories' => FrameworkCategories::getAll(),
-            'pillars'       => FrameworkCategories::getAllPillars()
+            'pillars'    => FrameworkCategories::getAllPillars()
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
@@ -339,10 +339,18 @@ class FrameworksController extends AbstractController
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
 
-        if ($request->query->has('status')) {
-            $status = [];
-            foreach ($request->query->get('status') as $item) {
-                $status[] = filter_var($item, FILTER_SANITIZE_STRING);
+        $statuses = [];
+        if ($request->query->has('statuses')) {
+            foreach ($request->query->get('statuses') as $status) {
+                if ($status == 'all') {
+                    $statuses = [];
+                    break;
+                }
+                $statuses[] = filter_var($status, FILTER_SANITIZE_STRING);
+            }
+
+            if (count($statuses) == 3) {
+                $statuses = [];
             }
         }
 
@@ -355,9 +363,9 @@ class FrameworksController extends AbstractController
             $results = $this->searchApi->list($page, [
                 'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
                 'limit'     => $limit,
-                'status'    => $status ?? null,
                 'category'  => $categoryName ?? null,
                 'pillar'    => $pillarName ?? null,
+                'status'    => $statuses
             ]);
         } catch (Exception $e) {
             // refresh page on 500 error
@@ -374,7 +382,8 @@ class FrameworksController extends AbstractController
             'category_slug' => (!empty($category) ? $category : null),
             'pillar'        => (!empty($pillarName) ? $pillarName : null),
             'pillar_slug'   => (!empty($pillar) ? $pillar : null),
-            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurldecode($query)
+            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurldecode($query),
+            'statuses'      => $statuses
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
