@@ -276,7 +276,7 @@
                                                     <p>{{ page.content.contact_form_form_sub_heading }}</p>
                                                 {% endif %}
 
-                                                <form id="js-contact-form" class="govuk-!-width-three-quarters" action="/{{slug}}" method="post">
+                                                <form id="js-contact-form" class="govuk-!-width-three-quarters pardot-submit" action="/{{slug}}" method="post">
 
 
                                                     {# See https://symfony.com/doc/current/templating/app_variable.html #}
@@ -372,6 +372,8 @@
 
 
                                                     {% if page.content.contact_form_show_what_areas_aggregation is defined and page.content.contact_form_show_what_areas_aggregation.value %}
+                                                        <input type="hidden" name="validateAggregationOption" value=1>
+
                                                         <div class="govuk-form-group">
                                                             <fieldset class="govuk-fieldset">
                                                                 <legend class="govuk-fieldset__legend">
@@ -450,7 +452,7 @@
 
                                                     <div class="govuk-form-group">
                                                         {# Please do not remove the gtm--submit-aggregation-form class as this is used to track submissions in Google Analytics! #}
-                                                        <button class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm--submit-aggregation-form">
+                                                        <button type="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm--submit-aggregation-form">
                                                             Submit
                                                         </button>
                                                     </div>
@@ -534,4 +536,9 @@
     </div>
 
 
+{% endblock %}
+
+{% block nonblocking_javascript %}
+    {{ parent() }}
+    <script src="/assets/scripts/pardot.js"></script>
 {% endblock %}

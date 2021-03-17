@@ -208,7 +208,12 @@ class ApiController extends AbstractController
             return new JsonResponse(['message' => 'An invalid email has been passed'], 400);
         }
 
-        $pardotFormUrl = getenv('PARDOT_EMAIL_FORM_HANDLER_URL');
+        if (is_null($data) || !isset($data->subject)) {
+            return new JsonResponse(['message' => 'You must pass a subject variable with this request'], 400);
+        }
+
+        $pardotFormUrl = $this->setPardotFormURL($data->subject);
+
         if (empty($pardotFormUrl) || !filter_var($pardotFormUrl, FILTER_VALIDATE_URL)) {
             return new JsonResponse(['message' => 'Please set PARDOT_EMAIL_FORM_HANDLER_URL or ensure this is a valid URL'], 400);
         }
@@ -216,7 +221,7 @@ class ApiController extends AbstractController
         // Build extra data to send to Pardot
         $extraData = [];
         foreach ($data as $key => $val) {
-            if ($key == 'email') {
+            if ($key == 'email' || $key == 'subject') {
                 continue;
             }
             $extraData[$key] = $val;
@@ -230,5 +235,48 @@ class ApiController extends AbstractController
             $response = $pardot->getLastResponse();
             throw new PardotException(sprintf('Error sending email data to Pardot. HTTP status code: %s, Message: %s', $response->getStatusCode(), $response->getContent()));
         }
+    }
+
+    /**
+     *
+     * sets pardot form URL based on campaign code (subject)
+     * @param string $subject
+     * @return string
+    */
+    public function setPardotFormURL(string $subject)
+    {
+        // strip out all whitespace
+        $subject = preg_replace('/\s*/', '', $subject);
+        // convert the string to all lowercase
+        $subject = strtolower($subject);
+
+        // campaign codes and form handler url
+        $codes = [
+            'contact'   => getenv('PARDOT_EMAIL_FORM_HANDLER_URL'),
+            'people'    => getenv('PARDOT_EMAIL_FORM_HANDLER_PEOPLE_URL'),
+            'corpsol'   => getenv('PARDOT_EMAIL_FORM_HANDLER_CORPORATE_URL'),
+            'buildings' => getenv('PARDOT_EMAIL_FORM_HANDLER_BUILDINGS_URL'),
+            'tech'      => getenv('PARDOT_EMAIL_FORM_HANDLER_TECH_URL'),
+            'cnz'       => getenv('PARDOT_EMAIL_FORM_HANDLER_CNZ_URL'),
+            'digitransformation' => getenv('PARDOT_EMAIL_FORM_HANDLER_DIGITRANS_URL'),
+            'digilg'    => getenv('PARDOT_EMAIL_FORM_HANDLER_DIGILG_URL'),
+            'diginhs'   => getenv('PARDOT_EMAIL_FORM_HANDLER_DIGINHS_URL'),
+            'estates'   => getenv('PARDOT_EMAIL_FORM_HANDLER_ESTATES_URL'),
+            'covidrecovery'     => getenv('PARDOT_EMAIL_FORM_HANDLER_COVIDRECOVERY_URL'),
+            'agg'       => getenv('PARDOT_EMAIL_FORM_HANDLER_AGG_URL'),
+            'event'     => getenv('PARDOT_EMAIL_FORM_HANDLER_EVENT_URL'),
+        ];
+
+        $pardotFormUrl = null;
+
+        foreach ($codes as $code => $url) {
+            // check if campaign code is within subject
+            if (strpos($subject, $code) !== false) {
+                $pardotFormUrl = $url;
+                break;
+            }
+        }
+
+        return $pardotFormUrl;
     }
 }

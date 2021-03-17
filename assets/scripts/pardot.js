@@ -30,6 +30,12 @@ if (cookiePreferences !== null) {
                 });
             }
 
+            if ($("input[name=subject]") != undefined) {
+                var subject = $("input[name=subject]").val();
+
+                data['subject'] = subject;
+            }
+ 
             $.ajax({
                 url: "/api/pardot-email",
                 method: "POST",

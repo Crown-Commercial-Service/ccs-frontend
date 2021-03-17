@@ -53,12 +53,6 @@ class FrameworksController extends AbstractController
         $this->searchApi->setContentType('frameworks');
         $this->searchApi->setCache($cache);
         $this->searchApi->setCacheLifetime(1);
-
-        if (getenv('GUIDED_MATCH_END_POINT') != false) {
-            $this->guidedMatchApiClient = new Client([
-                'base_uri' => getenv('GUIDED_MATCH_END_POINT'),
-            ]);
-        }
     }
 
     /**
@@ -100,7 +94,7 @@ class FrameworksController extends AbstractController
                 case 'im_field_category:16':
                     return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'fleet']);
                 case 'im_field_category:15':
-                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'travel']);
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'office-and-travel']);
                 case 'im_field_category:41':
                     return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'construction']);
             }
@@ -230,6 +224,10 @@ class FrameworksController extends AbstractController
             return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'energy']);
         }
 
+        if ($category == "travel") {
+            return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'office-and-travel']);
+        }
+
         // Map category slug to category db value
         $categoryName = FrameworkCategories::getDbValueBySlug($category);
         if ($categoryName === null) {
@@ -329,9 +327,6 @@ class FrameworksController extends AbstractController
      */
     public function search(Request $request, int $page = 1)
     {
-        // Get feature flag if it exists &feature=guidedmatch
-        $flag = filter_var($request->query->get('feature'), FILTER_SANITIZE_STRING);
-
 
         // Get search query
         $query =  filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
@@ -351,82 +346,37 @@ class FrameworksController extends AbstractController
             }
         }
 
-        if ($request->query->has('category')) {
-            $category = [];
-            foreach ($request->query->get('category') as $item) {
-                $category[] = filter_var($item, FILTER_SANITIZE_STRING);
-            }
-        }
+        $category =  filter_var($request->query->get('category'), FILTER_SANITIZE_STRING);
+        $pillar =  filter_var($request->query->get('pillar'), FILTER_SANITIZE_STRING);
+        $categoryName = $this-> getPillarOrCategoryName($request, 'category');
+        $pillarName = $this-> getPillarOrCategoryName($request, 'pillar');
 
         try {
             $results = $this->searchApi->list($page, [
-                'keyword'   => $query,
+                'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
                 'limit'     => $limit,
                 'status'    => $status ?? null,
-                'pillar'    => $category ?? null,
+                'category'  => $categoryName ?? null,
+                'pillar'    => $pillarName ?? null,
             ]);
         } catch (Exception $e) {
             // refresh page on 500 error
             return $this->redirect($request->getUri());
         }
 
-        if (!empty($query) && isset($this->guidedMatchApiClient)) {
-            try {
-                $guidedMatchResponse = $this->guidedMatchApiClient->request('GET', $query, [
-                    'headers' => [
-                        'Content-Type: application/json',
-                        'x-api-key'  => getenv('GUIDED_MATCH_API_KEY')
-                    ],
-                    'http_errors' => false
-                ]);
+        $data = [
+            'query'         => $query,
+            'pagination'    => $results->getPagination(),
+            'results'       => $results,
+            'categories'    => FrameworkCategories::getAll(),
+            'pillars'       => FrameworkCategories::getAllPillars(),
+            'category'      => (!empty($categoryName) ? $categoryName : null),
+            'category_slug' => (!empty($category) ? $category : null),
+            'pillar'        => (!empty($pillarName) ? $pillarName : null),
+            'pillar_slug'   => (!empty($pillar) ? $pillar : null),
+            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurldecode($query)
+        ];
 
-                $connected = true;
-            } catch (RequestException $e) {
-                Rollbar::log(
-                    Level::ERROR,
-                    'Guided Match API is refused to connect, GM banner will not show',
-                    $e
-                );
-
-                $connected = false;
-            }
-
-            if ($connected) {
-                $guidedMatchJsonResult = json_decode($guidedMatchResponse->getBody()->getContents());
-                $guidedMatchStatusCode  = $guidedMatchResponse->getStatusCode();
-
-                try {
-                    $responseForLandingPage = $this->guidedMatchApiClient->request('GET', getenv('GUIDED_MATCH_URL') . rawurlencode($query));
-                    $statusCodeForLandingPage = $responseForLandingPage->getStatusCode();
-                } catch (ServerException $e) {
-                    $statusCodeForLandingPage = 502;
-                }
-            } else {
-                $guidedMatchJsonResult = [];
-                $guidedMatchStatusCode = 400;
-                $statusCodeForLandingPage = 400;
-            }
-        }
-
-        if (!empty($guidedMatchJsonResult) && $guidedMatchStatusCode == 200 && $statusCodeForLandingPage == 200) {
-            $data = [
-                'query'                      => $query,
-                'pagination'                 => $results->getPagination(),
-                'results'                    => $results,
-                'categories'                 => FrameworkCategories::getAll(),
-                'pillars'                    => FrameworkCategories::getAllPillars(),
-                'guided_match_flag'          => $flag,
-                'match_url'                  => getenv('GUIDED_MATCH_URL') . rawurlencode($query)
-            ];
-        } else {
-            $data = [
-                'query'         => $query,
-                'pagination'    => $results->getPagination(),
-                'results'       => $results,
-                'categories'    => FrameworkCategories::getAll(),
-                'pillars'       => FrameworkCategories::getAllPillars()
-            ];
-        }
         return $this->render('frameworks/list.html.twig', $data);
     }
 
@@ -560,6 +510,7 @@ class FrameworksController extends AbstractController
         $csvData = array(
             0 => [
             'Supplier Name',
+            'Guarantor Recommended',
             'Contact Name',
             'Contact Email',
             'Street',
@@ -576,6 +527,7 @@ class FrameworksController extends AbstractController
             $i = 1;
             foreach ($results as $item) {
                 $supplier_name = ($item->getContent()->get('supplier_name')) ? $item->getContent()->get('supplier_name')->getValue() : '';
+                $haveGuarantor = ($item->getContent()->get('supplier_have_guarantor')) ? $item->getContent()->get('supplier_have_guarantor')->getValue() : '';
                 $contact_name = ($item->getContent()->get('supplier_contact_name')) ? $item->getContent()->get('supplier_contact_name')->getValue() : '';
                 $contact_email = ($item->getContent()->get('supplier_contact_email')) ? $item->getContent()->get('supplier_contact_email')->getValue() : '';
                 $street = ($item->getContent()->get('supplier_street')) ? $item->getContent()->get('supplier_street')->getValue() : '';
@@ -583,6 +535,7 @@ class FrameworksController extends AbstractController
                 $postcode = ($item->getContent()->get('supplier_postcode')) ? $item->getContent()->get('supplier_postcode')->getValue() : '';
 
                 $csvData[$i][] = $supplier_name;
+                $csvData[$i][] = $haveGuarantor == true ? stripslashes("=HYPERLINK(\"https://www.crowncommercial.gov.uk/buy-and-supply/guarantor-customer-guidance\",\"Yes: click this cell for more information about guarantors\")") : '';
                 $csvData[$i][] = $contact_name;
                 $csvData[$i][] = $contact_email;
                 $csvData[$i][] = $street;
@@ -621,5 +574,17 @@ class FrameworksController extends AbstractController
         );
 
         return $response;
+    }
+
+    private function getPillarOrCategoryName(Request $request, string $PillarOrCategory)
+    {
+
+        if ($request->query->has($PillarOrCategory)) {
+            $category = filter_var($request->query->get($PillarOrCategory), FILTER_SANITIZE_STRING);
+            $categoryName = FrameworkCategories::getDbValueBySlug($category);
+            return $categoryName;
+        }
+
+        return null;
     }
 }
