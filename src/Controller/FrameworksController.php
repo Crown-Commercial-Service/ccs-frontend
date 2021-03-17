@@ -142,8 +142,7 @@ class FrameworksController extends AbstractController
             'pagination' => $results->getPagination(),
             'results'    => $results,
             'categories' => FrameworkCategories::getAll(),
-            'pillars'    => FrameworkCategories::getAllPillars(),
-            'statuses'   => ['all']
+            'pillars'    => FrameworkCategories::getAllPillars()
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
@@ -254,8 +253,7 @@ class FrameworksController extends AbstractController
             'pagination'    => $results->getPagination(),
             'results'       => $results,
             'categories'    => FrameworkCategories::getAll(),
-            'pillars'       => FrameworkCategories::getAllPillars(),
-            'statuses'      => ['all']
+            'pillars'       => FrameworkCategories::getAllPillars()
         ];
         return $this->render('frameworks/list.html.twig', $data);
     }
@@ -305,8 +303,7 @@ class FrameworksController extends AbstractController
             'pagination'    => $results->getPagination(),
             'results'       => $results,
             'categories'    => FrameworkCategories::getAll(),
-            'pillars'       => FrameworkCategories::getAllPillars(),
-            'statuses'      => ['all']
+            'pillars'       => FrameworkCategories::getAllPillars()
         ];
         return $this->render('frameworks/list.html.twig', $data);
     }
@@ -386,7 +383,7 @@ class FrameworksController extends AbstractController
             'pillar'        => (!empty($pillarName) ? $pillarName : null),
             'pillar_slug'   => (!empty($pillar) ? $pillar : null),
             'match_url'     => getenv('GUIDED_MATCH_URL') . rawurldecode($query),
-            'statuses'      => (!empty($statuses) ? $statuses : ['all'])
+            'statuses'      => $statuses
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
