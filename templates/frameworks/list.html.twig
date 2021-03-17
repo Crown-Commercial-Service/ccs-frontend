@@ -82,7 +82,7 @@
                                 <label class="govuk-label" for="q"> Search
                                     agreements </label>
                                 {% if query is defined and query|trim is not empty %}
-                                    <input class="govuk-input" id="q" name="q" type="text" value={{ query }}>
+                                    <input class="govuk-input" id="q" name="q" type="text" value="{{ query }}">
                                 {% else %}
                                     <input class="govuk-input" id="q" name="q" type="text">
                                 {% endif %}
