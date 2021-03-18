@@ -136,11 +136,7 @@
                                             Filter by agreement status
                                         </span>
                                     </h2>
-                                    {% if statuses is not defined or statuses is empty %}
-                                        <span class="govuk-body-s">1 selected</span>
-                                    {% else %}
-                                        <span class="govuk-body-s">{{statuses|length}} selected</span>
-                                    {% endif %}
+                                    <span class="govuk-body-s">{{ statuses is not defined or statuses is empty ? 1 : statuses|length }} selected</span>
                                 </div>
                                
                                 <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
