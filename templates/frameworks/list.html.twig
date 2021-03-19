@@ -107,9 +107,9 @@
                                {% if query is defined %}
                                 
                                     {% if pillar is defined and pillar|trim is not empty %}
-                                        <a href="{{"/agreements/search?q=#{query}&pillar=#{pillar_slug|lower}"}}" class="govuk-link" >Clear filters</a>
+                                        <a href="{{"/agreements/search?q=#{query}&pillar=#{pillar_slug}"}}" class="govuk-link" >Clear filters</a>
                                     {% elseif category is defined and category|trim is not empty %}
-                                        <a href="{{"/agreements/search?q=#{query}&category=#{category_slug}|lower"}}" class="govuk-link" >Clear filters</a>
+                                        <a href="{{"/agreements/search?q=#{query}&category=#{category_slug}"}}" class="govuk-link" >Clear filters</a>
                                     {% else %}
                                         <a href="{{"search?q=#{query}"}}" class="govuk-link" >Clear filters</a>
                                     {% endif %}
@@ -117,9 +117,9 @@
                                 {% else %} 
 
                                     {% if pillar is defined and pillar|trim is not empty %}
-                                        <a href="{{"/agreements/pillar/#{pillar_slug}"|lower}}" class="govuk-link" >Clear filters</a>
+                                        <a href="{{"/agreements/pillar/#{pillar_slug}"}}" class="govuk-link" >Clear filters</a>
                                     {% elseif category is defined and category|trim is not empty %}
-                                        <a href="{{"/agreements/category/#{category_slug}"|lower}}" class="govuk-link" >Clear filters</a>
+                                        <a href="{{"/agreements/category/#{category_slug}"}}" class="govuk-link" >Clear filters</a>
                                     {% else %}
                                         <a href="{{"/agreements"}}" class="govuk-link" >Clear filters</a>
                                     {% endif %}
@@ -230,11 +230,11 @@
                                 <ul class="ccs-filters-summary__list">
                                     <li class="ccs-filters-summary__facet">
                                         {% if category is defined and category|trim is not empty %}
-                                            <a href="{{"/agreements/category/#{category_slug}"|lower}}" class="ccs-filters-summary__facet__cancel">
+                                            <a href="{{"/agreements/category/#{category_slug}"}}" class="ccs-filters-summary__facet__cancel">
                                                 <span>{{ query }}</span>
                                             </a>
                                         {% elseif pillar is defined and pillar|trim is not empty %}
-                                            <a href="{{"/agreements/pillar/#{pillar_slug}"|lower}}" class="ccs-filters-summary__facet__cancel">
+                                            <a href="{{"/agreements/pillar/#{pillar_slug}"}}" class="ccs-filters-summary__facet__cancel">
                                                 <span>{{ query }}</span>
                                             </a>
                                         {% else %}
