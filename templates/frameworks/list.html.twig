@@ -324,13 +324,13 @@
                                     {% if item.content.status == 'Expired - Data Still Received' %}
                                         <span class="govuk-tag ccs-tag ccs-tag--error">Expired: {{ item.content.end_date.format('d/m/Y') }}</span>
                                     {% elseif item.content.status == 'Future (Pipeline)'%}
-                                        <span class="govuk-tag govuk-tag--subtle">FUTURE</span>
+                                        <span class="govuk-tag ccs-tag--lower-case govuk-tag--subtle">Future</span>
                                     {% elseif item.content.status == 'Planned (Pipeline)'%}
-                                        <span class="govuk-tag govuk-tag--subtle">PLANNED</span>
+                                        <span class="govuk-tag ccs-tag--lower-case govuk-tag--subtle">Planned</span>
                                     {% elseif item.content.status == 'Underway (Pipeline)'%}
-                                        <span class="govuk-tag govuk-tag--subtle">UNDERWAY</span>
+                                        <span class="govuk-tag ccs-tag--lower-case govuk-tag--subtle">Underway</span>
                                     {% elseif item.content.status == 'Awarded (Pipeline)'%}
-                                        <span class="govuk-tag govuk-tag--subtle">AWARDED</span>
+                                        <span class="govuk-tag ccs-tag--lower-case govuk-tag--subtle">Awarded</span>
                                     {% endif %}
                                 </h3>
                                 <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
