@@ -223,6 +223,59 @@
                         {% endif %}
                  </div>
 
+                {% if statuses is not defined or 'all' not in statuses %}
+
+                    {% set statusLive = '&statuses%5B%5D=live' %}
+                    {% set statusExpired = '&statuses%5B%5D=expired' %}
+                    {% set statusUpcoming = '&statuses%5B%5D=upcoming' %}
+
+                    <div class="govuk-grid-column-two-thirds">
+                        <div class="ccs-filters-summary ccs-filter-summary-frameworks">
+                            <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
+                                <span class="ccs-filters-summary__label">Matching</span>
+                                <ul class="ccs-filters-summary__list">
+
+                                    {% if statuses is not defined or statuses is empty or 'live' in statuses %}
+                                        <li class="ccs-filters-summary__facet">
+                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'upcoming' in statuses ? statusUpcoming : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
+                                                <span> Live </span>
+                                            </a>  
+                                        </li>
+                                    {% endif %}
+
+                                    {% if statuses is defined %}
+                                        {% if 'live' in statuses and ('upcoming' in statuses or 'expired' in statuses) %}
+                                            <div style="display: inline; padding-right: 5px;" >and</div>
+                                        {% endif %}
+
+                                        {% if 'upcoming' in statuses %}
+                                        <li class="ccs-filters-summary__facet">
+                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{'expired' in statuses ? statusExpired : '' }#{'live' in statuses ? statusLive : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
+                                                <span> Upcoming deal </span>
+                                            </a>  
+                                        </li>
+                                        {% endif %}
+
+                                        {% if 'upcoming' in statuses and 'expired' in statuses %}
+                                            <div style="display: inline; padding-right: 5px;" >and</div>
+                                        {% endif %}
+
+                                        {% if 'expired' in statuses %}
+                                            <li class="ccs-filters-summary__facet">
+                                                <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{'upcoming' in statuses ? statusUpcoming : '' }#{'live' in statuses ? statusLive : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
+                                                    <span> Expired deal </span>
+                                                </a>  
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                
+
                 {% if query is defined and query|trim is not empty %}
                     <div class="govuk-grid-column-two-thirds">
                         <div class="ccs-filters-summary ccs-filter-summary-frameworks">
