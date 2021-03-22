@@ -343,14 +343,14 @@ class FrameworksController extends AbstractController
         if ($request->query->has('statuses')) {
             foreach ($request->query->get('statuses') as $status) {
                 if ($status == 'all') {
-                    $statuses = [];
+                    $statuses = ['all'];
                     break;
                 }
                 $statuses[] = filter_var($status, FILTER_SANITIZE_STRING);
             }
 
             if (count($statuses) == 3) {
-                $statuses = [];
+                $statuses = ['all'];
             }
         }
 

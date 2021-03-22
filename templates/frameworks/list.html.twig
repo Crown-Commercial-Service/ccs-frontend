@@ -104,24 +104,26 @@
                                <h2 class="govuk-heading-m">Apply filters</h2>
                             </div>
                              <div class="govuk-grid-column-one-half" style="text-align:right;">
-                               {% if query is defined %}
+                                {% set clearText = 'Clear filters' %}
+
+                                {% if query is defined %}
                                 
                                     {% if pillar is defined and pillar|trim is not empty %}
-                                        <a href="{{"/agreements/search?q=#{query}&pillar=#{pillar_slug|lower}"}}" class="govuk-link" >Clear filters</a>
+                                        <a href="{{"/agreements/search?q=#{query}&pillar=#{pillar_slug|lower}"}}" class="govuk-link" >{{ clearText }}</a>
                                     {% elseif category is defined and category|trim is not empty %}
-                                        <a href="{{"/agreements/search?q=#{query}&category=#{category_slug}|lower"}}" class="govuk-link" >Clear filters</a>
+                                        <a href="{{"/agreements/search?q=#{query}&category=#{category_slug}|lower"}}" class="govuk-link" >{{ clearText }}</a>
                                     {% else %}
-                                        <a href="{{"search?q=#{query}"}}" class="govuk-link" >Clear filters</a>
+                                        <a href="{{"search?q=#{query}"}}" class="govuk-link" >{{ clearText }}</a>
                                     {% endif %}
 
                                 {% else %} 
 
                                     {% if pillar is defined and pillar|trim is not empty %}
-                                        <a href="{{"/agreements/pillar/#{pillar_slug}"|lower}}" class="govuk-link" >Clear filters</a>
+                                        <a href="{{"/agreements/pillar/#{pillar_slug}"|lower}}" class="govuk-link" >{{ clearText }}</a>
                                     {% elseif category is defined and category|trim is not empty %}
-                                        <a href="{{"/agreements/category/#{category_slug}"|lower}}" class="govuk-link" >Clear filters</a>
+                                        <a href="{{"/agreements/category/#{category_slug}"|lower}}" class="govuk-link" >{{ clearText }}</a>
                                     {% else %}
-                                        <a href="{{"/agreements"}}" class="govuk-link" >Clear filters</a>
+                                        <a href="{{"/agreements"}}" class="govuk-link" >{{ clearText }}</a>
                                     {% endif %}
                                     
                                 {% endif %}
@@ -142,7 +144,7 @@
                                 <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                             
-                                            {% if statuses is not defined or statuses is empty %}
+                                            {% if statuses is defined and 'all' in statuses %}
                                             {# checked #}
                                                 <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="all" name="" type="checkbox" checked >
                                             {% else %}
@@ -155,8 +157,7 @@
                                         </div>
 
                                          <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-
-                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="live" name="statuses[]" type="checkbox" value="live" {{ statuses is defined and 'live' in statuses ? "checked" : "" }} >
+                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="live"name="statuses[]" type="checkbox" value="live" {{ statuses is not defined or statuses is empty or 'live' in statuses ? "checked" : "" }} >
                                             <label class="govuk-label govuk-checkboxes__label" for="live">
                                                 Live
                                             </label>
