@@ -33,12 +33,20 @@
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="/">Home</a>
                 </li>
-                <!--<li class="govuk-breadcrumbs__list-item">-->
-                <!--<a class="govuk-breadcrumbs__link" href="2-3-frameworks-search-result">Search frameworks</a>-->
-                <!--</li>-->
-                <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                    Search agreements
-                </li>
+                    {% if category is defined or pillar is defined %}
+                    <li class="govuk-breadcrumbs__list-item">
+                        <a class="govuk-breadcrumbs__link" href="/agreements">Search agreements </a>
+                    </li>
+                    {% if category is defined and category|trim is not empty  %}
+                        <li class="govuk-breadcrumbs__list-item" aria-current="page">{{ category }}</li>
+                    {% elseif pillar is defined and pillar|trim is not empty %}
+                        <li class="govuk-breadcrumbs__list-item" aria-current="page">{{ pillar }}</li>
+                    {% endif %}
+                {% else %}
+                    <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                        Search agreements
+                    </li>
+                {% endif %}
             </ol>
         </div>
 
@@ -50,13 +58,11 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
 
-                    {% if category is defined %}
-                        <h1 class="govuk-heading-xl page-title">Agreements in
-                            the {{ category }} category</h1>
-                    {% elseif pillar is defined %}
-                        <h1 class="govuk-heading-xl page-title">Agreements in
-                            the {{ pillar }} category</h1>
-                    {% elseif query is defined %}
+                    {% if category is defined and category|trim is not empty  %}
+                        <h1 class="govuk-heading-xl page-title">{{ query is defined and query|trim is not empty ? "Search agreements for #{query} in #{category} category" : "Search agreements in #{category} category" }}</h1>
+                    {% elseif pillar is defined and pillar|trim is not empty %}
+                        <h1 class="govuk-heading-xl page-title">{{ query is defined and query|trim is not empty ? "Search agreements for #{query} in #{pillar} category" : "Search agreements in #{pillar} category" }}</h1>
+                    {% elseif query is defined and query|trim is not empty %}
                         <h1 class="govuk-heading-xl page-title">Search agreements for {{ query }}</h1>
                     {% else %}
                         <h1 class="govuk-heading-xl page-title">Search agreements</h1>
@@ -75,14 +81,107 @@
                             <div class="govuk-form-group sidebar__search-group">
                                 <label class="govuk-label" for="q"> Search
                                     agreements </label>
-                                <input class="govuk-input" id="q" name="q" type="text">
-
+                                {% if query is defined and query|trim is not empty %}
+                                    <input class="govuk-input" id="q" name="q" type="text" value="{{ query }}">
+                                {% else %}
+                                    <input class="govuk-input" id="q" name="q" type="text">
+                                {% endif %}
+                                {% if category is defined and category|trim is not empty  %}
+                                    <input type="hidden" name="category" value={{ category_slug }}>
+                                {% endif %}
+                                {% if pillar is defined and pillar|trim is not empty %}
+                                    <input type="hidden" name="pillar" value={{ pillar_slug }}>
+                                {% endif %}
                                 <button type="submit" class="sidebar__search-button govuk-input">
                                     <span class="visuallyhidden">Search agreements</span>
                                 </button>
                             </div>
                         </div>
 
+
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-one-half">
+                               <h2 class="govuk-heading-m">Apply filters</h2>
+                            </div>
+                             <div class="govuk-grid-column-one-half" style="text-align:right;">
+                                {% set clearText = 'Clear filters' %}
+
+                                {% if query is defined %}
+                                
+                                    {% if pillar is defined and pillar|trim is not empty %}
+                                        <a href="{{"/agreements/search?q=#{query}&pillar=#{pillar_slug}"}}" class="govuk-link" >{{ clearText }}</a>
+                                    {% elseif category is defined and category|trim is not empty %}
+                                        <a href="{{"/agreements/search?q=#{query}&category=#{category_slug}"}}" class="govuk-link" >{{ clearText }}</a>
+                                    {% else %}
+                                        <a href="{{"search?q=#{query}"}}" class="govuk-link" >{{ clearText }}</a>
+                                    {% endif %}
+
+                                {% else %} 
+
+                                    {% if pillar is defined and pillar|trim is not empty %}
+                                        <a href="{{"/agreements/pillar/#{pillar_slug}"}}" class="govuk-link" >{{ clearText }}</a>
+                                    {% elseif category is defined and category|trim is not empty %}
+                                        <a href="{{"/agreements/category/#{category_slug}"}}" class="govuk-link" >{{ clearText }}</a>
+                                    {% else %}
+                                        <a href="{{"/agreements"}}" class="govuk-link" >{{ clearText }}</a>
+                                    {% endif %}
+                                    
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="accordion" id="accordion-with-summary-sections">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-3">
+                                            Filter by agreement status
+                                        </span>
+                                    </h2>
+                                    <span class="govuk-body-s">{{ statuses is not defined or statuses is empty ? 1 : statuses|length }} selected</span>
+                                </div>
+                               
+                                <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            
+                                            {% if statuses is defined and 'all' in statuses %}
+                                            {# checked #}
+                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="all" name="" type="checkbox" checked >
+                                            {% else %}
+                                            {# unchecked #}
+                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="all" name="statuses[]" type="checkbox" value="all" >
+                                            {% endif %}
+                                            <label class="govuk-label govuk-checkboxes__label" for="all">
+                                                View all
+                                            </label>
+                                        </div>
+
+                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="live"name="statuses[]" type="checkbox" value="live" {{ statuses is not defined or statuses is empty or 'live' in statuses ? "checked" : "" }} >
+                                            <label class="govuk-label govuk-checkboxes__label" for="live">
+                                                Live
+                                            </label>
+                                        </div>
+
+                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+
+                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="upcoming" name="statuses[]" type="checkbox" value="upcoming" {{ statuses is defined and 'upcoming' in statuses ? "checked" : "" }} >
+                                            <label class="govuk-label govuk-checkboxes__label" for="upcoming">
+                                                Upcoming
+                                            </label>
+                                        </div>
+
+                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+
+                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="expired" name="statuses[]" type="checkbox" value="expired" {{ statuses is defined and 'expired' in statuses ? "checked" : "" }} >
+                                            <label class="govuk-label govuk-checkboxes__label" for="expired">
+                                                Expired
+                                            </label>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                         {# see https://studio24.github.io/frontend/templating/content-fields.html #}
                         <h2 class="govuk-heading-m">Browse by category</h2>
                         <ul class="govuk-list">
@@ -115,10 +214,110 @@
                     </form>
 
                 </div>
-                {% if query is defined and query|trim is not empty %}	
+
+                 <div class="govuk-grid-column-two-thirds">
+                        {% if pagination.totalResults == 1 %}
+                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreement found</h2>
+                        {% else %}
+                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreements found</h2>
+                        {% endif %}
+                 </div>
+                    
+                {% set statusAll = '&statuses%5B%5D=all' %}
+                {% set statusLive = '&statuses%5B%5D=live' %}
+                {% set statusExpired = '&statuses%5B%5D=expired' %}
+                {% set statusUpcoming = '&statuses%5B%5D=upcoming' %}
+
+                {% if statuses is not defined or 'all' not in statuses %}
+
+                    <div class="govuk-grid-column-two-thirds">
+                        <div class="ccs-filters-summary ccs-filter-summary-frameworks">
+                            <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
+                                <span class="ccs-filters-summary__label">Matching</span>
+                                <ul class="ccs-filters-summary__list">
+
+                                    {% if statuses is not defined or statuses is empty or (statuses|length == 1 and 'live' in statuses)%}
+                                        <li class="ccs-filters-summary__facet">
+                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{statusAll} " }}" class="ccs-filters-summary__facet__cancel"> 
+                                                <span> Live </span>
+                                            </a>  
+                                        </li>
+                                    {% elseif 'live' in statuses %}
+                                         <li class="ccs-filters-summary__facet">
+                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'upcoming' in statuses ? statusUpcoming : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
+                                                <span> Live </span>
+                                            </a>  
+                                        </li>
+                                    {% endif %}
+
+                                    {% if statuses is defined %}
+                                        {% if 'live' in statuses and ('upcoming' in statuses or 'expired' in statuses) %}
+                                            <div style="display: inline; padding-right: 5px;" >and</div>
+                                        {% endif %}
+
+                                        {% if 'upcoming' in statuses %}
+                                        <li class="ccs-filters-summary__facet">
+                                            {% if statuses|length == 1 %}
+                                                <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{statusAll}" }}" class="ccs-filters-summary__facet__cancel"> 
+                                            {% else %}
+                                                <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{'expired' in statuses ? statusExpired : '' }#{'live' in statuses ? statusLive : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
+                                            {% endif %}
+                                                <span> Upcoming </span>
+                                            </a>  
+                                        </li>
+                                        {% endif %}
+
+                                        {% if 'upcoming' in statuses and 'expired' in statuses %}
+                                            <div style="display: inline; padding-right: 5px;" >and</div>
+                                        {% endif %}
+
+                                        {% if 'expired' in statuses %}
+                                            <li class="ccs-filters-summary__facet">
+                                            {% if statuses|length == 1 %}
+                                                <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{statusAll}" }}" class="ccs-filters-summary__facet__cancel"> 
+                                            {% else %}
+                                                <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{'upcoming' in statuses ? statusUpcoming : '' }#{'live' in statuses ? statusLive : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
+                                            {% endif %}
+                                                    <span> Expired </span>
+                                                </a>  
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                
+
+                {% if query is defined and query|trim is not empty %}
+                    <div class="govuk-grid-column-two-thirds">
+                        <div class="ccs-filters-summary ccs-filter-summary-frameworks">
+                            <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
+                                <span class="ccs-filters-summary__label">Containing</span>
+                                <ul class="ccs-filters-summary__list">
+                                    <li class="ccs-filters-summary__facet">
+                                        {% if category is defined and category|trim is not empty %}
+                                            <a href=" {{"/agreements/search?q=&category=#{category_slug}#{ statuses is defined and 'upcoming' in statuses ? statusUpcoming : '' }#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'all' in statuses ? statusAll : '' }" }}" class="ccs-filters-summary__facet__cancel">
+                                                <span>{{ query }}</span>
+                                            </a>
+                                        {% elseif pillar is defined and pillar|trim is not empty %}
+                                            <a href=" {{"/agreements/search?q=&pillar=#{pillar_slug}#{ statuses is defined and 'upcoming' in statuses ? statusUpcoming : '' }#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'all' in statuses ? statusAll : '' }" }}" class="ccs-filters-summary__facet__cancel">
+                                                <span>{{ query }}</span>
+                                            </a>
+                                        {% else %}
+                                            <a href=" {{"/agreements/search?q=#{ statuses is defined and 'upcoming' in statuses ? statusUpcoming : '' }#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'all' in statuses ? statusAll : '' }" }}" class="ccs-filters-summary__facet__cancel">
+                                                <span>{{ query }}</span>
+                                            </a>
+                                        {% endif %}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div class="govuk-grid-column-two-thirds guided-match-background govuk-!-margin-bottom-2 guided-match-area">
                             <label class="govuk-heading-l ccs-font-weight-semibold govuk-!-margin-top-1 govuk-!-margin-bottom-1 text-white">Get help finding the right agreement</label>
-                            <label class="govuk-heading-s ccs-font-weight-semibold text-white govuk-!-margin-bottom-1">There are {{ pagination.totalResults }} results for "{{ query }}".</label>
                             <label class="govuk-body text-white">Answer some simple questions to find the best agreement for your needs</br></label>
                         <a href={{ match_url }} role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-3 govuk-!-margin-bottom-3" data-module="govuk-button">
                             Start now
@@ -126,14 +325,6 @@
                             <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
                             </svg>
                         </a>
-                    </div>
-                {% else %}
-                    <div class="govuk-grid-column-two-thirds">
-                    {% if pagination.totalResults == 1 %}
-                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreement found</h2>
-                    {% else %}
-                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreements found</h2>
-                    {% endif %}
                     </div>
                 {% endif %}
 
@@ -147,6 +338,14 @@
                                     <a href="{{ path('frameworks_show', {'rmNumber':  item.content.rm_number }) }}">{{ item.content.title }}</a> {# <strong class="govuk-tag govuk-tag--subtle">{{ item.content.status }}</strong> #}
                                     {% if item.content.status == 'Expired - Data Still Received' %}
                                         <span class="govuk-tag ccs-tag ccs-tag--error">Expired: {{ item.content.end_date.format('d/m/Y') }}</span>
+                                    {% elseif item.content.status == 'Future (Pipeline)'%}
+                                        <span class="govuk-tag ccs-tag--lower-case govuk-tag--subtle">Future</span>
+                                    {% elseif item.content.status == 'Planned (Pipeline)'%}
+                                        <span class="govuk-tag ccs-tag--lower-case govuk-tag--subtle">Planned</span>
+                                    {% elseif item.content.status == 'Underway (Pipeline)'%}
+                                        <span class="govuk-tag ccs-tag--lower-case govuk-tag--subtle">Underway</span>
+                                    {% elseif item.content.status == 'Awarded (Pipeline)'%}
+                                        <span class="govuk-tag ccs-tag--lower-case govuk-tag--subtle">Awarded</span>
                                     {% endif %}
                                 </h3>
                                 <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
@@ -169,11 +368,11 @@
 
 
                     {# Pagination #}
-                    {% if pillar is defined %}
+                    {% if pillar is defined and pillar|trim is not empty %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_pillar', 'options': {'pillar': pillar_slug}} %}
-                    {% elseif category is defined %}
+                    {% elseif category is defined and category|trim is not empty %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_category', 'options': {'category': category_slug}} %}
-                    {% elseif query is defined %}
+                    {% elseif query is defined and query|trim is not empty %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'q': query}} %}
                     {% else %}
                         {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list', 'options': {}} %}

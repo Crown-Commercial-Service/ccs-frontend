@@ -158,6 +158,13 @@ class ApiController extends AbstractController
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
                     break;
                 case 'status':
+                    if (!is_array($param)) {
+                        $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    } else {
+                        $filtered[$name] = filter_var_array($param);
+                    }
+                    break;
+                case 'sort':
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
                     break;
                 case 'limit':
