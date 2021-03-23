@@ -142,7 +142,7 @@ class FrameworksController extends AbstractController
             'pagination' => $results->getPagination(),
             'results'    => $results,
             'categories' => FrameworkCategories::getAll(),
-            'pillars'       => FrameworkCategories::getAllPillars()
+            'pillars'    => FrameworkCategories::getAllPillars()
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
@@ -327,9 +327,6 @@ class FrameworksController extends AbstractController
      */
     public function search(Request $request, int $page = 1)
     {
-        // Get feature flag if it exists &feature=guidedmatch
-        $flag = filter_var($request->query->get('feature'), FILTER_SANITIZE_STRING);
-
 
         // Get search query
         $query =  filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
@@ -342,26 +339,33 @@ class FrameworksController extends AbstractController
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
 
-        if ($request->query->has('status')) {
-            $status = [];
-            foreach ($request->query->get('status') as $item) {
-                $status[] = filter_var($item, FILTER_SANITIZE_STRING);
+        $statuses = [];
+        if ($request->query->has('statuses')) {
+            foreach ($request->query->get('statuses') as $status) {
+                if ($status == 'all') {
+                    $statuses = ['all'];
+                    break;
+                }
+                $statuses[] = filter_var($status, FILTER_SANITIZE_STRING);
+            }
+
+            if (count($statuses) == 3) {
+                $statuses = ['all'];
             }
         }
 
-        if ($request->query->has('category')) {
-            $category = [];
-            foreach ($request->query->get('category') as $item) {
-                $category[] = filter_var($item, FILTER_SANITIZE_STRING);
-            }
-        }
+        $category =  filter_var($request->query->get('category'), FILTER_SANITIZE_STRING);
+        $pillar =  filter_var($request->query->get('pillar'), FILTER_SANITIZE_STRING);
+        $categoryName = $this-> getPillarOrCategoryName($request, 'category');
+        $pillarName = $this-> getPillarOrCategoryName($request, 'pillar');
 
         try {
             $results = $this->searchApi->list($page, [
-                'keyword'   => $query,
+                'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
                 'limit'     => $limit,
-                'status'    => $status ?? null,
-                'pillar'    => $category ?? null,
+                'category'  => $categoryName ?? null,
+                'pillar'    => $pillarName ?? null,
+                'status'    => $statuses
             ]);
         } catch (Exception $e) {
             // refresh page on 500 error
@@ -374,7 +378,12 @@ class FrameworksController extends AbstractController
             'results'       => $results,
             'categories'    => FrameworkCategories::getAll(),
             'pillars'       => FrameworkCategories::getAllPillars(),
-            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurldecode($query)
+            'category'      => (!empty($categoryName) ? $categoryName : null),
+            'category_slug' => (!empty($category) ? $category : null),
+            'pillar'        => (!empty($pillarName) ? $pillarName : null),
+            'pillar_slug'   => (!empty($pillar) ? $pillar : null),
+            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurldecode($query),
+            'statuses'      => $statuses
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
@@ -574,5 +583,17 @@ class FrameworksController extends AbstractController
         );
 
         return $response;
+    }
+
+    private function getPillarOrCategoryName(Request $request, string $PillarOrCategory)
+    {
+
+        if ($request->query->has($PillarOrCategory)) {
+            $category = filter_var($request->query->get($PillarOrCategory), FILTER_SANITIZE_STRING);
+            $categoryName = FrameworkCategories::getDbValueBySlug($category);
+            return $categoryName;
+        }
+
+        return null;
     }
 }
