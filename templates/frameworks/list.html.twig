@@ -251,7 +251,7 @@
                                         {% if 'upcoming' in statuses %}
                                         <li class="ccs-filters-summary__facet">
                                             <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{'expired' in statuses ? statusExpired : '' }#{'live' in statuses ? statusLive : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
-                                                <span> Upcoming deal </span>
+                                                <span> Upcoming </span>
                                             </a>  
                                         </li>
                                         {% endif %}
@@ -263,7 +263,7 @@
                                         {% if 'expired' in statuses %}
                                             <li class="ccs-filters-summary__facet">
                                                 <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{'upcoming' in statuses ? statusUpcoming : '' }#{'live' in statuses ? statusLive : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
-                                                    <span> Expired deal </span>
+                                                    <span> Expired </span>
                                                 </a>  
                                             </li>
                                         {% endif %}
