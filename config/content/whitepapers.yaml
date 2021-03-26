@@ -8,3 +8,7 @@ campaign_code:
   type: text
 description:
   type: text
+whitepaper_url:
+  type: text
+whitepaper_url_text:
+  type: text
