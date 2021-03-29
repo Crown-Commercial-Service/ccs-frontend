@@ -206,9 +206,11 @@ class SuppliersController extends AbstractController
      * @throws \Studio24\Frontend\Exception\FailedRequestException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function show(string $id, Request $request)
+    public function show(string $id, string $slug, Request $request)
     {
         $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
+        $slug = filter_var($slug, FILTER_SANITIZE_STRING);
 
         $this->api->setCacheKey($request->getRequestUri());
 
@@ -216,6 +218,10 @@ class SuppliersController extends AbstractController
             $results = $this->api->getOne($id);
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Supplier not found', $e);
+        }
+
+        if ( $results->getContent()['slug']->getValue() != $slug ){
+            throw new NotFoundHttpException('Supplier not found', new NotFoundException);
         }
 
         $listOfFrameworkWithGuarantor = $this->getFrameworkWithGuarantor($results);
