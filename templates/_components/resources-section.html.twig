@@ -9,7 +9,7 @@
             <div class="resources-section__intro">{{ page.content.resources_intro_introduction|raw }}</div>
         {% endif %}
 
-        {% if page.content.brochures_list_brochures_list is not empty  or  page.content.whitepapers_list_whitepapers is not empty  or  page.content.webinars_list_webinars %}
+        {% if page.content.brochures_list_brochures_list is not empty  or  page.content.whitepapers_list_whitepapers is not empty  or  page.content.webinars_list_webinars or page.content.digital_brochures_list_digital_brochures is not empty %}
             <div class="govuk-accordion" data-module="accordion" id="accordion-default">
                 {% if page.content.brochures_list_brochures_list is not empty %}
                     {# Start brochure section #}
@@ -102,6 +102,7 @@
 
 
                 {% if page.content.webinars_list_webinars is not empty %}
+                
                     <div class="govuk-accordion__section ">
                         {# Start Webinars section #}
 
@@ -152,6 +153,60 @@
                         </div>
 
                         {# End Webinars section #}
+                    </div>
+                {% endif %}
+
+
+                {% if page.content.digital_brochures_list_digital_brochures is not empty %}
+                    <div class="govuk-accordion__section ">
+                        {# Start Digital Brochures section #}
+
+                        <div class="govuk-accordion__section-header">
+                            <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
+                                          Digital Brochures ({{ page.content.digital_brochures_list_digital_brochures|length }}
+                                            )
+                                        </span>
+                            </h2>
+                        </div>
+                        <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">
+
+                            <ol class="ccs-list-grid">
+                                {% for digital_brochure in page.content.digital_brochures_list_digital_brochures %}
+                                    <li class="ccs-list-grid__item">
+                                        {% if digital_brochure.ccs_digital_brochure_featured_image.url is defined %}
+                                            <a href="/digital_brochure/request/{{ digital_brochure.ID }}/{{ digital_brochure.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
+                                                <img
+                                                        src="{{ digital_brochure.ccs_digital_brochure_featured_image.byName('news-size-m') }}"
+
+                                                        {% if digital_brochure.ccs_digital_brochure_featured_image.alt is defined %}
+                                                            alt="{{ digital_brochure.ccs_digital_brochure_featured_image.alt }}"
+                                                        {% else %}
+                                                            alt=""
+                                                            role="presentation"
+                                                        {% endif %}
+                                                /> </a>
+                                        {% endif %}
+                                        <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
+                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ digital_brochure.post_title }}</h3>
+                                            {% if digital_brochure.post_excerpt is defined and digital_brochure.post_excerpt is not empty %}
+                                                <p>{{ digital_brochure.post_excerpt }}</p>
+                                            {% endif %}
+                                            <a class="ccs-list-grid__item__cta" href="/digital_brochure/request/{{ digital_brochure.ID }}/{{ digital_brochure.post_name }}/">
+                                                {% if digital_brochure.link_text is not empty %}
+                                                    {{ digital_brochure.link_text }}
+                                                {% else %}
+                                                    Learn more
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ol>
+
+                        </div>
+
+                        {# End Digital Brochure section #}
                     </div>
                 {% endif %}
             </div>
