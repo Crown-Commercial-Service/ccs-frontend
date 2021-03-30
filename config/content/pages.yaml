@@ -62,6 +62,23 @@ webinars_list_webinars:
       type: image
     link_text:
       type: text
+digital_brochures_list_digital_brochures:
+  type: array
+  content_fields:
+    ID:
+      type: number
+    post_title:
+      type: text
+    post_excerpt:
+      type: text
+    post_name:
+      type: text
+    ccs_digital_brochure_file:
+      type: document
+    ccs_digital_brochure_featured_image:
+      type: image
+    link_text:
+      type: text
 contact_form_show_contact_form:
   type: boolean
 contact_form_show_newsletter_form:
