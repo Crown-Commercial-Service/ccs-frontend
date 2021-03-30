@@ -8,3 +8,7 @@ campaign_code:
   type: text
 description:
   type: text
+digital_brochure_url:
+  type: text
+digital_brochure_url_text:
+  type: text
