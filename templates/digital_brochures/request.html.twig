@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Request to access Digital Brochure - {{ digital_brochure.title|raw }} - CCS{% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+
+{% block flourishClasses %}{% endblock %}
+
+
+{% block body %}
+
+<!-- required wrapper 1 -->
+<div class="govuk-width-container">
+
+    <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
+
+
+    {#<div class="govuk-phase-banner">#}
+        {#<p class="govuk-phase-banner__content">#}
+            {#<strong class="govuk-tag govuk-phase-banner__content__tag ">#}
+                {#beta </strong> <span class="govuk-phase-banner__text">#}
+                  {#This is a new service – your#}
+                  {#<a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.#}
+                {#</span>#}
+        {#</p>#}
+    {#</div>#}
+
+    <main class="govuk-main-wrapper">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+
+                <h1 class="page-title-prepend">Digital Brochure</h1>
+                <h2 class="govuk-heading-xl page-title page-title--tight">{{ digital_brochure.title|raw }}</h2>
+
+                {% if whitepaper.content.form_introduction is defined and whitepaper.content.form_introduction is not empty %}
+                    <div class="page-intro">{{ digital_brochure.content.form_introduction|raw }}</div>
+                {% endif %}
+
+                <p>To read this digital brochure, we need a few details.</p>
+
+                {% include 'forms/gated-form.html.twig' %}
+
+            </div>
+            <div class="govuk-grid-column-one-third">
+                {% if digital_brochure.featuredImage is defined and digital_brochure.featuredImage is not empty %}
+                    <div class="flourish-box-effect">
+                        <div class="flourish-box-effect__inner">
+                            <img src="{{ digital_brochure.featuredImage.byName('news-size-m') }}" alt="" role="presentation" />
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+</div>
+
+{% endblock %}
+
+{% block nonblocking_javascript %}
+    {{ parent() }}
+
+    <script src="/assets/scripts/gated-form.js"></script>
+
+{% endblock %}
