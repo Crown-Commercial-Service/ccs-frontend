@@ -38,6 +38,9 @@
                     <h1 class="govuk-heading-xl page-title page-title--tight">You can now download this Digital Brochure</h1>
 
                     {#<div class="page-intro page-intro--tight"><p>Your details have been submitted and you can now download the digial brochure.</p></div>#}
+                    {% if (digital_brochure.content.digital_brochure_url is defined and digital_brochure.content.digital_brochure_url is not empty) and (digital_brochure.content.digital_brochure_url_text is defined and digital_brochure.content.digital_brochure_url_text is not empty)  %}
+                        <p><a href="{{ digital_brochure.content.digital_brochure_url }}">{{ digital_brochure.content.digital_brochure_url_text|raw }}</a></p>
+                    {% endif %}
 
                     {% if digital_brochure.content.digital_brochure_file.url is defined and digital_brochure.content.digital_brochure_file.url is not empty %}
                         <p><a class="download-file-link" href="{{ digital_brochure.content.digital_brochure_file.url }}">{{ digital_brochure.title|raw }} ({{ digital_brochure.content.digital_brochure_file.filesize }})</a></p>
