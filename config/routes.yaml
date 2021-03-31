@@ -166,6 +166,13 @@ webinar_confirmation:
   path: /webinar/confirmation/{id}/{slug}
   controller: App\Controller\WebinarController::show
 
+digital_brochure_request:
+  path: /digital_brochure/request/{id}/{slug}
+  controller: App\Controller\DigitalBrochureController::request
+
+digital_brochure_confirmation:
+  path: /digital_brochure/confirmation/{id}/{slug}
+  controller: App\Controller\DigitalBrochureController::show
 
 events_list:
   path: "/events/{page}"

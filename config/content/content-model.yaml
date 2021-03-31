@@ -37,6 +37,9 @@ content_types:
   webinars:
     api_endpoint: wp/v2/webinar
     content_fields: webinars.yaml
+  digital_brochures:
+    api_endpoint: wp/v2/digital_brochure
+    content_fields: digital_brochures.yaml
   events:
     api_endpoint: wp/v2/event
     content_fields: events.yaml
