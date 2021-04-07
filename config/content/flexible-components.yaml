@@ -24,6 +24,8 @@ components:
           type: richtext
         video_video_caption:
           type: richtext
+    intro_intro_flip_media_text:
+      type: boolean
   text_text:
     text_text_text:
       type: richtext
