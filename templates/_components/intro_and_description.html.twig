@@ -1,36 +1,10 @@
 <div class="govuk-width-container">
     <div class="govuk-grid-row ccs-grid-row--loose">
+        {# flip image to left and text to right #}
+        {% if component.intro_intro_flip_media_text is defined and component.intro_intro_flip_media_text.value %}
 
-        <div class="govuk-grid-column-one-half">
-
-            <h2 class="govuk-heading-m intro__heading">{{ component.intro_intro_heading }}</h2>
-
-            <div class="wysiwyg-content intro__content">
-                {{ component.intro_intro_content  | raw }}
-            </div>
-
-
-            {% if component.intro_intro_cta_label is not empty or component.intro_intro_secondary_label is not empty %}
-                <div class="call-to-action--compact">
-
-                    {% if component.intro_intro_cta_label is not empty %}
-                        <a href="{{ component.intro_intro_cta_destination }}" class="govuk-button">{{ component.intro_intro_cta_label }}</a>
-                    {% endif %}
-
-                    {% if component.intro_intro_secondary_label is not empty %}
-                        <p class=" wysiwyg-content">
-                            <a href="{{ component.intro_intro_secondary_destination }}">{{ component.intro_intro_secondary_label }}</a>
-                        </p>
-                    {% endif %}
-
-                </div>
-            {% endif %}
-
-
-        </div>
-
-        <div class="govuk-grid-column-one-half">
-
+            <div class="govuk-grid-column-one-half">
+    
             {% for media in component.intro_intro_media %}
 
                 {#{{ dump(media) }}#}
@@ -78,6 +52,114 @@
             {% endfor %}
 
         </div>
+
+        <div class="govuk-grid-column-one-half">
+
+            <h2 class="govuk-heading-m intro__heading">{{ component.intro_intro_heading }}</h2>
+
+            <div class="wysiwyg-content intro__content">
+                {{ component.intro_intro_content  | raw }}
+            </div>
+
+
+            {% if component.intro_intro_cta_label is not empty or component.intro_intro_secondary_label is not empty %}
+                <div class="call-to-action--compact">
+
+                    {% if component.intro_intro_cta_label is not empty %}
+                        <a href="{{ component.intro_intro_cta_destination }}" class="govuk-button">{{ component.intro_intro_cta_label }}</a>
+                    {% endif %}
+
+                    {% if component.intro_intro_secondary_label is not empty %}
+                        <p class=" wysiwyg-content">
+                            <a href="{{ component.intro_intro_secondary_destination }}">{{ component.intro_intro_secondary_label }}</a>
+                        </p>
+                    {% endif %}
+
+                </div>
+            {% endif %}
+
+
+        </div>
+
+        {% else %}
+            <div class="govuk-grid-column-one-half">
+
+            <h2 class="govuk-heading-m intro__heading">{{ component.intro_intro_heading }}</h2>
+
+            <div class="wysiwyg-content intro__content">
+                {{ component.intro_intro_content  | raw }}
+            </div>
+
+
+            {% if component.intro_intro_cta_label is not empty or component.intro_intro_secondary_label is not empty %}
+                <div class="call-to-action--compact">
+
+                    {% if component.intro_intro_cta_label is not empty %}
+                        <a href="{{ component.intro_intro_cta_destination }}" class="govuk-button">{{ component.intro_intro_cta_label }}</a>
+                    {% endif %}
+
+                    {% if component.intro_intro_secondary_label is not empty %}
+                        <p class=" wysiwyg-content">
+                            <a href="{{ component.intro_intro_secondary_destination }}">{{ component.intro_intro_secondary_label }}</a>
+                        </p>
+                    {% endif %}
+
+                </div>
+            {% endif %}
+
+
+            </div>
+
+            <div class="govuk-grid-column-one-half">
+
+                {% for media in component.intro_intro_media %}
+
+                    {#{{ dump(media) }}#}
+
+
+                    {% if media.video_video_video %}
+                        <div class="responsive-video widescreen">
+                            {# Replace the URL with the nocookie alternative (this should really be a custom Twig extension/filter) #}
+                            {{ media.video_video_video|replace({'youtube': 'youtube-nocookie'})|raw }}
+                            {#{{ media.video_video_video | raw }}#}
+                        </div>
+                    {% endif %}
+                    {% if media.video_video_caption %}
+                        <div class="intro__caption govuk-!-font-size-16 ccs-secondary-text-color">
+                            {{ media.video_video_caption | raw }}
+                        </div>
+                    {% endif %}
+
+
+
+                    {% if media.image_image_image %}
+
+                        <figure class="image-wrapper">
+                            <picture class="">
+                                <source media="(max-width: 768px)" srcset="{{ media.image_image_image.byName('medium_large') }}">
+                                <source media="(min-width: 1024px)" srcset="{{ media.image_image_image.byName('large') }}">
+                                <source media="(min-width: 1920px)" srcset="{{ media.image_image_image.byName('full') }}">
+                                {# Fallback for browsers that don't support the picture element #}
+                                <img src="{{ media.image_image_image }}"
+                                    role="presentation"
+                                    class=""
+                                    loading="lazy"/>
+                            </picture>
+                            {% if media.image_image_caption %}
+                                <figcaption class="intro__caption govuk-!-font-size-16 ccs-secondary-text-color">
+                                    {{ media.image_image_caption | raw }}
+                                </figcaption>
+                            {% endif %}
+                        </figure>
+
+                    {% endif %}
+
+
+
+                {% endfor %}
+
+            </div>
+        {% endif %}
 
     </div>
 </div>
