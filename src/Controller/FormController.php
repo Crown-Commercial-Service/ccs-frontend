@@ -75,7 +75,7 @@ class FormController extends AbstractController
 
         $params = $request->request;
 
-        if (!empty($_REQUEST['surname']) && (bool) $_REQUEST['surname'] == TRUE) {
+        if (!empty($_REQUEST['surname']) && (bool) $_REQUEST['surname'] == true) {
             die;
         }
 
