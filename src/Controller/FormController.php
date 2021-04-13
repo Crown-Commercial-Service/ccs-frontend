@@ -75,6 +75,10 @@ class FormController extends AbstractController
 
         $params = $request->request;
 
+        if (!empty($_REQUEST['surname']) && (bool) $_REQUEST['surname'] == true) {
+            die;
+        }
+
         // form data used for validation and to remember values when user submits form
         $formData = [
             'enquiryType' => $params->get('origin', null),
