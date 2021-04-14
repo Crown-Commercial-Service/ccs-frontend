@@ -104,6 +104,11 @@
     .govuk-caption-link {
         font-size:1.3rem;
     }
+
+    .govuk-caption-button {
+        margin-top:30px;
+        padding-bottom:9px;
+    }
 }
 
 @include govuk-media-query($from: desktop) {
@@ -182,6 +187,10 @@
             color: white;
             text-underline-offset:3px;
         }
+
+        .govuk-caption-button {
+            margin-top:10px;
+        }
     
         a:hover {
             text-decoration: none;
@@ -198,14 +207,23 @@
 
 @include govuk-media-query($from: 1138) {
     // fix text overlapping container below 1138px
-    .govuk-caption-heading {
-            
-        font-size: 2.7rem!important;
-    }
 
-    .govuk-caption-link {
-        font-size: 1.5rem!important;
+    .govuk-hero-homepage-caption-container {
+
+        .govuk-caption-heading {
+            
+            font-size: 2.7rem!important;
+        }
+    
+        .govuk-caption-link {
+            font-size: 1.5rem!important;
+        }
+
+        .govuk-caption-button {
+            margin-top: 30px!important;
+        }
     }
+   
 }
 
 .homepage-hero__search-button {
