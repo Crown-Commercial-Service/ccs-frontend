@@ -273,6 +273,7 @@ class PageController extends AbstractController
             'email' => $params->get('email', null),
             'phone' => $params->get('phone', null),
             'company' => $params->get('company', null),
+            'jobTitle' => $params->get('jobTitle', null),
             'aggregationOption' =>  $params->get('00Nb0000009IXEW', null),
             'callback' => $params->get('00Nb0000009IXEg', null),
             'description' =>  $params->get('description', null),
