@@ -38,7 +38,7 @@
                 <h1 class="page-title-prepend">Digital Brochure</h1>
                 <h2 class="govuk-heading-xl page-title page-title--tight">{{ digital_brochure.title|raw }}</h2>
 
-                {% if whitepaper.content.form_introduction is defined and whitepaper.content.form_introduction is not empty %}
+                {% if digital_brochure.content.form_introduction is defined and digital_brochure.content.form_introduction is not empty %}
                     <div class="page-intro">{{ digital_brochure.content.form_introduction|raw }}</div>
                 {% endif %}
 
