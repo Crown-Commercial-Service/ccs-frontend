@@ -20,8 +20,8 @@ website:
   type: text
 trading_name:
   type: text
-slug:
-  type: text
+slugArray:
+  type: plainarray
 alternative_trading_names:
   type: plainarray
 trading_names:
