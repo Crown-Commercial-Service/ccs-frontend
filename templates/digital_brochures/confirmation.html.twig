@@ -43,7 +43,7 @@
                     {% endif %}
 
                     {% if digital_brochure.content.digital_brochure_file.url is defined and digital_brochure.content.digital_brochure_file.url is not empty %}
-                        <p><a class="download-file-link" href="{{ digital_brochure.content.digital_brochure_file.url }}">{{ digital_brochure.title|raw }} ({{ digital_brochure.content.digital_brochure_file.filesize }})</a></p>
+                        <p><a class="download-file-link" href="{{ digital_brochure.content.digital_brochure_file.url }}">{{ digital_brochure.content.digital_brochure_file.title|raw }} ({{ digital_brochure.content.digital_brochure_file.filesize }})</a></p>
                     {% endif %}
                 </div>
             </div>
