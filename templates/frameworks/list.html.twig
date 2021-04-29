@@ -113,7 +113,7 @@
                                     {% elseif category is defined and category|trim is not empty %}
                                         <a href="{{"/agreements/search?q=#{query}&category=#{category_slug}"}}" class="govuk-link" >{{ clearText }}</a>
                                     {% else %}
-                                        <a href="{{"search?q=#{query}"}}" class="govuk-link" >{{ clearText }}</a>
+                                        <a href="{{"/agreements/search?q=#{query}"}}" class="govuk-link" >{{ clearText }}</a>
                                     {% endif %}
 
                                 {% else %} 
@@ -367,15 +367,18 @@
                     </ul>
 
 
+                    {% set statusData = statuses is defined and statuses is not empty ? {'statuses' : statuses} : {} %}
+                    {% set queryData = query is defined and query|trim is not empty ? {'q' : query} : {} %}
+
                     {# Pagination #}
                     {% if pillar is defined and pillar|trim is not empty %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_pillar', 'options': {'pillar': pillar_slug}} %}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'pillar': pillar_slug}|merge(statusData)|merge(queryData)} %}
                     {% elseif category is defined and category|trim is not empty %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_category', 'options': {'category': category_slug}} %}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'category': category_slug}|merge(statusData)|merge(queryData)} %}
                     {% elseif query is defined and query|trim is not empty %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'q': query}} %}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'q': query}|merge(statusData)} %}
                     {% else %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list', 'options': {}} %}
+                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': statusData} %}
                     {% endif %}
 
                     {% if pagination.totalPages > 1 %}
