@@ -113,7 +113,7 @@
                                     {% elseif category is defined and category|trim is not empty %}
                                         <a href="{{"/agreements/search?q=#{query}&category=#{category_slug}"}}" class="govuk-link" >{{ clearText }}</a>
                                     {% else %}
-                                        <a href="{{"search?q=#{query}"}}" class="govuk-link" >{{ clearText }}</a>
+                                        <a href="{{"/agreements/search?q=#{query}"}}" class="govuk-link" >{{ clearText }}</a>
                                     {% endif %}
 
                                 {% else %} 
@@ -369,13 +369,45 @@
 
                     {# Pagination #}
                     {% if pillar is defined and pillar|trim is not empty %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_pillar', 'options': {'pillar': pillar_slug}} %}
+
+                        {% if statuses is defined and statuses is not empty %}
+                            {% if query is defined and query|trim is not empty %}
+                                {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'q': query, 'pillar': pillar_slug, 'statuses': statuses}} %}
+                            {% else %}
+                                {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'pillar': pillar_slug, 'statuses': statuses}} %}
+                            {% endif %}
+                        {% else %}
+                            {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_pillar', 'options': {'pillar': pillar_slug}} %}
+                        {% endif %}
+
                     {% elseif category is defined and category|trim is not empty %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_category', 'options': {'category': category_slug}} %}
+
+                        {% if statuses is defined and statuses is not empty %}
+                            {% if query is defined and query|trim is not empty %}
+                                {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'q': query, 'category':category_slug, 'statuses': statuses}} %}
+                            {% else %}
+                                {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'category':category_slug, 'statuses': statuses}} %}
+                            {% endif %}
+                        {% else %}
+                            {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list_by_category', 'options': {'category': category_slug }} %}
+                        {% endif %}
+
                     {% elseif query is defined and query|trim is not empty %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'q': query}} %}
+
+                        {% if statuses is defined and statuses is not empty %}
+                            {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'q': query, 'statuses': statuses}} %}
+                        {% else %}
+                            {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'q': query}} %}
+                        {% endif %}
+
                     {% else %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list', 'options': {}} %}
+
+                        {% if statuses is defined and statuses is not empty %}
+                            {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'statuses': statuses}} %}
+                        {% else %}
+                            {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list', 'options': {}} %}
+                        {% endif %}
+
                     {% endif %}
 
                     {% if pagination.totalPages > 1 %}
