@@ -32,7 +32,7 @@
                                             <img src="/assets/images/icon-document-placeholder.svg" alt=""/>
                                         </a>
                                         <div class="ccs-list-grid__item__details">
-                                            <a class="ccs-list-grid__item__link-heading" href="{{ brochure.brochures_list_brochure.url }}">{{ brochure.brochures_list_brochure.title }}</a>
+                                            <a class="ccs-list-grid__item__link-heading" href="{{ brochure.brochures_list_brochure.url }}">{{ brochure.brochures_list_brochure.title|raw }}</a>
                                             <p>
                                                 <span class="file-extension">{{ brochure.brochures_list_brochure.extension }}</span>, {{ brochure.brochures_list_brochure.filesize }}
                                             </p>
