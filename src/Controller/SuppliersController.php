@@ -220,7 +220,7 @@ class SuppliersController extends AbstractController
             throw new NotFoundHttpException('Supplier not found', $e);
         }
 
-        if ($results->getContent()['slug']->getValue() != $slug) {
+        if (!in_array($slug, $results->getContent()['slugArray']->getValue())) {
             throw new NotFoundHttpException('Supplier not found', new NotFoundException());
         }
 
