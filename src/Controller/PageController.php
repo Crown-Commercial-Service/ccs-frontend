@@ -237,6 +237,7 @@ class PageController extends AbstractController
         $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
         $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
         $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
+        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
 
         foreach ($errorMessages as $type => $value) {
             if (!empty($errorMessages[$type]['errors'])) {
