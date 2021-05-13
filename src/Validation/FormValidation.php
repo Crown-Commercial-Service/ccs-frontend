@@ -82,7 +82,7 @@ class FormValidation
             'link' => '#jobTitle',
         ];
 
-        if (empty($company)) {
+        if (empty($jobTitle)) {
             $returnArray['errors'] = ['Enter your job title'];
         }
 
