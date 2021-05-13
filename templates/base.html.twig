@@ -58,7 +58,7 @@
             };
 
             var cookiePreferences = JSON.parse(readCookie('cookie_preferences'));
-            if (cookiePreferences !== null) {
+            if (cookiePreferences !== null && '{{ app.environment }}' == "prod") {
                 if (cookiePreferences.usage === true) {
                     (function (w, d, s, l, i) {
                         w[l] = w[l] || [];

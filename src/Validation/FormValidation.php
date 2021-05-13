@@ -75,6 +75,20 @@ class FormValidation
         return $returnArray;
     }
 
+    public static function validationJobTitle($jobTitle)
+    {
+        $returnArray  = [
+            'errors' => [],
+            'link' => '#jobTitle',
+        ];
+
+        if (empty($jobTitle)) {
+            $returnArray['errors'] = ['Enter your job title'];
+        }
+
+        return $returnArray;
+    }
+
     public static function validationDescription($description)
     {
         $returnArray  = [

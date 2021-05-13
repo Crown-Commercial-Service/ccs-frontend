@@ -124,6 +124,7 @@
                             <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
                         {% endif %}
 
+                        <input type="checkbox" name="surname" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
 
                         {# `name` value must match fields in Salesforce. `class` value must match GDS components #}
                         <div class="govuk-form-group">
@@ -230,7 +231,7 @@
                                 {% endfor %}                           
                             {% endif %}
 
-                            <input class="govuk-input {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="phone" maxlength="40" name="phone" size="20" type="text" value="{{formErrors is defined ? formData.phone}}" autocomplete="tel" required/>
+                            <input class="govuk-input {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="phone" maxlength="20" name="phone" size="20" type="text" value="{{formErrors is defined ? formData.phone}}" autocomplete="tel" required/>
                         </div>
 
 
@@ -394,7 +395,7 @@
                         // We gather the data once the user submits the form
                         formSubmitButton = document.getElementById("submit");
 
-                        formSubmitButton.addEventListener('click', function (e) {
+                        formSubmitButton.addEventListener('click', function handler (e) {
 
                             for (var i = 0, length = fieldCheckboxes.length; i < length; i++) {
 
@@ -409,8 +410,9 @@
                             dataCollectionFieldForSalesforce.value += fieldPostCode.name + ": " + fieldPostCode.value;
                             dataCollectionFieldForSalesforce.value += " " + fieldMoreDetail.name + ": " + fieldMoreDetail.value;
 
-                        }, false);
+                            this.removeEventListener('click', handler); 
 
+                        }, false);
 
                         // if form errors exist reset focus to error summary
                         var errorSummary = document.getElementsByClassName('govuk-error-summary');
