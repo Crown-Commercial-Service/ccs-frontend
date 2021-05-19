@@ -395,7 +395,7 @@
                         // We gather the data once the user submits the form
                         formSubmitButton = document.getElementById("submit");
 
-                        formSubmitButton.addEventListener('click', function (e) {
+                        formSubmitButton.addEventListener('click', function handler (e) {
 
                             for (var i = 0, length = fieldCheckboxes.length; i < length; i++) {
 
@@ -410,8 +410,9 @@
                             dataCollectionFieldForSalesforce.value += fieldPostCode.name + ": " + fieldPostCode.value;
                             dataCollectionFieldForSalesforce.value += " " + fieldMoreDetail.name + ": " + fieldMoreDetail.value;
 
-                        }, false);
+                            this.removeEventListener('click', handler); 
 
+                        }, false);
 
                         // if form errors exist reset focus to error summary
                         var errorSummary = document.getElementsByClassName('govuk-error-summary');

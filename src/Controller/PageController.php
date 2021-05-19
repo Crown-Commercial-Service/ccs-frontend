@@ -237,6 +237,7 @@ class PageController extends AbstractController
         $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
         $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
         $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
+        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
 
         foreach ($errorMessages as $type => $value) {
             if (!empty($errorMessages[$type]['errors'])) {
@@ -255,6 +256,7 @@ class PageController extends AbstractController
         $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
         $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
         $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
+        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
         $errorMessages['aggregationOptionErr'] = FormValidation::validationAggregationOption($data['aggregationOption']);
 
         foreach ($errorMessages as $type => $value) {
@@ -273,7 +275,7 @@ class PageController extends AbstractController
             'email' => $params->get('email', null),
             'phone' => $params->get('phone', null),
             'company' => $params->get('company', null),
-            'jobTitle' => $params->get('jobTitle', null),
+            'jobTitle' => $params->get('00Nb0000009IXEs', null),
             'aggregationOption' =>  $params->get('00Nb0000009IXEW', null),
             'callback' => $params->get('00Nb0000009IXEg', null),
             'description' =>  $params->get('description', null),
