@@ -71,7 +71,7 @@ class FormController extends AbstractController
         return $this->render('forms/thank-you.html.twig', $data);
     }
 
-    public function sendToSalesforce(Request $request)
+    public function contactCCS(Request $request)
     {
 
         $params = $request->request;
@@ -103,7 +103,7 @@ class FormController extends AbstractController
         }
         // check for submitted data
         if (!empty($formData)) {
-            $formErrors = $this->validateForm($formData);
+            $formErrors = $this->validateContactCCS($formData);
 
             // if there are errors re-render contact form with errors and form values
             if ($formErrors) {
@@ -130,7 +130,7 @@ class FormController extends AbstractController
         }
     }
 
-    public function validateForm(array $data)
+    public function validateContactCCS(array $data)
     {
         $errorMessages = [];
 

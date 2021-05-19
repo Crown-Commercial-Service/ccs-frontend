@@ -134,8 +134,8 @@ form_contact:
     template: forms/22-contact.html.twig
 
 form_contact_sends:
-  path: /contact/sendToSalesforce
-  controller: App\Controller\FormController::sendToSalesforce
+  path: /contact/contactCCS
+  controller: App\Controller\FormController::contactCCS
 
 form_contact_thanks:
   path: /contact/thanks
