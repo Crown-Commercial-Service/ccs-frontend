@@ -220,6 +220,10 @@ form_esourcing_register:
   defaults:
     template: forms/29-esourcing-register.html.twig
 
+form_esourcing_register_sends:
+  path: /esourcing-register/submit
+  controller: App\Controller\FormController::esourcingRegister
+
 form_esourcing_register_thanks:
   path: /esourcing-register/thanks
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
