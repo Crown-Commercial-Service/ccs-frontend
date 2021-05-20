@@ -18,12 +18,10 @@ class ContactCCSFormValidation
             'link' => '#name',
         ];
 
-        if (empty($name)) {
-            return $returnArray;
-        } else {
-            if (preg_match('~[0-9]~', $name)) {
-                $returnArray['errors'] = ['Please enter your name without numbers'];
-            }
+        if (empty(trim($name))) {
+            $returnArray['errors'] = ['Enter your name'];
+        } elseif (preg_match('~[0-9]~', $name)) {
+            $returnArray['errors'] = ['Enter your name'];
         }
 
         return $returnArray;
@@ -37,26 +35,63 @@ class ContactCCSFormValidation
         ];
 
 
-        if (empty($email)) {
+        if (empty(trim($email))) {
             $returnArray['errors'] = ['Enter an email address in the correct format, like name@example.com'];
         } elseif (preg_match("/[*,!,#,$,%,^,&,(,),?,<,>,=]/i", $email)) {
-            $returnArray['errors'] = ['Enter an email address that does not contain any of these invalid characters *, !, #, $, %, ^, &, (, ), ?, <, >, ='];
+            $returnArray['errors'] = ['Enter an email address in the correct format, like name@example.com'];
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $returnArray['errors'] = ['Enter an email address in the correct format, like name@example.com'];
         }
         return $returnArray;
     }
 
-    public static function validationPhone($phone)
+    public static function validationPhone($phone, $callback)
     {
         $returnArray  = [
             'errors' => [],
             'link' => '#phone',
         ];
-
-        if (empty($phone) || preg_match("/[a-z]/i", $phone) || preg_match("/[*,!,#,$,%,^,&,(,),?,<,>,=]/i", $phone)) {
-            $returnArray['errors'] = ['Please enter a valid phone number using only numbers and no special characters'];
+        if( $callback && empty(trim($phone)) ){
+            $returnArray['errors'] = ['Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'];
+        } elseif (preg_match("/[a-z]/i", $phone) || preg_match("/[*,!,#,$,%,^,&,?,<,>,=]/i", $phone)) {
+            $returnArray['errors'] = ['Enter a telephone number in the correct format'];
         }
+
+        return $returnArray;
+    }
+
+    public static function validationCompany($company)
+    {
+        $returnArray  = [
+            'errors' => [],
+            'link' => '#company',
+        ];
+
+        $returnArray['errors'] = empty(trim($company)) ? ['Enter your organisation'] : [] ;
+
+        return $returnArray;
+    }
+
+    public static function validationJobTitle($jobTitle)
+    {
+        $returnArray  = [
+            'errors' => [],
+            'link' => '#jobTitle',
+        ];
+
+        $returnArray['errors'] = empty(trim($jobTitle)) ? ['Enter your job title'] : [] ;
+
+        return $returnArray;
+    }
+
+    public static function validationMoreDetial($moreDetail)
+    {
+        $returnArray  = [
+            'errors' => [],
+            'link' => '#moreDetail',
+        ];
+
+        $returnArray['errors'] = empty(trim($moreDetail)) ? ['Enter more detail'] : [] ;
 
         return $returnArray;
     }
