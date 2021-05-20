@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Validation\ContactCCSFormValidation;
+use App\Validation\EsourcingRegisterFormValidation;
 use Studio24\Frontend\Cms\RestData;
 use Studio24\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,6 +40,38 @@ class FormController extends AbstractController
         $this->client = HttpClient::create();
     }
 
+    public function esourcingRegister(Request $request)
+    {
+        $params = $request->request;
+
+        $formData = [
+            'name' => $params->get('name', null),
+            'email' => $params->get('email', null),
+            'phone' => $params->get('phone', null),
+            'company' => $params->get('company', null),
+        ];
+
+
+        $formErrors = $this->validateEsourcingRegister($formData);
+
+        if ($formErrors) {
+            return $this->render('forms/29-esourcing-register.html.twig', [
+                'formErrors' => $formErrors,
+                'formData' => $formData,
+            ]);
+        } else {
+            $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                'query'             => $params->all(),
+            ]);
+
+            if (!is_null($params->get('debug'))) {
+                return new Response($response->getContent());
+            }
+        }
+
+        return $this->redirect($params->get('retURL'));
+    }
+
     /**
      * eSourcingTraining Form template
      *
@@ -71,7 +104,7 @@ class FormController extends AbstractController
         return $this->render('forms/thank-you.html.twig', $data);
     }
 
-    public function sendToSalesforce(Request $request)
+    public function contactCCS(Request $request)
     {
 
         $params = $request->request;
@@ -103,7 +136,7 @@ class FormController extends AbstractController
         }
         // check for submitted data
         if (!empty($formData)) {
-            $formErrors = $this->validateForm($formData);
+            $formErrors = $this->validateContactCCS($formData);
 
             // if there are errors re-render contact form with errors and form values
             if ($formErrors) {
@@ -130,7 +163,7 @@ class FormController extends AbstractController
         }
     }
 
-    public function validateForm(array $data)
+    public function validateContactCCS(array $data)
     {
         $errorMessages = [];
 
@@ -139,6 +172,23 @@ class FormController extends AbstractController
         $errorMessages['emailErr'] = ContactCCSFormValidation::validationEmail($data['email']);
 
         // loop through and check for errors
+        foreach ($errorMessages as $type => $value) {
+            if (!empty($errorMessages[$type]['errors'])) {
+                return $errorMessages;
+            }
+        }
+
+        return false;
+    }
+
+    public function validateEsourcingRegister(array $data)
+    {
+        $errorMessages = [];
+
+        $errorMessages['nameErr'] = EsourcingRegisterFormValidation::validationName($data['name']);
+        $errorMessages['emailErr'] = EsourcingRegisterFormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] = EsourcingRegisterFormValidation::validationPhone($data['phone']);
+
         foreach ($errorMessages as $type => $value) {
             if (!empty($errorMessages[$type]['errors'])) {
                 return $errorMessages;

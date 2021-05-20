@@ -134,8 +134,8 @@ form_contact:
     template: forms/22-contact.html.twig
 
 form_contact_sends:
-  path: /contact/sendToSalesforce
-  controller: App\Controller\FormController::sendToSalesforce
+  path: /contact/contactCCS
+  controller: App\Controller\FormController::contactCCS
 
 form_contact_thanks:
   path: /contact/thanks
@@ -219,6 +219,10 @@ form_esourcing_register:
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
   defaults:
     template: forms/29-esourcing-register.html.twig
+
+form_esourcing_register_sends:
+  path: /esourcing-register/submit
+  controller: App\Controller\FormController::esourcingRegister
 
 form_esourcing_register_thanks:
   path: /esourcing-register/thanks
