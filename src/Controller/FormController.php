@@ -158,7 +158,7 @@ class FormController extends AbstractController
 
         $errorMessages['nameErr'] = ContactCCSFormValidation::validationName($data['name']);
         $errorMessages['emailErr'] = ContactCCSFormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] = ContactCCSFormValidation::validationPhone($data['phone'],$data['callback']);
+        $errorMessages['phoneErr'] = ContactCCSFormValidation::validationPhone($data['phone'], $data['callback']);
         $errorMessages['companyErr'] = ContactCCSFormValidation::validationCompany($data['company']);
         $errorMessages['jobTitleErr'] = ContactCCSFormValidation::validationJobTitle($data['jobTitle']);
         $errorMessages['moreDetailErr'] = ContactCCSFormValidation::validationMoreDetial($data['moreDetail']);
@@ -177,8 +177,9 @@ class FormController extends AbstractController
         return $this->formatErrorMessages($errorMessages);
     }
 
-    public function formatErrorMessages($errorMessages) {
-        
+    public function formatErrorMessages($errorMessages)
+    {
+
         foreach ($errorMessages as $type => $value) {
             if (!empty($errorMessages[$type]['errors'])) {
                 return $errorMessages;
