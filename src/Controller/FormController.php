@@ -97,13 +97,6 @@ class FormController extends AbstractController
         return $this->render('forms/31-esourcing-training.html.twig', $data);
     }
 
-    public function thankYou(Request $request)
-    {
-        $data = [];
-
-        return $this->render('forms/thank-you.html.twig', $data);
-    }
-
     public function contactCCS(Request $request)
     {
 
@@ -115,20 +108,16 @@ class FormController extends AbstractController
 
         // form data used for validation and to remember values when user submits form
         $formData = [
-            'enquiryType' => $params->get('origin', null),
-            'name' => $params->get('name', null),
-            'email' => $params->get('email', null),
-            'phone' => $params->get('phone', null),
-            'company' => $params->get('company', null),
-            'jobTitle' => $params->get('00Nb0000009IXEs', null),
-            'postCode' => $params->get('post-code', null),
-            'moreDetail' =>  $params->get('more-detail', null),
+            'enquiryType'   => $params->get('origin', null),
+            'name'          => $params->get('name', null),
+            'email'         => $params->get('email', null),
+            'phone'         => $params->get('phone', null),
+            'company'       => $params->get('company', null),
+            'jobTitle'      => $params->get('00Nb0000009IXEs', null),
+            'postCode'      => $params->get('post-code', null),
+            'moreDetail'    =>  $params->get('more-detail', null),
+            'callback'      => $params->get('00Nb0000009IXEg', null)
         ];
-
-        // check if callback checkbox has been set and add to form data
-        if ($params->get('00Nb0000009IXEg') == '1') {
-            $formData['callback'] = $params->get('00Nb0000009IXEg', null);
-        }
 
         // check if complaint type exists and add to form data
         if ($params->get('complaint')) {
@@ -168,17 +157,13 @@ class FormController extends AbstractController
         $errorMessages = [];
 
         $errorMessages['nameErr'] = ContactCCSFormValidation::validationName($data['name']);
-        $errorMessages['phoneErr'] = ContactCCSFormValidation::validationPhone($data['phone']);
         $errorMessages['emailErr'] = ContactCCSFormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] = ContactCCSFormValidation::validationPhone($data['phone'], $data['callback']);
+        $errorMessages['companyErr'] = ContactCCSFormValidation::validationCompany($data['company']);
+        $errorMessages['jobTitleErr'] = ContactCCSFormValidation::validationJobTitle($data['jobTitle']);
+        $errorMessages['moreDetailErr'] = ContactCCSFormValidation::validationMoreDetial($data['moreDetail']);
 
-        // loop through and check for errors
-        foreach ($errorMessages as $type => $value) {
-            if (!empty($errorMessages[$type]['errors'])) {
-                return $errorMessages;
-            }
-        }
-
-        return false;
+        return $this->formatErrorMessages($errorMessages);
     }
 
     public function validateEsourcingRegister(array $data)
@@ -188,6 +173,12 @@ class FormController extends AbstractController
         $errorMessages['nameErr'] = EsourcingRegisterFormValidation::validationName($data['name']);
         $errorMessages['emailErr'] = EsourcingRegisterFormValidation::validationEmail($data['email']);
         $errorMessages['phoneErr'] = EsourcingRegisterFormValidation::validationPhone($data['phone']);
+
+        return $this->formatErrorMessages($errorMessages);
+    }
+
+    public function formatErrorMessages($errorMessages)
+    {
 
         foreach ($errorMessages as $type => $value) {
             if (!empty($errorMessages[$type]['errors'])) {
