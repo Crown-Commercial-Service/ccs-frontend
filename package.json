@@ -32,7 +32,7 @@
   "author": "Studio 24",
   "license": "ISC",
   "dependencies": {
-    "@babel/polyfill": "^7.2.3",
+    "@babel/polyfill": "^7.12.1",
     "autoprefixer-cli": "^1.0.0",
     "babel-preset-vue": "^2.0.2",
     "bl": "^2.2.1",
