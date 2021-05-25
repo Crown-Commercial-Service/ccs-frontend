@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Validation\ContactCCSFormValidation;
 use App\Validation\EsourcingRegisterFormValidation;
+use App\Validation\EsourcingTrainingFormValidation;
 use Studio24\Frontend\Cms\RestData;
 use Studio24\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,8 +36,9 @@ class FormController extends AbstractController
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
-        $this->api->setContentType('frameworks');
+        $this->api->setContentType('esourcing_dates');
         $this->api->setCache($cache);
+
         $this->client = HttpClient::create();
     }
 
@@ -45,10 +47,10 @@ class FormController extends AbstractController
         $params = $request->request;
 
         $formData = [
-            'name' => $params->get('name', null),
-            'email' => $params->get('email', null),
-            'phone' => $params->get('phone', null),
-            'company' => $params->get('company', null),
+            'name'      => $params->get('name', null),
+            'email'     => $params->get('email', null),
+            'phone'     => $params->get('phone', null),
+            'company'   => $params->get('company', null),
         ];
 
 
@@ -95,6 +97,44 @@ class FormController extends AbstractController
         $data = ['esourcingDates' => $results];
 
         return $this->render('forms/31-esourcing-training.html.twig', $data);
+    }
+
+    public function esourcingRegisterSubmit(Request $request)
+    {
+        $params = $request->request;
+
+        $formData = [
+            "customerType"  => $params-> get('customer-type', null),
+            "buyerDate"     => $params-> get('buyer-training-dates', null),
+            "supplierDate"  => $params-> get('supplier-training-dates', null),
+            'name'          => $params->get('name', null),
+            'email'         => $params->get('email', null),
+            'phone'         => $params->get('phone', null),
+            'company'       => $params->get('company', null),
+        ];
+
+        $formErrors = $this->validateEsourcingTraining($formData);
+
+        if ($formErrors) {
+            $this->api->setCacheKey($request->getRequestUri());
+            $results = $this->api->getOne(0);
+
+            return $this->render('forms/31-esourcing-training.html.twig', [
+                'formErrors'    => $formErrors,
+                'formData'      => $formData,
+                'esourcingDates' => $results
+            ]);
+        } else {
+            $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                'query'         => $params->all(),
+            ]);
+
+            if (!is_null($params->get('debug'))) {
+                return new Response($response->getContent());
+            }
+        }
+
+        return $this->redirect($params->get('retURL'));
     }
 
     public function contactCCS(Request $request)
@@ -173,6 +213,20 @@ class FormController extends AbstractController
         $errorMessages['nameErr'] = EsourcingRegisterFormValidation::validationName($data['name']);
         $errorMessages['emailErr'] = EsourcingRegisterFormValidation::validationEmail($data['email']);
         $errorMessages['phoneErr'] = EsourcingRegisterFormValidation::validationPhone($data['phone']);
+
+        return $this->formatErrorMessages($errorMessages);
+    }
+
+    public function validateEsourcingTraining(array $data)
+    {
+        $errorMessages = [];
+
+        $errorMessages['customerTypeErr'] = EsourcingTrainingFormValidation::validatioCustomerType($data['customerType']);
+        $errorMessages['dateErr'] = EsourcingTrainingFormValidation::validationDate($data['customerType'], $data['buyerDate'], $data['supplierDate']);
+
+        $errorMessages['nameErr'] = EsourcingTrainingFormValidation::validationName($data['name']);
+        $errorMessages['emailErr'] = EsourcingTrainingFormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] = EsourcingTrainingFormValidation::validationPhone($data['phone']);
 
         return $this->formatErrorMessages($errorMessages);
     }
