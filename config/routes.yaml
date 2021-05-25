@@ -210,6 +210,10 @@ form_esourcing_training:
   path: /esourcing-training
   controller: App\Controller\FormController::eSourcingTraining
 
+form_esourcing_training_send:
+  path: /esourcing-training/submit
+  controller: App\Controller\FormController::esourcingRegisterSubmit
+
 form_esourcing_training_thanks:
   path: /esourcing-training/thanks
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
