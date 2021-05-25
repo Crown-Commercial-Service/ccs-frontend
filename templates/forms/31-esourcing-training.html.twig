@@ -18,90 +18,40 @@
 
         <div class="govuk-phase-banner">
             <p class="govuk-phase-banner__content">
-                <strong class="govuk-tag govuk-phase-banner__content__tag ">
-                    beta </strong> <span class="govuk-phase-banner__text">
-      This is a new service – your
-      <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.
-    </span>
+                <strong class="govuk-tag govuk-phase-banner__content__tag "> beta </strong> 
+                <span class="govuk-phase-banner__text"> This is a new service – your <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QWDZX/">feedback</a> will help us to improve it.</span>
             </p>
         </div>
-
-
-        <!--<div class="govuk-breadcrumbs">-->
-        <!--<ol class="govuk-breadcrumbs__list">-->
-        <!--<li class="govuk-breadcrumbs__list-item">-->
-        <!--<a class="govuk-breadcrumbs__link" href="/">Home</a>-->
-        <!--</li>-->
-        <!--<li class="govuk-breadcrumbs__list-item">-->
-        <!--<a class="govuk-breadcrumbs__link" href="#">Search suppliers</a>-->
-        <!--</li>-->
-        <!--<li class="govuk-breadcrumbs__list-item" aria-current="page">-->
-        <!--Amey OW Limited-->
-        <!--</li>-->
-        <!--</ol>-->
-        <!--</div>-->
-
 
         <!-- required wrapper 2 -->
         <main id="main-content" role="main"  class="govuk-main-wrapper">
 
-
-            {#<div class="govuk-grid-row">#}
-            {#<div class="govuk-grid-column-full">#}
-
-            {#<h1 class="govuk-heading-xl page-title">Book online training for the CCS eSourcing tool</h1>#}
-
-            {#</div>#}
-            {#</div>#}
-
+            {% if formErrors is defined %}
+                <div class="govuk-error-summary govuk-grid-column-three-quarters" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+                    <h2 class="govuk-error-summary__title" id="error-summary-title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                        {% for errorType in formErrors %}
+                            {% for error in errorType.errors %}
+                                <a href={{errorType.link}}><li>{{error}}</li></a>
+                            {% endfor %}
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
 
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-three-quarters">
 
                     <h1 class="govuk-heading-xl page-title">Book online training for the CCS eSourcing tool</h1>
-
-
                     <p class="govuk-body-l">Complete the form below to book a place on one of our online training sessions.</p>
-
                     <p>The sessions are between 1 and 1.5 hours long. Login details will be issued in a meeting invitation sent to you about one week before the training date.</p>
-
-
-
-                    {#<form action="{{ web_to_case_post_url }}" method="POST">#}
-
-                        {#<input type=hidden name="orgid" value="{{ web_to_case_orgid }}">#}
-                        {#<input type=hidden name="retURL" value="{{ site_url }}/esourcing-training/thanks"> <!-- add the redirect url here-->#}
-                        {#<input type="hidden" id="priority" name="priority" value="Green" />#}
-                        {#<input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />#}
-                        {#<input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />#}
-                        {# Subject is where the information is stored !!! #}
-                        {# Description field contains date #}
-
-                        {# SUPPLIERS ALSO NEEDS DATES #}
-
-                        {# see https://symfony.com/doc/current/templating/app_variable.html #}
-                        {#{% if app.debug %}#}
-                            {#<input type="hidden" name="debug" value=1>#}
-                            {#<input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">#}
-                        {#{% endif %}#}
-
-                        {#<label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /><br>#}
-                        {#<label for="company">Organisation</label><input  id="company" maxlength="80" name="company" size="20" type="text" /><br>#}
-                        {#<label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>#}
-                        {#<label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br>#}
-                        {#<label for="checkbox-label">Do you require a call back</label><input id="00Nb0000009IXEg" name="00Nb0000009IXEg" type="checkbox" value="1" /><br>#}
-                        {#<label for="job-title">Job Title</label><input id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" /><br>#}
-                        {#<label for="description">Description</label><textarea name="description"></textarea><br>#}
-
-                        {#<input type="submit" name="Submit">#}
-
-                    {#</form>#}
-
 
 
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-                    <form class="govuk-!-width-three-quarters" action="{{ web_to_case_post_url }}" method="POST">
+                    <form class="govuk-!-width-three-quarters" action="/esourcing-training/submit" method="POST">
 
                         {# Change these field types to hidden for Production #}
                         <input type="hidden" name="orgid" value="{{ web_to_case_orgid }}">
@@ -128,104 +78,157 @@
                                         You will need to choose a training date. Are you a buyer or supplier?
                                     </h1>
                                 </legend>
-                                <div class="govuk-radios govuk-radios--conditional" data-module="radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="customer-type" type="radio" value="Buyer" data-aria-controls="conditional-how-contacted-conditional-1" required>
-                                        <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-1">
-                                            Buyer
-                                        </label>
-                                    </div>
-                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-1">
 
-                                        <div class="govuk-form-group">
-                                            <fieldset class="govuk-fieldset">
-                                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                                    <h1 class="govuk-fieldset__heading visuallyhidden">
-                                                        Choose your training time from the following:
-                                                    </h1>
-                                                </legend>
-                                                <div class="govuk-radios govuk-radios--small">
-
-                                                    {% for buyer_date in esourcingDates.content.buyer_dates %}
-
-                                                        <div class="govuk-radios__item govuk-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="buyer-training-dates-{{ loop.index }}" name="buyer-training-dates" type="radio" value="{{ buyer_date.date|date('jS M Y - g:ia') }}">
-                                                            <label class="govuk-label govuk-radios__label" for="buyer-training-dates-{{ loop.index }}">
-                                                                {{ buyer_date.date|date('jS M Y - g:ia') }}
-                                                            </label>
-                                                        </div>
-
-                                                    {% endfor %}
-
-                                                </div>
-                                            </fieldset>
+                                <div class="govuk-form-group {{formErrors.customerTypeErr is defined and formErrors.customerTypeErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                    {% if formErrors.customerTypeErr is defined and formErrors.customerTypeErr.errors|length > 0 %}
+                                        {% for error in formErrors.customerTypeErr.errors %}
+                                            <span id="customerType-error" class="govuk-error-message">
+                                                <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                            </span>
+                                        {% endfor %}                         
+                                    {% endif %}
+                                    
+                                    <div class="govuk-radios govuk-radios--conditional" data-module="radios">
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="how-contacted-conditional-1" name="customer-type" type="radio" value="Buyer" data-aria-controls="conditional-how-contacted-conditional-1" {{ formData is defined and formData.customerType is same as('Buyer') ? 'checked' : null }}>
+                                            <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-1">
+                                                Buyer
+                                            </label>
                                         </div>
+                                        <div class="govuk-form-group {{formErrors.dateErr is defined and formErrors.dateErr.errors|length > 0 and formData.customerType is same as('Buyer') ? 'govuk-form-group--error' : 'govuk-radios__conditional' }}" id="conditional-how-contacted-conditional-1">
 
-
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-2" name="customer-type" type="radio" value="Supplier" data-aria-controls="conditional-how-contacted-conditional-2">
-                                        <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">
-                                            Supplier
-                                        </label>
-                                    </div>
-                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-how-contacted-conditional-2">
-
-
-                                        <div class="govuk-form-group">
-                                            <fieldset class="govuk-fieldset">
-                                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                                    <h1 class="govuk-fieldset__heading visuallyhidden">
-                                                        Choose your training time from the following:
-                                                    </h1>
-                                                </legend>
-                                                <div class="govuk-radios govuk-radios--small">
-
-                                                    {% for supplier_date in esourcingDates.content.supplier_dates %}
-                                                        <div class="govuk-radios__item govuk-radios__item--small">
-                                                            <input class="govuk-radios__input govuk-radios__input--small" id="supplier-training-dates-{{ loop.index }}" name="supplier-training-dates" type="radio" value="{{ supplier_date.date|date('jS M Y - g:ia') }}">
-                                                            <label class="govuk-label govuk-radios__label" for="supplier-training-dates-{{ loop.index }}">
-                                                                {{ supplier_date.date|date('jS M Y - g:ia') }}
-                                                            </label>
-                                                        </div>
+                                            <div class="govuk-form-group">
+                                                {% if formErrors.dateErr is defined and formErrors.dateErr.errors|length > 0 and formData.customerType is same as('Buyer') %}
+                                                    {% for error in formErrors.dateErr.errors %}
+                                                        <span id="date-error" class="govuk-error-message">
+                                                            <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                                        </span>
                                                     {% endfor %}
+                                                {% endif %}
+                                                <fieldset class="govuk-fieldset">
+                                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                                        <h1 class="govuk-fieldset__heading visuallyhidden">
+                                                            Choose your training time from the following:
+                                                        </h1>
+                                                    </legend>
+                                                    <div class="govuk-radios govuk-radios--small">
 
-                                                </div>
-                                            </fieldset>
+                                                        {% for buyer_date in esourcingDates.content.buyer_dates %}
+                                                            <div class="govuk-radios__item govuk-radios__item--small">
+                                                                <input class="govuk-radios__input govuk-radios__input--small" id="buyer-training-dates-{{ loop.index }}" name="buyer-training-dates" type="radio" value="{{ buyer_date.date|date('jS M Y - g:ia') }}" {{ formData is defined and formData.customerType is same as('Buyer') and formData.buyerDate is same as buyer_date.date|date('jS M Y - g:ia') ? 'checked' : null }}>
+                                                                <label class="govuk-label govuk-radios__label" for="buyer-training-dates-{{ loop.index }}">
+                                                                    {{ buyer_date.date|date('jS M Y - g:ia') }}
+                                                                </label>
+                                                            </div>
+
+                                                        {% endfor %}
+
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+
+
                                         </div>
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="how-contacted-conditional-2" name="customer-type" type="radio" value="Supplier" data-aria-controls="conditional-how-contacted-conditional-2" {{ formData is defined and formData.customerType is same as('Supplier') ? 'checked' : null }}>
+                                            <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">
+                                                Supplier
+                                            </label>
+                                        </div>
+                                        <div class="govuk-form-group {{formErrors.dateErr is defined and formErrors.dateErr.errors|length > 0 and formData.customerType is same as('Supplier') ? 'govuk-form-group--error' : 'govuk-radios__conditional' }}" id="conditional-how-contacted-conditional-2">
+
+                                            <div class="govuk-form-group">
+                                                {% if formErrors.dateErr is defined and formErrors.dateErr.errors|length > 0 and formData.customerType is same as('Supplier') %}
+                                                    {% for error in formErrors.dateErr.errors %}
+                                                        <span id="date-error" class="govuk-error-message">
+                                                            <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                                        </span>
+                                                    {% endfor %}
+                                                {% endif %}
+                                                <fieldset class="govuk-fieldset">
+                                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                                        <h1 class="govuk-fieldset__heading visuallyhidden">
+                                                            Choose your training time from the following:
+                                                        </h1>
+                                                    </legend>
+                                                    <div class="govuk-radios govuk-radios--small">
+
+                                                        {% for supplier_date in esourcingDates.content.supplier_dates %}
+                                                            <div class="govuk-radios__item govuk-radios__item--small">
+                                                                <input class="govuk-radios__input govuk-radios__input--small" id="supplier-training-dates-{{ loop.index }}" name="supplier-training-dates" type="radio" value="{{ supplier_date.date|date('jS M Y - g:ia') }}" {{ formData is defined and formData.customerType is same as('Supplier') and formData.supplierDate is same as supplier_date.date|date('jS M Y - g:ia') ? 'checked' : null }}>
+                                                                <label class="govuk-label govuk-radios__label" for="supplier-training-dates-{{ loop.index }}">
+                                                                    {{ supplier_date.date|date('jS M Y - g:ia') }}
+                                                                </label>
+                                                            </div>
+                                                        {% endfor %}
+
+                                                    </div>
+                                                </fieldset>
+                                            </div>
 
 
+                                        </div>
                                     </div>
                                 </div>
                             </fieldset>
                         </div>
 
 
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="name">
-                                Name
-                            </label>
-                            <input class="govuk-input" id="name" maxlength="80" name="name" size="20" type="text" />
+                        <div class="govuk-form-group {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                            <label class="govuk-label" for="name"> Name </label>
+
+                            {% if formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 %}
+                                {% for error in formErrors.nameErr.errors %}
+                                     <span id="full-name-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                     </span>
+                                {% endfor %}
+                            {% endif %}
+
+                            <input class="govuk-input {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
                         </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="email">
-                                Email
-                            </label>
-                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="email" required />
+
+                         <div class="govuk-form-group {{formErrors.emailErr.errors is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                            <label class="govuk-label" for="email"> Email </label>
+
+                            {% if formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 %}
+                                {% for error in formErrors.emailErr.errors %}
+                                    <span id="email-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
+                                {% endfor %}                         
+                            {% endif %}    
+
+                            <input class="govuk-input {{formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="email" maxlength="80" name="email" size="20" type="email" value="{{formErrors is defined ? formData.email}}" autocomplete="email"/>
                         </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="name">
-                                Telephone number (optional)
-                            </label>
-                            <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text" />
+
+                        <div class="govuk-form-group {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                            <label class="govuk-label" for="phone"> Telephone number</label>
+
+                            {% if formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 %}
+                                {% for error in formErrors.phoneErr.errors %}
+                                    <span id="phone-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
+                                {% endfor %}                           
+                            {% endif %}
+
+                            <input class="govuk-input {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="phone" maxlength="20" name="phone" size="20" type="text" value="{{formErrors is defined ? formData.phone}}" autocomplete="tel" />
                         </div>
 
 
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="company">
-                                Organisation
-                            </label>
-                            <input class="govuk-input" id="company" maxlength="80" name="company" size="20" type="text" />
+                        <div class="govuk-form-group {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                            <label class="govuk-label" for="company"> Organisation </label>
+
+                            {% if formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 %}
+                                {% for error in formErrors.companyErr.errors %}
+                                    <span id="company-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
+                                {% endfor %}                            
+                            {% endif %}   
+
+                            <input class="govuk-input {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization"/>
                         </div>
 
                         {# Catch-all field for additional Salesforce data #}
@@ -242,33 +245,6 @@
 
                     <script>
 
-                        /**
-                         * Only implement this if the browser supports removeAttribute
-                         */
-                        if(document.body.removeAttribute) {
-                            /**
-                             * make date radio buttons required when necessary
-                             */
-                            var buyerRadioSelect    = document.getElementById("how-contacted-conditional-1");
-                            var buyerDateFirstRadio = document.getElementById("buyer-training-dates-1");
-                            var supplierRadioSelect = document.getElementById("how-contacted-conditional-2");
-                            var SupplierDateFirstRadio = document.getElementById("supplier-training-dates-1");
-
-                            function clearRequiredRadios() {
-                                buyerDateFirstRadio.removeAttribute("required");
-                                SupplierDateFirstRadio.removeAttribute("required");
-                            }
-
-                            buyerRadioSelect.addEventListener("click", function(event) {
-                                clearRequiredRadios();
-                                buyerDateFirstRadio.required = true;
-                            });
-
-                            supplierRadioSelect.addEventListener("click", function(event) {
-                                clearRequiredRadios();
-                                SupplierDateFirstRadio.required = true;
-                            });
-                        }
 
 
                         // Collect all the radio values
