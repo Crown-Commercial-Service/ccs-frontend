@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Validation\ContactCCSFormValidation;
+use App\Validation\EsourcingRegisterFormValidation;
+use App\Validation\EsourcingTrainingFormValidation;
 use Studio24\Frontend\Cms\RestData;
 use Studio24\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,9 +36,42 @@ class FormController extends AbstractController
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
-        $this->api->setContentType('frameworks');
+        $this->api->setContentType('esourcing_dates');
         $this->api->setCache($cache);
+
         $this->client = HttpClient::create();
+    }
+
+    public function esourcingRegister(Request $request)
+    {
+        $params = $request->request;
+
+        $formData = [
+            'name'      => $params->get('name', null),
+            'email'     => $params->get('email', null),
+            'phone'     => $params->get('phone', null),
+            'company'   => $params->get('company', null),
+        ];
+
+
+        $formErrors = $this->validateEsourcingRegister($formData);
+
+        if ($formErrors) {
+            return $this->render('forms/29-esourcing-register.html.twig', [
+                'formErrors' => $formErrors,
+                'formData' => $formData,
+            ]);
+        } else {
+            $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                'query'             => $params->all(),
+            ]);
+
+            if (!is_null($params->get('debug'))) {
+                return new Response($response->getContent());
+            }
+        }
+
+        return $this->redirect($params->get('retURL'));
     }
 
     /**
@@ -64,14 +99,45 @@ class FormController extends AbstractController
         return $this->render('forms/31-esourcing-training.html.twig', $data);
     }
 
-    public function thankYou(Request $request)
+    public function esourcingRegisterSubmit(Request $request)
     {
-        $data = [];
+        $params = $request->request;
 
-        return $this->render('forms/thank-you.html.twig', $data);
+        $formData = [
+            "customerType"  => $params-> get('customer-type', null),
+            "buyerDate"     => $params-> get('buyer-training-dates', null),
+            "supplierDate"  => $params-> get('supplier-training-dates', null),
+            'name'          => $params->get('name', null),
+            'email'         => $params->get('email', null),
+            'phone'         => $params->get('phone', null),
+            'company'       => $params->get('company', null),
+        ];
+
+        $formErrors = $this->validateEsourcingTraining($formData);
+
+        if ($formErrors) {
+            $this->api->setCacheKey($request->getRequestUri());
+            $results = $this->api->getOne(0);
+
+            return $this->render('forms/31-esourcing-training.html.twig', [
+                'formErrors'    => $formErrors,
+                'formData'      => $formData,
+                'esourcingDates' => $results
+            ]);
+        } else {
+            $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                'query'         => $params->all(),
+            ]);
+
+            if (!is_null($params->get('debug'))) {
+                return new Response($response->getContent());
+            }
+        }
+
+        return $this->redirect($params->get('retURL'));
     }
 
-    public function sendToSalesforce(Request $request)
+    public function contactCCS(Request $request)
     {
 
         $params = $request->request;
@@ -82,20 +148,16 @@ class FormController extends AbstractController
 
         // form data used for validation and to remember values when user submits form
         $formData = [
-            'enquiryType' => $params->get('origin', null),
-            'name' => $params->get('name', null),
-            'email' => $params->get('email', null),
-            'phone' => $params->get('phone', null),
-            'company' => $params->get('company', null),
-            'jobTitle' => $params->get('00Nb0000009IXEs', null),
-            'postCode' => $params->get('post-code', null),
-            'moreDetail' =>  $params->get('more-detail', null),
+            'enquiryType'   => $params->get('origin', null),
+            'name'          => $params->get('name', null),
+            'email'         => $params->get('email', null),
+            'phone'         => $params->get('phone', null),
+            'company'       => $params->get('company', null),
+            'jobTitle'      => $params->get('00Nb0000009IXEs', null),
+            'postCode'      => $params->get('post-code', null),
+            'moreDetail'    =>  $params->get('more-detail', null),
+            'callback'      => $params->get('00Nb0000009IXEg', null)
         ];
-
-        // check if callback checkbox has been set and add to form data
-        if ($params->get('00Nb0000009IXEg') == '1') {
-            $formData['callback'] = $params->get('00Nb0000009IXEg', null);
-        }
 
         // check if complaint type exists and add to form data
         if ($params->get('complaint')) {
@@ -103,7 +165,7 @@ class FormController extends AbstractController
         }
         // check for submitted data
         if (!empty($formData)) {
-            $formErrors = $this->validateForm($formData);
+            $formErrors = $this->validateContactCCS($formData);
 
             // if there are errors re-render contact form with errors and form values
             if ($formErrors) {
@@ -130,15 +192,48 @@ class FormController extends AbstractController
         }
     }
 
-    public function validateForm(array $data)
+    public function validateContactCCS(array $data)
     {
         $errorMessages = [];
 
         $errorMessages['nameErr'] = ContactCCSFormValidation::validationName($data['name']);
-        $errorMessages['phoneErr'] = ContactCCSFormValidation::validationPhone($data['phone']);
         $errorMessages['emailErr'] = ContactCCSFormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] = ContactCCSFormValidation::validationPhone($data['phone'], $data['callback']);
+        $errorMessages['companyErr'] = ContactCCSFormValidation::validationCompany($data['company']);
+        $errorMessages['jobTitleErr'] = ContactCCSFormValidation::validationJobTitle($data['jobTitle']);
+        $errorMessages['moreDetailErr'] = ContactCCSFormValidation::validationMoreDetial($data['moreDetail']);
 
-        // loop through and check for errors
+        return $this->formatErrorMessages($errorMessages);
+    }
+
+    public function validateEsourcingRegister(array $data)
+    {
+        $errorMessages = [];
+
+        $errorMessages['nameErr'] = EsourcingRegisterFormValidation::validationName($data['name']);
+        $errorMessages['emailErr'] = EsourcingRegisterFormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] = EsourcingRegisterFormValidation::validationPhone($data['phone']);
+
+        return $this->formatErrorMessages($errorMessages);
+    }
+
+    public function validateEsourcingTraining(array $data)
+    {
+        $errorMessages = [];
+
+        $errorMessages['customerTypeErr'] = EsourcingTrainingFormValidation::validatioCustomerType($data['customerType']);
+        $errorMessages['dateErr'] = EsourcingTrainingFormValidation::validationDate($data['customerType'], $data['buyerDate'], $data['supplierDate']);
+
+        $errorMessages['nameErr'] = EsourcingTrainingFormValidation::validationName($data['name']);
+        $errorMessages['emailErr'] = EsourcingTrainingFormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] = EsourcingTrainingFormValidation::validationPhone($data['phone']);
+
+        return $this->formatErrorMessages($errorMessages);
+    }
+
+    public function formatErrorMessages($errorMessages)
+    {
+
         foreach ($errorMessages as $type => $value) {
             if (!empty($errorMessages[$type]['errors'])) {
                 return $errorMessages;
