@@ -155,15 +155,16 @@ class PageController extends AbstractController
 
         $formErrors = null;
         $formData = $this->getFromData($request->request);
+        $formCampaignCode = $page->getContent()['contact_form_form_campaign_code']->getValue();
 
         if ($request->isMethod('POST')) {
-            $formErrors = $this->sendToSalesforce($request->request, $formData);
+            $formErrors = $this->sendToSalesforce($request->request, $formData, $formCampaignCode);
 
             if ($formErrors instanceof Response) {
                 return $formErrors;
             }
         }
-
+        
         return $this->render('pages/page.html.twig', [
             'page'               => $page,
             'breadcrumb_parents' => $breadcrumb,
@@ -203,15 +204,19 @@ class PageController extends AbstractController
         return '';
     }
 
-    private function sendToSalesforce($params, $formData)
+    private function sendToSalesforce($params, $formData, $formCampaignCode)
     {
 
         if ($params->get('validateAggregationOption')) {
-            $formErrors = $this->validateForm($formData);
+            $formErrors = $this->validateForm($formData, $formCampaignCode);
         } else {
-            $formErrors = $this->validateNewsletterForm($formData);
+            $formErrors = $this->validateNewsletterForm($formData, $formCampaignCode);
         }
 
+        if ($params->get('subject') !== $formCampaignCode || $params->get('00Nb0000009IXEW') !== $formCampaignCode ) {
+            return $formErrors;
+        }
+        
         if ($formErrors) {
             return $formErrors;
         } else {
@@ -230,7 +235,7 @@ class PageController extends AbstractController
         }
     }
 
-    private function validateNewsletterForm($data)
+    private function validateNewsletterForm($data, $formCampaignCode)
     {
         $errorMessages = [];
 
