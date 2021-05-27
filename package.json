@@ -38,7 +38,8 @@
     "bl": "^2.2.1",
     "braces": "^2.3.2",
     "decompress": "^4.2.1",
-    "govuk-frontend": "^2.6.0",
+    "exec-sh": "^0.4.0",
+    "govuk-frontend": "^2.13.0",
     "imagemin-cli": "^6.0.0",
     "imagemin-svgo": "^7.1.0",
     "js-yaml": "^3.14.1",
@@ -60,7 +61,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3"
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2"
   }
 }
