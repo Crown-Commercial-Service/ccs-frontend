@@ -164,7 +164,7 @@ class PageController extends AbstractController
                 return $formErrors;
             }
         }
-        
+
         return $this->render('pages/page.html.twig', [
             'page'               => $page,
             'breadcrumb_parents' => $breadcrumb,
@@ -213,10 +213,10 @@ class PageController extends AbstractController
             $formErrors = $this->validateNewsletterForm($formData);
         }
 
-        if ($params->get('subject') !== $formCampaignCode || $params->get('00Nb0000009IXEW') !== $formCampaignCode ) {
+        if ($params->get('subject') !== $formCampaignCode || $params->get('00Nb0000009IXEW') !== $formCampaignCode) {
             return $formErrors;
         }
-        
+
         if ($formErrors) {
             return $formErrors;
         } else {
