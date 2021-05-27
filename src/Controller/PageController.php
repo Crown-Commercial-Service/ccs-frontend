@@ -208,9 +208,9 @@ class PageController extends AbstractController
     {
 
         if ($params->get('validateAggregationOption')) {
-            $formErrors = $this->validateForm($formData, $formCampaignCode);
+            $formErrors = $this->validateForm($formData);
         } else {
-            $formErrors = $this->validateNewsletterForm($formData, $formCampaignCode);
+            $formErrors = $this->validateNewsletterForm($formData);
         }
 
         if ($params->get('subject') !== $formCampaignCode || $params->get('00Nb0000009IXEW') !== $formCampaignCode ) {
@@ -235,7 +235,7 @@ class PageController extends AbstractController
         }
     }
 
-    private function validateNewsletterForm($data, $formCampaignCode)
+    private function validateNewsletterForm($data)
     {
         $errorMessages = [];
 
