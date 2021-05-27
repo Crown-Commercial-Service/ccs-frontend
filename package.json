@@ -39,7 +39,7 @@
     "braces": "^2.3.2",
     "decompress": "^4.2.1",
     "govuk-frontend": "^2.6.0",
-    "imagemin-cli": "^4.0.0",
+    "imagemin-cli": "^4.0.1",
     "imagemin-svgo": "^7.1.0",
     "js-yaml": "^3.14.1",
     "lodash": "^4.17.21",
