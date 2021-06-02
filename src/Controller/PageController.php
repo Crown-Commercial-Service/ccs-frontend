@@ -216,7 +216,7 @@ class PageController extends AbstractController
         } else {
             $formErrors = $this->validateNewsletterForm($formData);
         }
-        
+
         if ($formErrors) {
             return $formErrors;
         } else {
@@ -225,7 +225,7 @@ class PageController extends AbstractController
                 $params->set('subject', $formCampaignCode);
                 $params->set('00Nb0000009IXEW', $formCampaignCode);
             }
-            
+
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                             // these values are automatically encoded before including them in the URL
                             'query' => $params->all(),
