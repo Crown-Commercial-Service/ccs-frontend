@@ -155,7 +155,11 @@ class PageController extends AbstractController
 
         $formErrors = null;
         $formData = $this->getFromData($request->request);
-        $formCampaignCode = $page->getContent()['contact_form_form_campaign_code']->getValue();
+        $formCampaignCode = null;
+
+        if (array_key_exists('contact_form_form_campaign_code', $page->getContent())) {
+            $formCampaignCode = $page->getContent()['contact_form_form_campaign_code']->getValue();
+        }
 
         if ($request->isMethod('POST')) {
             $formErrors = $this->sendToSalesforce($request->request, $formData, $formCampaignCode);
@@ -212,14 +216,16 @@ class PageController extends AbstractController
         } else {
             $formErrors = $this->validateNewsletterForm($formData);
         }
-
+        
         if ($formErrors) {
             return $formErrors;
         } else {
             // explicitly set campaign codes so they can't be manipulated client side
-            $params->set('subject', $formCampaignCode);
-            $params->set('00Nb0000009IXEW', $formCampaignCode);
-
+            if ($formCampaignCode !== null) {
+                $params->set('subject', $formCampaignCode);
+                $params->set('00Nb0000009IXEW', $formCampaignCode);
+            }
+            
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                             // these values are automatically encoded before including them in the URL
                             'query' => $params->all(),
