@@ -180,6 +180,9 @@ class FormController extends AbstractController
                     'formData' => $formData,
                 ]);
             } else {
+                // explicitly set campaign codes for contact form
+                $params->set('subject', 'Contact CCS');
+                $params->set('00Nb0000009IXEW', 'General-Enquiry');
                 // send to salesforce
                 $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                     // these values are automatically encoded before including them in the URL
