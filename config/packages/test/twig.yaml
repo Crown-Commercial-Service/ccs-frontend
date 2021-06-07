@@ -3,7 +3,7 @@ twig:
     globals:
         # No trailing slash on site_url please
         site_url: 'https://webuat.crowncommercial.gov.uk'
-        web_to_case_post_url: 'https://crowncommercial--PreProd.cs87.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8'
-        web_to_case_orgid: '00D8E0000000pAq'
+        web_to_case_post_url: 'https://crowncommercial--preprod.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8'
+        web_to_case_orgid: '00D3G0000000UB2'
         web_to_case_record_type: '012b00000005NWC'
         web_to_case_debug_email: 'carlos@studio24.net'
