@@ -175,7 +175,7 @@ class PageController extends AbstractController
             'page_query_string'  => filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING),
             'query_string_type'  => isset($_GET['type']) ? filter_var($_GET['type'], FILTER_SANITIZE_STRING) : null,
             'site_base_url'      => getenv('APP_BASE_URL'),
-            'org_id' => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D8E000000E4zz',
+            'org_id' => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D3G0000000UB2',
             'option_cards' => $optionCardsContent,
             'slug'               => $slug,
             'formErrors'         => $formErrors,
