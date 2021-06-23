@@ -62,6 +62,9 @@ class FormController extends AbstractController
                 'formData' => $formData,
             ]);
         } else {
+            $params->set('subject', 'Website - eSourcing Access');
+            $params->set('origin', 'Website - eSourcing Access');
+
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                 'query'             => $params->all(),
             ]);
@@ -125,6 +128,9 @@ class FormController extends AbstractController
                 'esourcingDates' => $results
             ]);
         } else {
+            $params->set('subject', 'Website - eSourcing Training');
+            $params->set('origin', 'Website - eSourcing Training');
+
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                 'query'         => $params->all(),
             ]);
