@@ -163,17 +163,14 @@ var docCookies = {
 
     function updateSeenCookie() {
 
-        // check if seen_cookie is set, if not, set it (we're checking this first because we don't want to reset to today every time)
-        if (!docCookies.hasItem('seen_cookie_message')) {
-            // 1 year = 3.154e+7
-            // 1 month = 2.628e+6
-            // set the cookie which tells us a user has 'accepted cookies'
-            // setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure)
-            docCookies.setItem('seen_cookie_message', true, oneyear, '/', '.crowncommercial.gov.uk');
+        // 1 year = 3.154e+7
+        // 1 month = 2.628e+6
+        // set the cookie which tells us a user has 'accepted cookies'
+        // setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure)
+        docCookies.setItem('seen_cookie_message', true, oneyear, '/', '.crowncommercial.gov.uk');
 
-            // the old 'seen' cookie is called `seen-cookie-message` (this should probably be deleted
+        // the old 'seen' cookie is called `seen-cookie-message` (this should probably be deleted
 
-        }
 
         // Only set or change the cookies if the user hasn't updated their preferences on the Cookie Settings page
         if (!docCookies.hasItem('cookie_preferences_set')) {
@@ -187,7 +184,8 @@ var docCookies = {
             docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences_accepted), oneyear, '/', '.crowncommercial.gov.uk');
             // createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
         }
-
+        // Set the 'cookies_timer_reset' to prevent showing the banner again next time the user visits
+        docCookies.setItem('cookies_timer_reset', JSON.stringify(true), oneyear, '/', '.crowncommercial.gov.uk');
     }
 
 
@@ -421,23 +419,21 @@ var docCookies = {
     // Only set the default cookies if they haven't been set
     if (!docCookies.hasItem('cookie_preferences')) {
         docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), oneyear, '/', '.crowncommercial.gov.uk');
+        // docCookies.setItem('cookies_timer_reset', JSON.stringify(cookie_preferences), oneyear, '/', '.crowncommercial.gov.uk');
         // createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
     }
 
+
     /** ---------- RESET COOKIE TIMERS ----------
      * 'seen_cookie_message' determines if the current user has previously seen the banner and accepted cookies
-     * 'cookies_timer_reset' determines whether to show the banner again or not, if cookie not present
-     *  it means visitor has an old version of cookie timers - onemonth)
+     * 'cookies_timer_reset' determines if user has an old version of cookie timers
+     * If the user has previously accepted cookies but has an old version of the timers, show the banner again
      */
     if (docCookies.hasItem('seen_cookie_message') && !docCookies.hasItem('cookies_timer_reset')) {
-
-        // If not on the cookie settings page, run the method createCookieMessage();
+        // If not on the cookie settings page, show the banner;
         if (window.location.href.indexOf("cookie-settings") === -1) {
             createCookieMessage();
         }
-
-        // Finally, set the 'cookies_timer_reset' to prevent showing the banner again next time the user visits
-        docCookies.setItem('cookies_timer_reset', JSON.stringify(true), oneyear, '/', '.crowncommercial.gov.uk');
     }
 
 
