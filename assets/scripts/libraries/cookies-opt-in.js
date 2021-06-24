@@ -430,7 +430,6 @@ var docCookies = {
      * If the user has previously accepted cookies but has an old version of the timers, show the banner again
      */
     if (docCookies.hasItem('seen_cookie_message') && !docCookies.hasItem('cookies_timer_reset')) {
-
         // If not on the cookie settings page, show the banner;
         if (window.location.href.indexOf("cookie-settings") === -1) {
             createCookieMessage();
