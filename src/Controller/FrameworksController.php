@@ -382,7 +382,7 @@ class FrameworksController extends AbstractController
             'category_slug' => (!empty($category) ? $category : null),
             'pillar'        => (!empty($pillarName) ? $pillarName : null),
             'pillar_slug'   => (!empty($pillar) ? $pillar : null),
-            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurldecode($query),
+            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($query),
             'statuses'      => $statuses
         ];
 
