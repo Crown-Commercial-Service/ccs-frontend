@@ -6,7 +6,7 @@
 
     border: 0;
     @include govuk-font(19, $weight: regular);
-    @include govuk-focusable;
+    @include govuk-focused-text;
     color: $govuk-link-colour;
     text-decoration: underline;
 

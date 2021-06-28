@@ -255,7 +255,7 @@
     right: govuk-px-to-rem(15);
     top: govuk-px-to-rem(41);
 
-    @include govuk-focusable;
+    @include govuk-focused-text;
     @include govuk-font(19, $weight: regular);
 
     @include govuk-media-query($from: 641) {
