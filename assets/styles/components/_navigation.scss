@@ -227,6 +227,7 @@
 
 }
 
+// override govuk focused text here
 .nav-list__link.nav-list__link:focus {
     color: $govuk-focus-text-colour;
     background-color: $govuk-focus-colour!important;
