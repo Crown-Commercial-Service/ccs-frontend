@@ -107,7 +107,7 @@
                                     </h2>
                                 </div>
                                 <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
-                                    <div class="govuk-radios govuk-radios--small ccs-radios--scrollable" v-if="!frameworkList">
+                                    <div class="govuk-radios ccs-radios--scrollable" v-if="!frameworkList">
                                         {% for framework in facets.frameworks %}
                                         <div class="govuk-radios__item govuk-radios__item--small">
                                             <input class="govuk-radios__input govuk-radios__input--small" id="framework-{{ framework.rm_number }}" name="framework" type="radio" value="{{ framework.rm_number }}" {% if selected.rm_number == framework.rm_number %} checked {% endif %}>
@@ -122,7 +122,7 @@
                                         <input class="govuk-input" type="text" name="searchFrameworkList" id="searchFrameworkList" v-model="frameworkFilter" v-on:keydown.enter="frameworkFilterExecute" />
                                         <button class="sidebar__search-button govuk-input" v-on:click="frameworkFilterExecute"><span class="visuallyhidden">Filter frameworks</span></button>
                                     </div>
-                                    <div class="govuk-radios govuk-radios--small ccs-radios--scrollable" v-show="frameworkList" style="display: none;">
+                                    <div class="govuk-radios ccs-radios--scrollable" v-show="frameworkList" style="display: none;">
                                         <div class="govuk-radios__item govuk-radios__item--small" v-for="framework in frameworkListFiltered">
                                             <input class="govuk-radios__input govuk-radios__input--small" :id="'framework-' + framework.rm_number" name="framework" type="radio" :value="framework" v-model="checkedFramework" :key="framework.rm_number">
                                             <label class="govuk-label govuk-radios__label" :for="'framework-' + framework.rm_number">
@@ -146,7 +146,7 @@
                                     </h2>
                                 </div>
                                 <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2">
-                                    <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                                    <div class="govuk-radios" data-module="govuk-radios">
 
                                         <div class="govuk-radios__item govuk-radios__item--small">
                                             <input class="govuk-radios__input govuk-radios__input--small" id="show-all-suppliers-on-framwork-1" name="lot-filter-nested" type="radio" value="all" v-on:click="checkedLot = ''; displayLotFilter = false;" {% if selected.lot is empty %}checked{% endif %}>
@@ -175,7 +175,7 @@
                                                                 Select lot to filter by
                                                             </h1>
                                                         </legend>
-                                                        <div class="govuk-radios govuk-radios--small ccs-radios--nested">
+                                                        <div class="govuk-radios ccs-radios--nested">
                                                             {% for lot in facets.lots %}
                                                                 <div class="govuk-radios__item govuk-radios__item--small">
                                                                     {% if selected.lot is defined and selected.lot is not empty %}
@@ -209,7 +209,7 @@
                                                             Select lot to filter by
                                                         </h1>
                                                     </legend>
-                                                    <div class="govuk-radios govuk-radios--small ccs-radios--nested">
+                                                    <div class="govuk-radios ccs-radios--nested">
                                                         <div class="govuk-radios__item govuk-radios__item--small" v-for="lot in lotList">
                                                             <input class="govuk-radios__input govuk-radios__input--small" :id="'lot-' + lot.id" name="lot-filter-nested" type="radio" :value="lot" v-model="checkedLot" :key="lot.id">
                                                             <label class="govuk-label govuk-radios__label" :for="'lot-' + lot.id">
@@ -237,7 +237,7 @@
                                     </h2>
                                 </div>
                                 <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
-                                    <div class="govuk-radios govuk-radios--small">
+                                    <div class="govuk-radios">
                                         <div class="govuk-radios__item govuk-radios__item--small">
                                             <input class="govuk-radios__input govuk-radios__input--small" id="results-per-page-1" name="limit" type="radio" :value="10" value="10" {{ pagination.resultsPerPage == 10 ? 'checked' : '' }} v-model="resultsLimit">
                                             <label class="govuk-label govuk-radios__label" for="results-per-page-1">10</label>
