@@ -134,8 +134,8 @@ form_contact:
     template: forms/22-contact.html.twig
 
 form_contact_sends:
-  path: /contact/sendToSalesforce
-  controller: App\Controller\FormController::sendToSalesforce
+  path: /contact/submit
+  controller: App\Controller\FormController::contactCCS
 
 form_contact_thanks:
   path: /contact/thanks
@@ -202,11 +202,17 @@ event_show:
 
 form_thank_you:
   path: /form-thank-you
-  controller: App\Controller\FormController::thankYou
+  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template: forms/thank-you.html.twig
 
 form_esourcing_training:
   path: /esourcing-training
   controller: App\Controller\FormController::eSourcingTraining
+
+form_esourcing_training_send:
+  path: /esourcing-training/submit
+  controller: App\Controller\FormController::esourcingRegisterSubmit
 
 form_esourcing_training_thanks:
   path: /esourcing-training/thanks
@@ -219,6 +225,10 @@ form_esourcing_register:
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
   defaults:
     template: forms/29-esourcing-register.html.twig
+
+form_esourcing_register_sends:
+  path: /esourcing-register/submit
+  controller: App\Controller\FormController::esourcingRegister
 
 form_esourcing_register_thanks:
   path: /esourcing-register/thanks
