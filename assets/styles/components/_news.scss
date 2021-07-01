@@ -1,0 +1,30 @@
+.news_img {
+
+    width: 80%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+
+.news_div {
+
+    background: #ffffff;
+    background-position: 25px 23px;
+    background-repeat: no-repeat;
+    background-size: 45px;
+    border: 1px solid #e7e4df;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.13);
+    margin-bottom: 20px;
+
+    padding: 5px 25px 5px 25px;
+
+    @include govuk-media-query($from: desktop) {
+
+        margin-bottom: 0;
+
+    }
+
+}

@@ -1,0 +1,51 @@
+<div class="govuk-width-container">
+    <div class="govuk-grid-row ccs-grid-row--loose">
+
+        <div class="govuk-grid-column-one-half">
+
+            <h2 class="news-listing-title">
+                <a href="{{ path('news_page', {'slug': page.urlSlug}) }}">{{ page.title|raw }}</a>
+            </h2>
+            <p> {{ page.datePublished.format('jS F Y') }} </p>
+                                
+            <p class="govuk-body govuk-!-font-size-17featured">
+                {{ page.content.post_lead_text  | raw }}
+            </p>
+            
+            <a href="{{ path('news_page', {'slug': page.urlSlug}) }}"> Read more </a> 
+            {# {% if component.intro_intro_cta_label is not empty or component.intro_intro_secondary_label is not empty %}
+                <div class="call-to-action--compact">
+
+                    {% if component.intro_intro_cta_label is not empty %}
+                        <a href="{{ component.intro_intro_cta_destination }}" class="govuk-button">{{ component.intro_intro_cta_label }}</a>
+                    {% endif %}
+
+                    {% if component.intro_intro_secondary_label is not empty %}
+                        <p class=" wysiwyg-content">
+                            <a href="{{ component.intro_intro_secondary_destination }}">{{ component.intro_intro_secondary_label }}</a>
+                        </p>
+                    {% endif %}
+
+                </div>
+            {% endif %} #}
+
+        </div>
+        <div class="govuk-grid-column-one-half">
+            <figure class="image-wrapper">
+                <picture class="">
+                    {% if page.featuredImage.url is defined %}
+                        <source media="(max-width: 768px)" srcset="{{ page.featuredImage.byName('medium_large') }}">
+                        <source media="(min-width: 1024px)" srcset="{{ page.featuredImage.byName('large') }}">
+                        <source media="(min-width: 1920px)" srcset="{{ page.featuredImage.byName('full') }}">
+                        <img src="{{ page.featuredImage.url }}"
+                                role="presentation"
+                                class="news_img"
+                                loading="lazy"/>
+                    {% endif %}
+                </picture>
+
+            </figure>
+        </div>
+
+    </div>
+</div>
