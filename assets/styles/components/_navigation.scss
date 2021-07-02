@@ -215,11 +215,7 @@
  * Highlight current navigation item
  */
 .nav-list__link.nav-list__link:hover,
-.nav-list__link.nav-list__link:focus,
 .item-current {
-
-    background-color: #5F0D2A;
-    color: govuk-colour("white");
 
     @include govuk-media-query($from: desktop) {
 
@@ -229,6 +225,16 @@
 
     }
 
+}
+
+// override govuk focused text here
+.nav-list__link.nav-list__link:focus {
+    color: $govuk-focus-text-colour;
+    background-color: $govuk-focus-colour!important;
+    box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
+    // When link is focussed, hide the default underline since the
+    // box shadow adds the "underline"
+    outline: $govuk-focus-width solid transparent;
 }
 
 .nav-list__link.nav-list__link:active {
@@ -255,7 +261,6 @@
     right: govuk-px-to-rem(15);
     top: govuk-px-to-rem(41);
 
-    @include govuk-focusable;
     @include govuk-font(19, $weight: regular);
 
     @include govuk-media-query($from: 641) {
