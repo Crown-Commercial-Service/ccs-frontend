@@ -1,10 +1,16 @@
 .news_img {
 
-    width: 80%;
-    height: auto;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.news_wrapper {
+    
+    display: flex;
+    flex-wrap: wrap;
 
 }
 
@@ -23,7 +29,7 @@
 
     @include govuk-media-query($from: desktop) {
 
-        margin-bottom: 0;
+        margin-bottom: 20px;
 
     }
 

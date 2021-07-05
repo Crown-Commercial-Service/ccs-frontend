@@ -40,15 +40,26 @@ class NewsController extends AbstractController
 
         $this->api->setCacheKey($request->getRequestUri());
 
+        $categories = null;
         try {
-            $list = $this->api->listPages($page);
+            if ($request->query->has('categories') ){
+                $categories = (int) filter_var($request->query->get('categories'), FILTER_SANITIZE_NUMBER_INT);
+            }
+
+            $list = $this->api->listPages($page, ['per_page' => 5,
+                                                  'categories'  => $categories ?? null
+                                                 ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('News page not found', $e);
         }
 
+        $dada = "dada";
         return $this->render('news/list.html.twig', [
-            'url' => sprintf('/news/page/%s', $page),
-            'pages' => $list
+            'url'               => sprintf('/news/page/%s', $page),
+            'pageNumber'        => $page,
+            'categories'        => $categories ?? null,
+            'categoriesName'    => $this->newsKeyToString($categories),
+            'pages'             => $list
         ]);
     }
 
@@ -68,5 +79,27 @@ class NewsController extends AbstractController
             'url' => sprintf('/news/%s', $slug),
             'page' => $page
         ]);
+    }
+
+    private function newsKeyToString( $id ){
+
+        switch ($id) {
+            case 26;
+                return "News";
+                break;
+            case 27:
+                return "Blog";
+                break;
+            case 28:
+                return "Event";
+                break;
+            case 29:
+                return "Case study";
+                break;
+            default:
+                return null;
+                break;
+        }
+
     }
 }

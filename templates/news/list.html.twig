@@ -24,14 +24,28 @@
             </p>
         </div>
 
+        {% set filterSet = categoriesName is defined and categoriesName is not empty ? true : false %}
+        {% set showFeature = pageNumber is defined and pageNumber == 1  ? true : false %}
+
+
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="/">Home</a>
                 </li>
-                <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                    News
-                </li>
+                {% if filterSet %}
+                    <li class="govuk-breadcrumbs__list-item">
+                        <a class="govuk-breadcrumbs__link" href="/news"> News</a>
+                    </li>
+
+                    <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                        {{ categoriesName }}
+                    </li>
+                {% else %}
+                    <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                        News
+                    </li>
+                {% endif %}
             </ol>
         </div>
 
@@ -40,25 +54,48 @@
 
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <h1 class="govuk-heading-xl page-title">News</h1>
+                    <h1 class="govuk-heading-xl page-title">{{ filterSet ? categoriesName : "News"}}</h1>
                 </div>
             </div>
 
 
             {% if pages %}
-                {% for page in pages %}
-                    {# {{ dump(page.content.post_lead_text) }}  #}
-                    <div class="govuk-width-container">
-                        <div class ="news_div" >
-                            {% include 'news/block.html.twig' with {'page': page} %}
-                        </div>
 
+                {% if not filterSet and showFeature %}
+                    <div class ="news_div" >
+                        {% include 'news/block.html.twig' with {'page': pages.current} %}
                     </div>
-                {% endfor %}
+                {% endif %}
+
+                <div class="govuk-grid-row news_wrapper" >
+                    <div class="govuk-grid-column-one-third">
+                        <p>filter option</p>
+                        <p>filter option</p>
+                        <p>filter option</p>
+                        <p>filter option</p>
+                        <p>filter option</p>
+                        <p>filter option</p>
+                        <p>filter option</p>
+                        <p>filter option</p>
+                        <p>filter option</p>
+                    </div>
+
+                    <div class="govuk-grid-column-two-thirds">
+                        {% for page in pages %}
+                            {% if not filterSet and not ( loop.first and showFeature) %}
+                                <div class ="news_div" >
+                                    {% include 'news/block.html.twig' with {'page': page} %}
+                                </div>
+                            {% endif %}
+                            
+                        {% endfor %}
+                    </div>
+              
+                </div>
             {% endif %}
 
 
-
+            {{ include('includes/pagination.html.twig', {'pagination': pages.pagination, 'route': 'news_list', 'options': {}}) }}
         </main>
     </div>
 
