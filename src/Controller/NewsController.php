@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Utils\FrameworkCategories;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
 use Studio24\Frontend\ContentModel\ContentModel;
@@ -40,14 +41,17 @@ class NewsController extends AbstractController
 
         $this->api->setCacheKey($request->getRequestUri());
 
-        $categories = null;
+        $categoriesFiltes = $this->api->getAllTerms('categories');
+
+        $selectedCategories = null;
+
         try {
             if ($request->query->has('categories') ){
-                $categories = (int) filter_var($request->query->get('categories'), FILTER_SANITIZE_NUMBER_INT);
+                $selectedCategories = (int) filter_var($request->query->get('categories'), FILTER_SANITIZE_NUMBER_INT);
             }
 
             $list = $this->api->listPages($page, ['per_page' => 5,
-                                                  'categories'  => $categories ?? null
+                                                  'categories'  => $selectedCategories ?? null
                                                  ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('News page not found', $e);
@@ -55,11 +59,11 @@ class NewsController extends AbstractController
 
         $dada = "dada";
         return $this->render('news/list.html.twig', [
-            'url'               => sprintf('/news/page/%s', $page),
-            'pageNumber'        => $page,
-            'categories'        => $categories ?? null,
-            'categoriesName'    => $this->newsKeyToString($categories),
-            'pages'             => $list
+            'url'                       => sprintf('/news/page/%s', $page),
+            'pageNumber'                => $page,
+            'categoriesFiltes'          => $categoriesFiltes,
+            'selectedCategoriesName'    => $this->newsKeyToString($selectedCategories),
+            'pages'                     => $list
         ]);
     }
 
@@ -81,7 +85,7 @@ class NewsController extends AbstractController
         ]);
     }
 
-    private function newsKeyToString( $id ){
+    private function newsKeyToString($id){
 
         switch ($id) {
             case 26;
