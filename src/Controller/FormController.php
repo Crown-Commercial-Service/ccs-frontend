@@ -212,6 +212,26 @@ class FormController extends AbstractController
         return $formErrors;
     }
 
+    public function sendToSalesforce($params, $data, $campaignCode)
+    {
+        $formErrors = self::gatedFormErrors($data);
+
+        if (!$formErrors) {
+              // create client
+              $client = HttpClient::create();
+
+              $params->set('subject', $campaignCode);
+              $params->set('00Nb0000009IXEW', $campaignCode);
+
+              $response = $client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                  // these values are automatically encoded before including them in the URL
+                  'query' => $params->all(),
+              ]);
+        }
+
+        return $formErrors;
+    }
+
     public function validateContactCCS(array $data)
     {
         $errorMessages = [];

@@ -56,7 +56,7 @@ class WhitepaperController extends AbstractController
         $campaignCode = $whitepaper->getContent()->get('campaign_code') ? $whitepaper->getContent()->get('campaign_code')->getValue() : '';
 
         if ($request->isMethod('POST')) {
-            $formErrors = $this->sendToSalesforce($params, $formData, $campaignCode);
+            $formErrors = FormController::sendToSalesforce($params, $formData, $campaignCode);
 
             if ($formErrors instanceof Response) {
                 return $formErrors;
@@ -106,25 +106,5 @@ class WhitepaperController extends AbstractController
             'phone' => $params->get('phone', null),
             'company' => $params->get('company', null),
         ];
-    }
-
-    public function sendToSalesforce($params, $data, $campaignCode)
-    {
-        $formErrors = FormController::gatedFormErrors($data);
-
-        if (!$formErrors) {
-              // create client
-              $client = HttpClient::create();
-
-              $params->set('subject', $campaignCode);
-              $params->set('00Nb0000009IXEW', $campaignCode);
-
-              $response = $client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
-                  // these values are automatically encoded before including them in the URL
-                  'query' => $params->all(),
-              ]);
-        }
-
-         return $formErrors;
     }
 }
