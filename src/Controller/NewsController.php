@@ -41,29 +41,38 @@ class NewsController extends AbstractController
 
         $this->api->setCacheKey($request->getRequestUri());
 
-        $categoriesFiltes = $this->api->getAllTerms('categories');
+        $categoriesFilters          = $this->api->getAllTerms('categories');
+        $sectorsFilters             = $this->api->getAllTerms('sectors');
+        $productsServicesFilters    = $this->api->getAllTerms('products_services');
 
-        $selectedCategories = null;
+
+        $selectedCategories         = $request->query->get('categories');
+        $selectedSectors            = $request->query->get('sectors');
+        $selectedProducts_services  = $request->query->get('products_services');
+
+
+        $options = [
+            'categories'        => $selectedCategories ?? null,
+            'sectors'           => $selectedSectors ?? null,
+            'products_services' => $selectedProducts_services ?? null,
+            'per_page'          => 5,
+        ];
 
         try {
-            if ($request->query->has('categories') ){
-                $selectedCategories = (int) filter_var($request->query->get('categories'), FILTER_SANITIZE_NUMBER_INT);
-            }
-
-            $list = $this->api->listPages($page, ['per_page' => 5,
-                                                  'categories'  => $selectedCategories ?? null
-                                                 ]);
+            $list = $this->api->listPages($page, $options);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('News page not found', $e);
         }
 
-        $dada = "dada";
         return $this->render('news/list.html.twig', [
             'url'                       => sprintf('/news/page/%s', $page),
             'pageNumber'                => $page,
-            'categoriesFiltes'          => $categoriesFiltes,
-            'selectedCategoriesName'    => $this->newsKeyToString($selectedCategories),
-            'pages'                     => $list
+            'categoriesFilters'         => $categoriesFilters,
+            'sectorsFilters'            => $sectorsFilters,
+            'productsServicesFilters'   => $productsServicesFilters,
+            'title'                     => $this->getTitle($categoriesFilters, $sectorsFilters, $productsServicesFilters, $options),
+            'pages'                     => $list,
+            'filters'                   => $options
         ]);
     }
 
@@ -85,25 +94,16 @@ class NewsController extends AbstractController
         ]);
     }
 
-    private function newsKeyToString($id){
+    private function getTitle($categoriesFilters, $sectorsFilters, $productsServicesFilters, $options)
+    {
+        $filteredId = $options['categories'] ?? $options['sectors'] ?? $options['products_services'];
 
-        switch ($id) {
-            case 26;
-                return "News";
-                break;
-            case 27:
-                return "Blog";
-                break;
-            case 28:
-                return "Event";
-                break;
-            case 29:
-                return "Case study";
-                break;
-            default:
-                return null;
-                break;
+        foreach ([$categoriesFilters, $sectorsFilters, $productsServicesFilters] as $filter) {
+            foreach ($filter as $each) {
+                if ($each->getID() == $filteredId) {
+                    return $each->getName();
+                }
+            }
         }
-
     }
 }
