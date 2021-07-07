@@ -204,13 +204,12 @@ class FormController extends AbstractController
         }
     }
 
-    public function gatedFormErrors ($formData) 
+    public function gatedFormErrors($formData)
     {
         // validate form data
-       $formErrors = self::validateGatedForm($formData);
+        $formErrors = self::validateGatedForm($formData);
 
-       return $formErrors;
-        
+        return $formErrors;
     }
 
     public function validateContactCCS(array $data)
@@ -252,7 +251,7 @@ class FormController extends AbstractController
         return $this->formatErrorMessages($errorMessages);
     }
 
-    public function validateGatedForm(array $data) 
+    public function validateGatedForm(array $data)
     {
         $errorMessages = [];
 
@@ -262,7 +261,6 @@ class FormController extends AbstractController
         $errorMessages['companyErr'] = GatedFormValidation::validationCompany($data['company']);
 
         return self::formatErrorMessages($errorMessages);
-
     }
 
     public function formatErrorMessages($errorMessages)

@@ -52,6 +52,7 @@ class WebinarController extends AbstractController
         $params = $request->request;
         $formData = $this->getFormData($params);
         $returnURL = getenv('APP_BASE_URL') . '/webinar/confirmation/' . $webinar->getId() . '/' . $webinar->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING);
+        $campaignCode = $webinar->getContent()->get('campaign_code') ? $webinar->getContent()->get('campaign_code')->getValue() : '';
 
         if ($request->isMethod('POST')) {
             $formErrors = FormController::gatedFormErrors($formData);
@@ -63,7 +64,6 @@ class WebinarController extends AbstractController
             if (!$formErrors) {
                 // create client
                 $client = HttpClient::create();
-                $campaignCode = $webinar->getContent()->get('campaign_code') ? $webinar->getContent()->get('campaign_code')->getValue() : '';
 
                 $params->set('subject', $campaignCode);
                 $params->set('00Nb0000009IXEW', $campaignCode);
@@ -73,7 +73,7 @@ class WebinarController extends AbstractController
                     'query' => $params->all(),
                 ]);
                 return $this->redirect($returnURL);
-               }
+            }
         }
 
         $data = [
@@ -107,7 +107,8 @@ class WebinarController extends AbstractController
         return $this->render('webinars/confirmation.html.twig', $data);
     }
 
-    public function getFormData ($params) {
+    public function getFormData($params)
+    {
         return [
             'name' => $params->get('name', null),
             'email' => $params->get('email', null),

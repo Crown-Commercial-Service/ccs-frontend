@@ -53,6 +53,7 @@ class WhitepaperController extends AbstractController
         $params = $request->request;
         $formData = $this->getFormData($params);
         $returnURL = getenv('APP_BASE_URL') . '/whitepaper/confirmation/' . $whitepaper->getId() . '/' . $whitepaper->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING);
+        $campaignCode = $whitepaper->getContent()->get('campaign_code') ? $whitepaper->getContent()->get('campaign_code')->getValue() : '';
 
         if ($request->isMethod('POST')) {
             $formErrors = FormController::gatedFormErrors($formData);
@@ -64,7 +65,6 @@ class WhitepaperController extends AbstractController
             if (!$formErrors) {
                 // create client
                 $client = HttpClient::create();
-                $campaignCode = $whitepaper->getContent()->get('campaign_code') ? $whitepaper->getContent()->get('campaign_code')->getValue() : '';
 
                 $params->set('subject', $campaignCode);
                 $params->set('00Nb0000009IXEW', $campaignCode);
@@ -74,7 +74,7 @@ class WhitepaperController extends AbstractController
                     'query' => $params->all(),
                 ]);
                 return $this->redirect($returnURL);
-               }
+            }
         }
 
         $data = [
@@ -108,7 +108,8 @@ class WhitepaperController extends AbstractController
         ]);
     }
 
-    public function getFormData ($params) {
+    public function getFormData($params)
+    {
         return [
             'name' => $params->get('name', null),
             'email' => $params->get('email', null),

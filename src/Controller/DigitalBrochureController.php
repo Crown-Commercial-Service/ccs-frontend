@@ -28,7 +28,7 @@ class DigitalBrochureController extends AbstractController
 
     public function __construct(CacheInterface $cache)
     {
-       
+
         $this->api = new WordPress(
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
@@ -54,6 +54,7 @@ class DigitalBrochureController extends AbstractController
         $params = $request->request;
         $formData = $this->getFormData($params);
         $returnURL = getenv('APP_BASE_URL') . '/digital_brochure/confirmation/' . $digital_brochure->getId() . '/' . $digital_brochure->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING);
+        $campaignCode = $digital_brochure->getContent()->get('campaign_code') ? $digital_brochure->getContent()->get('campaign_code')->getValue() : '';
 
         if ($request->isMethod('POST')) {
             $formErrors = FormController::gatedFormErrors($formData);
@@ -65,7 +66,6 @@ class DigitalBrochureController extends AbstractController
             if (!$formErrors) {
                 // create client
                 $client = HttpClient::create();
-                $campaignCode = $digital_brochure->getContent()->get('campaign_code') ? $digital_brochure->getContent()->get('campaign_code')->getValue() : '';
 
                 $params->set('subject', $campaignCode);
                 $params->set('00Nb0000009IXEW', $campaignCode);
@@ -75,16 +75,8 @@ class DigitalBrochureController extends AbstractController
                     'query' => $params->all(),
                 ]);
                 return $this->redirect($returnURL);
-               }
+            }
         }
-        
-        
-
-           // do we need return URL ?
-           // add form errors to html
-           // WHITEPAPER
-           // any other form that uses gated form
-           // clean up
 
         $data = [
           'digital_brochure'    => $digital_brochure,
@@ -94,7 +86,7 @@ class DigitalBrochureController extends AbstractController
           'org_id'        => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D8E000000E4zz',
           'return_url'    => $returnURL,
           'formErrors'    => $formErrors,
-          'formData'      => $formData,  
+          'formData'      => $formData,
         ];
 
         return $this->render('digital_brochures/request.html.twig', $data);
@@ -117,7 +109,8 @@ class DigitalBrochureController extends AbstractController
         ]);
     }
 
-    public function getFormData ($params) {
+    public function getFormData($params)
+    {
         return [
             'name' => $params->get('name', null),
             'email' => $params->get('email', null),
