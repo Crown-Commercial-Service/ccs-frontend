@@ -7,12 +7,15 @@ namespace App\Controller;
 use App\Validation\ContactCCSFormValidation;
 use App\Validation\EsourcingRegisterFormValidation;
 use App\Validation\EsourcingTrainingFormValidation;
+use App\Validation\GatedFormValidation;
+use App\Controller\WhitepaperController;
 use Studio24\Frontend\Cms\RestData;
 use Studio24\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Psr\SimpleCache\CacheInterface;
 
 /**
@@ -201,6 +204,15 @@ class FormController extends AbstractController
         }
     }
 
+    public function gatedFormErrors ($formData) 
+    {
+        // validate form data
+       $formErrors = self::validateGatedForm($formData);
+
+       return $formErrors;
+        
+    }
+
     public function validateContactCCS(array $data)
     {
         $errorMessages = [];
@@ -238,6 +250,19 @@ class FormController extends AbstractController
         $errorMessages['phoneErr'] = EsourcingTrainingFormValidation::validationPhone($data['phone']);
 
         return $this->formatErrorMessages($errorMessages);
+    }
+
+    public function validateGatedForm(array $data) 
+    {
+        $errorMessages = [];
+
+        $errorMessages['nameErr'] = GatedFormValidation::validationName($data['name']);
+        $errorMessages['emailErr'] = GatedFormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] = GatedFormValidation::validationPhone($data['phone']);
+        $errorMessages['companyErr'] = GatedFormValidation::validationCompany($data['company']);
+
+        return self::formatErrorMessages($errorMessages);
+
     }
 
     public function formatErrorMessages($errorMessages)
