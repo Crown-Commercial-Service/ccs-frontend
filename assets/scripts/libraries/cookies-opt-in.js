@@ -178,7 +178,7 @@ var docCookies = {
         // (in which case cookie_preferences_set will be set already)
         if (!docCookies.hasItem('cookie_preferences_set')) {
 
-            var cookie_preferences_accepted = { 
+            var cookie_preferences_accepted = {
                 essentials: true,
                 usage: true,
                 marketing: true,
@@ -186,7 +186,7 @@ var docCookies = {
 
             docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences_accepted), oneyear, '/', '.crowncommercial.gov.uk');
             // createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
-            
+
             // Set the 'cookies_timer_reset' to prevent showing the banner again next time the user visits
             docCookies.setItem('cookies_timer_reset', JSON.stringify(true), oneyear, '/', '.crowncommercial.gov.uk');
 
@@ -199,7 +199,7 @@ var docCookies = {
             const cookie_timer = (cookie_preferences['marketing'] === false && cookie_preferences['usage'] === false)
                 ? twodays
                 : oneyear;
-           
+
             docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), cookie_timer, '/', '.crowncommercial.gov.uk');
             // Set the 'cookies_timer_reset' to prevent showing the banner again next time the user visits
             docCookies.setItem('cookies_timer_reset', JSON.stringify(true), cookie_timer, '/', '.crowncommercial.gov.uk');
