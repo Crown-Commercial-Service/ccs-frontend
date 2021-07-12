@@ -8,7 +8,7 @@
             </h2>
 
             <p> 
-                {{ page.datePublished.format('jS F Y') }} , 
+                {{ page.datePublished.format('jS F Y') }}, 
                 <a href="{{ path('news_list', {'categories': page.taxonomies.categories.current.id }) }}"> {{ page.taxonomies.categories.current.name }} </a> 
             </p>
 
