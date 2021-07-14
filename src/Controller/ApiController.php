@@ -272,6 +272,15 @@ class ApiController extends AbstractController
             'covidrecovery'     => getenv('PARDOT_EMAIL_FORM_HANDLER_COVIDRECOVERY_URL'),
             'agg'       => getenv('PARDOT_EMAIL_FORM_HANDLER_AGG_URL'),
             'event'     => getenv('PARDOT_EMAIL_FORM_HANDLER_EVENT_URL'),
+            'construction'     => getenv('PARDOT_EMAIL_FORM_HANDLER_CONSTRUCTION_URL'),
+            'fleet'     => getenv('PARDOT_EMAIL_FORM_HANDLER_FLEET_URL'),
+            'tepas'     => getenv('PARDOT_EMAIL_FORM_HANDLER_TEPAS_URL'),
+            'nhswa'     => getenv('PARDOT_EMAIL_FORM_HANDLER_NHSWA_URL'),
+            'mou'     => getenv('PARDOT_EMAIL_FORM_HANDLER_MOU_URL'),
+            'cyber'     => getenv('PARDOT_EMAIL_FORM_HANDLER_CYBER_URL'),
+            'newsletter'     => getenv('PARDOT_EMAIL_FORM_HANDLER_NEWSLETTER_URL'),
+            'lg'     => getenv('PARDOT_EMAIL_FORM_HANDLER_LG_URL'),
+            'nhs'     => getenv('PARDOT_EMAIL_FORM_HANDLER_NHS_URL'),
         ];
 
         $pardotFormUrl = null;
