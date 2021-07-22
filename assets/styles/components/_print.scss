@@ -6,26 +6,18 @@
 
     border: 0;
     @include govuk-font(19, $weight: regular);
+    @include govuk-focusable;
     color: $govuk-link-colour;
     text-decoration: underline;
 
     &:hover,
+    &:focus,
     &:active {
 
         color: $govuk-link-hover-colour;
         text-decoration: none;
 
     }
-
-    &:focus {
-        color: $govuk-focus-text-colour;
-        background-color: $govuk-focus-colour!important;
-        box-shadow: 0 -2px $govuk-focus-colour, 0 4px $govuk-focus-text-colour;
-        // When link is focussed, hide the default underline since the
-        // box shadow adds the "underline"
-        outline: $govuk-focus-width solid transparent;
-    }
-
 
 }
 
