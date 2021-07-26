@@ -88,7 +88,7 @@
                                         {% endfor %}                         
                                     {% endif %}
                                     
-                                    <div class="govuk-radios govuk-radios--conditional" data-module="radios">
+                                    <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
                                         <div class="govuk-radios__item">
                                             <input class="govuk-radios__input" id="how-contacted-conditional-1" name="customer-type" type="radio" value="Buyer" data-aria-controls="conditional-how-contacted-conditional-1" {{ formData is defined and formData.customerType is same as('Buyer') ? 'checked' : null }}>
                                             <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-1">
@@ -111,7 +111,7 @@
                                                             Choose your training time from the following:
                                                         </h1>
                                                     </legend>
-                                                    <div class="govuk-radios govuk-radios--small">
+                                                    <div class="govuk-radios">
 
                                                         {% for buyer_date in esourcingDates.content.buyer_dates %}
                                                             <div class="govuk-radios__item govuk-radios__item--small">
@@ -151,7 +151,7 @@
                                                             Choose your training time from the following:
                                                         </h1>
                                                     </legend>
-                                                    <div class="govuk-radios govuk-radios--small">
+                                                    <div class="govuk-radios">
 
                                                         {% for supplier_date in esourcingDates.content.supplier_dates %}
                                                             <div class="govuk-radios__item govuk-radios__item--small">
