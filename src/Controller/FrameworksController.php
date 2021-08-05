@@ -329,7 +329,8 @@ class FrameworksController extends AbstractController
     {
 
         // Get search query
-        $query =  filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
+        // strip special characters and tags from search query
+        $query = preg_replace("/[^a-zA-Z0-9\s]/", "", strip_tags(html_entity_decode($request->query->get('q'))));
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         $this->searchApi->setCacheKey($request->getRequestUri());

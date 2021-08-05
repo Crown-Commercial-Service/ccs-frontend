@@ -155,9 +155,14 @@ class PageController extends AbstractController
 
         $formErrors = null;
         $formData = $this->getFromData($request->request);
+        $formCampaignCode = null;
+
+        if (array_key_exists('contact_form_form_campaign_code', $page->getContent())) {
+            $formCampaignCode = $page->getContent()['contact_form_form_campaign_code']->getValue();
+        }
 
         if ($request->isMethod('POST')) {
-            $formErrors = $this->sendToSalesforce($request->request, $formData);
+            $formErrors = $this->sendToSalesforce($request->request, $formData, $formCampaignCode);
 
             if ($formErrors instanceof Response) {
                 return $formErrors;
@@ -170,7 +175,7 @@ class PageController extends AbstractController
             'page_query_string'  => filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING),
             'query_string_type'  => isset($_GET['type']) ? filter_var($_GET['type'], FILTER_SANITIZE_STRING) : null,
             'site_base_url'      => getenv('APP_BASE_URL'),
-            'org_id' => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D8E000000E4zz',
+            'org_id' => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D3G0000000UB2',
             'option_cards' => $optionCardsContent,
             'slug'               => $slug,
             'formErrors'         => $formErrors,
@@ -203,7 +208,7 @@ class PageController extends AbstractController
         return '';
     }
 
-    private function sendToSalesforce($params, $formData)
+    private function sendToSalesforce($params, $formData, $formCampaignCode)
     {
 
         if ($params->get('validateAggregationOption')) {
@@ -215,6 +220,12 @@ class PageController extends AbstractController
         if ($formErrors) {
             return $formErrors;
         } else {
+            // explicitly set campaign codes so they can't be manipulated client side
+            if ($formCampaignCode !== null) {
+                $params->set('subject', $formCampaignCode);
+                $params->set('00Nb0000009IXEW', $formCampaignCode);
+            }
+
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                             // these values are automatically encoded before including them in the URL
                             'query' => $params->all(),
