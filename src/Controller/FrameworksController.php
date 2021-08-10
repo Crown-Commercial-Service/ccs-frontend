@@ -424,6 +424,8 @@ class FrameworksController extends AbstractController
             throw new NotFoundHttpException('Framework agreement not found', $e);
         }
 
+        $results = $this->setGovTableStyleForAllField($results);
+
         $data = [
             'framework' => $results
         ];
@@ -602,5 +604,118 @@ class FrameworksController extends AbstractController
         }
 
         return null;
+    }
+
+    private function setGovTableStyleForAllField($results)
+    {
+        $description = $results->getContent()['description']->getValue();
+        if ($description != "") {
+            $description = $this->addGovUkClassToTables($description);
+            $results->getContent()['description']->setContent($description);
+        }
+
+        $benefits = $results->getContent()['benefits']->getValue();
+        if ($benefits != "") {
+            $benefits = $this->addGovUkClassToTables($benefits);
+            $results->getContent()['benefits']->setContent($benefits);
+        }
+
+        $howToBuy = $results->getContent()['how_to_buy']->getValue();
+        if ($howToBuy != "") {
+            $howToBuy = $this->addGovUkClassToTables($howToBuy);
+            $results->getContent()['how_to_buy']->setContent($howToBuy);
+        }
+
+        return $results;
+    }
+
+    private function addGovUkClassToTables(string $input)
+    {
+        $lines = explode(PHP_EOL, $input);
+        $output = [];
+
+        $firstTr[] = "<thead class=\"govuk-table__head\">";
+        $firstSetOfTrFound = false;
+
+        $indexOfTableTag = 0;
+        $indexOfTableTagFound = false;
+
+        foreach ($lines as $eachLine) {
+            //if line contain table, tr or td, then add gov uk class
+            if ($this->stringContainTableElement($eachLine)) {
+                $eachLine = str_replace("<table", "<table class=\"govuk-table\" ", $eachLine);
+                $eachLine = str_replace("<tr", "<tr class=\"govuk-table__row\" ", $eachLine);
+                $eachLine = str_replace("<td", "<td class=\"govuk-table__cell\" ", $eachLine);
+                $eachLine = $this->removeStrongAndAddGovHeader($eachLine);
+            }
+
+            // spliting into main HTML and sub HTML
+            if ($this->stringContainTrOrTh($eachLine) == true and $firstSetOfTrFound == false) {
+                $firstTr[] = $eachLine;
+            } else {
+                $output[] = $eachLine;
+            }
+
+            //completing sub HMTL
+            if ($eachLine == "</tr>" and $firstSetOfTrFound == false) {
+                $firstSetOfTrFound = true;
+                $firstTr[] = "</thead>";
+            }
+
+            //finding the index to join main and sub HTML together
+            if ($this->stringContainTbody($eachLine) == false and $indexOfTableTagFound == false) {
+                $indexOfTableTag++;
+            } else {
+                $indexOfTableTagFound = true;
+            }
+        }
+
+        $output = $this->formatThead($output, $firstTr, $indexOfTableTag);
+
+        return implode("\n", $output);
+    }
+
+    private function stringContainTableElement($input)
+    {
+        if (strpos($input, '<td') !== false or strpos($input, '<tr') !== false or strpos($input, '<table') !== false) {
+            return (true);
+        }
+
+        return(false);
+    }
+
+    private function stringContainTrOrTh($input)
+    {
+        if (strpos($input, '<td') !== false or strpos($input, '<tr') !== false or strpos($input, '</tr') !== false) {
+            return (true);
+        }
+
+        return(false);
+    }
+
+    private function stringContainTbody($input)
+    {
+        if (strpos($input, '<tbody') !== false) {
+            return (true);
+        }
+
+        return(false);
+    }
+
+    private function removeStrongAndAddGovHeader($input)
+    {
+        if (strpos($input, '</strong>') !== false) {
+            $input = str_replace("<strong>", "", $input);
+            $input = str_replace("</strong>", "", $input);
+            $input = str_replace("class=\"", "class=\"govuk-table__header ", $input);
+        }
+
+        return($input);
+    }
+
+    private function formatThead($mainHtml, $subHtml, $indexOfTableTag)
+    {
+        array_splice($mainHtml, $indexOfTableTag, 0, $subHtml);
+        return $mainHtml;
     }
 }
