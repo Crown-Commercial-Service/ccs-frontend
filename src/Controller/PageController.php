@@ -211,6 +211,10 @@ class PageController extends AbstractController
     private function sendToSalesforce($params, $formData, $formCampaignCode)
     {
 
+        if (!empty($_REQUEST['surname']) && (bool) $_REQUEST['surname'] == true) {
+            die;
+        }
+
         if ($params->get('validateAggregationOption')) {
             $formErrors = $this->validateForm($formData);
         } else {
