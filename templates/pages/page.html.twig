@@ -312,6 +312,8 @@
                                                         <input class="govuk-input pardot-field {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
                                                     </div>
 
+                                                    <input type="checkbox" name="surname" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
+
                                                     <div class="govuk-form-group {{formErrors.emailErr.errors is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                                                         <label class="govuk-label" for="email">Email </label>
 
