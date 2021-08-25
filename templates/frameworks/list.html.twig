@@ -18,13 +18,7 @@
         <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
         <div class="govuk-phase-banner">
-            <p class="govuk-phase-banner__content">
-                <strong class="govuk-tag govuk-phase-banner__content__tag ">
-                    beta </strong> <span class="govuk-phase-banner__text">
-      This is a new service – your
-      <a class="govuk-link" href={{ survey_link }}>feedback</a> will help us to improve it.
-    </span>
-            </p>
+            {% include '/includes/phase-banner-content.html.twig' %}
         </div>
 
 
@@ -130,7 +124,7 @@
                             </div>
                         </div>
                         
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="accordion" id="accordion-with-summary-sections">
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">

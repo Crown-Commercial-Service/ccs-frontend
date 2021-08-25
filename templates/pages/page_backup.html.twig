@@ -38,13 +38,7 @@
 
             <div class="govuk-width-container">
                 <div class="govuk-phase-banner">
-                    <p class="govuk-phase-banner__content">
-                        <strong class="govuk-tag govuk-phase-banner__content__tag ">
-                            beta </strong> <span class="govuk-phase-banner__text">
-      This is a new service – your
-      <a class="govuk-link" href={{ survey_link }}>feedback</a> will help us to improve it.
-    </span>
-                    </p>
+                    {% include '/includes/phase-banner-content.html.twig' %}
                 </div>
             </div>
 
@@ -160,7 +154,7 @@
 
                         {% if page.content.page_accordion %}
                             <div class="govuk-width-container">
-                                <div class="govuk-accordion govuk-!-margin-top-6" data-module="accordion" id="accordion-default">
+                                <div class="govuk-accordion govuk-!-margin-top-6" data-module="govuk-accordion" id="accordion-default">
 
 
                                     {% for accordion_item in page.content.page_accordion %}
@@ -325,7 +319,7 @@
                                                         </h3>
                                                     </legend>
 
-                                                    <div class="govuk-radios govuk-radios--small">
+                                                    <div class="govuk-radios">
                                                         {% for aggregationOption in page.content.contact_form_aggregation_options %}
                                                             <div class="govuk-radios__item govuk-radios__item--small ccs-radios__item--small">
                                                                 <input class="govuk-radios__input govuk-radios__input--small" id="option-{{ slugify(aggregationOption.aggregation_options_name) }}" name="00Nb0000009IXEW" type="radio" value="{{ aggregationOption.aggregation_options_campaign_code }}" data-campaign-code="{{ aggregationOption.aggregation_options_campaign_code }}" required="">

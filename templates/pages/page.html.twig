@@ -30,25 +30,25 @@
     <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
 
-    {% if
+    <div class="govuk-width-container">
+        <div class="govuk-phase-banner">
+            {% include '/includes/phase-banner-content.html.twig' %}
+        </div>
+    </div>
+
+    {# {% if
         page.template == "page-templates/products-and-services.php" or
         page.template == "page-templates/sectors.php" %}
 
         <div class="govuk-width-container">
             <div class="govuk-phase-banner">
-                <p class="govuk-phase-banner__content">
-                    <strong class="govuk-tag govuk-phase-banner__content__tag ">
-                        beta </strong> <span class="govuk-phase-banner__text">
-      This is a new service – your
-      <a class="govuk-link" href={{ survey_link }}>feedback</a> will help us to improve it.
-    </span>
-                </p>
+                {% include '/includes/phase-banner-content.html.twig' %}
             </div>
         </div>
 
     {% else %}
         {# DONT SHOW BANNER #}
-    {% endif %}
+    {# {% endif %} #}
 
 
 
@@ -159,7 +159,7 @@
 
                                     {% if page.content.page_accordion %}
                                         <div class="govuk-width-container">
-                                            <div class="govuk-accordion govuk-!-margin-top-6" data-module="accordion" id="accordion-default">
+                                            <div class="govuk-accordion govuk-!-margin-top-6" data-module="govuk-accordion" id="accordion-default">
 
 
                                                 {% for accordion_item in page.content.page_accordion %}
@@ -312,6 +312,8 @@
                                                         <input class="govuk-input pardot-field {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
                                                     </div>
 
+                                                    <input type="checkbox" name="surname" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
+
                                                     <div class="govuk-form-group {{formErrors.emailErr.errors is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                                                         <label class="govuk-label" for="email">Email </label>
 
@@ -402,7 +404,7 @@
                                                                     </h3>
                                                                 </legend>
 
-                                                                <div class="govuk-radios govuk-radios--small">
+                                                                <div class="govuk-radios">
                                                                     <div class="govuk-form-group {{formErrors.aggregationOptionErr is defined and formErrors.aggregationOptionErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                                                                         {% if formErrors.aggregationOptionErr is defined and formErrors.aggregationOptionErr.errors|length > 0 %}
                                                                             {% for error in formErrors.aggregationOptionErr.errors %}

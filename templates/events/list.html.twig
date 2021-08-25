@@ -22,13 +22,7 @@
 
 
         <div class="govuk-phase-banner">
-            <p class="govuk-phase-banner__content">
-                <strong class="govuk-tag govuk-phase-banner__content__tag ">
-                    beta </strong> <span class="govuk-phase-banner__text">
-      This is a new service – your
-      <a class="govuk-link" href={{ survey_link }}>feedback</a> will help us to improve it.
-    </span>
-            </p>
+            {% include '/includes/phase-banner-content.html.twig' %}
         </div>
 
 
@@ -59,7 +53,7 @@
                     <h2 class="govuk-heading-m">Filter events list</h2>
 
                     {% if products_services is not empty %}
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="accordion" id="products-services-accordion">
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="products-services-accordion">
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
                                 <div class="govuk-accordion__section-header">
                                     <h3 class="govuk-accordion__section-heading">
@@ -85,7 +79,7 @@
                     {% endif %}
 
                     {% if audience_tag is not empty %}
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="accordion" id="audience-tag-accordion">
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="audience-tag-accordion">
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
                                 <div class="govuk-accordion__section-header">
                                     <h3 class="govuk-accordion__section-heading">
@@ -112,7 +106,7 @@
 
                     {% if sectors is not empty %}
 
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="accordion" id="sectors-accordion">
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="sectors-accordion">
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
                                 <div class="govuk-accordion__section-header">
                                     <h3 class="govuk-accordion__section-heading">

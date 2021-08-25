@@ -8,7 +8,7 @@
 @import "settings";
 
 // Import GOV.UK Frontend
-@import "node_modules/govuk-frontend/all";
+@import "node_modules/govuk-frontend/govuk/all";
 
 
 @import "essentials/variable-scopes";
@@ -71,6 +71,7 @@
 @import "components/quote-and-image";
 @import "components/achievement-and-image";
 @import "components/talk-to-us-text-box";
+@import "components/news";
 
 @import "pages/homepage";
 @import "pages/all-pages";
