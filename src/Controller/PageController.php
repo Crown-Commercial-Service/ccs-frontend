@@ -241,7 +241,7 @@ class PageController extends AbstractController
                 );
             }
 
-            if ($params->get('validateAggregationOption')) {
+            if ($params->get('subject') != 'newsletters') {
                 return $this->redirectToRoute('form_thank_you');
             } else {
                 return $this->redirect(getenv('APP_BASE_URL') . '/thank-you-page-newsletters');
