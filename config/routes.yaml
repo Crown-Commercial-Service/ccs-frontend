@@ -206,13 +206,14 @@ form_thank_you:
   defaults:
     template: forms/thank-you.html.twig
 
+
 form_esourcing_training:
   path: /esourcing-training
   controller: App\Controller\FormController::eSourcingTraining
 
 form_esourcing_training_send:
   path: /esourcing-training/submit
-  controller: App\Controller\FormController::esourcingRegisterSubmit
+  controller: App\Controller\FormController::esourcingTrainingSubmit
 
 form_esourcing_training_thanks:
   path: /esourcing-training/thanks
@@ -228,7 +229,7 @@ form_esourcing_register:
 
 form_esourcing_register_sends:
   path: /esourcing-register/submit
-  controller: App\Controller\FormController::esourcingRegister
+  controller: App\Controller\FormController::esourcingRegisterSubmit
 
 form_esourcing_register_thanks:
   path: /esourcing-register/thanks
