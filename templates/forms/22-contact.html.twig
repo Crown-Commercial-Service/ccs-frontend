@@ -105,7 +105,6 @@
                         {# Change these field types to hidden for Production #}
                         <input type="hidden" name="orgid" value="{{ web_to_case_orgid }}">
                         {# Post-submit redirect URL #}
-                        <input type="hidden" id="returnURL" name="retURL" value="{{ site_url }}/contact/thanks">
                         <!-- add the redirect url here-->
                         <input type="hidden" id="priority" name="priority" value="Green"/>
                         <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}"/>
@@ -355,8 +354,7 @@
                         // The field were we collect all the data for Salesforce
                         dataCollectionFieldForSalesforce = document.getElementById("salesforce-textarea");
 
-                        // Set up the custom fields. We need to update the retURL field depending on the `fieldCheckboxes` values
-                        retURLfield = document.getElementById("returnURL");
+                        // Set up the custom fields
                         condtionalFields = document.getElementById("conditional-fields");
                         generalEnquiryReturnURL = "{{ site_url }}/contact/thanks";
                         complaintReturnURL = "{{ site_url }}/contact/thanks-complaint";
@@ -371,7 +369,6 @@
                         
                         // if "Website - Complaint" is already selected for instance if there are errors and page has reloaded load additional fields
                         if (document.getElementById('how-contacted-conditional-2').checked) {
-                                    retURLfield.value = complaintReturnURL;
                                     condtionalFields.classList.remove("govuk-radios__conditional--hidden");
                                     labelMoreDetail.textContent = "Briefly state your feedback:";
                         }
@@ -382,14 +379,12 @@
 
                                 // If user selects "Website - Complaint", update redirect URL, show additional fields and update textarea label
                                 if (this.value === "Website - Complaint" && this.checked) {
-                                    retURLfield.value = complaintReturnURL;
                                     condtionalFields.classList.remove("govuk-radios__conditional--hidden");
                                     labelMoreDetail.textContent = "Briefly state your feedback:";
                                 }
 
                                 // If user selects "Website - Enquiry", update redirect URL, hide additional fields and update textarea label
                                 if (this.value === "Website - Enquiry" && this.checked) {
-                                    retURLfield.value = generalEnquiryReturnURL;
                                     condtionalFields.classList.add("govuk-radios__conditional--hidden");
                                     labelMoreDetail.textContent = "Can you provide more detail?";
                                 }

@@ -47,7 +47,6 @@
         <input class="govuk-input {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization" />
     </div>
 
-    <input type="hidden" name="retURL" value="{{ return_url }}">
     <input type="hidden" name="orgid" value="{{ org_id }}">
     <input type="hidden" name="subject" value="{{ campaign_code }}">
     <input type="hidden" name="00Nb0000009IXEW" value="{{ campaign_code }}">

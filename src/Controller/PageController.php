@@ -241,7 +241,11 @@ class PageController extends AbstractController
                 );
             }
 
-            return $this->redirect($params->get('retURL'));
+            if ($params->get('validateAggregationOption')) {
+                return $this->redirectToRoute('form_thank_you');
+            } else {
+                return $this->redirect(getenv('APP_BASE_URL') . '/thank-you-page-newsletters');
+            }
         }
     }
 
@@ -295,7 +299,6 @@ class PageController extends AbstractController
             'callback' => $params->get('00Nb0000009IXEg', null),
             'description' =>  $params->get('description', null),
             'aggregationCheckbox' => $params->get('00Nb0000009IXEd', null),
-            'returnLink' => $params->get('retURL', null),
             'validateAggregationOption' => $params->get('validateAggregationOption', null),
         ];
     }

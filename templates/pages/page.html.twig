@@ -292,11 +292,6 @@
                                                     {% endif %}
 
                                                     <input type="hidden" name="orgid" value="{{ org_id }}">
-                                                    {% if page.content.contact_form_show_newsletter_form is not empty and page.content.contact_form_show_newsletter_form.value == true %}
-                                                        <input type="hidden" name="retURL" value="{{ site_base_url }}/thank-you-page-newsletters">
-                                                    {% else %}
-                                                        <input type="hidden" name="retURL" value="{{ site_base_url }}/form-thank-you?{{ page_query_string }}">
-                                                    {% endif %}
                                                     <input type="hidden" name="recordType" value="012b00000005NWC">
                                                     <input type="hidden" name="priority" value="Green">
 
