@@ -45,7 +45,7 @@ class FormController extends AbstractController
         $this->client = HttpClient::create();
     }
 
-    public function esourcingRegister(Request $request)
+    public function esourcingRegisterSubmit(Request $request)
     {
         $params = $request->request;
 
@@ -77,7 +77,7 @@ class FormController extends AbstractController
             }
         }
 
-        return $this->redirect($params->get('retURL'));
+        return $this->redirectToRoute('form_esourcing_register_thanks');
     }
 
     /**
@@ -105,7 +105,7 @@ class FormController extends AbstractController
         return $this->render('forms/31-esourcing-training.html.twig', $data);
     }
 
-    public function esourcingRegisterSubmit(Request $request)
+    public function esourcingTrainingSubmit(Request $request)
     {
         $params = $request->request;
 
@@ -143,7 +143,7 @@ class FormController extends AbstractController
             }
         }
 
-        return $this->redirect($params->get('retURL'));
+        return $this->redirectToRoute('form_esourcing_training_thanks');
     }
 
     public function contactCCS(Request $request)
