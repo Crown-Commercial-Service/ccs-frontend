@@ -194,8 +194,6 @@ class FormController extends AbstractController
                     // these values are automatically encoded before including them in the URL
                     'query' => $params->all(),
                 ]);
-                //dd($params->all());
-                //die(var_dump($params->all()));
                 if (!is_null($params->get('debug'))) {
                     return new Response(
                         $response->getContent()
