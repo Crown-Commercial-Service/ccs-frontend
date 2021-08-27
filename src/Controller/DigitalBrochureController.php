@@ -73,7 +73,7 @@ class DigitalBrochureController extends AbstractController
           'campaign_code' => $campaignCode,
           'form_action'   => $request->getRequestUri(),
           'description'   => $digital_brochure->getContent()->get('description') ? $digital_brochure->getContent()->get('description')->getValue() : '',
-          'org_id'        => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D8E000000E4zz',
+          'org_id' => getenv('APP_ENV') === 'prod' ? getenv('ORG_ID_PROD') : getenv('ORG_ID_TEST'),
           'return_url'    => $returnURL,
           'formErrors'    => $formErrors,
           'formData'      => $formData,

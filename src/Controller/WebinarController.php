@@ -72,7 +72,7 @@ class WebinarController extends AbstractController
           'form_action'   => $request->getRequestUri(),
           'description'   => $webinar->getContent()->get('description') ? $webinar->getContent()->get('description')->getValue() : '',
           'return_url'    => $returnURL,
-          'org_id'        => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D8E000000E4zz',
+          'org_id' => getenv('APP_ENV') === 'prod' ? getenv('ORG_ID_PROD') : getenv('ORG_ID_TEST'),
           'formErrors'    => $formErrors,
           'formData'      => $formData,
         ];

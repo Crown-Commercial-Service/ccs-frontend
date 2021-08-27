@@ -69,7 +69,7 @@ class FormController extends AbstractController
             $params->set('origin', 'Website - eSourcing Access');
 
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
-                'query'             => $params->all(),
+                'query' => $params->all(),
             ]);
 
             if (!is_null($params->get('debug'))) {
@@ -186,11 +186,16 @@ class FormController extends AbstractController
                 // explicitly set campaign codes for contact form
                 $params->set('subject', 'Contact CCS');
                 $params->set('00Nb0000009IXEW', 'General-Enquiry');
+
+                $org_id = getenv('APP_ENV') === 'prod' ? getenv('ORG_ID_PROD') : getenv('ORG_ID_TEST');
+                $params->set('orgid', $org_id);
                 // send to salesforce
                 $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                     // these values are automatically encoded before including them in the URL
                     'query' => $params->all(),
                 ]);
+                //dd($params->all());
+                //die(var_dump($params->all()));
                 if (!is_null($params->get('debug'))) {
                     return new Response(
                         $response->getContent()
