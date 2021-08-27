@@ -68,6 +68,9 @@ class FormController extends AbstractController
             $params->set('subject', 'Website - eSourcing Access');
             $params->set('origin', 'Website - eSourcing Access');
 
+            $orgId = getenv('APP_ENV') === 'prod' ? getenv('ORG_ID_PROD') : getenv('ORG_ID_TEST');
+            $params->set('orgId', $orgId);
+
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                 'query' => $params->all(),
             ]);
@@ -134,8 +137,11 @@ class FormController extends AbstractController
             $params->set('subject', 'Website - eSourcing Training');
             $params->set('origin', 'Website - eSourcing Training');
 
+            $orgId = getenv('APP_ENV') === 'prod' ? getenv('ORG_ID_PROD') : getenv('ORG_ID_TEST');
+            $params->set('orgId', $orgId);
+
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
-                'query'         => $params->all(),
+                'query' => $params->all(),
             ]);
 
             if (!is_null($params->get('debug'))) {
@@ -187,8 +193,8 @@ class FormController extends AbstractController
                 $params->set('subject', 'Contact CCS');
                 $params->set('00Nb0000009IXEW', 'General-Enquiry');
 
-                $org_id = getenv('APP_ENV') === 'prod' ? getenv('ORG_ID_PROD') : getenv('ORG_ID_TEST');
-                $params->set('orgid', $org_id);
+                $orgId = getenv('APP_ENV') === 'prod' ? getenv('ORG_ID_PROD') : getenv('ORG_ID_TEST');
+                $params->set('orgId', $orgId);
                 // send to salesforce
                 $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                     // these values are automatically encoded before including them in the URL
