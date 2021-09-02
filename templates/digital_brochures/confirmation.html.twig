@@ -35,7 +35,7 @@
         <main class="govuk-main-wrapper">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <h1 class="govuk-heading-xl page-title page-title--tight">You can now download this Digital Brochure</h1>
+                    <h1 class="govuk-heading-xl page-title page-title--tight">You can now download this {{ digital_brochure.content.document_type|default ? digital_brochure.content.document_type|raw : 'Digital Brochure' }}</h1>
 
                     {#<div class="page-intro page-intro--tight"><p>Your details have been submitted and you can now download the digial brochure.</p></div>#}
                     {% if (digital_brochure.content.digital_brochure_url is defined and digital_brochure.content.digital_brochure_url is not empty) and (digital_brochure.content.digital_brochure_url_text is defined and digital_brochure.content.digital_brochure_url_text is not empty)  %}
