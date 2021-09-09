@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Validation\FormValidation;
+use App\Helper\ControllerHelper;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
 use Studio24\Frontend\Cms\RestData;
@@ -162,6 +163,7 @@ class PageController extends AbstractController
         }
 
         if ($request->isMethod('POST')) {
+            $params->set('orgid', ControllerHelper::getOrgId());
             $formErrors = $this->sendToSalesforce($request->request, $formData, $formCampaignCode);
 
             if ($formErrors instanceof Response) {
@@ -175,7 +177,6 @@ class PageController extends AbstractController
             'page_query_string'  => filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING),
             'query_string_type'  => isset($_GET['type']) ? filter_var($_GET['type'], FILTER_SANITIZE_STRING) : null,
             'site_base_url'      => getenv('APP_BASE_URL'),
-            'org_id' => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D26000000Ge1C',
             'option_cards' => $optionCardsContent,
             'slug'               => $slug,
             'formErrors'         => $formErrors,
@@ -217,8 +218,6 @@ class PageController extends AbstractController
 
         if ($params->get('validateAggregationOption')) {
             $formErrors = $this->validateForm($formData);
-        } else {
-            $formErrors = $this->validateNewsletterForm($formData);
         }
 
         if ($formErrors) {
@@ -228,6 +227,7 @@ class PageController extends AbstractController
             if ($formCampaignCode !== null) {
                 $params->set('subject', $formCampaignCode);
                 $params->set('00Nb0000009IXEW', $formCampaignCode);
+                $params->set('orgid', ControllerHelper::getOrgId());
             }
 
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
