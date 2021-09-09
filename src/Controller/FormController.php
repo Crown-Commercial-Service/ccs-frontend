@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Validation\FormValidation;
 use App\Validation\ContactCCSFormValidation;
 use App\Validation\EsourcingRegisterFormValidation;
 use App\Validation\EsourcingTrainingFormValidation;
 use App\Validation\GatedFormValidation;
+use App\Helper\ControllerHelper;
 use App\Controller\WhitepaperController;
 use Studio24\Frontend\Cms\RestData;
 use Studio24\Frontend\ContentModel\ContentModel;
@@ -204,6 +206,50 @@ class FormController extends AbstractController
         }
     }
 
+    public function newsletters(Request $request)
+    {
+        $params = $request->request;
+
+        ControllerHelper::honeyPot($params->get('surname', null));
+
+        $formData = [
+            'name'          => $params->get('name', null),
+            'email'         => $params->get('email', null),
+            'company'       => $params->get('company', null),
+            'jobTitle'      => $params->get('00Nb0000009IXEs', null),
+        ];
+
+        if (!empty($formData)) {
+            $formErrors = $this->validateNewsletterForm($formData);
+
+            if ($formErrors) {
+                return $this->render('forms/27-newsletter.html.twig', [
+                    'formErrors' => $formErrors,
+                    'formData' => $formData,
+                ]);
+            } else {
+                $params->set('subject', 'Newsletter');
+                $params->set('00Nb0000009IXEW', 'Newsletter');
+                $params->set('recordType', '012b00000005NWC');
+                $params->set('priority', 'Green');
+                $params->set('orgid', ControllerHelper::getOrgId());
+
+                $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                    'query' => $params->all(),
+                ]);
+
+                if (!is_null($params->get('debug'))) {
+                    return new Response(
+                        $response->getContent()
+                    );
+                } else {
+                    return $this->redirectToRoute('form_newsletter_thanks');
+                }
+            }
+        }
+    }
+
+
     public function gatedFormErrors($formData)
     {
         // validate form data
@@ -244,6 +290,24 @@ class FormController extends AbstractController
         $errorMessages['moreDetailErr'] = ContactCCSFormValidation::validationMoreDetial($data['moreDetail']);
 
         return $this->formatErrorMessages($errorMessages);
+    }
+
+    private function validateNewsletterForm($data)
+    {
+        $errorMessages = [];
+
+        $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
+        $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
+        $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
+        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
+
+        foreach ($errorMessages as $type => $value) {
+            if (!empty($errorMessages[$type]['errors'])) {
+                return $errorMessages;
+            }
+        }
+
+        return false;
     }
 
     public function validateEsourcingRegister(array $data)
