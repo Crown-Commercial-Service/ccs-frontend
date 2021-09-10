@@ -163,7 +163,6 @@ class PageController extends AbstractController
         }
 
         if ($request->isMethod('POST')) {
-            $params->set('orgid', ControllerHelper::getOrgId());
             $formErrors = $this->sendToSalesforce($request->request, $formData, $formCampaignCode);
 
             if ($formErrors instanceof Response) {
