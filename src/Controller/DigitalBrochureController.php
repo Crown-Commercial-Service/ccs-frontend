@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Controller\FormController;
+use App\Helper\ControllerHelper;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
 use Studio24\Frontend\Cms\RestData;
@@ -57,6 +58,7 @@ class DigitalBrochureController extends AbstractController
         $campaignCode = $digital_brochure->getContent()->get('campaign_code') ? $digital_brochure->getContent()->get('campaign_code')->getValue() : '';
 
         if ($request->isMethod('POST')) {
+            $params->set('orgid', ControllerHelper::getOrgId());
             $formErrors = FormController::sendToSalesforce($params, $formData, $campaignCode);
 
             if ($formErrors instanceof Response) {
@@ -73,7 +75,6 @@ class DigitalBrochureController extends AbstractController
           'campaign_code' => $campaignCode,
           'form_action'   => $request->getRequestUri(),
           'description'   => $digital_brochure->getContent()->get('description') ? $digital_brochure->getContent()->get('description')->getValue() : '',
-          'org_id'        => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D8E000000E4zz',
           'return_url'    => $returnURL,
           'formErrors'    => $formErrors,
           'formData'      => $formData,
