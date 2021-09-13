@@ -211,28 +211,26 @@ class PageController extends AbstractController
     private function sendToSalesforce($params, $formData, $formCampaignCode)
     {
 
-        if (!empty($_REQUEST['surname']) && (bool) $_REQUEST['surname'] == true) {
-            die;
-        }
+        ControllerHelper::honeyPot($params->get('surname', null));
 
         if ($params->get('validateAggregationOption')) {
+            $formErrors = $this->validateAggregationOptionForm($formData);
+        } else {
             $formErrors = $this->validateForm($formData);
         }
 
         if ($formErrors) {
             return $formErrors;
         } else {
-            // explicitly set campaign codes so they can't be manipulated client side
-            if ($formCampaignCode !== null) {
-                $params->set('subject', $formCampaignCode);
-                $params->set('00Nb0000009IXEW', $formCampaignCode);
-                $params->set('orgid', ControllerHelper::getOrgId());
-            }
+            $params->set('subject', $formCampaignCode);
+            $params->set('00Nb0000009IXEW', $params->get('validateAggregationOption') ? $params->get('00Nb0000009IXEW') : $formCampaignCode);
+            $params->set('recordType', '012b00000005NWC');
+            $params->set('priority', 'Green');
+            $params->set('orgid', ControllerHelper::getOrgId());
 
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
-                            // these values are automatically encoded before including them in the URL
-                            'query' => $params->all(),
-                        ]);
+                'query' => $params->all(),
+            ]);
 
             if (!is_null($params->get('debug'))) {
                 return new Response(
@@ -240,15 +238,29 @@ class PageController extends AbstractController
                 );
             }
 
-            if ($params->get('subject') != 'newsletters') {
-                return $this->redirectToRoute('form_thank_you');
-            } else {
-                return $this->redirect(getenv('APP_BASE_URL') . '/thank-you-page-newsletters');
-            }
+            return $this->redirectToRoute('form_thank_you');
         }
     }
 
     private function validateForm($data)
+    {
+        $errorMessages = [];
+
+        $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
+        $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
+        $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
+        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
+
+        foreach ($errorMessages as $type => $value) {
+            if (!empty($errorMessages[$type]['errors'])) {
+                return $errorMessages;
+            }
+        }
+
+        return false;
+    }
+
+    private function validateAggregationOptionForm($data)
     {
         $errorMessages = [];
 
@@ -283,7 +295,6 @@ class PageController extends AbstractController
             'validateAggregationOption' => $params->get('validateAggregationOption', null),
         ];
     }
-
 
     /**
      * Simple healthcheck

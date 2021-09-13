@@ -49,12 +49,6 @@
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
                     <form class="govuk-!-width-three-quarters" action="/esourcing-register/submit" method="POST" novalidate>
 
-                        {# Change these field types to hidden for Production #}
-                        <input type="hidden" id="priority" name="priority" value="Green" />
-                        <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
-                        <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Website - eSourcing Access" />
-                        <input type="hidden" id="origin" maxlength="80" name="origin" size="20" value="Website - eSourcing Access" />
-
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
                             <input type="hidden" name="debug" value=1>
@@ -64,6 +58,7 @@
 
                         {# `name` value must match fields in Salesforce. `class` value must match GDS components #}
 
+                        <input type="checkbox" name="surname" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
 
                         <div class="govuk-form-group {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="name"> Name </label>
