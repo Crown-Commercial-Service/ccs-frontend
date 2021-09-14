@@ -188,17 +188,21 @@ event_show:
   requirements:
     id: '\d+'
 
-#form_newsletter:
-#  path: /newsletter
-#  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-#  defaults:
-#    template: forms/27-newsletter.html.twig
-#
-#form_newsletter_thanks:
-#  path: /newsletter/thanks
-#  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-#  defaults:
-#    template: forms/28-newsletter-thanks.html.twig
+form_newsletter:
+ path: /newsletter
+ controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+ defaults:
+   template: forms/27-newsletter.html.twig
+
+form_newsletter_sends:
+  path: /newsletters/submit
+  controller: App\Controller\FormController::newsletters
+
+form_newsletter_thanks:
+ path: /newsletter/thanks
+ controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+ defaults:
+   template: forms/28-newsletter-thanks.html.twig
 
 form_thank_you:
   path: /form-thank-you

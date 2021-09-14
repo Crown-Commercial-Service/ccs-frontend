@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Controller\FormController;
+use App\Helper\ControllerHelper;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
 use Studio24\Frontend\ContentModel\ContentModel;
-use Studio24\Frontend\Exception\PaginationException;
-use Studio24\Frontend\Exception\WordpressException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpClient\HttpClient;
 use Studio24\Frontend\Exception\NotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -53,9 +51,11 @@ class WebinarController extends AbstractController
         $formData = $this->getFormData($params);
         $returnURL = getenv('APP_BASE_URL') . '/webinar/confirmation/' . $webinar->getId() . '/' . $webinar->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING);
         $campaignCode = $webinar->getContent()->get('campaign_code') ? $webinar->getContent()->get('campaign_code')->getValue() : '';
+        $description   = $webinar->getContent()->get('description') ? $webinar->getContent()->get('description')->getValue() : '';
+
 
         if ($request->isMethod('POST')) {
-            $formErrors = FormController::sendToSalesforce($params, $formData, $campaignCode);
+            $formErrors = FormController::sendToSalesforce($params, $formData, $campaignCode, $description);
 
             if ($formErrors instanceof Response) {
                 return $formErrors;
@@ -70,9 +70,8 @@ class WebinarController extends AbstractController
           'webinar'       => $webinar,
           'campaign_code' => $campaignCode,
           'form_action'   => $request->getRequestUri(),
-          'description'   => $webinar->getContent()->get('description') ? $webinar->getContent()->get('description')->getValue() : '',
+          'description'   => $description,
           'return_url'    => $returnURL,
-          'org_id'        => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D8E000000E4zz',
           'formErrors'    => $formErrors,
           'formData'      => $formData,
         ];

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Validation\FormValidation;
 use App\Validation\ContactCCSFormValidation;
 use App\Validation\EsourcingRegisterFormValidation;
 use App\Validation\EsourcingTrainingFormValidation;
 use App\Validation\GatedFormValidation;
+use App\Helper\ControllerHelper;
 use App\Controller\WhitepaperController;
 use Studio24\Frontend\Cms\RestData;
 use Studio24\Frontend\ContentModel\ContentModel;
@@ -49,6 +51,8 @@ class FormController extends AbstractController
     {
         $params = $request->request;
 
+        ControllerHelper::honeyPot($params->get('surname', null));
+
         $formData = [
             'name'      => $params->get('name', null),
             'email'     => $params->get('email', null),
@@ -66,7 +70,10 @@ class FormController extends AbstractController
             ]);
         } else {
             $params->set('subject', 'Website - eSourcing Access');
+            $params->set('recordType', '012b00000005NWC');
+            $params->set('priority', 'Green');
             $params->set('origin', 'Website - eSourcing Access');
+            $params->set('orgid', ControllerHelper::getOrgId());
 
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                 'query'             => $params->all(),
@@ -109,6 +116,8 @@ class FormController extends AbstractController
     {
         $params = $request->request;
 
+        ControllerHelper::honeyPot($params->get('surname', null));
+
         $formData = [
             "customerType"  => $params-> get('customer-type', null),
             "buyerDate"     => $params-> get('buyer-training-dates', null),
@@ -132,7 +141,10 @@ class FormController extends AbstractController
             ]);
         } else {
             $params->set('subject', 'Website - eSourcing Training');
+            $params->set('recordType', '012b00000005NWC');
+            $params->set('priority', 'Green');
             $params->set('origin', 'Website - eSourcing Training');
+            $params->set('orgid', ControllerHelper::getOrgId());
 
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                 'query'         => $params->all(),
@@ -151,11 +163,8 @@ class FormController extends AbstractController
 
         $params = $request->request;
 
-        if (!empty($_REQUEST['surname']) && (bool) $_REQUEST['surname'] == true) {
-            die;
-        }
+        ControllerHelper::honeyPot($params->get('surname', null));
 
-        // form data used for validation and to remember values when user submits form
         $formData = [
             'enquiryType'   => $params->get('origin', null),
             'name'          => $params->get('name', null),
@@ -168,29 +177,29 @@ class FormController extends AbstractController
             'callback'      => $params->get('00Nb0000009IXEg', null)
         ];
 
-        // check if complaint type exists and add to form data
         if ($params->get('complaint')) {
             $formData['complaint'] = $params->get('complaint', null);
         }
-        // check for submitted data
+
         if (!empty($formData)) {
             $formErrors = $this->validateContactCCS($formData);
 
-            // if there are errors re-render contact form with errors and form values
             if ($formErrors) {
                 return $this->render('forms/22-contact.html.twig', [
                     'formErrors' => $formErrors,
                     'formData' => $formData,
                 ]);
             } else {
-                // explicitly set campaign codes for contact form
                 $params->set('subject', 'Contact CCS');
                 $params->set('00Nb0000009IXEW', 'General-Enquiry');
-                // send to salesforce
+                $params->set('recordType', '012b00000005NWC');
+                $params->set('priority', 'Green');
+                $params->set('orgid', ControllerHelper::getOrgId());
+
                 $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
-                    // these values are automatically encoded before including them in the URL
                     'query' => $params->all(),
                 ]);
+
                 if (!is_null($params->get('debug'))) {
                     return new Response(
                         $response->getContent()
@@ -204,27 +213,65 @@ class FormController extends AbstractController
         }
     }
 
-    public function gatedFormErrors($formData)
+    public function newsletters(Request $request)
     {
-        // validate form data
-        $formErrors = self::validateGatedForm($formData);
+        $params = $request->request;
 
-        return $formErrors;
+        ControllerHelper::honeyPot($params->get('surname', null));
+
+        $formData = [
+            'name'          => $params->get('name', null),
+            'email'         => $params->get('email', null),
+            'company'       => $params->get('company', null),
+            'jobTitle'      => $params->get('00Nb0000009IXEs', null),
+        ];
+
+        if (!empty($formData)) {
+            $formErrors = $this->validateNewsletterForm($formData);
+
+            if ($formErrors) {
+                return $this->render('forms/27-newsletter.html.twig', [
+                    'formErrors' => $formErrors,
+                    'formData' => $formData,
+                ]);
+            } else {
+                $params->set('subject', 'Newsletter');
+                $params->set('00Nb0000009IXEW', 'Newsletter');
+                $params->set('recordType', '012b00000005NWC');
+                $params->set('priority', 'Green');
+                $params->set('orgid', ControllerHelper::getOrgId());
+
+                $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                    'query' => $params->all(),
+                ]);
+
+                if (!is_null($params->get('debug'))) {
+                    return new Response(
+                        $response->getContent()
+                    );
+                } else {
+                    return $this->redirectToRoute('form_newsletter_thanks');
+                }
+            }
+        }
     }
 
-    public function sendToSalesforce($params, $data, $campaignCode)
+    public static function sendToSalesforce($params, $data, $campaignCode, $description)
     {
-        $formErrors = self::gatedFormErrors($data);
+        $formErrors = self::validateGatedForm($data);
 
         if (!$formErrors) {
-              // create client
-              $client = HttpClient::create();
+            $client = HttpClient::create();
 
-              $params->set('subject', $campaignCode);
-              $params->set('00Nb0000009IXEW', $campaignCode);
+            $params->set('subject', $campaignCode);
+            $params->set('00Nb0000009IXEW', $campaignCode);
+            $params->set('00Nb0000009IXEn', '1');
+            $params->set('recordType', '012b00000005NWC');
+            $params->set('priority', 'Green');
+            $params->set('description', $description);
+            $params->set('orgid', ControllerHelper::getOrgId());
 
-              $response = $client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
-                  // these values are automatically encoded before including them in the URL
+            $client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                   'query' => $params->all(),
               ]);
         }
@@ -244,6 +291,24 @@ class FormController extends AbstractController
         $errorMessages['moreDetailErr'] = ContactCCSFormValidation::validationMoreDetial($data['moreDetail']);
 
         return $this->formatErrorMessages($errorMessages);
+    }
+
+    private function validateNewsletterForm($data)
+    {
+        $errorMessages = [];
+
+        $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
+        $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
+        $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
+        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
+
+        foreach ($errorMessages as $type => $value) {
+            if (!empty($errorMessages[$type]['errors'])) {
+                return $errorMessages;
+            }
+        }
+
+        return false;
     }
 
     public function validateEsourcingRegister(array $data)
@@ -271,7 +336,7 @@ class FormController extends AbstractController
         return $this->formatErrorMessages($errorMessages);
     }
 
-    public function validateGatedForm(array $data)
+    public static function validateGatedForm(array $data)
     {
         $errorMessages = [];
 
