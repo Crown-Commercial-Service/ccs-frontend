@@ -256,7 +256,6 @@
     border-radius: govuk-px-to-rem(3);
     color: #9B1A47;
     padding: govuk-px-to-rem(11) govuk-px-to-rem(14);
-
     position: absolute;
     right: govuk-px-to-rem(15);
     top: govuk-px-to-rem(41);
@@ -275,6 +274,12 @@
 
     }
 
+    @include govuk-media-query($until: 261) {
+
+        position: static;
+        margin-top: 20px;
+
+    }
 }
 
 .header-global--home .global-navigation__toggler {
