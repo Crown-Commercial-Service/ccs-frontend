@@ -17,9 +17,9 @@
 
         <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
-        <div class="govuk-phase-banner">
+        {# <div class="govuk-phase-banner">
             {% include '/includes/phase-banner-content.html.twig' %}
-        </div>
+        </div> #}
 
 
         <div class="govuk-breadcrumbs">
@@ -183,9 +183,9 @@
                             {% for pillar_item in pillars.pillars %}
                                 <li>
                                     {% if pillar is defined and pillar == pillar_item.name %}
-                                        <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug}) }}">{{ pillar_item.name }}</a>
+                                        <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug, 'query': query is defined and query|trim is not empty ? query : ''}) }}">{{ pillar_item.name }}</a>
                                     {% else %}
-                                        <a href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug}) }}">{{ pillar_item.name }}</a>
+                                        <a href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug, 'query': query is defined and query|trim is not empty ? query : ''}) }}">{{ pillar_item.name }}</a>
                                     {% endif %}
 
 
@@ -193,9 +193,9 @@
                                         {% for category_item in pillar_item.categories %}
                                             <li>
                                                 {% if category is defined and category == category_item.name %}
-                                                    <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_category', {'category': category_item.slug}) }}">{{ category_item.name }}</a>
+                                                    <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_category', {'category': category_item.slug, 'query': query is defined and query|trim is not empty ? query : ''}) }}">{{ category_item.name }}</a>
                                                 {% else %}
-                                                    <a href="{{ path('frameworks_list_by_category', {'category': category_item.slug}) }}">{{ category_item.name }}</a>
+                                                    <a href="{{ path('frameworks_list_by_category', {'category': category_item.slug, 'query': query is defined and query|trim is not empty ? query : ''}) }}">{{ category_item.name }}</a>
                                                 {% endif %}
                                             </li>
                                         {% endfor %}

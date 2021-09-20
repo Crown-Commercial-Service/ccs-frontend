@@ -33,20 +33,22 @@ frameworks_upcoming_deals:
   controller: App\Controller\FrameworksController::upcomingDeals
 
 frameworks_list_by_category:
-  path: /agreements/category/{category}/{page}
+  path: /agreements/category/{category}/{page}/{query}
   controller: App\Controller\FrameworksController::listByCategory
   requirements:
     page: '\d+'
   defaults:
     page: 1
+    query: ''
 
 frameworks_list_by_pillar:
-  path: /agreements/pillar/{pillar}/{page}
+  path: /agreements/pillar/{pillar}/{page}/{query}
   controller: App\Controller\FrameworksController::listByPillar
   requirements:
     page: '\d+'
   defaults:
     page: 1
+    query: ''
 
 frameworks_show:
   path: /agreements/{rmNumber}
