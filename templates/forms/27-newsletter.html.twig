@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %} Subscribe to our buyer newsletter - CCS {% endblock %}
+
 {% block header %}
     {% embed '/includes/header.html.twig' %}
         {% block bannerarea %}
@@ -9,98 +11,44 @@
 
 {% block body %}
 
+    {% include '_components/hero.html.twig' with {'image': '/assets/images/newsletters.jpg', 'heading': 'Subscribe to our buyer newsletter', 'notFromWordpress': 'true', 'cta_label': '', 'content': '', 'cta_label': '', 'cta_destination': ''} %}
+
     <!-- required wrapper 1 -->
     <div class="govuk-width-container">
 
         <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
-        <div class="govuk-phase-banner">
-            <p class="govuk-phase-banner__content">
-                <strong class="govuk-tag govuk-phase-banner__content__tag ">
-                    beta </strong> <span class="govuk-phase-banner__text">
-      This is a new service – your
-      <a class="govuk-link" href={{ survey_link }}>feedback</a> will help us to improve it.
-    </span>
-            </p>
-        </div>
-
-
-        <!--<div class="govuk-breadcrumbs">-->
-        <!--<ol class="govuk-breadcrumbs__list">-->
-        <!--<li class="govuk-breadcrumbs__list-item">-->
-        <!--<a class="govuk-breadcrumbs__link" href="/">Home</a>-->
-        <!--</li>-->
-        <!--<li class="govuk-breadcrumbs__list-item">-->
-        <!--<a class="govuk-breadcrumbs__link" href="#">Search suppliers</a>-->
-        <!--</li>-->
-        <!--<li class="govuk-breadcrumbs__list-item" aria-current="page">-->
-        <!--Amey OW Limited-->
-        <!--</li>-->
-        <!--</ol>-->
-        <!--</div>-->
-
+        {# <div class="govuk-phase-banner">
+            {% include '/includes/phase-banner-content.html.twig' %}
+        </div> #}
 
         <!-- required wrapper 2 -->
         <main id="main-content" role="main"  class="govuk-main-wrapper">
 
-
-            {#<div class="govuk-grid-row">#}
-            {#<div class="govuk-grid-column-full">#}
-
-            {#<h1 class="govuk-heading-xl page-title">Book online training for the CCS eSourcing tool</h1>#}
-
-            {#</div>#}
-            {#</div>#}
-
+            {% if formErrors is defined %}
+                <div class="govuk-error-summary govuk-grid-column-three-quarters" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+                    <h2 class="govuk-error-summary__title" id="error-summary-title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                        {% for errorType in formErrors %}
+                            {% for error in errorType.errors %}
+                                <a href={{errorType.link}}><li>{{error}}</li></a>
+                            {% endfor %}
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
 
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-three-quarters">
 
-                    <h1 class="govuk-heading-xl page-title">Sign up to receive news and updates from CCS</h1>
-
-                    <p class="govuk-body-l">Complete the form below to start learning about how we can save you time and money in procurement.</p>
-
-
-
-                    {#<form action="{{ web_to_case_post_url }}" method="POST">#}
-
-                        {#<input type=hidden name="orgid" value="{{ web_to_case_orgid }}">#}
-                        {#<input type=hidden name="retURL" value="{{ site_url }}/newsletter/thanks"> <!-- add the redirect url here-->#}
-                        {#<input type="hidden" id="priority" name="priority" value="Green" />#}
-                        {#<input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />#}
-                        {#<input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />#}
-
-                        {# see https://symfony.com/doc/current/templating/app_variable.html #}
-                        {#{% if app.debug %}#}
-                            {#<input type="hidden" name="debug" value=1>#}
-                            {#<input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">#}
-                        {#{% endif %}#}
-
-                        {#<label for="name">Contact Name</label><input  id="name" maxlength="80" name="name" size="20" type="text" /><br>#}
-                        {#<label for="company">Organisation</label><input  id="company" maxlength="80" name="company" size="20" type="text" /><br>#}
-                        {#<label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>#}
-                        {#<label for="phone">Phone</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br>#}
-                        {#<label for="checkbox-label">Do you require a call back</label><input id="00Nb0000009IXEg" name="00Nb0000009IXEg" type="checkbox" value="1" /><br>#}
-                        {#<label for="job-title">Job Title</label><input id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" /><br>#}
-                        {#<label for="description">Description</label><textarea name="description"></textarea><br>#}
-
-                        {#<input type="submit" name="Submit">#}
-
-                    {#</form>#}
-
-
+                    <h2 class="govuk-heading-m">Keep up to date with the latest news from CCS</h2>
+                    
+                    <p>Complete the form below to subscribe to the CCS newsletter and find out how we can bring power to your procurement. Each month it features framework updates, guidance, insights from our industry experts, events, case studies and much more.</p>
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-                    <form class="govuk-!-width-three-quarters" action="{{ web_to_case_post_url }}" method="POST">
-
-                        <p><em>Hidden Salesforce fields</em></p>
-                        {# Change these field types to hidden for Production #}
-                        <input type="text" name="orgid" value="{{ web_to_case_orgid }}">
-                        {# Post-submit redirect URL #}
-                        <input type="text" name="retURL" value="{{ site_url }}/newsletter/thanks"> <!-- add the redirect url here-->
-                        <input type="text" id="priority" name="priority" value="Green" />
-                        <input type="text" id="recordType" name="recordType" value="{{ web_to_case_record_type }}" />
-                        <input type="text" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
+                    <form class="govuk-!-width-three-quarters" action="/newsletters/submit" method="POST">
 
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
@@ -108,41 +56,72 @@
                             <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
                         {% endif %}
 
+                        <input type="checkbox" name="surname" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
 
-                        {# `name` value must match fields in Salesforce. `class` value must match GDS components #}
-                        <div class="govuk-form-group { govuk-form-group--error }">
-                            <label class="govuk-label" for="name">
-                                Name (combined from First name and Last name)
-                            </label>
-                            <span id="full-name-error" class="govuk-error-message">
-    Descriptive and helpful error message
-  </span>
-                            <input class="govuk-input { govuk-input--error }" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" />
+                        <div class="govuk-form-group {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                            <label class="govuk-label" for="name">Name</label>
+
+                            {% if formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 %}
+                                {% for error in formErrors.nameErr.errors %}
+                                     <span id="full-name-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                     </span>
+                                {% endfor %}
+                            {% endif %}
+
+                            <input class="govuk-input pardot-field {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
                         </div>
-                        <div class="govuk-form-group">
+
+                        <div class="govuk-form-group {{formErrors.emailErr.errors is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="email">
-                                Email
-                            </label>
-                            <input class="govuk-input" id="email" maxlength="80" name="email" size="20" type="email" required />
+                                Email </label>
+
+                            {% if formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 %}
+                                {% for error in formErrors.emailErr.errors %}
+                                    <span id="email-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
+                                {% endfor %}                         
+                            {% endif %}    
+
+                            <input class="govuk-input pardot-email {{formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="email" maxlength="80" name="email" size="20" type="email" value="{{formErrors is defined ? formData.email}}" autocomplete="email"/>
                         </div>
-                        <div class="govuk-form-group">
-                            <label class="govuk-label" for="name">
-                                Telephone number (optional)
-                            </label>
-                            <input class="govuk-input" id="phone" maxlength="40" name="phone" size="20" type="text" />
-                        </div>
-                        <div class="govuk-form-group">
+
+                        <div class="govuk-form-group {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="company">
-                                Organisation
-                            </label>
-                            <input class="govuk-input" id="company" maxlength="80" name="company" size="20" type="text" />
+                                Organisation </label>
+
+                            {% if formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 %}
+                                {% for error in formErrors.companyErr.errors %}
+                                    <span id="company-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
+                                {% endfor %}                            
+                            {% endif %}   
+
+                            <input class="govuk-input pardot-field {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization"/>
+                        </div>
+
+                        <div class="govuk-form-group {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                            <label class="govuk-label" for="00Nb0000009IXEs">
+                                Job title </label>
+
+                            {% if formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 %}
+                                {% for error in formErrors.jobTitleErr.errors %}
+                                    <span id="job-title-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
+                                {% endfor %}                           
+                            {% endif %} 
+
+                            <input class="govuk-input {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="organization-title"/>
                         </div>
 
                         <p>For information about how we use your data, you can read our <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice">privacy notice</a>. When you submit this form we will add you to our mailing list and send you our newsletters, or information about our products and services.</p>
                         <p>You will receive an email when you submit your details. You can unsubscribe using the link in the email.</p>
 
                         <div class="govuk-form-group">
-                            <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Subscribe to our newsletter (Updated copy)</button>
+                            <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Submit</button>
                         </div>
 
                     </form>

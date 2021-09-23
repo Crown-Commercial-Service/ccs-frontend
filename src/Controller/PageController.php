@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Validation\FormValidation;
+use App\Helper\ControllerHelper;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
 use Studio24\Frontend\Cms\RestData;
@@ -175,7 +176,6 @@ class PageController extends AbstractController
             'page_query_string'  => filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING),
             'query_string_type'  => isset($_GET['type']) ? filter_var($_GET['type'], FILTER_SANITIZE_STRING) : null,
             'site_base_url'      => getenv('APP_BASE_URL'),
-            'org_id' => getenv('APP_ENV') === 'prod' ? '00Db0000000egy4' : '00D26000000Ge1C',
             'option_cards' => $optionCardsContent,
             'slug'               => $slug,
             'formErrors'         => $formErrors,
@@ -211,29 +211,26 @@ class PageController extends AbstractController
     private function sendToSalesforce($params, $formData, $formCampaignCode)
     {
 
-        if (!empty($_REQUEST['surname']) && (bool) $_REQUEST['surname'] == true) {
-            die;
-        }
+        ControllerHelper::honeyPot($params->get('surname', null));
 
         if ($params->get('validateAggregationOption')) {
-            $formErrors = $this->validateForm($formData);
+            $formErrors = $this->validateAggregationOptionForm($formData);
         } else {
-            $formErrors = $this->validateNewsletterForm($formData);
+            $formErrors = $this->validateForm($formData);
         }
 
         if ($formErrors) {
             return $formErrors;
         } else {
-            // explicitly set campaign codes so they can't be manipulated client side
-            if ($formCampaignCode !== null) {
-                $params->set('subject', $formCampaignCode);
-                $params->set('00Nb0000009IXEW', $formCampaignCode);
-            }
+            $params->set('subject', $formCampaignCode);
+            $params->set('00Nb0000009IXEW', $params->get('validateAggregationOption') ? $params->get('00Nb0000009IXEW') : $formCampaignCode);
+            $params->set('recordType', '012b00000005NWC');
+            $params->set('priority', 'Green');
+            $params->set('orgid', ControllerHelper::getOrgId());
 
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
-                            // these values are automatically encoded before including them in the URL
-                            'query' => $params->all(),
-                        ]);
+                'query' => $params->all(),
+            ]);
 
             if (!is_null($params->get('debug'))) {
                 return new Response(
@@ -241,11 +238,11 @@ class PageController extends AbstractController
                 );
             }
 
-            return $this->redirect($params->get('retURL'));
+            return $this->redirectToRoute('form_thank_you');
         }
     }
 
-    private function validateNewsletterForm($data)
+    private function validateForm($data)
     {
         $errorMessages = [];
 
@@ -263,7 +260,7 @@ class PageController extends AbstractController
         return false;
     }
 
-    private function validateForm($data)
+    private function validateAggregationOptionForm($data)
     {
         $errorMessages = [];
 
@@ -295,11 +292,9 @@ class PageController extends AbstractController
             'callback' => $params->get('00Nb0000009IXEg', null),
             'description' =>  $params->get('description', null),
             'aggregationCheckbox' => $params->get('00Nb0000009IXEd', null),
-            'returnLink' => $params->get('retURL', null),
             'validateAggregationOption' => $params->get('validateAggregationOption', null),
         ];
     }
-
 
     /**
      * Simple healthcheck
