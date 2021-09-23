@@ -282,23 +282,8 @@
                                                     {# See https://symfony.com/doc/current/templating/app_variable.html #}
                                                     {% if app.debug %}
                                                         <input type="hidden" name="debug" value=1>
-{#                                                        <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">#}
+                                                        <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
                                                     {% endif %}
-
-
-                                                    {% if not page.content.contact_form_aggregation_options %}
-                                                        <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
-                                                        <input type="hidden" name="00Nb0000009IXEW" id="campaign-code-hidden-input" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
-                                                    {% endif %}
-
-                                                    <input type="hidden" name="orgid" value="{{ org_id }}">
-                                                    {% if page.content.contact_form_show_newsletter_form is not empty and page.content.contact_form_show_newsletter_form.value == true %}
-                                                        <input type="hidden" name="retURL" value="{{ site_base_url }}/thank-you-page-newsletters">
-                                                    {% else %}
-                                                        <input type="hidden" name="retURL" value="{{ site_base_url }}/form-thank-you?{{ page_query_string }}">
-                                                    {% endif %}
-                                                    <input type="hidden" name="recordType" value="012b00000005NWC">
-                                                    <input type="hidden" name="priority" value="Green">
 
                                                     <div class="govuk-form-group {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                                                         <label class="govuk-label" for="name">Name</label>
