@@ -707,6 +707,7 @@ class FrameworksController extends AbstractController
         if (strpos($input, '</strong>') !== false) {
             $input = str_replace("<strong>", "", $input);
             $input = str_replace("</strong>", "", $input);
+            $input = str_replace("td", "th", $input);
             $input = str_replace("class=\"", "class=\"govuk-table__header ", $input);
         }
 
