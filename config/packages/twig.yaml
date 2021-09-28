@@ -4,8 +4,9 @@ twig:
     strict_variables: '%kernel.debug%'
 
     # Salesforce Web-to-case form variables
+    # This file is for local twig config, therefore the web_to_case_post_url and web_to_case_orgid are incorrect value 
     globals:
-        site_url: 'https://webdev.crowncommercial.gov.uk'
+        site_url: 'http://local.crowncommercial.gov.uk'
         web_to_case_post_url: 'https://crowncommercial--PreProd.cs102.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8'
         web_to_case_orgid: '00D1j0000008aYA'
         web_to_case_record_type: '012b00000005NWC'
