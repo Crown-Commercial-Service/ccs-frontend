@@ -4,6 +4,8 @@
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
+    {% block bannerarea %}
+    {% endblock %}
         {% block headerclasses %}
             {% if page.featuredImage %}
                 header-global header-global--news-details
@@ -53,7 +55,9 @@
 
 {% block body %}
     <div class="govuk-width-container">
-
+        <div class="govuk-phase-banner">
+            {% include '/includes/phase-banner-content.html.twig' %}
+        </div>
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
                 <li class="govuk-breadcrumbs__list-item">
