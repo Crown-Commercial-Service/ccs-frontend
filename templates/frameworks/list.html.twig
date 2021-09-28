@@ -86,6 +86,9 @@
                                 {% if pillar is defined and pillar|trim is not empty %}
                                     <input type="hidden" name="pillar" value={{ pillar_slug }}>
                                 {% endif %}
+                                {% if statuses is defined and 'all' in statuses %}
+                                    <input type="hidden" name="statuses[]" value='all'>
+                                {% endif %}  
                                 <button type="submit" class="sidebar__search-button govuk-input">
                                     <span class="visuallyhidden">Search agreements</span>
                                 </button>
