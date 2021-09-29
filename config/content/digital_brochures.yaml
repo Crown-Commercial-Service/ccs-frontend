@@ -12,3 +12,5 @@ digital_brochure_url:
   type: text
 digital_brochure_url_text:
   type: text
+document_type:
+  type: text
