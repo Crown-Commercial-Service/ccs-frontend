@@ -48,15 +48,14 @@
         {% endif %}
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
-
-                <h1 class="page-title-prepend">Digital Brochure</h1>
+                <h1 class="page-title-prepend">{{ digital_brochure.content.document_type|default ? digital_brochure.content.document_type|raw : 'Digital Brochure' }}</h1>
                 <h2 class="govuk-heading-xl page-title page-title--tight">{{ digital_brochure.title|raw }}</h2>
 
                 {% if digital_brochure.content.form_introduction is defined and digital_brochure.content.form_introduction is not empty %}
                     <div class="page-intro">{{ digital_brochure.content.form_introduction|raw }}</div>
                 {% endif %}
 
-                <p>To read this digital brochure, we need a few details.</p>
+                <p>To read this {{ digital_brochure.content.document_type|default ? digital_brochure.content.document_type|raw : 'Digital Brochure' }}, we need a few details.</p>
 
                 {% include 'forms/gated-form.html.twig' %}
 
