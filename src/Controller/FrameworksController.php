@@ -215,10 +215,11 @@ class FrameworksController extends AbstractController
      * @throws \Studio24\Frontend\Exception\PaginationException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function listByCategory(Request $request, string $category, int $page = 1)
+    public function listByCategory(Request $request, string $category, string $query, int $page = 1)
     {
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
         $category = filter_var($category, FILTER_SANITIZE_STRING);
+        $query = filter_var($query, FILTER_SANITIZE_STRING);
 
         if ($category == "utilities-fuels") {
             return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'energy']);
@@ -239,6 +240,7 @@ class FrameworksController extends AbstractController
 
         try {
             $results = $this->searchApi->list($page, [
+                'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
                 'category' => $categoryName,
                 'limit' => 20
 
@@ -248,6 +250,8 @@ class FrameworksController extends AbstractController
         }
 
         $data = [
+            'query'         => $query,
+            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($query),
             'category'      => $categoryName,
             'category_slug' => $category,
             'pagination'    => $results->getPagination(),
@@ -272,10 +276,12 @@ class FrameworksController extends AbstractController
      * @throws \Studio24\Frontend\Exception\PaginationException
      * @throws \Studio24\Frontend\Exception\PermissionException
      */
-    public function listByPillar(Request $request, string $pillar, int $page = 1)
+    public function listByPillar(Request $request, string $pillar, string $query, int $page = 1)
     {
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
         $pillar = filter_var($pillar, FILTER_SANITIZE_STRING);
+        $query = filter_var($query, FILTER_SANITIZE_STRING);
+
 
         // Map category slug to category db value
         $pillarName = FrameworkCategories::getDbValueBySlug($pillar);
@@ -290,6 +296,7 @@ class FrameworksController extends AbstractController
 
         try {
             $results = $this->searchApi->list($page, [
+                'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
                 'pillar' => $pillarName,
                 'limit' => 20
             ]);
@@ -298,6 +305,8 @@ class FrameworksController extends AbstractController
         }
 
         $data = [
+            'query'         => $query,
+            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($query),
             'pillar'        => $pillarName,
             'pillar_slug'   => $pillar,
             'pagination'    => $results->getPagination(),
@@ -701,6 +710,7 @@ class FrameworksController extends AbstractController
         if (strpos($input, '</strong>') !== false) {
             $input = str_replace("<strong>", "", $input);
             $input = str_replace("</strong>", "", $input);
+            $input = str_replace("td", "th", $input);
             $input = str_replace("class=\"", "class=\"govuk-table__header ", $input);
         }
 

@@ -86,6 +86,9 @@
                                 {% if pillar is defined and pillar|trim is not empty %}
                                     <input type="hidden" name="pillar" value={{ pillar_slug }}>
                                 {% endif %}
+                                {% if statuses is defined and 'all' in statuses %}
+                                    <input type="hidden" name="statuses[]" value='all'>
+                                {% endif %}  
                                 <button type="submit" class="sidebar__search-button govuk-input">
                                     <span class="visuallyhidden">Search agreements</span>
                                 </button>
@@ -183,9 +186,9 @@
                             {% for pillar_item in pillars.pillars %}
                                 <li>
                                     {% if pillar is defined and pillar == pillar_item.name %}
-                                        <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug}) }}">{{ pillar_item.name }}</a>
+                                        <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug, 'query': query is defined and query|trim is not empty ? query : ''}) }}">{{ pillar_item.name }}</a>
                                     {% else %}
-                                        <a href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug}) }}">{{ pillar_item.name }}</a>
+                                        <a href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug, 'query': query is defined and query|trim is not empty ? query : ''}) }}">{{ pillar_item.name }}</a>
                                     {% endif %}
 
 
@@ -193,9 +196,9 @@
                                         {% for category_item in pillar_item.categories %}
                                             <li>
                                                 {% if category is defined and category == category_item.name %}
-                                                    <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_category', {'category': category_item.slug}) }}">{{ category_item.name }}</a>
+                                                    <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_category', {'category': category_item.slug, 'query': query is defined and query|trim is not empty ? query : ''}) }}">{{ category_item.name }}</a>
                                                 {% else %}
-                                                    <a href="{{ path('frameworks_list_by_category', {'category': category_item.slug}) }}">{{ category_item.name }}</a>
+                                                    <a href="{{ path('frameworks_list_by_category', {'category': category_item.slug, 'query': query is defined and query|trim is not empty ? query : ''}) }}">{{ category_item.name }}</a>
                                                 {% endif %}
                                             </li>
                                         {% endfor %}

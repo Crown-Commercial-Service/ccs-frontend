@@ -102,15 +102,6 @@
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
                     <form class="govuk-!-width-three-quarters pardot-submit" action="/contact/submit" method="POST" novalidate>
 
-                        {# Change these field types to hidden for Production #}
-                        <input type="hidden" name="orgid" value="{{ web_to_case_orgid }}">
-                        {# Post-submit redirect URL #}
-                        <!-- add the redirect url here-->
-                        <input type="hidden" id="priority" name="priority" value="Green"/>
-                        <input type="hidden" id="recordType" name="recordType" value="{{ web_to_case_record_type }}"/>
-                        <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Contact CCS" />
-                        <input type="hidden" name="00Nb0000009IXEW" id="campaign-code-hidden-input" value="General-Enquiry">
-
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
                             <input type="hidden" name="debug" value=1>
@@ -128,8 +119,8 @@
                                     </h1>
                                 </legend>
                                 <span id="how-contacted-conditional-hint" class="govuk-hint">
-      Select one option.
-    </span>
+                                    Select one option.
+                                    </span>
                                 <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="how-contacted-conditional-1" name="origin" type="radio" value="Website - Enquiry" data-aria-controls="conditional-how-contacted-conditional-1" {{ formData is defined and formData.enquiryType is same as('Website - Complaint') ? null : 'checked' }}>
