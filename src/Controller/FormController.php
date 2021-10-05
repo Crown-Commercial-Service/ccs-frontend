@@ -271,6 +271,8 @@ class FormController extends AbstractController
             $params->set('description', $description);
             $params->set('orgid', ControllerHelper::getOrgId());
 
+            dd($params->all());
+
             $client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                   'query' => $params->all(),
               ]);
@@ -344,6 +346,7 @@ class FormController extends AbstractController
         $errorMessages['emailErr'] = GatedFormValidation::validationEmail($data['email']);
         $errorMessages['phoneErr'] = GatedFormValidation::validationPhone($data['phone']);
         $errorMessages['companyErr'] = GatedFormValidation::validationCompany($data['company']);
+        $errorMessages['jobTitleErr'] = GatedFormValidation::validationJobTitle($data['jobTitle']);
 
         return self::formatErrorMessages($errorMessages);
     }

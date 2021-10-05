@@ -70,4 +70,16 @@ class GatedFormValidation
 
         return $returnArray;
     }
+
+     public static function validationJobTitle($jobTitle)
+    {
+        $returnArray  = [
+            'errors' => [],
+            'link' => '#jobTitle',
+        ];
+
+        $returnArray['errors'] = empty(trim($jobTitle)) ? ['Enter your job title'] : [] ;
+
+        return $returnArray;
+    }
 }
