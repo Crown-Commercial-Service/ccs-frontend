@@ -104,6 +104,7 @@ class WebinarController extends AbstractController
             'email' => $params->get('email', null),
             'phone' => $params->get('phone', null),
             'company' => $params->get('company', null),
+            'jobTitle' => $params->get('00Nb0000009IXEs', null),
         ];
     }
 }
