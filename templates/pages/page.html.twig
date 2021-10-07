@@ -30,7 +30,13 @@
     <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
 
-    {% if
+    <div class="govuk-width-container">
+        <div class="govuk-phase-banner">
+            {% include '/includes/phase-banner-content.html.twig' %}
+        </div>
+    </div>
+
+    {# {% if
         page.template == "page-templates/products-and-services.php" or
         page.template == "page-templates/sectors.php" %}
 
@@ -48,7 +54,7 @@
 
     {% else %}
         {# DONT SHOW BANNER #}
-    {% endif %}
+    {# {% endif %} #}
 
 
 

@@ -344,6 +344,7 @@ class FormController extends AbstractController
         $errorMessages['emailErr'] = GatedFormValidation::validationEmail($data['email']);
         $errorMessages['phoneErr'] = GatedFormValidation::validationPhone($data['phone']);
         $errorMessages['companyErr'] = GatedFormValidation::validationCompany($data['company']);
+        $errorMessages['jobTitleErr'] = GatedFormValidation::validationJobTitle($data['jobTitle']);
 
         return self::formatErrorMessages($errorMessages);
     }
