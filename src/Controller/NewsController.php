@@ -30,7 +30,7 @@ class NewsController extends AbstractController
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('news');
-        $this->api->setCache($cache);
+         $this->api->setCache($cache); 
         $this->api->setCacheLifetime(900);
     }
 
@@ -38,12 +38,12 @@ class NewsController extends AbstractController
     {
         $page = (int) filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
-        $this->api->setCacheKey($request->getRequestUri());
+        $this->api -> setCacheKey($request->getRequestUri());
 
         try {
-            $list = $this->api->listPages($page);
+            $list  = $this->api->listPages($page);
         } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('News page not found', $e);
+            throw new  NotFoundHttpException('News page not found', $e);
         }
 
         return $this->render('news/list.html.twig', [
@@ -56,7 +56,7 @@ class NewsController extends AbstractController
     {
         $slug = filter_var($slug, FILTER_SANITIZE_STRING);
 
-        $this->api->setCacheKey($request->getRequestUri());
+        $this->api-> setCacheKey($request->getRequestUri());
 
         try {
             $page = $this->api->getPageByUrl($request->getRequestUri());
