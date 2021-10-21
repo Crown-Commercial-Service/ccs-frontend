@@ -43,14 +43,14 @@ class FormValidation
         return $returnArray;
     }
 
-    public static function validationPhone($phone)
+    public static function validationPhone($phone, $callback)
     {
         $returnArray  = [
             'errors' => [],
             'link' => '#phone',
         ];
 
-        if (empty($phone)) {
+        if ($callback && empty(trim($phone))) {
             $returnArray['errors'] = ['Enter a telephone number'];
         } elseif (strlen($phone) > 20) {
             $returnArray['errors'] = ['Telephone number must be 20 characters or fewer'];
