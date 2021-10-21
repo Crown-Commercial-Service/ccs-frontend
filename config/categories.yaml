@@ -83,9 +83,9 @@ pillars:
         db_value: 'Network Services'
         slug: 'network-services'
 
-      - name: 'Software & Cyber'
-        db_value: 'Software & Cyber'
-        slug: 'software-cyber'
+      - name: 'Technology Solutions & Outcomes'
+        db_value: 'Technology Solutions & Outcomes'
+        slug: 'technology-solutions-outcomes'
 
       - name: 'Technology Products & Services'
         db_value: 'Technology Products & Services'
