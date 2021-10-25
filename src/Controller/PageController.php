@@ -251,7 +251,7 @@ class PageController extends AbstractController
         $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
         $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone'], $data['callback']);
         $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
-        
+
 
         foreach ($errorMessages as $type => $value) {
             if (!empty($errorMessages[$type]['errors'])) {
