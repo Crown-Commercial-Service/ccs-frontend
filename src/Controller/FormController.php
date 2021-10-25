@@ -284,10 +284,10 @@ class FormController extends AbstractController
         $errorMessages = [];
 
         $errorMessages['nameErr'] = ContactCCSFormValidation::validationName($data['name']);
+        $errorMessages['jobTitleErr'] = ContactCCSFormValidation::validationJobTitle($data['jobTitle']);
         $errorMessages['emailErr'] = ContactCCSFormValidation::validationEmail($data['email']);
         $errorMessages['phoneErr'] = ContactCCSFormValidation::validationPhone($data['phone'], $data['callback']);
         $errorMessages['companyErr'] = ContactCCSFormValidation::validationCompany($data['company']);
-        $errorMessages['jobTitleErr'] = ContactCCSFormValidation::validationJobTitle($data['jobTitle']);
         $errorMessages['moreDetailErr'] = ContactCCSFormValidation::validationMoreDetial($data['moreDetail']);
 
         return $this->formatErrorMessages($errorMessages);
@@ -298,9 +298,10 @@ class FormController extends AbstractController
         $errorMessages = [];
 
         $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
+        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
         $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
         $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
-        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
+        
 
         foreach ($errorMessages as $type => $value) {
             if (!empty($errorMessages[$type]['errors'])) {
@@ -341,10 +342,11 @@ class FormController extends AbstractController
         $errorMessages = [];
 
         $errorMessages['nameErr'] = GatedFormValidation::validationName($data['name']);
+        $errorMessages['jobTitleErr'] = GatedFormValidation::validationJobTitle($data['jobTitle']);
         $errorMessages['emailErr'] = GatedFormValidation::validationEmail($data['email']);
         $errorMessages['phoneErr'] = GatedFormValidation::validationPhone($data['phone']);
         $errorMessages['companyErr'] = GatedFormValidation::validationCompany($data['company']);
-        $errorMessages['jobTitleErr'] = GatedFormValidation::validationJobTitle($data['jobTitle']);
+        
 
         return self::formatErrorMessages($errorMessages);
     }
