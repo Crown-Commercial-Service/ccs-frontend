@@ -35,6 +35,9 @@ if (cookiePreferences !== null) {
 
                 data['subject'] = subject;
             }
+
+            // remove subject hidden field
+            $("input[name=subject]").remove();
  
             $.ajax({
                 url: "/api/pardot-email",
