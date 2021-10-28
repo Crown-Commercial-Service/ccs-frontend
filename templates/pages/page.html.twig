@@ -284,7 +284,8 @@
 
                                                 <form id="js-contact-form" class="govuk-!-width-three-quarters pardot-submit" action="/{{slug}}" method="post">
 
-
+                                                <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+                                                
                                                     {# See https://symfony.com/doc/current/templating/app_variable.html #}
                                                     {% if app.debug %}
                                                         <input type="hidden" name="debug" value=1>
