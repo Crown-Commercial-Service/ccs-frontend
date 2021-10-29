@@ -102,6 +102,9 @@
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
                     <form class="govuk-!-width-three-quarters pardot-submit" action="/contact/submit" method="POST" novalidate>
 
+                        {# For Pardot #}
+                        <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="contact" />
+
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
                             <input type="hidden" name="debug" value=1>
