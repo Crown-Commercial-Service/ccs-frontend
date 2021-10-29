@@ -354,7 +354,11 @@ class FrameworksController extends AbstractController
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
 
         $statuses = [];
+        if ($request->query->get('all') == "true" and !empty($query)) {
+            $statuses = ['all'];
+        }
         if ($request->query->has('statuses')) {
+            $statuses = [];
             foreach ($request->query->get('statuses') as $status) {
                 if ($status == 'all') {
                     $statuses = ['all'];
