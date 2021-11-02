@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Utils\FrameworkCategories;
 use Psr\SimpleCache\CacheInterface;
 use Studio24\Frontend\Cms\Wordpress;
 use Studio24\Frontend\ContentModel\ContentModel;
@@ -40,15 +41,38 @@ class NewsController extends AbstractController
 
         $this->api->setCacheKey($request->getRequestUri());
 
+        $categoriesFilters          = $this->api->getAllTerms('categories');
+        $sectorsFilters             = $this->api->getAllTerms('sectors');
+        $productsServicesFilters    = $this->api->getAllTerms('products_services');
+
+
+        $selectedCategories         = $request->query->get('categories');
+        $selectedSectors            = $request->query->get('sectors');
+        $selectedProducts_services  = $request->query->get('products_services');
+
+
+        $options = [
+            'categories'        => $selectedCategories ?? null,
+            'sectors'           => $selectedSectors ?? null,
+            'products_services' => $selectedProducts_services ?? null,
+            'per_page'          => 5,
+        ];
+
         try {
-            $list = $this->api->listPages($page);
+            $list = $this->api->listPages($page, $options);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('News page not found', $e);
         }
 
         return $this->render('news/list.html.twig', [
-            'url' => sprintf('/news/page/%s', $page),
-            'pages' => $list
+            'url'                       => sprintf('/news/page/%s', $page),
+            'pageNumber'                => $page,
+            'categoriesFilters'         => $categoriesFilters,
+            'sectorsFilters'            => $sectorsFilters,
+            'productsServicesFilters'   => $productsServicesFilters,
+            'title'                     => $this->getTitle($categoriesFilters, $sectorsFilters, $productsServicesFilters, $options),
+            'pages'                     => $list,
+            'filters'                   => $options
         ]);
     }
 
@@ -68,5 +92,18 @@ class NewsController extends AbstractController
             'url' => sprintf('/news/%s', $slug),
             'page' => $page
         ]);
+    }
+
+    private function getTitle($categoriesFilters, $sectorsFilters, $productsServicesFilters, $options)
+    {
+        $filteredId = $options['categories'] ?? $options['sectors'] ?? $options['products_services'];
+
+        foreach ([$categoriesFilters, $sectorsFilters, $productsServicesFilters] as $filter) {
+            foreach ($filter as $each) {
+                if ($each->getID() == $filteredId) {
+                    return $each->getName();
+                }
+            }
+        }
     }
 }
