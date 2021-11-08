@@ -61,8 +61,8 @@
 
             {% if pages.pagination.totalResults > 0  %}
                 {% if not filterSet and showFeature %}
-                    <div class ="news_div" >
-                        {% include 'news/block.html.twig' with {'page': pages.current} %}
+                    <div class ="news_div">
+                        {% include 'news/feature.html.twig' with {'page': pages.current} %}
                     </div>
                 {% endif %}
             {% endif %}
@@ -165,7 +165,7 @@
                     {% endif %}
                 </div>
                 
-                <div class="govuk-grid-column-two-thirds">
+                <div class="govuk-grid-column-three-quarters news-list-pagination-container">
                     {% if pages.pagination.totalResults > 0  %}
                         {% for page in pages %}
                             {% if filterSet or not ( loop.first and showFeature) %}

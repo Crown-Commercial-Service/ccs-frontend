@@ -1,25 +1,19 @@
 <div class="govuk-width-container">
     <div class="govuk-grid-row news_wrapper ">
 
-        <div class="govuk-grid-column-one-half">
-
+        <div class="govuk-grid-column-one-half news-listing-block">
+            <p class="news-listing-meta"> 
+                <a href="{{ path('news_list', {'categories': page.taxonomies.categories.current.id }) }}">{{ page.taxonomies.categories.current.name }}</a>
+                <span>{{ page.datePublished.format('jS F Y') }}</span> 
+            </p>
             <h2 class="news-listing-title">
                 <a href="{{ path('news_page', {'slug': page.urlSlug}) }}">{{ page.title|raw }}</a>
             </h2>
-
-            <p> 
-                {{ page.datePublished.format('jS F Y') }}, 
-                <a href="{{ path('news_list', {'categories': page.taxonomies.categories.current.id }) }}"> {{ page.taxonomies.categories.current.name }} </a> 
-            </p>
-
             <p class="govuk-body govuk-!-font-size-17featured">
                 {{ page.content.post_lead_text  | raw }}
-            </p>
-            
-            <a href="{{ path('news_page', {'slug': page.urlSlug}) }}"> Read more </a> 
-
+            </p> 
         </div>
-        <div class="govuk-grid-column-one-half">
+        <div class="govuk-grid-column-one-half news-img-container">
             <figure class="image-wrapper news_img">
                 <picture class="">
                     {% if page.featuredImage.url is defined %}
