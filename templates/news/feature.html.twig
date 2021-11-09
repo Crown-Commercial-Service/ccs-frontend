@@ -1,0 +1,33 @@
+<div class="govuk-width-container">
+    <div class="govuk-grid-row news_wrapper">
+        <div class="govuk-grid-column-two-thirds featured-news-img-container">
+                <figure class="image-wrapper news_img">
+                    <picture class="">
+                        {% if page.featuredImage.url is defined %}
+                            <source media="(max-width: 768px)" srcset="{{ page.featuredImage.byName('medium_large') }}">
+                            <source media="(min-width: 1024px)" srcset="{{ page.featuredImage.byName('large') }}">
+                            <source media="(min-width: 1920px)" srcset="{{ page.featuredImage.byName('full') }}">
+                            <img src="{{ page.featuredImage.url }}"
+                                    role="presentation"
+                                    class=""
+                                    loading="lazy"/>
+                        {% endif %}
+                    </picture>
+
+                </figure>
+        </div>
+
+        <div class="govuk-grid-column-one-third featured-news-text-container">
+            <p class="news-listing-meta"> 
+                <a href="{{ path('news_list', {'categories': page.taxonomies.categories.current.id }) }}">{{ page.taxonomies.categories.current.name }}</a>
+                <span>{{ page.datePublished.format('jS F Y') }}</span> 
+            </p>
+            <h2 class="news-listing-title">
+                <a href="{{ path('news_page', {'slug': page.urlSlug}) }}">{{ page.title|raw }}</a>
+            </h2>
+            <p class="govuk-body govuk-!-font-size-17featured">
+                {{ page.content.post_lead_text  | raw }}
+            </p> 
+        </div>
+    </div>
+</div>
