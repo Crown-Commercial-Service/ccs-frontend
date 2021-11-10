@@ -17,7 +17,7 @@
                 </figure>
         </div>
 
-        <div class="govuk-grid-column-one-third featured-news-text-container">
+        <div class="{{page.featuredImage is null ? "govuk-grid-column-full" : "govuk-grid-column-one-third"}} featured-news-text-container">
             <p class="news-listing-meta"> 
                 <a href="{{ path('news_list', {'categories': page.taxonomies.categories.current.id }) }}">{{ page.taxonomies.categories.current.name }}</a>
                 <span>{{ page.datePublished.format('jS F Y') }}</span> 
