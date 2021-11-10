@@ -76,6 +76,18 @@
     }
 }
 
+.govuk-grid-column-full.featured-news-text-container {
+
+    border:1px solid #E7E7E7;
+    padding:20px 33px 40px 29.5px;
+
+     @include govuk-media-query($from: desktop) {
+    
+        width:100%;
+    
+    }
+}
+
 // news list
 
 .news-listing-block {
@@ -86,6 +98,15 @@
     @include govuk-media-query(1100px) {
     
         width:50%;
+    
+    }
+}
+
+.govuk-grid-column-full.news-listing-block {
+
+     @include govuk-media-query(1100px) {
+    
+        width:100%!important;
     
     }
 }
