@@ -1,7 +1,7 @@
 <div class="govuk-width-container">
     <div class="govuk-grid-row news_wrapper ">
 
-        <div class="govuk-grid-column-one-half news-listing-block">
+        <div class="{{page.featuredImage is null ? "govuk-grid-column-full" : "govuk-grid-column-one-half"}} news-listing-block">
             <p class="news-listing-meta"> 
                 <a href="{{ path('news_list', {'categories': page.taxonomies.categories.current.id }) }}">{{ page.taxonomies.categories.current.name }}</a>
                 <span>{{ page.datePublished.format('jS F Y') }}</span> 
