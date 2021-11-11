@@ -12,6 +12,7 @@ use Studio24\Frontend\Exception\PaginationException;
 use Studio24\Frontend\Exception\WordpressException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpClient\HttpClient;
 use Studio24\Frontend\Exception\NotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -84,13 +85,19 @@ class NewsController extends AbstractController
 
         try {
             $page = $this->api->getPageByUrl($request->getRequestUri());
+            $response = HttpClient::create()->request('GET', getenv('APP_API_BASE_URL') . 'wp/v2/posts/' . $page->getId());
+
+            if ($response->getStatusCode() == 200) {
+                $authorName = json_decode($response->getContent())->authorName;
+            }
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('News page not found', $e);
         }
 
         return $this->render('news/show.html.twig', [
-            'url' => sprintf('/news/%s', $slug),
-            'page' => $page
+            'url'           => sprintf('/news/%s', $slug),
+            'page'          => $page,
+            'authorName'    => $authorName
         ]);
     }
 
