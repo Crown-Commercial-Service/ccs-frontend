@@ -178,7 +178,7 @@
                         <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">0 articles found</h2>
                     {% endif %}
                     {% if pages.pagination.totalPages > 1 %}
-                        {{ include('includes/pagination.html.twig', {'pagination': pages.pagination, 'route': 'news_list', 'options': {}}) }}
+                        {{ include('includes/pagination.html.twig', {'pagination': pages.pagination, 'route': 'news_list', 'options': {'categories': filters.categories,'sectors': filters.sectors, 'products_services': filters.products_services }}) }}
                     {% endif %}
                 </div>
             </div>
