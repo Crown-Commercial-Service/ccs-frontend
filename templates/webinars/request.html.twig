@@ -53,7 +53,7 @@
 
                     <p>To watch this webinar, we just need a few details first.</p>
 
-                    {% include 'forms/gated-form.html.twig' %}
+                    {% include 'forms/gated-form.html.twig' with {'subject': 'webinar'} %}
 
                 </div>
                 <div class="govuk-grid-column-one-third">
@@ -75,6 +75,6 @@
 {% block nonblocking_javascript %}
     {{ parent() }}
 
-    <script src="/assets/scripts/gated-form.js"></script>
+    <script src="/assets/scripts/pardot.js"></script>
 
 {% endblock %}
