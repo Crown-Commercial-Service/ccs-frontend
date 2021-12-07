@@ -20,7 +20,7 @@ class FormValidation
 
         if (empty($name)) {
             $returnArray['errors'] = ['Enter your name'];
-        } elseif (strlen($name) > 80) {
+        } elseif (!empty($name) && strlen($name) > 80) {
             $returnArray['errors'] = ['Name must be 80 characters or fewer'];
         }
 
@@ -36,7 +36,7 @@ class FormValidation
 
         if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $returnArray['errors'] = ['Enter an email address in the correct format, like name@example.com'];
-        } elseif (strlen($email) > 80) {
+        } elseif (!empty($email) && strlen($email) > 80) {
             $returnArray['errors'] = ['Email address must be 80 characters or fewer'];
         }
 
@@ -52,7 +52,7 @@ class FormValidation
 
         if ($callback && empty(trim($phone))) {
             $returnArray['errors'] = ['Enter a telephone number'];
-        } elseif (strlen($phone) > 20) {
+        } elseif (!empty($phone) && strlen($phone) > 20) {
             $returnArray['errors'] = ['Telephone number must be 20 characters or fewer'];
         }
 
@@ -68,7 +68,7 @@ class FormValidation
 
         if (empty($company)) {
             $returnArray['errors'] = ['Enter an organisation'];
-        } elseif (strlen($company) > 80) {
+        } elseif (!empty($company) && strlen($company) > 80) {
             $returnArray['errors'] = ['Organisation must be 80 characters or fewer'];
         }
 
