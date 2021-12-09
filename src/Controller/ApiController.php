@@ -281,6 +281,9 @@ class ApiController extends AbstractController
             'newsletter'     => getenv('PARDOT_EMAIL_FORM_HANDLER_NEWSLETTER_URL'),
             'lg'     => getenv('PARDOT_EMAIL_FORM_HANDLER_LG_URL'),
             'nhs'     => getenv('PARDOT_EMAIL_FORM_HANDLER_NHS_URL'),
+            'whitepaper' => getenv('PARDOT_EMAIL_FORM_HANDLER_WHITEPAPER_URL'),
+            'webinar' => getenv('PARDOT_EMAIL_FORM_HANDLER_WEBINAR_URL'),
+            'digitalbrochure' => getenv('PARDOT_EMAIL_FORM_HANDLER_DB_URL'),
         ];
 
         $pardotFormUrl = null;
