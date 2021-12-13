@@ -354,7 +354,11 @@ class FrameworksController extends AbstractController
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
 
         $statuses = [];
+        if ($request->query->get('all') == "true" and !empty($query)) {
+            $statuses = ['all'];
+        }
         if ($request->query->has('statuses')) {
+            $statuses = [];
             foreach ($request->query->get('statuses') as $status) {
                 if ($status == 'all') {
                     $statuses = ['all'];
@@ -630,6 +634,12 @@ class FrameworksController extends AbstractController
             $results->getContent()['how_to_buy']->setContent($howToBuy);
         }
 
+        $upcomingDealDetails = $results->getContent()['upcoming_deal_details']->getValue();
+        if ($upcomingDealDetails != "") {
+            $upcomingDealDetails = $this->addGovUkClassToTables($upcomingDealDetails);
+            $results->getContent()['upcoming_deal_details']->setContent($upcomingDealDetails);
+        }
+
         return $results;
     }
 
@@ -638,89 +648,24 @@ class FrameworksController extends AbstractController
         $lines = explode(PHP_EOL, $input);
         $output = [];
 
-        $firstTr[] = "<thead class=\"govuk-table__head\">";
-        $firstSetOfTrFound = false;
-
-        $indexOfTableTag = 0;
-        $indexOfTableTagFound = false;
-
         foreach ($lines as $eachLine) {
-            //if line contain table, tr or td, then add gov uk class
             if ($this->stringContainTableElement($eachLine)) {
                 $eachLine = str_replace("<table", "<table class=\"govuk-table\" ", $eachLine);
                 $eachLine = str_replace("<tr", "<tr class=\"govuk-table__row\" ", $eachLine);
                 $eachLine = str_replace("<td", "<td class=\"govuk-table__cell\" ", $eachLine);
-                $eachLine = $this->removeStrongAndAddGovHeader($eachLine);
+                $eachLine = str_replace("<th", "<th class=\"govuk-table__header\" ", $eachLine);
             }
-
-            // spliting into main HTML and sub HTML
-            if ($this->stringContainTrOrTh($eachLine) == true and $firstSetOfTrFound == false) {
-                $firstTr[] = $eachLine;
-            } else {
-                $output[] = $eachLine;
-            }
-
-            //completing sub HMTL
-            if ($eachLine == "</tr>" and $firstSetOfTrFound == false) {
-                $firstSetOfTrFound = true;
-                $firstTr[] = "</thead>";
-            }
-
-            //finding the index to join main and sub HTML together
-            if ($this->stringContainTbody($eachLine) == false and $indexOfTableTagFound == false) {
-                $indexOfTableTag++;
-            } else {
-                $indexOfTableTagFound = true;
-            }
+            $output[] = $eachLine;
         }
-
-        $output = $this->formatThead($output, $firstTr, $indexOfTableTag);
-
         return implode("\n", $output);
     }
 
     private function stringContainTableElement($input)
     {
-        if (strpos($input, '<td') !== false or strpos($input, '<tr') !== false or strpos($input, '<table') !== false) {
+        if (strpos($input, '<td') !== false or strpos($input, '<tr') !== false or strpos($input, '<table') !== false or strpos($input, '<th') !== false) {
             return (true);
         }
 
         return(false);
-    }
-
-    private function stringContainTrOrTh($input)
-    {
-        if (strpos($input, '<td') !== false or strpos($input, '<tr') !== false or strpos($input, '</tr') !== false) {
-            return (true);
-        }
-
-        return(false);
-    }
-
-    private function stringContainTbody($input)
-    {
-        if (strpos($input, '<tbody') !== false) {
-            return (true);
-        }
-
-        return(false);
-    }
-
-    private function removeStrongAndAddGovHeader($input)
-    {
-        if (strpos($input, '</strong>') !== false) {
-            $input = str_replace("<strong>", "", $input);
-            $input = str_replace("</strong>", "", $input);
-            $input = str_replace("td", "th", $input);
-            $input = str_replace("class=\"", "class=\"govuk-table__header ", $input);
-        }
-
-        return($input);
-    }
-
-    private function formatThead($mainHtml, $subHtml, $indexOfTableTag)
-    {
-        array_splice($mainHtml, $indexOfTableTag, 0, $subHtml);
-        return $mainHtml;
     }
 }
