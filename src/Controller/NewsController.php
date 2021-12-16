@@ -38,7 +38,8 @@ class NewsController extends AbstractController
 
     public function list(Request $request, $page = 1)
     {
-        $page = (int) filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+        $requestedPage = (int) filter_var($request->query->get('page'), FILTER_SANITIZE_NUMBER_INT);
+        $page  = $requestedPage != 0 ? $requestedPage : 1;
 
         $this->api->setCacheKey($request->getRequestUri());
 
@@ -67,6 +68,7 @@ class NewsController extends AbstractController
 
         return $this->render('news/list.html.twig', [
             'url'                       => sprintf('/news/page/%s', $page),
+            'api_base_url'              => getenv('APP_API_BASE_URL'),
             'pageNumber'                => $page,
             'categoriesFilters'         => $categoriesFilters,
             'sectorsFilters'            => $sectorsFilters,
