@@ -25,8 +25,6 @@
         </div>
 
         {% set filterSet = title is defined and title is not empty ? true : false %}
-        {% set showFeature = pageNumber is defined and pageNumber == 1 ? true : false %}
-
 
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
@@ -59,11 +57,9 @@
             </div>
 
             {% if pages.pagination.totalResults > 0  %}
-                {% if not filterSet and showFeature %}
-                    <div class ="news_div" v-if="feature">
-                        {% include 'news/feature.html.twig' with {'page': pages.current} %}
-                    </div>
-                {% endif %}
+                <div class ="news_div" v-if="feature">
+                    {% include 'news/feature.html.twig' with {'page': pages.current} %}
+                </div>
             {% endif %}
 
             
@@ -171,24 +167,6 @@
                         </div>
                 </div>
                 <div class="govuk-grid-column-three-quarters news-list-pagination-container">
-                {# ======================================================REAL====================================================== #}
-                    {# {% if pages.pagination.totalResults > 0  %}
-                        {% for page in pages %}
-                            {% if filterSet or not ( loop.first and showFeature) %}
-                                <div class ="news_div" >
-                                    {% include 'news/block.html.twig' with {'page': page} %}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% else %}
-                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">0 articles found</h2>
-                    {% endif %}
-                    {% if pages.pagination.totalPages > 1 %}
-                        {{ include('includes/pagination.html.twig', {'pagination': pages.pagination, 'route': 'news_list', 'options': {'categories': filters.categories,'sectors': filters.sectors, 'products_services': filters.products_services }}) }}
-                    {% endif %} #}
-                {# ======================================================REAL====================================================== #}
-
-                {# ======================================================TRY====================================================== #}
 
                     <div v-if="responseAvailable">
                             <div v-for="result in results">
@@ -250,25 +228,6 @@
                     <div v-else-if="responseAvailable === false">
                         <p>Loading...</p>
                     </div>
-                    <div v-else>
-                            {% if pages.pagination.totalResults > 0  %}
-                            {% for page in pages %}
-                                {% if filterSet or not ( loop.first and showFeature) %}
-                                    <div class ="news_div" >
-                                        {% include 'news/block.html.twig' with {'page': page} %}
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% else %}
-                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">0 articles found</h2>
-                        {% endif %}
-
-                        {{ include('includes/pagination.html.twig', {'pagination': pages.pagination, 'route': 'news_list', 'options': {'categories': filters.categories,'sectors': filters.sectors, 'products_services': filters.products_services }}) }}
-
-                    </div>
-
-                {# ======================================================TRY====================================================== #}
-
             </div>
 
         </main>
@@ -583,11 +542,15 @@
 
                         return products_servicesFilter;
                     },
-                    searchRequestUrl: function(page) {
+                    searchRequestUrl: function(categoriesSlug, page) {
                         console.log("update search URL");
                         fetchURL = this.apiURL + this.categoriesFilter() + this.sectorsFilter() + this.productsServicesFilter();
-                        
-                        this.currentPage = page != null ? page : 1;
+
+                        if (categoriesSlug != null && page == null){
+                            this.currentPage = 1
+                        }else if(categoriesSlug == null && page != null){
+                            this.currentPage = page
+                        }
                         
                         fetchURL = fetchURL + "&page=" + this.currentPage;
 
@@ -609,7 +572,7 @@
                         this.feature = false;
                         this.responseAvailable = false;
 
-                        var requestUrl = this.searchRequestUrl(page);
+                        var requestUrl = this.searchRequestUrl(categoriesSlug, page);
                         console.log(requestUrl);
 
                         fetch(requestUrl)
