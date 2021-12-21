@@ -381,7 +381,7 @@ class PageController extends AbstractController
         return array_unique($returnList);
     }
 
-    public function digitsLanding() 
+    public function digitsLanding()
     {
         return $this->render('pages/digits_landing.html.twig');
     }
