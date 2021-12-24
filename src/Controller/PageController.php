@@ -385,4 +385,9 @@ class PageController extends AbstractController
     {
         return $this->render('pages/digits_landing.html.twig');
     }
+
+    public function digitsCTM()
+    {
+        return $this->render('pages/digits_ctm.html.twig');
+    }
 }
