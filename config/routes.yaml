@@ -13,7 +13,7 @@ home:
   controller: App\Controller\PageController::home
 
 digits:
-  path: /digits-landing.html
+  path: /digits-ctm.html
   controller: App\Controller\PageController::digitsLanding
 
 frameworks_search:
