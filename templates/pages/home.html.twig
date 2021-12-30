@@ -33,12 +33,25 @@
                         <div class="govuk-hero-img-container">
                             <div class="govuk-hero-content">
                                 <div class="govuk-hero-homepage-caption-container govuk-hero-margin-right-35">
-                                    <div class="govuk-hero-caption">
-                                            <h1 class="govuk-caption-heading">Public procurement: with added buying power</h1>
-                                            <a class="govuk-caption-link" href="/power-to-your-procurement">Find out how CCS can help bring power to your procurement</a>
-                                            <br/><br/>
-                                            <a class="govuk-button govuk-caption-button" href="/digital_brochure/request/30384/commercial-agreements-autumn-2021-digital-brochure">Download our brochure</a>
-                                    </div>
+
+                                    {% set default = true %}
+
+                                    {% if default %}
+                                        <div class="govuk-hero-caption">
+                                                <h1 class="govuk-caption-heading">Public procurement: with added buying power</h1>
+                                                <a class="govuk-caption-link" href="/power-to-your-procurement">Find out how CCS can help bring power to your procurement</a>
+                                                <br/><br/>
+                                                <a class="govuk-button govuk-caption-button" href="/digital_brochure/request/30384/commercial-agreements-autumn-2021-digital-brochure">Download our brochure</a>
+                                        </div>   
+                                    {% else %}
+                                        <div class="govuk-hero-caption">
+                                                <h1 class="govuk-caption-heading">Public procurement: with added power</h1>
+                                                <a class="govuk-caption-link" href="/power-to-your-procurement">Find out how CCS can help bring power to your procurement</a>
+                                                <br/><br/>
+                                                <a class="govuk-button govuk-caption-button" href="/digital_brochure/request/30384/commercial-agreements-autumn-2021-digital-brochure">Download our brochure</a>
+                                        </div>
+                                    {% endif %}
+
                                 </div>
                             </div>
                         </div>
