@@ -12,6 +12,14 @@ home:
   path: /
   controller: App\Controller\PageController::home
 
+digits:
+  path: /digits-landing.html
+  controller: App\Controller\PageController::digitsLanding
+
+digits-ctm:
+  path: /digits-ctm.html
+  controller: App\Controller\PageController::digitsCTM
+
 frameworks_search:
   path: /agreements/search/{page}
   controller: App\Controller\FrameworksController::search

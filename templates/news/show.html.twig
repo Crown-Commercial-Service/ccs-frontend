@@ -92,6 +92,18 @@
                 {# End of wysiwyg content #}
 
 
+                <div class="news-listing-meta--featured">
+                    {% if page.taxonomies.categories %}
+                        {% for category in page.taxonomies.categories %}
+                            {{ category.name }}{% if loop.index < page.taxonomies.categories|length %}, {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    | {{ page.datePublished|date('j F Y') }}
+                    {% if authorName != null %}
+                        | Written by {{authorName}}
+                    {% endif %}
+                </div>
+
 
                 <div class="app-c-print-link">
                     <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">Print this page</button>

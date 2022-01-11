@@ -1,0 +1,149 @@
+
+.news_wrapper {
+
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin-bottom: 45px;
+    
+
+    @include govuk-media-query($from: desktop) {
+    
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-bottom:0;
+
+    }
+
+}
+
+.news_div {
+
+    @include govuk-media-query($from: desktop) {
+
+        margin-bottom: 39px;
+
+    }
+
+}
+
+
+.news-img-container {
+    padding:0;
+    width:100%;
+
+    @include govuk-media-query(1100px) {
+    
+        width:50%;
+    
+    }
+}
+
+.news_img {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom:0;
+
+}
+
+// featured news
+.featured-news-img-container {
+
+    width:100%;
+    
+
+    @include govuk-media-query($from: desktop) {
+    
+        width: 66.6666%;
+    
+    }
+}
+
+.featured-news-text-container {
+
+    width: 100%;
+    
+    .news-listing-title {
+        font-size: 2.2rem;
+    }
+
+    @include govuk-media-query($from: desktop) {
+    
+        width:33.3333%;
+    
+    }
+}
+
+.govuk-grid-column-full.featured-news-text-container {
+
+    border:1px solid #E7E7E7;
+    padding:20px 33px 40px 29.5px;
+
+     @include govuk-media-query($from: desktop) {
+    
+        width:100%;
+    
+    }
+}
+
+// news list
+
+.news-listing-block {
+    border:1px solid #E7E7E7;
+    padding:20px 33px 40px 29.5px;
+    width:100%;
+
+    @include govuk-media-query(1100px) {
+    
+        width:50%;
+    
+    }
+}
+
+.govuk-grid-column-full.news-listing-block {
+
+     @include govuk-media-query(1100px) {
+    
+        width:100%!important;
+    
+    }
+}
+
+.news-listing-meta {
+
+    a {
+        padding-right: 5px;
+        text-decoration: none;
+        font-size: 1.188rem;
+    }
+
+    span {
+        padding-left: 7px;
+        border-left: 2px solid black;
+        font-size:1.05rem;
+    }
+}
+
+// pagination
+
+.news-list-pagination-container {
+
+    ul.list--inline.pagination.govuk-body {
+        border-top:none;
+    }
+
+    ul.list--inline.pagination.govuk-body > li:first-child {
+        margin-left:41%;
+    }
+
+    ul.list--inline.pagination.govuk-body li.pagination__item.pagination__item--previous {
+        margin-left:0;
+    }
+
+    ul.list--inline.pagination.govuk-body li.pagination__item.pagination__item--next span.icon {
+        left:5px;
+    }
+    
+}

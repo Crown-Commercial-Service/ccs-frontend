@@ -6,6 +6,7 @@
 {% block metadescription %}Crown Commercial Service (CCS) helps 17,000 public sector buyers and charities save £725m a year when buying common products and services.{% endblock %}
 
 {% block header %}
+
     {% embed '/includes/header.html.twig' %}
         {% block headerclasses %}
             header-global header-global--home
@@ -18,12 +19,25 @@
                         <div class="govuk-hero-img-container">
                             <div class="govuk-hero-content">
                                 <div class="govuk-hero-homepage-caption-container govuk-hero-margin-right-35">
-                                    <div class="govuk-hero-caption">
-                                            <h1 class="govuk-caption-heading">Empowering you to reach carbon net zero</h1>
-                                            <a class="govuk-caption-link" href="/buy-and-supply/carbon-net-zero">Find out how we can help you to reach your carbon net zero goals</a>
-                                            <br/><br/>
-                                            <a class="govuk-button govuk-caption-button" href="/digital_brochure/request/36383/interactive-guide-helping-you-reach-carbon-net-zero">Download our Interactive guide</a>
-                                    </div>
+
+                                    {% set default = false %}
+
+                                    {% if default %}
+                                        <div class="govuk-hero-caption">
+                                                <h1 class="govuk-caption-heading">Public procurement: with added buying power</h1>
+                                                <a class="govuk-caption-link" href="/power-to-your-procurement">Find out how CCS can help bring power to your procurement</a>
+                                                <br/><br/>
+                                                <a class="govuk-button govuk-caption-button" href="/digital_brochure/request/30384/commercial-agreements-autumn-2021-digital-brochure">Download our brochure</a>
+                                        </div>   
+                                    {% else %}
+                                        <div class="govuk-hero-caption">
+                                                <h1 class="govuk-caption-heading">Digital transformation in local government</h1>
+                                                <a class="govuk-caption-link" href="/products-and-services/technology/digital-transformation-in-local-government">Find out how we can help you transform services for citizens through technology procurement</a>
+                                                <br/><br/>
+                                                <a class="govuk-button govuk-caption-button" href="/digital_brochure/request/39095/digital-transformation-guide-technology-procurement-for-local-government">Download our guide</a>
+                                        </div>
+                                    {% endif %}
+
                                 </div>
                             </div>
                         </div>
