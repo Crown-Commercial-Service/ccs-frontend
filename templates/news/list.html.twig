@@ -252,6 +252,7 @@
             }
 
             var apiBaseUrl                  = '{{ api_base_url }}';
+            var appBaseUrl                  = '{{ app_base_url }}';
             var pageNumber                  = {% if pageNumber is not empty %}{{ pageNumber }}{% else %}1{% endif %};
             var checkedCategories           = [];
             var checkedSectors              = [];
@@ -543,7 +544,6 @@
                         return products_servicesFilter;
                     },
                     searchRequestUrl: function(categoriesSlug, page) {
-                        console.log("update search URL");
                         fetchURL = this.apiURL + this.categoriesFilter() + this.sectorsFilter() + this.productsServicesFilter();
 
                         if (categoriesSlug != null && page == null){
@@ -573,7 +573,6 @@
                         this.responseAvailable = false;
 
                         var requestUrl = this.searchRequestUrl(categoriesSlug, page);
-                        console.log(requestUrl);
 
                         fetch(requestUrl)
                         .then(async function(response) {
@@ -590,8 +589,8 @@
                             for(var i = 0; i < jsonResponse.length; i++) {                                
                                 jsonResponse[i].postedDate = self.formatDate(jsonResponse[i].date);
                                 jsonResponse[i].postType = jsonResponse[i].category_type;
-                                jsonResponse[i].CategoriesLink = "http://local.crowncommercial.gov.uk/news?categories=" + jsonResponse[i].categories[0];
-                                jsonResponse[i].postLink = "http://local.crowncommercial.gov.uk/news/" + jsonResponse[i].slug;
+                                jsonResponse[i].CategoriesLink = appBaseUrl +"/news?categories=" + jsonResponse[i].categories[0];
+                                jsonResponse[i].postLink = appBaseUrl+ "/news/" + jsonResponse[i].slug;
                                 jsonResponse[i].index = i;
 
                                 if (jsonResponse[i].featured_image_url != false) {
