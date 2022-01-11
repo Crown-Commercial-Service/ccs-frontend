@@ -28,22 +28,8 @@
 
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
-                <li class="govuk-breadcrumbs__list-item">
-                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
-                </li>
-                {% if filterSet %}
-                    <li class="govuk-breadcrumbs__list-item">
-                        <a class="govuk-breadcrumbs__link" href="/news"> News</a>
-                    </li>
-
-                    <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                        {{ title }}
-                    </li>
-                {% else %}
-                    <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                        News
-                    </li>
-                {% endif %}
+                <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="/">Home</a></li>
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">News</li>
             </ol>
         </div>
 
@@ -52,7 +38,7 @@
 
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <h1 class="govuk-heading-xl page-title">{{ filterSet ? title : "News"}}</h1>
+                    <h1 class="govuk-heading-xl page-title">News</h1>
                 </div>
             </div>
 
@@ -227,6 +213,9 @@
                     </div>
                     <div v-else-if="responseAvailable === false">
                         <p>Loading...</p>
+                    </div>
+                    <div v-if="emptyResult">
+                        <p>There are no matching results.</p>
                     </div>
             </div>
 
@@ -416,6 +405,7 @@
                 data: {
                     results: "",
                     responseAvailable: null,
+                    emptyResult: false,
                     feature: true,
                     apiURL:  apiBaseUrl + "wp/v2/posts?per_page=5",
                     checkedCategories: checkedCategories,
@@ -571,6 +561,7 @@
                         var self = this;
                         this.feature = false;
                         this.responseAvailable = false;
+                        this.emptyResult = false;
 
                         var requestUrl = this.searchRequestUrl(categoriesSlug, page);
 
@@ -602,7 +593,12 @@
                                 }
                             }
                             self.results = jsonResponse;
-                            self.responseAvailable = true;
+                            if( Object.keys(jsonResponse).length === 0 ){
+                                self.emptyResult = true;
+                                self.responseAvailable = null;
+                            }else{
+                                self.responseAvailable = true;
+                            }
                             self.checkFeature();
                         })
                         .catch(function(error) {
