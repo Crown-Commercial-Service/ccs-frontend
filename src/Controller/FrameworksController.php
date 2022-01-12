@@ -481,6 +481,45 @@ class FrameworksController extends AbstractController
         return $this->render('frameworks/framework-suppliers.html.twig', $data);
     }
 
+    public function RM6263Lot(Request $request, int $lotNumber)
+    {   
+        $lotNumber = filter_var($lotNumber, FILTER_SANITIZE_NUMBER_INT);
+
+        if ($lotNumber != 1 && $lotNumber != 2){
+            throw new NotFoundHttpException('Page not found');
+        }
+        $lotOneDescription = "  <div>
+                                    <p class=\"govuk-body\">Deliver strategic objectives through a single project or groups of projects that involve:</p>
+                                    <ul class=\"govuk-list govuk-list--bullet\">
+                                        <li>research</li>
+                                        <li>test</li>
+                                        <li>design</li>
+                                        <li>build</li>
+                                        <li>release</li>
+                                        <li>iteration</li>
+                                        <li>support</li>
+                                        <li>closing down digital services</li>
+                                        <li>outcomes</li>
+                                        <li>deliverables</li>
+                                    </ul>
+                                    <p class=\"govuk-body\">Staff supplied could work in DevOps Services, Digital Definition Services, Build and Transition Services, End-to-End Development Services, and Data Management Services (and similar).</p>
+                                    <p class=\"govuk-body\">You can explain what resource or outcome you need in the Statement of Requirements.</p>
+                                </div>";
+        $lotTwoDescription = "
+                                <div>
+                                    <p class=\"govuk-body\">Individual DDaT specialists in a specific role (for example, delivery manager, product manager, business analyst, content design or user researcher) identified role (or roles) to deliver a specific outcome (or specific outcomes) on a service, programme and/or project.</p>
+                                    <p class=\"govuk-body\">You can explain what roles you need in the Statement of Requirements.</p>
+                                </div>";
+        $data = [
+            'lotNumber'     => $lotNumber,
+            'lotTitle'      => $lotNumber == 1 ? 'Programmes' : 'Specialists',
+            'expiryDate'    => 'DD month YYYY',
+            'lotDescription'   =>  $lotNumber == 1 ? $lotOneDescription : $lotTwoDescription
+        ];
+
+        return $this->render('frameworks/RM6263-lot.html.twig', $data);
+    }
+
 
     /**
      * Return suppliers on a lot

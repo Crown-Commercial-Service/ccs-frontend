@@ -70,6 +70,10 @@ frameworks_suppliers:
   defaults:
     page: 1
 
+RM6263_frameworks_lot:
+  path: /agreements/RM6263/lot/{lotNumber}
+  controller: App\Controller\FrameworksController::RM6263Lot
+
 frameworks_lot_suppliers_csv:
   path: /agreements/{rmNumber}:{lotNumber}/lot-suppliers/csv
   controller: App\Controller\FrameworksController::suppliersOnLotCsv
