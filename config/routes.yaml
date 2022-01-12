@@ -71,7 +71,7 @@ frameworks_suppliers:
     page: 1
 
 RM6263_frameworks_lot:
-  path: /agreements/RM6263/lot/{lotNumber}
+  path: /agreements/RM6263:{lotNumber}/lot-details
   controller: App\Controller\FrameworksController::RM6263Lot
 
 frameworks_lot_suppliers_csv:

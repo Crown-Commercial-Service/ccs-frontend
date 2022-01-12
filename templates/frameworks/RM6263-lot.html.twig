@@ -67,10 +67,12 @@
                             <li><b>Call-off Further Competition:</b> this is used to compare the relative merits of the shortlisted suppliers tender responses based on an evaluation of qualitative, commercial and social value criteria</li>
                         </ul>
 
-                        <p>or</p>
-                        <ul class="govuk-list govuk-list--bullet">
-                            <li><b>Direct Award:</b> this is used to assess a single supplier tender responses based on an evaluation of qualitative, commercial and social value criteria, having regard to the buyer's internal policies for direct award as well as Public Contract Regulation</li>
-                        </ul>
+                        {% if lotNumber == 2 %}
+                            <p>or</p>
+                            <ul class="govuk-list govuk-list--bullet">
+                                <li><b>Direct Award:</b> this is used to assess a single supplier tender responses based on an evaluation of qualitative, commercial and social value criteria, having regard to the buyer's internal policies for direct award as well as Public Contract Regulation</li>
+                            </ul>
+                        {% endif %}
                     </p>
                     <h3 class="govuk-heading-m"><b>To buy from this lot you will need to follow the steps below:</b></h3>
                     
