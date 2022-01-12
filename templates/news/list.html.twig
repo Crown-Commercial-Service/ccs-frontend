@@ -67,7 +67,7 @@
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                         <input v-on:change=fetchAPIData(null,null) v-model="checkedCategories" value="allCategories" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allCategories" type="checkbox">
                                         <label class="govuk-label govuk-checkboxes__label" for="allCategories">
-                                            All articles
+                                            View all
                                         </label>
                                     </div>
                                     {% if categoriesFilters is not empty %}
@@ -100,7 +100,7 @@
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                         <input v-on:change=fetchAPIData(null,null) v-model="checkedSectors" value="allSectors" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allSectors" type="checkbox">
                                         <label class="govuk-label govuk-checkboxes__label" for="allSectors">
-                                            All Sectors
+                                            View all
                                         </label>
                                     </div>
                                     {% if sectorsFilters is not empty %}
@@ -133,7 +133,7 @@
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                         <input v-on:change=fetchAPIData(null,null) v-model="checkedProducts_services" value="allPS" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allPS" type="checkbox">
                                         <label class="govuk-label govuk-checkboxes__label" for="allPS">
-                                            All Categories
+                                            View all
                                         </label>
                                     </div>
                                     {% if productsServicesFilters is not empty %}
