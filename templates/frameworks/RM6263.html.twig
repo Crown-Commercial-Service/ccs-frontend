@@ -27,7 +27,7 @@
 
         <details class="govuk-details" data-module="govuk-details">
             <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">Show previous updates</span>
+                <span class="govuk-details__summary-text" id="details-summary">Show previous updates</span>
             </summary>
             <div class="govuk-details__text">
                 <p class="govuk-body grey-margin-bottom"><strong>31 July 2021  : </strong>The General Data Protection Regulation (GDPR) was implemented on 25th May 2018. The Crown Commercial Service has updated all relevant agreements and the call off contract templates to include the necessary GDPR clauses. We have done this through a contract variation. Suppliers who have accepted the contract variation are listed in the Supplier Matrix on the <a href="#documents">‘Documents'</a> tab below. Find out more about what CCS did to get ready for GDPR. <br><br></p>            
@@ -235,3 +235,15 @@
         </aside>
     </div>
 </div>
+
+<script>
+    const detailsSummarySpan = document.getElementById("details-summary");
+
+    detailsSummarySpan.addEventListener('click', event => {
+        if(document.getElementById("details-summary").textContent == "Show previous updates"){
+            document.getElementById("details-summary").textContent="Hide previous updates";
+        }else{
+            document.getElementById("details-summary").textContent="Show previous updates";
+        }
+    });
+</script>
