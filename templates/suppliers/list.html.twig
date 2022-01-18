@@ -712,9 +712,14 @@
                  */
                 frontendQueryUrl: function() {
                     var queryUrl = '?search=true';
+                    var emailRegex = /(([^<>()\[\]\\.,;:\s@"%]+(\.[^<>()\[\]\\.,;:\s@"%]+)*)|(".+"))(@|%40)((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/
 
                     if(this.searchQuery) {
-                        queryUrl += '&q=' + this.searchQuery;
+                        if(this.searchQuery.match(emailRegex) !== null){
+                            queryUrl += '&q=' + 'EMAIL_REDACTED';
+                        }else{
+                            queryUrl += '&q=' + this.searchQuery;
+                        }
                     }
 
                     if(this.checkedFramework.rm_number) {
