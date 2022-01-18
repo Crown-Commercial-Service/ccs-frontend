@@ -69,8 +69,6 @@
         }
 
         if( Object.keys(window.location.search).length === 0 ){
-            console.log("empty la")
-
             var host = window.location.host;
             var pathname = window.location.pathname
             var url = host + pathname;
@@ -79,12 +77,8 @@
                 window.history.replaceState({}, '', 'EMAIL_REDACTED');
             }
 
-        }else{
-            console.log("not empty la")
-
+        } else {
             var urlParams = extractParams()
-            console.log(urlParams)
-
             // look for any email and replace it 
             for (var key in urlParams) {
                 urlParams[key] = decodeURIComponent(urlParams[key]).replace(emailRegex, "EMAIL_REDACTED")
