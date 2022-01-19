@@ -17,6 +17,10 @@ pillars:
         db_value: 'Workplace'
         slug: 'workplace'
 
+      - name: 'Estates Decarbonisation'
+        db_value: 'Estates Decarbonisation'
+        slug: 'estates decarbonisation'
+
 
   - name: 'Corporate Solutions'
     db_value: 'Corporate Solutions'
