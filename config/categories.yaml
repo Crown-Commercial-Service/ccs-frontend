@@ -19,7 +19,7 @@ pillars:
 
       - name: 'Estates Decarbonisation'
         db_value: 'Estates Decarbonisation'
-        slug: 'estates decarbonisation'
+        slug: 'estates-decarbonisation'
 
 
   - name: 'Corporate Solutions'

@@ -43,6 +43,7 @@ class FrameworkCategoriesTest extends WebTestCase
         $this->assertEquals('workplace', $last);
 
         $this->assertEquals('energy', FrameworkCategories::getSlug('Energy'));
+        $this->assertEquals('estates-decarbonisation', FrameworkCategories::getSlug('Estates Decarbonisation'));
         $this->assertEquals('document-management-logistics', FrameworkCategories::getSlug('Document Management & Logistics'));
         $this->assertEquals('Technology Products & Services', FrameworkCategories::getNameBySlug('technology-products-services'));
         $this->assertEquals('Marcomms & Research', FrameworkCategories::getNameBySlug('marcomms-research'));
