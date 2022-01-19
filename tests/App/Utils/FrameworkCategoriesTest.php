@@ -36,7 +36,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testCategories()
     {
         $categories = FrameworkCategories::getAll();
-        $this->assertEquals(18, count($categories));
+        $this->assertEquals(19, count($categories));
         $first = current($categories);
         $this->assertEquals('below-threshold', $first);
         $last = end($categories);
