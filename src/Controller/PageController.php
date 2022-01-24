@@ -157,7 +157,7 @@ class PageController extends AbstractController
         $formErrors = null;
         $formData = $this->getFromData($request->request);
         $formCampaignCode = null;
-        $newsPropertie = null;
+        $featureNewsProperties = null;
 
         if (array_key_exists('contact_form_form_campaign_code', $page->getContent())) {
             $formCampaignCode = $page->getContent()['contact_form_form_campaign_code']->getValue();
@@ -166,9 +166,9 @@ class PageController extends AbstractController
         if (array_key_exists('page_components_rows', (array) $page->getContent())) {
             foreach ($page->getContent()['page_components_rows']->getValue() as $acfFrield) {
                 if ($acfFrield->getName() == 'feature_news_feature_news') {
-                    $newsPropertie['newsType'] = array_key_exists('feature_news_feature_news_news_type', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_news_type']) : null;
-                    $newsPropertie['pAndSType'] = array_key_exists('feature_news_feature_news_products_and_services', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_products_and_services']) : null;
-                    $newsPropertie['sectorType'] = array_key_exists('feature_news_feature_news_sectors', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_sectors']) : null;
+                    $featureNewsProperties['newsType'] = array_key_exists('feature_news_feature_news_news_type', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_news_type']) : null;
+                    $featureNewsProperties['pAndSType'] = array_key_exists('feature_news_feature_news_products_and_services', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_products_and_services']) : null;
+                    $featureNewsProperties['sectorType'] = array_key_exists('feature_news_feature_news_sectors', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_sectors']) : null;
                     break;
                 }
             }
@@ -183,16 +183,16 @@ class PageController extends AbstractController
         }
 
         return $this->render('pages/page.html.twig', [
-            'page'               => $page,
-            'breadcrumb_parents' => $breadcrumb,
-            'page_query_string'  => filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING),
-            'query_string_type'  => isset($_GET['type']) ? filter_var($_GET['type'], FILTER_SANITIZE_STRING) : null,
-            'site_base_url'      => getenv('APP_BASE_URL'),
-            'option_cards' => $optionCardsContent,
-            'slug'               => $slug,
-            'formErrors'         => $formErrors,
-            'formData'           => $formData,
-            'newsPropertie'      => $newsPropertie,
+            'page'                       => $page,
+            'breadcrumb_parents'         => $breadcrumb,
+            'page_query_string'          => filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING),
+            'query_string_type'          => isset($_GET['type']) ? filter_var($_GET['type'], FILTER_SANITIZE_STRING) : null,
+            'site_base_url'              => getenv('APP_BASE_URL'),
+            'option_cards'               => $optionCardsContent,
+            'slug'                       => $slug,
+            'formErrors'                 => $formErrors,
+            'formData'                   => $formData,
+            'featureNewsProperties'      => $featureNewsProperties,
          ]);
     }
 
