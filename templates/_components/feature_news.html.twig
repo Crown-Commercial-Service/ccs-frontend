@@ -65,6 +65,23 @@
             {% endfor %}
         </ol>
 
+        {% if(component.articles| length == 3) %}
+            {% set path = site_base_url ~ '/news/?' %}
+
+            {% if featureNewsProperties.newsType != null %}
+                {% set path = path ~ '&categories=' ~ featureNewsProperties.newsType | join(',') %}
+            {% endif %}
+
+            {% if featureNewsProperties.pAndSType != null %}
+                {% set path = path ~ '&products_services=' ~ featureNewsProperties.pAndSType | join(',') %}
+            {% endif %}
+
+             {% if featureNewsProperties.sectorType != null %}
+                {% set path = path ~ '&sectors=' ~ featureNewsProperties.sectorType | join(',') %}
+            {% endif %}
+
+            <p><a href={{path}}>Browse all {{page.title | lower}} news articles</a></p>
+        {% endif %}
     </div>
 
 {% endif %}
