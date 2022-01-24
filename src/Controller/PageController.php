@@ -157,9 +157,21 @@ class PageController extends AbstractController
         $formErrors = null;
         $formData = $this->getFromData($request->request);
         $formCampaignCode = null;
+        $newsPropertie = null;
 
         if (array_key_exists('contact_form_form_campaign_code', $page->getContent())) {
             $formCampaignCode = $page->getContent()['contact_form_form_campaign_code']->getValue();
+        }
+
+        if (array_key_exists('page_components_rows', (array) $page->getContent())) {
+            foreach ($page->getContent()['page_components_rows']->getValue() as $acfFrield) {
+                if ($acfFrield->getName() == 'feature_news_feature_news') {
+                    $newsPropertie['newsType'] = array_key_exists('feature_news_feature_news_news_type', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_news_type']) : null;
+                    $newsPropertie['pAndSType'] = array_key_exists('feature_news_feature_news_products_and_services', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_products_and_services']) : null;
+                    $newsPropertie['sectorType'] = array_key_exists('feature_news_feature_news_sectors', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_sectors']) : null;
+                    break;
+                }
+            }
         }
 
         if ($request->isMethod('POST')) {
@@ -180,6 +192,7 @@ class PageController extends AbstractController
             'slug'               => $slug,
             'formErrors'         => $formErrors,
             'formData'           => $formData,
+            'newsPropertie'      => $newsPropertie,
          ]);
     }
 
@@ -389,5 +402,17 @@ class PageController extends AbstractController
     public function digitsCTM()
     {
         return $this->render('pages/digits_ctm.html.twig');
+    }
+
+    private function extractNewsPropertie($arrayFromEndpoint)
+    {
+
+        $arrayOfID = array();
+
+        foreach ($arrayFromEndpoint as $eachID) {
+            $arrayOfID[] = $eachID['term_taxonomy_id']->getValue();
+        }
+
+        return $arrayOfID;
     }
 }

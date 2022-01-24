@@ -68,6 +68,21 @@ components:
         - news
       post_lead_text:
         type: text
+    feature_news_feature_news_news_type:
+      type: array
+      content_fields:
+        term_taxonomy_id:
+          type: text
+    feature_news_feature_news_products_and_services:
+      type: array
+      content_fields:
+        term_taxonomy_id:
+          type: text
+    feature_news_feature_news_sectors:
+      type: array
+      content_fields:
+        term_taxonomy_id:
+          type: text
   feature_events_feature_events:
     feature_events_feature_events_heading:
       type: text
