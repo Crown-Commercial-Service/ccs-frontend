@@ -396,12 +396,18 @@ class PageController extends AbstractController
 
     public function digitsLanding()
     {
-        return $this->render('pages/digits_landing.html.twig');
+        // To render digits outage page use
+        // $this->render('pages/digits_landing.html.twig');
+
+        return $this->redirect('https://travel.crowncommercial.gov.uk/');
     }
 
     public function digitsCTM()
     {
-        return $this->render('pages/digits_ctm.html.twig');
+        // To render digits outage page use
+        // $this->render('pages/digits_ctm.html.twig');
+
+        return $this->redirect('https://travel.crowncommercial.gov.uk/');
     }
 
     private function extractNewsPropertie($arrayFromEndpoint)
