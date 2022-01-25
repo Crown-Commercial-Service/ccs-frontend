@@ -406,9 +406,8 @@ class PageController extends AbstractController
     {
         // To render digits outage page use
         // $this->render('pages/digits_ctm.html.twig');
-        
+
         return $this->redirect('https://travel.crowncommercial.gov.uk/');
-      
     }
 
     private function extractNewsPropertie($arrayFromEndpoint)
