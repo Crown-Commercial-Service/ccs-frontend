@@ -36,13 +36,14 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testCategories()
     {
         $categories = FrameworkCategories::getAll();
-        $this->assertEquals(18, count($categories));
+        $this->assertEquals(19, count($categories));
         $first = current($categories);
         $this->assertEquals('below-threshold', $first);
         $last = end($categories);
         $this->assertEquals('workplace', $last);
 
         $this->assertEquals('energy', FrameworkCategories::getSlug('Energy'));
+        $this->assertEquals('estates-decarbonisation', FrameworkCategories::getSlug('Estates Decarbonisation'));
         $this->assertEquals('document-management-logistics', FrameworkCategories::getSlug('Document Management & Logistics'));
         $this->assertEquals('Technology Products & Services', FrameworkCategories::getNameBySlug('technology-products-services'));
         $this->assertEquals('Marcomms & Research', FrameworkCategories::getNameBySlug('marcomms-research'));

@@ -8,6 +8,7 @@
                             <source media="(min-width: 1024px)" srcset="{{ page.featuredImage.byName('large') }}">
                             <source media="(min-width: 1920px)" srcset="{{ page.featuredImage.byName('full') }}">
                             <img src="{{ page.featuredImage.url }}"
+                                    alt={{ page.featuredImage.alt }}
                                     role="presentation"
                                     class=""
                                     loading="lazy"/>
