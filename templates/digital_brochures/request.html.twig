@@ -49,7 +49,7 @@
                     <div class="page-intro">{{ digital_brochure.content.form_introduction|raw }}</div>
                 {% endif %}
 
-                <p>To read this {{ digital_brochure.content.document_type|default ? digital_brochure.content.document_type|raw : 'Digital Brochure' }}, we need a few details.</p>
+                <p>To read this {{ digital_brochure.content.document_type|default ? digital_brochure.content.document_type|raw|lower : 'Digital Brochure' }}, we need a few details.</p>
 
                 {% include 'forms/gated-form.html.twig' with {'subject': 'digitalbrochure'} %}
 
