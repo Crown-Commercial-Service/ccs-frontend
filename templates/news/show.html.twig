@@ -99,8 +99,11 @@
                         {% endfor %}
                     {% endif %}
                     | {{ page.datePublished|date('j F Y') }}
-                    {% if authorName != null %}
-                        {# | Written by {{authorName}} #}
+                    {% if authorText != null %}
+                        | Written by {{authorText}}
+                    {% endif %}
+                    {% if authorText == null and authorName != null %}
+                        | Written by {{authorName}}
                     {% endif %}
                 </div>
 

@@ -92,6 +92,7 @@ class NewsController extends AbstractController
 
             if ($response->getStatusCode() == 200) {
                 $authorName = json_decode($response->getContent())->authorName;
+                $authorText = json_decode($response->getContent())->acf->author_name_text;
             }
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('News page not found', $e);
@@ -100,7 +101,8 @@ class NewsController extends AbstractController
         return $this->render('news/show.html.twig', [
             'url'           => sprintf('/news/%s', $slug),
             'page'          => $page,
-            'authorName'    => $authorName
+            'authorName'    => $authorName,
+            'authorText'    => $authorText
         ]);
     }
 
