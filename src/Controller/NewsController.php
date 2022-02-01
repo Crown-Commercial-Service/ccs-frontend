@@ -68,7 +68,7 @@ class NewsController extends AbstractController
 
         return $this->render('news/list.html.twig', [
             'url'                       => sprintf('/news/page/%s', $page),
-            'api_base_url'              => getenv('APP_API_BASE_URL'),
+            'api_base_url'              => getenv('SEARCH_API_BASE_URL'),
             'app_base_url'              => getenv('APP_BASE_URL'),
             'pageNumber'                => $page,
             'categoriesFilters'         => $categoriesFilters,
