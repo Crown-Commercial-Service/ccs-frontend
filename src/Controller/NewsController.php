@@ -89,11 +89,9 @@ class NewsController extends AbstractController
         try {
             $page = $this->api->getPageByUrl($request->getRequestUri());
             $response = HttpClient::create()->request('GET', getenv('APP_API_BASE_URL') . 'wp/v2/posts/' . $page->getId());
-            // check if 'author_name_text' acf is set for that page in wp
-            $authorDefined = property_exists(json_decode($response->getContent())->acf, 'author_name_text');
-            if ($response->getStatusCode() == 200 && $authorDefined) {
-                $authorName = json_decode($response->getContent())->authorName;
-                $authorText = json_decode($response->getContent())->acf->author_name_text;
+            if ($response->getStatusCode() == 200) { 
+                $acfContent = (array) json_decode($response->getContent())->acf;
+                $authorText = array_key_exists('author_name_text', $acfContent) ? $acfContent['author_name_text'] : null; 
             }
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('News page not found', $e);
@@ -102,7 +100,6 @@ class NewsController extends AbstractController
         return $this->render('news/show.html.twig', [
             'url'           => sprintf('/news/%s', $slug),
             'page'          => $page,
-            'authorName'    => $authorName,
             'authorText'    => $authorText
         ]);
     }
