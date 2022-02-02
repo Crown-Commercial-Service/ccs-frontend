@@ -124,6 +124,12 @@ api_frameworks:
   defaults:
     _format: json
 
+api_news:
+  path: /api/news
+  controller: App\Controller\ApiController::news
+  defaults:
+    _format: json
+
 api_pardot_email:
   path: /api/pardot-email
   controller: App\Controller\ApiController::pardotEmail
