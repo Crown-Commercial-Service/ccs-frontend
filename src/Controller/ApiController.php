@@ -216,8 +216,9 @@ class ApiController extends AbstractController
         if ($response->getStatusCode() !== 200) {
             throw new ApiException(sprintf('Error with news filter API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent()));
         }
-
-        $responseFinal = json_decode($response->getContent());
+        $responseFinal['meta']['X-WP-TotalPages'] = (int) $response->getHeaders()["x-wp-totalpages"][0];
+        $responseFinal['meta']['X-WP-Total'] = (int) $response->getHeaders()["x-wp-total"][0];
+        $responseFinal['body'] = json_decode($response->getContent());
         return new JsonResponse($responseFinal);
     }
 
@@ -244,6 +245,9 @@ class ApiController extends AbstractController
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
                     break;
                 case 'page':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
+                    break;
+                case 'per_page':
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
                     break;
             }
