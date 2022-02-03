@@ -531,7 +531,7 @@
 
                         this.currentPage = page === null ? 1 : page;
                         
-                        fetchURL = fetchURL + "&page=" + this.currentPage;
+                        fetchURL = fetchURL + "&per_page=5&page=" + this.currentPage;
 
                         if(this.popstateLoad === false) {
                             history.pushState({
@@ -559,30 +559,30 @@
                             if (!response.ok) {
                                 throw new Error('HTTP error, status = ' + response.status);
                             }
-                            
-                            self.numberOfPages = await parseInt(response.headers.get("X-WP-TotalPages"));
-                            self.totalResults = await parseInt(response.headers.get("X-WP-Total"));
-
                             return response.json();
                         })
                         .then(function(jsonResponse) {
-                            for(var i = 0; i < jsonResponse.length; i++) {                                
-                                jsonResponse[i].postedDate = self.formatDate(jsonResponse[i].date);
-                                jsonResponse[i].postType = jsonResponse[i].category_type;
-                                jsonResponse[i].CategoriesLink = appBaseUrl +"/news?categories=" + jsonResponse[i].categories[0];
-                                jsonResponse[i].postLink = appBaseUrl+ "/news/" + jsonResponse[i].slug;
-                                jsonResponse[i].index = i;
+                            self.numberOfPages = jsonResponse.meta['X-WP-TotalPages'];
+                            self.totalResults = jsonResponse.meta['X-WP-Total'];
+                                
+                            for(var i = 0; i < jsonResponse.body.length; i++) {            
+                                console.log(jsonResponse.body[i].date);                
+                                jsonResponse.body[i].postedDate = self.formatDate(jsonResponse.body[i].date);
+                                jsonResponse.body[i].postType = jsonResponse.body[i].category_type;
+                                jsonResponse.body[i].CategoriesLink = appBaseUrl +"/news?categories=" + jsonResponse.body[i].categories[0];
+                                jsonResponse.body[i].postLink = appBaseUrl+ "/news/" + jsonResponse.body[i].slug;
+                                jsonResponse.body[i].index = i;
 
-                                if (jsonResponse[i].featured_image_url != false) {
-                                    jsonResponse[i].imageSet = true;
-                                    jsonResponse[i].imageURL = jsonResponse[i].featured_image_url;
-                                    jsonResponse[i].altText  = jsonResponse[i].alt_text;
+                                if (jsonResponse.body[i].featured_image_url != false) {
+                                    jsonResponse.body[i].imageSet = true;
+                                    jsonResponse.body[i].imageURL = jsonResponse.body[i].featured_image_url;
+                                    jsonResponse.body[i].altText  = jsonResponse.body[i].alt_text;
                                 }else{
-                                    jsonResponse[i].imageSet = false;
+                                    jsonResponse.body[i].imageSet = false;
                                 }
                             }
-                            self.results = jsonResponse;
-                            if( Object.keys(jsonResponse).length === 0 ){
+                            self.results = jsonResponse.body;
+                            if( Object.keys(jsonResponse.body).length === 0 ){
                                 self.emptyResult = true;
                                 self.responseAvailable = null;
                             }else{
