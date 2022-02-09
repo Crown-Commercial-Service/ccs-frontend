@@ -163,7 +163,8 @@ class FormController extends AbstractController
         $referrer = $request->headers->get('referer');
 
         $data = [
-            'referrer' => $referrer
+            'referrer' => $referrer,
+            'env' => getenv('APP_ENV')
         ];
 
         return $this->render('forms/22-contact.html.twig', $data);
