@@ -105,6 +105,14 @@
                         {# For Pardot #}
                         <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="contact" />
 
+                        {# need to refactor after 25/02/2022 #}
+                        {% if env != 'prod' %}
+                            <input type="hidden" name="00N0C0000067jkg" id="referrer" value="{{ referrer }}">
+                        {% else %}
+                            <input type="hidden" name="00N4L000009OPAj" id="referrer" value="{{ referrer }}">
+                        {% endif %}
+                        
+
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
                             <input type="hidden" name="debug" value=1>

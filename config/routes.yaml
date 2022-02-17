@@ -145,13 +145,11 @@ news_page:
 
 form_contact:
   path: /contact
-  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-  defaults:
-    template: forms/22-contact.html.twig
+  controller: App\Controller\FormController::contactCCS
 
 form_contact_sends:
   path: /contact/submit
-  controller: App\Controller\FormController::contactCCS
+  controller: App\Controller\FormController::contactCcsSubmit
 
 form_contact_thanks:
   path: /contact/thanks
