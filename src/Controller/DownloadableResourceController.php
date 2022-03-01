@@ -43,7 +43,6 @@ class DownloadableResourceController extends AbstractController
 
         try {
             $downloadable_resource = $this->api->getPageByUrl('/news/downloadable/' . $sanitisedSlug);
-            
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Downloadable Resource not found', $e);
         }
@@ -91,7 +90,7 @@ class DownloadableResourceController extends AbstractController
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Downloadable Resource not found', $e);
         }
-        
+
         return $this->render('downloadable_resources/confirmation.html.twig', [
             'downloadable_resource' => $downloadable_resource
         ]);
