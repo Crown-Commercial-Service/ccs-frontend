@@ -188,14 +188,6 @@ digital_brochure_confirmation:
   path: /digital_brochure/confirmation/{id}/{slug}
   controller: App\Controller\DigitalBrochureController::show
 
-downloadable_resource_request:
-  path: /downloadable-resource/request/{id}/{slug}
-  controller: App\Controller\DownloadableResourceController::request
-
-downloadable_resource_confirmation:
-  path: /downloadable-resource/confirmation/{id}/{slug}
-  controller: App\Controller\DownloadableResourceController::show
-
 events_list:
   path: "/events/{page}"
   controller: App\Controller\EventsController::list
