@@ -79,6 +79,23 @@ digital_brochures_list_digital_brochures:
       type: image
     link_text:
       type: text
+downloadable_list_downloadable_resource:
+  type: array
+  content_fields:
+    ID:
+      type: number
+    post_title:
+      type: text
+    post_excerpt:
+      type: text
+    post_name:
+      type: text
+    ccs_downloadable_featured_image:
+      type: image
+    ccs_downloadable_file:
+      type: document
+    link_text:
+      type: text
 contact_form_show_contact_form:
   type: boolean
 contact_form_show_newsletter_form:
