@@ -163,8 +163,7 @@ class FormController extends AbstractController
         $referrer = $request->headers->get('referer');
 
         $data = [
-            'referrer' => $referrer,
-            'env' => getenv('APP_ENV')
+            'referrer' => $referrer
         ];
 
         return $this->render('forms/22-contact.html.twig', $data);
@@ -197,8 +196,7 @@ class FormController extends AbstractController
 
             if ($formErrors) {
                 return $this->render('forms/22-contact.html.twig', [
-                    //need to refactor after 25/02/2022
-                    'referrer' => $params->get(getenv('APP_ENV') == 'prod' ? '00N4L000009OPAj' : '00N0C0000067jkg', null),
+                    'referrer' => $params->get('00N4L000009OPAj', null),
                     'formErrors' => $formErrors,
                     'formData' => $formData,
                 ]);
