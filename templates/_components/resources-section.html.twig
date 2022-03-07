@@ -9,7 +9,11 @@
             <div class="resources-section__intro">{{ page.content.resources_intro_introduction|raw }}</div>
         {% endif %}
 
-        {% if page.content.brochures_list_brochures_list is not empty  or  page.content.whitepapers_list_whitepapers is not empty  or  page.content.webinars_list_webinars or page.content.digital_brochures_list_digital_brochures is not empty %}
+        {% if page.content.brochures_list_brochures_list is not empty  or  
+              page.content.whitepapers_list_whitepapers is not empty  or  
+              page.content.webinars_list_webinars or 
+              page.content.digital_brochures_list_digital_brochures is not empty or 
+              page.content.downloadable_list_downloadable_resource %}
             <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
                 {% if page.content.brochures_list_brochures_list is not empty %}
                     {# Start brochure section #}
@@ -207,6 +211,59 @@
                         </div>
 
                         {# End Digital Brochure section #}
+                    </div>
+                {% endif %}
+
+                {% if page.content.downloadable_list_downloadable_resource is not empty %}
+                    <div class="govuk-accordion__section ">
+                        {# Start Downloadable Resources section #}
+
+                        <div class="govuk-accordion__section-header">
+                            <h2 class="govuk-accordion__section-heading">
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
+                                          Downloadable Resources ({{ page.content.downloadable_list_downloadable_resource|length }}
+                                            )
+                                        </span>
+                            </h2>
+                        </div>
+                        <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">
+
+                            <ol class="ccs-list-grid">
+                                {% for downloadable_resource in page.content.downloadable_list_downloadable_resource %}
+                                    <li class="ccs-list-grid__item">
+                                        {% if downloadable_resource.ccs_downloadable_featured_image.url is defined %}
+                                            <a href="/downloadable-resource/request/{{ downloadable_resource.ID }}/{{ downloadable_resource.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
+                                                <img
+                                                        src="{{ downloadable_resource.ccs_downloadable_featured_image.byName('news-size-m') }}"
+
+                                                        {% if downloadable_resource.ccs_downloadable_featured_image.alt is defined %}
+                                                            alt="{{ downloadable_resource.ccs_downloadable_featured_image.alt }}"
+                                                        {% else %}
+                                                            alt=""
+                                                            role="presentation"
+                                                        {% endif %}
+                                                /> </a>
+                                        {% endif %}
+                                        <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
+                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ downloadable_resource.post_title }}</h3>
+                                            {% if downloadable_resource.post_excerpt is defined and downloadable_resource.post_excerpt is not empty %}
+                                                <p>{{ downloadable_resource.post_excerpt }}</p>
+                                            {% endif %}
+                                            <a class="ccs-list-grid__item__cta" href="/downloadable-resource/request/{{ downloadable_resource.ID }}/{{ downloadable_resource.post_name }}/">
+                                                {% if downloadable_resource.link_text is not empty %}
+                                                    {{ downloadable_resource.link_text }}
+                                                {% else %}
+                                                    Learn more
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ol>
+
+                        </div>
+
+                        {# End Downloadable Resources section #}
                     </div>
                 {% endif %}
             </div>

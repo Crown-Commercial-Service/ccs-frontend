@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Access Downloadable Resource - {{ downloadable_resource.title|raw }} - CCS{% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+
+{# Remove colour flourishes from this page #}
+{% block flourishClasses %}{% endblock %}
+
+
+{% block body %}
+
+    <!-- required wrapper 1 -->
+    <div class="govuk-width-container">
+
+        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
+
+
+        <div class="govuk-phase-banner">
+            {% include '/includes/phase-banner-content.html.twig' %}
+        </div>
+
+        <main class="govuk-main-wrapper">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">    
+                    <h1 class="govuk-heading-xl page-title">{{ downloadable_resource.content.download_confirmation_msg|default ? downloadable_resource.content.download_confirmation_msg|striptags : 'You can now download this resource' }}</h1>
+                    <br />
+                    {% if downloadable_resource.content.downloadable_resources_url is defined and downloadable_resource.content.downloadable_resources_url is not empty %}
+                        <div class="wysiwyg-content intro__content">
+                            {{ downloadable_resource.content.downloadable_resources_url|raw }}
+                         </div>
+                    {% endif %}
+                    <br /> <br />
+                    {% if downloadable_resource.content.downloadable_resources_file is defined and downloadable_resource.content.downloadable_resources_file is not empty %}
+                        <p><a class="download-file-link" href="{{ downloadable_resource.content.downloadable_resources_file }}">{{ downloadable_resource.content.downloadable_resources_file_text|raw }}</a></p>
+                        <br /> <br />
+                    {% endif %}
+
+                     {% if downloadable_resource.content.embed_video is defined and downloadable_resource.content.embed_video %}
+                        <div class="responsive-video widescreen">{{ downloadable_resource.content.embed_video|raw }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+{% endblock %}
