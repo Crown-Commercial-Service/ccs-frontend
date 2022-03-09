@@ -20,6 +20,10 @@ digits-ctm:
   path: /digits-ctm.html
   controller: App\Controller\PageController::digitsCTM
 
+course:
+  path: /lms-course
+  controller: App\Controller\PageController::course
+
 frameworks_search:
   path: /agreements/search/{page}
   controller: App\Controller\FrameworksController::search
