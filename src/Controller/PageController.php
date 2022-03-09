@@ -421,4 +421,9 @@ class PageController extends AbstractController
 
         return $arrayOfID;
     }
+
+    public function course() {
+
+        return $this->render('lms/course.html.twig');
+    }
 }
