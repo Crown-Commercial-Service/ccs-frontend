@@ -94,7 +94,7 @@ class FrameworksController extends AbstractController
                 case 'im_field_category:16':
                     return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'fleet']);
                 case 'im_field_category:15':
-                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'office-and-travel']);
+                    return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'travel']);
                 case 'im_field_category:41':
                     return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'construction']);
             }
@@ -228,8 +228,8 @@ class FrameworksController extends AbstractController
             case "software-cyber":
                 return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'technology-solutions-outcomes']);
                 break;
-            case "travel":
-                return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'office-and-travel']);
+            case "office-and-travel":
+                return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'travel']);
                 break;
         }
 
