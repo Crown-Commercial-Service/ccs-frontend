@@ -478,7 +478,7 @@
                         var self = this;
                         date = new Date(Date.parse(date));
                         const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][date.getMonth()];
-                        return date.getDate() + self.nth(date.getDate()) + ' ' + month + ' ' + date.getFullYear();
+                        return date.getDate() + ' ' + month + ' ' + date.getFullYear();
 
                     },
                     categoriesFilter:function(categoriesSlug){

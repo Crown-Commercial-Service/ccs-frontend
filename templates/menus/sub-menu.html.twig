@@ -1,8 +1,10 @@
 {% for menu_item in menu_list %}
-        <a class="govuk-footer__link" href="{{ menu_item.url }}">{{ menu_item.label }}</a>
-        {% if menu_item.children %}
-            <ul class="govuk-!-padding-left-3 list--inline" >
+    <ul class="govuk-!-padding-left-3 list--inline">
+        <li>
+            <a class="govuk-footer__link" href="{{ menu_item.url }}">{{ menu_item.label }}</a>
+            {% if menu_item.children %}
                 {% include 'menus/sub-menu.html.twig' with {'menu_list': menu_item.children} %}
-            </ul>
-        {% endif %}
+            {% endif %}
+        </li>
+    </ul>
 {% endfor %}
