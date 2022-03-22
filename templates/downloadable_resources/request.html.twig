@@ -49,7 +49,7 @@
                     <div class="page-intro">{{ downloadable_resource.content.form_introduction|raw }}</div>
                 {% endif %}
 
-                <p>{{ downloadable_resource.content.prompt_text|default ? downloadable_resource.content.prompt_text|raw|lower : ' To read this downloadable resource, we need a few details' }}</p>
+                <p>{{ downloadable_resource.content.prompt_text|default ? downloadable_resource.content.prompt_text|raw : ' To read this downloadable resource, we need a few details' }}</p>
 
                 {% include 'forms/gated-form.html.twig' with {'subject': 'downloadable'} %}
 
