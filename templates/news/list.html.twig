@@ -67,7 +67,7 @@
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                         <input v-on:change=fetchAPIData(null,null) v-model="checkedCategories" value="allCategories" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allCategories" type="checkbox">
                                         <label class="govuk-label govuk-checkboxes__label" for="allCategories">
-                                            All articles
+                                            View all
                                         </label>
                                     </div>
                                     {% if categoriesFilters is not empty %}
@@ -100,7 +100,7 @@
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                         <input v-on:change=fetchAPIData(null,null) v-model="checkedSectors" value="allSectors" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allSectors" type="checkbox">
                                         <label class="govuk-label govuk-checkboxes__label" for="allSectors">
-                                            All Sectors
+                                            View all
                                         </label>
                                     </div>
                                     {% if sectorsFilters is not empty %}
@@ -133,7 +133,7 @@
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                         <input v-on:change=fetchAPIData(null,null) v-model="checkedProducts_services" value="allPS" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allPS" type="checkbox">
                                         <label class="govuk-label govuk-checkboxes__label" for="allPS">
-                                            All Categories
+                                            View all
                                         </label>
                                     </div>
                                     {% if productsServicesFilters is not empty %}
@@ -300,16 +300,12 @@
 
                         // if the start page is very close to the last page, then
                         // account for this
-                        if((this.currentPage + 2) >= this.numberOfPages) {
+                        if((this.currentPage + 2) > this.numberOfPages) {
                             linksStartPage = linksStartPage - 2;
                         }
 
-                        if(this.numberOfPages < this.resultPagesLinkNumber) {
-                            linksStartPage = 1;
-                        }
-
-                        if(linksStartPage <= 0) {
-                            linksStartPage = 1;
+                        if(linksStartPage <= 1 ) {
+                            linksStartPage = 2;
                         }
 
                         return linksStartPage;
@@ -320,9 +316,6 @@
                         // if there aren't more pages than the number we
                         // want to show by minimum, then the end page is just equal
                         // to the final result page
-                        if (this.numberOfPages < this.resultPagesLinkNumber) {
-                            linksEndPage = this.totalResults;
-                        }
 
                         if ((linksEndPage >= this.numberOfPages)) {
                             // minus 1 because the last page is always output
@@ -361,7 +354,7 @@
                                 </a>
                             </li>
 
-                            <li class="pagination__item" v-if="numberOfPages > 6">
+                            <li class="pagination__item">
                                 <span v-if="currentPage == 1"><span class="visuallyhidden">Page </span>1</span>
                                 <a v-else href="#" v-on:click="updatePageNumber($event, 1)"><span class="visuallyhidden">Page </span>1</a>
                             </li>
@@ -407,7 +400,7 @@
                     responseAvailable: null,
                     emptyResult: false,
                     feature: true,
-                    apiURL:  apiBaseUrl + "wp/v2/posts?per_page=5",
+                    apiURL:  apiBaseUrl + "news?",
                     checkedCategories: checkedCategories,
                     checkedSectors: checkedSectors,
                     checkedProducts_services: checkedProducts_services,
@@ -485,7 +478,7 @@
                         var self = this;
                         date = new Date(Date.parse(date));
                         const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][date.getMonth()];
-                        return date.getDate() + self.nth(date.getDate()) + ' ' + month + ' ' + date.getFullYear();
+                        return date.getDate() + ' ' + month + ' ' + date.getFullYear();
 
                     },
                     categoriesFilter:function(categoriesSlug){
@@ -536,13 +529,9 @@
                     searchRequestUrl: function(categoriesSlug, page) {
                         fetchURL = this.apiURL + this.categoriesFilter() + this.sectorsFilter() + this.productsServicesFilter();
 
-                        if (categoriesSlug != null && page == null){
-                            this.currentPage = 1
-                        }else if(categoriesSlug == null && page != null){
-                            this.currentPage = page
-                        }
+                        this.currentPage = page === null ? 1 : page;
                         
-                        fetchURL = fetchURL + "&page=" + this.currentPage;
+                        fetchURL = fetchURL + "&per_page=5&page=" + this.currentPage;
 
                         if(this.popstateLoad === false) {
                             history.pushState({
@@ -570,30 +559,30 @@
                             if (!response.ok) {
                                 throw new Error('HTTP error, status = ' + response.status);
                             }
-                            
-                            self.numberOfPages = await parseInt(response.headers.get("X-WP-TotalPages"));
-                            self.totalResults = await parseInt(response.headers.get("X-WP-Total"));
-
                             return response.json();
                         })
                         .then(function(jsonResponse) {
-                            for(var i = 0; i < jsonResponse.length; i++) {                                
-                                jsonResponse[i].postedDate = self.formatDate(jsonResponse[i].date);
-                                jsonResponse[i].postType = jsonResponse[i].category_type;
-                                jsonResponse[i].CategoriesLink = appBaseUrl +"/news?categories=" + jsonResponse[i].categories[0];
-                                jsonResponse[i].postLink = appBaseUrl+ "/news/" + jsonResponse[i].slug;
-                                jsonResponse[i].index = i;
+                            self.numberOfPages = jsonResponse.meta['X-WP-TotalPages'];
+                            self.totalResults = jsonResponse.meta['X-WP-Total'];
+                                
+                            for(var i = 0; i < jsonResponse.body.length; i++) {            
+                                console.log(jsonResponse.body[i].date);                
+                                jsonResponse.body[i].postedDate = self.formatDate(jsonResponse.body[i].date);
+                                jsonResponse.body[i].postType = jsonResponse.body[i].category_type;
+                                jsonResponse.body[i].CategoriesLink = appBaseUrl +"/news?categories=" + jsonResponse.body[i].categories[0];
+                                jsonResponse.body[i].postLink = appBaseUrl+ "/news/" + jsonResponse.body[i].slug;
+                                jsonResponse.body[i].index = i;
 
-                                if (jsonResponse[i].featured_image_url != false) {
-                                    jsonResponse[i].imageSet = true;
-                                    jsonResponse[i].imageURL = jsonResponse[i].featured_image_url;
-                                    jsonResponse[i].altText  = jsonResponse[i].alt_text;
+                                if (jsonResponse.body[i].featured_image_url != false) {
+                                    jsonResponse.body[i].imageSet = true;
+                                    jsonResponse.body[i].imageURL = jsonResponse.body[i].featured_image_url;
+                                    jsonResponse.body[i].altText  = jsonResponse.body[i].alt_text;
                                 }else{
-                                    jsonResponse[i].imageSet = false;
+                                    jsonResponse.body[i].imageSet = false;
                                 }
                             }
-                            self.results = jsonResponse;
-                            if( Object.keys(jsonResponse).length === 0 ){
+                            self.results = jsonResponse.body;
+                            if( Object.keys(jsonResponse.body).length === 0 ){
                                 self.emptyResult = true;
                                 self.responseAvailable = null;
                             }else{

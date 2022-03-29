@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Request to access Digital Brochure - {{ digital_brochure.title|raw }} - CCS{% endblock %}
+{% block title %}Request to access Digital Brochure - {{ downloadable_resource.title|raw }} - CCS{% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -42,23 +42,23 @@
         {% endif %}
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
-                <h1 class="page-title-prepend">{{ digital_brochure.content.document_type|default ? digital_brochure.content.document_type|raw : 'Digital Brochure' }}</h1>
-                <h2 class="govuk-heading-xl page-title page-title--tight">{{ digital_brochure.title|raw }}</h2>
+                <h1 class="page-title-prepend">{{ downloadable_resource.content.downloadable_type|default ? downloadable_resource.content.downloadable_type|raw : 'Downloadable Resources' }}</h1>
+                <h2 class="govuk-heading-xl page-title page-title--tight">{{ downloadable_resource.title|raw }}</h2>
 
-                {% if digital_brochure.content.form_introduction is defined and digital_brochure.content.form_introduction is not empty %}
-                    <div class="page-intro">{{ digital_brochure.content.form_introduction|raw }}</div>
+                {% if downloadable_resource.content.form_introduction is defined and downloadable_resource.content.form_introduction is not empty %}
+                    <div class="page-intro">{{ downloadable_resource.content.form_introduction|raw }}</div>
                 {% endif %}
 
-                <p>To read this {{ digital_brochure.content.document_type|default ? digital_brochure.content.document_type|raw|lower : 'Digital Brochure' }}, we need a few details.</p>
+                <p>{{ downloadable_resource.content.prompt_text|default ? downloadable_resource.content.prompt_text|raw : ' To read this downloadable resource, we need a few details' }}</p>
 
-                {% include 'forms/gated-form.html.twig' with {'subject': 'digitalbrochure'} %}
+                {% include 'forms/gated-form.html.twig' with {'subject': 'downloadable'} %}
 
             </div>
             <div class="govuk-grid-column-one-third">
-                {% if digital_brochure.featuredImage is defined and digital_brochure.featuredImage is not empty %}
+                {% if downloadable_resource.featuredImage is defined and downloadable_resource.featuredImage is not empty %}
                     <div class="flourish-box-effect">
                         <div class="flourish-box-effect__inner">
-                            <img src="{{ digital_brochure.featuredImage.byName('news-size-m') }}" alt="" role="presentation" />
+                            <img src="{{ downloadable_resource.featuredImage.byName('news-size-m') }}" alt="" role="presentation" />
                         </div>
                     </div>
                 {% endif %}

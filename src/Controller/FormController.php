@@ -160,7 +160,17 @@ class FormController extends AbstractController
 
     public function contactCCS(Request $request)
     {
+        $referrer = $request->headers->get('referer');
 
+        $data = [
+            'referrer' => $referrer
+        ];
+
+        return $this->render('forms/22-contact.html.twig', $data);
+    }
+
+    public function contactCcsSubmit(Request $request)
+    {
         $params = $request->request;
 
         ControllerHelper::honeyPot($params->get('surname', null));
@@ -186,6 +196,7 @@ class FormController extends AbstractController
 
             if ($formErrors) {
                 return $this->render('forms/22-contact.html.twig', [
+                    'referrer' => $params->get('00N4L000009OPAj', null),
                     'formErrors' => $formErrors,
                     'formData' => $formData,
                 ]);
