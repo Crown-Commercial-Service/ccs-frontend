@@ -1,0 +1,22 @@
+.ppg-login {
+  float: right;
+  right: 0;
+}
+.ppg-login-links {
+  padding: 0;
+  margin: 0;
+}
+
+.ppg-login-link {
+  float:left;
+  list-style-type: none;
+  padding:7px 15px;
+  background-color: rgba(109,2,39,0.41);;
+  margin-right: 1px;
+  @include govuk-font(18, $weight: regular);
+
+  a {
+    text-decoration: none;
+  }
+
+}
