@@ -1,6 +1,11 @@
 .ppg-login {
   display: flex;
   justify-content: flex-end;
+
+  @media screen and (max-width: 768px) {
+      visibility: hidden;
+      display: none;
+    }
 }
 .ppg-login-links {
   display: flex;
