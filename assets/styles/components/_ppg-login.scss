@@ -1,14 +1,15 @@
 .ppg-login {
-  float: right;
-  right: 0;
+  display: flex;
+  justify-content: flex-end;
 }
 .ppg-login-links {
+  display: flex;
+  justify-content: flex-start;
   padding: 0;
   margin: 0;
 }
 
 .ppg-login-link {
-  float:left;
   list-style-type: none;
   padding:7px 15px;
   background-color: rgba(109,2,39,0.41);;
