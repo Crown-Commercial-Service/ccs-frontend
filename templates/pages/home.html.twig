@@ -12,6 +12,16 @@
             header-global header-global--home
         {% endblock %}
 
+       {% block ppglogin %}
+           <div class="ppg-login">
+                <ul class="ppg-login-links">
+                    <li class="ppg-login-link"><p class="ppg-login-text">Public Procurement Gateway</p></li>
+                    <li class="ppg-login-link"><a href="{{ppgCreateAccount}}">Create account</a></li>
+                    <li class="ppg-login-link"><a href="{{ppgLogin}}">Sign in</a></li>
+                </ul>
+            </div>
+        {% endblock %}
+
         {% block featuredcontent %}
                 <div class="homepage-hero govuk-homepage-hero-full-width">
 
