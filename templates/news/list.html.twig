@@ -220,9 +220,14 @@
             </div>
 
         </main>
+
         <!-- Vue and Custom JavaScript -->
-        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    
+        {% if app.environment == "prod" %}
+            <script src="/assets/scripts/libraries/vue.min.js"></script>
+        {% else %}
+            <script src="/assets/scripts/libraries/vue.js"></script>
+        {% endif %}
+
         <script>
              /**
             * Function to test if the browser supports ES6 template literals
@@ -478,7 +483,7 @@
                         var self = this;
                         date = new Date(Date.parse(date));
                         const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][date.getMonth()];
-                        return date.getDate() + self.nth(date.getDate()) + ' ' + month + ' ' + date.getFullYear();
+                        return date.getDate() + ' ' + month + ' ' + date.getFullYear();
 
                     },
                     categoriesFilter:function(categoriesSlug){
@@ -565,8 +570,7 @@
                             self.numberOfPages = jsonResponse.meta['X-WP-TotalPages'];
                             self.totalResults = jsonResponse.meta['X-WP-Total'];
                                 
-                            for(var i = 0; i < jsonResponse.body.length; i++) {            
-                                console.log(jsonResponse.body[i].date);                
+                            for(var i = 0; i < jsonResponse.body.length; i++) {                         
                                 jsonResponse.body[i].postedDate = self.formatDate(jsonResponse.body[i].date);
                                 jsonResponse.body[i].postType = jsonResponse.body[i].category_type;
                                 jsonResponse.body[i].CategoriesLink = appBaseUrl +"/news?categories=" + jsonResponse.body[i].categories[0];

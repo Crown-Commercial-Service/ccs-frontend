@@ -1,0 +1,33 @@
+.ppg-login {
+  display: flex;
+  justify-content: flex-end;
+
+  @media screen and (max-width: 768px) {
+      visibility: hidden;
+      display: none;
+    }
+}
+.ppg-login-links {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0;
+  margin: 0;
+}
+
+.ppg-login-text {
+  color: #ffffff;
+  margin: 0;
+}
+
+.ppg-login-link {
+  list-style-type: none;
+  padding:7px 15px;
+  background-color: rgba(109,2,39,0.41);;
+  margin-right: 1px;
+  @include govuk-font(18, $weight: regular);
+
+  a {
+    text-decoration: none;
+  }
+
+}
