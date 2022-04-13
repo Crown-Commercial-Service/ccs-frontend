@@ -422,8 +422,8 @@ class PageController extends AbstractController
         return $arrayOfID;
     }
 
-    public function course() {
+    public function ppgTraining() {
 
-        return $this->render('lms/course.html.twig');
+        return $this->render('pages/ppg_training.html.twig');
     }
 }

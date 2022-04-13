@@ -20,9 +20,9 @@ digits-ctm:
   path: /digits-ctm.html
   controller: App\Controller\PageController::digitsCTM
 
-course:
-  path: /lms-course
-  controller: App\Controller\PageController::course
+ppg_training:
+  path: /ppg-training
+  controller: App\Controller\PageController::ppgTraining
 
 frameworks_search:
   path: /agreements/search/{page}
