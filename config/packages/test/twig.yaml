@@ -9,3 +9,5 @@ twig:
         web_to_case_debug_email: 'carlos@studio24.net'
         survey_link: 'https://crowncommercial.qualtrics.com/jfe/form/SV_5jzPGtbYCrfydbE'
         cat_domain: 'https://uat-ccs-scale-cat-buyer-ui.london.cloudapps.digital'
+        ppgLogin: 'https://uat.identify.crowncommercial.gov.uk/'
+        ppgCreateAccount: 'https://uat.identify.crowncommercial.gov.uk/manage-org/register'
