@@ -21,7 +21,7 @@ digits-ctm:
   controller: App\Controller\PageController::digitsCTM
 
 ppg_training:
-  path: /ppg-training
+  path: /ppg-guides
   controller: App\Controller\PageController::ppgTraining
 
 frameworks_search:
