@@ -12,6 +12,17 @@
             header-global header-global--home
         {% endblock %}
 
+       {% block ppglogin %}
+           <div class="ppg-login">
+                <ul class="ppg-login-links">
+
+                    <li class="ppg-login-link"><p class="ppg-login-text">Public Procurement Gateway: </p></li>
+                    <li class="ppg-login-link"><p class="ppg-login-text"><a href="{{ppgCreateAccount}}">Create account</a> or <a href="{{ppgLogin}}">Sign in</a></p></li>
+
+                </ul>
+            </div>
+        {% endblock %}
+
         {% block featuredcontent %}
                 <div class="homepage-hero govuk-homepage-hero-full-width">
 
@@ -20,7 +31,7 @@
                             <div class="govuk-hero-content">
                                 <div class="govuk-hero-homepage-caption-container govuk-hero-margin-right-35">
 
-                                    {% set default = true %}
+                                    {% set default = false %}
 
                                     {% if default %}
                                         <div class="govuk-hero-caption">
@@ -31,10 +42,10 @@
                                         </div>   
                                     {% else %}
                                         <div class="govuk-hero-caption">
-                                                <h1 class="govuk-caption-heading">Digital transformation in local government</h1>
-                                                <a class="govuk-caption-link" href="/products-and-services/technology/digital-transformation-in-local-government">Find out how we can help you transform services for citizens through technology procurement</a>
-                                                <br/><br/>
-                                                <a class="govuk-button govuk-caption-button" href="/digital_brochure/request/39095/digital-transformation-guide-technology-procurement-for-local-government">Download our guide</a>
+                                                <h1 class="govuk-caption-heading">Digital brochure 2022: powerful procurement at your fingertips</h1>
+                                                <a class="govuk-caption-link" href="/power-to-your-procurement">Discover our carbon net-zero and modern slavery initiatives, our commercial agreements and much more</a>
+                                                <br />
+                                                <a class="govuk-button govuk-caption-button" href="/digital_brochure/request/30384/commercial-agreements-digital-brochure">Download our brochure</a>
                                         </div>
                                     {% endif %}
 

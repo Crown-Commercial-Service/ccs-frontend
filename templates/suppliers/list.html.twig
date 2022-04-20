@@ -425,11 +425,13 @@
         </main>
     </div>
 
+     <!-- Vue and Custom JavaScript -->
+    {% if app.environment == "prod" %}
+        <script src="/assets/scripts/libraries/vue.min.js"></script>
+    {% else %}
+        <script src="/assets/scripts/libraries/vue.js"></script>
+    {% endif %}
 
-
-
-
-    <script src="/assets/scripts/libraries/vue.js"></script>
     <script>
         /**
          * Function to test if the browser supports ES6 template literals
