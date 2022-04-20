@@ -126,7 +126,11 @@
                     <div class="page-components">
                         {% include '_components/components.html.twig' with {'components': page.content.page_components_rows } %}
 
-                        {% if page.content.brochures_list_brochures_list is not empty  or  page.content.whitepapers_list_whitepapers is not empty  or  page.content.webinars_list_webinars is not empty or page.content.digital_brochures_list_digital_brochures is not empty %}
+                        {% if page.content.brochures_list_brochures_list is not empty or 
+                              page.content.whitepapers_list_whitepapers is not empty  or  
+                              page.content.webinars_list_webinars is not empty or 
+                              page.content.digital_brochures_list_digital_brochures is not empty or
+                              page.content.downloadable_list_downloadable_resource %}
                             {% include '_components/resources-section.html.twig' %}
                         {% endif %}
                     </div>
@@ -284,7 +288,8 @@
 
                                                 <form id="js-contact-form" class="govuk-!-width-three-quarters pardot-submit" action="/{{slug}}" method="post">
 
-
+                                                <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+                                                
                                                     {# See https://symfony.com/doc/current/templating/app_variable.html #}
                                                     {% if app.debug %}
                                                         <input type="hidden" name="debug" value=1>
@@ -304,6 +309,21 @@
                                                     </div>
 
                                                     <input type="checkbox" name="surname" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
+
+                                                    <div class="govuk-form-group {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                                        <label class="govuk-label" for="jobTitle">
+                                                            Job title </label>
+
+                                                        {% if formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 %}
+                                                            {% for error in formErrors.jobTitleErr.errors %}
+                                                                <span id="jobTitle-error" class="govuk-error-message">
+                                                                    <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                                                </span>
+                                                            {% endfor %}                            
+                                                        {% endif %}   
+
+                                                        <input class="govuk-input pardot-field {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="jobTitle" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="jobTitle"/>
+                                                    </div>
 
                                                     <div class="govuk-form-group {{formErrors.emailErr.errors is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                                                         <label class="govuk-label" for="email">Email </label>
@@ -348,21 +368,6 @@
                                                         {% endif %}   
 
                                                         <input class="govuk-input pardot-field {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization"/>
-                                                    </div>
-
-                                                    <div class="govuk-form-group {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
-                                                        <label class="govuk-label" for="jobTitle">
-                                                            Job title </label>
-
-                                                        {% if formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 %}
-                                                            {% for error in formErrors.jobTitleErr.errors %}
-                                                                <span id="jobTitle-error" class="govuk-error-message">
-                                                                    <span class="govuk-visually-hidden">Error:</span>{{error}}
-                                                                </span>
-                                                            {% endfor %}                            
-                                                        {% endif %}   
-
-                                                        <input class="govuk-input pardot-field {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="jobTitle" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="jobTitle"/>
                                                     </div>
 
                                                     {% if page.content.contact_form_find_out_more_aggregation.value is defined and page.content.contact_form_find_out_more_aggregation.value %}

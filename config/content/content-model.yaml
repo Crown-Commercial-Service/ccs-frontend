@@ -40,6 +40,9 @@ content_types:
   digital_brochures:
     api_endpoint: wp/v2/digital_brochure
     content_fields: digital_brochures.yaml
+  downloadable_resources:
+    api_endpoint: wp/v2/downloadable
+    content_fields: downloadable-resources.yaml
   events:
     api_endpoint: wp/v2/event
     content_fields: events.yaml

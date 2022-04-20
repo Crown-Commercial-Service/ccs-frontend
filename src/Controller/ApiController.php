@@ -185,6 +185,77 @@ class ApiController extends AbstractController
     }
 
     /**
+     * API proxy for news filter
+     *
+     * Proxy requests from https://FRONTEND/api/news?categories=&sectors=&products_services=&page=1
+     * to: https://CMS/wp-json/wp/v2/posts?categories=&sectors=&products_services=&page=1
+     *
+     * @param Request $request
+     * @param CacheInterface $cache
+     * @return JsonResponse
+     * @throws ApiException
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
+    public function news(Request $request, CacheInterface $cache)
+    {
+        $apiUrl = $this->getCmsUrl('/wp-json/wp/v2/posts');
+
+        // Build query and input filter params
+        $client = HttpClient::create();
+        $response = $client->request(
+            'GET',
+            $apiUrl,
+            [
+                'query' => $this->filterNewsParams($request->query->all())
+            ]
+        );
+
+        if ($response->getStatusCode() !== 200) {
+            throw new ApiException(sprintf('Error with news filter API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent()));
+        }
+        $responseFinal['meta']['X-WP-TotalPages'] = (int) $response->getHeaders()["x-wp-totalpages"][0];
+        $responseFinal['meta']['X-WP-Total'] = (int) $response->getHeaders()["x-wp-total"][0];
+        $responseFinal['body'] = json_decode($response->getContent());
+        return new JsonResponse($responseFinal);
+    }
+
+    /**
+     * Return a filtered array of search params for news API query
+     *
+     * Please note any GET params you want to allow to be passed onto the WP API must be added here
+     *
+     * @param array $params
+     * @return array
+     */
+    private function filterNewsParams(array $params)
+    {
+        $filtered = [];
+        foreach ($params as $name => $param) {
+            switch ($name) {
+                case 'categories':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    break;
+                case 'sectors':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    break;
+                case 'products_services':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    break;
+                case 'page':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
+                    break;
+                case 'per_page':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
+                    break;
+            }
+        }
+        return $filtered;
+    }
+
+    /**
      * Send email address to Pardot
      *
      * This sends submitted email addresses to a Pardot form to help with marketing tracking
@@ -281,6 +352,9 @@ class ApiController extends AbstractController
             'newsletter'     => getenv('PARDOT_EMAIL_FORM_HANDLER_NEWSLETTER_URL'),
             'lg'     => getenv('PARDOT_EMAIL_FORM_HANDLER_LG_URL'),
             'nhs'     => getenv('PARDOT_EMAIL_FORM_HANDLER_NHS_URL'),
+            'whitepaper' => getenv('PARDOT_EMAIL_FORM_HANDLER_WHITEPAPER_URL'),
+            'webinar' => getenv('PARDOT_EMAIL_FORM_HANDLER_WEBINAR_URL'),
+            'digitalbrochure' => getenv('PARDOT_EMAIL_FORM_HANDLER_DB_URL'),
         ];
 
         $pardotFormUrl = null;

@@ -157,9 +157,21 @@ class PageController extends AbstractController
         $formErrors = null;
         $formData = $this->getFromData($request->request);
         $formCampaignCode = null;
+        $featureNewsProperties = null;
 
         if (array_key_exists('contact_form_form_campaign_code', $page->getContent())) {
             $formCampaignCode = $page->getContent()['contact_form_form_campaign_code']->getValue();
+        }
+
+        if (array_key_exists('page_components_rows', (array) $page->getContent())) {
+            foreach ($page->getContent()['page_components_rows']->getValue() as $acfFrield) {
+                if ($acfFrield->getName() == 'feature_news_feature_news') {
+                    $featureNewsProperties['newsType'] = array_key_exists('feature_news_feature_news_news_type', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_news_type']) : null;
+                    $featureNewsProperties['pAndSType'] = array_key_exists('feature_news_feature_news_products_and_services', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_products_and_services']) : null;
+                    $featureNewsProperties['sectorType'] = array_key_exists('feature_news_feature_news_sectors', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_sectors']) : null;
+                    break;
+                }
+            }
         }
 
         if ($request->isMethod('POST')) {
@@ -171,15 +183,16 @@ class PageController extends AbstractController
         }
 
         return $this->render('pages/page.html.twig', [
-            'page'               => $page,
-            'breadcrumb_parents' => $breadcrumb,
-            'page_query_string'  => filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING),
-            'query_string_type'  => isset($_GET['type']) ? filter_var($_GET['type'], FILTER_SANITIZE_STRING) : null,
-            'site_base_url'      => getenv('APP_BASE_URL'),
-            'option_cards' => $optionCardsContent,
-            'slug'               => $slug,
-            'formErrors'         => $formErrors,
-            'formData'           => $formData,
+            'page'                       => $page,
+            'breadcrumb_parents'         => $breadcrumb,
+            'page_query_string'          => filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING),
+            'query_string_type'          => isset($_GET['type']) ? filter_var($_GET['type'], FILTER_SANITIZE_STRING) : null,
+            'site_base_url'              => getenv('APP_BASE_URL'),
+            'option_cards'               => $optionCardsContent,
+            'slug'                       => $slug,
+            'formErrors'                 => $formErrors,
+            'formData'                   => $formData,
+            'featureNewsProperties'      => $featureNewsProperties,
          ]);
     }
 
@@ -247,9 +260,11 @@ class PageController extends AbstractController
         $errorMessages = [];
 
         $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
-        $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
-        $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
         $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
+        $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone'], $data['callback']);
+        $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
+
 
         foreach ($errorMessages as $type => $value) {
             if (!empty($errorMessages[$type]['errors'])) {
@@ -377,5 +392,39 @@ class PageController extends AbstractController
             }
         }
         return array_unique($returnList);
+    }
+
+    public function digitsLanding()
+    {
+        // To render digits outage page use
+        // $this->render('pages/digits_landing.html.twig');
+
+        return $this->redirect('https://travel.crowncommercial.gov.uk/');
+    }
+
+    public function digitsCTM()
+    {
+        // To render digits outage page use
+        // $this->render('pages/digits_ctm.html.twig');
+
+        return $this->redirect('https://travel.crowncommercial.gov.uk/');
+    }
+
+    private function extractNewsPropertie($arrayFromEndpoint)
+    {
+
+        $arrayOfID = array();
+
+        foreach ($arrayFromEndpoint as $eachID) {
+            $arrayOfID[] = $eachID['term_taxonomy_id']->getValue();
+        }
+
+        return $arrayOfID;
+    }
+
+    public function ppgTraining()
+    {
+
+        return $this->render('pages/ppg_training.html.twig');
     }
 }

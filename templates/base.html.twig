@@ -29,18 +29,67 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.2.1">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.3.3">
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.2.1">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.3.3">
     {% endif %}
 
     {% block blocking_javascript %}
 
         {# Google Tag Manager #}
         <script>
+
+        var emailRegex = /(([^<>()\[\]\\.,;:\s@"%]+(\.[^<>()\[\]\\.,;:\s@"%]+)*)|(".+"))(@|%40)((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/
+
+        function extractParams() {
+            var urlParams = {},
+                match,
+                search = /([^&=]+)=?([^&]*)/g,
+                query = window.location.search.substring(1);
+            while (match = search.exec(query)) {
+                urlParams[match[1]] = match[2];
+            }
+            return urlParams
+        }
+
+        function rewriteURL(urlParams) {
+            var keys = Object.keys(urlParams).sort();
+            var params = "?";
+
+            for (var i = 0; i < keys.length; i++) {
+                if (i > 0) {
+                    params = params.concat("&")
+                }
+                params = params.concat(keys[i] + "=" + urlParams[keys[i]])
+            }
+            return window.location.protocol + "//" + window.location.host + window.location.pathname + params + window.location.hash
+        }
+
+        if( Object.keys(window.location.search).length === 0 ){
+            var host = window.location.host;
+            var pathname = window.location.pathname
+            var url = host + pathname;
+
+            if (url.match(emailRegex) !== null) {
+                window.history.replaceState({}, '', 'EMAIL_REDACTED');
+            }
+
+        } else {
+            var urlParams = extractParams()
+            // look for any email and replace it 
+            for (var key in urlParams) {
+                urlParams[key] = decodeURIComponent(urlParams[key]).replace(emailRegex, "EMAIL_REDACTED")
+            }
+
+            var newURL = rewriteURL(urlParams);
+
+            if (newURL !== window.location.href) {
+                window.history.replaceState({}, "", newURL)
+            }
+        }
 
             window.readCookie = function (name) {
                 var nameEQ = name + "=";
@@ -179,9 +228,9 @@ End Usersnap code #}
 <!-- Pardot -->
 <!-- @todo Wrap around Cookie Manager JS to ensure we have user consent before this is run -->
 <script type="text/javascript">
-    piAId = '812733';
-    piCId = '63961';
-    piHostname = 'pi.pardot.com';
+    piAId = '812463';
+    piCId = '';
+    piHostname = 'information.crowncommercial.gov.uk';
 
     var cookiePreferences = JSON.parse(readCookie('cookie_preferences'));
     if (cookiePreferences !== null) {
@@ -189,7 +238,7 @@ End Usersnap code #}
               (function() {
                 function async_load(){
                     var s = document.createElement('script'); s.type = 'text/javascript';
-                    s.src = ('https:' == document.location.protocol ? 'https://pi' : 'http://cdn') + '.pardot.com/pd.js';
+                    s.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + piHostname + '/pd.js';
                     var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c);
                 }
                 if(window.attachEvent) { window.attachEvent('onload', async_load); }

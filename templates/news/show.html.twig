@@ -44,7 +44,7 @@
                             {{ category.name }}{% if loop.index < page.taxonomies.categories|length %}, {% endif %}
                         {% endfor %}
                         {% endif %}
-                        | {{ page.datePublished|date('jS F Y') }}</div>
+                        | {{ page.datePublished|date('j F Y') }}</div>
                     <h1 class="govuk-heading-xl govuk-!-font-size-48 page-title news-listing-title--featured">{{ page.title|raw }}</h1>
 
                 </div>
@@ -91,6 +91,22 @@
                 </div>
                 {# End of wysiwyg content #}
 
+
+                <div class="news-listing-meta--featured">
+                    {% set isBlog = false %}
+                    {% if page.taxonomies.categories %}
+                        {% for category in page.taxonomies.categories %}
+                            {{ category.name }}{% if loop.index < page.taxonomies.categories|length %}, {% endif %}
+                            {% if category.name == 'Blog' %}
+                                {% set isBlog = true %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    | {{ page.datePublished|date('j F Y') }}
+                    {% if authorText != null and isBlog %}
+                        | Written by {{authorText}}
+                    {% endif %}
+                </div>
 
 
                 <div class="app-c-print-link">

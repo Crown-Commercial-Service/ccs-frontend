@@ -128,7 +128,7 @@
     }
 
     .govuk-hero-content {
-        background-image: url('/assets/images/homepage-hero-construction.jpg');
+        background-image: url('/assets/images/homepage-hero-takeover.jpg');
         background-repeat: no-repeat;
         background-size: 100% 100%;
         // full width image
@@ -171,7 +171,7 @@
     
         .govuk-caption-heading {
             
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: white !important;
             
         }
@@ -199,7 +199,48 @@
     }
 }
 
-@include govuk-media-query($from: 1138) {
+// tablet
+@include govuk-media-query($from: 770) {
+   
+    .govuk-hero-homepage-caption-container {
+
+        .govuk-caption-heading {
+            
+            font-size: 1.38rem!important;
+        }
+    
+        .govuk-caption-link {
+            font-size: 1rem!important;
+        }
+
+    }
+   
+}
+
+// laptop
+@include govuk-media-query($from: 996) {
+    // fix text overlapping container below 1138px
+
+    .govuk-hero-homepage-caption-container {
+
+        .govuk-caption-heading {
+            
+            font-size: 1.8rem!important;
+        }
+    
+        .govuk-caption-link {
+            font-size: 1.3rem!important;
+        }
+
+        .govuk-caption-button {
+            margin-top: 30px!important;
+        }
+    }
+   
+}
+
+//desktop
+@include govuk-media-query($from: 1338) {
     // fix text overlapping container below 1138px
 
     .govuk-hero-homepage-caption-container {
@@ -219,6 +260,7 @@
     }
    
 }
+
 
 .homepage-hero__search-button {
 

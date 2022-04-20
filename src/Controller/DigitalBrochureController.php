@@ -39,6 +39,13 @@ class DigitalBrochureController extends AbstractController
     {
         $sanitisedSlug = filter_var($slug, FILTER_SANITIZE_STRING);
 
+        switch ($sanitisedSlug) {
+            case "commercial-agreements-spring-2021-digital-brochure":
+                // id is just a dummy value
+                return $this->redirectToRoute('digital_brochure_request', ['id' => '111', 'slug' => 'commercial-agreements-autumn-2021-digital-brochure']);
+                break;
+        }
+
         $this->api->setCacheKey($request->getRequestUri());
 
         try {

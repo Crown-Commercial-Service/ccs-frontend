@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Request to access Digital Brochure - {{ downloadable_resource.title|raw }} - CCS{% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+
+{% block flourishClasses %}{% endblock %}
+
+
+{% block body %}
+
+<!-- required wrapper 1 -->
+<div class="govuk-width-container">
+
+    <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
+
+    <div class="govuk-phase-banner">
+        {% include '/includes/phase-banner-content.html.twig' %}
+    </div>
+
+
+    <main class="govuk-main-wrapper">
+        {% if formErrors is not null %}
+                <div class="govuk-error-summary govuk-grid-column-two-thirds" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+                    <h2 class="govuk-error-summary__title" id="error-summary-title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                        {% for errorType in formErrors %}
+                            {% for error in errorType.errors %}
+                                <a href={{errorType.link}}><li>{{error}}</li></a>
+                            {% endfor %}
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+        {% endif %}
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <h1 class="page-title-prepend">{{ downloadable_resource.content.downloadable_type|default ? downloadable_resource.content.downloadable_type|raw : 'Downloadable Resources' }}</h1>
+                <h2 class="govuk-heading-xl page-title page-title--tight">{{ downloadable_resource.title|raw }}</h2>
+
+                {% if downloadable_resource.content.form_introduction is defined and downloadable_resource.content.form_introduction is not empty %}
+                    <div class="page-intro">{{ downloadable_resource.content.form_introduction|raw }}</div>
+                {% endif %}
+
+                <p>{{ downloadable_resource.content.prompt_text|default ? downloadable_resource.content.prompt_text|raw : ' To read this downloadable resource, we need a few details' }}</p>
+
+                {% include 'forms/gated-form.html.twig' with {'subject': 'downloadable'} %}
+
+            </div>
+            <div class="govuk-grid-column-one-third">
+                {% if downloadable_resource.featuredImage is defined and downloadable_resource.featuredImage is not empty %}
+                    <div class="flourish-box-effect">
+                        <div class="flourish-box-effect__inner">
+                            <img src="{{ downloadable_resource.featuredImage.byName('news-size-m') }}" alt="" role="presentation" />
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+</div>
+
+{% endblock %}
+
+{% block nonblocking_javascript %}
+    {{ parent() }}
+
+    <script src="/assets/scripts/pardot.js"></script>
+
+{% endblock %}
