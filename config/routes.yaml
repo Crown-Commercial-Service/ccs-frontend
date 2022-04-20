@@ -20,6 +20,10 @@ digits-ctm:
   path: /digits-ctm.html
   controller: App\Controller\PageController::digitsCTM
 
+ppg_training:
+  path: /ppg-guides
+  controller: App\Controller\PageController::ppgTraining
+
 frameworks_search:
   path: /agreements/search/{page}
   controller: App\Controller\FrameworksController::search
@@ -124,6 +128,12 @@ api_frameworks:
   defaults:
     _format: json
 
+api_news:
+  path: /api/news
+  controller: App\Controller\ApiController::news
+  defaults:
+    _format: json
+
 api_pardot_email:
   path: /api/pardot-email
   controller: App\Controller\ApiController::pardotEmail
@@ -139,13 +149,11 @@ news_page:
 
 form_contact:
   path: /contact
-  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-  defaults:
-    template: forms/22-contact.html.twig
+  controller: App\Controller\FormController::contactCCS
 
 form_contact_sends:
   path: /contact/submit
-  controller: App\Controller\FormController::contactCCS
+  controller: App\Controller\FormController::contactCcsSubmit
 
 form_contact_thanks:
   path: /contact/thanks
@@ -183,6 +191,14 @@ digital_brochure_request:
 digital_brochure_confirmation:
   path: /digital_brochure/confirmation/{id}/{slug}
   controller: App\Controller\DigitalBrochureController::show
+
+downloadable_resource_request:
+  path: /downloadable-resource/request/{id}/{slug}
+  controller: App\Controller\DownloadableResourceController::request
+
+downloadable_resource_confirmation:
+  path: /downloadable-resource/confirmation/{id}/{slug}
+  controller: App\Controller\DownloadableResourceController::show
 
 events_list:
   path: "/events/{page}"
