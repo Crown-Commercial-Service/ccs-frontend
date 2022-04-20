@@ -94,11 +94,6 @@
                                 <a href="tel:03454102222">0345 410 2222</a></p>
                             <p>CCS customer services team is available Monday to
                                 Friday, 9am to 5pm.</p>
-                             <p class="govuk-body">
-                                    Our customer service team will be available to support you from 10am to 4pm on Christmas Eve and New Year’s Eve.<br /><br />
-                                    We will be closed on Monday 27 December, Tuesday 28 December and Monday 3 January.<br /><br />
-                                    We will be available from 9am to 5pm as usual on all other weekdays over the holiday period.
-                             </p>
                         </div>
                     </div>
 
@@ -109,6 +104,8 @@
 
                         {# For Pardot #}
                         <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="contact" />
+                        <input type="hidden" name="00N4L000009OPAj" id="referrer" name="referrer" value="{{ referrer }}">
+                        
 
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}

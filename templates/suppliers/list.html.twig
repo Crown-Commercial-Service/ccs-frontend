@@ -425,11 +425,13 @@
         </main>
     </div>
 
+     <!-- Vue and Custom JavaScript -->
+    {% if app.environment == "prod" %}
+        <script src="/assets/scripts/libraries/vue.min.js"></script>
+    {% else %}
+        <script src="/assets/scripts/libraries/vue.js"></script>
+    {% endif %}
 
-
-
-
-    <script src="/assets/scripts/libraries/vue.js"></script>
     <script>
         /**
          * Function to test if the browser supports ES6 template literals
@@ -712,9 +714,14 @@
                  */
                 frontendQueryUrl: function() {
                     var queryUrl = '?search=true';
+                    var emailRegex = /(([^<>()\[\]\\.,;:\s@"%]+(\.[^<>()\[\]\\.,;:\s@"%]+)*)|(".+"))(@|%40)((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/
 
                     if(this.searchQuery) {
-                        queryUrl += '&q=' + this.searchQuery;
+                        if(this.searchQuery.match(emailRegex) !== null){
+                            queryUrl += '&q=' + 'EMAIL_REDACTED';
+                        }else{
+                            queryUrl += '&q=' + this.searchQuery;
+                        }
                     }
 
                     if(this.checkedFramework.rm_number) {

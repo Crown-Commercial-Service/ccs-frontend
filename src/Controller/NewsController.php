@@ -38,7 +38,8 @@ class NewsController extends AbstractController
 
     public function list(Request $request, $page = 1)
     {
-        $page = (int) filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+        $requestedPage = (int) filter_var($request->query->get('page'), FILTER_SANITIZE_NUMBER_INT);
+        $page  = $requestedPage != 0 ? $requestedPage : 1;
 
         $this->api->setCacheKey($request->getRequestUri());
 
@@ -67,6 +68,8 @@ class NewsController extends AbstractController
 
         return $this->render('news/list.html.twig', [
             'url'                       => sprintf('/news/page/%s', $page),
+            'api_base_url'              => getenv('SEARCH_API_BASE_URL'),
+            'app_base_url'              => getenv('APP_BASE_URL'),
             'pageNumber'                => $page,
             'categoriesFilters'         => $categoriesFilters,
             'sectorsFilters'            => $sectorsFilters,
@@ -86,9 +89,9 @@ class NewsController extends AbstractController
         try {
             $page = $this->api->getPageByUrl($request->getRequestUri());
             $response = HttpClient::create()->request('GET', getenv('APP_API_BASE_URL') . 'wp/v2/posts/' . $page->getId());
-
             if ($response->getStatusCode() == 200) {
-                $authorName = json_decode($response->getContent())->authorName;
+                $acfContent = (array) json_decode($response->getContent())->acf;
+                $authorText = array_key_exists('author_name_text', $acfContent) ? $acfContent['author_name_text'] : null;
             }
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('News page not found', $e);
@@ -97,7 +100,7 @@ class NewsController extends AbstractController
         return $this->render('news/show.html.twig', [
             'url'           => sprintf('/news/%s', $slug),
             'page'          => $page,
-            'authorName'    => $authorName
+            'authorText'    => $authorText
         ]);
     }
 

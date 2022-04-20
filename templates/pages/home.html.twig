@@ -6,24 +6,21 @@
 {% block metadescription %}Crown Commercial Service (CCS) helps 17,000 public sector buyers and charities save £725m a year when buying common products and services.{% endblock %}
 
 {% block header %}
-    <div class="emergency-banner" role="banner" data-nosnippet>
-        <div class="govuk-width-container">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-two-thirds">
-                    <h2 class="emergency-banner-heading">Potential cyber attack threat</h2>
-                    <p class="emergency-banner-description">A worldwide IT vulnerability was discovered in Apache’s log4j product on Friday 10 December. 
-                    If this is used by your IT systems you could be vulnerable to a cyber attack.
-                    This is a serious issue for the government and we are working hard to make sure that any potentially vulnerable systems are protected.
-                    </p>
-                    <a href="https://www.crowncommercial.gov.uk/news/critical-it-vulnerabilities-in-apaches-log4j" class="emergency-banner-link govuk-link">Information for customers and suppliers (updated on Tuesday 21 December)</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     {% embed '/includes/header.html.twig' %}
         {% block headerclasses %}
             header-global header-global--home
+        {% endblock %}
+
+       {% block ppglogin %}
+           <div class="ppg-login">
+                <ul class="ppg-login-links">
+
+                    <li class="ppg-login-link"><p class="ppg-login-text">Public Procurement Gateway: </p></li>
+                    <li class="ppg-login-link"><p class="ppg-login-text"><a href="{{ppgCreateAccount}}">Create account</a> or <a href="{{ppgLogin}}">Sign in</a></p></li>
+
+                </ul>
+            </div>
         {% endblock %}
 
         {% block featuredcontent %}
@@ -33,12 +30,25 @@
                         <div class="govuk-hero-img-container">
                             <div class="govuk-hero-content">
                                 <div class="govuk-hero-homepage-caption-container govuk-hero-margin-right-35">
-                                    <div class="govuk-hero-caption">
-                                            <h1 class="govuk-caption-heading">Public procurement: with added buying power</h1>
-                                            <a class="govuk-caption-link" href="/power-to-your-procurement">Find out how CCS can help bring power to your procurement</a>
-                                            <br/><br/>
-                                            <a class="govuk-button govuk-caption-button" href="/digital_brochure/request/30384/commercial-agreements-autumn-2021-digital-brochure">Download our brochure</a>
-                                    </div>
+
+                                    {% set default = false %}
+
+                                    {% if default %}
+                                        <div class="govuk-hero-caption">
+                                                <h1 class="govuk-caption-heading">Public procurement: with added buying power</h1>
+                                                <a class="govuk-caption-link" href="/power-to-your-procurement">Find out how CCS can help bring power to your procurement</a>
+                                                <br/><br/>
+                                                <a class="govuk-button govuk-caption-button" href="/digital_brochure/request/30384/commercial-agreements-autumn-2021-digital-brochure">Download our brochure</a>
+                                        </div>   
+                                    {% else %}
+                                        <div class="govuk-hero-caption">
+                                                <h1 class="govuk-caption-heading">Digital brochure 2022: powerful procurement at your fingertips</h1>
+                                                <a class="govuk-caption-link" href="/power-to-your-procurement">Discover our carbon net-zero and modern slavery initiatives, our commercial agreements and much more</a>
+                                                <br />
+                                                <a class="govuk-button govuk-caption-button" href="/digital_brochure/request/30384/commercial-agreements-digital-brochure">Download our brochure</a>
+                                        </div>
+                                    {% endif %}
+
                                 </div>
                             </div>
                         </div>
@@ -341,13 +351,13 @@
                                                         <!--[if IE 9]></video><![endif]-->
                                                         <!-- Fallback -->
                                                         {% if news_item.featuredImage.byName('news-size-m') %}
-                                                            <img src="{{ news_item.featuredImage.byName('news-size-m') }}" alt="" role="presentation" aria-hidden="true">
+                                                            <img src="{{ news_item.featuredImage.byName('news-size-m') }}" alt="" role="presentation" aria-hidden="true" tabindex="-1">
                                                         {% else %}
-                                                            <img src="{{ news_item.featuredImage.byName('full') }}" alt="" role="presentation" aria-hidden="true">
+                                                            <img src="{{ news_item.featuredImage.byName('full') }}" alt="" role="presentation" aria-hidden="true" tabindex="-1">
                                                         {% endif %}
 
                                             </picture>
-                                            <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link"></a>
+                                            <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link" tabindex="-1"></a>
 
                                             {% endif %}
 
@@ -358,7 +368,7 @@
                                                             {{ category.name }}{% if loop.index < news_item.taxonomies.categories|length %}, {% endif %}
                                                         {% endfor %}
                                                     {% endif %}
-                                                    | {{ news_item.datePublished.format('jS F Y') }}
+                                                    | {{ news_item.datePublished.format('j F Y') }}
                                                 </div>
                                                 <h3 class="news-listing-title">
                                                     <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}">{{ news_item.title|raw }}</a>

@@ -8,6 +8,7 @@
                             <source media="(min-width: 1024px)" srcset="{{ page.featuredImage.byName('large') }}">
                             <source media="(min-width: 1920px)" srcset="{{ page.featuredImage.byName('full') }}">
                             <img src="{{ page.featuredImage.url }}"
+                                    alt={{ page.featuredImage.alt }}
                                     role="presentation"
                                     class=""
                                     loading="lazy"/>
@@ -20,7 +21,7 @@
         <div class="{{page.featuredImage is null ? "govuk-grid-column-full" : "govuk-grid-column-one-third"}} featured-news-text-container">
             <p class="news-listing-meta"> 
                 <a href="{{ path('news_list', {'categories': page.taxonomies.categories.current.id }) }}">{{ page.taxonomies.categories.current.name }}</a>
-                <span>{{ page.datePublished.format('jS F Y') }}</span> 
+                <span>{{ page.datePublished.format('j F Y') }}</span> 
             </p>
             <h2 class="news-listing-title">
                 <a href="{{ path('news_page', {'slug': page.urlSlug}) }}">{{ page.title|raw }}</a>
