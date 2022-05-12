@@ -13,4 +13,8 @@ twig:
         survey_link: 'https://crowncommercial.qualtrics.com/jfe/form/SV_5jzPGtbYCrfydbE'
         cat_domain: 'https://dev-ccs-scale-cat-buyer-ui.london.cloudapps.digital'
         ppgLogin: 'https://dev.identify.crowncommercial.gov.uk/'
+<<<<<<< HEAD
         ppgCreateAccount: 'https://dev.identify.crowncommercial.gov.uk/manage-org/register'
+=======
+        ppgCreateAccount: 'https://dev.identify.crowncommercial.gov.uk/manage-org/register'
+>>>>>>> master
