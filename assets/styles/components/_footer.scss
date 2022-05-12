@@ -11,9 +11,6 @@
 
     // to allow the flourish to positon itself according to the footer
     position: relative;
-    @media only print {
-        display: none;
-    }
 
 }
 
