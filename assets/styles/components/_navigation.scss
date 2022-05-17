@@ -287,21 +287,3 @@
      top: govuk-px-to-rem(78);
 
 }
-
-.nav-list--primary,
-.nav-list--secondary {
-    @media only print {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: normal;
-        // padding-left: 20px;
-    }
-}
-
-.nav-list--primary .nav-list__link,
-.nav-list--secondary .nav-list__link {
-    @media only print {
-        line-height: .6;
-    }
-}
