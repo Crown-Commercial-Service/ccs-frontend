@@ -165,9 +165,9 @@
                                                 <div class="govuk-form-group">
                                                     <fieldset class="govuk-fieldset">
                                                         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" style="margin-bottom: 0;">
-                                                            <h1 class="govuk-fieldset__heading visuallyhidden">
+                                                            <h2 class="govuk-fieldset__heading visuallyhidden">
                                                                 Select lot to filter by
-                                                            </h1>
+                                                            </h2>
                                                         </legend>
                                                         <div class="govuk-radios ccs-radios--nested">
                                                             {% for lot in facets.lots %}
@@ -199,9 +199,9 @@
                                             <div class="govuk-form-group">
                                                 <fieldset class="govuk-fieldset">
                                                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m" style="margin-bottom: 0;">
-                                                        <h1 class="govuk-fieldset__heading visuallyhidden">
+                                                        <h2 class="govuk-fieldset__heading visuallyhidden">
                                                             Select lot to filter by
-                                                        </h1>
+                                                        </h2>
                                                     </legend>
                                                     <div class="govuk-radios ccs-radios--nested">
                                                         <div class="govuk-radios__item govuk-radios__item--small" v-for="lot in lotList">
@@ -580,7 +580,7 @@
                 }
             },
             template: `
-                <ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination" v-if="numberOfPages > 0">
+                <ul class="list--inline pagination govuk-body" role="list" aria-label="Pagination" v-if="numberOfPages > 0">
                     <li class="pagination__item pagination__item--previous" v-if="currentPage != 1">
                         <a :href="'/suppliers/search' + previousPage + queryUrl" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
                             <span class="icon">

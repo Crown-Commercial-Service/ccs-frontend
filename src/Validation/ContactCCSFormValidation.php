@@ -76,7 +76,7 @@ class ContactCCSFormValidation
     {
         $returnArray  = [
             'errors' => [],
-            'link' => '#jobTitle',
+            'link' => '#00Nb0000009IXEs',
         ];
 
         $returnArray['errors'] = empty(trim($jobTitle)) ? ['Enter your job title'] : [] ;

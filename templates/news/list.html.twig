@@ -349,7 +349,7 @@
                 template: 
                     `
                     <div>
-                        <ul class="list--inline pagination govuk-body" role="navigation" aria-label="Pagination" v-if="numberOfPages > 0">
+                        <ul class="list--inline pagination govuk-body" role="list" aria-label="Pagination" v-if="numberOfPages > 0">
                             <li class="pagination__item pagination__item--previous" v-if="currentPage != 1">
                                 <a href="#" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
                                     <span class="icon">
