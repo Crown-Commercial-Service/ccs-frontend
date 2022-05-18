@@ -182,6 +182,8 @@ class PageController extends AbstractController
             }
         }
 
+        $this->setCookiesOnSafari($request);
+
         return $this->render('pages/page.html.twig', [
             'page'                       => $page,
             'breadcrumb_parents'         => $breadcrumb,
@@ -426,5 +428,25 @@ class PageController extends AbstractController
     {
 
         return $this->render('pages/ppg_training.html.twig');
+    }
+
+    public function setCookiesOnSafari (Request $request) {
+        // check browser is safari
+        $browser = $request->headers->get('User-Agent');
+
+        if (stripos($browser, 'Chrome') !== false) {
+            return;
+        } elseif (stripos($browser, 'Safari') !== false) {
+            
+        // TODO Read Current Cookies
+        $cookies = $request->cookies;
+
+        dd($cookies);
+
+        // TODO SET Cookies like seen cookier and timer reset to one year
+
+        // check if cookies now show on safari
+        }
+        
     }
 }
