@@ -64,6 +64,9 @@
     position: relative;
     left: calc(-50vw + 50%);
     background-color:#41424d;
+    @media only print {
+        background-color: transparent;
+    }
 }
 
 .govuk-margin-left-right-30{
@@ -83,13 +86,19 @@
     margin: 0 15px 40px 15px;
     border-bottom: 3px solid #007E8A;
     padding-bottom: 50px;
+    @media only print {
+        border-bottom: none;
+    }
 }
 
 .govuk-hero-homepage-caption-container{
 
     .govuk-caption-heading {       
         font-size: 2.7rem;
-        color: white
+        color: white;
+        @media only print {
+            font-size: 2rem;
+        }
     }
 }
 
@@ -138,7 +147,10 @@
         margin-bottom: 25px;
         // make bg image height only as big as it needs to be calc by (img-height/width *100)
         padding-top:29.25%;
+        @media only print {
+            background-image: none;
         }
+    }
     
     .govuk-hero-homepage-caption-container {
             position: absolute;
@@ -150,6 +162,12 @@
             width: 40%;
             display: table;
             height: 100%;
+            @media only print {
+                left: 10%;
+                width: 80%;
+                margin-right: 15%;
+                height: fit-content; // fix the gap between nav items and caption heading in firefox
+            }
         }
     
     .govuk-hero-caption {
@@ -310,6 +328,14 @@
 
 }
 
+.apollo-island>.govuk-width-container>.govuk-grid-row>.govuk-grid-column-one-half {
+    @media only print and (min-width: 40.0625em) {
+        box-sizing: border-box;
+        width: 100% !important;
+        padding: 0 15px;
+    }
+}
+
 .greyed-bg {
 
     background-color: #F8F8F8;
@@ -328,6 +354,21 @@
     padding-bottom: 0;
 
 }
+
+.govuk-main-wrapper {
+    // firefox print layout fix: prevent events list jumping to next page
+    @media only print {
+        padding-bottom: 0;
+    }
+}
+
+.govuk-main-wrapper--tight {
+    // firefox print layout fix: prevent events list jumping to next page
+    @media only print {
+        padding-top: 0 !important;
+    }
+}
+
 .is-home .footer-global {
 
     margin-top: 0;
