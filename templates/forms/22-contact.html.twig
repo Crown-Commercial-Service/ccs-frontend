@@ -119,9 +119,9 @@
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                    <h1 class="govuk-fieldset__heading">
+                                    <h2 class="govuk-fieldset__heading">
                                         Type of enquiry
-                                    </h1>
+                                    </h2>
                                 </legend>
                                 <span id="how-contacted-conditional-hint" class="govuk-hint">
                                     Select one option.
@@ -188,7 +188,7 @@
                                 {% endfor %}                           
                             {% endif %} 
 
-                            <input class="govuk-input {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="jobTitle" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="organization-title"/>
+                            <input class="govuk-input {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="organization-title"/>
                         </div>
                         <div class="govuk-form-group {{formErrors.emailErr.errors is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="email">
@@ -209,9 +209,9 @@
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                    <h1 class="govuk-fieldset__heading">
+                                    <h2 class="govuk-fieldset__heading">
                                         Do you require a callback?
-                                    </h1>
+                                    </h2>
                                 </legend>
                                 <div class="govuk-checkboxes">
                                     <div class="govuk-checkboxes__item">
@@ -274,9 +274,9 @@
                             <div class="govuk-form-group">
                                 <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
                                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                                        <h1 class="govuk-fieldset__heading">
+                                        <h2 class="govuk-fieldset__heading">
                                             Is your feedback about
-                                        </h1>
+                                        </h2>
                                     </legend>
                                     <div class="govuk-checkboxes">
                                         <div class="govuk-checkboxes__item">
