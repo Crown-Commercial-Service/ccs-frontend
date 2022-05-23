@@ -106,7 +106,7 @@
                 return null;
             };
 
-            var cookiePreferences = JSON.parse(readCookie('cookie_preferences'));
+            var cookiePreferences = JSON.parse(decodeURIComponent(readCookie('cookie_preferences')));
             if (cookiePreferences !== null && '{{ app.environment }}' == "prod") {
                 if (cookiePreferences.usage === true) {
                     (function (w, d, s, l, i) {
@@ -232,7 +232,7 @@ End Usersnap code #}
     piCId = '';
     piHostname = 'information.crowncommercial.gov.uk';
 
-    var cookiePreferences = JSON.parse(readCookie('cookie_preferences'));
+    var cookiePreferences = JSON.parse(decodeURIComponent(readCookie('cookie_preferences')));
     if (cookiePreferences !== null) {
         if (cookiePreferences.marketing === true) {
               (function() {

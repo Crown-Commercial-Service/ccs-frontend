@@ -85,8 +85,6 @@ var docCookies = {
 
 (function () {
 
-
-
     /**
      * The initial cookie preferences
      *
@@ -159,6 +157,7 @@ var docCookies = {
     function optUserIn() {
         hideMessage();
         updateSeenCookie();
+        updateCookieOnSafari();
         fireGTM();
     }
 
@@ -213,6 +212,23 @@ var docCookies = {
             docCookies.setItem('cookies_timer_reset', JSON.stringify(true), cookie_timer, '/', '.crowncommercial.gov.uk');
             docCookies.setItem('seen_cookie_message', true, cookie_timer, '/', '.crowncommercial.gov.uk');
         }
+    }
+
+    function updateCookieOnSafari() {
+        // check if browser is safari
+        var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
+            navigator.userAgent &&
+            navigator.userAgent.indexOf('CriOS') == -1 &&
+            navigator.userAgent.indexOf('FxiOS') == -1;
+        
+        if (isSafari) {
+            // send to server to set cookies
+            fetch('/set-cookies-on-safari', {
+                method: 'POST'
+            })
+            .then(response => response.text);
+        }
+        
     }
 
 
