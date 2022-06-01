@@ -143,6 +143,11 @@ api_pardot_email:
   defaults:
     _format: json
 
+set_cookies_on_safari:
+  path: /set-cookies-on-safari
+  methods: POST
+  controller: App\Controller\PageController::setCookiesOnSafari
+
 news_page:
   path: "/news/{slug}"
   controller: App\Controller\NewsController::show
