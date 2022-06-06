@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
@@ -426,5 +427,24 @@ class PageController extends AbstractController
     {
 
         return $this->render('pages/ppg_training.html.twig');
+    }
+
+    public function setCookiesOnSafari(Request $request)
+    {
+        // Read Current Cookies
+        $cookies = $request->cookies;
+
+        // Update cookies with expiry to 1 year
+        if ($cookies->has('cookies_timer_reset')) {
+            $cookiePreferences = new Cookie('cookie_preferences', '{"essentials":true,"usage":true,"marketing":true}', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
+            $seenCookieMessage = new Cookie('seen_cookie_message', 'true', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
+            $cookieTimerReset = new Cookie('cookies_timer_reset', 'true', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
+
+            $response = new Response();
+            $response->headers->setCookie($cookiePreferences);
+            $response->headers->setCookie($seenCookieMessage);
+            $response->headers->setCookie($cookieTimerReset);
+            return $response->sendHeaders();
+        }
     }
 }

@@ -1,4 +1,4 @@
-var cookiePreferences = JSON.parse(readCookie('cookie_preferences'));
+var cookiePreferences = JSON.parse(decodeURIComponent(readCookie('cookie_preferences')));
 var pardotSubmitted = false;
 
 // excute pardot JS if user consents to marketing cookies
