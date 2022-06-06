@@ -10,9 +10,22 @@ description:
   type: richtext
 updates:
   type: richtext
+cas_updates:
+  type: array
+  content_fields:
+    framework_cas_updates_date:
+      type: date
+    framework_cas_updates_update:
+      type: richtext
 benefits:
   type: richtext
 how_to_buy:
+  type: richtext
+availability:
+  type: richtext
+cannot_use:
+  type: richtext
+contract_length:
   type: richtext
 terms:
   type: text
@@ -37,6 +50,51 @@ expected_award_date:
 published_status:
   type: text
 document_updates:
+  type: richtext
+customer_guide:
+  type: richtext
+core_terms_conditions:
+  type: richtext
+call_off_order_form:
+  type: richtext
+joint_schedules:
+  type: array
+  content_fields:
+    joint_schedule_document_name:
+      type: text
+    joint_schedule_document:
+      type: text
+    joint_schedule_document_type:
+      type: text
+    joint_schedule_document_usage:
+      type: text
+    joint_schedule_document_description:
+      type: richtext
+call_off_schedules:
+  type: array
+  content_fields:
+    call_off_schedule_document_name:
+      type: text
+    call_off_schedule_document:
+      type: text
+    call_off_schedule_document_type:
+      type: text
+    call_off_schedule_document_usage:
+      type: text
+    call_off_schedule_document_description:
+      type: richtext
+framework_schedules:
+  type: array
+  content_fields:
+    framework_schedule_document_name:
+      type: text
+    framework_schedule_document:
+      type: text
+    framework_schedule_document_usage:
+      type: text
+    framework_schedule_document_description:
+      type: richtext
+templates:
   type: richtext
 lots:
   type: array
