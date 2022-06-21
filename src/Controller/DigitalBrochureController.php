@@ -41,9 +41,12 @@ class DigitalBrochureController extends AbstractController
 
         switch ($sanitisedSlug) {
             case "commercial-agreements-spring-2021-digital-brochure":
-            case "digital-transformation-guide-technology-procurement-for-local-government":
+            case "commercial-agreements-autumn-2021-digital-brochure":
                 // id is just a dummy value
                 return $this->redirectToRoute('digital_brochure_request', ['id' => '111', 'slug' => 'commercial-agreements-digital-brochure']);
+                break;
+            case "digital-transformation-guide-technology-procurement-for-local-government":
+                return $this->redirectToRoute('downloadable_resource_request', ['id' => '111', 'slug' => 'digital-transformation-guide-technology-procurement-for-local-government']);
                 break;
         }
 
