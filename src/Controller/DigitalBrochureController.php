@@ -79,7 +79,7 @@ class DigitalBrochureController extends AbstractController
 
         $data = [
           'digital_brochure'    => $digital_brochure,
-          'campaign_code' => $campaignCode,
+          'campaign_code' => preg_replace('/\s*/', '', $campaignCode),
           'form_action'   => $request->getRequestUri(),
           'description'   => $description,
           'return_url'    => $returnURL,
