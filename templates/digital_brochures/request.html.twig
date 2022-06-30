@@ -51,7 +51,7 @@
 
                 <p>To read this {{ digital_brochure.content.document_type|default ? digital_brochure.content.document_type|raw|lower : 'Digital Brochure' }}, we need a few details.</p>
 
-                {% include 'forms/gated-form.html.twig' with {'subject': 'digitalbrochure'} %}
+                {% include 'forms/gated-form.html.twig' with {'subject': campaign_code} %}
 
             </div>
             <div class="govuk-grid-column-one-third">
