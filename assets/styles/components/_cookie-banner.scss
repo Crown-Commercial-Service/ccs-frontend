@@ -10,6 +10,10 @@
   padding-bottom: govuk-spacing(3);
   padding-left: govuk-spacing(3);
   background-color: lighten(desaturate(govuk-colour("light-blue"), 8.46), 42.55);
+
+  @media only print {
+    display: none !important
+  }
 }
 
 .app-cookie-banner__message {
