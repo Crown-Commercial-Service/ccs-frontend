@@ -53,21 +53,22 @@
         color: red;
     }
     // **** REMOVE LAYOUT SECTIONS FOR PRINT **** //
-    .global-navigation__toggler, // the menu toggler
+    
+    
+    #cookie-consent-container,
+    .cookie-message,
+    .global-navigation__toggler,
     .govuk-phase-banner,
-    .featured-news-img-container, // the featured news image on the news page
+    .featured-news-img-container,
     .news-img-container,
-    main.govuk-main-wrapper>.govuk-grid-row>.govuk-grid-column-one-quarter, // hide View Archives on news page
+    // hide View Archives on news page
+    main.govuk-main-wrapper>.govuk-grid-row>.govuk-grid-column-one-quarter,
     .staging-banner, //.ppg-login,
     form[action="/suppliers/search"],
     form[action="/agreements/search"] {
-        display: none;
+        display: none !important;
     }
-    .global-navigation[aria-hidden="true"] {
-        // make nav visible for print (override the rule @ _navigation.scss line 68)
-        visibility: visible;
-        display: flex;
-    }
+
     .nav-wrapper>.logo {
         // align the logo
         align-self: center;
@@ -75,48 +76,51 @@
         padding-left: 10px;
     }
     .nav-wrapper>.logo img {
-        content: url("/assets/images/CCS_BLACK_SML_AW.png"); // load black logo for print
+        content: url("/assets/images/CCS_BLACK_SML_AW.png");
     }
     .nav-list--primary .nav-list-link,
     .nav-list--secondary .nav-list-link {
         line-height: .6;
     }
+    // flatten the hero section
     .govuk-hero-content {
-        // keep hero content centred
         text-align: center;
+        margin-bottom: 0px !important;
     }
+    .govuk-hero-caption {
+        padding-bottom: 0px !important;
+        // fix hero text overflow on Safari
+        padding: 0 50px !important;
+    }
+
     //**** REMOVE BACKSLASHES AFTER LINKS ****//
+
     a.nav-list__link::after,
-    a.logo::after, // the backslash after the logo
-    a.news-listing__item__image-link::after, // image link
-    a.govuk-breadcrumbs__link::after, // the backslash after the breadcrumbs list
-    ul.pagination a::after, // the pagination links
-    a.ccs-filters-summary__facet__cancel::after, // the link on agreements page search summary
-    .news-listing-meta>a::after // the backslash after blog type on news page
-    //a[href^="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"]::after, // the backslash after copyright in the footer
-    //a.govuk-footer__link::after,q
-    {
+    a.logo::after,
+    a.news-listing__item__image-link::after,
+    a.govuk-breadcrumbs__link::after,
+    ul.pagination a::after,
+    a.ccs-filters-summary__facet__cancel::after,
+    .news-listing-meta>a::after {
         display: none;
     }
-    a.govuk-caption-link[href="/power-to-your-procurement"] {
-        // keep caption link centered
-        margin: 50px;
-        text-align: center;
-    }
+
+    // display the url links on a new line
     a::after {
-        // display the url links on a new line
         display: block;
     }
-    // **** STRETCH COLUMNS FOR PRINT **** //
+
+    // **** STRETCH APOLLO ISLAND COLUMNS ON HOMEPAGE **** //
+    
     .featured-news-text-container,
     .govuk-grid-column-one-quarter,
     .govuk-grid-column-three-quarters,
     .govuk-grid-column-two-thirds,
     .news-listing-block {
-        box-sizing: border-box;
         width: 100% !important;
-        padding: 0 15px;
     }
+    
+    // **** STRETCH CARDS ON PRODUCTS AND SERVICES PAGE **** //
     .card-list__item {
         min-width: 100% !important;
     }
