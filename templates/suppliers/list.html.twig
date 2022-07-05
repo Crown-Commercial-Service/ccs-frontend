@@ -311,7 +311,7 @@
                         <div class="ccs-filters-summary__facets" id="search-query-summary" v-show="searchQuery" {% if query is defined and query is not empty %}style="display: block;"{% else %}style="display: none;"{% endif %}>
                             <span class="ccs-filters-summary__label">Containing</span>
                             <ul class="ccs-filters-summary__list" id="search-query-list">
-                                <li class="ccs-filters-summary__facet">
+                                <li class="ccs-filters-summary__facet" v-if="searchQuery">
                                     <a href="/suppliers/search?framework={{ selected.rm_number }}&lot-filter-nested={{ selected.lot_id }}&limit={{ limit }}" class="ccs-filters-summary__facet__cancel" v-on:click="clearSearch">
 {#                                        {% if query is defined and query is not empty %}<span>{{ query }}</span>{% endif %}#}
                                         <span v-show="searchQuery" style="display: none;">{[ searchQuery ]}</span>

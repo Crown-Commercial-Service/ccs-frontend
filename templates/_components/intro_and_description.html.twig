@@ -36,7 +36,8 @@
                             <img src="{{ media.image_image_image }}"
                                  role="presentation"
                                  class=""
-                                 loading="lazy"/>
+                                 loading="lazy"
+                                 alt="{{media.image_image_image.alt}}">
                         </picture>
                         {% if media.image_image_caption %}
                             <figcaption class="intro__caption govuk-!-font-size-16 ccs-secondary-text-color">
@@ -55,7 +56,9 @@
 
         <div class="govuk-grid-column-one-half">
 
-            <h2 class="govuk-heading-m intro__heading">{{ component.intro_intro_heading }}</h2>
+            {% if component.intro_intro_heading is defined and component.intro_intro_heading|length > 0 %}
+                <h2 class="govuk-heading-m intro__heading">{{ component.intro_intro_heading }}</h2>
+            {% endif %}
 
             <div class="wysiwyg-content intro__content">
                 {{ component.intro_intro_content  | raw }}
@@ -84,7 +87,9 @@
         {% else %}
             <div class="govuk-grid-column-one-half">
 
-            <h2 class="govuk-heading-m intro__heading">{{ component.intro_intro_heading }}</h2>
+            {% if component.intro_intro_heading is defined and component.intro_intro_heading|length > 0 %}
+                <h2 class="govuk-heading-m intro__heading">{{ component.intro_intro_heading }}</h2>
+            {% endif %}
 
             <div class="wysiwyg-content intro__content">
                 {{ component.intro_intro_content  | raw }}
@@ -143,7 +148,8 @@
                                 <img src="{{ media.image_image_image }}"
                                     role="presentation"
                                     class=""
-                                    loading="lazy"/>
+                                    loading="lazy"
+                                    alt="{{media.image_image_image.alt}}">
                             </picture>
                             {% if media.image_image_caption %}
                                 <figcaption class="intro__caption govuk-!-font-size-16 ccs-secondary-text-color">

@@ -113,13 +113,14 @@
                             <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
                         {% endif %}
 
-                        <input type="checkbox" name="surname" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
+                        <label hidden class="visuallyhidden" aria-hidden="true" for="surname">dummy hidden label</label>
+                        <input type="checkbox" id="surname" name="surname" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
 
                         {# `name` value must match fields in Salesforce. `class` value must match GDS components #}
                         <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
+                            <fieldset class="govuk-fieldset" aria-describedby="typeOfEnquiry">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                    <h2 class="govuk-fieldset__heading">
+                                    <h2 class="govuk-fieldset__heading" id="typeOfEnquiry" >
                                         Type of enquiry
                                     </h2>
                                 </legend>
@@ -158,12 +159,12 @@
                             </fieldset>
                         </div>
 
+                        {% set nameError = formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 %}
 
-                        {# wrapper class for error states; `govuk-form-group--error`  #}
-                        <div class="govuk-form-group {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                        <div class="govuk-form-group {{ nameError ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="name">Name</label>
 
-                            {% if formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 %}
+                            {% if nameError %}
                                 {% for error in formErrors.nameErr.errors %}
                                      <span id="full-name-error" class="govuk-error-message">
                                         <span class="govuk-visually-hidden">Error:</span>{{error}}
@@ -171,10 +172,7 @@
                                 {% endfor %}
                             {% endif %}
 
-                            {#Descriptive and helpful error message#}
-                            {#</span>
-                            {# input class for error states; `govuk-input--error`  #}
-                            <input class="govuk-input pardot-field {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
+                            <input class="govuk-input pardot-field {{nameError ? 'govuk-input--error' : null }}" {{nameError ? 'aria-describedby="full-name-error"' : null }} id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
                         </div>
                         <div class="govuk-form-group {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="00Nb0000009IXEs">
@@ -207,9 +205,9 @@
 
 
                         <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                            <fieldset class="govuk-fieldset" aria-describedby="callback">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                    <h2 class="govuk-fieldset__heading">
+                                    <h2 class="govuk-fieldset__heading" id="callback">
                                         Do you require a callback?
                                     </h2>
                                 </legend>
@@ -272,7 +270,7 @@
 
                         <div id="conditional-fields" class="govuk-radios__conditional--hidden">
                             <div class="govuk-form-group">
-                                <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+                                <fieldset class="govuk-fieldset" 
                                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                                         <h2 class="govuk-fieldset__heading">
                                             Is your feedback about

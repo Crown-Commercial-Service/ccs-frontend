@@ -58,12 +58,13 @@
 
                         {# `name` value must match fields in Salesforce. `class` value must match GDS components #}
 
-                        <input type="checkbox" name="surname" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
+                        <label hidden class="visuallyhidden" aria-hidden="true" for="surname">dummy hidden label</label>
+                        <input type="checkbox" id="surname" name="surname" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
 
                         <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" aria-describedby="how-contacted-conditional-hint">
+                            <fieldset class="govuk-fieldset" aria-describedby="buyerOrSupplier">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                    <h2 class="govuk-fieldset__heading">
+                                    <h2 class="govuk-fieldset__heading" id="buyerOrSupplier">
                                         You will need to choose a training date. Are you a buyer or supplier?
                                     </h2>
                                 </legend>
@@ -174,7 +175,7 @@
                                 {% endfor %}
                             {% endif %}
 
-                            <input class="govuk-input {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
+                            <input class="govuk-input {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
                         </div>
 
                          <div class="govuk-form-group {{formErrors.emailErr.errors is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
