@@ -1,7 +1,7 @@
 <div class="govuk-width-container">
     <div class="resources-section">
 
-        {% if component.accordion_accordion_heading %}
+        {% if component.accordion_accordion_heading is defined and component.accordion_accordion_heading|length > 0  %}
             <h2 class="govuk-heading-m resources-section__heading">{{ component.accordion_accordion_heading }}</h2>
         {% endif %}
         {% if component.accordion_accordion_introduction %}
