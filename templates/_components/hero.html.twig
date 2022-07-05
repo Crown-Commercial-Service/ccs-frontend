@@ -12,12 +12,13 @@
                     class="hero__image"
                     loading="lazy"
                     data-object-fit="cover"
-                    data-object-position="right center">
+                    data-object-position="right center"
+                    alt="{{image.alt}}">
         </picture>
         {% else %}
             <picture class="hero__picture">
                 <img src="{{ image }}"
-                    role="presentation" class="hero__image" loading="lazy" data-object-fit="cover" data-object-position="right center">
+                    role="presentation" class="hero__image" loading="lazy" data-object-fit="cover" data-object-position="right center" alt="">
             </picture>
         {% endif %}
 
