@@ -47,3 +47,81 @@
     display: none;
 
 }
+
+@media only print {
+    h1 {
+        color: red;
+    }
+    // **** REMOVE LAYOUT SECTIONS FOR PRINT **** //
+    
+    
+    #cookie-consent-container,
+    .cookie-message,
+    .global-navigation__toggler,
+    .govuk-phase-banner,
+    .featured-news-img-container,
+    .news-img-container,
+    // hide View Archives on news page
+    main.govuk-main-wrapper>.govuk-grid-row>.govuk-grid-column-one-quarter,
+    .staging-banner, //.ppg-login,
+    form[action="/suppliers/search"],
+    form[action="/agreements/search"] {
+        display: none !important;
+    }
+
+    .nav-wrapper>.logo {
+        // align the logo
+        align-self: center;
+        padding-right: 50px;
+        padding-left: 10px;
+    }
+    .nav-wrapper>.logo img {
+        content: url("/assets/images/CCS_BLACK_SML_AW.png");
+    }
+    .nav-list--primary .nav-list-link,
+    .nav-list--secondary .nav-list-link {
+        line-height: .6;
+    }
+    // flatten the hero section
+    .govuk-hero-content {
+        text-align: center;
+        margin-bottom: 0px !important;
+    }
+    .govuk-hero-caption {
+        padding-bottom: 0px !important;
+        // fix hero text overflow on Safari
+        padding: 0 50px !important;
+    }
+
+    //**** REMOVE BACKSLASHES AFTER LINKS ****//
+
+    a.nav-list__link::after,
+    a.logo::after,
+    a.news-listing__item__image-link::after,
+    a.govuk-breadcrumbs__link::after,
+    ul.pagination a::after,
+    a.ccs-filters-summary__facet__cancel::after,
+    .news-listing-meta>a::after {
+        display: none;
+    }
+
+    // display the url links on a new line
+    a::after {
+        display: block;
+    }
+
+    // **** STRETCH APOLLO ISLAND COLUMNS ON HOMEPAGE **** //
+    
+    .featured-news-text-container,
+    .govuk-grid-column-one-quarter,
+    .govuk-grid-column-three-quarters,
+    .govuk-grid-column-two-thirds,
+    .news-listing-block {
+        width: 100% !important;
+    }
+    
+    // **** STRETCH CARDS ON PRODUCTS AND SERVICES PAGE **** //
+    .card-list__item {
+        min-width: 100% !important;
+    }
+}

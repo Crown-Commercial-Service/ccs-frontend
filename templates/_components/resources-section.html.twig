@@ -2,7 +2,7 @@
 
     <div class="govuk-width-container">
 
-        {% if page.content.resources_intro_heading %}
+        {% if page.content.resources_intro_heading is defined and page.content.resources_intro_heading|length > 0  %}
             <h2 class="govuk-heading-m resources-section__heading">{{ page.content.resources_intro_heading }}</h2>
         {% endif %}
         {% if page.content.resources_intro_introduction %}

@@ -4,7 +4,9 @@
 
             <div class="govuk-grid-column-full">
 
-                <h2 class="govuk-heading-l intro__heading">{{ component.cards_cards_heading }}</h2>
+                {% if component.cards_cards_heading is defined and component.cards_cards_heading|length > 0 %}
+                    <h2 class="govuk-heading-l intro__heading">{{ component.cards_cards_heading }}</h2>
+                {% endif %}
 
                 <ul class="card-list govuk-!-margin-top-6 card-list--two-on-large">
 
