@@ -6,8 +6,11 @@ namespace App\Controller;
 
 use App\Validation\FormValidation;
 use App\Helper\ControllerHelper;
-use Psr\SimpleCache\CacheInterface;
-
+//use Psr\SimpleCache\CacheInterface;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\Psr16Cache;
+use Symfony\Component\Cache\Adapter\Psr16Adapter;
 use Strata\Frontend\Cms\Wordpress;
 use Strata\Frontend\Cms\RestData;
 use Strata\Frontend\ContentModel\ContentModel;
@@ -38,15 +41,16 @@ class PageController extends AbstractController
      */
     protected $redirectionApi;
 
-    public function __construct(CacheInterface $cache)
+    public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new Wordpress(
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
+        $psr6Cache = new Psr16Cache($cache);
         $this->api->setContentType('page');
-        dd($cache);
-        $this->api->setCache($cache);
+        //dd($cache);
+        $this->api->setCache($psr6Cache);
         $this->api->setCacheLifetime(900);
         $this->client = HttpClient::create();
 

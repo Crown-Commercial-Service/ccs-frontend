@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Utils\FrameworkCategories;
 //use Psr\SimpleCache\CacheInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Psr16Cache;
 use Strata\Frontend\Cms\Wordpress;
 use Strata\Frontend\ContentModel\ContentModel;
 use Strata\Frontend\Exception\PaginationException;
@@ -33,7 +34,8 @@ class NewsController extends AbstractController
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('news');
-        $this->api->setCache($cache);
+        $psr6Cache = new Psr16Cache($cache);
+        $this->api->setCache($psr6Cache);
         $this->api->setCacheLifetime(900);
     }
 

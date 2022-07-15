@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Controller\FormController;
 use App\Helper\ControllerHelper;
 //use Psr\SimpleCache\CacheInterface;
+use Symfony\Component\Cache\Psr16Cache;
 use Psr\Cache\CacheItemPoolInterface;
 use Strata\Frontend\Cms\Wordpress;
 use Strata\Frontend\ContentModel\ContentModel;
@@ -31,7 +32,8 @@ class WebinarController extends AbstractController
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('webinars');
-        $this->api->setCache($cache);
+        $psr6Cache = new Psr16Cache($cache);
+        $this->api->setCache($psr6Cache);
         $this->api->setCacheLifetime(900);
     }
 

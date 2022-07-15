@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 //use Psr\SimpleCache\CacheInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Psr16Cache;
 
 /**
  * Form controller
@@ -43,7 +44,8 @@ class FormController extends AbstractController
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('esourcing_dates');
-        $this->api->setCache($cache);
+        $psr6Cache = new Psr16Cache($cache);
+        $this->api->setCache($psr6Cache);
 
         $this->client = HttpClient::create();
     }

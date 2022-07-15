@@ -7,12 +7,13 @@ namespace App\Controller;
 use App\Controller\FormController;
 use App\Helper\ControllerHelper;
 //use Psr\SimpleCache\CacheInterface;
+use Symfony\Component\Cache\Psr16Cache;
 use Psr\Cache\CacheItemPoolInterface;
-use Strata\Frontend\src\Cms\Wordpress;
-use Strata\Frontend\src\ContentModel\ContentModel;
+use Strata\Frontend\Cms\Wordpress;
+use Strata\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Strata\Frontend\src\Exception\NotFoundException;
+use Strata\Frontend\Exception\NotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DigitalBrochureController extends AbstractController
@@ -32,7 +33,8 @@ class DigitalBrochureController extends AbstractController
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('digital_brochures');
-        $this->api->setCache($cache);
+        $psr6Cache = new Psr16Cache($cache);
+        $this->api->setCache($psr6Cache);
         $this->api->setCacheLifetime(900);
     }
 

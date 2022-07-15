@@ -6,6 +6,7 @@ namespace App\Controller;
 
 //use Psr\SimpleCache\CacheInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Psr16Cache;
 use Strata\Frontend\Cms\Wordpress;
 use Strata\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,9 +27,12 @@ class MenuController extends AbstractController
     public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new Wordpress(
-            getenv('APP_API_BASE_URL')
+            getenv('APP_API_BASE_URL'),
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
-        $this->api->setCache($cache);
+        $psr6Cache = new Psr16Cache($cache);
+        $this->api->setContentType('page');
+        $this->api->setCache($psr6Cache);
         $this->api->setCacheLifetime(900);
     }
 

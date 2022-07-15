@@ -112,7 +112,7 @@ class ApiController extends AbstractController
      * to: https://CMS/search-api/suppliers?keyword=l&limit=20&page=1
      *
      * @param Request $request
-     * @param CacheInterface $cache
+     * @param CacheItemPoolInterface $cache
      * @return JsonResponse
      * @throws ApiException
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
@@ -120,7 +120,7 @@ class ApiController extends AbstractController
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    public function frameworks(Request $request, CacheInterface $cache)
+    public function frameworks(Request $request, CacheItemPoolInterface $cache)
     {
         $apiUrl = $this->getCmsUrl('/search-api/frameworks');
 
@@ -192,7 +192,7 @@ class ApiController extends AbstractController
      * to: https://CMS/wp-json/wp/v2/posts?categories=&sectors=&products_services=&page=1
      *
      * @param Request $request
-     * @param CacheInterface $cache
+     * @param CacheItemPoolInterface $cache
      * @return JsonResponse
      * @throws ApiException
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
@@ -200,7 +200,7 @@ class ApiController extends AbstractController
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    public function news(Request $request, CacheInterface $cache)
+    public function news(Request $request, CacheItemPoolInterface $cache)
     {
         $apiUrl = $this->getCmsUrl('/wp-json/wp/v2/posts');
 

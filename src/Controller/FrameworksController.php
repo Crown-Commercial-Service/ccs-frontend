@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Utils\FrameworkCategories;
 //use Psr\SimpleCache\CacheInterface;
+use Symfony\Component\Cache\Psr16Cache;
 use Psr\Cache\CacheItemPoolInterface;
 use Strata\Frontend\ContentModel\ContentModel;
 use Strata\Frontend\Exception\PaginationException;
@@ -43,7 +44,8 @@ class FrameworksController extends AbstractController
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('frameworks');
-        $this->api->setCache($cache);
+        $psr6Cache = new Psr16Cache($cache);
+        $this->api->setCache($psr6Cache);
         $this->api->setCacheLifetime(900);
 
         $this->searchApi = new RestData(
@@ -52,7 +54,7 @@ class FrameworksController extends AbstractController
         );
 
         $this->searchApi->setContentType('frameworks');
-        $this->searchApi->setCache($cache);
+        $this->searchApi->setCache($psr6Cache);
         $this->searchApi->setCacheLifetime(1);
     }
 
