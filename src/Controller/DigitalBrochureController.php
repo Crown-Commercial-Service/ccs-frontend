@@ -6,12 +6,13 @@ namespace App\Controller;
 
 use App\Controller\FormController;
 use App\Helper\ControllerHelper;
-use Psr\SimpleCache\CacheInterface;
-use Studio24\Frontend\Cms\Wordpress;
-use Studio24\Frontend\ContentModel\ContentModel;
+//use Psr\SimpleCache\CacheInterface;
+use Psr\Cache\CacheItemPoolInterface;
+use Strata\Frontend\src\Cms\Wordpress;
+use Strata\Frontend\src\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Studio24\Frontend\Exception\NotFoundException;
+use Strata\Frontend\src\Exception\NotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DigitalBrochureController extends AbstractController
@@ -23,7 +24,7 @@ class DigitalBrochureController extends AbstractController
      */
     protected $api;
 
-    public function __construct(CacheInterface $cache)
+    public function __construct(CacheItemPoolInterface $cache)
     {
 
         $this->api = new WordPress(

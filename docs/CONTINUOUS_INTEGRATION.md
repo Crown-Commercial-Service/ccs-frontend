@@ -21,4 +21,4 @@ The following tests are run:
 * Runs PHP Code Sniffer to check application code is compliant with PSR-2
 * Runs PHP Unit (unit testing), this currently tests:
     * Application tests (in tests/)
-    * Core frontend library (in vendor/studio24/frontend/tests)
+    * Core frontend library (in vendor/Strata/frontend/tests)

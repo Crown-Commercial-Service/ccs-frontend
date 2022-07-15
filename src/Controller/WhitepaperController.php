@@ -7,11 +7,12 @@ namespace App\Controller;
 use App\Controller\FormController;
 use App\Helper\ControllerHelper;
 use Psr\SimpleCache\CacheInterface;
-use Studio24\Frontend\Cms\Wordpress;
-use Studio24\Frontend\ContentModel\ContentModel;
+use Psr\Cache\CacheItemPoolInterface;
+use Strata\Frontend\Cms\Wordpress;
+use Strata\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Studio24\Frontend\Exception\NotFoundException;
+use Strata\Frontend\Exception\NotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class WhitepaperController extends AbstractController
@@ -23,7 +24,7 @@ class WhitepaperController extends AbstractController
      */
     protected $api;
 
-    public function __construct(CacheInterface $cache)
+    public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new WordPress(
             getenv('APP_API_BASE_URL'),

@@ -6,7 +6,8 @@ namespace App\Controller;
 
 use App\Exception\PardotException;
 use App\Utils\Pardot;
-use Psr\SimpleCache\CacheInterface;
+//use Psr\SimpleCache\CacheInterface;
+use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,7 +42,7 @@ class ApiController extends AbstractController
      * to: https://CMS/search-api/suppliers?keyword=l&framework=&lot=&limit=20&page=1
      *
      * @param Request $request
-     * @param CacheInterface $cache
+     * @param CacheItemPoolInterface $cache
      * @return JsonResponse
      * @throws ApiException
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
@@ -49,7 +50,7 @@ class ApiController extends AbstractController
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    public function suppliers(Request $request, CacheInterface $cache)
+    public function suppliers(Request $request, CacheItemPoolInterface $cache)
     {
         $apiUrl = $this->getCmsUrl('/search-api/suppliers');
 
