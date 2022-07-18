@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use App\Exception\PardotException;
 use App\Utils\Pardot;
-//use Psr\SimpleCache\CacheInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

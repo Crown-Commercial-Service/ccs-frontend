@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-//use Psr\SimpleCache\CacheInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Psr16Cache;
 use Strata\Frontend\Cms\Wordpress;

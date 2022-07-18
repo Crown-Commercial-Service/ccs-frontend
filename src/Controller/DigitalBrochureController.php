@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use App\Controller\FormController;
 use App\Helper\ControllerHelper;
-//use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Cache\Psr16Cache;
 use Psr\Cache\CacheItemPoolInterface;
 use Strata\Frontend\Cms\Wordpress;

@@ -80,10 +80,10 @@
             "ref": "0dc9cceda799fd3a08b96987e176a261028a3709"
         }
     },
-    "Strata/frontend": {
+    "strata/frontend": {
         "version": "dev-master"
     },
-    "Strata/http-cache-clear": {
+    "studio24/http-cache-clear": {
         "version": "v0.1.0"
     },
     "symfony/apache-pack": {
