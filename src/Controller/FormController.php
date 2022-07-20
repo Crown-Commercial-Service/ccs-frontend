@@ -26,7 +26,6 @@ use Symfony\Component\Cache\Psr16Cache;
  */
 class FormController extends AbstractController
 {
-
     /**
      * Frameworks Rest API data
      *

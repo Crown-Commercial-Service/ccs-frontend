@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class FrameworkCategoriesTest extends WebTestCase
 {
-
     public function testFind()
     {
         $cat = FrameworkCategories::find('People');

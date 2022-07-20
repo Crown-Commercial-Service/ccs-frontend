@@ -15,7 +15,6 @@ use App\Exception\ApiException;
 
 class ApiController extends AbstractController
 {
-
     /**
      * Return CMS API URL
      *

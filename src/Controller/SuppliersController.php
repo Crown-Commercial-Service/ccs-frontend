@@ -15,7 +15,6 @@ use Exception;
 
 class SuppliersController extends AbstractController
 {
-
     /**
      * Suppliers Rest API data
      *
