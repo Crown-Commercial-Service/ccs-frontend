@@ -22,7 +22,6 @@ use Exception;
 
 class FrameworksController extends AbstractController
 {
-
     /**
      * Frameworks Rest API data
      *

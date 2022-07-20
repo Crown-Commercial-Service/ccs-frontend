@@ -25,7 +25,6 @@ use Psr\SimpleCache\CacheInterface;
  */
 class FormController extends AbstractController
 {
-
     /**
      * Frameworks Rest API data
      *
