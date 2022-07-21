@@ -36,8 +36,8 @@ class SuppliersController extends AbstractController
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('suppliers');
-        $psr6Cache = new Psr16Cache($cache);
-        $this->api->setCache($psr6Cache);
+        $psr16Cache = new Psr16Cache($cache);
+        $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
 
         $this->searchApi = new RestData(
@@ -46,7 +46,7 @@ class SuppliersController extends AbstractController
         );
 
         $this->searchApi->setContentType('suppliers');
-        $this->searchApi->setCache($cache);
+        $this->searchApi->setCache($psr16Cache);
         $this->searchApi->setCacheLifetime(1);
     }
 

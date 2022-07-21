@@ -42,8 +42,8 @@ class FrameworksController extends AbstractController
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('frameworks');
-        $psr6Cache = new Psr16Cache($cache);
-        $this->api->setCache($psr6Cache);
+        $psr16Cache = new Psr16Cache($cache);
+        $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
 
         $this->searchApi = new RestData(
@@ -52,7 +52,7 @@ class FrameworksController extends AbstractController
         );
 
         $this->searchApi->setContentType('frameworks');
-        $this->searchApi->setCache($psr6Cache);
+        $this->searchApi->setCache($psr16Cache);
         $this->searchApi->setCacheLifetime(1);
     }
 

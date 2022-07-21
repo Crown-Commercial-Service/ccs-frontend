@@ -29,9 +29,9 @@ class MenuController extends AbstractController
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
-        $psr6Cache = new Psr16Cache($cache);
+        $psr16Cache = new Psr16Cache($cache);
         $this->api->setContentType('page');
-        $this->api->setCache($psr6Cache);
+        $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
     }
 

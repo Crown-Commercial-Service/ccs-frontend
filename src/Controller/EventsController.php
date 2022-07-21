@@ -32,8 +32,8 @@ class EventsController extends AbstractController
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('events');
-        $psr6Cache = new Psr16Cache($cache);
-        $this->api->setCache($psr6Cache);
+        $psr16Cache = new Psr16Cache($cache);
+        $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
     }
 
