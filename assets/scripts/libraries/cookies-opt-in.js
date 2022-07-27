@@ -94,7 +94,24 @@ var docCookies = {
     var initial_cookie_preferences = [
         {
             title: "Cookies that measure website use",
-            description: "<p>We use Google Analytics to measure how you use the website so we can improve it based on user needs. Google Analytics sets cookies that store anonymised information about:</p><ul><li>how you got to the site</li><li>the pages you visit on Crown Commercial Service (CCS), and how long you spend on each page</li><li>what you click on while you're visiting the site</li></ul><p>We do not allow Google to use or share the data about how you use this site.</p>",
+            description: `<p>We use Google Analytics to measure how you use the website so we can improve it based on user needs. Google Analytics sets cookies that store anonymised information about:</p>
+                          <ul>
+                            <li>how you got to the site</li>
+                            <li>the pages you visit on Crown Commercial Service (CCS), and how long you spend on each page</li>
+                            <li>what you click on while you're visiting the site</li>
+                          </ul>
+                          <p>We do not allow Google to use or share the data about how you use this site.</p>
+                          <br>
+                          <p>We use Glassbox software to collect information about how you use CCS. We do this to help make sure the site is meeting the needs of its users and to help us make improvements</p>
+                          <p>Glassbox stores information about:</p>
+                          <ul>
+                            <li>Browsing activity</li>
+                            <li>Click-stream activity</li>
+                            <li>Session heatmaps and</li>
+                            <li>Scrolls</li>
+                          </ul>
+                          <p>This information can’t be used to identify who you are.</p>
+                          <p>We don’t allow Glassbox to use or share our analytics data.</p>`,
             cookie_type: "usage",
             enabled: null,
             adjustable: true,
@@ -103,6 +120,16 @@ var docCookies = {
                     "name": "1P_JAR",
                     "path": "/",
                     "domain": ".google.com"
+                },
+                {
+                    "name": "_cls_s",
+                    "path": "/",
+                    "domain": ".crowncommercial.gov.uk"
+                },
+                {
+                    "name": "_cls_v",
+                    "path": "/",
+                    "domain": ".crowncommercial.gov.uk"
                 },
             ]
         },
