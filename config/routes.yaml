@@ -172,6 +172,9 @@ form_contact_thanks_complaint:
   defaults:
     template: forms/25-contact-thanks-complaint.html.twig
 
+glossary:
+  path: /glossary
+  controller: App\Controller\PageController::glossary
 
 whitepaper_request:
   path: /whitepaper/request/{id}/{slug}
