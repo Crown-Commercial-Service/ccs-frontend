@@ -99,10 +99,22 @@ var docCookies = {
                             <li>how you got to the site</li>
                             <li>the pages you visit on Crown Commercial Service (CCS), and how long you spend on each page</li>
                             <li>what you click on while you're visiting the site</li>
-                          </ul>
-                          <p>We do not allow Google to use or share the data about how you use this site.</p>
-                          <br>
-                          <p>We use Glassbox software to collect information about how you use CCS. We do this to help make sure the site is meeting the needs of its users and to help us make improvements</p>
+                          </ul>`,
+            cookie_type: "usage",
+            enabled: null,
+            adjustable: true,
+            cookies: [
+                {
+                    "name": "1P_JAR",
+                    "path": "/",
+                    "domain": ".google.com"
+                }
+            ]
+        },
+
+        {
+            title: "Measuring website usage (Glassbox)",
+            description: `<p>We use Glassbox software to collect information about how you use CCS. We do this to help make sure the site is meeting the needs of its users and to help us make improvements</p>
                           <p>Glassbox stores information about:</p>
                           <ul>
                             <li>Browsing activity</li>
@@ -112,15 +124,10 @@ var docCookies = {
                           </ul>
                           <p>This information can’t be used to identify who you are.</p>
                           <p>We don’t allow Glassbox to use or share our analytics data.</p>`,
-            cookie_type: "usage",
+            cookie_type: "glassbox",
             enabled: null,
             adjustable: true,
             cookies: [
-                {
-                    "name": "1P_JAR",
-                    "path": "/",
-                    "domain": ".google.com"
-                },
                 {
                     "name": "_cls_s",
                     "path": "/",
@@ -133,6 +140,7 @@ var docCookies = {
                 },
             ]
         },
+
         {
             title: "Cookies that help with our communications and marketing",
             description: "These cookies may be set by third party websites and do things like measure how you view YouTube videos that are on Crown Commercial Service (CCS).",
@@ -163,6 +171,7 @@ var docCookies = {
         essentials: true,
         usage: false,
         marketing: false,
+        glassbox: false
     };
 
 
@@ -216,6 +225,7 @@ var docCookies = {
                 essentials: true,
                 usage: true,
                 marketing: true,
+                glassbox: true
             };
 
             docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences_accepted), oneyear, '/', '.crowncommercial.gov.uk');
