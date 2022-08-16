@@ -11,6 +11,8 @@
 
 {% block body %}
 
+    {% include '_components/hero.html.twig' with {'image': '/assets/images/glossary.png', 'heading': 'Search our glossary for common procurement terms', 'notFromWordpress': 'true', 'cta_label': '', 'content': '', 'cta_label': '', 'cta_destination': ''} %}
+
     <div class="govuk-width-container">
         <div class="govuk-phase-banner">
             {% include '/includes/phase-banner-content.html.twig' %}
@@ -93,7 +95,7 @@
 
                         </div>
                     {% else %}
-                        <p> Nothing here </p>
+                        <p> Sorry, looks like we don't have an entry for that term </p>
                     {% endif %}
 
                 </div>
