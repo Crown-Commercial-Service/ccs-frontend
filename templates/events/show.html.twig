@@ -41,6 +41,11 @@
             </ol>
         </div>
 
+            <pre>
+                Event dump
+ 	            {{ dump(event) }}
+            </pre>
+
 
         <main class="govuk-main-wrapper event-detail">
             <div class="govuk-grid-row">
@@ -89,3 +94,66 @@
     </div>
 
 {% endblock %}
+
+<script type="application/ld+json">
+    const eventAttendanceMode = event.content.location_type === 'in-person' 
+        ? "https://schema.org/OfflineEventAttendanceMode" 
+        :  event.content.location_type === 'online' 
+            ? "https://schema.org/OnlineEventAttendanceMode" 
+            : "https://schema.org/MixedEventAttendanceMode";
+
+    const location = event.content.location_type === 'in-person' 
+        ? {
+        "@type": "Place",
+        "name": "Snickerpark Stadium",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "100 West Snickerpark Dr",
+          "addressLocality": "Snickertown",
+          "postalCode": "19019",
+          "addressRegion": "PA",
+          "addressCountry": "US"
+            }
+        }
+        : event.content.location_type === 'online' 
+            ? {
+                "@type": "VirtualLocation",
+                "url": event.content.cta_destination
+            }
+            // hybrid location
+            : [{
+            "@type": "VirtualLocation",
+            "url": event.content.cta_destination
+            },
+            {
+                "@type": "Place",
+                "name": "Snickerpark Stadium",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "100 West Snickerpark Dr",
+                    "addressLocality": "Snickertown",
+                    "postalCode": "19019",
+                    "addressRegion": "PA",
+                    "addressCountry": "US"
+                }
+            }]
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": event.title,
+      "startDate": event.content.start_datetime,
+      "endDate": event.content.end_datetime,
+      "eventAttendanceMode": eventAttendanceMode,
+      "eventStatus": "https://schema.org/EventScheduled",
+      "location": location,
+      "image": [
+        event.content.image
+       ],
+      "description": event.content.description,
+      "organizer": {
+        "@type": "Organization",
+        "name": "Crown Commercial Service",
+        "url": event.content.cta_destination
+      }
+    }
+</script>
