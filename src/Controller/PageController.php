@@ -434,15 +434,15 @@ class PageController extends AbstractController
         $cookies = $request->cookies;
 
         // Update cookies with expiry to 1 year
-        if ($cookies->has('cookies_timer_reset')) {
+        if ($cookies->has('cookies_reset')) {
             $cookiePreferences = new Cookie('cookie_preferences', '{"essentials":true,"usage":true,"marketing":true}', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
             $seenCookieMessage = new Cookie('seen_cookie_message', 'true', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
-            $cookieTimerReset = new Cookie('cookies_timer_reset', 'true', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
+            $cookieReset = new Cookie('cookies_reset', 'true', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
 
             $response = new Response();
             $response->headers->setCookie($cookiePreferences);
             $response->headers->setCookie($seenCookieMessage);
-            $response->headers->setCookie($cookieTimerReset);
+            $response->headers->setCookie($cookieReset);
             return $response->sendHeaders();
         }
     }

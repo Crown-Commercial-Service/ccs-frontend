@@ -94,7 +94,12 @@ var docCookies = {
     var initial_cookie_preferences = [
         {
             title: "Cookies that measure website use",
-            description: "<p>We use Google Analytics to measure how you use the website so we can improve it based on user needs. Google Analytics sets cookies that store anonymised information about:</p><ul><li>how you got to the site</li><li>the pages you visit on Crown Commercial Service (CCS), and how long you spend on each page</li><li>what you click on while you're visiting the site</li></ul><p>We do not allow Google to use or share the data about how you use this site.</p>",
+            description: `<p>We use Google Analytics to measure how you use the website so we can improve it based on user needs. Google Analytics sets cookies that store anonymised information about:</p>
+                          <ul>
+                            <li>how you got to the site</li>
+                            <li>the pages you visit on Crown Commercial Service (CCS), and how long you spend on each page</li>
+                            <li>what you click on while you're visiting the site</li>
+                          </ul>`,
             cookie_type: "usage",
             enabled: null,
             adjustable: true,
@@ -103,9 +108,39 @@ var docCookies = {
                     "name": "1P_JAR",
                     "path": "/",
                     "domain": ".google.com"
+                }
+            ]
+        },
+
+        {
+            title: "Measuring website usage (Glassbox)",
+            description: `<p>We use Glassbox software to collect information about how you use CCS. We do this to help make sure the site is meeting the needs of its users and to help us make improvements</p>
+                          <p>Glassbox stores information about:</p>
+                          <ul>
+                            <li>Browsing activity</li>
+                            <li>Click-stream activity</li>
+                            <li>Session heatmaps and</li>
+                            <li>Scrolls</li>
+                          </ul>
+                          <p>This information can’t be used to identify who you are.</p>
+                          <p>We don’t allow Glassbox to use or share our analytics data.</p>`,
+            cookie_type: "glassbox",
+            enabled: null,
+            adjustable: true,
+            cookies: [
+                {
+                    "name": "_cls_s",
+                    "path": "/",
+                    "domain": ".crowncommercial.gov.uk"
+                },
+                {
+                    "name": "_cls_v",
+                    "path": "/",
+                    "domain": ".crowncommercial.gov.uk"
                 },
             ]
         },
+
         {
             title: "Cookies that help with our communications and marketing",
             description: "These cookies may be set by third party websites and do things like measure how you view YouTube videos that are on Crown Commercial Service (CCS).",
@@ -136,6 +171,7 @@ var docCookies = {
         essentials: true,
         usage: false,
         marketing: false,
+        glassbox: false
     };
 
 
@@ -156,7 +192,7 @@ var docCookies = {
      */
     function optUserIn() {
         hideMessage();
-        updateSeenCookie();
+        acceptAllCookies();
         updateCookieOnSafari();
         fireGTM();
     }
@@ -170,48 +206,37 @@ var docCookies = {
     }
 
     function updateSeenCookie() {
-
-        // 1 year = 3.154e+7
-        // 1 month = 2.628e+6
-        // set the cookie which tells us a user has 'accepted cookies'
-        // setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure)
-        // docCookies.setItem('seen_cookie_message', true, oneyear, '/', '.crowncommercial.gov.uk');
-
-        // the old 'seen' cookie is called `seen-cookie-message` (this should probably be deleted
-
-
-        // Only set or change the cookies if the user hasn't updated their preferences on the Cookie Settings page
-        // This is to check if the method was updateSeenCookie() was called from 'Accept all cookies' or cookie settings page 
-        // (in which case cookie_preferences_set will be set already)
-        if (!docCookies.hasItem('cookie_preferences_set')) {
-
-            var cookie_preferences_accepted = { 
-                essentials: true,
-                usage: true,
-                marketing: true,
-            };
-
-            docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences_accepted), oneyear, '/', '.crowncommercial.gov.uk');
-            // createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
-            
-            // Set the 'cookies_timer_reset' to prevent showing the banner again next time the user visits
-            docCookies.setItem('cookies_timer_reset', JSON.stringify(true), oneyear, '/', '.crowncommercial.gov.uk');
-
-            docCookies.setItem('seen_cookie_message', true, oneyear, '/', '.crowncommercial.gov.uk');
-        }
-        // this is a case when the user selected cookies on the cookie settings page – the cookie_preferences array 
-        // will be updated with this user's choices
-        else {
-            // console.log('cookie_preferences', cookie_preferences);
             const cookie_timer = (cookie_preferences['marketing'] === false && cookie_preferences['usage'] === false)
                 ? twodays
                 : oneyear;
            
             docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), cookie_timer, '/', '.crowncommercial.gov.uk');
-            // Set the 'cookies_timer_reset' to prevent showing the banner again next time the user visits
-            docCookies.setItem('cookies_timer_reset', JSON.stringify(true), cookie_timer, '/', '.crowncommercial.gov.uk');
+            // Set the 'cookies_reset' to prevent showing the banner again next time the user visits
+            docCookies.setItem('cookies_reset', JSON.stringify(true), cookie_timer, '/', '.crowncommercial.gov.uk');
             docCookies.setItem('seen_cookie_message', true, cookie_timer, '/', '.crowncommercial.gov.uk');
-        }
+        
+    }
+
+    function acceptAllCookies () {
+        // 1 year = 3.154e+7
+        // 1 month = 2.628e+6
+        // set the cookie which tells us a user has 'accepted cookies'
+        // setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure)
+        // docCookies.setItem('seen_cookie_message', true, oneyear, '/', '.crowncommercial.gov.uk');
+        var cookie_preferences_accepted = {
+            essentials: true,
+            usage: true,
+            marketing: true,
+            glassbox: true
+        };
+
+        docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences_accepted), oneyear, '/', '.crowncommercial.gov.uk');
+        // createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
+
+        // Set the 'cookies_reset' to prevent showing the banner again next time the user visits
+        docCookies.setItem('cookies_reset', JSON.stringify(true), oneyear, '/', '.crowncommercial.gov.uk');
+
+        docCookies.setItem('seen_cookie_message', true, oneyear, '/', '.crowncommercial.gov.uk');
     }
 
     function updateCookieOnSafari() {
@@ -466,23 +491,24 @@ var docCookies = {
     // Only set the default cookies if they haven't been set
     if (!docCookies.hasItem('cookie_preferences')) {
         docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), twodays, '/', '.crowncommercial.gov.uk');
-        // docCookies.setItem('cookies_timer_reset', JSON.stringify(cookie_preferences), oneyear, '/', '.crowncommercial.gov.uk');
-        // createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
     }
 
 
     /** ---------- RESET COOKIE TIMERS ----------
      * 'seen_cookie_message' determines if the current user has previously seen the banner and accepted cookies
-     * 'cookies_timer_reset' determines if user has an old version of cookie timers
+     * 'cookies_reset' determines if user has an old version of cookie timers
      * If the user has previously accepted cookies but has an old version of the timers, show the banner again
      */
-    if (docCookies.hasItem('seen_cookie_message') && !docCookies.hasItem('cookies_timer_reset')) {
+    if (docCookies.hasItem('seen_cookie_message') && !docCookies.hasItem('cookies_reset')) {
         // If not on the cookie settings page, show the banner;
         if (window.location.href.indexOf("cookie-settings") === -1) {
             createCookieMessage();
         }
     }
 
+    if (docCookies.hasItem('cookies_timer_reset')) {
+        docCookies.removeItem('cookies_timer_reset', '/', '.crowncommercial.gov.uk');
+    }
 
     /**
      * Run JavaScript for the component (component-cookie-consent) that displays
