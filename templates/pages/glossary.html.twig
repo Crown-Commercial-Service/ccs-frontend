@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Glossary - CCS{% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block body %}
+
+    {% include '_components/hero.html.twig' with {'image': '/assets/images/glossary.png', 'heading': 'Search our glossary for common procurement terms', 'notFromWordpress': 'true', 'cta_label': '', 'content': '', 'cta_label': '', 'cta_destination': ''} %}
+
+    <div class="govuk-width-container">
+        <div class="govuk-phase-banner">
+            {% include '/includes/phase-banner-content.html.twig' %}
+        </div>
+
+        <div class="govuk-breadcrumbs">
+            <ol class="govuk-breadcrumbs__list">
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
+                </li>
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                    Glossary
+                </li>
+            </ol>
+        </div>
+
+
+        <main id="main-content" role="main" class="govuk-main-wrapper">
+           
+            <div class="govuk-grid-row">
+
+                <div class="govuk-grid-column-full">
+                        <h1 class="govuk-heading-xl page-title">Glossary</h1>
+                </div>
+                <div class="govuk-grid-column-one-third">
+                
+                    <div class="govuk-form-group govuk-form-group--enclosure">
+                        <form action="{{ path('glossary') }}" method="GET">
+                            <div class="govuk-form-group sidebar__search-group">
+                                <label class="govuk-label" for="termSearch"> Search </label>
+                                <input class="govuk-input" id="termSearch" name="termSearch" type="text" value="{{ termSearch }}" />
+                                <button type="submit" class="sidebar__search-button govuk-input">
+                                    <span class="visuallyhidden">Search glossary</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+
+                <div class="govuk-grid-column-two-thirds">
+
+
+                    {% if termSearch is defined and termSearch|trim is not empty %}
+
+                            <div class="ccs-filters-summary ccs-filter-summary-frameworks">
+                                <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
+                                    <span class="ccs-filters-summary__label">Containing</span>
+                                    <ul class="ccs-filters-summary__list">
+                                        <li class="ccs-filters-summary__facet">
+                                            <a href="/glossary" class="ccs-filters-summary__facet__cancel"><span>{{ termSearch }} </span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                    {% endif %}
+
+
+                    {% if glossaries is defined and glossaries is not empty %}
+                        <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+                            {% for key, value in glossaries %}
+                                <div class="govuk-accordion__section ">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
+                                            <span class="govuk-accordion__section-button" id="accordion-default-heading-3">{{ key }}</span>
+                                        </h2>
+                                    </div>
+                                
+                                    <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                                        {% for glossary in value %}
+                                            <h3>{{ glossary.term }}</h3>
+                                            <div class="wysiwyg-content">
+                                                <p>{{glossary.meaning | raw}}</p>
+                                            </div>
+                                        {% endfor %} 
+                                    </div>
+                                </div>   
+                            {% endfor %}
+
+                        </div>
+                    {% else %}
+                        <p> Sorry, looks like we don't have an entry for that term </p>
+                    {% endif %}
+
+                </div>
+            </div>
+        </main>
+
+    </div>
+{% endblock %}
