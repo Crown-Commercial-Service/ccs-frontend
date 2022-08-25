@@ -7,7 +7,7 @@
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-one-third">
             <div class="govuk-heading-s">
-                {{ component.featured_featured_heading_1 | striptags | raw }}
+                {{ component.featured_featured_heading_1 | striptags('<img>') | raw }}
             </div>
             <div class="govuk-body">
                 {{ component.featured_featured_body_1 | striptags | raw }}
@@ -16,7 +16,7 @@
         </div>
         <div class="govuk-grid-column-one-third">
             <div class="govuk-heading-s">
-                {{ component.featured_featured_heading_2 | striptags | raw }}
+                {{ component.featured_featured_heading_2 | striptags('<img>') | raw }}
             </div>
             <div class="govuk-body">
                 {{ component.featured_featured_body_2 | striptags | raw }}
@@ -25,7 +25,7 @@
         </div>
         <div class="govuk-grid-column-one-third">
             <div class="govuk-heading-s">
-                {{ component.featured_featured_heading_3 | striptags | raw }}
+                {{ component.featured_featured_heading_3 | striptags('<img>') | raw }}
             </div>
             <div class="govuk-body">
                 {{ component.featured_featured_body_3 | striptags | raw }}
