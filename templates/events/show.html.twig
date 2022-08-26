@@ -96,11 +96,11 @@
     <script type="text/javascript">
 
         window.onload = () => {
-            const eventAttendanceMode = event.content.location_type === 'in-person'
-                ? "https://schema.org/OfflineEventAttendanceMode"
-                :  event.content.location_type === 'online'
-                    ? "https://schema.org/OnlineEventAttendanceMode"
-                    : "https://schema.org/MixedEventAttendanceMode"; // hybrid location type
+
+            const online = {
+                "@type": "VirtualLocation",
+                "url": event.content.event_url
+            }
 
             const in_person = {
                 "@type": "Place",
@@ -115,16 +115,23 @@
                 }
             }
 
-            const online = {
-                "@type": "VirtualLocation",
-                "url": event.content.event_url
-            }
+            const hybrid = [ online, in_person ];
 
-            const location = event.content.location_type === 'in-person'
-                ? in_person
-                : event.content.location_type === 'online'
-                    ? online
-                    : [ online, in_person ]; // hybrid location type
+            const eventAttendanceMode = "";
+            const location = "";
+
+            switch(event.content.location_type) {
+                case "in-person":
+                    eventAttendanceMode = "https://schema.org/OfflineEventAttendanceMode";
+                    location = in_person;
+                    break;
+                case "online": eventAttendanceMode = "https://schema.org/OnlineEventAttendanceMode";
+                    location = online;
+                    break;
+                case "hybrid": eventAttendanceMode = "https://schema.org/MixedEventAttendanceMode";
+                    location = hybrid;
+                    break;
+            }
 
             document.getElementById('ldjson').text(() => {
                 return JSON.stringify({
