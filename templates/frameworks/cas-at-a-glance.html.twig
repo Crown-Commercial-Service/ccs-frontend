@@ -23,9 +23,9 @@
 			</li>
 		{% endif %}
 
-        {% if framework.content.contract_length and framework.content.contract_length != "" %}
+        {% if framework.content.how_to_buy and framework.content.how_to_buy != "" %}
             <li class="govuk-tabs__list-item" role="presentation">
-                <a class="govuk-tabs__tab" href="#key-facts" id="tab_key-facts" role="tab" aria-controls="key-facts" aria-selected="false" tabindex="-1">Contract length</a>
+                <a class="govuk-tabs__tab" href="#key-facts" id="tab_key-facts" role="tab" aria-controls="key-facts" aria-selected="false" tabindex="-1">How to buy</a>
             </li>
         {% endif %}
 
@@ -43,9 +43,9 @@
 		</div>
     {% endif %}
     
-    {% if framework.content.contract_length and framework.content.contract_length != "" %}
+    {% if framework.content.how_to_buy and framework.content.how_to_buy != "" %}
 		<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="key-facts" role="tabpanel" aria-labelledby="tab_key-facts">
-			{{ framework.content.contract_length | raw }}   
+			{{ framework.content.how_to_buy | raw }}   
 		</div>
     {% endif %}
     
