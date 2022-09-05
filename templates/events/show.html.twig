@@ -71,10 +71,19 @@
                             {% endif %}
                         </div>
 
-                        {% if event.content.location %}
+                        {% if event.content.location_type %}
                             <div class="event-detail__location">
                                 <h2 class="govuk-heading-s">Location</h2>
-                                <p>{{ event.content.location|raw }}</p>
+
+                                {% if event.content.location_type == 'In Person' %}
+                                    <p>{{ event.content.street_address|raw }} {{"\n"|nl2br}} {{ event.content.address_region|raw }}, {{ event.content.address_locality|raw }}</p>
+                                {% endif %}
+                                {% if event.content.location_type == 'Online' %}
+                                    <p>Online</p>
+                                {% endif %}
+                                {% if event.content.location_type == 'Online and In Person' %}
+                                    <p>Online and in person</p>
+                                {% endif %}
                             </div>
                         {% endif %}
 

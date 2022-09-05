@@ -18,8 +18,6 @@ secondary_cta_destination:
   type: text
 location_type:
   type: text
-event_url:
-  type: text
 place_name:
   type: text
 street_address:
