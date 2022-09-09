@@ -384,3 +384,26 @@
     }
 
 }
+
+
+.mourning_banner_container {
+    padding: 15px 0px 15px 0px;
+    width: 100%;
+    position: relative;
+    z-index: 10000;
+    border: none;
+    display: block;
+    background-color: #000000;
+    min-height: 30px;
+}
+
+.mourning_banner_wrap {
+    padding: 0px;
+    z-index: 10000;
+    border: none;
+    display: block;
+    background-color: #000000;
+    text-align: left;
+    font-size: 1em;
+    min-height: 30px;
+}
