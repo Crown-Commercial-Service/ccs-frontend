@@ -6,7 +6,17 @@
 {% block metadescription %}Crown Commercial Service (CCS) helps 17,000 public sector buyers and charities save £725m a year when buying common products and services.{% endblock %}
 
 {% block header %}
-
+    <div class="mourning_banner_container">
+        <div class="mourning_banner_wrap">
+            <div class="ccs-width-container">
+                <br>
+                <h2 class="govuk-heading-l ppg-login-text ccs-font-weight-semibold">Her Majesty Queen Elizabeth II</h2>
+                <br>
+                <p class="ppg-login-text">21 April 1926 to 8 September 2022</p>
+                <br>
+            </div>
+        </div>
+    </div>
     {% embed '/includes/header.html.twig' %}
         {% block headerclasses %}
             header-global header-global--home
@@ -24,7 +34,7 @@
         {% endblock %}
 
         {% block featuredcontent %}
-                <div class="homepage-hero govuk-homepage-hero-full-width">
+                <div class="homepage-hero govuk-homepage-hero-full-width" style="filter: grayscale(100%);">
 
                     <div class="govuk-grid-row govuk-margin-left-right-30">
                         <div class="govuk-hero-img-container">
