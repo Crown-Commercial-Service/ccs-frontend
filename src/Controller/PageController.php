@@ -30,12 +30,19 @@ class PageController extends AbstractController
      */
     protected $api;
 
-     /**
+    /**
      * Frameworks Rest API data
      *
      * @var RestData
      */
     protected $redirectionApi;
+
+    /**
+     * Frameworks Rest API data
+     *
+     * @var RestData
+     */
+    protected $glossaryApi;
 
     public function __construct(CacheInterface $cache)
     {
@@ -53,6 +60,12 @@ class PageController extends AbstractController
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->redirectionApi->setContentType('redirections');
+
+        $this->glossaryApi = new RestData(
+            getenv('APP_API_BASE_URL'),
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
+        );
+        $this->glossaryApi->setContentType('glossary');
     }
 
     /**
@@ -445,5 +458,34 @@ class PageController extends AbstractController
             $response->headers->setCookie($cookieReset);
             return $response->sendHeaders();
         }
+    }
+
+    public function glossary(Request $request)
+    {
+        $query = filter_var($request->query->get('termSearch'), FILTER_SANITIZE_STRING);
+
+        try {
+            $results = $this->glossaryApi->getOne(0);
+        } catch (NotFoundException $e) {
+            throw new NotFoundHttpException('Glossary API broken', $e);
+        }
+        $results = $results->getContent()->get('glossaries')->getValue();
+
+        $glossaries = [];
+
+        foreach ((array) $results as $glossary) {
+            $term = trim($glossary->get('term')->getValue());
+            $key = $term[0];
+            if (str_contains(strtolower($term), strtolower($query))) {
+                $glossaries[$key][] = ['term' => $term, 'meaning' => $glossary->get('meaning')->getValue()];
+            }
+        }
+
+        ksort($glossaries);
+
+        return $this->render('pages/glossary.html.twig', [
+            'glossaries' => $glossaries,
+            'termSearch'     => $query
+        ]);
     }
 }
