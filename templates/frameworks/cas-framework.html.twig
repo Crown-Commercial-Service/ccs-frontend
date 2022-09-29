@@ -1,0 +1,184 @@
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-xl page-title cat-agrement-page-title">{{ framework.content.title }}</h1>
+        {% if framework.content.summary and framework.content.summary != "" %}
+            <p class="govuk-body-s agreement-subtitle">{{ framework.content.summary | striptags | raw }}</p>
+        {% endif %}
+
+                                
+        <div>
+            <p class="govuk-body agreement-overview">Agreement number: <strong> {{ framework.content.rm_number }} </strong></p>
+            <p class="govuk-body agreement-overview">Start date: <strong> {{ framework.content.start_date.format('d/m/Y') }} </strong></p>
+            <p class="govuk-body agreement-overview">End date: <strong> {{ framework.content.end_date.format('d/m/Y') }} </strong></p>
+        </div>
+
+        <br>
+        <br>
+
+        {% if framework.content.availability and framework.content.availability != "" %}
+            <p ><strong>Available for:</strong> {{ framework.content.availability| striptags | raw }} </p> </br>
+        {% endif %}
+
+
+        {% if framework.content.cas_updates and framework.content.cas_updates is not empty %}
+            {% set latestUpdate = framework.content.cas_updates|first %}
+            
+            <h2 class="govuk-heading-s">Updates</h2>
+
+            <p><strong>{{ latestUpdate.framework_cas_updates_date.format('d F Y') }}:</strong> {{ latestUpdate.framework_cas_updates_update |striptags('<a>') |raw }} </p> 
+            
+            {% if framework.content.cas_updates|length > 1 %}
+                 <details class="govuk-details" data-module="govuk-details">
+                    <summary class="govuk-details__summary">
+                        <span class="govuk-details__summary-text" id="details-summary">Show previous updates</span>
+                    </summary>
+                    <div class="govuk-details__text">
+                        {% for update in framework.content.cas_updates %}
+                            {% if not loop.first %}
+                                <p><strong>{{ update.framework_cas_updates_date.format('d F Y') }}:</strong> {{ update.framework_cas_updates_update |striptags('<a>') |raw }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </details>
+            {% endif %}
+        {% endif %}
+
+
+        </br>
+
+        {% if 
+            framework.content.description and framework.content.description != "" or 
+            framework.content.cannot_use and framework.content.cannot_use != "" or 
+            framework.content.how_to_buy and framework.content.how_to_buy != "" or 
+            framework.content.benefits and framework.content.benefits != ""
+        %}
+			{% set showAtAGlance = true %}
+		{% endif %}
+
+        {% if 
+            framework.content.customer_guide and framework.content.customer_guide != "" or 
+            framework.content.core_terms_conditions and framework.content.core_terms_conditions != "" or 
+            framework.content.call_off_order_form and framework.content.call_off_order_form != "" or 
+            framework.content.joint_schedules and framework.content.joint_schedules != "" or 
+            framework.content.call_off_schedules and framework.content.call_off_schedules != "" or 
+            framework.content.framework_schedules and framework.content.framework_schedules != "" or 
+            framework.content.templates and framework.content.templates != ""
+        %}
+			{% set showDocuments = true %}
+		{% endif %}
+
+        <div>
+            <h3 class="govuk-heading-s" id="contents">Contents</h3>
+
+            <ul class="govuk-list govuk-list--bullet">
+                {% if showAtAGlance is defined and showAtAGlance %}
+                    <li> <a class="govuk-link" href="#ataglance">At a glance</a></li>
+                {% endif %}
+
+                <li> <a class="govuk-link" href="#products">Products and suppliers</a></li>
+
+                {% if showDocuments is defined and showDocuments %}
+                    <li> <a class="govuk-link" href="#documents">Documents</a></li>
+                {% endif %}
+
+                <li> <a class="govuk-link" href="#benefitsofccs">The benefits of using CCS</a></li>
+            </ul>
+        </div>
+
+        </br>
+
+        {% if showAtAGlance is defined and showAtAGlance %}
+            {% include 'frameworks/cas-at-a-glance.html.twig' with {'framework': framework}%}
+            </br>
+        {% endif %}
+
+        <h2 class="govuk-heading-m" id="products">Products and suppliers</h2>
+
+        <div class="govuk-inset-text">
+            <p ><strong>You can now procure online with CCS.</strong> <br>Please select a lot to start.</p>
+        </div>
+
+        <div class="grey-margin-bottom" id="agreement-lots"></div>
+
+        {% for lot in framework.content.lots %}
+            <dl class="apollo-list apollo-list--definition grey-margin-bottom">
+                <dt class="apollo-list--definition__key">
+                    <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id={{ framework.content.rm_number }}&lotNum=Lot%20{{ lot.lot_number }}">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
+                </dt>
+                <dd class="apollo-list--definition__value">
+                    {% if lot.description %}
+                        <div class="govuk-!-margin-bottom-2">{{ lot.description | raw }}</div>
+                    {% endif %}
+
+                    {% if lot.expiry_date is defined and lot.expiry_date is not null and lot.expiry_date >= framework.content.end_date %}
+                        <p>Expired: {{ lot.expiry_date.format('d/m/Y') }}</p>
+                    {% endif %}
+
+                    {% if lot.suppliers|length == 0 %}
+                        <p>No suppliers</p>
+                    {% else %}
+                        <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }} suppliers</a> </p>
+                    {% endif %}
+
+                </dd>
+            </dl>
+        {% endfor %}
+
+         {% if showDocuments is defined and showDocuments %}
+            {% include 'frameworks/cas-documents.html.twig' with {'framework': framework}%}
+            </br>
+        {% endif %}
+
+
+        <div>
+            <h2 class="govuk-heading-m" id="benefitsofccs">The benefits of using CCS</h2>
+            <iframe src="https://www.youtube-nocookie.com/embed/mn-3isisTGM" allowfullscreen="" width="560" height="315"></iframe>
+        </div>
+
+        <div class="app-c-print-link">
+            <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">Print this page</button>
+        </div>
+
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+        <aside class="aside">
+            <div class="apollo-enclosure">
+                <h2 class="aside__heading">Contact</h2>
+                <p >You can contact us by email, phone or using the <a class="govuk-link" href="/contact">enquiry form</a>.</p>
+
+                <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Email:</h3>
+                <p ><a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a></p>
+
+                <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Telephone:</h3>
+                <p ><a href="tel:03454102222">0345 410 2222</a></p>
+
+                <p >CCS customer services team is available Monday to Friday, 9am to 5pm.</p>
+            </div>
+            <div class="apollo-enclosure">
+                <h2 class="aside__heading">Do you need an accessible version of a document?</h2>
+                <br />
+                <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Email:</h3>
+                <p ><a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a></p>
+
+                <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Telephone:</h3>
+                <p ><a href="tel:03454102222">0345 410 2222</a></p>
+            </div>
+
+        </aside>
+    </div>
+</div>
+
+<script>
+    const detailsSummarySpan = document.getElementById("details-summary");
+
+    detailsSummarySpan.addEventListener('click', event => {
+        if(document.getElementById("details-summary").textContent == "Show previous updates"){
+            document.getElementById("details-summary").textContent="Hide previous updates";
+        }else{
+            document.getElementById("details-summary").textContent="Show previous updates";
+        }
+    });
+</script>
