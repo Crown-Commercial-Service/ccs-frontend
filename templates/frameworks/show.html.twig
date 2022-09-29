@@ -86,11 +86,7 @@
         <!-- required wrapper 2 -->
         <main id="main-content" role="main" class="govuk-main-wrapper">
 
-            {% if framework.content.rm_number ==  "RM6263" %}
-
-                {% include 'frameworks/RM6263.html.twig' %}
-
-            {% elseif framework.content.type == "CAS framework" and frameworkStatus == "live" %}
+            {% if framework.content.type == "CAS framework" and frameworkStatus == "live" %}
 
                 {% include 'frameworks/cas-framework.html.twig' with {'framework': framework} %}
             
