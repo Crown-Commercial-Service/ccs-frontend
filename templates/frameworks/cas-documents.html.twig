@@ -13,7 +13,7 @@
                 </h2>
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
-                {{ framework.content.customer_guide|raw }}
+                <div class="wysiwyg-content">{{ framework.content.customer_guide|raw }}</div>
             </div>
         </div>
     {% endif %}
@@ -26,7 +26,7 @@
                 </h2>
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
-                {{ framework.content.core_terms_conditions|raw }}
+                <div class="wysiwyg-content">{{ framework.content.core_terms_conditions|raw }}</div>
             </div>
         </div>
     {% endif %}
@@ -39,7 +39,7 @@
                 </h2>
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
-                {{ framework.content.call_off_order_form|raw }}
+                <div class="wysiwyg-content">{{ framework.content.call_off_order_form|raw }}</div>
             </div>
         </div>
     {% endif %}
@@ -56,7 +56,7 @@
                     <p class="joint-schedule-title"><a href={{ jointSchedule.joint_schedule_document}}><strong>{{ jointSchedule.joint_schedule_document_name }}</strong></a></p>
                     <p class="joint-schedule-title">{{ jointSchedule.joint_schedule_document_type}}</p>
                     <p class="joint-schedule-title">{{ jointSchedule.joint_schedule_document_usage}}</p>
-                    {{ jointSchedule.joint_schedule_document_description|raw }}
+                    <div class="wysiwyg-content">{{ jointSchedule.joint_schedule_document_description|raw }}</div>
                     <br>
                 {% endfor %}
             </div>
@@ -79,7 +79,7 @@
                     <p class="joint-schedule-title"><a href={{ callOffSchedules.call_off_schedule_document}}><strong>{{ callOffSchedules.call_off_schedule_document_name }}</strong></a></p>
                     <p class="joint-schedule-title">{{ callOffSchedules.call_off_schedule_document_type}}</p>
                     <p class="joint-schedule-title">{{ callOffSchedules.call_off_schedule_document_usage}}</p>
-                    {{ callOffSchedules.call_off_schedule_document_description|raw }}
+                    <div class="wysiwyg-content">{{ callOffSchedules.call_off_schedule_document_description|raw }}</div>
                     <br>
                 {% endfor %}
             </div>
@@ -100,7 +100,7 @@
                 {% for frameworkSchedules in framework.content.framework_schedules %}
                     <p class="joint-schedule-title"><a href={{ frameworkSchedules.framework_schedule_document}}><strong>{{ frameworkSchedules.framework_schedule_document_name }}</strong></a></p>
                     <p class="joint-schedule-title">{{ frameworkSchedules.framework_schedule_document_usage}}</p>
-                    {{ frameworkSchedules.framework_schedule_document_description|raw }}
+                    <div class="wysiwyg-content">{{ frameworkSchedules.framework_schedule_document_description|raw }}</div>
                     <br>
                 {% endfor %}
             </div>
@@ -115,7 +115,7 @@
                 </h2>
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
-                {{ framework.content.templates|raw }}
+                <div class="wysiwyg-content">{{ framework.content.templates|raw }}</div>
             </div>
         </div>
     {% endif %}
