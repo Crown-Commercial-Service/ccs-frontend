@@ -86,19 +86,12 @@
         <!-- required wrapper 2 -->
         <main id="main-content" role="main" class="govuk-main-wrapper">
 
-            {% if framework.content.rm_number ==  "RM6263" %}
-
-                {% include 'frameworks/RM6263.html.twig' %}
-
-            {% elseif framework.content.type == "CAS framework" and frameworkStatus == "live" %}
+            {% if framework.content.type == "CAS framework" and frameworkStatus == "live" %}
 
                 {% include 'frameworks/cas-framework.html.twig' with {'framework': framework} %}
             
             {% else %}
                 {% if frameworkStatus == "live" %}
-
-
-
 
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-full">
@@ -142,17 +135,15 @@
                             {#<li><code>expected_award_date</code>: {{ framework.content.expected_award_date }}</li>#}
                             {#</ul>#}
 
-
                             <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
-
 
                                 {% if framework.content.updates and framework.content.updates != "" %}
                                     <div class="govuk-accordion__section ">
                                         <div class="govuk-accordion__section-header">
                                             <h2 class="govuk-accordion__section-heading">
-                            <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
-                            Updates
-                            </span>
+                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+                                                Updates
+                                                </span>
                                             </h2>
                                         </div>
                                         <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
@@ -165,15 +156,13 @@
                                     </div>
                                 {% endif %}
 
-
-
                                 {% if framework.content.description and framework.content.description != "" and framework.content.status != 'Expired - Data Still Received' %}
                                     <div class="govuk-accordion__section ">
                                         <div class="govuk-accordion__section-header">
                                             <h2 class="govuk-accordion__section-heading">
-            <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
-            Description
-            </span>
+                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
+                                                Description
+                                                </span>
                                             </h2>
                                         </div>
                                         <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">
@@ -186,15 +175,13 @@
                                     </div>
                                 {% endif %}
 
-
-
                                 {% if framework.content.benefits and framework.content.benefits != "" and framework.content.status != 'Expired - Data Still Received' %}
                                     <div class="govuk-accordion__section ">
                                         <div class="govuk-accordion__section-header">
                                             <h2 class="govuk-accordion__section-heading">
-            <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
-            Benefits
-            </span>
+                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
+                                                Benefits
+                                                </span>
                                             </h2>
                                         </div>
                                         <div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3">
@@ -207,111 +194,104 @@
                                     </div>
                                 {% endif %}
 
-
-
-
                                 {% if framework.content.lots and framework.content.lots != "" and framework.content.status != 'Expired - Data Still Received' %}
-                                <div class="govuk-accordion__section ">
-                                    <div class="govuk-accordion__section-header">
-                                        <h2 class="govuk-accordion__section-heading">
-            <span class="govuk-accordion__section-button" id="accordion-default-heading-4">
-            Products and suppliers
-            </span>
-                                        </h2>
-                                    </div>
-                                    <div id="accordion-default-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4">
+                                    <div class="govuk-accordion__section ">
+                                        <div class="govuk-accordion__section-header">
+                                            <h2 class="govuk-accordion__section-heading">
+                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-4">
+                                                Products and suppliers
+                                                </span>
+                                            </h2>
+                                        </div>
+                                        <div id="accordion-default-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4">
 
-                                        {# Expected `type` values;
+                                            {# Expected `type` values;
 
-                                        - Upcoming deal
-                                        - Standard framework
-                                        - DPS
-                                        - G-cloud
+                                            - Upcoming deal
+                                            - Standard framework
+                                            - DPS
+                                            - G-cloud
 
-                                        #}
-                                        {% if framework.content.type == "Dynamic purchasing system" %}
-                                            <p>Please read the 'How to buy' tab
-                                                below for detailed instructions on
-                                                how to find out which suppliers are
-                                                on this agreement.</p>
+                                            #}
+                                            {% if framework.content.type == "Dynamic purchasing system" %}
+                                                <p>Please read the 'How to buy' tab
+                                                    below for detailed instructions on
+                                                    how to find out which suppliers are
+                                                    on this agreement.</p>
 
-                                        {% elseif framework.content.type == "G-cloud/DOS" %}
-                                            <p>
-                                                <a href="https://www.digitalmarketplace.service.gov.uk/">Digital
-                                                    Marketplace</a> has the
-                                                constantly updated list of the
-                                                suppliers on this agreement.</p>
+                                            {% elseif framework.content.type == "G-cloud/DOS" %}
+                                                <p>
+                                                    <a href="https://www.digitalmarketplace.service.gov.uk/">Digital
+                                                        Marketplace</a> has the
+                                                    constantly updated list of the
+                                                    suppliers on this agreement.</p>
 
-                                            {# Only link to suppliers if the item is not DPS or G-cloud #}
-                                        {% else %}
+                                                {# Only link to suppliers if the item is not DPS or G-cloud #}
+                                            {% else %}
 
-                                            <p>There are
-                                                <a href="{{ path('frameworks_suppliers', {'rmNumber': framework.content.rm_number }) }}">{{ framework.content.total_suppliers }}
-                                                    suppliers</a> on this agreement
-                                            </p>
+                                                <p>There are
+                                                    <a href="{{ path('frameworks_suppliers', {'rmNumber': framework.content.rm_number }) }}">{{ framework.content.total_suppliers }}
+                                                        suppliers</a> on this agreement
+                                                </p>
 
-                                        {% endif %}
+                                            {% endif %}
 
 
-                                        <dl class="apollo-list apollo-list--definition">
-                                            {% for lot in framework.content.lots %}
-                                                <dt class="apollo-list--definition__key">
-                                                    <span class="apollo-list--definition__key__inner">Lot {{ lot.lot_number }}: {{ lot.title|raw }}</span>
+                                            <dl class="apollo-list apollo-list--definition">
+                                                {% for lot in framework.content.lots %}
+                                                    <dt class="apollo-list--definition__key">
+                                                        <span class="apollo-list--definition__key__inner">Lot {{ lot.lot_number }}: {{ lot.title|raw }}</span>
 
-                                                    {% if lot.status == "Expired" or lot.status == "Expired - Data Still Received" %}
-                                                        <span class="govuk-tag ccs-tag ccs-tag--error">Expired: {{ lot.expiry_date.format('d/m/Y') }}</span>
-                                                    {% elseif lot.expiry_date is defined and lot.expiry_date is not null and lot.expiry_date < framework.content.end_date %}
-                                                        {# Output a message if the lot expires before the framework #}
-                                                        <span class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--lower-case">Lot expires before framework: <time>{{ lot.expiry_date.format('d/m/Y') }}</time></span>
-                                                    {% endif %}
-                                                </dt>
-                                                <dd class="apollo-list--definition__value">
-                                                    {% if lot.description %}
-                                                        <div class="govuk-!-margin-bottom-2">{{ lot.description | raw }}</div>
-                                                    {% endif %}
-
-                                                    {# don't show this information if the lot has expired already #}
-                                                    {% if lot.status != "Expired" and lot.status != "Expired - Data Still Received" %}
-                                                        {# Sometimes, such RM1018, lots are `null` so check for both #}
-                                                        {% if lot.expiry_date is defined and lot.expiry_date is not null and lot.expiry_date >= framework.content.end_date %}
-                                                            <p class>Expires:
-                                                                <time>{{ lot.expiry_date.format('d/m/Y') }}</time>
-                                                            </p>
+                                                        {% if lot.status == "Expired" or lot.status == "Expired - Data Still Received" %}
+                                                            <span class="govuk-tag ccs-tag ccs-tag--error">Expired: {{ lot.expiry_date.format('d/m/Y') }}</span>
+                                                        {% elseif lot.expiry_date is defined and lot.expiry_date is not null and lot.expiry_date < framework.content.end_date %}
+                                                            {# Output a message if the lot expires before the framework #}
+                                                            <span class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--lower-case">Lot expires before framework: <time>{{ lot.expiry_date.format('d/m/Y') }}</time></span>
+                                                        {% endif %}
+                                                    </dt>
+                                                    <dd class="apollo-list--definition__value">
+                                                        {% if lot.description %}
+                                                            <div class="govuk-!-margin-bottom-2">{{ lot.description | raw }}</div>
                                                         {% endif %}
 
-                                                        {% if framework.content.type == "G-cloud/DOS" or framework.content.type == "Dynamic purchasing system" %}
-                                                            {# Don't display Supplier link if TRUE #}
-                                                        {% else %}
-                                                            {% if lot.suppliers|length == 0 %}
-                                                                <p>No suppliers</p>
-                                                            {% else %}
-                                                                <p>
-                                                                    <a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }}
-                                                                        suppliers</a>
+                                                        {# don't show this information if the lot has expired already #}
+                                                        {% if lot.status != "Expired" and lot.status != "Expired - Data Still Received" %}
+                                                            {# Sometimes, such RM1018, lots are `null` so check for both #}
+                                                            {% if lot.expiry_date is defined and lot.expiry_date is not null and lot.expiry_date >= framework.content.end_date %}
+                                                                <p class>Expires:
+                                                                    <time>{{ lot.expiry_date.format('d/m/Y') }}</time>
                                                                 </p>
                                                             {% endif %}
+
+                                                            {% if framework.content.type == "G-cloud/DOS" or framework.content.type == "Dynamic purchasing system" %}
+                                                                {# Don't display Supplier link if TRUE #}
+                                                            {% else %}
+                                                                {% if lot.suppliers|length == 0 %}
+                                                                    <p>No suppliers</p>
+                                                                {% else %}
+                                                                    <p>
+                                                                        <a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }}
+                                                                            suppliers</a>
+                                                                    </p>
+                                                                {% endif %}
+                                                            {% endif %}
                                                         {% endif %}
-                                                    {% endif %}
 
-                                                </dd>
-                                            {% endfor %}
-                                        </dl>
+                                                    </dd>
+                                                {% endfor %}
+                                            </dl>
 
-
+                                        </div>
                                     </div>
-                                </div>
                                 {% endif %}
-
-
-
 
                                 {% if framework.content.how_to_buy and framework.content.how_to_buy != "" and framework.content.status != 'Expired - Data Still Received' %}
                                     <div class="govuk-accordion__section ">
                                         <div class="govuk-accordion__section-header">
                                             <h2 class="govuk-accordion__section-heading">
-                            <span class="govuk-accordion__section-button" id="accordion-default-heading-5">
-                            How to buy
-                            </span>
+                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-5">
+                                                How to buy
+                                                </span>
                                             </h2>
                                         </div>
                                         <div id="accordion-default-content-5" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-5">
@@ -324,15 +304,13 @@
                                     </div>
                                 {% endif %}
 
-
-
                                 {% if framework.content.documents and framework.content.documents != "" %}
                                     <div class="govuk-accordion__section ">
                                         <div class="govuk-accordion__section-header">
                                             <h2 class="govuk-accordion__section-heading">
-                            <span class="govuk-accordion__section-button" id="accordion-default-heading-6">
-                            Documents
-                            </span>
+                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-6">
+                                                Documents
+                                                </span>
                                             </h2>
                                         </div>
                                         <div id="accordion-default-content-6" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-6">
@@ -406,22 +384,18 @@
 
                             </div>
 
-
                             <div class="app-c-print-link">
                                 <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">
                                     Print this page
                                 </button>
                             </div>
 
-
                         </div>
+
                         <div class="govuk-grid-column-one-third">
 
-
                             <aside class="aside">
-
                                 <div class="apollo-enclosure">
-
                                     <h2 class="aside__heading">Key facts</h2>
 
                                     <dl class="govuk-list govuk-list--definition">
@@ -478,7 +452,7 @@
 
                                 </div>
 
-                                    <div class="apollo-enclosure">
+                                <div class="apollo-enclosure">
                                     <h2 class="aside__heading">Do you need an accessible version of a document? </h2>
                                     <br />
                                     <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">
@@ -490,23 +464,13 @@
                                     <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">
                                         Telephone:</h3>
                                     <p class="govuk-body"><a href="tel:03454102222">0345 410 2222</a></p>
-
-
                                 </div>
 
                             </aside>
-
-
                         </div>
                     </div>
 
-
-
-
-
-
                 {% else %}
-
 
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-two-thirds">
@@ -534,15 +498,11 @@
                                 </button>
                             </div>
 
-
-
                         </div>
                     </div>
 
-
                 {% endif %}
             {% endif %}
-
 
         </main>
     </div>

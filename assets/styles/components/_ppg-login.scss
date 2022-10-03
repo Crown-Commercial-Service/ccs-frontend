@@ -25,10 +25,8 @@
 
 .ppg-login-link {
   list-style-type: none;
-
   padding:7px 10px;
   background-color: rgba(109,2,39,0.41);;
   margin-right: 1px;
   @include govuk-font(18, $weight: regular);
-
 }

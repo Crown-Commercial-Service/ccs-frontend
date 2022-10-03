@@ -33,25 +33,33 @@
 	
 	{% if framework.content.description and framework.content.description != "" %}
 		<div class="govuk-tabs__panel" id="desc" role="tabpanel" aria-labelledby="tab_desc">
-			{{ framework.content.description | raw }}   
+			<div class="wysiwyg-content">
+				{{ framework.content.description | raw }}
+			</div>
 		</div>
     {% endif %}
     
 	{% if framework.content.cannot_use and framework.content.cannot_use != "" %}
 		<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="nottousefor" role="tabpanel" aria-labelledby="tab_nottousefor">
-			{{ framework.content.cannot_use | raw }}   
+			<div class="wysiwyg-content">
+				{{ framework.content.cannot_use | raw }}
+			</div>
 		</div>
     {% endif %}
     
     {% if framework.content.how_to_buy and framework.content.how_to_buy != "" %}
 		<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="key-facts" role="tabpanel" aria-labelledby="tab_key-facts">
-			{{ framework.content.how_to_buy | raw }}   
+			<div class="wysiwyg-content">
+				{{ framework.content.how_to_buy | raw }}
+			</div>
 		</div>
     {% endif %}
     
 	{% if framework.content.benefits and framework.content.benefits != "" %}
 		<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="benefits" role="tabpanel" aria-labelledby="tab_benefits">
-			{{ framework.content.benefits | raw }}   
+			<div class="wysiwyg-content">
+				{{ framework.content.benefits | raw }}
+			</div>
 		</div>
     {% endif %}
 
