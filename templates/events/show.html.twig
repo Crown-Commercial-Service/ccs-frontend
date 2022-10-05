@@ -71,10 +71,19 @@
                             {% endif %}
                         </div>
 
-                        {% if event.content.location %}
+                        {% if event.content.location_type %}
                             <div class="event-detail__location">
                                 <h2 class="govuk-heading-s">Location</h2>
-                                <p>{{ event.content.location|raw }}</p>
+                                {% if (event.content.location_type == 'In Person' or event.content.location_type == 'Online and In Person')%}
+                                    <p>{{ event.content.street_address|raw }} {{"\n"|nl2br}} {{ event.content.address_region|raw }}, {{ event.content.address_locality|raw }}</p>
+                                {% endif %}
+                                {% if event.content.location_type == 'Online and In Person' %}
+                                    <p>Available online and in person</p>
+                                {% endif %}
+                                {% if event.content.location_type == 'Online' %}
+                                    <p>Online</p>
+                                {% endif %}
+
                             </div>
                         {% endif %}
 
@@ -87,5 +96,74 @@
         </main>
 
     </div>
+{% endblock %}
 
+{% block javascript %}
+
+    <script id="ldjson" type="application/ld+json"></script>
+
+    <script type="text/javascript">
+
+        window.onload = () => {
+
+            const online = {
+                "@type": "VirtualLocation",
+                "url": event.content.event_url
+            }
+
+            const in_person = {
+                "@type": "Place",
+                "name": event.content.place_name,
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": event.content.street_address,
+                    "addressLocality": event.content.address_locality,
+                    "postalCode": event.content.postal_code,
+                    "addressRegion": event.content.address_region,
+                    "addressCountry": event.content.address_country
+                }
+            }
+
+            const hybrid = [ online, in_person ];
+
+            const eventAttendanceMode = "";
+            const location = "";
+
+            switch(event.content.location_type) {
+                case "in-person":
+                    eventAttendanceMode = "https://schema.org/OfflineEventAttendanceMode";
+                    location = in_person;
+                    break;
+                case "online": eventAttendanceMode = "https://schema.org/OnlineEventAttendanceMode";
+                    location = online;
+                    break;
+                case "hybrid": eventAttendanceMode = "https://schema.org/MixedEventAttendanceMode";
+                    location = hybrid;
+                    break;
+            }
+
+            document.getElementById('ldjson').text(() => {
+                return JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "Event",
+                    "name": event.title,
+                    "startDate": event.content.start_datetime,
+                    "endDate": event.content.end_datetime,
+                    "eventAttendanceMode": eventAttendanceMode,
+                    "eventStatus": "https://schema.org/EventScheduled",
+                    "location": location,
+                    "image": [
+                        event.content.image
+                    ],
+                    "description": event.content.description,
+                    "organizer": {
+                        "@type": "Organization",
+                        "name": "Crown Commercial Service",
+                        "url": event.content.cta_destination
+                    }
+                });
+            });
+        }
+
+    </script>
 {% endblock %}
