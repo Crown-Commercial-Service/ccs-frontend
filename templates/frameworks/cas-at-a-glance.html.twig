@@ -11,47 +11,55 @@
 			</li>
 		{% endif %}
 
-		{% if framework.content.cannot_use and framework.content.cannot_use != "" %}
-			<li class="govuk-tabs__list-item" role="presentation">
-				<a class="govuk-tabs__tab" href="#nottousefor" id="tab_nottousefor" role="tab" aria-controls="nottousefor" aria-selected="false" tabindex="-1">When you can't use this agreement</a>
-			</li>
-		{% endif %}
-
-        {% if framework.content.contract_length and framework.content.contract_length != "" %}
-            <li class="govuk-tabs__list-item" role="presentation">
-                <a class="govuk-tabs__tab" href="#key-facts" id="tab_key-facts" role="tab" aria-controls="key-facts" aria-selected="false" tabindex="-1">Contract length</a>
-            </li>
-        {% endif %}
-
 		{% if framework.content.benefits and framework.content.benefits != "" %}
 			<li class="govuk-tabs__list-item" role="presentation">
 				<a class="govuk-tabs__tab" href="#benefits" id="tab_benefits" role="tab" aria-controls="benefits" aria-selected="false" tabindex="-1">Benefits</a>
 			</li>
 		{% endif %}
 
+		{% if framework.content.cannot_use and framework.content.cannot_use != "" %}
+			<li class="govuk-tabs__list-item" role="presentation">
+				<a class="govuk-tabs__tab" href="#nottousefor" id="tab_nottousefor" role="tab" aria-controls="nottousefor" aria-selected="false" tabindex="-1">When you can't use this agreement</a>
+			</li>
+		{% endif %}
+
+        {% if framework.content.how_to_buy and framework.content.how_to_buy != "" %}
+            <li class="govuk-tabs__list-item" role="presentation">
+                <a class="govuk-tabs__tab" href="#key-facts" id="tab_key-facts" role="tab" aria-controls="key-facts" aria-selected="false" tabindex="-1">How to buy</a>
+            </li>
+        {% endif %}
+
     </ul>
 	
 	{% if framework.content.description and framework.content.description != "" %}
 		<div class="govuk-tabs__panel" id="desc" role="tabpanel" aria-labelledby="tab_desc">
-			{{ framework.content.description | raw }}   
+			<div class="wysiwyg-content">
+				{{ framework.content.description | raw }}
+			</div>
 		</div>
     {% endif %}
     
 	{% if framework.content.cannot_use and framework.content.cannot_use != "" %}
 		<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="nottousefor" role="tabpanel" aria-labelledby="tab_nottousefor">
-			{{ framework.content.cannot_use | raw }}   
+			<div class="wysiwyg-content">
+				{{ framework.content.cannot_use | raw }}
+			</div>
 		</div>
     {% endif %}
     
-    {% if framework.content.contract_length and framework.content.contract_length != "" %}
+    {% if framework.content.how_to_buy and framework.content.how_to_buy != "" %}
 		<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="key-facts" role="tabpanel" aria-labelledby="tab_key-facts">
-			{{ framework.content.contract_length | raw }}   
+			<div class="wysiwyg-content">
+				{{ framework.content.how_to_buy | raw }}
+			</div>
 		</div>
     {% endif %}
     
 	{% if framework.content.benefits and framework.content.benefits != "" %}
 		<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="benefits" role="tabpanel" aria-labelledby="tab_benefits">
-			{{ framework.content.benefits | raw }}   
+			<div class="wysiwyg-content">
+				{{ framework.content.benefits | raw }}
+			</div>
 		</div>
     {% endif %}
 

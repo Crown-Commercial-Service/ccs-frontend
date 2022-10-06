@@ -1,34 +1,37 @@
-<div class="govuk-width-container">
-    <div class="govuk-grid-row news_wrapper">
-        <div class="govuk-grid-column-two-thirds featured-news-img-container">
-                <figure class="image-wrapper news_img">
-                    <picture class="">
-                        {% if page.featuredImage.url is defined %}
-                            <source media="(max-width: 768px)" srcset="{{ page.featuredImage.byName('medium_large') }}">
-                            <source media="(min-width: 1024px)" srcset="{{ page.featuredImage.byName('large') }}">
-                            <source media="(min-width: 1920px)" srcset="{{ page.featuredImage.byName('full') }}">
-                            <img src="{{ page.featuredImage.url }}"
-                                    alt={{ page.featuredImage.alt }}
-                                    role="presentation"
-                                    class=""
-                                    loading="lazy"/>
-                        {% endif %}
-                    </picture>
-
-                </figure>
-        </div>
-
-        <div class="{{page.featuredImage is null ? "govuk-grid-column-full" : "govuk-grid-column-one-third"}} featured-news-text-container">
-            <p class="news-listing-meta"> 
-                <a href="{{ path('news_list', {'categories': page.taxonomies.categories.current.id }) }}">{{ page.taxonomies.categories.current.name }}</a>
-                <span>{{ page.datePublished.format('j F Y') }}</span> 
-            </p>
-            <h2 class="news-listing-title">
-                <a href="{{ path('news_page', {'slug': page.urlSlug}) }}">{{ page.title|raw }}</a>
-            </h2>
-            <p class="govuk-body govuk-!-font-size-17featured">
-                {{ page.content.post_lead_text  | raw }}
-            </p> 
+<div v-for="result in results.slice(0, 1)">
+    <div class="govuk-width-container">
+        <div class="govuk-grid-row news_wrapper">
+            <div v-if="result.imageSet">
+                <div class="govuk-grid-column-two-thirds featured-news-img-container">
+                    <figure class="image-wrapper news_img">
+                        <picture class="">
+                            <div v-if="result.imageSet">
+                                <img :src="result.imageURL"
+                                        :alt="result.altText"
+                                        role="presentation"
+                                        class=""
+                                        loading="lazy"/>
+                            </div>
+                        </picture>
+                    </figure>
+                </div>
+                <div class="govuk-grid-column-one-third featured-news-text-container">
+                    <p class="news-listing-meta">
+                        <a :href="result.CategoriesLink">{[ result.postType ]}</a>
+                        <span> {[result.postedDate]} </span> 
+                    </p>
+                    <h2 class="news-listing-title"><a :href="result.postLink" v-html="result.title.rendered"></a></h2>
+                    <p v-html="result.postDescription"></p> 
+                </div>
+            </div>
+            <div v-else class="govuk-grid-column-full news-listing-block">
+                <p class="news-listing-meta"> 
+                    <a :href="result.CategoriesLink">{[ result.postType ]}</a>
+                    <span> {[result.postedDate]} </span> 
+                </p>
+                <h2 class="news-listing-title"><a :href="result.postLink" v-html="result.title.rendered"></a></h2>
+                <p v-html="result.postDescription"></p>    
+            </div>
         </div>
     </div>
 </div>

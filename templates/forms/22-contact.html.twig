@@ -272,12 +272,14 @@
                             <div class="govuk-form-group">
                                 <fieldset class="govuk-fieldset" 
                                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                                        <h2 class="govuk-fieldset__heading">
+                                    <label class="govuk-label" for="complaint-input">
+                                Is your feedback about </label>
+                                        {# <h2 class="govuk-fieldset__heading">
                                             Is your feedback about
-                                        </h2>
+                                        </h2> #}
                                     </legend>
                                     <div class="govuk-checkboxes">
-                                        <div class="govuk-checkboxes__item">
+                                        <div class="govuk-checkboxes__item" id="complaint-input">
                                             <input class="govuk-checkboxes__input" id="complaint-1" name="complaint" type="checkbox" value="Service" {{ formData.complaint is defined and formData.complaint is same as('Service') ? 'checked' : null }}>
                                             <label class="govuk-label govuk-checkboxes__label" for="complaint-1">
                                                 Service </label>

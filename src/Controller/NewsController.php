@@ -60,6 +60,8 @@ class NewsController extends AbstractController
             'sectors'           => $selectedSectors ?? null,
             'products_services' => $selectedProducts_services ?? null,
             'per_page'          => 5,
+            'whitepaper'        => $request->query->get('whitepaper') ?? null,
+            'webinar'           => $request->query->get('webinar') ??  null,
         ];
 
         try {

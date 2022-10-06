@@ -50,6 +50,9 @@ content_types:
   redirections:
     api_endpoint: ccs/v1/redirections
     content_fields: redirections.yaml
+  glossary:
+    api_endpoint: ccs/v1/glossary
+    content_fields: glossary.yaml
 global:
   image_sizes:
     - thumbnail

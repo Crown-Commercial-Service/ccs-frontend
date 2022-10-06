@@ -237,6 +237,15 @@ class ApiController extends AbstractController
                 case 'categories':
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
                     break;
+                case 'whitepaper':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    break;
+                case 'webinar':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    break;
+                case 'noPost':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    break;
                 case 'sectors':
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
                     break;
