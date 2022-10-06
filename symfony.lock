@@ -80,7 +80,7 @@
             "ref": "0dc9cceda799fd3a08b96987e176a261028a3709"
         }
     },
-    "strata/frontend": {
+    "studio24/frontend": {
         "version": "dev-master"
     },
     "studio24/http-cache-clear": {
