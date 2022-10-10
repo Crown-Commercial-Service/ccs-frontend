@@ -13,7 +13,6 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  */
 class Pardot
 {
-
     /** @var ResponseInterface */
     protected $lastResponse;
 
