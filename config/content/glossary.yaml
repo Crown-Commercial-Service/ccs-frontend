@@ -1,0 +1,12 @@
+meta:
+  type: array
+  content_fields:
+    total_results:
+      type: number
+glossaries:
+  type: array
+  content_fields:
+    term:
+      type: text
+    meaning:
+      type: text

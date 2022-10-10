@@ -10,7 +10,6 @@ namespace App\Validation;
  */
 class GatedFormValidation
 {
-
     public static function validationName($name)
     {
         $returnArray  = [

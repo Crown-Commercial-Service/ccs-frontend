@@ -369,7 +369,7 @@
 
                         {% for item in results %}
 
-                            {% set name = item.content.name %}
+                            {% set name = item.content.name|trim %}
 
                         <li>
                             {#{{ dump(item.content) }}#}

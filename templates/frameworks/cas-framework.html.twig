@@ -13,13 +13,8 @@
             <p class="govuk-body agreement-overview">End date: <strong> {{ framework.content.end_date.format('d/m/Y') }} </strong></p>
         </div>
 
-        <div class="govuk-inset-text">
-            <p>
-                <b>You can now procure online with CCS.</b> </br>
-                Please go to Products and Services and <a href="#agreement-lots" class="govuk-link">select a lot to start.</a></p>
-            </p>
-        </div>
-
+        <br>
+        <br>
 
         {% if framework.content.availability and framework.content.availability != "" %}
             <p ><strong>Available for:</strong> {{ framework.content.availability| striptags | raw }} </p> </br>
@@ -55,7 +50,7 @@
         {% if 
             framework.content.description and framework.content.description != "" or 
             framework.content.cannot_use and framework.content.cannot_use != "" or 
-            framework.content.contract_length and framework.content.contract_length != "" or 
+            framework.content.how_to_buy and framework.content.how_to_buy != "" or 
             framework.content.benefits and framework.content.benefits != ""
         %}
 			{% set showAtAGlance = true %}
@@ -117,13 +112,13 @@
                     {% endif %}
 
                     {% if lot.expiry_date is defined and lot.expiry_date is not null and lot.expiry_date >= framework.content.end_date %}
-                        <p><strong>Expiry date:</strong><time> {{ lot.expiry_date.format('d F Y') }} </time> </p>
+                        <p>Expired: {{ lot.expiry_date.format('d/m/Y') }}</p>
                     {% endif %}
 
                     {% if lot.suppliers|length == 0 %}
                         <p>No suppliers</p>
                     {% else %}
-                        <p> Take a look at and download the <a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}"> lot supplier list ({{ lot.suppliers|length }} suppliers) </a> </p>
+                        <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }} suppliers</a> </p>
                     {% endif %}
 
                 </dd>
@@ -161,6 +156,15 @@
                 <p ><a href="tel:03454102222">0345 410 2222</a></p>
 
                 <p >CCS customer services team is available Monday to Friday, 9am to 5pm.</p>
+            </div>
+            <div class="apollo-enclosure">
+                <h2 class="aside__heading">Do you need an accessible version of a document?</h2>
+                <br />
+                <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Email:</h3>
+                <p ><a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a></p>
+
+                <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Telephone:</h3>
+                <p ><a href="tel:03454102222">0345 410 2222</a></p>
             </div>
 
         </aside>

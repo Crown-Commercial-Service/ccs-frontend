@@ -1,10 +1,7 @@
 <div>
     <h2 class="govuk-heading-m" id="documents">Documents</h2>
-
-    <p>You can use these documents to create a contract and buy from a supplier. The documents will help you to compliantly contract their services.</p>
-    <p>You might not need all the documents to buy the products or services from this agreement.</p>
-    <p>Each section below has the links to the documents, what they are for, when to use them and if you need to enter any information into them. </p>
-
+    <p>Each section below has the links to the documents, what they are for, when to use them and if you need to enter any information into them.</p>
+    <p>You might not need all the contractual documents to buy the products or services from this agreement.</p>
 </div>
 
 <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
@@ -16,7 +13,7 @@
                 </h2>
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
-                {{ framework.content.customer_guide|raw }}
+                <div class="wysiwyg-content">{{ framework.content.customer_guide|raw }}</div>
             </div>
         </div>
     {% endif %}
@@ -29,7 +26,7 @@
                 </h2>
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
-                {{ framework.content.core_terms_conditions|raw }}
+                <div class="wysiwyg-content">{{ framework.content.core_terms_conditions|raw }}</div>
             </div>
         </div>
     {% endif %}
@@ -42,7 +39,7 @@
                 </h2>
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
-                {{ framework.content.call_off_order_form|raw }}
+                <div class="wysiwyg-content">{{ framework.content.call_off_order_form|raw }}</div>
             </div>
         </div>
     {% endif %}
@@ -59,7 +56,7 @@
                     <p class="joint-schedule-title"><a href={{ jointSchedule.joint_schedule_document}}><strong>{{ jointSchedule.joint_schedule_document_name }}</strong></a></p>
                     <p class="joint-schedule-title">{{ jointSchedule.joint_schedule_document_type}}</p>
                     <p class="joint-schedule-title">{{ jointSchedule.joint_schedule_document_usage}}</p>
-                    {{ jointSchedule.joint_schedule_document_description|raw }}
+                    <div class="wysiwyg-content">{{ jointSchedule.joint_schedule_document_description|raw }}</div>
                     <br>
                 {% endfor %}
             </div>
@@ -82,7 +79,7 @@
                     <p class="joint-schedule-title"><a href={{ callOffSchedules.call_off_schedule_document}}><strong>{{ callOffSchedules.call_off_schedule_document_name }}</strong></a></p>
                     <p class="joint-schedule-title">{{ callOffSchedules.call_off_schedule_document_type}}</p>
                     <p class="joint-schedule-title">{{ callOffSchedules.call_off_schedule_document_usage}}</p>
-                    {{ callOffSchedules.call_off_schedule_document_description|raw }}
+                    <div class="wysiwyg-content">{{ callOffSchedules.call_off_schedule_document_description|raw }}</div>
                     <br>
                 {% endfor %}
             </div>
@@ -103,7 +100,7 @@
                 {% for frameworkSchedules in framework.content.framework_schedules %}
                     <p class="joint-schedule-title"><a href={{ frameworkSchedules.framework_schedule_document}}><strong>{{ frameworkSchedules.framework_schedule_document_name }}</strong></a></p>
                     <p class="joint-schedule-title">{{ frameworkSchedules.framework_schedule_document_usage}}</p>
-                    {{ frameworkSchedules.framework_schedule_document_description|raw }}
+                    <div class="wysiwyg-content">{{ frameworkSchedules.framework_schedule_document_description|raw }}</div>
                     <br>
                 {% endfor %}
             </div>
@@ -118,7 +115,7 @@
                 </h2>
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
-                {{ framework.content.templates|raw }}
+                <div class="wysiwyg-content">{{ framework.content.templates|raw }}</div>
             </div>
         </div>
     {% endif %}

@@ -6,12 +6,15 @@ namespace App\Controller;
 
 use App\Validation\FormValidation;
 use App\Helper\ControllerHelper;
-use Psr\SimpleCache\CacheInterface;
-use Studio24\Frontend\Cms\Wordpress;
-use Studio24\Frontend\Cms\RestData;
-use Studio24\Frontend\ContentModel\ContentModel;
-use Studio24\Frontend\Exception\FailedRequestException;
-use Studio24\Frontend\Exception\NotFoundException;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\Psr16Cache;
+use Symfony\Component\Cache\Adapter\Psr16Adapter;
+use Strata\Frontend\Cms\Wordpress;
+use Strata\Frontend\Cms\RestData;
+use Strata\Frontend\ContentModel\ContentModel;
+use Strata\Frontend\Exception\FailedRequestException;
+use Strata\Frontend\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,21 +33,29 @@ class PageController extends AbstractController
      */
     protected $api;
 
-     /**
+    /**
      * Frameworks Rest API data
      *
      * @var RestData
      */
     protected $redirectionApi;
 
-    public function __construct(CacheInterface $cache)
+    /**
+     * Frameworks Rest API data
+     *
+     * @var RestData
+     */
+    protected $glossaryApi;
+
+    public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new Wordpress(
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
+        $psr16Cache = new Psr16Cache($cache);
         $this->api->setContentType('page');
-        $this->api->setCache($cache);
+        $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
         $this->client = HttpClient::create();
 
@@ -53,6 +64,12 @@ class PageController extends AbstractController
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->redirectionApi->setContentType('redirections');
+
+        $this->glossaryApi = new RestData(
+            getenv('APP_API_BASE_URL'),
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
+        );
+        $this->glossaryApi->setContentType('glossary');
     }
 
     /**
@@ -61,11 +78,11 @@ class PageController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Studio24\Frontend\Exception\ContentFieldException
-     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Studio24\Frontend\Exception\FailedRequestException
-     * @throws \Studio24\Frontend\Exception\PaginationException
-     * @throws \Studio24\Frontend\Exception\PermissionException
+     * @throws \Strata\Frontend\Exception\ContentFieldException
+     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Strata\Frontend\Exception\FailedRequestException
+     * @throws \Strata\Frontend\Exception\PaginationException
+     * @throws \Strata\Frontend\Exception\PermissionException
      */
     public function home(Request $request)
     {
@@ -105,12 +122,12 @@ class PageController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Studio24\Frontend\Exception\ApiException
-     * @throws \Studio24\Frontend\Exception\ContentFieldException
-     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Studio24\Frontend\Exception\FailedRequestException
-     * @throws \Studio24\Frontend\Exception\PaginationException
-     * @throws \Studio24\Frontend\Exception\PermissionException
+     * @throws \Strata\Frontend\Exception\ApiException
+     * @throws \Strata\Frontend\Exception\ContentFieldException
+     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Strata\Frontend\Exception\FailedRequestException
+     * @throws \Strata\Frontend\Exception\PaginationException
+     * @throws \Strata\Frontend\Exception\PermissionException
      */
     public function page(string $slug, Request $request)
     {
@@ -251,8 +268,7 @@ class PageController extends AbstractController
                     $response->getContent()
                 );
             }
-
-            return $this->redirectToRoute('form_thank_you');
+            return $this->redirectToRoute($formCampaignCode == 'alwayson_newsletter' ? 'form_newsletter_thanks' : 'form_thank_you');
         }
     }
 
@@ -327,8 +343,8 @@ class PageController extends AbstractController
         // Check Composer has loaded required classes
         $required = [
             'Symfony\Bundle\FrameworkBundle\Controller\AbstractController',
-            'Studio24\Frontend\Cms\RestData',
-            'Studio24\Frontend\Cms\Wordpress'
+            'Strata\Frontend\Cms\RestData',
+            'Strata\Frontend\Cms\Wordpress'
         ];
         foreach ($required as $class) {
             if (!class_exists($class)) {
@@ -435,16 +451,46 @@ class PageController extends AbstractController
         $cookies = $request->cookies;
 
         // Update cookies with expiry to 1 year
-        if ($cookies->has('cookies_timer_reset')) {
-            $cookiePreferences = new Cookie('cookie_preferences', '{"essentials":true,"usage":true,"marketing":true}', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
+        if ($cookies->has('cookies_reset')) {
+            $cookiePreferences = new Cookie('cookie_preferences', '{"essentials":true,"usage":true,"marketing":true, "glassbox": true}', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
             $seenCookieMessage = new Cookie('seen_cookie_message', 'true', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
-            $cookieTimerReset = new Cookie('cookies_timer_reset', 'true', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
+            $cookieReset = new Cookie('cookies_reset', 'true', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
 
             $response = new Response();
             $response->headers->setCookie($cookiePreferences);
             $response->headers->setCookie($seenCookieMessage);
-            $response->headers->setCookie($cookieTimerReset);
+            $response->headers->setCookie($cookieReset);
             return $response->sendHeaders();
         }
+    }
+
+    public function glossary(Request $request)
+    {
+        $query = filter_var($request->query->get('termSearch'), FILTER_SANITIZE_STRING);
+
+        try {
+            $results = $this->glossaryApi->getOne(0);
+        } catch (NotFoundException $e) {
+            throw new NotFoundHttpException('Glossary API broken', $e);
+        }
+        $results = $results->getContent()->get('glossaries')->getValue();
+
+        $glossaries = [];
+
+        foreach ((array) $results as $glossary) {
+            $term = trim($glossary->get('term')->getValue());
+            $key = strtoupper($term[0]);
+
+            if (str_contains(strtolower($term), strtolower($query))) {
+                $glossaries[$key][] = ['term' => $term, 'meaning' => $glossary->get('meaning')->getValue()];
+            }
+        }
+
+        ksort($glossaries);
+
+        return $this->render('pages/glossary.html.twig', [
+            'glossaries' => $glossaries,
+            'termSearch'     => $query
+        ]);
     }
 }
