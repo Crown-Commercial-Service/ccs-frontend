@@ -7,7 +7,7 @@
         "php": "^7.4.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "rollbar/rollbar-php-symfony-bundle": "dev-master",
+        "rollbar/rollbar-php-symfony-bundle": "4.*",
         "strata/frontend": "0.7.0",
         "studio24/http-cache-clear": "^0.2",
         "symfony/http-kernel": "^5.4.0",
