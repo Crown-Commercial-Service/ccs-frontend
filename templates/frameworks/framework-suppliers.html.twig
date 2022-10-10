@@ -62,10 +62,9 @@
           <ul class="govuk-list govuk-list--suppliers">
 
             {% for item in results %}
-
               <li>
                 <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
-                  <a href="{{ path('suppliers_show', {'id': item.content.supplier_id, 'slug': slugify(item.content.supplier_name)} ) }}">{{ item.content.supplier_name }}</a>
+                  <a href="{{ path('suppliers_show', {'id': item.content.supplier_id, 'slug': slugify(item.content.supplier_name|trim)} ) }}">{{ item.content.supplier_name }}</a>
                 </h3>
 
                 <ul class="govuk-list govuk-!-font-size-17featured">
