@@ -4,7 +4,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.4",
+        "php": "^7.3.8",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "rollbar/rollbar-php-symfony-bundle": "v3.1.2",
@@ -72,12 +72,10 @@
         "behat/mink-extension": "dev-master",
         "behat/mink-goutte-driver": "^1.2",
         "roave/security-advisories": "dev-master",
-        "squizlabs/php_codesniffer": "3.*",
-        "symfony/debug-bundle": "^4.4",
-        "symfony/monolog-bundle": "^3.0",
+        "symfony/debug-pack": "^1.0",
         "symfony/phpunit-bridge": "^4.4",
-        "symfony/stopwatch": "^4.4",
-        "symfony/web-profiler-bundle": "^4.4",
-        "symfony/web-server-bundle": "^4.4"
+        "symfony/web-server-bundle": "^4.4",
+        "squizlabs/php_codesniffer": "3.*",
+        "overtrue/phplint": "dev-master"
     }
 }
