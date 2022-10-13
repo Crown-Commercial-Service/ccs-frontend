@@ -11,14 +11,15 @@ use App\Validation\EsourcingTrainingFormValidation;
 use App\Validation\GatedFormValidation;
 use App\Helper\ControllerHelper;
 use App\Controller\WhitepaperController;
-use Studio24\Frontend\Cms\RestData;
-use Studio24\Frontend\ContentModel\ContentModel;
+use Strata\Frontend\Cms\RestData;
+use Strata\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Psr\SimpleCache\CacheInterface;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Psr16Cache;
 
 /**
  * Form controller
@@ -34,14 +35,15 @@ class FormController extends AbstractController
 
     protected $client;
 
-    public function __construct(CacheInterface $cache)
+    public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new RestData(
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('esourcing_dates');
-        $this->api->setCache($cache);
+        $psr16Cache = new Psr16Cache($cache);
+        $this->api->setCache($psr16Cache);
 
         $this->client = HttpClient::create();
     }
@@ -92,11 +94,11 @@ class FormController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Studio24\Frontend\Exception\ContentFieldException
-     * @throws \Studio24\Frontend\Exception\ContentFieldNotSetException
-     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Studio24\Frontend\Exception\FailedRequestException
-     * @throws \Studio24\Frontend\Exception\PermissionException
+     * @throws \Strata\Frontend\Exception\ContentFieldException
+     * @throws \Strata\Frontend\Exception\ContentFieldNotSetException
+     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Strata\Frontend\Exception\FailedRequestException
+     * @throws \Strata\Frontend\Exception\PermissionException
      */
     public function eSourcingTraining(Request $request)
     {
