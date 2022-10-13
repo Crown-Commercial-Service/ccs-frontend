@@ -574,6 +574,8 @@
                             this.webinar = false;
                             document.getElementById(categoriesSlug) != null ? document.getElementById(categoriesSlug).checked = false : null
                             document.getElementById("allCategories").checked = true;
+                            document.getElementById("whitepaper").checked = false;
+                            document.getElementById("webinar").checked = false;
                             return "&whitepaper=1&webinar=1"
                         } else {
                             whitepaperAndWebinar = this.whitepaper ? whitepaperAndWebinar + "&whitepaper=1" : whitepaperAndWebinar;
