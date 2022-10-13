@@ -10,6 +10,7 @@ namespace App\Validation;
  */
 class FormValidation
 {
+
     public static function validationName($name)
     {
         $returnArray  = [

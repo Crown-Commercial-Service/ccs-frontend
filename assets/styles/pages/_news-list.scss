@@ -57,13 +57,7 @@
     @include govuk-media-query($from: desktop) {
     
         width: 66.6666%;
-
-    }
-
-    @include govuk-media-query(1100px) {
-
-        width:40%;
-        
+    
     }
 }
 

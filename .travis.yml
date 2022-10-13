@@ -18,7 +18,7 @@ language: php
 matrix:
   fast_finish: true
   include:
-    - php: '7.4'
+    - php: '7.3'
       env: SNIFF=1
     - php: '7.4'
 
@@ -33,7 +33,7 @@ script:
   - if [[ "$SNIFF" == "1" ]]; then vendor/bin/phpcs; fi
   # Run PHP Unit
   - bin/phpunit
-  - bin/phpunit vendor/strata/frontend/tests
+  - bin/phpunit vendor/studio24/frontend/tests
 
 notifications:
   on_success: never

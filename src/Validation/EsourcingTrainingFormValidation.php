@@ -10,6 +10,7 @@ namespace App\Validation;
  */
 class EsourcingTrainingFormValidation
 {
+
     public static function validatioCustomerType($customerType)
     {
         $returnArray  = [

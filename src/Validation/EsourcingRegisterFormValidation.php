@@ -10,6 +10,7 @@ namespace App\Validation;
  */
 class EsourcingRegisterFormValidation
 {
+
     public static function validationName($name)
     {
         $returnArray  = [

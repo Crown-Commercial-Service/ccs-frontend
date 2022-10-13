@@ -10,6 +10,7 @@ namespace App\Validation;
  */
 class ContactCCSFormValidation
 {
+
     public static function validationName($name)
     {
         $returnArray  = [

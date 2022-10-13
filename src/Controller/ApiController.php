@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Exception\PardotException;
 use App\Utils\Pardot;
-use Psr\Cache\CacheItemPoolInterface;
+use Psr\SimpleCache\CacheInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +15,7 @@ use App\Exception\ApiException;
 
 class ApiController extends AbstractController
 {
+
     /**
      * Return CMS API URL
      *
@@ -40,7 +41,7 @@ class ApiController extends AbstractController
      * to: https://CMS/search-api/suppliers?keyword=l&framework=&lot=&limit=20&page=1
      *
      * @param Request $request
-     * @param CacheItemPoolInterface $cache
+     * @param CacheInterface $cache
      * @return JsonResponse
      * @throws ApiException
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
@@ -48,7 +49,7 @@ class ApiController extends AbstractController
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    public function suppliers(Request $request, CacheItemPoolInterface $cache)
+    public function suppliers(Request $request, CacheInterface $cache)
     {
         $apiUrl = $this->getCmsUrl('/search-api/suppliers');
 
@@ -110,7 +111,7 @@ class ApiController extends AbstractController
      * to: https://CMS/search-api/suppliers?keyword=l&limit=20&page=1
      *
      * @param Request $request
-     * @param CacheItemPoolInterface $cache
+     * @param CacheInterface $cache
      * @return JsonResponse
      * @throws ApiException
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
@@ -118,7 +119,7 @@ class ApiController extends AbstractController
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    public function frameworks(Request $request, CacheItemPoolInterface $cache)
+    public function frameworks(Request $request, CacheInterface $cache)
     {
         $apiUrl = $this->getCmsUrl('/search-api/frameworks');
 
@@ -190,7 +191,7 @@ class ApiController extends AbstractController
      * to: https://CMS/wp-json/wp/v2/posts?categories=&sectors=&products_services=&page=1
      *
      * @param Request $request
-     * @param CacheItemPoolInterface $cache
+     * @param CacheInterface $cache
      * @return JsonResponse
      * @throws ApiException
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
@@ -198,7 +199,7 @@ class ApiController extends AbstractController
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    public function news(Request $request, CacheItemPoolInterface $cache)
+    public function news(Request $request, CacheInterface $cache)
     {
         $apiUrl = $this->getCmsUrl('/wp-json/wp/v2/posts');
 

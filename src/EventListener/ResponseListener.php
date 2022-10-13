@@ -2,16 +2,16 @@
 
 namespace App\EventListener;
 
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 class ResponseListener
 {
     /**
      * Alter response
      *
-     * @param ResponseEvent $event
+     * @param FilterResponseEvent $event
      */
-    public function onKernelResponse(ResponseEvent $event)
+    public function onKernelResponse(FilterResponseEvent $event)
     {
         $response = $event->getResponse();
 

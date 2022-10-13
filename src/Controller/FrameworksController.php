@@ -3,16 +3,15 @@
 namespace App\Controller;
 
 use App\Utils\FrameworkCategories;
-use Symfony\Component\Cache\Psr16Cache;
-use Psr\Cache\CacheItemPoolInterface;
-use Strata\Frontend\ContentModel\ContentModel;
-use Strata\Frontend\Exception\PaginationException;
+use Psr\SimpleCache\CacheInterface;
+use Studio24\Frontend\ContentModel\ContentModel;
+use Studio24\Frontend\Exception\PaginationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Strata\Frontend\Cms\RestData;
+use Studio24\Frontend\Cms\RestData;
 use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpClient\HttpClient;
-use Strata\Frontend\Exception\NotFoundException;
+use Studio24\Frontend\Exception\NotFoundException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ServerException;
 use Rollbar\Rollbar;
@@ -23,6 +22,7 @@ use Exception;
 
 class FrameworksController extends AbstractController
 {
+
     /**
      * Frameworks Rest API data
      *
@@ -31,19 +31,18 @@ class FrameworksController extends AbstractController
     protected $api;
 
     /**
-     * @var \Strata\Frontend\Cms\RestData
+     * @var \Studio24\Frontend\Cms\RestData
      */
     protected $searchApi;
 
-    public function __construct(CacheItemPoolInterface $cache)
+    public function __construct(CacheInterface $cache)
     {
         $this->api = new RestData(
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('frameworks');
-        $psr16Cache = new Psr16Cache($cache);
-        $this->api->setCache($psr16Cache);
+        $this->api->setCache($cache);
         $this->api->setCacheLifetime(900);
 
         $this->searchApi = new RestData(
@@ -52,7 +51,7 @@ class FrameworksController extends AbstractController
         );
 
         $this->searchApi->setContentType('frameworks');
-        $this->searchApi->setCache($psr16Cache);
+        $this->searchApi->setCache($cache);
         $this->searchApi->setCacheLifetime(1);
     }
 
@@ -63,11 +62,11 @@ class FrameworksController extends AbstractController
      * @param int $page
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PaginationException
-     * @throws \Strata\Frontend\Exception\PermissionException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PaginationException
+     * @throws \Studio24\Frontend\Exception\PermissionException
      */
     public function list(Request $request, int $page = 1)
     {
@@ -155,11 +154,11 @@ class FrameworksController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentFieldNotSetException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PermissionException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentFieldNotSetException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PermissionException
      */
     public function upcomingDeals(Request $request)
     {
@@ -210,11 +209,11 @@ class FrameworksController extends AbstractController
      * @param int $page
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PaginationException
-     * @throws \Strata\Frontend\Exception\PermissionException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PaginationException
+     * @throws \Studio24\Frontend\Exception\PermissionException
      */
     public function listByCategory(Request $request, string $category, string $query, int $page = 1)
     {
@@ -275,11 +274,11 @@ class FrameworksController extends AbstractController
      * @param int $page
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PaginationException
-     * @throws \Strata\Frontend\Exception\PermissionException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PaginationException
+     * @throws \Studio24\Frontend\Exception\PermissionException
      */
     public function listByPillar(Request $request, string $pillar, string $query, int $page = 1)
     {
@@ -333,11 +332,11 @@ class FrameworksController extends AbstractController
      * @param int $page
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PaginationException
-     * @throws \Strata\Frontend\Exception\PermissionException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PaginationException
+     * @throws \Studio24\Frontend\Exception\PermissionException
      */
     public function search(Request $request, int $page = 1)
     {
@@ -415,11 +414,11 @@ class FrameworksController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentFieldNotSetException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PermissionException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentFieldNotSetException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PermissionException
      */
     public function show(string $rmNumber, Request $request)
     {
@@ -450,11 +449,11 @@ class FrameworksController extends AbstractController
      * @param int $page
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PaginationException
-     * @throws \Strata\Frontend\Exception\PermissionException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PaginationException
+     * @throws \Studio24\Frontend\Exception\PermissionException
      */
     public function suppliersOnFramework(Request $request, string $rmNumber, int $page = 1)
     {
@@ -492,12 +491,12 @@ class FrameworksController extends AbstractController
      * @param int $page
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentFieldNotSetException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PaginationException
-     * @throws \Strata\Frontend\Exception\PermissionException
+     * @throws \Studio24\Frontend\Exception\ContentFieldException
+     * @throws \Studio24\Frontend\Exception\ContentFieldNotSetException
+     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Studio24\Frontend\Exception\FailedRequestException
+     * @throws \Studio24\Frontend\Exception\PaginationException
+     * @throws \Studio24\Frontend\Exception\PermissionException
      */
     public function suppliersOnLot(Request $request, string $rmNumber, string $lotNumber, int $page = 1)
     {
