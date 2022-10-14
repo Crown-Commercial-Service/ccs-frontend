@@ -137,7 +137,7 @@
     }
 
     .govuk-hero-content {
-        background-image: url('/assets/images/homepage-hero-nhs-digital.jpg');
+        background-image: url('/assets/images/homepage-hero-default.jpg');
         background-repeat: no-repeat;
         background-size: 100% 100%;
         // full width image
@@ -156,8 +156,7 @@
             position: absolute;
             top: 0px;
             bottom: 0px;
-            right: 0px;
-            left:57.5%;
+            right:50.5%;
             float:right;
             width: 40%;
             display: table;
