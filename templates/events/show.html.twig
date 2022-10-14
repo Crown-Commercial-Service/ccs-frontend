@@ -52,7 +52,7 @@
                     {% if event.content.description is not empty %}
                         <h2 class="govuk-heading-m">About this event</h2>
 
-                        <div class="wysiwyg-content">{{ event.content.description|raw }}</div>
+                        <div class="wysiwyg-content" id="event_description">{{ event.content.description|raw }}</div>
                     {% endif %}
 
                     {% if event.content.cta_destination is not empty and event.content.cta_label is not empty %}
@@ -120,7 +120,7 @@
         const startDateTime = '{{ event.content.start_datetime }}';
         const endDateTime = '{{ event.content.end_datetime }}';
         const image = '{{ event.content.image }}';
-        const description = `{{ event.content.description|raw|striptags }}`;
+        const description = $("#event_description").text();
 
         const online = {
             "@type": "VirtualLocation",
