@@ -102,12 +102,6 @@
 
     window.onload = () => {
 
-        decodeEntity = (inputStr) => {
-            var textarea = document.createElement("textarea");
-            textarea.innerHTML = inputStr;
-            return textarea.value;
-        }
-
         const eventName = '{{ event.title|raw }}';
         const eventURL = '{{ event.content.cta_destination }}';
         const placeName = '{{ event.content.place_name }}';
