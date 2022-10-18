@@ -9,12 +9,12 @@ FIRST_RUN_PATH="/codedeploy.server_setup"
 echo "> Updating system software..."
 sudo yum update -y
 
-echo "> Set timezone..."
-    sudo rm -f /etc/sysconfig/clock
-    sudo mv -f \
-        "$SCRIPTDIR/files/clock" \
-        /etc/sysconfig/clock
-    sudo ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
+# echo "> Set timezone..."
+#     sudo rm -f /etc/sysconfig/clock
+#     sudo mv -f \
+#         "$SCRIPTDIR/files/clock" \
+#         /etc/sysconfig/clock
+#     sudo ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 
 if [ ! -e "$FIRST_RUN_PATH" ]; then
     echo "> Running once-only deployment tasks..."
@@ -57,11 +57,6 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
         php-bcmath.x86_64 \
         php-soap.x86_64 \
         php-json.x86_64 
-
-    sudo amazon-linux-extras disable php7.3
-    sudo amazon-linux-extras enable php7.4
-    sudo yum clean metadata
-    sudo yum install php-cli php-pdo php-fpm php-json php-mysqlnd
 
     echo "> > Moving httpd.conf..."
     sudo mv -f "$SCRIPTDIR/files/httpd.conf" /etc/httpd/conf/httpd.conf
@@ -106,5 +101,10 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     echo "> > Marking first deployment tasks as completed..."
     sudo touch "$FIRST_RUN_PATH"
 fi
+
+sudo amazon-linux-extras disable php7.3
+sudo amazon-linux-extras enable php7.4
+sudo yum clean metadata
+sudo yum -y install php-cli php-pdo php-fpm php-json php-mysqlnd
 
 echo "Codedeploy server_setup.sh complete."
