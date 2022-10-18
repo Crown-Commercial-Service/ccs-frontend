@@ -10,9 +10,21 @@ start_datetime:
   type: datetime
 end_datetime:
   type: datetime
-location:
-  type: text
 secondary_cta_label:
   type: text
 secondary_cta_destination:
+  type: text
+location_type:
+  type: text
+place_name:
+  type: text
+street_address:
+  type: text
+address_locality:
+  type: text
+postal_code:
+  type: text
+address_region:
+  type: text
+address_country:
   type: text
