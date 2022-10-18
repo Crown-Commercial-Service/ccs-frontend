@@ -4,7 +4,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.3.8",
+        "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "rollbar/rollbar-php-symfony-bundle": "v3.1.2",
