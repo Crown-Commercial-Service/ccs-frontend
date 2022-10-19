@@ -20,6 +20,7 @@ matrix:
   include:
     - php: '7.4'
       env: SNIFF=1
+    - php: '7.4'
 
 before_install:
   - composer self-update;
@@ -32,7 +33,7 @@ script:
   - if [[ "$SNIFF" == "1" ]]; then vendor/bin/phpcs; fi
   # Run PHP Unit
   - bin/phpunit
-  - bin/phpunit vendor/studio24/frontend/tests
+  - bin/phpunit vendor/strata/frontend/tests
 
 notifications:
   on_success: never

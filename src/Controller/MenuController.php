@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Psr\SimpleCache\CacheInterface;
-use Studio24\Frontend\Cms\Wordpress;
-use Studio24\Frontend\ContentModel\ContentModel;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Psr16Cache;
+use Strata\Frontend\Cms\Wordpress;
+use Strata\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,12 +23,15 @@ class MenuController extends AbstractController
      */
     protected $api;
 
-    public function __construct(CacheInterface $cache)
+    public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new Wordpress(
-            getenv('APP_API_BASE_URL')
+            getenv('APP_API_BASE_URL'),
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
-        $this->api->setCache($cache);
+        $psr16Cache = new Psr16Cache($cache);
+        $this->api->setContentType('page');
+        $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
     }
 
