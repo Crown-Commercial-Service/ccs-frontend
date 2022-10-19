@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Psr\SimpleCache\CacheInterface;
-use Studio24\Frontend\Cms\Wordpress;
-use Studio24\Frontend\ContentModel\ContentModel;
-use Studio24\Frontend\Exception\PaginationException;
-use Studio24\Frontend\Exception\WordpressException;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Psr16Cache;
+use Strata\Frontend\Cms\Wordpress;
+use Strata\Frontend\ContentModel\ContentModel;
+use Strata\Frontend\Exception\PaginationException;
+use Strata\Frontend\Exception\WordpressException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Studio24\Frontend\Exception\NotFoundException;
+use Strata\Frontend\Exception\NotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EventsController extends AbstractController
@@ -23,14 +24,15 @@ class EventsController extends AbstractController
      */
     protected $api;
 
-    public function __construct(CacheInterface $cache)
+    public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new Wordpress(
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('events');
-        $this->api->setCache($cache);
+        $psr16Cache = new Psr16Cache($cache);
+        $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
     }
 
@@ -85,10 +87,10 @@ class EventsController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Studio24\Frontend\Exception\ContentFieldException
-     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Studio24\Frontend\Exception\FailedRequestException
-     * @throws \Studio24\Frontend\Exception\PermissionException
+     * @throws \Strata\Frontend\Exception\ContentFieldException
+     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Strata\Frontend\Exception\FailedRequestException
+     * @throws \Strata\Frontend\Exception\PermissionException
      */
     public function show($id, $slug, Request $request)
     {

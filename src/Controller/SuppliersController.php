@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
-use Psr\SimpleCache\CacheInterface;
-use Studio24\Frontend\ContentModel\ContentModel;
-use Studio24\Frontend\Exception\PaginationException;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Psr16Cache;
+use Strata\Frontend\ContentModel\ContentModel;
+use Strata\Frontend\Exception\PaginationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Studio24\Frontend\Cms\RestData;
+use Strata\Frontend\Cms\RestData;
 use Symfony\Component\HttpFoundation\Request;
-use Studio24\Frontend\Exception\NotFoundException;
+use Strata\Frontend\Exception\NotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Exception;
 
@@ -28,14 +29,15 @@ class SuppliersController extends AbstractController
      */
     protected $searchApi;
 
-    public function __construct(CacheInterface $cache)
+    public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new RestData(
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('suppliers');
-        $this->api->setCache($cache);
+        $psr16Cache = new Psr16Cache($cache);
+        $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
 
         $this->searchApi = new RestData(
@@ -44,7 +46,7 @@ class SuppliersController extends AbstractController
         );
 
         $this->searchApi->setContentType('suppliers');
-        $this->searchApi->setCache($cache);
+        $this->searchApi->setCache($psr16Cache);
         $this->searchApi->setCacheLifetime(1);
     }
 
@@ -56,11 +58,11 @@ class SuppliersController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Studio24\Frontend\Exception\ContentFieldException
-     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Studio24\Frontend\Exception\FailedRequestException
-     * @throws \Studio24\Frontend\Exception\PaginationException
-     * @throws \Studio24\Frontend\Exception\PermissionException
+     * @throws \Strata\Frontend\Exception\ContentFieldException
+     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Strata\Frontend\Exception\FailedRequestException
+     * @throws \Strata\Frontend\Exception\PaginationException
+     * @throws \Strata\Frontend\Exception\PermissionException
      */
     public function list(Request $request, int $page = 1)
     {
@@ -121,11 +123,11 @@ class SuppliersController extends AbstractController
      * @param int $page
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Studio24\Frontend\Exception\ContentFieldException
-     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Studio24\Frontend\Exception\FailedRequestException
-     * @throws \Studio24\Frontend\Exception\PaginationException
-     * @throws \Studio24\Frontend\Exception\PermissionException
+     * @throws \Strata\Frontend\Exception\ContentFieldException
+     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Strata\Frontend\Exception\FailedRequestException
+     * @throws \Strata\Frontend\Exception\PaginationException
+     * @throws \Strata\Frontend\Exception\PermissionException
      */
     public function search(Request $request, int $page = 1)
     {
@@ -199,11 +201,11 @@ class SuppliersController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Studio24\Frontend\Exception\ContentFieldException
-     * @throws \Studio24\Frontend\Exception\ContentFieldNotSetException
-     * @throws \Studio24\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Studio24\Frontend\Exception\FailedRequestException
-     * @throws \Studio24\Frontend\Exception\PermissionException
+     * @throws \Strata\Frontend\Exception\ContentFieldException
+     * @throws \Strata\Frontend\Exception\ContentFieldNotSetException
+     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
+     * @throws \Strata\Frontend\Exception\FailedRequestException
+     * @throws \Strata\Frontend\Exception\PermissionException
      */
     public function show(string $id, string $slug, Request $request)
     {

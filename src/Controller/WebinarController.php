@@ -6,12 +6,13 @@ namespace App\Controller;
 
 use App\Controller\FormController;
 use App\Helper\ControllerHelper;
-use Psr\SimpleCache\CacheInterface;
-use Studio24\Frontend\Cms\Wordpress;
-use Studio24\Frontend\ContentModel\ContentModel;
+use Symfony\Component\Cache\Psr16Cache;
+use Psr\Cache\CacheItemPoolInterface;
+use Strata\Frontend\Cms\Wordpress;
+use Strata\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Studio24\Frontend\Exception\NotFoundException;
+use Strata\Frontend\Exception\NotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class WebinarController extends AbstractController
@@ -23,14 +24,15 @@ class WebinarController extends AbstractController
      */
     protected $api;
 
-    public function __construct(CacheInterface $cache)
+    public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new Wordpress(
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('webinars');
-        $this->api->setCache($cache);
+        $psr16Cache = new Psr16Cache($cache);
+        $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
     }
 
