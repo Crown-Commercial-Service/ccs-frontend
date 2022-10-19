@@ -28,7 +28,7 @@ services:
     # please note that last definitions always *replace* previous ones
 
     # Register Frontend Twig helpers
-    Strata\Frontend\Twig\FrontendExtension:
+    strata\Frontend\Twig\FrontendExtension:
         tags: ['twig.extension']
 
     # Response listener
