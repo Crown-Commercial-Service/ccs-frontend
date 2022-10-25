@@ -15,7 +15,6 @@ use App\Exception\ApiException;
 
 class ApiController extends AbstractController
 {
-
     /**
      * Return CMS API URL
      *
@@ -236,6 +235,15 @@ class ApiController extends AbstractController
         foreach ($params as $name => $param) {
             switch ($name) {
                 case 'categories':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    break;
+                case 'whitepaper':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    break;
+                case 'webinar':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    break;
+                case 'noPost':
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
                     break;
                 case 'sectors':

@@ -6,7 +6,6 @@ namespace App\Helper;
 
 class ControllerHelper
 {
-
     public static function honeyPot($honeyPotField)
     {
         if (!empty($honeyPotField) && (bool) $honeyPotField == true) {

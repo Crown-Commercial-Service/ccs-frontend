@@ -10,6 +10,8 @@
 {% endblock %}
 
 {% block body %}
+    {% include '_components/hero.html.twig' with {'image': '/assets/images/news_banner.jpg', 'heading': 'Explore our latest news', 'notFromWordpress': 'true', 'cta_label': '', 'content': '<p>Alongside our latest news you will find blogs, case studies, whitepapers and recorded webinars here. Filter by area of interest, sector and content type to help you find what interests you most.</p>', 'cta_label': '', 'cta_destination': ''} %}
+
 
     <div class="govuk-width-container">
 
@@ -80,6 +82,18 @@
                                             </div>
                                         {% endfor %}
                                     {% endif %}
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input v-on:change=fetchAPIData(whitepaper,null) v-model="whitepaper" value=true class="govuk-checkboxes__input govuk-checkboxes__input--small" id="whitepaper" type="checkbox">
+                                        <label class="govuk-label govuk-checkboxes__label" for="whitepaper">
+                                            Whitepaper
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input v-on:change=fetchAPIData(webinar,null) v-model="webinar" value=true class="govuk-checkboxes__input govuk-checkboxes__input--small" id="webinar" type="checkbox">
+                                        <label class="govuk-label govuk-checkboxes__label" for="webinar">
+                                            Webinar
+                                        </label>
+                                    </div>
                                 </div>
 
                                 
@@ -168,7 +182,7 @@
                                                 <h2 class="news-listing-title">
                                                     <a :href="result.postLink" v-html="result.title.rendered"></a>
                                                 </h2>
-                                                <p class="govuk-body govuk-!-font-size-17featured">{[result.acf.post_lead_text]}</p> 
+                                                <p v-html="result.postDescription"></p> 
                                             </div>
                                             <div v-else class="govuk-grid-column-full news-listing-block">
                                                 <p class="news-listing-meta"> 
@@ -179,7 +193,7 @@
                                                 <h2 class="news-listing-title">
                                                     <a :href="result.postLink" v-html="result.title.rendered"></a>
                                                 </h2>
-                                                <p class="govuk-body govuk-!-font-size-17featured">{[result.acf.post_lead_text]}</p> 
+                                                <p v-html="result.postDescription"></p> 
                                             </div>
                                             
                                             <div class="govuk-grid-column-one-half news-img-container">
@@ -251,6 +265,8 @@
             var checkedCategories           = [];
             var checkedSectors              = [];
             var checkedProducts_services    = [];
+            var whitepaper                  = false;
+            var webinar                     = false;
 
             {% if filters.categories is defined and filters.categories is not empty %}
                 var checkedCategories   = Array.from([{{filters.categories}}]);
@@ -262,6 +278,14 @@
 
             {% if filters.products_services is defined and filters.products_services is not empty %}
                 var checkedProducts_services   = Array.from([{{filters.products_services}}]);
+            {% endif %}
+
+            {% if filters.whitepaper is defined and filters.whitepaper == "1" %}
+                whitepaper = true;
+            {% endif %}
+
+            {% if filters.webinar is defined and filters.webinar == "1" %}
+                webinar = true;
             {% endif %}
 
             
@@ -399,6 +423,7 @@
                     this.categoriesFilter();
                     this.sectorsFilter();
                     this.productsServicesFilter();
+                    this.whitepaperAndWebinar();
                 },
                 data: {
                     results: "",
@@ -409,6 +434,8 @@
                     checkedCategories: checkedCategories,
                     checkedSectors: checkedSectors,
                     checkedProducts_services: checkedProducts_services,
+                    whitepaper: whitepaper,
+                    webinar: webinar,
 
                     currentPage: pageNumber,
                     numberOfPages: Number,
@@ -434,6 +461,8 @@
                                 checkedCategories: this.checkedCategories,
                                 checkedSectors: this.checkedSectors,
                                 checkedProducts_services: this.checkedProducts_services,
+                                whitepaper: this.whitepaper,
+                                webinar: this.webinar,
                             }, 'News', this.frontendSearchUrl);
                         }
 
@@ -447,6 +476,14 @@
 
                         if(this.checkedCategories.length != 0) {
                             queryUrl += '&categories=' + this.checkedCategories.join();
+                        }
+
+                        if(this.whitepaper == true) {
+                            queryUrl += '&whitepaper=1';
+                        }
+
+                        if(this.webinar == true) {
+                            queryUrl += '&webinar=1';
                         }
 
                         if(this.checkedSectors.length != 0) {
@@ -470,15 +507,6 @@
                     }
                 },   
                 methods: {
-                    nth:function(number){
-                        if (number > 3 && number < 21) return 'th';
-                        switch (number % 10) {
-                            case 1:  return "st";
-                            case 2:  return "nd";
-                            case 3:  return "rd";
-                            default: return "th";
-                        }
-                    },
                     formatDate:function(date){
                         var self = this;
                         date = new Date(Date.parse(date));
@@ -490,13 +518,16 @@
                         var self = this;
                         var categoriesFilter = "";
 
-                        if (self.checkedCategories.includes("allCategories") || self.checkedCategories.length == 0 || self.checkedCategories.length == "{{categoriesFilters|length}}"){
+                        if (self.checkedCategories.includes("allCategories")){
+                            self.whitepaper = false;
+                            self.webinar = false;
                             self.checkedCategories = [];
-                            document.getElementById("allCategories").checked = true;
-                            document.getElementById(categoriesSlug) != null ? document.getElementById(categoriesSlug).checked = false : null
-                        }else{
+                        } else if (self.checkedCategories.length != 0){
                             document.getElementById("allCategories").checked = false;
                             categoriesFilter = "&categories=" + self.checkedCategories.join();
+
+                            self.whitepaper = self.whitepaper === false ? false : self.whitepaper;
+                            self.webinar = self.webinar === false ? false : self.webinar;
                         }
 
                         return categoriesFilter;
@@ -531,8 +562,36 @@
 
                         return products_servicesFilter;
                     },
+                    whitepaperAndWebinar:function(categoriesSlug){
+
+                        var whitepaperAndWebinar = "";
+                        var allCategoriesClear = this.whitepaper === false && this.webinar === false && this.checkedCategories.length == 0 
+
+                        if ( allCategoriesClear ){
+                            document.getElementById("allCategories").checked = true;
+                            return "&whitepaper=1&webinar=1"
+                        }else if( this.checkedCategories.length == "{{categoriesFilters|length}}" && this.whitepaper && this.webinar ){
+                            this.checkedCategories = [];
+                            this.whitepaper = false;
+                            this.webinar = false;
+                            document.getElementById(categoriesSlug) != null ? document.getElementById(categoriesSlug).checked = false : null
+                            document.getElementById("allCategories").checked = true;
+                            document.getElementById("whitepaper").checked = false;
+                            document.getElementById("webinar").checked = false;
+                            return "&whitepaper=1&webinar=1"
+                        } else {
+                            whitepaperAndWebinar = this.whitepaper ? whitepaperAndWebinar + "&whitepaper=1" : whitepaperAndWebinar;
+                            whitepaperAndWebinar = this.webinar    ? whitepaperAndWebinar + "&webinar=1"    : whitepaperAndWebinar;
+                            whitepaperAndWebinar = this.checkedCategories.length == 0 ? whitepaperAndWebinar + "&noPost=1" : whitepaperAndWebinar;
+
+                            document.getElementById("allCategories").checked = false;
+                        }
+
+                        return whitepaperAndWebinar;
+                    },
                     searchRequestUrl: function(categoriesSlug, page) {
-                        fetchURL = this.apiURL + this.categoriesFilter() + this.sectorsFilter() + this.productsServicesFilter();
+
+                        fetchURL = this.apiURL + this.categoriesFilter() + this.sectorsFilter() + this.productsServicesFilter() + this.whitepaperAndWebinar(categoriesSlug);
 
                         this.currentPage = page === null ? 1 : page;
                         
@@ -543,6 +602,8 @@
                                 checkedCategories: this.checkedCategories,
                                 checkedSectors: this.checkedSectors,
                                 checkedProducts_services: this.checkedProducts_services,
+                                whitepaper: this.whitepaper,
+                                webinar: this.webinar
                             }, 'Search suppliers - CCS', this.frontendSearchUrl);
                         }
 
@@ -573,16 +634,36 @@
                             for(var i = 0; i < jsonResponse.body.length; i++) {                         
                                 jsonResponse.body[i].postedDate = self.formatDate(jsonResponse.body[i].date);
                                 jsonResponse.body[i].postType = jsonResponse.body[i].category_type;
-                                jsonResponse.body[i].CategoriesLink = appBaseUrl +"/news?categories=" + jsonResponse.body[i].categories[0];
-                                jsonResponse.body[i].postLink = appBaseUrl+ "/news/" + jsonResponse.body[i].slug;
                                 jsonResponse.body[i].index = i;
+                                
+                                switch(jsonResponse.body[i].postType) {
+                                    case 'Whitepaper':
+                                        postLink = appBaseUrl+ "/whitepaper/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        postDescription = jsonResponse.body[i].excerpt.rendered;
+                                        categoriesLink = appBaseUrl + "/news/?&whitepaper=1";
+                                        break;
+                                    case 'Webinar':
+                                        postLink = appBaseUrl+ "/webinar/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        postDescription = jsonResponse.body[i].excerpt.rendered;
+                                        categoriesLink = appBaseUrl + "/news/?&webinar=1";
+                                        break;
+                                    default:
+                                        postLink = appBaseUrl+ "/news/" + jsonResponse.body[i].slug;
+                                        postDescription = jsonResponse.body[i].acf.post_lead_text
+                                        categoriesLink = appBaseUrl +"/news?categories=" + jsonResponse.body[i].categories[0];
+                                        break;
+                                }
 
+                                jsonResponse.body[i].postLink = postLink;
+                                jsonResponse.body[i].postDescription = postDescription;
+                                jsonResponse.body[i].CategoriesLink = categoriesLink
+
+
+                                jsonResponse.body[i].imageSet = false;
                                 if (jsonResponse.body[i].featured_image_url != false) {
                                     jsonResponse.body[i].imageSet = true;
                                     jsonResponse.body[i].imageURL = jsonResponse.body[i].featured_image_url;
                                     jsonResponse.body[i].altText  = jsonResponse.body[i].alt_text;
-                                }else{
-                                    jsonResponse.body[i].imageSet = false;
                                 }
                             }
                             self.results = jsonResponse.body;
@@ -606,8 +687,13 @@
                     checkFeature: function() {
                         this.feature = false;
 
-                        if(this.checkedCategories.length == 0 && this.checkedSectors.length == 0 && this.checkedProducts_services.length == 0 && this.currentPage == 1){
-                            this.feature = true;
+                        if(this.checkedCategories.length == 0 
+                            && this.checkedSectors.length == 0 
+                            && this.checkedProducts_services.length == 0 
+                            && (this.whitepaper == false || this.whitepaper == null )
+                            && (this.webinar == false || this.webinar == null )
+                            && this.currentPage == 1){
+                                this.feature = true;
                         }
                     },
                     setupHistoryApi: function() {
@@ -622,12 +708,16 @@
                                 self.checkedCategories = [];
                                 self.checkedSectors = [];
                                 self.checkedProducts_services =[]
+                                self.whitepaper =null
+                                self.webinar =null
                                 return;
                             }
 
                             self.checkedCategories         = event.state.checkedCategories;
                             self.checkedSectors            = event.state.checkedSectors;
                             self.checkedProducts_services  = event.checkedProducts_services.checkedLot;
+                            self.whitepaper                = event.state.whitepaper;
+                            self.webinar                   = event.state.webinar;
                         }
                     },
                 }
