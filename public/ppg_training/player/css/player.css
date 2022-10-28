@@ -1184,6 +1184,12 @@ body.ev-fullscreen-open {
 .ev-button span {
   pointer-events: none;
 }
+.ev-button span.ev-button-inner {
+  align-self: stretch;
+}
+.ev-button span.ev-button-text {
+  width: 100%;
+}
 .ev-button.ev-button-icon-position-left .ev-icon {
   margin: 0 5px 0 0;
 }
@@ -1231,6 +1237,9 @@ body.ev-fullscreen-open {
 }
 .ev-button.ev-button-image-position-bottom .ev-image-container {
   margin: 5px 0 0 0;
+}
+.ev-button.ev-button-no-text .ev-button-inner {
+  align-self: auto;
 }
 .ev-button.ev-button-no-text .ev-icon {
   margin: 0;
@@ -1882,8 +1891,8 @@ body.ev-fullscreen-open {
   z-index: 1;
   top: 0;
   right: 0;
-  width: 490px;
-  background-color: #f9f9f9;
+  width: 390px;
+  background-color: white;
 }
 @media all and (max-width: 520px) {
   .ev-comments-container .ev-comments-container-iframe-container {
@@ -1894,13 +1903,14 @@ body.ev-fullscreen-open {
   display: block;
   width: 100%;
   height: 100vh;
+  border: none;
 }
 .ios .ev-comments-container iframe {
   height: auto;
 }
 .ios .ev-comments-container .ev-comments-container-iframe-container {
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 .ev-comments-button-mount-point {
@@ -1972,12 +1982,17 @@ body.ev-fullscreen-open {
 .ev-comments-button:focus {
   opacity: 1;
 }
-.ev-comments-button .ev-comments-button-item-count,
-.ev-comments-button .ev-icon {
+.ev-comments-button .ev-comments-button-item-count {
   color: #ffffff!important;
+  position: relative;
+  font-weight: 700;
+  top: -1px;
 }
-.ev-comments-button .ev-icon {
+.ev-comments-button .ev-comments-button-icon {
   margin-right: 5px;
+}
+.ev-comments-button .ev-comments-button-icon path {
+  fill: white;
 }
 .ev-component {
   position: relative;
@@ -2451,6 +2466,9 @@ body.ev-fullscreen-open {
 }
 .ev-dot-progress-indicator {
   text-align: center;
+}
+.ev-dot-progress-indicator li {
+  display: inline-block;
 }
 .ev-dot-progress-indicator .ev-dot-progress-indicator-dot {
   transition: background-color 0.25s ease-in, color 0.25s ease-in, border-color 0.25s ease-in;
@@ -3714,15 +3732,25 @@ input[type="checkbox"].ev-input-checkbox {
 input[type="search"].ev-input-search {
   -webkit-appearance: none;
 }
+.ev-region.ev-is-selectable {
+  cursor: pointer;
+}
+.ev-region.ev-is-selected-region {
+  outline: 2px solid #448aff;
+}
+.ev-region.ev-is-selected-region.ev-page-container {
+  box-shadow: inset 0 0 0 2px #448aff;
+}
 .ev-is-active-region {
-  outline: 2px solid #9a2efd;
+  outline: 2px dashed #448aff;
+  border-radius: 1px;
 }
 .ev-is-active-region.ev-inspect-aria-labels .ev-region-overlay,
 .ev-is-active-region.ev-inspect-alt-texts .ev-region-overlay {
   opacity: 0;
 }
 .ev-is-inspector-node {
-  outline: 2px dotted #ed5565!important;
+  outline: 2px dotted #ed5565 !important;
 }
 .ev-region-overlay {
   position: absolute;
@@ -3730,32 +3758,31 @@ input[type="search"].ev-input-search {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #b261fd;
+  background-color: #77aaff;
   opacity: 0.3;
   z-index: 1000;
   pointer-events: none;
 }
 .ev-region-name {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
   display: flex;
   align-items: center;
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #6d6d6d;
+  background-color: #448aff;
   padding: 0 10px;
   color: white;
   z-index: 1001;
   font-size: 12px;
   height: 30px;
-  font-weight: 600;
-  font-family: 'Roboto', Arial, Helvetica, sans-serif;
-  text-transform: uppercase;
+  font-weight: 500;
 }
 .ev-region-button {
   position: absolute;
   top: 0;
   right: 0;
-  background-color: #9a2efd;
+  background-color: #448aff;
   border: none;
   outline: none;
   z-index: 1001;
@@ -3770,7 +3797,7 @@ input[type="search"].ev-input-search {
 .ev-region-button:hover,
 .ev-region-button:active,
 .ev-region-button:focus {
-  background-color: #8e15fd;
+  background-color: #2a7aff;
 }
 .ev-region-button svg {
   margin-right: -2px;
@@ -3806,7 +3833,7 @@ input[type="search"].ev-input-search {
 }
 .ev-inspector-tabs {
   height: 40px;
-  background-color: #F0F0F0;
+  background-color: #f0f0f0;
   display: flex;
 }
 .ev-inspector-tabs-inner {
@@ -3825,10 +3852,10 @@ input[type="search"].ev-input-search {
   transition: all 0.3s ease-in-out;
 }
 .ev-inspector-tab.is-active {
-  border-bottom-color: #448AFF;
+  border-bottom-color: #448aff;
 }
 .ev-inspector-tab:hover {
-  background-color: #CBCBCB;
+  background-color: #cbcbcb;
 }
 .ev-inspector-tab:focus,
 .ev-inspector-tab:active {
@@ -3839,7 +3866,7 @@ input[type="search"].ev-input-search {
   background: transparent;
 }
 .ev-inspector-position-toggle path {
-  fill: #448AFF;
+  fill: #448aff;
 }
 .ev-inspector-content {
   height: calc(100vh - 40px);
@@ -3855,7 +3882,7 @@ input[type="search"].ev-input-search {
   cursor: default;
   margin-bottom: 8px;
   background-color: #f9f9f9;
-  border: 1px solid #EBEBEB;
+  border: 1px solid #ebebeb;
   padding: 4px 8px;
 }
 .ev-inspector-details {
@@ -3895,7 +3922,7 @@ input[type="search"].ev-input-search {
   background: none;
   border-radius: 0;
   padding: 0;
-  color: #448AFF;
+  color: #448aff;
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
   transition: color 0.3s ease-in-out;
   font-size: 14px;
@@ -3903,10 +3930,10 @@ input[type="search"].ev-input-search {
 }
 .ev-inspector-details-button:hover {
   color: #116aff;
-  outline: none!important;
+  outline: none !important;
 }
 .ev-inspector-details-button:focus {
-  outline: none!important;
+  outline: none !important;
 }
 .ev-inspector-none {
   padding: 20px;
@@ -4037,7 +4064,8 @@ input[type="search"].ev-input-search {
 .ev-singleFlipCard-card-front-text a:not(.ev-inline-link),
 .ev-singleFlipCard-card-back-text a:not(.ev-inline-link),
 .ev-text-graphic-item-body-inner a:not(.ev-inline-link),
-.ev-text-reveal-item-reveal-text-inner-text a:not(.ev-inline-link) {
+.ev-text-reveal-item-reveal-text-inner-text a:not(.ev-inline-link),
+.ev-list-item-content-inner a:not(.ev-inline-link) {
   transition: background-color 0.25s ease-in, color 0.25s ease-in, border-color 0.25s ease-in;
   color: #0057b8;
   text-decoration: underline;
@@ -4063,7 +4091,8 @@ input[type="search"].ev-input-search {
 .ev-singleFlipCard-card-front-text a:not(.ev-inline-link):visited,
 .ev-singleFlipCard-card-back-text a:not(.ev-inline-link):visited,
 .ev-text-graphic-item-body-inner a:not(.ev-inline-link):visited,
-.ev-text-reveal-item-reveal-text-inner-text a:not(.ev-inline-link):visited {
+.ev-text-reveal-item-reveal-text-inner-text a:not(.ev-inline-link):visited,
+.ev-list-item-content-inner a:not(.ev-inline-link):visited {
   color: #834cb1;
 }
 .ev-no-touchevents .ev-menu-item-body-inner a:not(.ev-inline-link):hover,
@@ -4088,6 +4117,7 @@ input[type="search"].ev-input-search {
 .ev-no-touchevents .ev-singleFlipCard-card-back-text a:not(.ev-inline-link):hover,
 .ev-no-touchevents .ev-text-graphic-item-body-inner a:not(.ev-inline-link):hover,
 .ev-no-touchevents .ev-text-reveal-item-reveal-text-inner-text a:not(.ev-inline-link):hover,
+.ev-no-touchevents .ev-list-item-content-inner a:not(.ev-inline-link):hover,
 .ev-menu-item-body-inner a:not(.ev-inline-link):focus,
 .ev-page-body-inner a:not(.ev-inline-link):focus,
 .ev-header-body-inner a:not(.ev-inline-link):focus,
@@ -4109,7 +4139,8 @@ input[type="search"].ev-input-search {
 .ev-singleFlipCard-card-front-text a:not(.ev-inline-link):focus,
 .ev-singleFlipCard-card-back-text a:not(.ev-inline-link):focus,
 .ev-text-graphic-item-body-inner a:not(.ev-inline-link):focus,
-.ev-text-reveal-item-reveal-text-inner-text a:not(.ev-inline-link):focus {
+.ev-text-reveal-item-reveal-text-inner-text a:not(.ev-inline-link):focus,
+.ev-list-item-content-inner a:not(.ev-inline-link):focus {
   color: #0057b8;
 }
 a.ev-inline-link,
@@ -4186,17 +4217,14 @@ a.ev-inline-link:focus,
 .ev-list-item .ev-list-item-inner:after {
   clear: both;
 }
-.ev-list-item button,
-.ev-list-item a {
+.ev-list-item button {
   margin: 0;
   background-color: #0057b8;
   border-color: #0057b8;
   color: #ffffff;
 }
 .ev-no-touchevents .ev-list-item button:hover,
-.ev-no-touchevents .ev-list-item a:hover,
-.ev-list-item button:focus,
-.ev-list-item a:focus {
+.ev-list-item button:focus {
   background-color: #ffffff;
   border-color: #0057b8;
   color: #0057b8;
@@ -5386,98 +5414,6 @@ a.ev-inline-link:focus,
   .ev-extension-content-items .ev-menu-content-item {
     margin-bottom: 10px;
   }
-}
-.ev-is-ie-11 .ev-menu-content-items .ev-component .ev-component-body-inner,
-.ev-is-ie-11 .ev-extension-content-items .ev-component .ev-component-body-inner,
-.ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item .ev-component-body-inner,
-.ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item .ev-component-body-inner,
-.ev-is-ie-11 .ev-menu-content-items .ev-component .ev-menu-content-item-body-inner,
-.ev-is-ie-11 .ev-extension-content-items .ev-component .ev-menu-content-item-body-inner,
-.ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item .ev-menu-content-item-body-inner,
-.ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item .ev-menu-content-item-body-inner,
-.ev-is-ie-11 .ev-menu-content-items .ev-component .ev-content-item-graphic,
-.ev-is-ie-11 .ev-extension-content-items .ev-component .ev-content-item-graphic,
-.ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item .ev-content-item-graphic,
-.ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item .ev-content-item-graphic,
-.ev-is-ie-11 .ev-menu-content-items .ev-component .ev-content-item-video,
-.ev-is-ie-11 .ev-extension-content-items .ev-component .ev-content-item-video,
-.ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item .ev-content-item-video,
-.ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item .ev-content-item-video {
-  padding: 0!important;
-}
-.ev-is-ie-11 .ev-menu-content-items .ev-component .ev-content-item-graphic,
-.ev-is-ie-11 .ev-extension-content-items .ev-component .ev-content-item-graphic,
-.ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item .ev-content-item-graphic,
-.ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item .ev-content-item-graphic,
-.ev-is-ie-11 .ev-menu-content-items .ev-component .ev-content-item-video,
-.ev-is-ie-11 .ev-extension-content-items .ev-component .ev-content-item-video,
-.ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item .ev-content-item-video,
-.ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item .ev-content-item-video {
-  flex: 0 1 49%;
-}
-@media all and (max-width: 768px) {
-  .ev-is-ie-11 .ev-menu-content-items .ev-component .ev-content-item-graphic,
-  .ev-is-ie-11 .ev-extension-content-items .ev-component .ev-content-item-graphic,
-  .ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item .ev-content-item-graphic,
-  .ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item .ev-content-item-graphic,
-  .ev-is-ie-11 .ev-menu-content-items .ev-component .ev-content-item-video,
-  .ev-is-ie-11 .ev-extension-content-items .ev-component .ev-content-item-video,
-  .ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item .ev-content-item-video,
-  .ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item .ev-content-item-video {
-    flex: 100%;
-  }
-}
-.ev-is-ie-11 .ev-menu-content-items .ev-component .ev-component-body-inner,
-.ev-is-ie-11 .ev-extension-content-items .ev-component .ev-component-body-inner,
-.ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item .ev-component-body-inner,
-.ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item .ev-component-body-inner,
-.ev-is-ie-11 .ev-menu-content-items .ev-component .ev-menu-content-item-body-inner,
-.ev-is-ie-11 .ev-extension-content-items .ev-component .ev-menu-content-item-body-inner,
-.ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item .ev-menu-content-item-body-inner,
-.ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item .ev-menu-content-item-body-inner {
-  flex: 100%;
-}
-.ev-is-ie-11 .ev-menu-content-items .ev-component.ev-has-graphic .ev-component-body,
-.ev-is-ie-11 .ev-extension-content-items .ev-component.ev-has-graphic .ev-component-body,
-.ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item.ev-has-graphic .ev-component-body,
-.ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item.ev-has-graphic .ev-component-body,
-.ev-is-ie-11 .ev-menu-content-items .ev-component.ev-has-graphic .ev-menu-content-item-body,
-.ev-is-ie-11 .ev-extension-content-items .ev-component.ev-has-graphic .ev-menu-content-item-body,
-.ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item.ev-has-graphic .ev-menu-content-item-body,
-.ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item.ev-has-graphic .ev-menu-content-item-body {
-  justify-content: space-between;
-}
-.ev-is-ie-11 .ev-menu-content-items .ev-component.ev-has-graphic .ev-component-body-inner,
-.ev-is-ie-11 .ev-extension-content-items .ev-component.ev-has-graphic .ev-component-body-inner,
-.ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item.ev-has-graphic .ev-component-body-inner,
-.ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item.ev-has-graphic .ev-component-body-inner,
-.ev-is-ie-11 .ev-menu-content-items .ev-component.ev-has-graphic .ev-menu-content-item-body-inner,
-.ev-is-ie-11 .ev-extension-content-items .ev-component.ev-has-graphic .ev-menu-content-item-body-inner,
-.ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item.ev-has-graphic .ev-menu-content-item-body-inner,
-.ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item.ev-has-graphic .ev-menu-content-item-body-inner {
-  flex: 0 1 49%;
-}
-@media all and (max-width: 768px) {
-  .ev-is-ie-11 .ev-menu-content-items .ev-component.ev-has-graphic .ev-component-body-inner,
-  .ev-is-ie-11 .ev-extension-content-items .ev-component.ev-has-graphic .ev-component-body-inner,
-  .ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item.ev-has-graphic .ev-component-body-inner,
-  .ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item.ev-has-graphic .ev-component-body-inner,
-  .ev-is-ie-11 .ev-menu-content-items .ev-component.ev-has-graphic .ev-menu-content-item-body-inner,
-  .ev-is-ie-11 .ev-extension-content-items .ev-component.ev-has-graphic .ev-menu-content-item-body-inner,
-  .ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item.ev-has-graphic .ev-menu-content-item-body-inner,
-  .ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item.ev-has-graphic .ev-menu-content-item-body-inner {
-    flex: 100%;
-  }
-}
-.ev-is-ie-11 .ev-menu-content-items .ev-component.ev-has-no-body .ev-content-item-graphic,
-.ev-is-ie-11 .ev-extension-content-items .ev-component.ev-has-no-body .ev-content-item-graphic,
-.ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item.ev-has-no-body .ev-content-item-graphic,
-.ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item.ev-has-no-body .ev-content-item-graphic,
-.ev-is-ie-11 .ev-menu-content-items .ev-component.ev-has-no-body .ev-content-item-video,
-.ev-is-ie-11 .ev-extension-content-items .ev-component.ev-has-no-body .ev-content-item-video,
-.ev-is-ie-11 .ev-menu-content-items .ev-menu-content-item.ev-has-no-body .ev-content-item-video,
-.ev-is-ie-11 .ev-extension-content-items .ev-menu-content-item.ev-has-no-body .ev-content-item-video {
-  flex: 100%;
 }
 .ev-navigation-top {
   position: fixed;
@@ -8292,10 +8228,6 @@ THEMES:
   padding-left: 0;
   padding-right: 2em;
 }
-.ev-is-ie-11 select option {
-  background-color: white!important;
-  color: black!important;
-}
 /**
  * React Select
  * ============
@@ -9127,44 +9059,49 @@ table td a {
 .ev-text-audio-content .ev-audio-poster-image {
   margin-bottom: 10px;
 }
+.ev-text-audio-content .ev-audio-player.has-no-poster {
+  flex-grow: 1;
+}
 .ev-text-audio-content audio {
-  max-width: 100%;
+  width: 100%;
+}
+.ev-text-graphic-content.ev-is-svg .ev-image-container {
+  flex-grow: 1;
 }
 .ev-text-graphic-content img {
   display: inline-block;
 }
+.ev-text-media-content-container:not(.ev-text-only-content):not(.ev-media-only-content) {
+  display: flex;
+}
 .ev-text-media-content-container .ev-text-media-content-media {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.ev-text-media-content-container.ev-js-media-top,
+.ev-text-media-content-container.ev-js-media-bottom {
+  flex-direction: column;
 }
 .ev-text-media-content-container.ev-js-media-top .ev-text-media-content-inner {
   margin-top: 20px;
 }
-.ev-text-media-content-container.ev-js-media-top .ev-text-media-content-media:first-child {
-  display: block;
-}
-.ev-text-media-content-container.ev-js-media-top .ev-text-media-content-media:last-child {
-  display: none;
-}
-.ev-text-media-content-container.ev-js-media-bottom .text-media-content-inner {
+.ev-text-media-content-container.ev-js-media-bottom .ev-text-media-content-inner {
   margin-bottom: 20px;
 }
-.ev-text-media-content-container.ev-js-media-left .ev-text-media-content-media {
-  float: left;
-}
-.ev-text-media-content-container.ev-js-media-left .ev-text-media-content {
-  float: right;
+.ev-text-media-content-container.ev-js-media-left {
+  flex-direction: row-reverse;
 }
 .ev-text-media-content-container.ev-js-media-left .ev-text-media-content-inner {
   margin-left: 20px;
 }
-.ev-text-media-content-container.ev-js-media-right .ev-text-media-content-media {
-  float: right;
-}
-.ev-text-media-content-container.ev-js-media-right .ev-text-media-content {
-  float: left;
-}
 .ev-text-media-content-container.ev-js-media-right .ev-text-media-content-inner {
   margin-right: 20px;
+}
+@media all and (max-width: 768px) {
+  .ev-text-media-content-container.ev-js-media-left,
+  .ev-text-media-content-container.ev-js-media-right {
+    display: block !important;
+  }
 }
 .ev-text-media-content-container.ev-js-media-left .ev-text-media-content-media,
 .ev-text-media-content-container.ev-js-media-right .ev-text-media-content-media,
@@ -9178,8 +9115,23 @@ table td a {
   .ev-text-media-content-container.ev-js-media-left .ev-text-media-content,
   .ev-text-media-content-container.ev-js-media-right .ev-text-media-content {
     width: auto;
-    float: none;
   }
+}
+.ev-text-media-content-container.ev-js-media-left .ev-text-media-content,
+.ev-text-media-content-container.ev-js-media-right .ev-text-media-content {
+  display: flex;
+}
+.ev-text-media-content-container.ev-js-media-left .ev-text-media-content.ev-js-text-top,
+.ev-text-media-content-container.ev-js-media-right .ev-text-media-content.ev-js-text-top {
+  align-items: flex-start;
+}
+.ev-text-media-content-container.ev-js-media-left .ev-text-media-content.ev-js-text-center,
+.ev-text-media-content-container.ev-js-media-right .ev-text-media-content.ev-js-text-center {
+  align-items: center;
+}
+.ev-text-media-content-container.ev-js-media-left .ev-text-media-content.ev-js-text-bottom,
+.ev-text-media-content-container.ev-js-media-right .ev-text-media-content.ev-js-text-bottom {
+  align-items: flex-end;
 }
 @media all and (max-width: 768px) {
   .ev-text-media-content-container.ev-js-media-left .ev-text-media-content-inner,
@@ -9189,6 +9141,9 @@ table td a {
 }
 .ev-text-video-content video {
   max-width: 100%;
+}
+.ev-text-video-content .ev-video-stream-player {
+  flex: 1;
 }
 .ev-text-video-content.ev-is-popup .ev-text-media-content-media {
   text-align: center;
@@ -9506,7 +9461,8 @@ table td a {
   flex-direction: column;
 }
 .ev-video-player.ev-is-mouse-moving .ev-video-controls,
-.ev-video-player:not(.ev-is-playing) .ev-video-controls {
+.ev-video-player:not(.ev-is-playing) .ev-video-controls,
+.ev-video-player:focus-within .ev-video-controls {
   opacity: 1;
 }
 .ev-video-player.ev-is-fullscreen {
@@ -9864,9 +9820,6 @@ table td a {
 .ev-is-viewing-fullscreen-video .ev-navigation-top {
   display: none!important;
 }
-.ev-is-ie-11 .ev-video-player video {
-  height: 100%;
-}
 .ev-video-play-button {
   display: none;
   z-index: 10;
@@ -10050,20 +10003,12 @@ table td a {
 .ev-box-menu .ev-menu-items-layout-2 .ev-menu-item {
   flex: 0 0 48%;
 }
-.ev-is-ie-11 .ev-box-menu .ev-menu-items-layout-2 .ev-menu-item {
-  flex: none;
-  width: 48%;
-}
 .ev-box-menu .ev-menu-items-layout-2 .ev-progress-bar-indicator,
 .ev-box-menu .ev-menu-items-layout-2 .ev-progress-indicator-items {
   width: 50%;
 }
 .ev-box-menu .ev-menu-items-layout-3 .ev-menu-item {
   flex: 0 0 31%;
-}
-.ev-is-ie-11 .ev-box-menu .ev-menu-items-layout-3 .ev-menu-item {
-  flex: none;
-  width: 31%;
 }
 .ev-box-menu .ev-menu-items-layout-3 .ev-progress-bar,
 .ev-box-menu .ev-menu-items-layout-3 .ev-progress-indicator {
@@ -10089,10 +10034,6 @@ table td a {
 }
 .ev-box-menu .ev-menu-items-layout-4 .ev-menu-item {
   flex: 0 0 23%;
-}
-.ev-is-ie-11 .ev-box-menu .ev-menu-items-layout-4 .ev-menu-item {
-  flex: none;
-  width: 23%;
 }
 .ev-box-menu .ev-menu-items-layout-4 .ev-progress-bar,
 .ev-box-menu .ev-menu-items-layout-4 .ev-progress-indicator {
@@ -14134,65 +14075,20 @@ table td a {
     width: auto !important;
   }
 }
-.ev-discussion-component .ev-discussion-post-editor {
-  display: flex;
-  align-items: center;
+.ev-discussion-component .ev-discussion-deprecated {
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  border-radius: 4px;
+  border: 1px solid #dadbe1;
+  padding: 16px;
+  background-color: #f0f0f0;
+  color: #393b3d;
 }
-.ev-discussion-component .ev-discussion-post-editor-input.ev-input-text {
-  flex: 1;
-  margin: 0 10px 0 0;
-  padding: 8px 12px 8px 12px;
-}
-@media all and (max-width: 768px) {
-  .ev-discussion-component .ev-discussion-post-editor-input.ev-input-text {
-    padding: 8px 12px 8px 12px;
-  }
-}
-@media all and (max-width: 520px) {
-  .ev-discussion-component .ev-discussion-post-editor-input.ev-input-text {
-    padding: 8px 12px 8px 12px;
-  }
-}
-[dir="rtl"] .ev-discussion-component .ev-discussion-post-editor-input.ev-input-text {
-  margin: 0 0 0 10px;
-}
-.ev-discussion-component .ev-discussion-posts {
-  list-style-type: none;
-  padding: 0;
-}
-.ev-discussion-component .ev-discussion-post-item {
-  display: flex;
-}
-.ev-discussion-component .ev-discussion-post-item-inner {
-  flex: 1;
-}
-.ev-discussion-component .ev-discussion-post-item-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.ev-discussion-component .ev-discussion-post-item-user-comment {
-  padding-top: 20px;
-}
-.ev-discussion-component .ev-discussion-vote {
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  flex-flow: column wrap;
-  align-items: center;
-  font-weight: bold;
-  color: inherit;
-  padding-right: 20px;
-}
-.ev-discussion-component .ev-discussion-vote.ev-voted {
-  pointer-events: none;
-  color: #e8e8e8;
-}
-.ev-discussion-component .ev-discussion-vote.ev-voted .ev-icon {
-  color: #e8e8e8;
-}
-.ev-discussion-component .ev-discussion-vote-score {
-  font-weight: bold;
+.ev-discussion-component .ev-discussion-deprecated a {
+  color: #3168f6;
+  text-decoration: none;
 }
 .ev-dragAndDrop-component .ev-dragAndDrop-widget {
   position: relative;
@@ -14530,19 +14426,19 @@ table td a {
     padding: 0;
   }
 }
-.ev-dragAndDrop-component .ev-draggabble-items-grid-layout .ev-draggable-items {
+.ev-dragAndDrop-component .ev-draggable-items-grid-layout .ev-draggable-items {
   display: flex;
   flex-wrap: wrap;
 }
-.ev-dragAndDrop-component .ev-draggabble-items-grid-layout .ev-draggable-items .ev-draggable-item:nth-child(odd) {
+.ev-dragAndDrop-component .ev-draggable-items-grid-layout .ev-draggable-items .ev-draggable-item:nth-child(odd) {
   margin-right: 2%;
   width: 49%;
 }
-[dir='rtl'] .ev-dragAndDrop-component .ev-draggabble-items-grid-layout .ev-draggable-items .ev-draggable-item:nth-child(odd) {
+[dir='rtl'] .ev-dragAndDrop-component .ev-draggable-items-grid-layout .ev-draggable-items .ev-draggable-item:nth-child(odd) {
   margin-right: 0;
   margin-left: 2%;
 }
-.ev-dragAndDrop-component .ev-draggabble-items-grid-layout .ev-draggable-items .ev-draggable-item:nth-child(even) {
+.ev-dragAndDrop-component .ev-draggable-items-grid-layout .ev-draggable-items .ev-draggable-item:nth-child(even) {
   margin-right: 0;
   width: 49%;
 }
@@ -16025,24 +15921,6 @@ table td a {
     opacity: 0.0;
   }
 }
-.ev-is-ie-11 .ev-game-controller .ev-game-character-select-item {
-  flex: none;
-  width: 25%;
-  display: block;
-}
-.ev-is-ie-11 .ev-game-controller .ev-game-question-multiple-choice-item,
-.ev-is-ie-11 .ev-game-controller .ev-game-question-true-false-button {
-  flex: none;
-  width: 49%;
-}
-.ev-is-ie-11 .ev-game-controller .ev-game-question-ordering-item {
-  flex: none;
-  width: 23%;
-}
-.ev-is-ie-11 .ev-game-controller .ev-game-question-graphic-multiple-choice-content-graphic {
-  flex: none;
-  width: 50%;
-}
 .ev-gif-widget img {
   margin: 0 auto;
 }
@@ -16554,7 +16432,12 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-hotgraphic-component .ev-hotgraphic-mobile-item .ev-text-media-content-inner h6 {
+.ev-hotgraphic-component .ev-hotgraphic-mobile-item .ev-text-media-content-inner h1,
+.ev-hotgraphic-component .ev-hotgraphic-mobile-item h2,
+.ev-hotgraphic-component .ev-hotgraphic-mobile-item h3,
+.ev-hotgraphic-component .ev-hotgraphic-mobile-item h4,
+.ev-hotgraphic-component .ev-hotgraphic-mobile-item h5,
+.ev-hotgraphic-component .ev-hotgraphic-mobile-item h6 {
   font-size: inherit;
   font-family: inherit;
   font-weight: inherit;
@@ -16708,8 +16591,11 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-hotgraphic-component .ev-hotgraphic-inline-item {
+.ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-top {
   margin-bottom: 15px;
+}
+.ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-bottom {
+  margin-top: 15px;
 }
 .ev-hotgraphic-component .ev-hotgraphic-inline-item .ev-hotgraphic-pin {
   position: relative;
@@ -16815,7 +16701,7 @@ table td a {
   margin: 0 auto 10px;
   display: inline-block;
 }
-.ev-icon-component .ev-component-content-title h6 {
+.ev-icon-component .ev-component-content-title {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -16824,14 +16710,14 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-icon-component .ev-component-content-title h6 {
+  .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-icon-component .ev-component-content-title h6 {
+  .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -17652,11 +17538,6 @@ table td a {
   transform: translateY(-50%);
   margin: 0;
 }
-@media all and (max-width: 768px) {
-  .ev-mediaCarousel-component .ev-mediaCarousel-widget .ev-media-carousel-control {
-    display: none;
-  }
-}
 .ev-mediaCarousel-component .ev-mediaCarousel-widget .ev-media-carousel-control .ev-icon {
   margin: 0;
 }
@@ -17684,19 +17565,12 @@ table td a {
   left: auto;
 }
 .ev-mediaCarousel-component .ev-mediaCarousel-widget .ev-media-carousel-mobile-controls {
-  display: none;
+  display: flex;
   position: relative;
-}
-@media all and (max-width: 768px) {
-  .ev-mediaCarousel-component .ev-mediaCarousel-widget .ev-media-carousel-mobile-controls {
-    display: flex;
-    justify-content: space-between;
-  }
-  .ev-mediaCarousel-component .ev-mediaCarousel-widget .ev-media-carousel-mobile-controls .ev-media-carousel-control {
-    display: block;
-  }
+  justify-content: space-between;
 }
 .ev-mediaCarousel-component .ev-mediaCarousel-widget .ev-media-carousel-mobile-controls .ev-media-carousel-control {
+  display: flex;
   position: static;
   transform: translateY(0);
 }
@@ -19377,9 +19251,6 @@ table td a {
     width: 90%;
   }
 }
-.ev-is-ie-11 .ev-simulation .ev-simulation-dialog {
-  height: 90%;
-}
 .ev-simulation .ev-simulation-dialog-content-container {
   flex: 1;
   overflow: auto;
@@ -20389,13 +20260,11 @@ table td a {
   flex-wrap: wrap;
 }
 .ev-flexbox .ev-survey-component .ev-survey-complete {
-  display: flex;
+  display: inline-flex;
   align-items: center;
 }
 .ev-flexbox .ev-survey-component .ev-survey-complete .ev-icon {
-  box-sizing: content-box;
-  color: #e8e8e8;
-  padding: 15px 10px 15px 0;
+  margin-right: 8px;
 }
 .ev-no-flexbox .ev-survey-component .ev-star-rating-star {
   display: inline-block;
@@ -20750,10 +20619,6 @@ table td a {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
-  padding: 16px 0;
-  font-weight: 700;
-}
 .ev-textAndGraphic-component .ev-text-graphic-item {
   margin-bottom: 12px;
 }
@@ -20880,7 +20745,8 @@ table td a {
     margin-bottom: 0;
   }
 }
-.ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+.ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
+  padding: 16px 0;
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -20889,20 +20755,20 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
-[dir='rtl'] .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+[dir='rtl'] .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   text-align: right !important;
 }
 .ev-textAndGraphic-component .ev-text-graphic-item-body {
@@ -21266,8 +21132,6 @@ table td a {
 }
 .ev-textReveal-component .ev-text-reveal-item-title {
   margin-bottom: 6px;
-}
-.ev-textReveal-component .ev-text-reveal-item-title h6 {
   color: #454545;
   font-family: SourceSansPro-Regular;
   font-size: 18px;
@@ -21275,18 +21139,18 @@ table td a {
   line-height: 1.25;
   text-align: left;
 }
-[dir='rtl'] .ev-textReveal-component .ev-text-reveal-item-title h6 {
+[dir='rtl'] .ev-textReveal-component .ev-text-reveal-item-title {
   text-align: right;
 }
 @media all and (max-width: 768px) {
-  .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -21422,12 +21286,6 @@ table td a {
   .ev-textReveal-component .ev-text-reveal-item-reveal-text-inner.ev-has-graphic.ev-layout-right .ev-text-reveal-item-reveal-text-inner-text {
     padding-top: 15px;
   }
-}
-.ev-is-ie-11  .ev-textReveal-component .ev-text-reveal-item-reveal-text-inner {
-  flex: 1;
-}
-.ev-is-ie-11  .ev-textReveal-component .ev-text-reveal-item-reveal-text-inner.ev-has-graphic {
-  display: block;
 }
 .ev-achievements .ev-achievement-item-counters {
   display: flex;
@@ -22390,10 +22248,8 @@ table td a {
 }
 .ev-glossary-item .ev-glossary-item-term {
   transition: background-color 0.25s ease-in, color 0.25s ease-in, border-color 0.25s ease-in;
-  display: block;
   border: none;
   width: 100%;
-  text-align: inherit;
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
@@ -23316,22 +23172,6 @@ table td a {
   z-index: 900;
   transform: scale(0.8, 0.8);
 }
-.storage-login .storage-login-button {
-  display: inline-flex;
-  align-items: center;
-}
-.storage-login .storage-login-logo {
-  display: inline-block;
-  width: 23px;
-  height: 23px;
-  margin-right: 10px;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.storage-login .storage-login-logo-google {
-  background-image: url(assets/sso-google-logo.png);
-}
 .ev-tags-overview-chart-colors-item {
   background-color: #9b1a47;
 }
@@ -23349,21 +23189,21 @@ table td a {
 .ev-tags-overview-container-radar {
   margin: auto;
 }
-.ev-tags-count-chart-tag-name h5 {
+.ev-tags-count-chart-tag-name {
   color: #454545;
   font-family: SourceSansPro-Regular;
   font-weight: 400;
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-tags-count-chart-tag-name h5 {
+  .ev-tags-count-chart-tag-name {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-tags-count-chart-tag-name h5 {
+  .ev-tags-count-chart-tag-name {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -25927,25 +25767,6 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-14 .ev-discussion-component .ev-discussion-post-editor-input {
-  padding: 8px 12px 8px 12px;
-}
-@media all and (max-width: 768px) {
-  .ev-article-style-14 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-@media all and (max-width: 520px) {
-  .ev-article-style-14 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-.ev-article-style-14 .ev-discussion-component .ev-discussion-vote.ev-voted {
-  color: #e8e8e8;
-}
-.ev-article-style-14 .ev-discussion-component .ev-discussion-vote.ev-voted .ev-icon {
-  color: #e8e8e8;
-}
 .ev-article-style-14 .ev-dragAndDrop-component .ev-draggable-item {
   border-top: 1px none #454545;
   border-right: 1px none #454545;
@@ -26414,8 +26235,11 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-14 .ev-hotgraphic-component .ev-hotgraphic-inline-item {
+.ev-article-style-14 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-top {
   margin-bottom: 15px;
+}
+.ev-article-style-14 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-bottom {
+  margin-top: 15px;
 }
 .ev-article-style-14 .ev-hotgraphic-component .ev-hotgraphic-inline-item .ev-hotgraphic-pin {
   background-color: #0057b8;
@@ -26467,7 +26291,7 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-14 .ev-icon-component .ev-component-content-title h6 {
+.ev-article-style-14 .ev-icon-component .ev-component-content-title {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -26476,14 +26300,14 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-14 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-14 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-14 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-14 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -27726,10 +27550,6 @@ table td a {
 .ev-article-style-14 .ev-survey-component .ev-star-rating-star {
   padding: 15px 10px 15px 0;
 }
-.ev-flexbox .ev-article-style-14 .ev-survey-component .ev-survey-complete .ev-icon {
-  color: #e8e8e8;
-  padding: 15px 10px 15px 0;
-}
 .ev-article-style-14 .ev-table-widget thead th {
   border-right: 1px solid #002752;
   border-bottom: 1px solid #002752;
@@ -27952,7 +27772,7 @@ table td a {
     margin: 15px auto 0;
   }
 }
-.ev-article-style-14 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+.ev-article-style-14 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -27961,20 +27781,20 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-14 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-14 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-14 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-14 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
-[dir="rtl"] .ev-article-style-14 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+[dir="rtl"] .ev-article-style-14 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   text-align: right!important;
 }
 .ev-article-style-14 .ev-textAndGraphic-component .ev-text-graphic-item-body {
@@ -28154,7 +27974,7 @@ table td a {
   color: #ffffff;
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2);
 }
-.ev-article-style-14 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+.ev-article-style-14 .ev-textReveal-component .ev-text-reveal-item-title {
   color: #454545;
   font-family: SourceSansPro-Regular;
   font-size: 18px;
@@ -28162,18 +27982,18 @@ table td a {
   line-height: 1.25;
   text-align: left;
 }
-[dir='rtl'] .ev-article-style-14 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+[dir='rtl'] .ev-article-style-14 .ev-textReveal-component .ev-text-reveal-item-title {
   text-align: right;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-14 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-14 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-14 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-14 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -30626,25 +30446,6 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-13 .ev-discussion-component .ev-discussion-post-editor-input {
-  padding: 8px 12px 8px 12px;
-}
-@media all and (max-width: 768px) {
-  .ev-article-style-13 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-@media all and (max-width: 520px) {
-  .ev-article-style-13 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-.ev-article-style-13 .ev-discussion-component .ev-discussion-vote.ev-voted {
-  color: #e8e8e8;
-}
-.ev-article-style-13 .ev-discussion-component .ev-discussion-vote.ev-voted .ev-icon {
-  color: #e8e8e8;
-}
 .ev-article-style-13 .ev-dragAndDrop-component .ev-draggable-item {
   border-top: 1px none #454545;
   border-right: 1px none #454545;
@@ -31113,8 +30914,11 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-13 .ev-hotgraphic-component .ev-hotgraphic-inline-item {
+.ev-article-style-13 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-top {
   margin-bottom: 15px;
+}
+.ev-article-style-13 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-bottom {
+  margin-top: 15px;
 }
 .ev-article-style-13 .ev-hotgraphic-component .ev-hotgraphic-inline-item .ev-hotgraphic-pin {
   background-color: #0057b8;
@@ -31166,7 +30970,7 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-13 .ev-icon-component .ev-component-content-title h6 {
+.ev-article-style-13 .ev-icon-component .ev-component-content-title {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -31175,14 +30979,14 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-13 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-13 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-13 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-13 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -32425,10 +32229,6 @@ table td a {
 .ev-article-style-13 .ev-survey-component .ev-star-rating-star {
   padding: 15px 10px 15px 0;
 }
-.ev-flexbox .ev-article-style-13 .ev-survey-component .ev-survey-complete .ev-icon {
-  color: #e8e8e8;
-  padding: 15px 10px 15px 0;
-}
 .ev-article-style-13 .ev-table-widget thead th {
   border-right: 1px solid #002752;
   border-bottom: 1px solid #002752;
@@ -32651,7 +32451,7 @@ table td a {
     margin: 15px auto 0;
   }
 }
-.ev-article-style-13 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+.ev-article-style-13 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -32660,20 +32460,20 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-13 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-13 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-13 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-13 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
-[dir="rtl"] .ev-article-style-13 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+[dir="rtl"] .ev-article-style-13 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   text-align: right!important;
 }
 .ev-article-style-13 .ev-textAndGraphic-component .ev-text-graphic-item-body {
@@ -32853,7 +32653,7 @@ table td a {
   color: #ffffff;
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2);
 }
-.ev-article-style-13 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+.ev-article-style-13 .ev-textReveal-component .ev-text-reveal-item-title {
   color: #454545;
   font-family: SourceSansPro-Regular;
   font-size: 18px;
@@ -32861,18 +32661,18 @@ table td a {
   line-height: 1.25;
   text-align: left;
 }
-[dir='rtl'] .ev-article-style-13 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+[dir='rtl'] .ev-article-style-13 .ev-textReveal-component .ev-text-reveal-item-title {
   text-align: right;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-13 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-13 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-13 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-13 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -35325,25 +35125,6 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-12 .ev-discussion-component .ev-discussion-post-editor-input {
-  padding: 8px 12px 8px 12px;
-}
-@media all and (max-width: 768px) {
-  .ev-article-style-12 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-@media all and (max-width: 520px) {
-  .ev-article-style-12 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-.ev-article-style-12 .ev-discussion-component .ev-discussion-vote.ev-voted {
-  color: #e8e8e8;
-}
-.ev-article-style-12 .ev-discussion-component .ev-discussion-vote.ev-voted .ev-icon {
-  color: #e8e8e8;
-}
 .ev-article-style-12 .ev-dragAndDrop-component .ev-draggable-item {
   border-top: 1px none #454545;
   border-right: 1px none #454545;
@@ -35812,8 +35593,11 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-12 .ev-hotgraphic-component .ev-hotgraphic-inline-item {
+.ev-article-style-12 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-top {
   margin-bottom: 15px;
+}
+.ev-article-style-12 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-bottom {
+  margin-top: 15px;
 }
 .ev-article-style-12 .ev-hotgraphic-component .ev-hotgraphic-inline-item .ev-hotgraphic-pin {
   background-color: #0057b8;
@@ -35865,7 +35649,7 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-12 .ev-icon-component .ev-component-content-title h6 {
+.ev-article-style-12 .ev-icon-component .ev-component-content-title {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -35874,14 +35658,14 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-12 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-12 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-12 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-12 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -37124,10 +36908,6 @@ table td a {
 .ev-article-style-12 .ev-survey-component .ev-star-rating-star {
   padding: 15px 10px 15px 0;
 }
-.ev-flexbox .ev-article-style-12 .ev-survey-component .ev-survey-complete .ev-icon {
-  color: #e8e8e8;
-  padding: 15px 10px 15px 0;
-}
 .ev-article-style-12 .ev-table-widget thead th {
   border-right: 1px solid #002752;
   border-bottom: 1px solid #002752;
@@ -37350,7 +37130,7 @@ table td a {
     margin: 15px auto 0;
   }
 }
-.ev-article-style-12 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+.ev-article-style-12 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -37359,20 +37139,20 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-12 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-12 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-12 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-12 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
-[dir="rtl"] .ev-article-style-12 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+[dir="rtl"] .ev-article-style-12 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   text-align: right!important;
 }
 .ev-article-style-12 .ev-textAndGraphic-component .ev-text-graphic-item-body {
@@ -37552,7 +37332,7 @@ table td a {
   color: #ffffff;
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2);
 }
-.ev-article-style-12 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+.ev-article-style-12 .ev-textReveal-component .ev-text-reveal-item-title {
   color: #454545;
   font-family: SourceSansPro-Regular;
   font-size: 18px;
@@ -37560,18 +37340,18 @@ table td a {
   line-height: 1.25;
   text-align: left;
 }
-[dir='rtl'] .ev-article-style-12 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+[dir='rtl'] .ev-article-style-12 .ev-textReveal-component .ev-text-reveal-item-title {
   text-align: right;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-12 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-12 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-12 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-12 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -40024,25 +39804,6 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-11 .ev-discussion-component .ev-discussion-post-editor-input {
-  padding: 8px 12px 8px 12px;
-}
-@media all and (max-width: 768px) {
-  .ev-article-style-11 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-@media all and (max-width: 520px) {
-  .ev-article-style-11 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-.ev-article-style-11 .ev-discussion-component .ev-discussion-vote.ev-voted {
-  color: #e8e8e8;
-}
-.ev-article-style-11 .ev-discussion-component .ev-discussion-vote.ev-voted .ev-icon {
-  color: #e8e8e8;
-}
 .ev-article-style-11 .ev-dragAndDrop-component .ev-draggable-item {
   border-top: 1px none #454545;
   border-right: 1px none #454545;
@@ -40511,8 +40272,11 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-11 .ev-hotgraphic-component .ev-hotgraphic-inline-item {
+.ev-article-style-11 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-top {
   margin-bottom: 15px;
+}
+.ev-article-style-11 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-bottom {
+  margin-top: 15px;
 }
 .ev-article-style-11 .ev-hotgraphic-component .ev-hotgraphic-inline-item .ev-hotgraphic-pin {
   background-color: #0057b8;
@@ -40564,7 +40328,7 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-11 .ev-icon-component .ev-component-content-title h6 {
+.ev-article-style-11 .ev-icon-component .ev-component-content-title {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -40573,14 +40337,14 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-11 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-11 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-11 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-11 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -41824,10 +41588,6 @@ table td a {
 .ev-article-style-11 .ev-survey-component .ev-star-rating-star {
   padding: 15px 10px 15px 0;
 }
-.ev-flexbox .ev-article-style-11 .ev-survey-component .ev-survey-complete .ev-icon {
-  color: #e8e8e8;
-  padding: 15px 10px 15px 0;
-}
 .ev-article-style-11 .ev-table-widget thead th {
   border-right: 1px solid #002752;
   border-bottom: 1px solid #002752;
@@ -42050,7 +41810,7 @@ table td a {
     margin: 15px auto 0;
   }
 }
-.ev-article-style-11 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+.ev-article-style-11 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -42059,20 +41819,20 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-11 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-11 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-11 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-11 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
-[dir="rtl"] .ev-article-style-11 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+[dir="rtl"] .ev-article-style-11 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   text-align: right!important;
 }
 .ev-article-style-11 .ev-textAndGraphic-component .ev-text-graphic-item-body {
@@ -42252,7 +42012,7 @@ table td a {
   color: #ffffff;
   box-shadow: none;
 }
-.ev-article-style-11 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+.ev-article-style-11 .ev-textReveal-component .ev-text-reveal-item-title {
   color: #454545;
   font-family: SourceSansPro-Regular;
   font-size: 18px;
@@ -42260,18 +42020,18 @@ table td a {
   line-height: 1.25;
   text-align: left;
 }
-[dir='rtl'] .ev-article-style-11 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+[dir='rtl'] .ev-article-style-11 .ev-textReveal-component .ev-text-reveal-item-title {
   text-align: right;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-11 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-11 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-11 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-11 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -44726,25 +44486,6 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-10 .ev-discussion-component .ev-discussion-post-editor-input {
-  padding: 8px 12px 8px 12px;
-}
-@media all and (max-width: 768px) {
-  .ev-article-style-10 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-@media all and (max-width: 520px) {
-  .ev-article-style-10 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-.ev-article-style-10 .ev-discussion-component .ev-discussion-vote.ev-voted {
-  color: #e8e8e8;
-}
-.ev-article-style-10 .ev-discussion-component .ev-discussion-vote.ev-voted .ev-icon {
-  color: #e8e8e8;
-}
 .ev-article-style-10 .ev-dragAndDrop-component .ev-draggable-item {
   border-top: 1px none #454545;
   border-right: 1px none #454545;
@@ -45213,8 +44954,11 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-10 .ev-hotgraphic-component .ev-hotgraphic-inline-item {
+.ev-article-style-10 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-top {
   margin-bottom: 15px;
+}
+.ev-article-style-10 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-bottom {
+  margin-top: 15px;
 }
 .ev-article-style-10 .ev-hotgraphic-component .ev-hotgraphic-inline-item .ev-hotgraphic-pin {
   background-color: #0057b8;
@@ -45266,7 +45010,7 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-10 .ev-icon-component .ev-component-content-title h6 {
+.ev-article-style-10 .ev-icon-component .ev-component-content-title {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -45275,14 +45019,14 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-10 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-10 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-10 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-10 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -46525,10 +46269,6 @@ table td a {
 .ev-article-style-10 .ev-survey-component .ev-star-rating-star {
   padding: 15px 10px 15px 0;
 }
-.ev-flexbox .ev-article-style-10 .ev-survey-component .ev-survey-complete .ev-icon {
-  color: #e8e8e8;
-  padding: 15px 10px 15px 0;
-}
 .ev-article-style-10 .ev-table-widget thead th {
   border-right: 1px solid #002752;
   border-bottom: 1px solid #002752;
@@ -46751,7 +46491,7 @@ table td a {
     margin: 15px auto 0;
   }
 }
-.ev-article-style-10 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+.ev-article-style-10 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -46760,20 +46500,20 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-10 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-10 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-10 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-10 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
-[dir="rtl"] .ev-article-style-10 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+[dir="rtl"] .ev-article-style-10 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   text-align: right!important;
 }
 .ev-article-style-10 .ev-textAndGraphic-component .ev-text-graphic-item-body {
@@ -46953,7 +46693,7 @@ table td a {
   color: #ffffff;
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2);
 }
-.ev-article-style-10 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+.ev-article-style-10 .ev-textReveal-component .ev-text-reveal-item-title {
   color: #454545;
   font-family: SourceSansPro-Regular;
   font-size: 18px;
@@ -46961,18 +46701,18 @@ table td a {
   line-height: 1.25;
   text-align: left;
 }
-[dir='rtl'] .ev-article-style-10 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+[dir='rtl'] .ev-article-style-10 .ev-textReveal-component .ev-text-reveal-item-title {
   text-align: right;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-10 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-10 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-10 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-10 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -49427,25 +49167,6 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-8 .ev-discussion-component .ev-discussion-post-editor-input {
-  padding: 8px 12px 8px 12px;
-}
-@media all and (max-width: 768px) {
-  .ev-article-style-8 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-@media all and (max-width: 520px) {
-  .ev-article-style-8 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-.ev-article-style-8 .ev-discussion-component .ev-discussion-vote.ev-voted {
-  color: #e8e8e8;
-}
-.ev-article-style-8 .ev-discussion-component .ev-discussion-vote.ev-voted .ev-icon {
-  color: #e8e8e8;
-}
 .ev-article-style-8 .ev-dragAndDrop-component .ev-draggable-item {
   border-top: 1px none #454545;
   border-right: 1px none #454545;
@@ -49914,8 +49635,11 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-8 .ev-hotgraphic-component .ev-hotgraphic-inline-item {
+.ev-article-style-8 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-top {
   margin-bottom: 15px;
+}
+.ev-article-style-8 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-bottom {
+  margin-top: 15px;
 }
 .ev-article-style-8 .ev-hotgraphic-component .ev-hotgraphic-inline-item .ev-hotgraphic-pin {
   background-color: #0057b8;
@@ -49967,7 +49691,7 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-8 .ev-icon-component .ev-component-content-title h6 {
+.ev-article-style-8 .ev-icon-component .ev-component-content-title {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -49976,14 +49700,14 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-8 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-8 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-8 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-8 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -51226,10 +50950,6 @@ table td a {
 .ev-article-style-8 .ev-survey-component .ev-star-rating-star {
   padding: 15px 10px 15px 0;
 }
-.ev-flexbox .ev-article-style-8 .ev-survey-component .ev-survey-complete .ev-icon {
-  color: #e8e8e8;
-  padding: 15px 10px 15px 0;
-}
 .ev-article-style-8 .ev-table-widget thead th {
   border-right: 1px solid #002752;
   border-bottom: 1px solid #002752;
@@ -51452,7 +51172,7 @@ table td a {
     margin: 15px auto 0;
   }
 }
-.ev-article-style-8 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+.ev-article-style-8 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -51461,20 +51181,20 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-8 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-8 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-8 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-8 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
-[dir="rtl"] .ev-article-style-8 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+[dir="rtl"] .ev-article-style-8 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   text-align: right!important;
 }
 .ev-article-style-8 .ev-textAndGraphic-component .ev-text-graphic-item-body {
@@ -51654,7 +51374,7 @@ table td a {
   color: #ffffff;
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2);
 }
-.ev-article-style-8 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+.ev-article-style-8 .ev-textReveal-component .ev-text-reveal-item-title {
   color: #454545;
   font-family: SourceSansPro-Regular;
   font-size: 22px;
@@ -51662,18 +51382,18 @@ table td a {
   line-height: 1.25;
   text-align: left;
 }
-[dir='rtl'] .ev-article-style-8 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+[dir='rtl'] .ev-article-style-8 .ev-textReveal-component .ev-text-reveal-item-title {
   text-align: right;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-8 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-8 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-8 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-8 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -54128,25 +53848,6 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-7 .ev-discussion-component .ev-discussion-post-editor-input {
-  padding: 8px 12px 8px 12px;
-}
-@media all and (max-width: 768px) {
-  .ev-article-style-7 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-@media all and (max-width: 520px) {
-  .ev-article-style-7 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-.ev-article-style-7 .ev-discussion-component .ev-discussion-vote.ev-voted {
-  color: #e8e8e8;
-}
-.ev-article-style-7 .ev-discussion-component .ev-discussion-vote.ev-voted .ev-icon {
-  color: #e8e8e8;
-}
 .ev-article-style-7 .ev-dragAndDrop-component .ev-draggable-item {
   border-top: 1px none #454545;
   border-right: 1px none #454545;
@@ -54615,8 +54316,11 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-7 .ev-hotgraphic-component .ev-hotgraphic-inline-item {
+.ev-article-style-7 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-top {
   margin-bottom: 15px;
+}
+.ev-article-style-7 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-bottom {
+  margin-top: 15px;
 }
 .ev-article-style-7 .ev-hotgraphic-component .ev-hotgraphic-inline-item .ev-hotgraphic-pin {
   background-color: #0057b8;
@@ -54668,7 +54372,7 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-7 .ev-icon-component .ev-component-content-title h6 {
+.ev-article-style-7 .ev-icon-component .ev-component-content-title {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -54677,14 +54381,14 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-7 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-7 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-7 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-7 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -55927,10 +55631,6 @@ table td a {
 .ev-article-style-7 .ev-survey-component .ev-star-rating-star {
   padding: 15px 10px 15px 0;
 }
-.ev-flexbox .ev-article-style-7 .ev-survey-component .ev-survey-complete .ev-icon {
-  color: #e8e8e8;
-  padding: 15px 10px 15px 0;
-}
 .ev-article-style-7 .ev-table-widget thead th {
   border-right: 1px solid #002752;
   border-bottom: 1px solid #002752;
@@ -56153,7 +55853,7 @@ table td a {
     margin: 15px auto 0;
   }
 }
-.ev-article-style-7 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+.ev-article-style-7 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -56162,20 +55862,20 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-7 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-7 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-7 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-7 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
-[dir="rtl"] .ev-article-style-7 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+[dir="rtl"] .ev-article-style-7 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   text-align: right!important;
 }
 .ev-article-style-7 .ev-textAndGraphic-component .ev-text-graphic-item-body {
@@ -56355,7 +56055,7 @@ table td a {
   color: #ffffff;
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2);
 }
-.ev-article-style-7 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+.ev-article-style-7 .ev-textReveal-component .ev-text-reveal-item-title {
   color: #454545;
   font-family: SourceSansPro-Regular;
   font-size: 18px;
@@ -56363,18 +56063,18 @@ table td a {
   line-height: 1.25;
   text-align: left;
 }
-[dir='rtl'] .ev-article-style-7 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+[dir='rtl'] .ev-article-style-7 .ev-textReveal-component .ev-text-reveal-item-title {
   text-align: right;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-7 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-7 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-7 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-7 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -58827,25 +58527,6 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-6 .ev-discussion-component .ev-discussion-post-editor-input {
-  padding: 8px 12px 8px 12px;
-}
-@media all and (max-width: 768px) {
-  .ev-article-style-6 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-@media all and (max-width: 520px) {
-  .ev-article-style-6 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-.ev-article-style-6 .ev-discussion-component .ev-discussion-vote.ev-voted {
-  color: #e8e8e8;
-}
-.ev-article-style-6 .ev-discussion-component .ev-discussion-vote.ev-voted .ev-icon {
-  color: #e8e8e8;
-}
 .ev-article-style-6 .ev-dragAndDrop-component .ev-draggable-item {
   border-top: 1px none #454545;
   border-right: 1px none #454545;
@@ -59314,8 +58995,11 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-6 .ev-hotgraphic-component .ev-hotgraphic-inline-item {
+.ev-article-style-6 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-top {
   margin-bottom: 15px;
+}
+.ev-article-style-6 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-bottom {
+  margin-top: 15px;
 }
 .ev-article-style-6 .ev-hotgraphic-component .ev-hotgraphic-inline-item .ev-hotgraphic-pin {
   background-color: #0057b8;
@@ -59367,7 +59051,7 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-6 .ev-icon-component .ev-component-content-title h6 {
+.ev-article-style-6 .ev-icon-component .ev-component-content-title {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -59376,14 +59060,14 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-6 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-6 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-6 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-6 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -60626,10 +60310,6 @@ table td a {
 .ev-article-style-6 .ev-survey-component .ev-star-rating-star {
   padding: 15px 10px 15px 0;
 }
-.ev-flexbox .ev-article-style-6 .ev-survey-component .ev-survey-complete .ev-icon {
-  color: #e8e8e8;
-  padding: 15px 10px 15px 0;
-}
 .ev-article-style-6 .ev-table-widget thead th {
   border-right: 1px solid #002752;
   border-bottom: 1px solid #002752;
@@ -60852,7 +60532,7 @@ table td a {
     margin: 15px auto 0;
   }
 }
-.ev-article-style-6 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+.ev-article-style-6 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -60861,20 +60541,20 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-6 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-6 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-6 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-6 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
-[dir="rtl"] .ev-article-style-6 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+[dir="rtl"] .ev-article-style-6 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   text-align: right!important;
 }
 .ev-article-style-6 .ev-textAndGraphic-component .ev-text-graphic-item-body {
@@ -61054,7 +60734,7 @@ table td a {
   color: #ffffff;
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2);
 }
-.ev-article-style-6 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+.ev-article-style-6 .ev-textReveal-component .ev-text-reveal-item-title {
   color: #454545;
   font-family: SourceSansPro-Regular;
   font-size: 18px;
@@ -61062,18 +60742,18 @@ table td a {
   line-height: 1.25;
   text-align: left;
 }
-[dir='rtl'] .ev-article-style-6 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+[dir='rtl'] .ev-article-style-6 .ev-textReveal-component .ev-text-reveal-item-title {
   text-align: right;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-6 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-6 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-6 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-6 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -63526,25 +63206,6 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-5 .ev-discussion-component .ev-discussion-post-editor-input {
-  padding: 8px 12px 8px 12px;
-}
-@media all and (max-width: 768px) {
-  .ev-article-style-5 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-@media all and (max-width: 520px) {
-  .ev-article-style-5 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-.ev-article-style-5 .ev-discussion-component .ev-discussion-vote.ev-voted {
-  color: #e8e8e8;
-}
-.ev-article-style-5 .ev-discussion-component .ev-discussion-vote.ev-voted .ev-icon {
-  color: #e8e8e8;
-}
 .ev-article-style-5 .ev-dragAndDrop-component .ev-draggable-item {
   border-top: 1px none #454545;
   border-right: 1px none #454545;
@@ -64013,8 +63674,11 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-5 .ev-hotgraphic-component .ev-hotgraphic-inline-item {
+.ev-article-style-5 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-top {
   margin-bottom: 15px;
+}
+.ev-article-style-5 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-bottom {
+  margin-top: 15px;
 }
 .ev-article-style-5 .ev-hotgraphic-component .ev-hotgraphic-inline-item .ev-hotgraphic-pin {
   background-color: #0057b8;
@@ -64066,7 +63730,7 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-5 .ev-icon-component .ev-component-content-title h6 {
+.ev-article-style-5 .ev-icon-component .ev-component-content-title {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -64075,14 +63739,14 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-5 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-5 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-5 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-5 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -65325,10 +64989,6 @@ table td a {
 .ev-article-style-5 .ev-survey-component .ev-star-rating-star {
   padding: 15px 10px 15px 0;
 }
-.ev-flexbox .ev-article-style-5 .ev-survey-component .ev-survey-complete .ev-icon {
-  color: #e8e8e8;
-  padding: 15px 10px 15px 0;
-}
 .ev-article-style-5 .ev-table-widget thead th {
   border-right: 1px solid #002752;
   border-bottom: 1px solid #002752;
@@ -65551,7 +65211,7 @@ table td a {
     margin: 15px auto 0;
   }
 }
-.ev-article-style-5 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+.ev-article-style-5 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -65560,20 +65220,20 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-5 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-5 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-5 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-5 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
-[dir="rtl"] .ev-article-style-5 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+[dir="rtl"] .ev-article-style-5 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   text-align: right!important;
 }
 .ev-article-style-5 .ev-textAndGraphic-component .ev-text-graphic-item-body {
@@ -65753,7 +65413,7 @@ table td a {
   color: #ffffff;
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2);
 }
-.ev-article-style-5 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+.ev-article-style-5 .ev-textReveal-component .ev-text-reveal-item-title {
   color: #454545;
   font-family: SourceSansPro-Regular;
   font-size: 18px;
@@ -65761,18 +65421,18 @@ table td a {
   line-height: 1.25;
   text-align: left;
 }
-[dir='rtl'] .ev-article-style-5 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+[dir='rtl'] .ev-article-style-5 .ev-textReveal-component .ev-text-reveal-item-title {
   text-align: right;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-5 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-5 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-5 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-5 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -68225,25 +67885,6 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-4 .ev-discussion-component .ev-discussion-post-editor-input {
-  padding: 8px 12px 8px 12px;
-}
-@media all and (max-width: 768px) {
-  .ev-article-style-4 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-@media all and (max-width: 520px) {
-  .ev-article-style-4 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-.ev-article-style-4 .ev-discussion-component .ev-discussion-vote.ev-voted {
-  color: #e8e8e8;
-}
-.ev-article-style-4 .ev-discussion-component .ev-discussion-vote.ev-voted .ev-icon {
-  color: #e8e8e8;
-}
 .ev-article-style-4 .ev-dragAndDrop-component .ev-draggable-item {
   border-top: 1px none #454545;
   border-right: 1px none #454545;
@@ -68712,8 +68353,11 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-4 .ev-hotgraphic-component .ev-hotgraphic-inline-item {
+.ev-article-style-4 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-top {
   margin-bottom: 15px;
+}
+.ev-article-style-4 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-bottom {
+  margin-top: 15px;
 }
 .ev-article-style-4 .ev-hotgraphic-component .ev-hotgraphic-inline-item .ev-hotgraphic-pin {
   background-color: #0057b8;
@@ -68765,7 +68409,7 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-4 .ev-icon-component .ev-component-content-title h6 {
+.ev-article-style-4 .ev-icon-component .ev-component-content-title {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -68774,14 +68418,14 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-4 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-4 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-4 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-4 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -70024,10 +69668,6 @@ table td a {
 .ev-article-style-4 .ev-survey-component .ev-star-rating-star {
   padding: 15px 10px 15px 0;
 }
-.ev-flexbox .ev-article-style-4 .ev-survey-component .ev-survey-complete .ev-icon {
-  color: #e8e8e8;
-  padding: 15px 10px 15px 0;
-}
 .ev-article-style-4 .ev-table-widget thead th {
   border-right: 1px solid #000000;
   border-bottom: 1px solid #000000;
@@ -70250,7 +69890,7 @@ table td a {
     margin: 15px auto 0;
   }
 }
-.ev-article-style-4 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+.ev-article-style-4 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -70259,20 +69899,20 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-4 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-4 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-4 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-4 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
-[dir="rtl"] .ev-article-style-4 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+[dir="rtl"] .ev-article-style-4 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   text-align: right!important;
 }
 .ev-article-style-4 .ev-textAndGraphic-component .ev-text-graphic-item-body {
@@ -70452,7 +70092,7 @@ table td a {
   color: #ffffff;
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2);
 }
-.ev-article-style-4 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+.ev-article-style-4 .ev-textReveal-component .ev-text-reveal-item-title {
   color: #454545;
   font-family: SourceSansPro-Regular;
   font-size: 18px;
@@ -70460,18 +70100,18 @@ table td a {
   line-height: 1.25;
   text-align: left;
 }
-[dir='rtl'] .ev-article-style-4 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+[dir='rtl'] .ev-article-style-4 .ev-textReveal-component .ev-text-reveal-item-title {
   text-align: right;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-4 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-4 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-4 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-4 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -72924,25 +72564,6 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-3 .ev-discussion-component .ev-discussion-post-editor-input {
-  padding: 8px 12px 8px 12px;
-}
-@media all and (max-width: 768px) {
-  .ev-article-style-3 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-@media all and (max-width: 520px) {
-  .ev-article-style-3 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-.ev-article-style-3 .ev-discussion-component .ev-discussion-vote.ev-voted {
-  color: #e8e8e8;
-}
-.ev-article-style-3 .ev-discussion-component .ev-discussion-vote.ev-voted .ev-icon {
-  color: #e8e8e8;
-}
 .ev-article-style-3 .ev-dragAndDrop-component .ev-draggable-item {
   border-top: 1px none #454545;
   border-right: 1px none #454545;
@@ -73411,8 +73032,11 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-3 .ev-hotgraphic-component .ev-hotgraphic-inline-item {
+.ev-article-style-3 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-top {
   margin-bottom: 15px;
+}
+.ev-article-style-3 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-bottom {
+  margin-top: 15px;
 }
 .ev-article-style-3 .ev-hotgraphic-component .ev-hotgraphic-inline-item .ev-hotgraphic-pin {
   background-color: #0057b8;
@@ -73464,7 +73088,7 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-3 .ev-icon-component .ev-component-content-title h6 {
+.ev-article-style-3 .ev-icon-component .ev-component-content-title {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -73473,14 +73097,14 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-3 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-3 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-3 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-3 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -74723,10 +74347,6 @@ table td a {
 .ev-article-style-3 .ev-survey-component .ev-star-rating-star {
   padding: 15px 10px 15px 0;
 }
-.ev-flexbox .ev-article-style-3 .ev-survey-component .ev-survey-complete .ev-icon {
-  color: #e8e8e8;
-  padding: 15px 10px 15px 0;
-}
 .ev-article-style-3 .ev-table-widget thead th {
   border-right: 1px solid #b5b5b5;
   border-bottom: 1px solid #b5b5b5;
@@ -74949,7 +74569,7 @@ table td a {
     margin: 15px auto 0;
   }
 }
-.ev-article-style-3 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+.ev-article-style-3 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -74958,20 +74578,20 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-3 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-3 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-3 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-3 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
-[dir="rtl"] .ev-article-style-3 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+[dir="rtl"] .ev-article-style-3 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   text-align: right!important;
 }
 .ev-article-style-3 .ev-textAndGraphic-component .ev-text-graphic-item-body {
@@ -75151,7 +74771,7 @@ table td a {
   color: #9b1a47;
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2);
 }
-.ev-article-style-3 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+.ev-article-style-3 .ev-textReveal-component .ev-text-reveal-item-title {
   color: #454545;
   font-family: SourceSansPro-Regular;
   font-size: 18px;
@@ -75159,18 +74779,18 @@ table td a {
   line-height: 1.25;
   text-align: left;
 }
-[dir='rtl'] .ev-article-style-3 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+[dir='rtl'] .ev-article-style-3 .ev-textReveal-component .ev-text-reveal-item-title {
   text-align: right;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-3 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-3 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-3 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-3 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -77623,25 +77243,6 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-2 .ev-discussion-component .ev-discussion-post-editor-input {
-  padding: 8px 12px 8px 12px;
-}
-@media all and (max-width: 768px) {
-  .ev-article-style-2 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-@media all and (max-width: 520px) {
-  .ev-article-style-2 .ev-discussion-component .ev-discussion-post-editor-input {
-    padding: 8px 12px 8px 12px;
-  }
-}
-.ev-article-style-2 .ev-discussion-component .ev-discussion-vote.ev-voted {
-  color: #e8e8e8;
-}
-.ev-article-style-2 .ev-discussion-component .ev-discussion-vote.ev-voted .ev-icon {
-  color: #e8e8e8;
-}
 .ev-article-style-2 .ev-dragAndDrop-component .ev-draggable-item {
   border-top: 1px none #454545;
   border-right: 1px none #454545;
@@ -78110,8 +77711,11 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-2 .ev-hotgraphic-component .ev-hotgraphic-inline-item {
+.ev-article-style-2 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-top {
   margin-bottom: 15px;
+}
+.ev-article-style-2 .ev-hotgraphic-component .ev-hotgraphic-inline-item.ev-is-bottom {
+  margin-top: 15px;
 }
 .ev-article-style-2 .ev-hotgraphic-component .ev-hotgraphic-inline-item .ev-hotgraphic-pin {
   background-color: #0057b8;
@@ -78163,7 +77767,7 @@ table td a {
     line-height: 1.25;
   }
 }
-.ev-article-style-2 .ev-icon-component .ev-component-content-title h6 {
+.ev-article-style-2 .ev-icon-component .ev-component-content-title {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -78172,14 +77776,14 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-2 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-2 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-2 .ev-icon-component .ev-component-content-title h6 {
+  .ev-article-style-2 .ev-icon-component .ev-component-content-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
@@ -79422,10 +79026,6 @@ table td a {
 .ev-article-style-2 .ev-survey-component .ev-star-rating-star {
   padding: 15px 10px 15px 0;
 }
-.ev-flexbox .ev-article-style-2 .ev-survey-component .ev-survey-complete .ev-icon {
-  color: #e8e8e8;
-  padding: 15px 10px 15px 0;
-}
 .ev-article-style-2 .ev-table-widget thead th {
   border-right: 1px solid #002752;
   border-bottom: 1px solid #002752;
@@ -79648,7 +79248,7 @@ table td a {
     margin: 15px auto 0;
   }
 }
-.ev-article-style-2 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+.ev-article-style-2 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   color: #454545;
   text-align: left;
   font-family: SourceSansPro-Regular;
@@ -79657,20 +79257,20 @@ table td a {
   line-height: 1.25;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-2 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-2 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-2 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+  .ev-article-style-2 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
-[dir="rtl"] .ev-article-style-2 .ev-textAndGraphic-component .ev-text-graphic-item-title h6 {
+[dir="rtl"] .ev-article-style-2 .ev-textAndGraphic-component .ev-text-graphic-item-title-inner {
   text-align: right!important;
 }
 .ev-article-style-2 .ev-textAndGraphic-component .ev-text-graphic-item-body {
@@ -79850,7 +79450,7 @@ table td a {
   color: #ffffff;
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2);
 }
-.ev-article-style-2 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+.ev-article-style-2 .ev-textReveal-component .ev-text-reveal-item-title {
   color: #454545;
   font-family: SourceSansPro-Regular;
   font-size: 18px;
@@ -79858,18 +79458,18 @@ table td a {
   line-height: 1.25;
   text-align: left;
 }
-[dir='rtl'] .ev-article-style-2 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+[dir='rtl'] .ev-article-style-2 .ev-textReveal-component .ev-text-reveal-item-title {
   text-align: right;
 }
 @media all and (max-width: 768px) {
-  .ev-article-style-2 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-2 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
   }
 }
 @media all and (max-width: 520px) {
-  .ev-article-style-2 .ev-textReveal-component .ev-text-reveal-item-title h6 {
+  .ev-article-style-2 .ev-textReveal-component .ev-text-reveal-item-title {
     font-size: 16px;
     font-weight: 400;
     line-height: 1.25;
