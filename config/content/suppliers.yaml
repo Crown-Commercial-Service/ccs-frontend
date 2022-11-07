@@ -18,6 +18,8 @@ postcode:
   type: text
 website:
   type: text
+crp_url:
+  type: text
 trading_name:
   type: text
 slugArray:
