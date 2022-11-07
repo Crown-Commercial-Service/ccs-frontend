@@ -400,6 +400,20 @@
                                 </div>
                             </address>
 
+                            {% if supplier.content.crp_url != "" or supplier.content.crp_url != null %}
+                                <h3 class="govuk-heading-m govuk-!-font-size-17featured govuk-!-font-weight-bold">Carbon Reduction plan:</h3>
+
+                                <p class='govuk-!-padding-bottom-4'><a href="{{ fix_url(supplier.content.crp_url) }}">Read this supplier's carbon reduction plan</a></p>
+                                <details class="govuk-details" data-module="govuk-details">
+                                    <summary class="govuk-details__summary">
+                                        <span class="govuk-details__summary-text">What is a Carbon reduction plan(CRP)</span>
+                                    </summary>
+                                    <div class="govuk-details__text">
+                                        A CRP helps customers understand the impact of a supplier's operations on the environment. A CRP details an organisation's emissions across a single year against a range of emission sources and greenhouse gases. <a href="https://www.crowncommercial.gov.uk/news/5-steps-to-help-you-on-your-carbon-net-zero-journey">Learn more about CRPs</a>.
+                                    </div>
+                                </details>
+
+                            {% endif %}
                         </div>
 
                     </aside>
