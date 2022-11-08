@@ -75,7 +75,7 @@
                     {% if glossaries is defined and glossaries is not empty %}
                         <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
                             {% for key, value in glossaries %}
-                                <div class="govuk-accordion__section ">
+                                <div class="govuk-accordion__section govuk-accordion__section--expanded">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
                                             <span class="govuk-accordion__section-button" id="accordion-default-heading-1">{{ key }}</span>
@@ -84,7 +84,7 @@
                                 
                                     <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
                                         {% for glossary in value %}
-                                            <h3>{{ glossary.term }}</h3>
+                                            <h3 id='{{ glossary.term | lower |replace({' ': '_'}) }}'>{{ glossary.term }}</h3>
                                             <div class="wysiwyg-content" style="padding-left: 20px;">
                                                 {{ glossary.meaning | raw }}
                                             </div>

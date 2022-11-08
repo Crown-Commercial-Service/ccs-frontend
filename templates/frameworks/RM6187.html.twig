@@ -1,0 +1,240 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Management Consultancy Framework Three (MCF3) - CCS {% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block body %}
+    <div class="govuk-width-container">
+
+        <div class="govuk-phase-banner">
+            {% include '/includes/phase-banner-content.html.twig' %}
+        </div>
+
+        <div class="govuk-breadcrumbs">
+            <ol class="govuk-breadcrumbs__list">
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
+                </li>
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/agreements">Search
+                        agreements</a>
+                </li>
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">
+                    Management Consultancy Framework Three (MCF3)
+                </li>
+            </ol>
+        </div>
+
+        <main id="main-content" role="main" class="govuk-main-wrapper">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+
+                    <h1 class="govuk-heading-xl page-title cat-agrement-page-title">Management Consultancy Framework Three (MCF3)</h1>
+                    <p class="govuk-body-s agreement-subtitle">Access to consultancy including business, strategy and policy, finance, HR, procurement, health/social care and community, infrastructure and environment.</p>
+
+                                            
+                    <div>
+                        <p class="govuk-body agreement-overview">Agreement number: <strong> RM6187 </strong></p>
+                        <p class="govuk-body agreement-overview">Start date: <strong> 24 August 2021 </strong></p>
+                        <p class="govuk-body agreement-overview">End date: <strong> 23 August 2025 </strong></p>
+                    </div>
+                    
+                    </br>
+                    
+                    <p ><strong>Available for:</strong> Central government, the wider public sector, charities, voluntary and community organisations, education, health, local authorities, blue light (police, fire, ambulance and search and rescue), devolved administrations, social housing organisations. </p>
+
+                    </br>
+
+                    <div>
+                    <h3 class="govuk-heading-s" id="contents">Contents</h3>
+
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li> <a class="govuk-link govuk-link--no-visited-state" href="#ataglance">At a glance</a></li>
+                        <li> <a class="govuk-link govuk-link--no-visited-state" href="#products">Products and suppliers</a></li>
+                        <li> <a class="govuk-link govuk-link--no-visited-state" href="#documents">Documents</a></li>
+                        <li> <a class="govuk-link govuk-link--no-visited-state" href="#benefitsofccs">The benefits of using CCS</a>
+                        </li>
+                    </ul>
+                    </div>
+
+                    </br>
+
+                    {% include 'frameworks/RM6187-at-a-glance.html.twig'%}
+
+                    </br>
+
+
+                    <h2 class="govuk-heading-m" id="products">Products and suppliers</h2>
+
+                    <div class="govuk-inset-text">
+                        <p><strong>You can now procure online with CCS.</strong> <br>Please select a lot to start.</p>
+                    </div>
+
+                    <div class="grey-margin-bottom" id="agreement-lots"></div>
+                        <dl class="apollo-list apollo-list--definition grey-margin-bottom">
+                            <dt class="apollo-list--definition__key">
+                                <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id=RM6187&lotNum=Lot%201">Lot 1 Business</a></span>
+                            </dt>
+                            <dd class="apollo-list--definition__value">
+                                <p>Objective advice relating to strategy, structure, management or operations of an organisation. This may include identifying options with recommendations as well as implementation and delivery.</p>
+                                <p>Expires: 23/08/2025</p>
+                                <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': 'RM6187', 'lotNumber': '1' }) }}">80 suppliers</a></p>
+                            </dd>
+                        </dl>
+
+                        <dl class="apollo-list apollo-list--definition grey-margin-bottom">
+                            <dt class="apollo-list--definition__key">
+                                <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id=RM6187&lotNum=Lot%202">Lot 2 Strategy & Policy</a></span>
+                            </dt>
+                            <dd class="apollo-list--definition__value">
+                                <p>Strategic objective advice relating to corporate strategies or government policy. This may include identifying options with recommendations as well as implementation and delivery.</p>
+                                <p>Expires: 23/08/2025</p>
+                                <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': 'RM6187', 'lotNumber': '2' }) }}">36 suppliers</a></p>
+                            </dd>
+                        </dl>
+
+                        <dl class="apollo-list apollo-list--definition grey-margin-bottom">
+                            <dt class="apollo-list--definition__key">
+                                <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id=RM6187&lotNum=Lot%203">Lot 3 Complex and Transformation</a></span>
+                            </dt>
+                            <dd class="apollo-list--definition__value">
+                                <p>Objective advice on complex programmes or portfolios of work which may be multi-disciplinary and/or transformational. This may include identification of options with recommendations, as well as implementation and delivery.</p>
+                                <p>Expires: 23/08/2025</p>
+                                <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': 'RM6187', 'lotNumber': '3' }) }}">30 suppliers</a></p>
+                            </dd>
+                        </dl>
+
+                        <dl class="apollo-list apollo-list--definition grey-margin-bottom">
+                            <dt class="apollo-list--definition__key">
+                                <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id=RM6187&lotNum=Lot%204">Lot 4 Finance</a></span>
+                            </dt>
+                            <dd class="apollo-list--definition__value">
+                                <p>Objective strategic and operational financial advice. This may include identification of options with recommendations as well as implementation and delivery.</p>
+                                <p>Expires: 23/08/2025</p>
+                                <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': 'RM6187', 'lotNumber': '4' }) }}">25 suppliers</a></p>
+                            </dd>
+                        </dl>
+
+                        <dl class="apollo-list apollo-list--definition grey-margin-bottom">
+                            <dt class="apollo-list--definition__key">
+                                <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id=RM6187&lotNum=Lot%205">Lot 5 HR</a></span>
+                            </dt>
+                            <dd class="apollo-list--definition__value">
+                                <p>Objective advice on HR which may include identification of options with recommendations as well as implementation and delivery.</p>
+                                <p>Expires: 23/08/2025</p>
+                                <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': 'RM6187', 'lotNumber': '5' }) }}">29 suppliers</a></p>
+                            </dd>
+                        </dl>
+
+                        <dl class="apollo-list apollo-list--definition grey-margin-bottom">
+                            <dt class="apollo-list--definition__key">
+                                <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id=RM6187&lotNum=Lot%206">Lot 6 Procurement and Supply Chain</a></span>
+                            </dt>
+                            <dd class="apollo-list--definition__value">
+                                <p>Objective advice in relation to procurement and supply chain. This may include identification of options with recommendations as well as implementation and delivery.</p>
+                                <p>Expires: 23/08/2025</p>
+                                <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': 'RM6187', 'lotNumber': '6' }) }}">35 suppliers</a></p>
+                            </dd>
+                        </dl>
+
+                        <dl class="apollo-list apollo-list--definition grey-margin-bottom">
+                            <dt class="apollo-list--definition__key">
+                                <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id=RM6187&lotNum=Lot%207">Lot 7 Health, Social Care and Community</a></span>
+                            </dt>
+                            <dd class="apollo-list--definition__value">
+                                <p>Objective specialist advice in areas related to health, social care and / or community. This may include identification of options with recommendations as well as implementation and delivery.</p>
+                                <p>Expires: 23/08/2025</p>
+                                <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': 'RM6187', 'lotNumber': '7' }) }}">41 suppliers</a></p>
+                            </dd>
+                        </dl>
+
+                        <dl class="apollo-list apollo-list--definition grey-margin-bottom">
+                            <dt class="apollo-list--definition__key">
+                                <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id=RM6187&lotNum=Lot%208">Lot 8 Infrastructure Including Transport</a></span>
+                            </dt>
+                            <dd class="apollo-list--definition__value">
+                                <p>Objective specialist advice on areas related to infrastructure and/or transport. This may include identification of options with recommendations.</p>
+                                <p>Expires: 23/08/2025</p>
+                                <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': 'RM6187', 'lotNumber': '8' }) }}">44 suppliers</a></p>
+                            </dd>
+                        </dl>
+
+                        <dl class="apollo-list apollo-list--definition grey-margin-bottom">
+                            <dt class="apollo-list--definition__key">
+                                <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id=RM6187&lotNum=Lot%209">Lot 9 Environmental Sustainability & Socio-Economic Development</a></span>
+                            </dt>
+                            <dd class="apollo-list--definition__value">
+                                <p>Objective strategic advice in areas related to environmental and/or sustainability. This may include identification of options with recommendations as well as implementation and delivery.</p>
+                                <p>Expires: 23/08/2025</p>
+                                <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': 'RM6187', 'lotNumber': '9' }) }}">41 suppliers</a></p>
+                            </dd>
+                        </dl>
+
+                    {% include 'frameworks/RM6187-document-section.html.twig'%}
+
+                    </br>
+
+                    <div>
+                        <h2 class="govuk-heading-m" id="benefitsofccs">The benefits of using CCS</h2>
+                        <iframe src="https://www.youtube-nocookie.com/embed/mn-3isisTGM" allowfullscreen="" width="560" height="315"></iframe>
+                    </div>
+
+                    <div class="app-c-print-link">
+                        <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">Print this page</button>
+                    </div>
+
+                </div>
+
+                <div class="govuk-grid-column-one-third">
+
+                    <aside class="aside">
+                        <div class="apollo-enclosure">
+                            <h2 class="aside__heading">Contact</h2>
+                            <p >You can contact us by email, phone or using the <a class="govuk-link" href="/contact">enquiry form</a>.</p>
+
+                            <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Email:</h3>
+                            <p ><a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a></p>
+
+                            <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Telephone:</h3>
+                            <p ><a href="tel:03454102222">0345 410 2222</a></p>
+
+                            <p >CCS customer services team is available Monday to Friday, 9am to 5pm.</p>
+                        </div>
+                        <div class="apollo-enclosure">
+                            <h2 class="aside__heading">Do you need an accessible version of a document?</h2>
+                            <br />
+                            <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Email:</h3>
+                            <p ><a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a></p>
+
+                            <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Telephone:</h3>
+                            <p ><a href="tel:03454102222">0345 410 2222</a></p>
+                        </div>
+
+                    </aside>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
+
+
+
+{% block nonblocking_javascript %}
+    <script>
+        const detailsSummarySpan = document.getElementById("details-summary");
+
+        detailsSummarySpan.addEventListener('click', event => {
+            if(document.getElementById("details-summary").textContent == "Show previous updates"){
+                document.getElementById("details-summary").textContent="Hide previous updates";
+            }else{
+                document.getElementById("details-summary").textContent="Show previous updates";
+            }
+        });
+    </script>
+{% endblock %}
