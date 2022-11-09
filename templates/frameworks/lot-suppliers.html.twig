@@ -64,7 +64,6 @@
 
                <ul class="govuk-list govuk-list--suppliers">
                   {% for item in results %}
-                        {# <p>CRP URL{{item.content.supplier_crp_url}}</p> #}
                       <li>
                          <h3 class="{{ item.content.supplier_crp_url ? 'ccs-tag--inline' : '' }} govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
                              <a href="{{ path('suppliers_show', {'id': item.content.supplier_id, 'slug': slugify(item.content.supplier_name|trim)} ) }}">{{ item.content.supplier_name }}</a></h3>
