@@ -112,7 +112,7 @@
                     {% endif %}
 
                     {% if lot.expiry_date is defined and lot.expiry_date is not null and lot.expiry_date >= framework.content.end_date %}
-                        <p>Expired: {{ lot.expiry_date.format('d/m/Y') }}</p>
+                        <p>Expires: {{ lot.expiry_date.format('d/m/Y') }}</p>
                     {% endif %}
 
                     {% if lot.suppliers|length == 0 %}
