@@ -104,7 +104,7 @@
         {% for lot in framework.content.lots %}
             <dl class="apollo-list apollo-list--definition grey-margin-bottom">
                 <dt class="apollo-list--definition__key">
-                    <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id={{ framework.content.rm_number }}&lotNum=Lot%20{{ lot.lot_number }}">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
+                    <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id={{ framework.content.rm_number }}&lotNum={{ lot.lot_number }}">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
                 </dt>
                 <dd class="apollo-list--definition__value">
                     {% if lot.description %}
