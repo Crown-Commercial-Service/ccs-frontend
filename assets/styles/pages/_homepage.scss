@@ -137,7 +137,7 @@
     }
 
     .govuk-hero-content {
-        background-image: url('/assets/images/homepage-hero-default.jpg');
+        background-image: url('/assets/images/CNZ_website_takeover_banner.jpg');
         background-repeat: no-repeat;
         background-size: 100% 100%;
         // full width image
@@ -156,7 +156,9 @@
             position: absolute;
             top: 0px;
             bottom: 0px;
-            right:50.5%;
+            // right:50.5%;
+            right: 0px;
+            left:57.5%;
             float:right;
             width: 40%;
             display: table;
