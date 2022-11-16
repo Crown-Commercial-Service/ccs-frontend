@@ -188,10 +188,6 @@ class FormController extends AbstractController
             'callback'      => $params->get('00Nb0000009IXEg', null)
         ];
 
-        if ($params->get('complaint')) {
-            $formData['complaint'] = $params->get('complaint', null);
-        }
-
         if (!empty($formData)) {
             $formErrors = $this->validateContactCCS($formData);
 
