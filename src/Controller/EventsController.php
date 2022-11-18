@@ -103,11 +103,73 @@ class EventsController extends AbstractController
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Event not found', $e);
         }
-
+        
         $data = [
-            'event'       => $event
+            'event'       => $event,
+            'schema'      => $this->createEventSchemaJSON($event)
         ];
 
         return $this->render('events/show.html.twig', $data);
+    }
+
+    private function createEventSchemaJSON($event) {
+        $content = array($event->getContent());
+       
+        $online = array(
+            "@type" => "VirtualLocation",
+            "url" => ($content[0]['cta_destination']->getValue())
+        );
+            
+        $in_person = array(
+            "@type" => "Place",
+            "name" =>  $content[0]['place_name']->getValue(),
+            "address" => array(
+                "@type" => "PostalAddress",
+                "streetAddress" => $content[0]['street_address']->getValue(),
+                "addressLocality" => $content[0]['address_locality']->getValue(),
+                "postalCode" => $content[0]['postal_code']->getValue(),
+                "addressRegion" => $content[0]['address_region']->getValue(),
+                "addressCountry" => $content[0]['address_country']->getValue()
+            )
+        );
+
+        $location = [];
+        $hybrid = array($online, $in_person);
+        $eventAttendanceMode = '';
+
+        switch($content[0]['location_type']) {
+            case "In Person":
+                $eventAttendanceMode = "https://schema.org/OfflineEventAttendanceMode";
+                $location = $in_person;
+                break;
+            case "Online": 
+                $eventAttendanceMode = "https://schema.org/OnlineEventAttendanceMode";
+                $location = $online;
+                break;
+            case "Online and In Person": 
+                $eventAttendanceMode = "https://schema.org/MixedEventAttendanceMode";
+                $location = $hybrid;
+                break;
+        }
+
+        $schema = array(
+            "@context" => "https://schema.org",
+            "@type" => "Event",
+            "name" => $event->getTitle(),
+            "startDate" => date_format($content[0]['start_datetime']->getValue(), 'c'),
+            "endDate" => date_format($content[0]['end_datetime']->getValue(), 'c'),
+            "eventAttendanceMode" => $eventAttendanceMode,
+            "eventStatus" => "https://schema.org/EventScheduled",
+            "location" => $location,
+            "image" => $event->getFeaturedImage(),
+            "description" => strip_tags($content[0]['description']->getValue()),
+            "organizer" => array(
+                "@type" => "Organization",
+                "name" => "Crown Commercial Service",
+                "url" => $content[0]['cta_destination']->getValue()
+            )
+        );
+
+        return json_encode($schema);
     }
 }
