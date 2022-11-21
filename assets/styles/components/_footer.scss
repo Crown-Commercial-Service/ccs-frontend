@@ -67,9 +67,107 @@
 
 }
 
+.social-links {
+        margin-left: auto;
+        margin-top: 0px;
+        margin-right: 8px;
+}
+
 
 .apollo-island--emphasised + .footer-global {
 
     margin-top: 0;
+
+}
+
+.govuk-footer__navigation {
+    width: 70%;
+}
+
+.govuk-footer__meta {
+    align-items: initial;
+
+    
+}
+
+.govuk-footer-width-15 {
+    width: 25%;
+    margin-top:60px;
+}
+
+.govuk-footer__meta-item {
+    margin-left: auto;
+    margin-bottom: 15px;
+}
+
+.govuk-footer-logo-align-right {
+        display: flex;
+        flex-direction: column;
+        padding-left: 30px;
+        margin-left: 55px;
+        margin-right: 0px;
+        margin-top:30px;
+}
+
+.govuk-footer-mobile-logo-view {
+    display: none;
+}
+
+.govuk-footer__inline-list-item {
+    margin-right: 30px;
+}
+
+.govuk-footer__copyright-display-block {
+    display: block;
+}
+
+@media (max-width: 717px) {
+
+    .govuk-footer__navigation {
+            flex-direction: column;
+            width: 100%;
+    }
+
+    .govuk-footer__inline-list-item {
+            margin-right: 0px;
+            display: list-item;
+     }
+
+    .govuk-footer-width-15 {
+            width: 100%;
+            margin-top: 0px;
+    }
+
+    .govuk-footer__meta {
+           flex-direction: column;
+     }
+
+    .govuk-footer-logo-align-right {
+             display: block;
+             flex-direction: column;
+             padding-left: 0;
+             margin-left: 15px;
+             margin-right: 0;
+             margin-top: 30px;
+    }
+
+    .govuk-footer-logo-margin-left-10 {
+        margin-left:-10px;
+    }
+
+    .footer-logo-margin-bottom-20 {
+        margin-bottom: 20px!important;
+    }
+
+    .govuk-footer-web-logo-view {
+        display: none;
+    }
+
+    govuk-footer-mobile-logo-view {
+        display: block;
+    }
+
+
+
 
 }
