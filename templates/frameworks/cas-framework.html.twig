@@ -95,6 +95,12 @@
 
         <h2 class="govuk-heading-m" id="products">Products and suppliers</h2>
 
+        {% if framework.content.rm_number ==  "RM1557.13" %}
+            <p>The functionality that enables you to view the details of all service lines presented on G-Cloud 13, is not currently available. CCS is aware of this and is working to reinstate the functionality as soon as possible. We are expecting full supplier transparency functionality to be delivered before the end of December 2022. We apologise for any inconvenience and ask for your patience while we work to resolve this. There is no need to raise this with CCS Customer Service Centre.</p>
+    
+            <p>If you are a G-Cloud 13 Lot 1,2, or 3 supplier, you do not need to register with the Public Procurement Gateway (PPG) in order to gain access to your G-Cloud 13 entries or to use the functionality referenced above.</p>
+        {% endif %}
+
         <div class="govuk-inset-text">
             <p ><strong>You can now procure online with CCS.</strong> <br>Please select a lot to start.</p>
         </div>
@@ -104,7 +110,7 @@
         {% for lot in framework.content.lots %}
             <dl class="apollo-list apollo-list--definition grey-margin-bottom">
                 <dt class="apollo-list--definition__key">
-                    <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id={{ framework.content.rm_number }}&lotNum=Lot%20{{ lot.lot_number }}">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
+                    <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id={{ framework.content.rm_number }}&lotNum={{ lot.lot_number }}">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
                 </dt>
                 <dd class="apollo-list--definition__value">
                     {% if lot.description %}
@@ -112,14 +118,14 @@
                     {% endif %}
 
                     {% if lot.expiry_date is defined and lot.expiry_date is not null and lot.expiry_date >= framework.content.end_date %}
-                        <p>Expired: {{ lot.expiry_date.format('d/m/Y') }}</p>
+                        <p>Expires: {{ lot.expiry_date.format('d/m/Y') }}</p>
                     {% endif %}
 
-                    {% if lot.suppliers|length == 0 %}
+                    {# {% if lot.suppliers|length == 0 %}
                         <p>No suppliers</p>
                     {% else %}
                         <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }} suppliers</a> </p>
-                    {% endif %}
+                    {% endif %} #}
 
                 </dd>
             </dl>

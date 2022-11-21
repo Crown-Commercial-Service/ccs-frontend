@@ -59,9 +59,16 @@
 		<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="benefits" role="tabpanel" aria-labelledby="tab_benefits">
 			<div class="wysiwyg-content">
 				{{ framework.content.benefits | raw }}
+				{# {% if framework.content.crp_compliant %} 
+					<div>
+						<h4>Carbon Reduction Plans (Public Procurement Notice 06/21)</h4>
+						<p>Suppliers on this framework comply with all 3 sections of 
+						<a href="https://www.gov.uk/government/publications/procurement-policy-note-0621-taking-account-of-carbon-reduction-plans-in-the-procurement-of-major-government-contracts" 
+						class="govuk-link">Procurement Policy Note 06/21: 'Taking account of Carbon Reduction Plans in the procurement of major government contracts'</a>. This means that suppliers have committed to, or have already published their carbon reduction plans. You can see a supplier's Carbon Reduction Plan on their individual supplier details page.</p>
+					</div>
+				{% endif %} #}
 			</div>
 		</div>
     {% endif %}
-
 </div>
 </div>

@@ -38,6 +38,24 @@
 
 }
 
+.ccs-tag--crp {
+    background-color: #37a895;
+    vertical-align: text-bottom;
+    font-size: 1.15rem;
+    font-weight: bold;
+    margin: 0 8px;
+    white-space: nowrap;
+    display: inline;
+    a {
+        color: white;
+        text-decoration: none;
+    }
+}
+
+.ccs-tag--inline {
+    display: inline;
+}
+
 .page-title .govuk-tag {
 
     position: relative;
