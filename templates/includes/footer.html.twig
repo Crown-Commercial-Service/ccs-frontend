@@ -4,29 +4,6 @@
         <div class="govuk-footer__navigation">
 
             <div class="govuk-footer__section">
-                <a class="govuk-footer__link logo" href="/"><img src="/assets/images/CCS_WHITE_SML_AW.png" alt="Go to the CCS homepage"></a>
-
-                <ul class="list list--inline social-links">
-                    <li>
-                        <a href="https://twitter.com/gov_procurement" class="govuk-footer__link">
-                            <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
-                            </span> <span class="visuallyhidden">Follow us on Twitter</span></a>
-                    </li>
-                    <li>
-                        <a href="https://www.linkedin.com/company/government-procurement-service/" class="govuk-footer__link">
-                            <span class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/></svg>
-                            </span> <span class="visuallyhidden">Connect with us on LinkedIn</span></a>
-                    </li>
-                </ul>
-
-                <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">©
-                    Crown copyright</a>
-
-            </div>
-
-            <div class="govuk-footer__section">
 
                 {{ render(controller(
                     'App\\Controller\\MenuController::menu',
@@ -43,16 +20,61 @@
                 )) }}
 
             </div>
-
-            <div class="govuk-footer__section">
+        </div>
+        <hr class="govuk-footer__section-break govuk-footer__heading ">
+        <div class="govuk-footer__meta">
+             <div class="govuk-footer__section govuk-footer-width-15">
 
                 {{ render(controller(
                     'App\\Controller\\MenuController::menu',
-                    { 'id': 25, 'currentPath': app.request.pathinfo, 'templatePath': 'menus/footer-menu.html.twig' }
+                    { 'id': 25, 'currentPath': app.request.pathinfo, 'templatePath': 'menus/footer-menu.html.twig', 'inlineMenu': true }
                 )) }}
 
             </div>
+            <div class="govuk-footer__section govuk-footer-logo-align-right govuk-footer-web-logo-view">
+                <div class="govuk-footer__meta-item">
+                    <a class="govuk-footer__link govuk-footer__copyright-logo govuk-footer__copyright-display-block " href="/" alt="Go to Homepage"></a>
+                    <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">©
+                    Crown copyright</a>
+                </div>
 
+                <ul class="list list--inline social-links">
+                    <li>
+                        <a href="https://twitter.com/gov_procurement" class="govuk-footer__link">
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                            </span> <span class="visuallyhidden">Follow us on Twitter</span></a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/company/government-procurement-service/" class="govuk-footer__link">
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/></svg>
+                            </span> <span class="visuallyhidden">Connect with us on LinkedIn</span></a>
+                    </li>
+                </ul>
+            </div>
+            {# mobile logo #}
+            <div class="govuk-footer__section govuk-footer-logo-align-right govuk-footer-mobile-logo-view">
+                <div class="govuk-footer__meta-item govuk-footer-logo-margin-left-10">
+                    <a href="/" class="logo footer-logo-margin-bottom-20"><img srcset="/assets/images/CCS_WHITE_SML_AW.png, /assets/images/CCS_BLACK_SML_AW.png" src="/assets/images/CCS_WHITE_SML_AW.png" alt="Go to the CCS homepage"></a>
+                </div>
+
+                <ul class="list list--inline social-links">
+                    <li>
+                        <a href="https://twitter.com/gov_procurement" class="govuk-footer__link">
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                            </span> <span class="visuallyhidden">Follow us on Twitter</span></a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/company/government-procurement-service/" class="govuk-footer__link">
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/></svg>
+                            </span> <span class="visuallyhidden">Connect with us on LinkedIn</span></a>
+                    </li>
+                </ul>
+                <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">©Crown copyright</a>
+            </div>
         </div>
     </div>
 </footer>
