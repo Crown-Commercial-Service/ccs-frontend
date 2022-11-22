@@ -103,7 +103,7 @@ class EventsController extends AbstractController
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Event not found', $e);
         }
-        
+
         $data = [
             'event'       => $event,
             'schema'      => $this->createEventSchemaJSON($event)
@@ -112,14 +112,15 @@ class EventsController extends AbstractController
         return $this->render('events/show.html.twig', $data);
     }
 
-    private function createEventSchemaJSON($event) {
+    private function createEventSchemaJSON($event)
+    {
         $content = array($event->getContent());
-       
+
         $online = array(
             "@type" => "VirtualLocation",
             "url" => ($content[0]['cta_destination']->getValue())
         );
-            
+
         $inPerson = array(
             "@type" => "Place",
             "name" =>  $content[0]['place_name']->getValue(),
@@ -136,16 +137,16 @@ class EventsController extends AbstractController
         $location = [];
         $eventAttendanceMode = '';
 
-        switch($content[0]['location_type']) {
+        switch ($content[0]['location_type']) {
             case "In Person":
                 $eventAttendanceMode = "https://schema.org/OfflineEventAttendanceMode";
                 $location = $inPerson;
                 break;
-            case "Online": 
+            case "Online":
                 $eventAttendanceMode = "https://schema.org/OnlineEventAttendanceMode";
                 $location = $online;
                 break;
-            case "Online and In Person": 
+            case "Online and In Person":
                 $eventAttendanceMode = "https://schema.org/MixedEventAttendanceMode";
                 $location = array($online, $inPerson);
                 break;
