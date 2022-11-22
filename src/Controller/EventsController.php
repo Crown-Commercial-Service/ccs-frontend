@@ -121,18 +121,21 @@ class EventsController extends AbstractController
             "url" => ($content[0]['cta_destination']->getValue())
         );
 
-        $inPerson = array(
-            "@type" => "Place",
-            "name" =>  $content[0]['place_name']->getValue(),
-            "address" => array(
-                "@type" => "PostalAddress",
-                "streetAddress" => $content[0]['street_address']->getValue(),
-                "addressLocality" => $content[0]['address_locality']->getValue(),
-                "postalCode" => $content[0]['postal_code']->getValue(),
-                "addressRegion" => $content[0]['address_region']->getValue(),
-                "addressCountry" => $content[0]['address_country']->getValue()
-            )
-        );
+        $inPerson = [];
+        if ($content[0]['place_name']) {
+            $inPerson = array(
+                "@type" => "Place",
+                "name" =>  $content[0]['place_name']->getValue(),
+                "address" => array(
+                    "@type" => "PostalAddress",
+                    "streetAddress" => $content[0]['street_address']->getValue(),
+                    "addressLocality" => $content[0]['address_locality']->getValue(),
+                    "postalCode" => $content[0]['postal_code']->getValue(),
+                    "addressRegion" => $content[0]['address_region']->getValue(),
+                    "addressCountry" => $content[0]['address_country']->getValue()
+                )
+            );
+        }
 
         $location = [];
         $eventAttendanceMode = '';
