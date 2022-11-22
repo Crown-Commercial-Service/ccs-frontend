@@ -120,7 +120,7 @@ class EventsController extends AbstractController
             "url" => ($content[0]['cta_destination']->getValue())
         );
             
-        $in_person = array(
+        $inPerson = array(
             "@type" => "Place",
             "name" =>  $content[0]['place_name']->getValue(),
             "address" => array(
@@ -134,13 +134,12 @@ class EventsController extends AbstractController
         );
 
         $location = [];
-        $hybrid = array($online, $in_person);
         $eventAttendanceMode = '';
 
         switch($content[0]['location_type']) {
             case "In Person":
                 $eventAttendanceMode = "https://schema.org/OfflineEventAttendanceMode";
-                $location = $in_person;
+                $location = $inPerson;
                 break;
             case "Online": 
                 $eventAttendanceMode = "https://schema.org/OnlineEventAttendanceMode";
@@ -148,7 +147,7 @@ class EventsController extends AbstractController
                 break;
             case "Online and In Person": 
                 $eventAttendanceMode = "https://schema.org/MixedEventAttendanceMode";
-                $location = $hybrid;
+                $location = array($online, $inPerson);
                 break;
         }
 
