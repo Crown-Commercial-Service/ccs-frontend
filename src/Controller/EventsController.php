@@ -122,7 +122,7 @@ class EventsController extends AbstractController
         );
 
         $inPerson = [];
-        if ($content[0]['place_name']) {
+        if (array_key_exists('place_name', $content[0])) {
             $inPerson = array(
                 "@type" => "Place",
                 "name" =>  $content[0]['place_name']->getValue(),
