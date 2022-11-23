@@ -169,7 +169,7 @@ class EventsController extends AbstractController
             "organizer" => array(
                 "@type" => "Organization",
                 "name" => "Crown Commercial Service",
-                "url" => $content[0]['cta_destination']->getValue()
+                "url" => "https://www.crowncommercial.gov.uk/"
             )
         );
 
