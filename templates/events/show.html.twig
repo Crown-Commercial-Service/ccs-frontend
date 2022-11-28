@@ -75,7 +75,14 @@
                             <div class="event-detail__location">
                                 <h2 class="govuk-heading-s">Location</h2>
                                 {% if (event.content.location_type == 'In Person' or event.content.location_type == 'Online and In Person')%}
-                                    <p>{{ event.content.street_address|raw }} {{"\n"|nl2br}} {{ event.content.address_region|raw }}, {{ event.content.address_locality|raw }}</p>
+                                    <p class="govuk-!-margin-0" >{{ event.content.street_address|raw }} </p>
+
+                                    {% if event.content.address_region != "" %}
+                                    <p class="govuk-!-margin-0" >{{ event.content.address_region|raw }}, {{ event.content.address_locality|raw }}</p>
+                                    {% else %}
+                                    <p class="govuk-!-margin-0" >{{ event.content.address_locality|raw }}</p>
+                                    {% endif %}
+                                    <br/>
                                 {% endif %}
                                 {% if event.content.location_type == 'Online and In Person' %}
                                     <p>Available online and in person</p>
@@ -86,7 +93,6 @@
 
                             </div>
                         {% endif %}
-
                         {% if event.content.secondary_cta_destination is not empty and event.content.secondary_cta_label is not empty %}
                             <a class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button" href="{{ event.content.secondary_cta_destination }}">{{ event.content.secondary_cta_label }}</a>
                         {% endif %}
@@ -97,82 +103,8 @@
 
     </div>
 
-<script id="ldjson" type="application/ld+json"></script>
-<script type="text/javascript">
-
-    window.onload = () => {
-
-        const eventName = '{{ event.title|raw }}';
-        const eventURL = '{{ event.content.cta_destination }}';
-        const placeName = '{{ event.content.place_name }}';
-        const streetAddress = '{{ event.content.street_address }}';
-        const addressLocality = '{{ event.content.address_locality }}';
-        const postalCode = '{{ event.content.postal_code }}';
-        const addressRegion = '{{ event.content.address_region }}';
-        const addressCountry = '{{ event.content.address_country }}';
-        const locationType = '{{ event.content.location_type }}';
-        const startDateTime = '{{ event.content.start_datetime }}';
-        const endDateTime = '{{ event.content.end_datetime }}';
-        const image = '{{ event.content.image }}';
-        const description = $("#event_description").text();
-
-        const online = {
-            "@type": "VirtualLocation",
-            "url": eventURL
-        }
-
-        const in_person = {
-            "@type": "Place",
-            "name": placeName,
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": streetAddress,
-                "addressLocality": addressLocality,
-                "postalCode": postalCode,
-                "addressRegion": addressRegion,
-                "addressCountry": addressCountry
-            }
-        }
-
-        const hybrid = [ online, in_person ];
-
-        let eventAttendanceMode = "";
-        let location = {};
-
-        switch(locationType) {
-            case "In Person":
-                eventAttendanceMode = "https://schema.org/OfflineEventAttendanceMode";
-                location = in_person;
-                break;
-            case "Online": eventAttendanceMode = "https://schema.org/OnlineEventAttendanceMode";
-                location = online;
-                break;
-            case "Online and In Person": eventAttendanceMode = "https://schema.org/MixedEventAttendanceMode";
-                location = hybrid;
-                break;
-        }
-
-        document.getElementById('ldjson').innerHTML = JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "Event",
-                "name": eventName,
-                "startDate": startDateTime,
-                "endDate": endDateTime,
-                "eventAttendanceMode": eventAttendanceMode,
-                "eventStatus": "https://schema.org/EventScheduled",
-                "location": location,
-                "image": [
-                    image
-                ],
-                "description": description,
-                "organizer": {
-                    "@type": "Organization",
-                    "name": "Crown Commercial Service",
-                    "url": eventURL
-                }
-                });
-    }
-
-</script>
+    <script id="ldjson" type="application/ld+json">
+    {{ schema|raw }}
+    </script>
 
 {% endblock %}

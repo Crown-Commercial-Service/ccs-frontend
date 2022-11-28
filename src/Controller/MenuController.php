@@ -44,7 +44,7 @@ class MenuController extends AbstractController
      * @param string $currentPath
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function menu(int $id, string $currentPath, string $templatePath = 'menus/default-menu.html.twig')
+    public function menu(int $id, string $currentPath, string $templatePath = 'menus/default-menu.html.twig', bool $inlineMenu = false)
     {
         $id = (int) filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
@@ -68,6 +68,7 @@ class MenuController extends AbstractController
         return $this->render($templatePath, [
             'menu' => $menu,
             'currentPath' => $currentPath,
+            'inlineMenu' => $inlineMenu,
         ]);
     }
 }
