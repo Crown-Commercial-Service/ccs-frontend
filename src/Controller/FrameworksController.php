@@ -673,7 +673,8 @@ class FrameworksController extends AbstractController
         return(false);
     }
 
-    private function showCRP($rm_number) {
+    private function showCRP($rm_number)
+    {
         $CRP_EXCLUDED_FRAMEWORKS = array('RM6269', 'RM6263', 'RM6282', 'RM6186', 'RM6195', 'RM6232', 'RM6248', 'RM6257');
         return !in_array($rm_number, $CRP_EXCLUDED_FRAMEWORKS);
     }
