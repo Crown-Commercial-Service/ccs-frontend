@@ -90,9 +90,9 @@
     
 }
 
-.govuk-footer-width-15 {
-    width: 25%;
-    margin-top:60px;
+.govuk-footer-width-45 {
+    width: 45%;
+    margin-top:55px;
 }
 
 .govuk-footer__meta-item {
@@ -114,7 +114,8 @@
 }
 
 .govuk-footer__inline-list-item {
-    margin-right: 30px;
+    margin-right: 40px;
+    margin-top: 5px;
 }
 
 .govuk-footer__copyright-display-block {
@@ -130,10 +131,11 @@
 
     .govuk-footer__inline-list-item {
             margin-right: 0px;
+            margin-top: 0px;
             display: list-item;
      }
 
-    .govuk-footer-width-15 {
+    .govuk-footer-width-45 {
             width: 100%;
             margin-top: 0px;
     }
