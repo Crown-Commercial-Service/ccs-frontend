@@ -122,6 +122,10 @@
     display: block;
 }
 
+.govuk-footer-remove-flex-grow {
+    flex-grow: 1!important;
+}
+
 @media (max-width: 717px) {
 
     .govuk-footer__navigation {
