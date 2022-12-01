@@ -189,14 +189,13 @@
                                             <div class="wysiwyg-content">
                                                 {{ framework.content.benefits | raw }}
                                             </div>
-                                            {# {% if framework.content.crp_compliant %}
+                                            {% if framework.content.crp_compliant and show_crp %}
                                                 <div>
                                                     <h3>Carbon Reduction Plans (Public Procurement Notice 06/21)</h3>
-                                                    <p>Suppliers on this framework comply with all 3 sections of 
-                                                    <a href="https://www.gov.uk/government/publications/procurement-policy-note-0621-taking-account-of-carbon-reduction-plans-in-the-procurement-of-major-government-contracts" 
-                                                    class="govuk-link">Procurement Policy Note 06/21: 'Taking account of Carbon Reduction Plans in the procurement of major government contracts'</a>. This means that suppliers have committed to, or have already published their carbon reduction plans. You can see a supplier's Carbon Reduction Plan on their individual supplier details page.</p>
+                                                    <p>Some of the suppliers for this agreement have agreed to comply with the <a href="https://www.gov.uk/government/publications/procurement-policy-note-0621-taking-account-of-carbon-reduction-plans-in-the-procurement-of-major-government-contracts" 
+                                                    class="govuk-link">Procurement Policy Note 06/21: 'Taking account of Carbon Reduction Plans in the procurement of major government contracts'</a>. If a supplier has published a carbon reduction plan, you can find it on their individual supplier details page.</p>
                                                 </div>
-                                            {% endif %} #}
+                                            {% endif %}
                                         </div>
                                     </div>
                                 {% endif %}
