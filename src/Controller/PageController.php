@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use App\Controller\SharedController;
 
 class PageController extends AbstractController
 {
@@ -47,8 +48,13 @@ class PageController extends AbstractController
      */
     protected $glossaryApi;
 
+    protected $sharedController;
+
     public function __construct(CacheItemPoolInterface $cache)
     {
+
+        $this->sharedController = new SharedController();
+
         $this->api = new Wordpress(
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
@@ -200,6 +206,8 @@ class PageController extends AbstractController
             }
         }
 
+        $cscMessage = $this->sharedController->getCSCMessage();
+
         return $this->render('pages/page.html.twig', [
             'page'                       => $page,
             'breadcrumb_parents'         => $breadcrumb,
@@ -211,6 +219,7 @@ class PageController extends AbstractController
             'formErrors'                 => $formErrors,
             'formData'                   => $formData,
             'featureNewsProperties'      => $featureNewsProperties,
+            'cscMessage'                 => $cscMessage
          ]);
     }
 

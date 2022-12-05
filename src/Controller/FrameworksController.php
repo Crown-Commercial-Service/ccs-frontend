@@ -35,8 +35,13 @@ class FrameworksController extends AbstractController
      */
     protected $searchApi;
 
+    protected $sharedController;
+
     public function __construct(CacheItemPoolInterface $cache)
     {
+
+        $this->sharedController = new SharedController();
+
         $this->api = new RestData(
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
@@ -437,9 +442,12 @@ class FrameworksController extends AbstractController
 
         $content = $results->getContent();
 
+        $cscMessage = $this->sharedController->getCSCMessage();
+
         $data = [
-            'framework' => $results,
-            'show_crp' => $this->showCRP($content['rm_number']->getValue())
+            'framework'     => $results,
+            'show_crp'      => $this->showCRP($content['rm_number']->getValue()),
+            'cscMessage'    => $cscMessage
         ];
         return $this->render('frameworks/show.html.twig', $data);
     }

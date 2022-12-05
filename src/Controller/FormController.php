@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Psr16Cache;
+use App\Controller\SharedController;
 
 /**
  * Form controller
@@ -35,8 +36,13 @@ class FormController extends AbstractController
 
     protected $client;
 
+    protected $sharedController;
+
     public function __construct(CacheItemPoolInterface $cache)
     {
+
+        $this->sharedController = new SharedController();
+
         $this->api = new RestData(
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
@@ -163,8 +169,11 @@ class FormController extends AbstractController
     {
         $referrer = $request->headers->get('referer');
 
+        $cscMessage = $this->sharedController->getCSCMessage();
+
         $data = [
-            'referrer' => $referrer
+            'referrer'      => $referrer,
+            'cscMessage'    => $cscMessage
         ];
 
         return $this->render('forms/22-contact.html.twig', $data);
