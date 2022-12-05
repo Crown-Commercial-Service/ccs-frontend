@@ -637,7 +637,7 @@
                         this.responseAvailable = false;
                         this.emptyResult = false;
 
-                        var requestUrl = this.searchRequestUrl(categoriesSlug, page === null ? this.currentPage : 1);
+                        var requestUrl = this.searchRequestUrl(categoriesSlug, this.currentPage);
                         //console.log(requestUrl);
                         fetch(requestUrl)
                         .then(async function(response) {
