@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Utils\FrameworkCategories;
+use App\Helper\ControllerHelper;
 use Symfony\Component\Cache\Psr16Cache;
 use Psr\Cache\CacheItemPoolInterface;
 use Strata\Frontend\ContentModel\ContentModel;
@@ -437,9 +438,12 @@ class FrameworksController extends AbstractController
 
         $content = $results->getContent();
 
+        $cscMessage = ControllerHelper::getCSCMessage($this->api);
+
         $data = [
             'framework' => $results,
-            'show_crp' => $this->showCRP($content['rm_number']->getValue())
+            'show_crp' => $this->showCRP($content['rm_number']->getValue()),
+            'cscMessage'    => $cscMessage,
         ];
         return $this->render('frameworks/show.html.twig', $data);
     }
