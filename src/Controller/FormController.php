@@ -163,8 +163,11 @@ class FormController extends AbstractController
     {
         $referrer = $request->headers->get('referer');
 
+        $cscMessage = ControllerHelper::getCSCMessage();
+
         $data = [
-            'referrer' => $referrer
+            'referrer' => $referrer,
+            'cscMessage'    => $cscMessage,
         ];
 
         return $this->render('forms/22-contact.html.twig', $data);
