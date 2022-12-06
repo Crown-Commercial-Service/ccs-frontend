@@ -163,7 +163,7 @@ class FormController extends AbstractController
     {
         $referrer = $request->headers->get('referer');
 
-        $cscMessage = ControllerHelper::getCSCMessage($this->api);
+        $cscMessage = ControllerHelper::getCSCMessage();
 
         $data = [
             'referrer' => $referrer,

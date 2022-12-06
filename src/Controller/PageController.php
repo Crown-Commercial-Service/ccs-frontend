@@ -200,7 +200,7 @@ class PageController extends AbstractController
             }
         }
 
-        $cscMessage = ControllerHelper::getCSCMessage($this->api);
+        $cscMessage = ControllerHelper::getCSCMessage();
 
         return $this->render('pages/page.html.twig', [
             'page'                       => $page,

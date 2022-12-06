@@ -201,8 +201,6 @@ class FrameworksController extends AbstractController
         return $this->render('frameworks/upcoming-list.html.twig', $data);
     }
 
-
-
     /**
      * List frameworks by category
      *
@@ -438,7 +436,7 @@ class FrameworksController extends AbstractController
 
         $content = $results->getContent();
 
-        $cscMessage = ControllerHelper::getCSCMessage($this->api);
+        $cscMessage = ControllerHelper::getCSCMessage();
 
         $data = [
             'framework' => $results,

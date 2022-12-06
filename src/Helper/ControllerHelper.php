@@ -6,6 +6,7 @@ namespace App\Helper;
 
 use Strata\Frontend\Cms\RestData;
 use Strata\Frontend\ContentModel\ContentModel;
+use Strata\Frontend\Api\Providers\RestApi;
 
 class ControllerHelper
 {
@@ -21,9 +22,14 @@ class ControllerHelper
         return getenv('APP_ENV') === 'prod' ? getenv('ORG_ID_PROD') : getenv('ORG_ID_TEST');
     }
 
-    public static function getCSCMessage($api)
+    public static function getCSCMessage()
     {
+        $api = new RestData(
+            getenv('APP_API_BASE_URL'),
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
+        );
         $api->setContentType('csc_message');
+
         try {
             $cscMessage = $api->getOne(0);
         } catch (NotFoundException $e) {
