@@ -261,7 +261,7 @@
 
             var apiBaseUrl                  = '{{ api_base_url }}';
             var appBaseUrl                  = '{{ app_base_url }}';
-            var pageNumber                  = {% if pageNumber is not empty %}{{ pageNumber }}{% else %}1{% endif %};
+            var pageNumber                  = {% if pageNumber is defined and pageNumber is not empty %}{{ pageNumber }}{% else %}1{% endif %};
             var checkedCategories           = [];
             var checkedSectors              = [];
             var checkedProducts_services    = [];
@@ -446,7 +446,7 @@
                 created: function() {
                     // unfortunately we have to update the results when we instantiate
                     // the Vue app so it hooks in all the correct event handlers etc.
-                    this.fetchAPIData(null,null);
+                    this.fetchAPIData(null, this.currentPage);
 
                     // setup popstate event listener for History API
                     this.setupHistoryApi();                   
@@ -611,8 +611,6 @@
                     searchRequestUrl: function(categoriesSlug, page) {
 
                         fetchURL = this.apiURL + this.categoriesFilter() + this.sectorsFilter() + this.productsServicesFilter() + this.whitepaperAndWebinar(categoriesSlug);
-
-                        this.currentPage = page === null ? 1 : page;
                         
                         fetchURL = fetchURL + "&per_page=5&page=" + this.currentPage;
 
@@ -637,6 +635,7 @@
                         this.responseAvailable = false;
                         this.emptyResult = false;
 
+                        this.currentPage = page === null ? 1 : page;
                         var requestUrl = this.searchRequestUrl(categoriesSlug, this.currentPage);
                         //console.log(requestUrl);
                         fetch(requestUrl)
