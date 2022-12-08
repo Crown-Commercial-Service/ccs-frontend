@@ -200,6 +200,8 @@ class PageController extends AbstractController
             }
         }
 
+        $cscMessage = ControllerHelper::getCSCMessage();
+
         return $this->render('pages/page.html.twig', [
             'page'                       => $page,
             'breadcrumb_parents'         => $breadcrumb,
@@ -211,6 +213,7 @@ class PageController extends AbstractController
             'formErrors'                 => $formErrors,
             'formData'                   => $formData,
             'featureNewsProperties'      => $featureNewsProperties,
+            'cscMessage'                 => $cscMessage,
          ]);
     }
 

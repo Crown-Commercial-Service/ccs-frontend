@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Utils\FrameworkCategories;
+use App\Helper\ControllerHelper;
 use Symfony\Component\Cache\Psr16Cache;
 use Psr\Cache\CacheItemPoolInterface;
 use Strata\Frontend\ContentModel\ContentModel;
@@ -199,8 +200,6 @@ class FrameworksController extends AbstractController
 
         return $this->render('frameworks/upcoming-list.html.twig', $data);
     }
-
-
 
     /**
      * List frameworks by category
@@ -435,8 +434,14 @@ class FrameworksController extends AbstractController
 
         $results = $this->setGovTableStyleForAllField($results);
 
+        $content = $results->getContent();
+
+        $cscMessage = ControllerHelper::getCSCMessage();
+
         $data = [
-            'framework' => $results
+            'framework' => $results,
+            'show_crp' => $this->showCRP($content['rm_number']->getValue()),
+            'cscMessage'    => $cscMessage,
         ];
         return $this->render('frameworks/show.html.twig', $data);
     }
@@ -668,5 +673,11 @@ class FrameworksController extends AbstractController
         }
 
         return(false);
+    }
+
+    private function showCRP($rm_number)
+    {
+        $CRP_EXCLUDED_FRAMEWORKS = array('RM6269', 'RM6263', 'RM6282', 'RM6186', 'RM6195', 'RM6232', 'RM6248', 'RM6257');
+        return !in_array($rm_number, $CRP_EXCLUDED_FRAMEWORKS);
     }
 }

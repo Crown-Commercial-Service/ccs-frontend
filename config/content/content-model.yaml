@@ -53,6 +53,9 @@ content_types:
   glossary:
     api_endpoint: ccs/v1/glossary
     content_fields: glossary.yaml
+  csc_message:
+    api_endpoint: ccs/v1/csc-message
+    content_fields: csc-message.yaml
 global:
   image_sizes:
     - thumbnail

@@ -92,8 +92,7 @@
                         <div class="govuk-grid-column-three-quarters">
                             <p class="govuk-!-font-size-24">
                                 <a href="tel:03454102222">0345 410 2222</a></p>
-                            <p>CCS customer services team is available Monday to
-                                Friday, 9am to 5pm.</p>
+                            <p>{{ cscMessage }}</p>
                         </div>
                     </div>
 
@@ -266,39 +265,6 @@
 
                             <input class="govuk-input {{formErrors.postCodeErr is defined and formErrors.postCodeErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="post-code" maxlength="100" name="post-code" size="20" type="text" value="{{formErrors is defined ? formData.postCode}}" autocomplete="postal-code"/>
                         </div>
-
-
-                        <div id="conditional-fields" class="govuk-radios__conditional--hidden">
-                            <div class="govuk-form-group">
-                                <fieldset class="govuk-fieldset" 
-                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                                    <label class="govuk-label" for="complaint-input">
-                                Is your feedback about </label>
-                                        {# <h2 class="govuk-fieldset__heading">
-                                            Is your feedback about
-                                        </h2> #}
-                                    </legend>
-                                    <div class="govuk-checkboxes">
-                                        <div class="govuk-checkboxes__item" id="complaint-input">
-                                            <input class="govuk-checkboxes__input" id="complaint-1" name="complaint" type="checkbox" value="Service" {{ formData.complaint is defined and formData.complaint is same as('Service') ? 'checked' : null }}>
-                                            <label class="govuk-label govuk-checkboxes__label" for="complaint-1">
-                                                Service </label>
-                                        </div>
-                                        <div class="govuk-checkboxes__item">
-                                            <input class="govuk-checkboxes__input" id="complaint-2" name="complaint" type="checkbox" value="Supplier staff" {{ formData.complaint is defined and formData.complaint is same as('Supplier staff') ? 'checked' : null }}>
-                                            <label class="govuk-label govuk-checkboxes__label" for="complaint-2">
-                                                Supplier staff </label>
-                                        </div>
-                                        <div class="govuk-checkboxes__item">
-                                            <input class="govuk-checkboxes__input" id="complaint-3" name="complaint" type="checkbox" value="Other" {{ formData.complaint is defined and formData.complaint is same as('Other') ? 'checked' : null }}>
-                                            <label class="govuk-label govuk-checkboxes__label" for="complaint-3">
-                                                Other </label>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-                        </div>
-
 
                         <div class="govuk-form-group {{formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label id="more-detail-label" class="govuk-label" for="more-detail">Can

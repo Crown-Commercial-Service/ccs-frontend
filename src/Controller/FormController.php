@@ -163,8 +163,11 @@ class FormController extends AbstractController
     {
         $referrer = $request->headers->get('referer');
 
+        $cscMessage = ControllerHelper::getCSCMessage();
+
         $data = [
-            'referrer' => $referrer
+            'referrer' => $referrer,
+            'cscMessage'    => $cscMessage,
         ];
 
         return $this->render('forms/22-contact.html.twig', $data);
@@ -187,10 +190,6 @@ class FormController extends AbstractController
             'moreDetail'    =>  $params->get('more-detail', null),
             'callback'      => $params->get('00Nb0000009IXEg', null)
         ];
-
-        if ($params->get('complaint')) {
-            $formData['complaint'] = $params->get('complaint', null);
-        }
 
         if (!empty($formData)) {
             $formErrors = $this->validateContactCCS($formData);
