@@ -208,6 +208,13 @@
 <script src="/assets/scripts/all.js"></script>
 <script src="/assets/scripts/app.js?v=1.1"></script>
 <script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.0"></script>
+<script type="text/javascript">
+  $('a[target^="_new-window"]').click(function() {
+    var width = window.innerWidth * 0.9 ;
+    var height = width * window.innerHeight / window.innerWidth ;
+    window.open(this.href , 'newwindow', 'width=' + width + ', height=' + height + ', top=' + ((window.innerHeight - height) / 2) + ', left=' + ((window.innerWidth - width) / 2));
+})
+</script>
 
 {# Usersnap code
 <script type="text/javascript">
