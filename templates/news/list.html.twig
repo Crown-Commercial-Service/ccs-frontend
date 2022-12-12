@@ -567,6 +567,7 @@
                         var whitepaperAndWebinar = "";
                         var allCategoriesClear = this.whitepaper === false && this.webinar === false && this.checkedCategories.length == 0
 
+
                         if ( allCategoriesClear ){
                             document.getElementById("allCategories").checked = true;
                             return "&whitepaper=1&webinar=1"
@@ -582,7 +583,7 @@
                         } else {
                             whitepaperAndWebinar = this.whitepaper ? whitepaperAndWebinar + "&whitepaper=1" : whitepaperAndWebinar;
                             whitepaperAndWebinar = this.webinar    ? whitepaperAndWebinar + "&webinar=1"    : whitepaperAndWebinar;
-
+                            whitepaperAndWebinar = this.checkedCategories.length == 0 ? whitepaperAndWebinar + "&noPost=1" : whitepaperAndWebinar;
                             document.getElementById("allCategories").checked = false;
                         }
 
