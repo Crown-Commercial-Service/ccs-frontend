@@ -1,8 +1,13 @@
 <?php
 
 use Behat\Behat\Context\Context;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
+use Behat\Behat\Context\ClosuredContextInterface,
+    Behat\Behat\Context\TranslatedContextInterface,
+    Behat\Behat\Context\BehatContext,
+    Behat\Behat\Exception\PendingException;
+use Behat\Gherkin\Node\PyStringNode,
+    Behat\Gherkin\Node\TableNode;
+
 use Behat\MinkExtension\Context\MinkContext;
 
 /**
@@ -32,6 +37,20 @@ class FeatureContext extends MinkContext implements Context
             var node = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
 
             node.singleNodeValue.click()
+        JS;
+
+        $this->getSession()->getDriver()->executeScript($js);
+        $this->waitForThePageToBeLoaded();
+    }
+
+    /**
+    * @When I click the link :linkLocation in :linkclass 
+    */
+    public function iClickTheLinkIn($linkLocation, $linkclass)
+    {
+        $js = <<<JS
+            const collection = document.getElementsByClassName("{$linkclass}");
+            $linkLocation.click()
         JS;
 
         $this->getSession()->getDriver()->executeScript($js);
@@ -98,5 +117,33 @@ class FeatureContext extends MinkContext implements Context
     public function iShouldSeeErrorMessages($arg1)
     {
         $this->assertSession()->elementsCount('css', "div.govuk-error-summary.govuk-grid-column-three-quarters > div > ul > a", $arg1);
+    }
+
+    /**
+     * @Then the URL should contain :url
+     */
+    public function theUrlShouldContain($url)
+    {
+        $currentURL = $this->getSession()->getCurrentUrl();
+
+        if (strpos((string) $currentURL, $url) === FALSE){
+            throw new Exception("URL (${currentURL}) does not contain {$url}");
+        }
+    }
+
+    /**
+    * @When the page loaded
+    */
+    public function thePageLoaded()
+    {
+        sleep(2);
+    }
+
+    /**
+    * Usage $this->saveHTML();
+    */
+    private function saveHTML (){
+        $html = $this->getSession()->getPage()->getHtml();
+        file_put_contents('features/bootstrap/HTML_output.txt', $html);
     }
 }
