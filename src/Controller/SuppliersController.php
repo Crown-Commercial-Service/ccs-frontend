@@ -75,9 +75,8 @@ class SuppliersController extends AbstractController
 
         try {
             $results = $this->searchApi->list($page);
-        } catch (Exception $e) {
-             // refresh page on 500 error
-             return $this->redirect($request->getUri());
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
         }
 
         $limit = $request->query->has('limit') ? (int)filter_var(
@@ -165,9 +164,8 @@ class SuppliersController extends AbstractController
                 'framework' => $frameworkId,
                 'lot'       => $lotId
             ]);
-        } catch (Exception $e) {
-             // refresh page on 500 error
-             return $this->redirect($request->getUri());
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
         }
 
         $facets = $results->getMetadata()->offsetGet('facets');
