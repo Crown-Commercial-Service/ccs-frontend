@@ -135,9 +135,8 @@ class FrameworksController extends AbstractController
 
         try {
             $results = $this->searchApi->list($page, ['limit' => $limit]);
-        } catch (Exception $e) {
-            // refresh page on 500 error
-            return $this->redirect($request->getUri());
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
         }
 
         $data = [
@@ -385,9 +384,8 @@ class FrameworksController extends AbstractController
                 'pillar'    => $pillarName ?? null,
                 'status'    => $statuses
             ]);
-        } catch (Exception $e) {
-            // refresh page on 500 error
-            return $this->redirect($request->getUri());
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
         }
 
         $data = [
