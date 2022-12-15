@@ -20,7 +20,7 @@
                 <strong class="govuk-tag govuk-phase-banner__content__tag ">
                     beta 
                 </strong> 
-                <span class="govuk-phase-banner__text">This is a new service – your
+                <span class="govuk-phase-banner__text">This is a new service - your
                 <a class="govuk-link" href={{ survey_link }}>feedback</a> will help us to improve it.
                 </span>
             </p>
@@ -261,7 +261,7 @@
 
             var apiBaseUrl                  = '{{ api_base_url }}';
             var appBaseUrl                  = '{{ app_base_url }}';
-            var pageNumber                  = {% if pageNumber is not empty %}{{ pageNumber }}{% else %}1{% endif %};
+            var pageNumber                  = {% if pageNumber is defined and pageNumber is not empty %}{{ pageNumber }}{% else %}1{% endif %};
             var checkedCategories           = [];
             var checkedSectors              = [];
             var checkedProducts_services    = [];
@@ -446,7 +446,7 @@
                 created: function() {
                     // unfortunately we have to update the results when we instantiate
                     // the Vue app so it hooks in all the correct event handlers etc.
-                    this.fetchAPIData(null,null);
+                    this.fetchAPIData(null, this.currentPage);
 
                     // setup popstate event listener for History API
                     this.setupHistoryApi();                   
@@ -565,8 +565,8 @@
                     whitepaperAndWebinar:function(categoriesSlug){
 
                         var whitepaperAndWebinar = "";
-                        var allCategoriesClear = this.whitepaper === false && this.webinar === false && this.checkedCategories.length == 0 
-                        this.showFilters(true);
+                        var allCategoriesClear = this.whitepaper === false && this.webinar === false && this.checkedCategories.length == 0
+
 
                         if ( allCategoriesClear ){
                             document.getElementById("allCategories").checked = true;
@@ -581,38 +581,17 @@
                             document.getElementById("webinar").checked = false;
                             return "&whitepaper=1&webinar=1"
                         } else {
-                            this.showFilters(false);
                             whitepaperAndWebinar = this.whitepaper ? whitepaperAndWebinar + "&whitepaper=1" : whitepaperAndWebinar;
                             whitepaperAndWebinar = this.webinar    ? whitepaperAndWebinar + "&webinar=1"    : whitepaperAndWebinar;
-                            
-                            if (this.checkedCategories.length == 0){
-                                whitepaperAndWebinar = whitepaperAndWebinar + "&noPost=1";
-                            }else{
-                                this.showFilters(true);
-                                whitepaperAndWebinar = whitepaperAndWebinar;
-                            }
-
-
+                            whitepaperAndWebinar = this.checkedCategories.length == 0 ? whitepaperAndWebinar + "&noPost=1" : whitepaperAndWebinar;
                             document.getElementById("allCategories").checked = false;
                         }
 
                         return whitepaperAndWebinar;
                     },
-                    showFilters:function(show){
-
-                        if(show == true){
-                            document.getElementById('filter_sector').classList.remove("visuallyhidden");
-                            document.getElementById('filter_p_and_s').classList.remove("visuallyhidden");
-                        }else{
-                            document.getElementById('filter_sector').classList.add("visuallyhidden");
-                            document.getElementById('filter_p_and_s').classList.add("visuallyhidden");
-                        }
-                    },
                     searchRequestUrl: function(categoriesSlug, page) {
 
                         fetchURL = this.apiURL + this.categoriesFilter() + this.sectorsFilter() + this.productsServicesFilter() + this.whitepaperAndWebinar(categoriesSlug);
-
-                        this.currentPage = page === null ? 1 : page;
                         
                         fetchURL = fetchURL + "&per_page=5&page=" + this.currentPage;
 
@@ -637,6 +616,7 @@
                         this.responseAvailable = false;
                         this.emptyResult = false;
 
+                        this.currentPage = page === null ? 1 : page;
                         var requestUrl = this.searchRequestUrl(categoriesSlug, this.currentPage);
                         //console.log(requestUrl);
                         fetch(requestUrl)
