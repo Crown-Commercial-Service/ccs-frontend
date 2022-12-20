@@ -11,6 +11,10 @@ if (cookiePreferences !== null) {
          */
         $('form.pardot-submit').submit(function(event) {
 
+            //removing gtm tag class so it won't fire twice
+            $("form.pardot-submit button[type=submit]").removeClass("gtm--submit-contact-form");
+            $("form.pardot-submit button[type=submit]").removeClass("gtm--submit-aggregation-form");
+
             if (pardotSubmitted) {
                 return true;
             }
@@ -46,6 +50,7 @@ if (cookiePreferences !== null) {
                 complete: function(){
                     pardotSubmitted = true;
                     console.log('Proceeding with submission.');
+
                     $("form.pardot-submit button[type=submit]").click();
                 }
             });
