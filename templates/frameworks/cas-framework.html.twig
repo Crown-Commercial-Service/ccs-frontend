@@ -113,11 +113,13 @@
                         <p>Expires: {{ lot.expiry_date.format('d/m/Y') }}</p>
                     {% endif %}
 
-                    {# {% if lot.suppliers|length == 0 %}
-                        <p>No suppliers</p>
-                    {% else %}
-                        <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }} suppliers</a> </p>
-                    {% endif %} #}
+                    {% if framework.content.terms == "Standard" %}
+                        {% if lot.suppliers|length == 0 %}
+                            <p>No suppliers</p>
+                        {% else %}
+                            <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }} suppliers</a> </p>
+                        {% endif %}
+                    {% endif %}
 
                 </dd>
             </dl>
