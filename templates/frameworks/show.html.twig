@@ -56,34 +56,20 @@
     {#{{ framework.content.type }}#}
 
 
-
-    <!-- required wrapper 1 -->
     <div class="govuk-width-container">
-
-        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
         <div class="govuk-phase-banner">
             {% include '/includes/phase-banner-content.html.twig' %}
         </div>
 
-
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
-                <li class="govuk-breadcrumbs__list-item">
-                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
-                </li>
-                <li class="govuk-breadcrumbs__list-item">
-                    <a class="govuk-breadcrumbs__link" href="{{ path('frameworks_list') }}">Search
-                        agreements</a>
-                </li>
-                <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                    {{ framework.content.title }}
-                </li>
+                <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="/">Home</a></li>
+                <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="{{ path('frameworks_list') }}">Search agreements</a></li>
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">{{ framework.content.title }}</li>
             </ol>
         </div>
 
-
-        <!-- required wrapper 2 -->
         <main id="main-content" role="main" class="govuk-main-wrapper">
 
             {% if framework.content.type == "CAS framework" and frameworkStatus == "live" %}
@@ -101,8 +87,8 @@
                                     <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
                                     <strong class="govuk-warning-text__text">
                                         <span class="govuk-warning-text__assistive">Important</span>
-                                        Expired agreement - This information is for
-                                        reference only</strong>
+                                        Expired agreement - This information is for reference only
+                                    </strong>
                                 </div>
                             {% endif %}
 
@@ -113,27 +99,11 @@
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-two-thirds">
 
-                            {#<h1 class="govuk-heading-xl page-title">Apleona HSG Ltd. {framework title} which span multiple lines&nbsp;<strong class="govuk-tag govuk-tag--subtle">Expired</strong></h1>#}
                             <h1 class="govuk-heading-xl page-title">{{ framework.content.title }}</h1>
 
-                            {# https://twig.symfony.com/doc/2.x/filters/raw.html #}
-                            {# https://twig.symfony.com/doc/2.x/filters/striptags.html #}
                             {% if framework.content.summary and framework.content.summary != "" %}
-                            <div class="govuk-body-l">{{ framework.content.summary | striptags | raw }}</div>
+                                <div class="govuk-body-l">{{ framework.content.summary | striptags | raw }}</div>
                             {% endif %}
-
-
-                            {# see https://Strata.github.io/frontend/templating/content-fields.html #}
-                            {# see https://Strata.github.io/frontend/templating/debugging.html #}
-                            {#{{ dump(framework) }}#}
-
-                            {#<p>unallocated content on some frameworks</p>#}
-                            {#<ul>#}
-                            {#<li><code>tenders_open_date</code>: {{ framework.content.tenders_open_date }}</li>#}
-                            {#<li><code>tenders_close_date</code>: {{ framework.content.tenders_close_date }}</li>#}
-                            {#<li><code>expected_live_date</code>: {{ framework.content.expected_live_date }}</li>#}
-                            {#<li><code>expected_award_date</code>: {{ framework.content.expected_award_date }}</li>#}
-                            {#</ul>#}
 
                             <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
 
@@ -211,21 +181,13 @@
                                         </div>
                                         <div id="accordion-default-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4">
 
-                                            {# Expected `type` values;
-
-                                            - Upcoming deal
-                                            - Standard framework
-                                            - DPS
-                                            - G-cloud
-
-                                            #}
-                                            {% if framework.content.type == "Dynamic purchasing system" %}
+                                            {% if framework.content.terms == "DPS" %}
                                                 <p>Please read the 'How to buy' tab
                                                     below for detailed instructions on
                                                     how to find out which suppliers are
                                                     on this agreement.</p>
 
-                                            {% elseif framework.content.type == "G-cloud/DOS" %}
+                                            {% elseif framework.content.terms == "DOS" or framework.content.terms == "G-Cloud" %}
                                                 <p>
                                                     <a href="https://www.digitalmarketplace.service.gov.uk/">Digital
                                                         Marketplace</a> has the
@@ -269,9 +231,7 @@
                                                                 </p>
                                                             {% endif %}
 
-                                                            {% if framework.content.type == "G-cloud/DOS" or framework.content.type == "Dynamic purchasing system" %}
-                                                                {# Don't display Supplier link if TRUE #}
-                                                            {% else %}
+                                                            {% if framework.content.terms == "Standard" %}
                                                                 {% if lot.suppliers|length == 0 %}
                                                                     <p>No suppliers</p>
                                                                 {% else %}
@@ -395,7 +355,6 @@
                                     Print this page
                                 </button>
                             </div>
-
                         </div>
 
                         <div class="govuk-grid-column-one-third">
@@ -409,31 +368,27 @@
                                         <dd class="apollo-list--definition__value">
                                             {{ framework.content.rm_number }}
                                         </dd>
+
                                         <dt>Start date</dt>
                                         <dd class="apollo-list--definition__value">
                                             {{ framework.content.start_date.format('d/m/Y') }}
                                         </dd>
+
                                         <dt>End date</dt>
                                         <dd class="apollo-list--definition__value">
                                             {{ framework.content.end_date.format('d/m/Y') }}
                                         </dd>
+
                                         <dt>Lots</dt>
                                         <dd class="apollo-list--definition__value">
                                             {{ framework.content.lots|length }}
                                         </dd>
-                                        {#
-                                        Upcoming deal
-                                        Standard framework
-                                        DPS
-                                        G-cloud
-                                        #}
-                                        {% if framework.content.type == "G-cloud/DOS" or framework.content.type == "Dynamic purchasing system" %}
-                                            {# Don't display Supplier link if TRUE #}
-                                        {% else %}
-                                        <dt>Suppliers</dt>
-                                        <dd class="apollo-list--definition__value">
-                                            {{ framework.content.total_suppliers }}
-                                        </dd>
+
+                                        {% if framework.content.terms == "Standard" %}
+                                            <dt>Suppliers</dt>
+                                            <dd class="apollo-list--definition__value">
+                                                {{ framework.content.total_suppliers }}
+                                            </dd>
                                         {% endif %}
                                     </dl>
                                 </div>
@@ -481,35 +436,22 @@
 
                             <h1 class="govuk-heading-xl page-title">{{ framework.content.title }}</h1>
 
-                            {#{% if framework.content.summary %}#}
-                                {#<div class="govuk-body-l">{{ framework.content.summary | striptags }}</div>#}
-                            {#{% endif %}#}
-
-                            {# Start of wysiwyg content #}
                             {% if framework.content.upcoming_deal_details %}
                                 <div class="wysiwyg-content">
-
                                     {{ framework.content.upcoming_deal_details | raw }}
-
                                 </div>
                             {% endif %}
-                            {# End of wysiwyg content #}
-
 
                             <div class="app-c-print-link">
                                 <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">
                                     Print this page
                                 </button>
                             </div>
-
                         </div>
                     </div>
 
                 {% endif %}
             {% endif %}
-
         </main>
     </div>
-
-
 {% endblock %}
