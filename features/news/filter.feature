@@ -12,6 +12,7 @@ Feature: fitlering the content
     And the "procurement-essentials" checkbox is unchecked
     And the "whitepaper" checkbox is unchecked
     And the "webinar" checkbox is unchecked
+    And the "digitalBrochure" checkbox is unchecked
     And the "allSectors" checkbox should be checked
     And the "allPS" checkbox should be checked
 
@@ -25,6 +26,7 @@ Feature: fitlering the content
     And the "procurement-essentials" checkbox is unchecked
     And the "whitepaper" checkbox is unchecked
     And the "webinar" checkbox is unchecked
+    And the "digitalBrochure" checkbox is unchecked
     And the "allSectors" checkbox should be checked
     And the "allPS" checkbox should be checked
     And the URL should contain "/news/?&categories=26&page=1"
@@ -39,6 +41,7 @@ Feature: fitlering the content
     And the "procurement-essentials" checkbox is unchecked
     And the "whitepaper" checkbox is checked
     And the "webinar" checkbox is unchecked
+    And the "digitalBrochure" checkbox is unchecked
     And the "allSectors" checkbox should be checked
     And the "allPS" checkbox should be checked
     And the URL should contain "/news/?&whitepaper=1&page=1"
@@ -53,9 +56,25 @@ Feature: fitlering the content
     And the "procurement-essentials" checkbox is unchecked
     And the "whitepaper" checkbox is unchecked
     And the "webinar" checkbox is checked
+    And the "digitalBrochure" checkbox is unchecked
     And the "allSectors" checkbox should be checked
     And the "allPS" checkbox should be checked
     And the URL should contain "/news/?&webinar=1&page=1"
+
+  Scenario: viewing digital brochure article only
+    Given I am on "/news/?&page=1"
+    And I check "digitalBrochure"
+    Then the "allCategories" checkbox should be unchecked
+    And the "news" checkbox is unchecked
+    And the "blog" checkbox is unchecked
+    And the "case-study" checkbox is unchecked
+    And the "procurement-essentials" checkbox is unchecked
+    And the "whitepaper" checkbox is unchecked
+    And the "webinar" checkbox is unchecked
+    And the "digitalBrochure" checkbox is checked
+    And the "allSectors" checkbox should be checked
+    And the "allPS" checkbox should be checked
+    And the URL should contain "/news/?&digitalBrochure=1&page=1"
 
   Scenario: viewing mixed article (news -> whitepaper)
     Given I am on "/news/?&page=1"
@@ -68,6 +87,7 @@ Feature: fitlering the content
     And the "procurement-essentials" checkbox is unchecked
     And the "whitepaper" checkbox is checked
     And the "webinar" checkbox is unchecked
+    And the "digitalBrochure" checkbox is unchecked
     And the "allSectors" checkbox should be checked
     And the "allPS" checkbox should be checked
     And the URL should contain "/news/?&categories=26&whitepaper=1&page=1"
@@ -83,6 +103,7 @@ Feature: fitlering the content
     And the "procurement-essentials" checkbox is unchecked
     And the "whitepaper" checkbox is unchecked
     And the "webinar" checkbox is checked
+    And the "digitalBrochure" checkbox is unchecked
     And the "allSectors" checkbox should be checked
     And the "allPS" checkbox should be checked
     And the URL should contain "/news/?&categories=26&webinar=1&page=1"
@@ -95,6 +116,7 @@ Feature: fitlering the content
     And I check "procurement-essentials"
     And I check "whitepaper"
     And I check "webinar"
+    And I check "digitalBrochure"
     Then the "allCategories" checkbox should be checked
     And the "news" checkbox is unchecked
     And the "blog" checkbox is unchecked
@@ -102,6 +124,7 @@ Feature: fitlering the content
     And the "procurement-essentials" checkbox is unchecked
     And the "whitepaper" checkbox is unchecked
     And the "webinar" checkbox is unchecked
+    And the "digitalBrochure" checkbox is unchecked
     And the "allSectors" checkbox should be checked
     And the "allPS" checkbox should be checked
     And the URL should contain "/news/?&page=1"
@@ -116,6 +139,7 @@ Feature: fitlering the content
     And the "procurement-essentials" checkbox is unchecked
     And the "whitepaper" checkbox is unchecked
     And the "webinar" checkbox is unchecked
+    And the "digitalBrochure" checkbox is unchecked
     And the "allSectors" checkbox should be checked
     And the "allPS" checkbox should be checked
 
@@ -129,6 +153,7 @@ Feature: fitlering the content
     And the "procurement-essentials" checkbox is unchecked
     And the "whitepaper" checkbox is unchecked
     And the "webinar" checkbox is unchecked
+    And the "digitalBrochure" checkbox is unchecked
     And the "allSectors" checkbox should be checked
     And the "allPS" checkbox should be checked
 
