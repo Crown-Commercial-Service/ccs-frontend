@@ -36,44 +36,34 @@
                 <div class="govuk-grid-column-two-thirds">
 
                     <h1 class="govuk-heading-xl page-title cat-agrement-page-title">Management Consultancy Framework Three (MCF3)</h1>
-                    <p class="govuk-body-s agreement-subtitle">Access to consultancy including business, strategy and policy, finance, HR, procurement, health/social care and community, infrastructure and environment.</p>
+                    <p class=" agreement-subtitle">Access to consultancy including business, strategy and policy, finance, HR, procurement, health/social care and community, infrastructure and environment.</p>
 
-                                            
-                    <div>
-                        <p class="govuk-body agreement-overview">Agreement number: <strong> RM6187 </strong></p>
-                        <p class="govuk-body agreement-overview">Start date: <strong> 24 August 2021 </strong></p>
-                        <p class="govuk-body agreement-overview">End date: <strong> 23 August 2025 </strong></p>
+                    <div class="govuk-body">
+                        <p class="agreement-overview"> <strong> Agreement number: </strong> RM6187 </p>
+                        <p class="agreement-overview"> <strong> Start date: </strong> 24 August 2021 </p>
+                        <p class="agreement-overview"> <strong> End date: </strong> 23 August 2025 </p>
                     </div>
-                    
-                    </br>
                     
                     <p ><strong>Available for:</strong> Central government, the wider public sector, charities, voluntary and community organisations, education, health, local authorities, blue light (police, fire, ambulance and search and rescue), devolved administrations, social housing organisations. </p>
 
-                    </br>
-
                     <div>
-                    <h3 class="govuk-heading-s" id="contents">Contents</h3>
+                    <h2 class="govuk-heading-m" id="contents">Contents</h2>
 
                     <ul class="govuk-list govuk-list--bullet">
-                        <li> <a class="govuk-link govuk-link--no-visited-state" href="#ataglance">At a glance</a></li>
-                        <li> <a class="govuk-link govuk-link--no-visited-state" href="#products">Products and suppliers</a></li>
-                        <li> <a class="govuk-link govuk-link--no-visited-state" href="#documents">Documents</a></li>
-                        <li> <a class="govuk-link govuk-link--no-visited-state" href="#benefitsofccs">The benefits of using CCS</a>
+                        <li> <a class="govuk-link govuk-link--no-visited-state" href="#ataglance">at a glance</a></li>
+                        <li> <a class="govuk-link govuk-link--no-visited-state" href="#products">products and suppliers</a></li>
+                        <li> <a class="govuk-link govuk-link--no-visited-state" href="#documents">documents</a></li>
+                        <li> <a class="govuk-link govuk-link--no-visited-state" href="#benefitsofccs">the benefits of using CCS</a>
                         </li>
                     </ul>
                     </div>
 
-                    </br>
-
                     {% include 'frameworks/RM6187-at-a-glance.html.twig'%}
-
-                    </br>
-
 
                     <h2 class="govuk-heading-m" id="products">Products and suppliers</h2>
 
                     <div class="govuk-inset-text">
-                        <p><strong>You can now procure online with CCS.</strong> <br>Please select a lot to start.</p>
+                        <p ><strong>You can now buy online with CCS.</strong> <br>Please select a lot to start.</p>
                     </div>
 
                     <div class="grey-margin-bottom" id="agreement-lots"></div>
@@ -178,8 +168,6 @@
 
                     {% include 'frameworks/RM6187-document-section.html.twig'%}
 
-                    </br>
-
                     <div>
                         <h2 class="govuk-heading-m" id="benefitsofccs">The benefits of using CCS</h2>
                         <iframe src="https://www.youtube-nocookie.com/embed/mn-3isisTGM" allowfullscreen="" width="560" height="315"></iframe>
@@ -229,12 +217,14 @@
     <script>
         const detailsSummarySpan = document.getElementById("details-summary");
 
-        detailsSummarySpan.addEventListener('click', event => {
-            if(document.getElementById("details-summary").textContent == "Show previous updates"){
-                document.getElementById("details-summary").textContent="Hide previous updates";
-            }else{
-                document.getElementById("details-summary").textContent="Show previous updates";
-            }
-        });
+        if(detailsSummarySpan !== null){
+            detailsSummarySpan.addEventListener('click', event => {
+                if(document.getElementById("details-summary").textContent == "Show previous updates"){
+                    document.getElementById("details-summary").textContent="Hide previous updates";
+                }else{
+                    document.getElementById("details-summary").textContent="Show previous updates";
+                }
+            });
+        }
     </script>
 {% endblock %}
