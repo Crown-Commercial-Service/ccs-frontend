@@ -3,28 +3,24 @@
 
         <h1 class="govuk-heading-xl page-title cat-agrement-page-title">{{ framework.content.title }}</h1>
         {% if framework.content.summary and framework.content.summary != "" %}
-            <p class="govuk-body-s agreement-subtitle">{{ framework.content.summary | striptags | raw }}</p>
+            <p class="agreement-subtitle">{{ framework.content.summary | striptags | raw }}</p>
         {% endif %}
 
                                 
-        <div>
-            <p class="govuk-body agreement-overview">Agreement number: <strong> {{ framework.content.rm_number }} </strong></p>
-            <p class="govuk-body agreement-overview">Start date: <strong> {{ framework.content.start_date.format('d/m/Y') }} </strong></p>
-            <p class="govuk-body agreement-overview">End date: <strong> {{ framework.content.end_date.format('d/m/Y') }} </strong></p>
+        <div class="govuk-body">
+            <p class="agreement-overview"> <strong> Agreement number: </strong> {{ framework.content.rm_number }} </p>
+            <p class="agreement-overview"> <strong> Start date: </strong> {{ framework.content.start_date.format('d/m/Y') }} </p>
+            <p class="agreement-overview"> <strong> End date: </strong> {{ framework.content.end_date.format('d/m/Y') }} </p>
         </div>
 
-        <br>
-        <br>
-
         {% if framework.content.availability and framework.content.availability != "" %}
-            <p ><strong>Available for:</strong> {{ framework.content.availability| striptags | raw }} </p> </br>
+            <p ><strong>Available for:</strong> {{ framework.content.availability| striptags | raw }} </p> 
         {% endif %}
-
 
         {% if framework.content.cas_updates and framework.content.cas_updates is not empty %}
             {% set latestUpdate = framework.content.cas_updates|first %}
             
-            <h2 class="govuk-heading-s">Updates</h2>
+            <h2 class="govuk-heading-m" id="updates">Updates</h2>
 
             <p><strong>{{ latestUpdate.framework_cas_updates_date.format('d F Y') }}:</strong> {{ latestUpdate.framework_cas_updates_update |striptags('<a>') |raw }} </p> 
             
@@ -43,9 +39,6 @@
                 </details>
             {% endif %}
         {% endif %}
-
-
-        </br>
 
         {% if 
             framework.content.description and framework.content.description != "" or 
@@ -69,40 +62,39 @@
 		{% endif %}
 
         <div>
-            <h3 class="govuk-heading-s" id="contents">Contents</h3>
+            <h2 class="govuk-heading-m" id="contents">Contents</h2>
 
             <ul class="govuk-list govuk-list--bullet">
                 {% if showAtAGlance is defined and showAtAGlance %}
-                    <li> <a class="govuk-link" href="#ataglance">At a glance</a></li>
+                    <li> <a class="govuk-link" href="#ataglance">at a glance</a></li>
                 {% endif %}
 
-                <li> <a class="govuk-link" href="#products">Products and suppliers</a></li>
+                <li> <a class="govuk-link" href="#products">products and suppliers</a></li>
 
                 {% if showDocuments is defined and showDocuments %}
-                    <li> <a class="govuk-link" href="#documents">Documents</a></li>
+                    <li> <a class="govuk-link" href="#documents">documents</a></li>
                 {% endif %}
 
-                <li> <a class="govuk-link" href="#benefitsofccs">The benefits of using CCS</a></li>
+                <li> <a class="govuk-link" href="#benefitsofccs">the benefits of using CCS</a></li>
             </ul>
         </div>
 
-        </br>
 
         {% if showAtAGlance is defined and showAtAGlance %}
             {% include 'frameworks/cas-at-a-glance.html.twig' with {'framework': framework}%}
-            </br>
+            
         {% endif %}
 
         <h2 class="govuk-heading-m" id="products">Products and suppliers</h2>
 
         {% if framework.content.rm_number ==  "RM1557.13" %}
-            <p>The functionality that enables you to view the details of all service lines presented on G-Cloud 13, is not currently available. CCS is aware of this and is working to reinstate the functionality as soon as possible. We are expecting full supplier transparency functionality to be delivered before the end of December 2022. We apologise for any inconvenience and ask for your patience while we work to resolve this. There is no need to raise this with CCS Customer Service Centre.</p>
+            <p>The functionality that enables you to view the details of all service lines presented on G-Cloud 13, has now been restored. CCS apologises for any inconvenience.</p>
     
-            <p>If you are a G-Cloud 13 Lot 1,2, or 3 supplier, you do not need to register with the Public Procurement Gateway (PPG) in order to gain access to your G-Cloud 13 entries or to use the functionality referenced above.</p>
+            <p>If you are a G-Cloud 13 Lot 1, 2 or 3 supplier, you do not need to register with the Public Procurement Gateway (PPG) in order to gain access to your G-Cloud 13 entries or to use the functionality referenced above.</p>
         {% endif %}
 
         <div class="govuk-inset-text">
-            <p ><strong>You can now procure online with CCS.</strong> <br>Please select a lot to start.</p>
+            <p ><strong>You can now buy online with CCS.</strong> <br>Please select a lot to start.</p>
         </div>
 
         <div class="grey-margin-bottom" id="agreement-lots"></div>
@@ -121,11 +113,13 @@
                         <p>Expires: {{ lot.expiry_date.format('d/m/Y') }}</p>
                     {% endif %}
 
-                    {# {% if lot.suppliers|length == 0 %}
-                        <p>No suppliers</p>
-                    {% else %}
-                        <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }} suppliers</a> </p>
-                    {% endif %} #}
+                    {% if framework.content.terms == "Standard" %}
+                        {% if lot.suppliers|length == 0 %}
+                            <p>No suppliers</p>
+                        {% else %}
+                            <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }} suppliers</a> </p>
+                        {% endif %}
+                    {% endif %}
 
                 </dd>
             </dl>
@@ -133,7 +127,6 @@
 
          {% if showDocuments is defined and showDocuments %}
             {% include 'frameworks/cas-documents.html.twig' with {'framework': framework}%}
-            </br>
         {% endif %}
 
 
@@ -180,11 +173,13 @@
 <script>
     const detailsSummarySpan = document.getElementById("details-summary");
 
-    detailsSummarySpan.addEventListener('click', event => {
-        if(document.getElementById("details-summary").textContent == "Show previous updates"){
-            document.getElementById("details-summary").textContent="Hide previous updates";
-        }else{
-            document.getElementById("details-summary").textContent="Show previous updates";
-        }
-    });
+    if(detailsSummarySpan !== null){
+        detailsSummarySpan.addEventListener('click', event => {
+            if(document.getElementById("details-summary").textContent == "Show previous updates"){
+                document.getElementById("details-summary").textContent="Hide previous updates";
+            }else{
+                document.getElementById("details-summary").textContent="Show previous updates";
+            }
+        });
+    }
 </script>

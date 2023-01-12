@@ -9,7 +9,7 @@
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Customer Guide</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Buyer and supplier guides</span>
                 </h2>
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
@@ -57,7 +57,6 @@
                     <p class="joint-schedule-title">{{ jointSchedule.joint_schedule_document_type}}</p>
                     <p class="joint-schedule-title">{{ jointSchedule.joint_schedule_document_usage}}</p>
                     <div class="wysiwyg-content">{{ jointSchedule.joint_schedule_document_description|raw }}</div>
-                    <br>
                 {% endfor %}
             </div>
         </div>
@@ -80,7 +79,6 @@
                     <p class="joint-schedule-title">{{ callOffSchedules.call_off_schedule_document_type}}</p>
                     <p class="joint-schedule-title">{{ callOffSchedules.call_off_schedule_document_usage}}</p>
                     <div class="wysiwyg-content">{{ callOffSchedules.call_off_schedule_document_description|raw }}</div>
-                    <br>
                 {% endfor %}
             </div>
         </div>
@@ -101,7 +99,6 @@
                     <p class="joint-schedule-title"><a href={{ frameworkSchedules.framework_schedule_document}}><strong>{{ frameworkSchedules.framework_schedule_document_name }}</strong></a></p>
                     <p class="joint-schedule-title">{{ frameworkSchedules.framework_schedule_document_usage}}</p>
                     <div class="wysiwyg-content">{{ frameworkSchedules.framework_schedule_document_description|raw }}</div>
-                    <br>
                 {% endfor %}
             </div>
         </div>

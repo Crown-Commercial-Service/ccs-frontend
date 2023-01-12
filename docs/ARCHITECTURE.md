@@ -29,7 +29,7 @@ Web to Case functionality.
 
 ### Frontend software
 
-The core software which enables us to build the Headless CMS architecture is [Frontend](https://github.com/strata/frontend),
+The core software which enables us to build the Headless CMS architecture is [Frontend](https://github.com/Crown-Commercial-Service/CCS-Website-Strata-Frontend),
 open source software developed by Studio 24 and used on Headless CMS projects. This software has unit tests and 
 code quality static analysis run via Travis.
 

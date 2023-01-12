@@ -62,6 +62,7 @@ class NewsController extends AbstractController
             'per_page'          => 5,
             'whitepaper'        => $request->query->get('whitepaper') ?? null,
             'webinar'           => $request->query->get('webinar') ??  null,
+            'digitalBrochure'   => $request->query->get('digitalBrochure') ?? null,
         ];
 
         try {
