@@ -6,7 +6,7 @@ monolog:
         main:
             type: stream
             path: "%kernel.logs_dir%/symfony.log"
-            level: debug
+            level: error
             channels: ["!event"]
         rollbar:
             type: service
