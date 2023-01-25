@@ -681,8 +681,9 @@ class FrameworksController extends AbstractController
         return !in_array($rm_number, $CRP_EXCLUDED_FRAMEWORKS);
     }
 
-    private function blockBot(String $userAgent) {
-        if(preg_match('/bot|crawl|slurp|spider/i', $userAgent)) {
+    private function blockBot(string $userAgent)
+    {
+        if (preg_match('/bot|crawl|slurp|spider/i', $userAgent)) {
             die();
         }
     }
