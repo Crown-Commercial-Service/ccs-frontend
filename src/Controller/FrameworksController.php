@@ -339,6 +339,8 @@ class FrameworksController extends AbstractController
      */
     public function search(Request $request, int $page = 1)
     {
+        // check if user is bot and block the request
+        $this->blockBot($request->headers->get('User-Agent'));
 
         // Get search query
         // strip special characters and tags from search query
@@ -677,5 +679,11 @@ class FrameworksController extends AbstractController
     {
         $CRP_EXCLUDED_FRAMEWORKS = array('RM6269', 'RM6263', 'RM6282', 'RM6186', 'RM6195', 'RM6232', 'RM6248', 'RM6257');
         return !in_array($rm_number, $CRP_EXCLUDED_FRAMEWORKS);
+    }
+
+    private function blockBot(String $userAgent) {
+        if(preg_match('/bot|crawl|slurp|spider/i', $userAgent)) {
+            die();
+        }
     }
 }
