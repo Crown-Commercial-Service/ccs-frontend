@@ -100,6 +100,16 @@
                                             Digital brochure
                                         </label>
                                     </div>
+                                     {% if contentTypeFilters is not empty %}
+                                        {% for item in contentTypeFilters %}
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedContentType" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox">
+                                                <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
+                                                    {{ item.name }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
                                 </div>
 
                                 
@@ -271,6 +281,7 @@
             var checkedCategories           = [];
             var checkedSectors              = [];
             var checkedProducts_services    = [];
+            var checkedContentType         = [];
             var whitepaper                  = false;
             var webinar                     = false;
             var digitalBrochure             = false;
@@ -285,6 +296,10 @@
 
             {% if filters.products_services is defined and filters.products_services is not empty %}
                 var checkedProducts_services   = Array.from([{{filters.products_services}}]);
+            {% endif %}
+
+            {% if filters.content_type is defined and filters.content_type is not empty %}
+                var checkedContentType   = Array.from([{{filters.content_type}}]);
             {% endif %}
 
             {% if filters.whitepaper is defined and filters.whitepaper == "1" %}
@@ -444,6 +459,7 @@
                     checkedCategories: checkedCategories,
                     checkedSectors: checkedSectors,
                     checkedProducts_services: checkedProducts_services,
+                    checkedContentType: checkedContentType,
                     whitepaper: whitepaper,
                     webinar: webinar,
                     digitalBrochure: digitalBrochure,
@@ -471,6 +487,7 @@
                                 checkedCategories: this.checkedCategories,
                                 checkedSectors: this.checkedSectors,
                                 checkedProducts_services: this.checkedProducts_services,
+                                checkedContentType: this.checkedContentType,
                                 whitepaper: this.whitepaper,
                                 webinar: this.webinar,
                                 digitalBrochure: this.digitalBrochure,
@@ -507,6 +524,10 @@
 
                         if(this.checkedProducts_services.length != 0) {
                             queryUrl += '&products_services=' + this.checkedProducts_services.join();
+                        }
+
+                        if(this.checkedContentType.length != 0) {
+                            queryUrl += '&content_type=' + this.checkedContentType.join();
                         }
 
                         if(this.currentPage ){
@@ -621,6 +642,7 @@
                                 checkedCategories: this.checkedCategories,
                                 checkedSectors: this.checkedSectors,
                                 checkedProducts_services: this.checkedProducts_services,
+                                checkedContentType: this.checkedContentType,
                                 whitepaper: this.whitepaper,
                                 webinar: this.webinar,
                                 digitalBrochure: this.digitalBrochure
@@ -716,6 +738,7 @@
                         if(this.checkedCategories.length == 0 
                             && this.checkedSectors.length == 0 
                             && this.checkedProducts_services.length == 0 
+                            && this.checkedContentType.length == 0
                             && (this.whitepaper == false || this.whitepaper == null )
                             && (this.webinar == false || this.webinar == null )
                             && (this.digitalBrochure == false || this.digitalBrochure == null )
@@ -734,16 +757,18 @@
                             if(event.state == null) {
                                 self.checkedCategories = [];
                                 self.checkedSectors = [];
-                                self.checkedProducts_services =[]
-                                self.whitepaper =null
-                                self.webinar =null
-                                self.digitalBrochure =null
+                                self.checkedProducts_services =[];
+                                self.checkedContentType =[];
+                                self.whitepaper =null;
+                                self.webinar =null;
+                                self.digitalBrochure =null;
                                 return;
                             }
 
                             self.checkedCategories         = event.state.checkedCategories;
                             self.checkedSectors            = event.state.checkedSectors;
                             self.checkedProducts_services  = event.checkedProducts_services.checkedLot;
+                            self.checkedContentType        = event.state.checkedContentType;
                             self.whitepaper                = event.state.whitepaper;
                             self.webinar                   = event.state.webinar;
                             self.digitalBrochure           = event.state.digitalBrochure;
