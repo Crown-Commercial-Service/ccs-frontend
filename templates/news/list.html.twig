@@ -197,7 +197,7 @@
                                             <div v-if="result.imageSet" class="govuk-grid-column-one-half news-listing-block">
                                                 <p class="news-listing-meta"> 
                                                     <a :href="result.CategoriesLink">{[ result.postType ]}</a>
-                                                    <span> {[result.postedDate]} </span> 
+                                                    <span v-if="result.postType != 'Digital Brochure'"> {[result.postedDate]} </span> 
                                                 </p>
                                                 <h2 class="news-listing-title">
                                                     <a :href="result.postLink" v-html="result.title.rendered"></a>
@@ -207,7 +207,7 @@
                                             <div v-else class="govuk-grid-column-full news-listing-block">
                                                 <p class="news-listing-meta"> 
                                                     <a :href="result.CategoriesLink">{[ result.postType ]}</a>
-                                                    <span> {[result.postedDate]} </span> 
+                                                    <span v-if="result.postType != 'Digital Brochure'"> {[result.postedDate]} </span> 
                                                 </p>
                                                 
                                                 <h2 class="news-listing-title">
