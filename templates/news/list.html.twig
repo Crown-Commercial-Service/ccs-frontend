@@ -100,9 +100,23 @@
                                             Digital brochure
                                         </label>
                                     </div>
-                                </div>
 
-                                
+                                    {% set tempDigitalDownload = [] %}
+
+                                    {% if contentTypeFilters is not empty %}
+                                        {% for item in contentTypeFilters|sort %}
+
+                                            {% set tempDigitalDownload = tempDigitalDownload|merge([item.id]) %}
+
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedDigitalDownload" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox">
+                                                <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
+                                                    {{ item.name }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
 
@@ -274,6 +288,8 @@
             var whitepaper                  = false;
             var webinar                     = false;
             var digitalBrochure             = false;
+            var checkedDigitalDownload      = [];
+            var allDigitalDownload          = [];
 
             {% if filters.categories is defined and filters.categories is not empty %}
                 var checkedCategories   = Array.from([{{filters.categories}}]);
@@ -298,7 +314,15 @@
             {% if filters.digitalBrochure is defined and filters.digitalBrochure == "1" %}
                 digitalBrochure = true;
             {% endif %}
+
             
+            {% if filters.digitalDownload is defined and filters.digitalDownload is not empty %}
+                var checkedDigitalDownload   = Array.from([{{filters.digitalDownload}}]);
+            {% endif %}
+            
+            {% if contentTypeFilters is defined and contentTypeFilters is not empty%}
+               var allDigitalDownload = Array.from([{{tempDigitalDownload|join(', ')}}]);
+            {% endif %} 
 
             Vue.component('results-pagination', {
                 delimiters: ['{[', ']}'],
@@ -447,6 +471,8 @@
                     whitepaper: whitepaper,
                     webinar: webinar,
                     digitalBrochure: digitalBrochure,
+                    checkedDigitalDownload: checkedDigitalDownload,
+                    allDigitalDownload: allDigitalDownload,
                     currentPage: pageNumber,
                     numberOfPages: Number,
                     totalResults: Number,
@@ -474,6 +500,7 @@
                                 whitepaper: this.whitepaper,
                                 webinar: this.webinar,
                                 digitalBrochure: this.digitalBrochure,
+                                checkedDigitalDownload: checkedDigitalDownload,
                             }, 'News', this.frontendSearchUrl);
                         }
 
@@ -507,6 +534,10 @@
 
                         if(this.checkedProducts_services.length != 0) {
                             queryUrl += '&products_services=' + this.checkedProducts_services.join();
+                        }
+
+                        if(this.checkedDigitalDownload.length != 0) {
+                            queryUrl += '&digitalDownload=' + this.checkedDigitalDownload.join();
                         }
 
                         if(this.currentPage ){
@@ -550,7 +581,7 @@
                     sectorsFilter:function(sectorSlug){
                         var self = this;
                         var sectorsFilter = "";
-                        
+
                         if (self.checkedSectors.includes("allSectors") || self.checkedSectors.length == 0 || self.checkedSectors.length == "{{sectorsFilters|length}}"){
                             self.checkedSectors = [];
                             document.getElementById("allSectors").checked = true;
@@ -580,25 +611,27 @@
                     otherPostType:function(categoriesSlug){
                         var self = this;
                         var otherPostType = "";
-                        var allCategoriesClear = this.whitepaper === false && this.webinar === false && this.digitalBrochure === false && this.checkedCategories.length == 0;
+                        var allCategoriesClear = this.whitepaper === false && this.webinar === false && this.digitalBrochure === false && this.checkedCategories.length == 0 && this.checkedDigitalDownload.length == 0;
 
                         if ( allCategoriesClear ){
                             document.getElementById("allCategories").checked = true;
-                            return "&whitepaper=1&webinar=1&digitalBrochure=1"
-                        }else if( this.checkedCategories.length == "{{categoriesFilters|length}}" && this.whitepaper && this.webinar && this.digitalBrochure){
+                            return "&whitepaper=1&webinar=1&digitalBrochure=1&digitalDownload=" + self.allDigitalDownload
+                        }else if( this.checkedCategories.length == "{{categoriesFilters|length}}" && this.whitepaper && this.webinar && this.digitalBrochure && this.checkedDigitalDownload.length == this.allDigitalDownload.length ){
                             this.checkedCategories = [];
+                            this.checkedDigitalDownload = [];
                             self.setOtherPostTypeToFalse();
                             document.getElementById(categoriesSlug) != null ? document.getElementById(categoriesSlug).checked = false : null
                             document.getElementById("allCategories").checked = true;
                             document.getElementById("whitepaper").checked = false;
                             document.getElementById("webinar").checked = false;
                             document.getElementById("digitalBrochure").checked = false;
-                            return "&whitepaper=1&webinar=1&digitalBrochure=1"
+                            return "&whitepaper=1&webinar=1&digitalBrochure=1&digitalDownload=" + self.allDigitalDownload
                         } else {
-                            otherPostType = this.whitepaper                     ? otherPostType + "&whitepaper=1"       : otherPostType;
-                            otherPostType = this.webinar                        ? otherPostType + "&webinar=1"          : otherPostType;
-                            otherPostType = this.digitalBrochure                ? otherPostType + "&digitalBrochure=1"  : otherPostType;
-                            otherPostType = this.checkedCategories.length == 0  ? otherPostType + "&noPost=1"           : otherPostType;
+                            otherPostType = this.whitepaper                         ? otherPostType + "&whitepaper=1"       : otherPostType;
+                            otherPostType = this.webinar                            ? otherPostType + "&webinar=1"          : otherPostType;
+                            otherPostType = this.digitalBrochure                    ? otherPostType + "&digitalBrochure=1"  : otherPostType;
+                            otherPostType = this.checkedCategories.length == 0      ? otherPostType + "&noPost=1"           : otherPostType;
+                            otherPostType = this.checkedDigitalDownload.length != 0 ? otherPostType + "&digitalDownload=" + self.checkedDigitalDownload.join()   : otherPostType;
                             document.getElementById("allCategories").checked = false;
                         }
 
@@ -609,10 +642,11 @@
                         self.whitepaper = false;
                         self.webinar = false;
                         self.digitalBrochure = false;
+                        self.checkedDigitalDownload = [];
                     },
                     searchRequestUrl: function(categoriesSlug, page) {
 
-                        fetchURL = this.apiURL + this.categoriesFilter() + this.sectorsFilter() + this.productsServicesFilter() + this.otherPostType(categoriesSlug);
+                        fetchURL = this.apiURL + this.categoriesFilter(categoriesSlug) + this.sectorsFilter(categoriesSlug) + this.productsServicesFilter(categoriesSlug) + this.otherPostType(categoriesSlug);
                         
                         fetchURL = fetchURL + "&per_page=5&page=" + this.currentPage;
 
@@ -623,7 +657,8 @@
                                 checkedProducts_services: this.checkedProducts_services,
                                 whitepaper: this.whitepaper,
                                 webinar: this.webinar,
-                                digitalBrochure: this.digitalBrochure
+                                digitalBrochure: this.digitalBrochure,
+                                checkedDigitalDownload: checkedDigitalDownload
                             }, 'Search suppliers - CCS', this.frontendSearchUrl);
                         }
 
@@ -640,7 +675,7 @@
 
                         this.currentPage = page === null ? 1 : page;
                         var requestUrl = this.searchRequestUrl(categoriesSlug, this.currentPage);
-                        //console.log(requestUrl);
+                        console.log(requestUrl);
                         fetch(requestUrl)
                         .then(async function(response) {
                             if (!response.ok) {
@@ -672,6 +707,12 @@
                                         postLink = appBaseUrl+ "/digital_brochure/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
                                         categoriesLink = appBaseUrl + "/news/?&digitalBrochure=1";
+                                        break;
+                                    case 'Downloadable':
+                                        jsonResponse.body[i].postType = jsonResponse.body[i].content_type_name;
+                                        postLink = appBaseUrl+ "/downloadable-resource/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        postDescription = jsonResponse.body[i].excerpt.rendered;
+                                        categoriesLink = appBaseUrl +"/news?contentType=" + jsonResponse.body[i].content_type_id;
                                         break;
                                     default:
                                         postLink = appBaseUrl+ "/news/" + jsonResponse.body[i].slug;
@@ -719,6 +760,7 @@
                             && (this.whitepaper == false || this.whitepaper == null )
                             && (this.webinar == false || this.webinar == null )
                             && (this.digitalBrochure == false || this.digitalBrochure == null )
+                            && this.checkedDigitalDownload.length == 0 
                             && this.currentPage == 1){
                                 this.feature = true;
                         }
@@ -738,6 +780,7 @@
                                 self.whitepaper =null
                                 self.webinar =null
                                 self.digitalBrochure =null
+                                self.checkedDigitalDownload = []
                                 return;
                             }
 
@@ -747,6 +790,7 @@
                             self.whitepaper                = event.state.whitepaper;
                             self.webinar                   = event.state.webinar;
                             self.digitalBrochure           = event.state.digitalBrochure;
+                            self.checkedDigitalDownload    = event.state.checkedDigitalDownload;
                         }
                     },
                 }
