@@ -18,7 +18,7 @@
                 <div class="govuk-grid-column-one-third featured-news-text-container">
                     <p class="news-listing-meta">
                         <a :href="result.CategoriesLink">{[ result.postType ]}</a>
-                        <span> {[result.postedDate]} </span> 
+                        <span v-if="result.postType != 'Digital Brochure'"> {[result.postedDate]} </span>
                     </p>
                     <h2 class="news-listing-title"><a :href="result.postLink" v-html="result.title.rendered"></a></h2>
                     <p v-html="result.postDescription"></p> 
@@ -27,7 +27,7 @@
             <div v-else class="govuk-grid-column-full news-listing-block">
                 <p class="news-listing-meta"> 
                     <a :href="result.CategoriesLink">{[ result.postType ]}</a>
-                    <span> {[result.postedDate]} </span> 
+                    <span v-if="result.postType != 'Digital Brochure'"> {[result.postedDate]} </span>
                 </p>
                 <h2 class="news-listing-title"><a :href="result.postLink" v-html="result.title.rendered"></a></h2>
                 <p v-html="result.postDescription"></p>    
