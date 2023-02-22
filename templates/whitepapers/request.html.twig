@@ -60,7 +60,7 @@
                 {% if whitepaper.featuredImage is defined and whitepaper.featuredImage is not empty %}
                     <div class="flourish-box-effect">
                         <div class="flourish-box-effect__inner">
-                            <img src="{{ whitepaper.featuredImage.byName('news-size-m') }}" alt="" role="presentation" />
+                            <img src="{{ whitepaper.featuredImage.byName('news-size-m')|trim is not empty ? whitepaper.featuredImage.byName('news-size-m') : whitepaper.featuredImage }}" alt="" role="presentation" />
                         </div>
                     </div>
                 {% endif %}
