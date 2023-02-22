@@ -58,7 +58,7 @@
                 {% if digital_brochure.featuredImage is defined and digital_brochure.featuredImage is not empty %}
                     <div class="flourish-box-effect">
                         <div class="flourish-box-effect__inner">
-                            <img src="{{ digital_brochure.featuredImage.byName('news-size-m') }}" alt="" role="presentation" />
+                            <img src="{{ digital_brochure.featuredImage.byName('news-size-m')|trim is not empty ? digital_brochure.featuredImage.byName('news-size-m') : digital_brochure.featuredImage }}" alt="" role="presentation" />
                         </div>
                     </div>
                 {% endif %}

@@ -58,7 +58,7 @@
                 </div>
                 <div class="govuk-grid-column-one-third">
                     {% if webinar.featuredImage is defined and webinar.featuredImage is not empty %}
-                        <img src="{{ webinar.featuredImage.byName('news-size-m') }}" alt="" role="presentation" />
+                        <img src="{{ webinar.featuredImage.byName('news-size-m')|trim is not empty ? webinar.featuredImage.byName('news-size-m') : webinar.featuredImage }}" alt="" role="presentation" />
                     {% endif %}
 
                     {% if webinar.content.additional_text is not empty %}
