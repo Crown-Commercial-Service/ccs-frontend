@@ -264,7 +264,7 @@
                                                         document.querySelector('.govuk-error-summary').focus();
                                                     });
                                                 </script>
-                                                <div class="govuk-error-summary govuk-grid-column-two-thirds" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary" id="error-summary">
+                                                <div class="govuk-error-summary govuk-grid-column-two-thirds" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary" id="error-summary">
                                                     <h2 class="govuk-error-summary__title" id="error-summary-title"> There is a problem</h2>
                                                     <div class="govuk-error-summary__body">
                                                         <ul class="govuk-list govuk-error-summary__list">
@@ -440,13 +440,13 @@
                                                                 Is there anything specific we can help you with?
                                                             {% endif %}
                                                         </label>
-                                                        <span id="form-more-detail-hint" class="govuk-hint">
+                                                        <div id="form-more-detail-hint" class="govuk-hint">
                                                 {% if page.content.contact_form_message_question_description is defined and page.content.contact_form_message_question_description is not empty %}
                                                     {{ page.content.contact_form_message_question_description }}
                                                 {% else %}
                                                     Please give us as much detail as possible, including the agreement name and number
                                                 {% endif %}
-                                            </span>
+                                            </div>
                                                     <textarea class="govuk-textarea" id="form-more-detail" style="{{formErrors.descriptionErr is defined and formErrors.descriptionErr.errors|length > 0 ? 'border: 4px solid #b10e1e' : null }}" id="description" name="description" rows="5" aria-describedby="form-more-detail-hint">{{formErrors is defined ? formData.description}}</textarea>
                                                     </div>
                                                     {% endif %}

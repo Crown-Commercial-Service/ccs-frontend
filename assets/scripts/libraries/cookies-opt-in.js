@@ -360,9 +360,9 @@ var docCookies = {
         ${datarecord.title}
       </h3>
     </legend>
-    <span id="${datarecord.cookie_type}-hint" class="govuk-hint">
+    <div id="${datarecord.cookie_type}-hint" class="govuk-hint">
       ${datarecord.description}
-    </span>
+    </div>
     <div class="govuk-radios govuk-radios--inline">
       <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="${datarecord.cookie_type}" name="${datarecord.cookie_type}" type="radio"
