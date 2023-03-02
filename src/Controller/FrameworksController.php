@@ -344,7 +344,7 @@ class FrameworksController extends AbstractController
 
         // Get search query
         // strip special characters and tags from search query
-        $orginalSearch = strip_tags(html_entity_decode($request->query->get('q')));
+        $orginalSearch = str_replace('/','',strip_tags(html_entity_decode($request->query->get('q'))));
         $query = preg_replace("/[^a-zA-Z0-9\s]/", "", $orginalSearch);
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
