@@ -345,13 +345,13 @@
                                                     Is there anything specific we can help you with?
                                                 {% endif %}
                                             </label>
-                                            <span id="form-more-detail-hint" class="govuk-hint">
+                                            <div id="form-more-detail-hint" class="govuk-hint">
                                                 {% if page.content.contact_form_message_question_description is defined and page.content.contact_form_message_question_description is not empty %}
                                                     {{ page.content.contact_form_message_question_description }}
                                                 {% else %}
                                                     Please give us as much detail as possible, including the framework name and number
                                                 {% endif %}
-                                            </span>
+                                            </div>
                                             <textarea class="govuk-textarea" id="form-more-detail" name="description" rows="5" aria-describedby="form-more-detail"></textarea>
                                         </div>
 

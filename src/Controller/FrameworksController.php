@@ -344,7 +344,8 @@ class FrameworksController extends AbstractController
 
         // Get search query
         // strip special characters and tags from search query
-        $query = preg_replace("/[^a-zA-Z0-9\s]/", "", strip_tags(html_entity_decode($request->query->get('q'))));
+        $orginalSearch = str_replace('/', '', strip_tags(html_entity_decode($request->query->get('q'))));
+        $query = preg_replace("/[^a-zA-Z0-9\s]/", "", $orginalSearch);
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         $this->searchApi->setCacheKey($request->getRequestUri());
@@ -400,7 +401,7 @@ class FrameworksController extends AbstractController
             'category_slug' => (!empty($category) ? $category : null),
             'pillar'        => (!empty($pillarName) ? $pillarName : null),
             'pillar_slug'   => (!empty($pillar) ? $pillar : null),
-            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($query),
+            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($orginalSearch),
             'statuses'      => $statuses
         ];
 

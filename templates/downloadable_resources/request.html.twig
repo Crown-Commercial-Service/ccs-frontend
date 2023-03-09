@@ -58,7 +58,7 @@
                 {% if downloadable_resource.featuredImage is defined and downloadable_resource.featuredImage is not empty %}
                     <div class="flourish-box-effect">
                         <div class="flourish-box-effect__inner">
-                            <img src="{{ downloadable_resource.featuredImage.byName('news-size-m') }}" alt="" role="presentation" />
+                            <img src="{{ downloadable_resource.featuredImage.byName('news-size-m')|trim is not empty ? downloadable_resource.featuredImage.byName('news-size-m') : downloadable_resource.featuredImage }}" alt="" role="presentation" />
                         </div>
                     </div>
                 {% endif %}
