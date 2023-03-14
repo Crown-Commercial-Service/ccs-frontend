@@ -195,10 +195,12 @@ class FormController extends AbstractController
             $formErrors = $this->validateContactCCS($formData);
 
             if ($formErrors) {
+                $cscMessage = ControllerHelper::getCSCMessage();
                 return $this->render('forms/22-contact.html.twig', [
                     'referrer' => $params->get('00N4L000009OPAj', null),
                     'formErrors' => $formErrors,
                     'formData' => $formData,
+                    'cscMessage'    => $cscMessage,
                 ]);
             } else {
                 $params->set('subject', 'Contact CCS');
