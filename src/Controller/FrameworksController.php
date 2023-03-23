@@ -230,6 +230,9 @@ class FrameworksController extends AbstractController
             case "office-and-travel":
                 return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'travel']);
                 break;
+            case "travel":
+                return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'Travel, Transport, Accommodation and Venues Category']);
+                break;
         }
 
         // Map category slug to category db value

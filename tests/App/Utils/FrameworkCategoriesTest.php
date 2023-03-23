@@ -68,4 +68,15 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertResponseRedirects('/agreements/category/energy');
     }
+
+    public function testRedirectFromTravelToTravelTransportAccommodationAndVenuesCategory()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/agreements/category/travel');
+        $response = $client->getResponse();
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->assertResponseRedirects('/agreements/category/travel-transport-accommodation-and-venues-category');
+    }
 }

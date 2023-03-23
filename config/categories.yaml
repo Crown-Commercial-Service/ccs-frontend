@@ -44,9 +44,9 @@ pillars:
         db_value: 'Marcomms & Research'
         slug: 'marcomms-research'
 
-      - name: 'Travel'
-        db_value: 'Travel'
-        slug: 'travel'
+      - name: 'Travel, Transport, Accommodation and Venues Category'
+        db_value: 'Travel, Transport, Accommodation and Venues Category'
+        slug: 'travel-transport-accommodation-and-venues-category'
 
   - name: 'People'
     db_value: 'People'
