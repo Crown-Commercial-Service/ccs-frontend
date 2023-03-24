@@ -231,7 +231,7 @@ class FrameworksController extends AbstractController
                 return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'travel']);
                 break;
             case "travel":
-                return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'Travel, Transport, Accommodation and Venues Category']);
+                return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'travel-transport-accommodation-and-venues']);
                 break;
         }
 

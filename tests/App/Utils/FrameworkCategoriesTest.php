@@ -77,6 +77,6 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertResponseRedirects('/agreements/category/travel-transport-accommodation-and-venues-category');
+        $this->assertResponseRedirects('/agreements/category/travel-transport-accommodation-and-venues');
     }
 }
