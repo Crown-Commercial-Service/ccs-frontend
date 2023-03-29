@@ -301,7 +301,7 @@ class FormController extends AbstractController
         $errorMessages['emailErr'] = ContactCCSFormValidation::validationEmail($data['email']);
         $errorMessages['phoneErr'] = ContactCCSFormValidation::validationPhone($data['phone'], $data['callback']);
         $errorMessages['companyErr'] = ContactCCSFormValidation::validationCompany($data['company']);
-        $errorMessages['moreDetailErr'] = ContactCCSFormValidation::validationMoreDetial($data['moreDetail']);
+        $errorMessages['moreDetailErr'] = ContactCCSFormValidation::validationMoreDetail($data['moreDetail']);
 
         return $this->formatErrorMessages($errorMessages);
     }
