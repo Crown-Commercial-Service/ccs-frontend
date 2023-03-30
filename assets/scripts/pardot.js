@@ -13,6 +13,7 @@ if (cookiePreferences !== null) {
 
             //removing gtm tag class so it won't fire twice
             $("form.pardot-submit button[type=submit]").removeClass("gtm--submit-aggregation-form");
+            $("form.pardot-submit button[type=submit]").removeClass("gtm-form-submit");
 
             if (pardotSubmitted) {
                 return true;

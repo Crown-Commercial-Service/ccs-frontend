@@ -83,11 +83,11 @@ class ContactCCSFormValidation
         return $returnArray;
     }
 
-    public static function validationMoreDetial($moreDetail)
+    public static function validationMoreDetail($moreDetail)
     {
         $returnArray  = [
             'errors' => [],
-            'link' => '#moreDetail',
+            'link' => '#more-detail',
         ];
 
         $returnArray['errors'] = empty(trim($moreDetail)) ? ['Enter more detail'] : [] ;

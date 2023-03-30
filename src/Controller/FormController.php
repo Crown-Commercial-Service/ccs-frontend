@@ -195,10 +195,12 @@ class FormController extends AbstractController
             $formErrors = $this->validateContactCCS($formData);
 
             if ($formErrors) {
+                $cscMessage = ControllerHelper::getCSCMessage();
                 return $this->render('forms/22-contact.html.twig', [
                     'referrer' => $params->get('00N4L000009OPAj', null),
                     'formErrors' => $formErrors,
                     'formData' => $formData,
+                    'cscMessage'    => $cscMessage,
                 ]);
             } else {
                 $params->set('subject', 'Contact CCS');
@@ -299,7 +301,7 @@ class FormController extends AbstractController
         $errorMessages['emailErr'] = ContactCCSFormValidation::validationEmail($data['email']);
         $errorMessages['phoneErr'] = ContactCCSFormValidation::validationPhone($data['phone'], $data['callback']);
         $errorMessages['companyErr'] = ContactCCSFormValidation::validationCompany($data['company']);
-        $errorMessages['moreDetailErr'] = ContactCCSFormValidation::validationMoreDetial($data['moreDetail']);
+        $errorMessages['moreDetailErr'] = ContactCCSFormValidation::validationMoreDetail($data['moreDetail']);
 
         return $this->formatErrorMessages($errorMessages);
     }
