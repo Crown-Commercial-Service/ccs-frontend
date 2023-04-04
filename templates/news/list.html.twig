@@ -12,7 +12,6 @@
 {% block body %}
     {% include '_components/hero.html.twig' with {'image': '/assets/images/news_banner.jpg', 'heading': 'Explore our latest news', 'notFromWordpress': 'true', 'H1title': 'true', 'content': '<p>Alongside our latest news you will find blogs, case studies, whitepapers and recorded webinars here. Filter by area of interest, sector and content type to help you find what interests you most.</p>', 'cta_label': 'Subscribe to customer newsletter', 'cta_destination': '/newsletter', 'news_page_banner': 'true'} %}
 
-
     <div class="govuk-width-container">
 
         <div class="govuk-phase-banner">
@@ -36,13 +35,6 @@
         </div>
 
         <main id="main-content" role="main"  class="govuk-main-wrapper">
-
-            {% if pages.pagination.totalResults > 0  %}
-                <div class ="news_div" v-if="feature">
-                    {% include 'news/feature.html.twig' with {'page': pages.current} %}
-                </div>
-            {% endif %}
-
             
             <div class="govuk-grid-row" >
                 <div class="govuk-grid-column-one-quarter">
@@ -191,7 +183,7 @@
 
                     <div v-if="responseAvailable">
                             <div v-for="result in results">
-                                <div class ="news_div" v-if="result.index != 0 && feature || !feature">
+                                <div class ="news_div" >
                                     <div class="govuk-width-container">
                                         <div class="govuk-grid-row news_wrapper ">
 
@@ -464,7 +456,6 @@
                     results: "",
                     responseAvailable: null,
                     emptyResult: false,
-                    feature: true,
                     apiURL:  apiBaseUrl + "news?",
                     checkedCategories: checkedCategories,
                     checkedSectors: checkedSectors,
@@ -670,7 +661,6 @@
                     },
                     fetchAPIData: function(categoriesSlug, page) {
                         var self = this;
-                        this.feature = false;
                         this.responseAvailable = false;
                         this.emptyResult = false;
 
@@ -741,7 +731,6 @@
                             }else{
                                 self.responseAvailable = true;
                             }
-                            self.checkFeature();
                         })
                         .catch(function(error) {
                             console.log('An error occurred');
@@ -751,20 +740,6 @@
                     },
                     updatePageValue: function(newPageValue) {
                         this.currentPage = newPageValue;
-                    },
-                    checkFeature: function() {
-                        this.feature = false;
-
-                        if(this.checkedCategories.length == 0 
-                            && this.checkedSectors.length == 0 
-                            && this.checkedProducts_services.length == 0 
-                            && (this.whitepaper == false || this.whitepaper == null )
-                            && (this.webinar == false || this.webinar == null )
-                            && (this.digitalBrochure == false || this.digitalBrochure == null )
-                            && this.checkedDigitalDownload.length == 0 
-                            && this.currentPage == 1){
-                                this.feature = true;
-                        }
                     },
                     setupHistoryApi: function() {
                         var self = this;
