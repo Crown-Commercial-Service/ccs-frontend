@@ -290,22 +290,20 @@
                         fieldCheckboxes = document.getElementsByName("origin");
                         callbackTimeslotboxes = document.getElementsByName("callbackTimeslot");
                         fieldPostCode = document.getElementById("post-code");
-                        callbackRequired = document.getElementById("callback-1");
                         fieldMoreDetail = document.getElementById("more-detail");
-                        labelMoreDetail = document.getElementById("more-detail-label");
                         formSubmitButton = document.getElementById("submit");
 
                         dataCollectionFieldForSalesforce = document.getElementById("salesforce-textarea");
 
 
-                        callbackRequired.addEventListener('click', function (e) {
-                            if ( this.checked ) {
-                                document.getElementById("phone-label").textContent = "Telephone number";
-                            } else {
-                                document.getElementById("phone-label").textContent = "Telephone number (optional)";
-                            }
-                        }, false);
-
+                        document.querySelectorAll('input[name="00Nb0000009IXEg"]').forEach((option) => {
+                            option.addEventListener("change", function(event) {
+                                if (event.target.value == "1"){
+                                    document.getElementById("phone-label").textContent = "Telephone number";
+                                } else 
+                                    document.getElementById("phone-label").textContent = "Telephone number (optional)";
+                            });
+                        });
 
                         document.querySelectorAll('input[name="origin"]').forEach((option) => {
                             option.addEventListener("change", function(event) {
