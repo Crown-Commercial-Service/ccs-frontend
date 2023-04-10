@@ -180,15 +180,18 @@ class FormController extends AbstractController
         ControllerHelper::honeyPot($params->get('surname', null));
 
         $formData = [
-            'enquiryType'   => $params->get('origin', null),
-            'name'          => $params->get('name', null),
-            'email'         => $params->get('email', null),
-            'phone'         => $params->get('phone', null),
-            'company'       => $params->get('company', null),
-            'jobTitle'      => $params->get('00Nb0000009IXEs', null),
-            'postCode'      => $params->get('post-code', null),
-            'moreDetail'    =>  $params->get('more-detail', null),
-            'callback'      => $params->get('00Nb0000009IXEg', null)
+            'enquiryType'           => $params->get('origin', null),
+            'name'                  => $params->get('name', null),
+            'email'                 => $params->get('email', null),
+            'phone'                 => $params->get('phone', null),
+            'company'               => $params->get('company', null),
+            'jobTitle'              => $params->get('00Nb0000009IXEs', null),
+            'postCode'              => $params->get('post-code', null),
+            'moreDetail'            => $params->get('more-detail', null),
+            'callback'              => $params->get('00Nb0000009IXEg', null),
+            'contactedBefore'       => $params->get('contactedBefore', null),
+            'caseNumber'            => $params->get('00N3G00000GOQn4', null),
+            'callbackTimeslot'      => $params->get('callbackTimeslot', null),
         ];
 
         if (!empty($formData)) {
