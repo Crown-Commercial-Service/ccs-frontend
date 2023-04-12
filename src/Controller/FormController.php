@@ -186,7 +186,6 @@ class FormController extends AbstractController
             'phone'                 => $params->get('phone', null),
             'company'               => $params->get('company', null),
             'jobTitle'              => $params->get('00Nb0000009IXEs', null),
-            'postCode'              => $params->get('post-code', null),
             'moreDetail'            => $params->get('more-detail', null),
             'callback'              => $params->get('00Nb0000009IXEg', null),
             'contactedBefore'       => $params->get('contactedBefore', null),
