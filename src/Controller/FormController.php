@@ -219,7 +219,7 @@ class FormController extends AbstractController
                     return new Response(
                         $response->getContent()
                     );
-                } elseif ($params->get('origin') == 'Website - Enquiry') {
+                } elseif ($params->get('origin') != 'Website - Complaint') {
                     return $this->redirectToRoute('form_contact_thanks');
                 } else {
                     return $this->redirectToRoute('form_contact_thanks_complaint');
