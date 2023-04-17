@@ -285,6 +285,7 @@ class FormController extends AbstractController
             $params->set('priority', 'Green');
             $params->set('description', $description);
             $params->set('orgid', ControllerHelper::getOrgId());
+            $params->set('origin', 'Website - Download');
 
             $client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                   'query' => $params->all(),
