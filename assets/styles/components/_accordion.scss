@@ -17,7 +17,6 @@
 .js-enabled .govuk-accordion__section-button {
 
     padding-top: govuk-px-to-rem(20);
-    border-top: none;
 
 }
 
@@ -60,6 +59,12 @@
 .govuk-accordion__controls {
 
     margin-bottom: 10px;
+
+}
+
+.no-top-line {
+
+    border-top: none !important; 
 
 }
 
