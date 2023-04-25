@@ -230,6 +230,9 @@ class FrameworksController extends AbstractController
             case "office-and-travel":
                 return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'travel']);
                 break;
+            case "travel":
+                return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'travel-transport-accommodation-and-venues']);
+                break;
         }
 
         // Map category slug to category db value
@@ -344,7 +347,7 @@ class FrameworksController extends AbstractController
 
         // Get search query
         // strip special characters and tags from search query
-        $orginalSearch = strip_tags(html_entity_decode($request->query->get('q')));
+        $orginalSearch = str_replace('/', '', strip_tags(html_entity_decode($request->query->get('q'))));
         $query = preg_replace("/[^a-zA-Z0-9\s]/", "", $orginalSearch);
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
