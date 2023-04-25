@@ -288,9 +288,12 @@
 
                                                 <form id="js-contact-form" class="govuk-!-width-three-quarters pardot-submit" action="/{{slug}}" method="post">
 
-                                                <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
-                                                
-                                                    {# See https://symfony.com/doc/current/templating/app_variable.html #}
+                                                    <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
+
+                                                    {% if page.content.contact_form_show_newsletter_form is not empty %}
+                                                         <input type="hidden" name="newsletterForm" value={{page.content.contact_form_show_newsletter_form.value == true ? 1 : 0}}>
+                                                    {% endif %}
+
                                                     {% if app.debug %}
                                                         <input type="hidden" name="debug" value=1>
                                                         <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
@@ -305,7 +308,7 @@
                                                                 </span>
                                                             {% endfor %}
                                                         {% endif %}
-                                                        <input class="govuk-input pardot-field {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
+                                                        <input class="govuk-input pardot-field gtm-form-start {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
                                                     </div>
 
                                                     <label hidden class="visuallyhidden" aria-hidden="true" for="surname">dummy hidden label</label>
@@ -376,10 +379,8 @@
                                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small ccs-checkboxes__item--small">
                                                                 <input class="govuk-checkboxes__input govuk-checkboxes__input--small" id="form-aggregation-general" name="00Nb0000009IXEd" type="checkbox" value="1" {{ formData.aggregationCheckbox is not null ? 'checked' : null }}/>
                                                                 <label class="govuk-label govuk-checkboxes__label" for="form-aggregation-general">
-                                                                    Find out
-                                                                    about
-                                                                    aggregation
-                                                                    opportunities </label>
+                                                                    Find out about aggregation opportunities 
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     {% endif %}
@@ -392,12 +393,7 @@
                                                             <fieldset class="govuk-fieldset">
                                                                 <legend class="govuk-fieldset__legend">
                                                                     <h3 class="govuk-fieldset__heading">
-                                                                        What
-                                                                        areas of
-                                                                        aggregation
-                                                                        are you
-                                                                        interested
-                                                                        in?
+                                                                        What areas of aggregation are you interested in?
                                                                     </h3>
                                                                 </legend>
 
@@ -465,8 +461,7 @@
                                                     <p>You will receive an email when you submit your details. You can unsubscribe using the link in the email.</p>
 
                                                     <div class="govuk-form-group">
-                                                        {# Please do not remove the gtm--submit-aggregation-form class as this is used to track submissions in Google Analytics! #}
-                                                        <button type="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm--submit-aggregation-form">
+                                                        <button type="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit gtm--submit-aggregation-form">
                                                             Submit
                                                         </button>
                                                     </div>
