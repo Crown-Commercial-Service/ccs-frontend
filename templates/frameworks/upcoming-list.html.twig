@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Upcoming deals - CCS{% endblock %}
+{% block title %}Upcoming agreements - CCS{% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -35,7 +35,7 @@
 
                 {% else %}
                     <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                        Upcoming deals
+                        Upcoming agreements
                     </li>
                 {% endif %}
             </ol>
@@ -63,7 +63,7 @@
 
                     {% else %}
 
-                        <h1 class="govuk-heading-xl page-title">Upcoming Deals</h1>
+                        <h1 class="govuk-heading-xl page-title">Upcoming agreements</h1>
 
                         <p class="govuk-body-l govuk-!-width-three-quarters">If you would like to find out more about the scope of any of these procurements please
                             <a href="/contact">contact us</a>.</p>
@@ -92,7 +92,7 @@
                     
                     {% if awarded_pipeline|length >= 1 %}
 
-                        <table class="govuk-table ccs-table--upcoming-deals">
+                        <table class="govuk-table ccs-table--upcoming-agreements">
                             {% if upcoming_deals_content and upcoming_deals_content.table_0.caption|length > 0 %}
 
                                 <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_0.caption }}</caption>
@@ -163,7 +163,7 @@
 
                     {% if underway_pipeline|length >= 1 %}
 
-                        <table class="govuk-table ccs-table--upcoming-deals">
+                        <table class="govuk-table ccs-table--upcoming-agreements">
 
                             {% if upcoming_deals_content and upcoming_deals_content.table_1.caption %}
 
@@ -245,7 +245,7 @@
 
                     {% if dynamic_purchasing_systems|length >= 1 %}
 
-                        <table class="govuk-table ccs-table--upcoming-deals">
+                        <table class="govuk-table ccs-table--upcoming-agreements">
                             {% if upcoming_deals_content and upcoming_deals_content.table_2.caption|length > 0 %}
 
                                 <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_2.caption }}</caption>
@@ -314,7 +314,7 @@
 
                     {% if planned_pipeline|length >= 1 %}
 
-                        <table class="govuk-table ccs-table--upcoming-deals">
+                        <table class="govuk-table ccs-table--upcoming-agreements">
 
                             {% if upcoming_deals_content and upcoming_deals_content.table_3.caption|length > 0 %}
 
@@ -391,7 +391,7 @@
 
                     {% if future_pipeline|length >= 1 %}
 
-                        <table class="govuk-table ccs-table--upcoming-deals">
+                        <table class="govuk-table ccs-table--upcoming-agreements">
 
                             {% if upcoming_deals_content and upcoming_deals_content.table_4.caption|length > 0 %}
 

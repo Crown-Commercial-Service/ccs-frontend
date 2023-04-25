@@ -26,7 +26,7 @@
         <main id="main-content" role="main"  class="govuk-main-wrapper">
 
             {% if formErrors is defined %}
-                <div class="govuk-error-summary govuk-grid-column-three-quarters" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+                <div class="govuk-error-summary govuk-grid-column-three-quarters" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
                     <h2 class="govuk-error-summary__title" id="error-summary-title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
@@ -58,6 +58,7 @@
 
                         <label hidden class="visuallyhidden" aria-hidden="true" for="surname">dummy hidden label</label>
                         <input type="checkbox" id="surname" name="surname" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
+                        <input type="hidden" name="subject" value="Website - Newsletter">
 
                         <div class="govuk-form-group {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="name">Name</label>
@@ -70,7 +71,7 @@
                                 {% endfor %}
                             {% endif %}
 
-                            <input class="govuk-input pardot-field {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
+                            <input class="govuk-input pardot-field gtm-form-start {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
                         </div>
 
                          <div class="govuk-form-group {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
@@ -122,7 +123,7 @@
                         <p>You will receive an email when you submit your details. You can unsubscribe using the link in the email.</p>
 
                         <div class="govuk-form-group">
-                            <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Submit</button>
+                            <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit">Submit</button>
                         </div>
 
                     </form>

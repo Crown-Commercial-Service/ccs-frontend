@@ -12,7 +12,7 @@
                 </span>
             {% endfor %}
         {% endif %}    
-        <input class="govuk-input pardot-field {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
+        <input class="govuk-input pardot-field gtm-form-start {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" aria-describedby="full-name-error" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
     </div>
 
     <div class="govuk-form-group {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
@@ -67,7 +67,7 @@
     <p>You will receive an email when you submit your details. You can unsubscribe using the link in the email.</p>
 
     <div class="govuk-form-group">
-        <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">
+        <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit">
             Continue to download
         </button>
         {#                            <a href="/webinar/confirmation/{{ webinar.ID }}/{{ webinar.urlSlug }}/" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Submit</a>#}

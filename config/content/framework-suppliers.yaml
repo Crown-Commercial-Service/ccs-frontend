@@ -18,6 +18,8 @@ supplier_contact_email:
   type: text
 supplier_website:
   type: text
+supplier_crp_url:
+  type: text
 live_frameworks:
   type: array
   content_fields:

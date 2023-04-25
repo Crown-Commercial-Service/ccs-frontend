@@ -29,12 +29,12 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.0">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.10">
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.0">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.10">
     {% endif %}
 
     {% block blocking_javascript %}
@@ -205,9 +205,16 @@
 
 <script src="/assets/scripts/libraries/jquery-3.6.0.min.js"></script>
 <script src="/assets/scripts/libraries/objectFitPolyfill.min.js"></script>
-<script src="/assets/scripts/all.js"></script>
-<script src="/assets/scripts/app.js?v=1.1"></script>
+<script src="/assets/scripts/all.js?v=2.0"></script>
+<script src="/assets/scripts/app.js?v=2.0"></script>
 <script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.0"></script>
+<script type="text/javascript">
+  $('a[target^="_new-window"]').click(function() {
+    var width = window.innerWidth * 0.9 ;
+    var height = width * window.innerHeight / window.innerWidth ;
+    window.open(this.href , 'popup', 'width=' + width + ', height=' + height + ', top=' + ((window.innerHeight - height) / 2) + ', left=' + ((window.innerWidth - width) / 2)); return false;
+})
+</script>
 
 {# Usersnap code
 <script type="text/javascript">

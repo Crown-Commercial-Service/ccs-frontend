@@ -48,20 +48,24 @@ class NewsController extends AbstractController
         $categoriesFilters          = $this->api->getAllTerms('categories');
         $sectorsFilters             = $this->api->getAllTerms('sectors');
         $productsServicesFilters    = $this->api->getAllTerms('products_services');
+        $contentTypeFilters         = $this->api->getAllTerms('content_type');
 
 
         $selectedCategories         = $request->query->get('categories');
         $selectedSectors            = $request->query->get('sectors');
         $selectedProducts_services  = $request->query->get('products_services');
+        $selectedDigitalDownload    = $request->query->get('digitalDownload');
 
 
         $options = [
             'categories'        => $selectedCategories ?? null,
             'sectors'           => $selectedSectors ?? null,
             'products_services' => $selectedProducts_services ?? null,
+            'digitalDownload'   => $selectedDigitalDownload ?? null,
             'per_page'          => 5,
             'whitepaper'        => $request->query->get('whitepaper') ?? null,
             'webinar'           => $request->query->get('webinar') ??  null,
+            'digitalBrochure'   => $request->query->get('digitalBrochure') ?? null,
         ];
 
         try {
@@ -78,6 +82,7 @@ class NewsController extends AbstractController
             'categoriesFilters'         => $categoriesFilters,
             'sectorsFilters'            => $sectorsFilters,
             'productsServicesFilters'   => $productsServicesFilters,
+            'contentTypeFilters'        => $contentTypeFilters,
             'title'                     => $this->getTitle($categoriesFilters, $sectorsFilters, $productsServicesFilters, $options),
             'pages'                     => $list,
             'filters'                   => $options
