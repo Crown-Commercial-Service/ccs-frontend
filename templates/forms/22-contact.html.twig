@@ -208,7 +208,7 @@
                                 {% endif %}
 
                                 <div id="more-detail-hint" class="govuk-hint">Tell us more about your question or describe the problem you are having. Do not include personal or financial information, like your credit card details.</div>
-                                <textarea maxlength="3000" class="govuk-textarea" style="margin-bottom: 0px; {{formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 ? 'border: 4px solid #b10e1e' : null }}" id="more-detail" name="more-detail" rows="5" aria-describedby="more-detail-hint" required>{{formErrors is defined ? formData.moreDetail}}</textarea>
+                                <textarea maxlength="3000" class="govuk-textarea" style="margin-bottom: 0px; {{formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 ? 'border: 4px solid #b10e1e' : null }}" id="more-detail" name="more-detail" rows="10" aria-describedby="more-detail-hint" required>{{formErrors is defined ? formData.moreDetail}}</textarea>
                                 <p class="govuk-hint">You can enter up to 3000 characters</p>
                             </div>
 
@@ -233,9 +233,9 @@
                                         </div>
                                         <div class="govuk-radios__conditional" id="conditional-contactedBefore-1">
                                             <div class="govuk-form-group">
-                                                <label class="govuk-label" for="00N3G00000GOQn4">Case Reference number (Optional)</label>
+                                                <label class="govuk-label" for="00N4L000009vOyr">Case Reference number (Optional)</label>
                                                 <div class="govuk-hint">If you have contacted us before you will have received a case reference number. Your case reference number will begin with a 0 and will be 7 digits long. It will be on all emails from our customer service team.</div>
-                                                <input class="govuk-input" id="00N3G00000GOQn4" maxlength="7" name="00N3G00000GOQn4" size="20" type="text" value="{{formData.caseNumber is defined and formData.caseNumber != null ? formData.caseNumber}}">
+                                                <input class="govuk-input" id="00N4L000009vOyr" maxlength="7" name="00N4L000009vOyr" size="20" type="text" value="{{formData.caseNumber is defined and formData.caseNumber != null ? formData.caseNumber}}">
                                             </div>
                                         </div>
                                         <div class="govuk-radios__item">
@@ -274,10 +274,9 @@
 
                     <script>
 
-                        fieldCheckboxes = document.getElementsByName("origin");
-                        callbackTimeslotboxes = document.getElementsByName("callbackTimeslot");
-                        fieldMoreDetail = document.getElementById("more-detail");
-                        formSubmitButton = document.getElementById("submit");
+                        const fieldCheckboxes = document.getElementsByName("origin");
+                        const callbackTimeslotboxes = document.getElementsByName("callbackTimeslot");
+                        const formSubmitButton = document.getElementById("submit");
 
                         dataCollectionFieldForSalesforce = document.getElementById("salesforce-textarea");
 
@@ -310,6 +309,11 @@
 
                         formSubmitButton.addEventListener('click', function handler (e) {
 
+                            const yesCallbackChecked = document.getElementById("callback-1").checked;
+                            const noCallbackChecked = document.getElementById("callback-2").checked;
+                            const fieldMoreDetail = document.getElementById("more-detail");
+                            var calledbackOptionAddedToDataField = false;
+
                             for (var i = 0, length = fieldCheckboxes.length; i < length; i++) {
                                 if (fieldCheckboxes[i].checked) {
                                     dataCollectionFieldForSalesforce.value += fieldCheckboxes[i].name + ": " + fieldCheckboxes[i].value + ", ";
@@ -317,9 +321,15 @@
                             }
 
                             for (var i = 0, length = callbackTimeslotboxes.length; i < length; i++) {
-                                if (callbackTimeslotboxes[i].checked) {
+                                if (callbackTimeslotboxes[i].checked && !noCallbackChecked) {
                                     dataCollectionFieldForSalesforce.value += "Callback: " + callbackTimeslotboxes[i].value + ", ";
+                                    calledbackOptionAddedToDataField = true;
+                                    break;
                                 }
+                            }
+
+                            if (!calledbackOptionAddedToDataField && yesCallbackChecked){
+                                dataCollectionFieldForSalesforce.value += "Callback: " + callbackTimeslotboxes[2].value + ", ";
                             }
 
                             dataCollectionFieldForSalesforce.value += " " + fieldMoreDetail.name + ": " + fieldMoreDetail.value;

@@ -189,7 +189,7 @@ class FormController extends AbstractController
             'moreDetail'            => $params->get('more-detail', null),
             'callback'              => $params->get('00Nb0000009IXEg', null),
             'contactedBefore'       => $params->get('contactedBefore', null),
-            'caseNumber'            => $params->get('00N3G00000GOQn4', null),
+            'caseNumber'            => $params->get('00N4L000009vOyr', null),
             'callbackTimeslot'      => $params->get('callbackTimeslot', null),
         ];
 
@@ -255,6 +255,7 @@ class FormController extends AbstractController
                 $params->set('recordType', '012b00000005NWC');
                 $params->set('priority', 'Green');
                 $params->set('orgid', ControllerHelper::getOrgId());
+                $params->set('origin', 'Website - Newsletter');
 
                 $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                     'query' => $params->all(),
