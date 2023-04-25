@@ -10,8 +10,7 @@
 {% endblock %}
 
 {% block body %}
-    {% include '_components/hero.html.twig' with {'image': '/assets/images/news_banner.jpg', 'heading': 'Explore our latest news', 'notFromWordpress': 'true', 'cta_label': '', 'content': '<p>Alongside our latest news you will find blogs, case studies, whitepapers and recorded webinars here. Filter by area of interest, sector and content type to help you find what interests you most.</p>', 'cta_label': '', 'cta_destination': ''} %}
-
+    {% include '_components/hero.html.twig' with {'image': '/assets/images/news_banner.jpg', 'heading': 'Explore our latest news', 'notFromWordpress': 'true', 'H1title': 'true', 'content': '<p>Alongside our latest news you will find blogs, case studies, whitepapers and recorded webinars here. Filter by area of interest, sector and content type to help you find what interests you most.</p>', 'cta_label': 'Subscribe to customer newsletter', 'cta_destination': '/newsletter', 'news_page_banner': 'true'} %}
 
     <div class="govuk-width-container">
 
@@ -36,30 +35,24 @@
         </div>
 
         <main id="main-content" role="main"  class="govuk-main-wrapper">
-
-
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <h1 class="govuk-heading-xl page-title">News</h1>
-                </div>
-            </div>
-
-            {% if pages.pagination.totalResults > 0  %}
-                <div class ="news_div" v-if="feature">
-                    {% include 'news/feature.html.twig' with {'page': pages.current} %}
-                </div>
-            {% endif %}
-
             
             <div class="govuk-grid-row" >
                 <div class="govuk-grid-column-one-quarter">
-                    <h2 class="news-listing-title" style="margin: 25px 0 35px 0">View archives</h3>
+
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-one-half">
+                            <h2 class="govuk-heading-m">Apply filters</h2>
+                        </div>
+                            <div class="govuk-grid-column-one-half" style="text-align:right;">
+                                <a href={{ path('news_list') }} class="govuk-link"> Clear filters </a>
+                            </div>
+                         </div>
 
                         <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_article">
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-categories">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-categories">
                                             Type of article
                                         </span>
                                     </h2>
@@ -124,7 +117,7 @@
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-sectors">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-sectors">
                                             Sectors
                                         </span>
                                     </h2>
@@ -157,7 +150,7 @@
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-ps">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-ps">
                                             Products and services
                                         </span>
                                     </h2>
@@ -190,7 +183,7 @@
 
                     <div v-if="responseAvailable">
                             <div v-for="result in results">
-                                <div class ="news_div" v-if="result.index != 0 && feature || !feature">
+                                <div class ="news_div" >
                                     <div class="govuk-width-container">
                                         <div class="govuk-grid-row news_wrapper ">
 
@@ -463,7 +456,6 @@
                     results: "",
                     responseAvailable: null,
                     emptyResult: false,
-                    feature: true,
                     apiURL:  apiBaseUrl + "news?",
                     checkedCategories: checkedCategories,
                     checkedSectors: checkedSectors,
@@ -669,7 +661,6 @@
                     },
                     fetchAPIData: function(categoriesSlug, page) {
                         var self = this;
-                        this.feature = false;
                         this.responseAvailable = false;
                         this.emptyResult = false;
 
@@ -740,7 +731,6 @@
                             }else{
                                 self.responseAvailable = true;
                             }
-                            self.checkFeature();
                         })
                         .catch(function(error) {
                             console.log('An error occurred');
@@ -750,20 +740,6 @@
                     },
                     updatePageValue: function(newPageValue) {
                         this.currentPage = newPageValue;
-                    },
-                    checkFeature: function() {
-                        this.feature = false;
-
-                        if(this.checkedCategories.length == 0 
-                            && this.checkedSectors.length == 0 
-                            && this.checkedProducts_services.length == 0 
-                            && (this.whitepaper == false || this.whitepaper == null )
-                            && (this.webinar == false || this.webinar == null )
-                            && (this.digitalBrochure == false || this.digitalBrochure == null )
-                            && this.checkedDigitalDownload.length == 0 
-                            && this.currentPage == 1){
-                                this.feature = true;
-                        }
                     },
                     setupHistoryApi: function() {
                         var self = this;

@@ -1,0 +1,9 @@
+.contact_card {
+
+    background: #F8F8F8;
+    border: 1px solid #979797;
+    border-width: 1px 1px 1px 5px;
+    padding: govuk-px-to-rem(30) govuk-px-to-rem(25) govuk-px-to-rem(30) govuk-px-to-rem(25);
+    border-left-color: $ccs-colour;
+    position: relative;
+}
