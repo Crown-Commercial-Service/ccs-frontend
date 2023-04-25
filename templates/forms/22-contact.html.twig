@@ -275,6 +275,7 @@
                     <script>
 
                         fieldCheckboxes = document.getElementsByName("origin");
+                        noCallback = document.getElementById("callback-2").checked;
                         callbackTimeslotboxes = document.getElementsByName("callbackTimeslot");
                         fieldMoreDetail = document.getElementById("more-detail");
                         formSubmitButton = document.getElementById("submit");
@@ -317,7 +318,7 @@
                             }
 
                             for (var i = 0, length = callbackTimeslotboxes.length; i < length; i++) {
-                                if (callbackTimeslotboxes[i].checked) {
+                                if (callbackTimeslotboxes[i].checked && noCallback != false ) {
                                     dataCollectionFieldForSalesforce.value += "Callback: " + callbackTimeslotboxes[i].value + ", ";
                                 }
                             }
