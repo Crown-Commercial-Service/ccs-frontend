@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Utils\FrameworkCategories;
+use App\Helper\ControllerHelper;
 use Symfony\Component\Cache\Psr16Cache;
 use Psr\Cache\CacheItemPoolInterface;
 use Strata\Frontend\ContentModel\ContentModel;
@@ -134,9 +135,8 @@ class FrameworksController extends AbstractController
 
         try {
             $results = $this->searchApi->list($page, ['limit' => $limit]);
-        } catch (Exception $e) {
-            // refresh page on 500 error
-            return $this->redirect($request->getUri());
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
         }
 
         $data = [
@@ -200,8 +200,6 @@ class FrameworksController extends AbstractController
         return $this->render('frameworks/upcoming-list.html.twig', $data);
     }
 
-
-
     /**
      * List frameworks by category
      *
@@ -231,6 +229,9 @@ class FrameworksController extends AbstractController
                 break;
             case "office-and-travel":
                 return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'travel']);
+                break;
+            case "travel":
+                return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'travel-transport-accommodation-and-venues']);
                 break;
         }
 
@@ -341,10 +342,13 @@ class FrameworksController extends AbstractController
      */
     public function search(Request $request, int $page = 1)
     {
+        // check if user is bot and block the request
+        $this->blockBot($request->headers->get('User-Agent'));
 
         // Get search query
         // strip special characters and tags from search query
-        $query = preg_replace("/[^a-zA-Z0-9\s]/", "", strip_tags(html_entity_decode($request->query->get('q'))));
+        $orginalSearch = str_replace('/', '', strip_tags(html_entity_decode($request->query->get('q'))));
+        $query = preg_replace("/[^a-zA-Z0-9\s]/", "", $orginalSearch);
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         $this->searchApi->setCacheKey($request->getRequestUri());
@@ -386,9 +390,8 @@ class FrameworksController extends AbstractController
                 'pillar'    => $pillarName ?? null,
                 'status'    => $statuses
             ]);
-        } catch (Exception $e) {
-            // refresh page on 500 error
-            return $this->redirect($request->getUri());
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
         }
 
         $data = [
@@ -401,7 +404,7 @@ class FrameworksController extends AbstractController
             'category_slug' => (!empty($category) ? $category : null),
             'pillar'        => (!empty($pillarName) ? $pillarName : null),
             'pillar_slug'   => (!empty($pillar) ? $pillar : null),
-            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($query),
+            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($orginalSearch),
             'statuses'      => $statuses
         ];
 
@@ -435,8 +438,14 @@ class FrameworksController extends AbstractController
 
         $results = $this->setGovTableStyleForAllField($results);
 
+        $content = $results->getContent();
+
+        $cscMessage = ControllerHelper::getCSCMessage();
+
         $data = [
-            'framework' => $results
+            'framework' => $results,
+            'show_crp' => $this->showCRP($content['rm_number']->getValue()),
+            'cscMessage'    => $cscMessage,
         ];
         return $this->render('frameworks/show.html.twig', $data);
     }
@@ -668,5 +677,18 @@ class FrameworksController extends AbstractController
         }
 
         return(false);
+    }
+
+    private function showCRP($rm_number)
+    {
+        $CRP_EXCLUDED_FRAMEWORKS = array('RM6269', 'RM6263', 'RM6282', 'RM6186', 'RM6195', 'RM6232', 'RM6248', 'RM6257');
+        return !in_array($rm_number, $CRP_EXCLUDED_FRAMEWORKS);
+    }
+
+    private function blockBot(string $userAgent)
+    {
+        if (preg_match('/bot|crawl|slurp|spider/i', $userAgent)) {
+            die();
+        }
     }
 }

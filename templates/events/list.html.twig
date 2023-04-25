@@ -14,6 +14,7 @@
 
 
 {% block body %}
+        {% include '_components/hero.html.twig' with {'image': '/assets/images/events_banner.jpg', 'heading': 'Events', 'notFromWordpress': 'true', 'cta_label': '', 'content': '<p>Take a look at our upcoming events, webinars and aggregation opportunities. You can filter by area of interest and sector.</p>', 'cta_label': '', 'cta_destination': ''} %}
 
     <!-- required wrapper 1 -->
     <div class="govuk-width-container">
@@ -57,7 +58,7 @@
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
                                 <div class="govuk-accordion__section-header">
                                     <h3 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="products-services-accordion-heading">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="products-services-accordion-heading">
                                             Products and services
                                         </span>
                                     </h3>
@@ -83,7 +84,7 @@
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
                                 <div class="govuk-accordion__section-header">
                                     <h3 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="audience-tag-accordion-heading">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="audience-tag-accordion-heading">
                                             Event audience
                                         </span>
                                     </h3>
@@ -110,7 +111,7 @@
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
                                 <div class="govuk-accordion__section-header">
                                     <h3 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="sectors-accordion-heading">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="sectors-accordion-heading">
                                             Sectors
                                         </span>
                                     </h3>

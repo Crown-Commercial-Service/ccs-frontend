@@ -163,8 +163,11 @@ class FormController extends AbstractController
     {
         $referrer = $request->headers->get('referer');
 
+        $cscMessage = ControllerHelper::getCSCMessage();
+
         $data = [
-            'referrer' => $referrer
+            'referrer' => $referrer,
+            'cscMessage'    => $cscMessage,
         ];
 
         return $this->render('forms/22-contact.html.twig', $data);
@@ -177,29 +180,29 @@ class FormController extends AbstractController
         ControllerHelper::honeyPot($params->get('surname', null));
 
         $formData = [
-            'enquiryType'   => $params->get('origin', null),
-            'name'          => $params->get('name', null),
-            'email'         => $params->get('email', null),
-            'phone'         => $params->get('phone', null),
-            'company'       => $params->get('company', null),
-            'jobTitle'      => $params->get('00Nb0000009IXEs', null),
-            'postCode'      => $params->get('post-code', null),
-            'moreDetail'    =>  $params->get('more-detail', null),
-            'callback'      => $params->get('00Nb0000009IXEg', null)
+            'enquiryType'           => $params->get('origin', null),
+            'name'                  => $params->get('name', null),
+            'email'                 => $params->get('email', null),
+            'phone'                 => $params->get('phone', null),
+            'company'               => $params->get('company', null),
+            'jobTitle'              => $params->get('00Nb0000009IXEs', null),
+            'moreDetail'            => $params->get('more-detail', null),
+            'callback'              => $params->get('00Nb0000009IXEg', null),
+            'contactedBefore'       => $params->get('contactedBefore', null),
+            'caseNumber'            => $params->get('00N4L000009vOyr', null),
+            'callbackTimeslot'      => $params->get('callbackTimeslot', null),
         ];
-
-        if ($params->get('complaint')) {
-            $formData['complaint'] = $params->get('complaint', null);
-        }
 
         if (!empty($formData)) {
             $formErrors = $this->validateContactCCS($formData);
 
             if ($formErrors) {
+                $cscMessage = ControllerHelper::getCSCMessage();
                 return $this->render('forms/22-contact.html.twig', [
                     'referrer' => $params->get('00N4L000009OPAj', null),
                     'formErrors' => $formErrors,
                     'formData' => $formData,
+                    'cscMessage'    => $cscMessage,
                 ]);
             } else {
                 $params->set('subject', 'Contact CCS');
@@ -216,7 +219,7 @@ class FormController extends AbstractController
                     return new Response(
                         $response->getContent()
                     );
-                } elseif ($params->get('origin') == 'Website - Enquiry') {
+                } elseif ($params->get('origin') != 'Website - Complaint') {
                     return $this->redirectToRoute('form_contact_thanks');
                 } else {
                     return $this->redirectToRoute('form_contact_thanks_complaint');
@@ -252,6 +255,7 @@ class FormController extends AbstractController
                 $params->set('recordType', '012b00000005NWC');
                 $params->set('priority', 'Green');
                 $params->set('orgid', ControllerHelper::getOrgId());
+                $params->set('origin', 'Website - Newsletter');
 
                 $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                     'query' => $params->all(),
@@ -282,6 +286,7 @@ class FormController extends AbstractController
             $params->set('priority', 'Green');
             $params->set('description', $description);
             $params->set('orgid', ControllerHelper::getOrgId());
+            $params->set('origin', 'Website - Download');
 
             $client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                   'query' => $params->all(),
@@ -300,7 +305,7 @@ class FormController extends AbstractController
         $errorMessages['emailErr'] = ContactCCSFormValidation::validationEmail($data['email']);
         $errorMessages['phoneErr'] = ContactCCSFormValidation::validationPhone($data['phone'], $data['callback']);
         $errorMessages['companyErr'] = ContactCCSFormValidation::validationCompany($data['company']);
-        $errorMessages['moreDetailErr'] = ContactCCSFormValidation::validationMoreDetial($data['moreDetail']);
+        $errorMessages['moreDetailErr'] = ContactCCSFormValidation::validationMoreDetail($data['moreDetail']);
 
         return $this->formatErrorMessages($errorMessages);
     }

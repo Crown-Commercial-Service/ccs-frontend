@@ -95,7 +95,7 @@
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-1">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-1">
                                             Select framework
                                         </span>
                                     </h2>
@@ -134,7 +134,7 @@
 
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-2">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-2">
                                             Lot
                                         </span>
                                     </h2>
@@ -225,7 +225,7 @@
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
                                 <div class="govuk-accordion__section-header">
                                     <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-3">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-3">
                                         Results per page
                                         </span>
                                     </h2>
@@ -346,6 +346,7 @@
 
                             <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
                                 <a :href="result.url">{[ result.name ]}</a>
+                                <span v-if="result.crp_url" class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--lower-case ccs-tag--crp">Carbon Reduction Plan</span>
                                 <span class="ccs-subtle-notification" v-if="result.alternative_trading_names.length > 0">
                                     Trading as
                                     <span class="trading-name" v-for="trading_name in result.alternative_trading_names">{[ trading_name ]}</span>
@@ -375,6 +376,11 @@
                             {#{{ dump(item.content) }}#}
                             <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
                                 <a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a>
+
+                                {% if item.content.crp_url != null and item.content.crp_url != ""  %}
+                                    <span class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--lower-case ccs-tag--crp">Carbon Reduction Plan</span>
+                                {% endif %}
+
                                 {% if item.content.trading_name %}
                                     <span class="ccs-subtle-notification">Trading as {{ item.content.trading_name }}</span>
                                 {% endif %}
