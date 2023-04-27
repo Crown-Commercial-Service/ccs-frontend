@@ -79,9 +79,13 @@ pillars:
     slug: 'technology'
 
     categories:
-      - name: 'Digital Future'
-        db_value: 'Digital Future'
-        slug: 'digital-future'
+      - name: 'Cloud and Hosting'
+        db_value: 'Cloud and Hosting'
+        slug: 'cloud-and-hosting'
+        
+      - name: 'Digital Specialists'
+        db_value: 'Digital Specialists'
+        slug: 'digital-specialists'
 
       - name: 'Network Services'
         db_value: 'Network Services'
