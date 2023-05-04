@@ -80,7 +80,12 @@
                 {% set path = path ~ '&sectors=' ~ featureNewsProperties.sectorType | join(',') %}
             {% endif %}
 
-            <p><a href={{path}}>Browse all {{page.title | lower}} news articles</a></p>
+            {% if component.feature_news_feature_news_view_more_text is defined and component.feature_news_feature_news_view_more_text is not empty %}
+                <p><a href={{path}}>{{(component.feature_news_feature_news_view_more_text)}}</a></p>
+            {% else %}
+                <p><a href={{path}}>Browse all {{page.title | lower}} news articles</a></p>
+            {% endif %}
+
         {% endif %}
     </div>
 
