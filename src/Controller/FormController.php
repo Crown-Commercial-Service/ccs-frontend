@@ -191,6 +191,8 @@ class FormController extends AbstractController
             'contactedBefore'       => $params->get('contactedBefore', null),
             'caseNumber'            => $params->get('00N4L000009vOyr', null),
             'callbackTimeslot'      => $params->get('callbackTimeslot', null),
+            'customerType'          => $params->get('customerType', null),
+            'contactWay'            => $params->get('contactWay', null),
         ];
 
         if (!empty($formData)) {
@@ -303,7 +305,17 @@ class FormController extends AbstractController
         $errorMessages['nameErr'] = ContactCCSFormValidation::validationName($data['name']);
         $errorMessages['jobTitleErr'] = ContactCCSFormValidation::validationJobTitle($data['jobTitle']);
         $errorMessages['emailErr'] = ContactCCSFormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] = ContactCCSFormValidation::validationPhone($data['phone'], $data['callback']);
+
+
+        if ($data['enquiryType'] == "Website - Complaint" ){
+            $errorMessages['phoneErr'] = ContactCCSFormValidation::validationPhone($data['phone']);
+            $errorMessages['customerTypeErr'] = ContactCCSFormValidation::validationCustomerType($data['customerType']);
+            $errorMessages['contactWayErr'] = ContactCCSFormValidation::validationContactWay($data['contactWay']);
+
+        }elseif (!($data['callback'] == "No" || $data['callback'] == null)){
+            $errorMessages['phoneErr'] = ContactCCSFormValidation::validationPhone($data['phone']);
+        }
+       
         $errorMessages['companyErr'] = ContactCCSFormValidation::validationCompany($data['company']);
         $errorMessages['moreDetailErr'] = ContactCCSFormValidation::validationMoreDetail($data['moreDetail']);
 
