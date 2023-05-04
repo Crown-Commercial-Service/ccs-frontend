@@ -62,6 +62,8 @@ components:
   feature_news_feature_news:
     feature_news_feature_news_heading:
       type: text
+    feature_news_feature_news_view_more_text:
+      type: text
     articles:
       type: relation_array
       content_type:
