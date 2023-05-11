@@ -220,19 +220,16 @@ class FrameworksController extends AbstractController
         $category = filter_var($category, FILTER_SANITIZE_STRING);
         $query = filter_var($query, FILTER_SANITIZE_STRING);
 
-        switch ($category) {
-            case "utilities-fuels":
-                return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'energy']);
-                break;
-            case "software-cyber":
-                return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'technology-solutions-outcomes']);
-                break;
-            case "office-and-travel":
-                return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'travel']);
-                break;
-            case "travel":
-                return $this->redirectToRoute('frameworks_list_by_category', ['category' => 'travel-transport-accommodation-and-venues']);
-                break;
+        $redirect = array(
+            "utilities-fuels"   => "energy",
+            "software-cyber"    => "technology-solutions-outcomes",
+            "office-and-travel" => "travel-transport-accommodation-and-venues",
+            "travel"            => "travel-transport-accommodation-and-venues",
+            "digital-future"    => "digital-specialists",
+        );
+
+        if (array_key_exists($category, $redirect)) {
+            return $this->redirectToRoute('frameworks_list_by_category', ['category' => $redirect[$category]]);
         }
 
         // Map category slug to category db value
