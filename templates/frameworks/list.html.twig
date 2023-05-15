@@ -99,27 +99,14 @@
                             </div>
                              <div class="govuk-grid-column-one-half" style="text-align:right;">
                                 {% set clearText = 'Clear filters' %}
+                                {% set queryString = query is defined ? "q=#{query}" : ""%}
 
-                                {% if query is defined %}
-                                
-                                    {% if pillar is defined and pillar|trim is not empty %}
-                                        <a href="{{"/agreements/search?q=#{query}&pillar=#{pillar_slug}"}}" class="govuk-link" >{{ clearText }}</a>
-                                    {% elseif category is defined and category|trim is not empty %}
-                                        <a href="{{"/agreements/search?q=#{query}&category=#{category_slug}"}}" class="govuk-link" >{{ clearText }}</a>
-                                    {% else %}
-                                        <a href="{{"/agreements/search?q=#{query}"}}" class="govuk-link" >{{ clearText }}</a>
-                                    {% endif %}
-
-                                {% else %} 
-
-                                    {% if pillar is defined and pillar|trim is not empty %}
-                                        <a href="{{"/agreements/pillar/#{pillar_slug}"}}" class="govuk-link" >{{ clearText }}</a>
-                                    {% elseif category is defined and category|trim is not empty %}
-                                        <a href="{{"/agreements/category/#{category_slug}"}}" class="govuk-link" >{{ clearText }}</a>
-                                    {% else %}
-                                        <a href="{{"/agreements"}}" class="govuk-link" >{{ clearText }}</a>
-                                    {% endif %}
-                                    
+                                {% if pillar is defined and pillar|trim is not empty %}
+                                    <a href="{{"/agreements/search?#{queryString}&pillar=#{pillar_slug}"}}" class="govuk-link" >{{ clearText }}</a>
+                                {% elseif category is defined and category|trim is not empty %}
+                                    <a href="{{"/agreements/search?#{queryString}&category=#{category_slug}"}}" class="govuk-link" >{{ clearText }}</a>
+                                {% else %}
+                                    <a href="{{"/agreements/search?#{queryString}"}}" class="govuk-link" >{{ clearText }}</a>
                                 {% endif %}
                             </div>
                         </div>
@@ -191,20 +178,25 @@
                                     <ul class="govuk-list">
                                         {% for pillar_item in pillars.pillars %}
                                             <li>
-                                                {% if pillar is defined and pillar == pillar_item.name %}
-                                                    <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug, 'query': query is defined and query|trim is not empty ? query : ''}) }}">{{ pillar_item.name }}</a>
-                                                {% else %}
-                                                    <a href="{{ path('frameworks_list_by_pillar', {'pillar': pillar_item.slug, 'query': query is defined and query|trim is not empty ? query : ''}) }}">{{ pillar_item.name }}</a>
-                                                {% endif %}
-
+                                                <a class="{{pillar is defined and pillar == pillar_item.name ? 'govuk-!-font-weight-bold'}}" 
+                                                    href="{{ path('frameworks_list_by_pillar',
+                                                    {   'pillar': pillar_item.slug, 
+                                                        'query': query is defined and query|trim is not empty ? query : '',
+                                                        'statuses': statuses is defined ? statuses
+                                                    }) }}">
+                                                {{ pillar_item.name }}</a>
+                                                
                                                 <ul class="govuk-list">
                                                     {% for category_item in pillar_item.categories %}
                                                         <li>
-                                                            {% if category is defined and category == category_item.name %}
-                                                                <a class="govuk-!-font-weight-bold" href="{{ path('frameworks_list_by_category', {'category': category_item.slug, 'query': query is defined and query|trim is not empty ? query : ''}) }}">{{ category_item.name }}</a>
-                                                            {% else %}
-                                                                <a href="{{ path('frameworks_list_by_category', {'category': category_item.slug, 'query': query is defined and query|trim is not empty ? query : ''}) }}">{{ category_item.name }}</a>
-                                                            {% endif %}
+                                                            <a class="{{category is defined and category == category_item.name ? 'govuk-!-font-weight-bold' }}" 
+                                                                href="{{ path('frameworks_list_by_category', 
+                                                                {   'category': category_item.slug, 
+                                                                    'query': query is defined and query|trim is not empty ? query : '',
+                                                                    'statuses': statuses is defined ? statuses
+                                                                }) }}">
+                                                            {{ category_item.name }}
+                                                            </a>
                                                         </li>
                                                     {% endfor %}
                                                 </ul>
