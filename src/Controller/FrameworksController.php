@@ -680,24 +680,23 @@ class FrameworksController extends AbstractController
     private function getStatusArray(Request $request)
     {
         $statuses = [];
-        if ($request->query->get('all') == "true" and !empty($query)) {
+
+        if ($request->query->get('all') === "true") {
             $statuses = ['all'];
-        }
-        if ($request->query->has('statuses')) {
-            $statuses = [];
+        } elseif ($request->query->has('statuses')) {
             foreach ($request->query->get('statuses') as $status) {
-                if ($status == 'all') {
+                if ($status === 'all') {
                     $statuses = ['all'];
                     break;
                 }
                 $statuses[] = filter_var($status, FILTER_SANITIZE_STRING);
             }
-
-            if (count($statuses) == 3) {
+        
+            if (count($statuses) === 3) {
                 $statuses = ['all'];
             }
         }
-
+        
         return $statuses;
     }
 }
