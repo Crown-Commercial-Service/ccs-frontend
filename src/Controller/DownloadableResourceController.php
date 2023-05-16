@@ -57,7 +57,7 @@ class DownloadableResourceController extends AbstractController
         $description   = $downloadable_resource->getContent()->get('description') ? $downloadable_resource->getContent()->get('description')->getValue() : '';
 
         if ($request->isMethod('POST')) {
-            $formErrors = FormController::sendToSalesforce($params, $formData, $campaignCode, $description);
+            $formErrors = FormController::sendToSalesforceForDownload($params, $formData, $campaignCode, $description);
 
             if ($formErrors instanceof Response) {
                 return $formErrors;

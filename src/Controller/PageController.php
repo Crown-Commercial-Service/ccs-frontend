@@ -193,7 +193,7 @@ class PageController extends AbstractController
         }
 
         if ($request->isMethod('POST')) {
-            $formErrors = $this->sendToSalesforce($request->request, $formData, $formCampaignCode);
+            $formErrors = $this->sendToSalesforceForPageEnquiry($request->request, $formData, $formCampaignCode);
 
             if ($formErrors instanceof Response) {
                 return $formErrors;
@@ -242,7 +242,7 @@ class PageController extends AbstractController
         return '';
     }
 
-    private function sendToSalesforce($params, $formData, $formCampaignCode)
+    private function sendToSalesforceForPageEnquiry($params, $formData, $formCampaignCode)
     {
 
         ControllerHelper::honeyPot($params->get('surname', null));
@@ -280,11 +280,11 @@ class PageController extends AbstractController
     {
         $errorMessages = [];
 
-        $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
+        $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
-        $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone'], $data['callback']);
-        $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
+        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] =    FormValidation::validationPhone($data['phone'], $data['callback']);
+        $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
 
 
         foreach ($errorMessages as $type => $value) {
@@ -300,11 +300,11 @@ class PageController extends AbstractController
     {
         $errorMessages = [];
 
-        $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
-        $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
-        $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
-        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
+        $errorMessages['nameErr'] =              FormValidation::validationName($data['name']);
+        $errorMessages['emailErr'] =             FormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] =             FormValidation::validationPhoneOnly($data['phone']);
+        $errorMessages['companyErr'] =           FormValidation::validationCompany($data['company']);
+        $errorMessages['jobTitleErr'] =          FormValidation::validationJobTitle($data['jobTitle']);
         $errorMessages['aggregationOptionErr'] = FormValidation::validationAggregationOption($data['aggregationOption']);
 
         foreach ($errorMessages as $type => $value) {
