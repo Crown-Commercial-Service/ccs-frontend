@@ -193,14 +193,9 @@ class FormValidation
             $returnArray['errors'] = ['Select the date that you would like to book your eSourcing tool training'];
         } else {
             $inputDate = is_null($buyerDate) ? $supplierDate : $buyerDate;
+            $inputDate = strtotime(explode("-", $inputDate)[0]);
 
-            $dateTime = explode("-", $inputDate);
-            $inputDate = strtotime($dateTime[0]);
-            $todayDate = strtotime(date("Y/m/d"));
-
-            if ($todayDate > $inputDate) {
-                $returnArray['errors'] = ['The date you have selected is in the past, select the date of an upcoming event'];
-            }
+            $returnArray['errors'] = strtotime(date("Y/m/d")) > $inputDate ? ['The date you have selected is in the past, select the date of an upcoming event'] : [];
         }
 
         return $returnArray;
