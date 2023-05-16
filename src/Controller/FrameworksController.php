@@ -219,6 +219,7 @@ class FrameworksController extends AbstractController
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
         $category = filter_var($category, FILTER_SANITIZE_STRING);
         $query = filter_var($query, FILTER_SANITIZE_STRING);
+        $statuses = $this->getAgreementFilterStatusArray($request);
 
         $redirect = array(
             "utilities-fuels"   => "energy",
@@ -245,8 +246,8 @@ class FrameworksController extends AbstractController
             $results = $this->searchApi->list($page, [
                 'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
                 'category' => $categoryName,
-                'limit' => 20
-
+                'limit' => 20,
+                'status' => $statuses
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
@@ -260,7 +261,8 @@ class FrameworksController extends AbstractController
             'pagination'    => $results->getPagination(),
             'results'       => $results,
             'categories'    => FrameworkCategories::getAll(),
-            'pillars'       => FrameworkCategories::getAllPillars()
+            'pillars'       => FrameworkCategories::getAllPillars(),
+            'statuses' => $statuses
         ];
         return $this->render('frameworks/list.html.twig', $data);
     }
@@ -284,7 +286,7 @@ class FrameworksController extends AbstractController
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
         $pillar = filter_var($pillar, FILTER_SANITIZE_STRING);
         $query = filter_var($query, FILTER_SANITIZE_STRING);
-
+        $statuses = $this->getAgreementFilterStatusArray($request);
 
         // Map category slug to category db value
         $pillarName = FrameworkCategories::getDbValueBySlug($pillar);
@@ -301,7 +303,8 @@ class FrameworksController extends AbstractController
             $results = $this->searchApi->list($page, [
                 'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
                 'pillar' => $pillarName,
-                'limit' => 20
+                'limit' => 20,
+                'status' => $statuses
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
@@ -315,7 +318,8 @@ class FrameworksController extends AbstractController
             'pagination'    => $results->getPagination(),
             'results'       => $results,
             'categories'    => FrameworkCategories::getAll(),
-            'pillars'       => FrameworkCategories::getAllPillars()
+            'pillars'       => FrameworkCategories::getAllPillars(),
+            'statuses' => $statuses
         ];
         return $this->render('frameworks/list.html.twig', $data);
     }
@@ -355,24 +359,7 @@ class FrameworksController extends AbstractController
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
 
-        $statuses = [];
-        if ($request->query->get('all') == "true" and !empty($query)) {
-            $statuses = ['all'];
-        }
-        if ($request->query->has('statuses')) {
-            $statuses = [];
-            foreach ($request->query->get('statuses') as $status) {
-                if ($status == 'all') {
-                    $statuses = ['all'];
-                    break;
-                }
-                $statuses[] = filter_var($status, FILTER_SANITIZE_STRING);
-            }
-
-            if (count($statuses) == 3) {
-                $statuses = ['all'];
-            }
-        }
+        $statuses = $this->getAgreementFilterStatusArray($request);
 
         $category =  filter_var($request->query->get('category'), FILTER_SANITIZE_STRING);
         $pillar =  filter_var($request->query->get('pillar'), FILTER_SANITIZE_STRING);
@@ -447,7 +434,6 @@ class FrameworksController extends AbstractController
         return $this->render('frameworks/show.html.twig', $data);
     }
 
-
     /**
      * List unique suppliers on a framework
      *
@@ -487,7 +473,6 @@ class FrameworksController extends AbstractController
         ];
         return $this->render('frameworks/framework-suppliers.html.twig', $data);
     }
-
 
     /**
      * Return suppliers on a lot
@@ -530,7 +515,6 @@ class FrameworksController extends AbstractController
 
         return $this->render('frameworks/lot-suppliers.html.twig', $data);
     }
-
 
     public function suppliersOnLotCsv(Request $request, string $rmNumber, string $lotNumber)
     {
@@ -686,6 +670,17 @@ class FrameworksController extends AbstractController
     {
         if (preg_match('/bot|crawl|slurp|spider/i', $userAgent)) {
             die();
+        }
+    }
+
+    private function getAgreementFilterStatusArray(Request $request)
+    {
+        $statuses = (array) $request->query->get('statuses', []);
+
+        if (count($statuses) === 3 || in_array('all', $statuses)) {
+            return ['all'];
+        } elseif ($request->query->has('statuses')) {
+            return $statuses;
         }
     }
 }
