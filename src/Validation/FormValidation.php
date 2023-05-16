@@ -175,26 +175,27 @@ class FormValidation
 
         $returnArray['errors'] = $customerType == null ? ['Select one option'] : [] ;
 
-
         return $returnArray;
     }
 
     public static function validationDate($customerType, $buyerDate, $supplierDate)
     {
-        $returnArray  = [
-            'errors' => [],
-            'link' => '#date-error',
+        $returnArray = [
+        'errors' => [],
+        'link' => '#date-error',
         ];
 
-        if ($customerType == null) {
+        if (is_null($customerType)) {
             return $returnArray;
-        } elseif ($buyerDate == null && $supplierDate == null) {
+        }
+
+        if (is_null($buyerDate) && is_null($supplierDate)) {
             $returnArray['errors'] = ['Select the date that you would like to book your eSourcing tool training'];
         } else {
-            $inputDate = $buyerDate == null ? $supplierDate : $buyerDate;
+            $inputDate = is_null($buyerDate) ? $supplierDate : $buyerDate;
 
             $dateTime = explode("-", $inputDate);
-            $inputDate = strtotime("$dateTime[0]");
+            $inputDate = strtotime($dateTime[0]);
             $todayDate = strtotime(date("Y/m/d"));
 
             if ($todayDate > $inputDate) {

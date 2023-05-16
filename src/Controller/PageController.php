@@ -47,6 +47,8 @@ class PageController extends AbstractController
      */
     protected $glossaryApi;
 
+    protected $client;
+
     public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new Wordpress(
@@ -247,15 +249,9 @@ class PageController extends AbstractController
 
         ControllerHelper::honeyPot($params->get('surname', null));
 
-        if ($params->get('validateAggregationOption')) {
-            $formErrors = $this->validateAggregationOptionForm($formData);
-        } else {
-            $formErrors = $this->validateForm($formData);
-        }
+        $formErrors = $params->get('validateAggregationOption') ? $this->validateAggregationOptionForm($formData) : $this->validateForm($formData);
 
-        if ($formErrors) {
-            return $formErrors;
-        } else {
+        if (!$formErrors) {
             $params->set('subject', $formCampaignCode);
             $params->set('00Nb0000009IXEW', $params->get('validateAggregationOption') ? $params->get('00Nb0000009IXEW') : $formCampaignCode);
             $params->set('recordType', '012b00000005NWC');
@@ -274,6 +270,8 @@ class PageController extends AbstractController
             }
             return $this->redirectToRoute($formCampaignCode == 'alwayson_newsletter' ? 'form_newsletter_thanks' : 'form_thank_you');
         }
+
+        return $formErrors;
     }
 
     private function validateForm($data)
