@@ -677,11 +677,10 @@ class FrameworksController extends AbstractController
     {
         $statuses = (array) $request->query->get('statuses', []);
 
-        if ( count($statuses) === 3 || in_array('all', $statuses) ) {
+        if (count($statuses) === 3 || in_array('all', $statuses)) {
             return ['all'];
-        }elseif ($request->query->has('statuses')) {
+        } elseif ($request->query->has('statuses')) {
             return $statuses;
         }
-
     }
 }
