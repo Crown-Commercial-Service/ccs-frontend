@@ -56,7 +56,7 @@ class WhitepaperController extends AbstractController
         $description = $whitepaper->getContent()->get('description') ? $whitepaper->getContent()->get('description')->getValue() : '';
 
         if ($request->isMethod('POST')) {
-            $formErrors = FormController::sendToSalesforce($params, $formData, $campaignCode, $description);
+            $formErrors = FormController::sendToSalesforceForDownload($params, $formData, $campaignCode, $description);
 
             if ($formErrors instanceof Response) {
                 return $formErrors;
