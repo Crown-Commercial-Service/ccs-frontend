@@ -3,7 +3,11 @@
 
 <head>
     <meta charset="utf-8">
-
+    {% if content_group is defined %}
+        {% for each in content_group %}
+            <meta name="content_group" value={{each}}>
+        {% endfor %}
+    {% endif%}
     {#
      # The minus is to remove whitespace
      # https://twig.symfony.com/doc/2.x/templates.html#whitespace-control

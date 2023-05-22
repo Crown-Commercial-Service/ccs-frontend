@@ -38,4 +38,22 @@ class ControllerHelper
 
         return $cscMessage->getContent()->get('csc_message')->getValue();
     }
+
+    public static function toSlug(string $string): string
+    {
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '_', $string)));
+        return $slug;
+    }
+
+    public static function toSlugArray(string $prefix = "", array $inputArray): array
+    {
+        $slugArray = [];
+
+        foreach ($inputArray as $eachInput) {
+            $slugArray[] = $prefix . ControllerHelper::toSlug($eachInput);
+        }
+
+        return $slugArray;
+    }
+
 }

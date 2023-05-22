@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Helper\ControllerHelper;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Psr16Cache;
 use Strata\Frontend\Cms\Wordpress;
@@ -104,9 +105,13 @@ class EventsController extends AbstractController
             throw new NotFoundHttpException('Event not found', $e);
         }
 
+        $listOfSector = $event->getContent()["sectors"]->getValue();
+        $content_group = ControllerHelper::toSlugArray("events-", $listOfSector);
+
         $data = [
-            'event'       => $event,
-            'schema'      => $this->createEventSchemaJSON($event)
+            'event'         => $event,
+            'schema'        => $this->createEventSchemaJSON($event),
+            'content_group' => $content_group,
         ];
 
         return $this->render('events/show.html.twig', $data);
