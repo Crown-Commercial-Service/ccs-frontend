@@ -187,6 +187,9 @@ class FormController extends AbstractController
             'contactedBefore'       => $params->get('contactedBefore', null),
             'caseNumber'            => $params->get('00N4L000009vOyr', null),
             'callbackTimeslot'      => $params->get('callbackTimeslot', null),
+            'callbackTimeslotForC'  => $params->get('callbackTimeslotForC', null),
+            'customerType'          => $params->get('customerType', null),
+            'contactWay'            => $params->get('contactWay', null),
         ];
 
         if (!empty($formData)) {
@@ -299,7 +302,15 @@ class FormController extends AbstractController
         $errorMessages['nameErr'] =         FormValidation::validationName($data['name']);
         $errorMessages['jobTitleErr'] =     FormValidation::validationJobTitleForContactCCS($data['jobTitle']);
         $errorMessages['emailErr'] =        FormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] =        FormValidation::validationPhone($data['phone'], $data['callback']);
+
+        if ($data['enquiryType'] == "Website - Complaint") {
+            $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
+            $errorMessages['customerTypeErr'] = FormValidation::validationCustomerType($data['customerType']);
+            $errorMessages['contactWayErr'] = FormValidation::validationContactWay($data['contactWay']);
+        } elseif (!($data['callback'] == "No" || $data['callback'] == null)) {
+            $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
+        }
+
         $errorMessages['companyErr'] =      FormValidation::validationCompany($data['company']);
         $errorMessages['moreDetailErr'] =   FormValidation::validationMoreDetail($data['moreDetail']);
 
@@ -324,7 +335,7 @@ class FormController extends AbstractController
 
         $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] =    FormValidation::validationPhoneOnly($data['phone']);
+        $errorMessages['phoneErr'] =    FormValidation::validationPhone($data['phone']);
 
         return $this->formatErrorMessages($errorMessages);
     }
@@ -337,7 +348,7 @@ class FormController extends AbstractController
         $errorMessages['dateErr'] =             FormValidation::validationDate($data['customerType'], $data['buyerDate'], $data['supplierDate']);
         $errorMessages['nameErr'] =             FormValidation::validationNameForEsourcingTraining($data['name']);
         $errorMessages['emailErr'] =            FormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] =            FormValidation::validationPhoneOnly($data['phone']);
+        $errorMessages['phoneErr'] =            FormValidation::validationPhone($data['phone']);
 
         return $this->formatErrorMessages($errorMessages);
     }
@@ -349,7 +360,7 @@ class FormController extends AbstractController
         $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
         $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] =    FormValidation::validationPhoneOnly($data['phone']);
+        $errorMessages['phoneErr'] =    FormValidation::validationPhone($data['phone']);
         $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
 
 
