@@ -62,7 +62,7 @@ class FormValidation
             'errors' => [],
             'link' => '#phone',
         ];
-        if ( empty(trim($phone)) ) {
+        if (empty(trim($phone))) {
             $returnArray['errors'] = ['Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'];
         } elseif (preg_match("/[a-z]/i", $phone) || preg_match("/[*,!,#,$,%,^,&,?,<,>,=]/i", $phone)) {
             $returnArray['errors'] = ['Enter a telephone number in the correct format'];

@@ -303,12 +303,11 @@ class FormController extends AbstractController
         $errorMessages['jobTitleErr'] =     FormValidation::validationJobTitleForContactCCS($data['jobTitle']);
         $errorMessages['emailErr'] =        FormValidation::validationEmail($data['email']);
 
-        if ($data['enquiryType'] == "Website - Complaint" ){
+        if ($data['enquiryType'] == "Website - Complaint") {
             $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
             $errorMessages['customerTypeErr'] = FormValidation::validationCustomerType($data['customerType']);
             $errorMessages['contactWayErr'] = FormValidation::validationContactWay($data['contactWay']);
-
-        }elseif (!($data['callback'] == "No" || $data['callback'] == null)){
+        } elseif (!($data['callback'] == "No" || $data['callback'] == null)) {
             $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
         }
 
