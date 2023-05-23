@@ -56,31 +56,16 @@ class FormValidation
         return $returnArray;
     }
 
-    public static function validationPhoneOnly($phone)
+    public static function validationPhone($phone)
     {
         $returnArray  = [
             'errors' => [],
             'link' => '#phone',
         ];
-
-        if (empty(trim($phone)) || preg_match("/[a-z]/i", $phone) || preg_match("/[*,!,#,$,%,^,&,?,<,>,=]/i", $phone)) {
+        if ( empty(trim($phone)) ) {
+            $returnArray['errors'] = ['Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'];
+        } elseif (preg_match("/[a-z]/i", $phone) || preg_match("/[*,!,#,$,%,^,&,?,<,>,=]/i", $phone)) {
             $returnArray['errors'] = ['Enter a telephone number in the correct format'];
-        }
-
-        return $returnArray;
-    }
-
-    public static function validationPhone($phone, $callback)
-    {
-        $returnArray  = [
-            'errors' => [],
-            'link' => '#phone',
-        ];
-
-        if ($callback && empty(trim($phone))) {
-            $returnArray['errors'] = ['Enter a telephone number'];
-        } elseif (!empty($phone) && strlen($phone) > 20) {
-            $returnArray['errors'] = ['Telephone number must be 20 characters or fewer'];
         }
 
         return $returnArray;
@@ -197,6 +182,30 @@ class FormValidation
 
             $returnArray['errors'] = strtotime(date("Y/m/d")) > $inputDate ? ['The date you have selected is in the past, select the date of an upcoming event'] : [];
         }
+
+        return $returnArray;
+    }
+
+    public static function validationCustomerType($customerType)
+    {
+        $returnArray  = [
+            'errors' => [],
+            'link' => '#typeOfCustomer',
+        ];
+
+        $returnArray['errors'] = $customerType == null ? ['Select if you are a buyer or a supplier'] : [] ;
+
+        return $returnArray;
+    }
+
+    public static function validationContactWay($contactWay)
+    {
+        $returnArray  = [
+            'errors' => [],
+            'link' => '#contactWay',
+        ];
+
+        $returnArray['errors'] = $contactWay == null ? ['Select how you want to be contact'] : [] ;
 
         return $returnArray;
     }
