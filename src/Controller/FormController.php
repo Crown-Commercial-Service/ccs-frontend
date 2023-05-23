@@ -311,7 +311,7 @@ class FormController extends AbstractController
         $errorMessages = [];
 
         $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
-        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
+        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitleForContactCCS($data['jobTitle']);
         $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
         $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
 
