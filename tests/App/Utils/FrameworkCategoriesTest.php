@@ -90,4 +90,15 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertResponseRedirects('/agreements/category/digital-specialists');
     }
+
+    public function testRedirectFromNetworkServicesToNetworkSolutions()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/agreements/category/network-services');
+        $response = $client->getResponse();
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->assertResponseRedirects('/agreements/category/network-solutions');
+    }
 }
