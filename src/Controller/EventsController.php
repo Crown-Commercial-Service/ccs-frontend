@@ -106,7 +106,7 @@ class EventsController extends AbstractController
         }
 
         $listOfSector = $event->getContent()["sectors"]->getValue();
-        $content_group = ControllerHelper::toSlugArray("events-", $listOfSector);
+        $content_group = ControllerHelper::toSlugList("events/", $listOfSector);
 
         $data = [
             'event'         => $event,

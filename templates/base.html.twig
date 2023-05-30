@@ -4,9 +4,7 @@
 <head>
     <meta charset="utf-8">
     {% if content_group is defined %}
-        {% for each in content_group %}
-            <meta name="content_group" value={{each}}>
-        {% endfor %}
+        <meta name="content_group" value={{content_group}}>
     {% endif%}
     {#
      # The minus is to remove whitespace

@@ -41,19 +41,17 @@ class ControllerHelper
 
     public static function toSlug(string $string): string
     {
-        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '_', $string)));
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string)));
         return $slug;
     }
 
-    public static function toSlugArray(string $prefix = "", array $inputArray): array
+    public static function toSlugList(string $prefix = "", array $inputArray): string
     {
-        $slugArray = [];
+        $slugList = array_reduce(
+            $inputArray,
+            fn($output, $each) => $output .= $prefix . ControllerHelper::toSlug($each) . "|"
+        );
 
-        foreach ($inputArray as $eachInput) {
-            $slugArray[] = $prefix . ControllerHelper::toSlug($eachInput);
-        }
-
-        return $slugArray;
+        return rtrim($slugList, "|");
     }
-
 }

@@ -423,14 +423,14 @@ class FrameworksController extends AbstractController
         $results = $this->setGovTableStyleForAllField($results);
 
         $content = $results->getContent();
-        $content_group = "agreement-" .  ControllerHelper::toSlug($results->getContent()["category"]->getValue());
+        $content_group = "agreement/" .  ControllerHelper::toSlug($results->getContent()["category"]->getValue());
         $cscMessage = ControllerHelper::getCSCMessage();
 
         $data = [
             'framework'     => $results,
             'show_crp'      => $this->showCRP($content['rm_number']->getValue()),
             'cscMessage'    => $cscMessage,
-            'content_group' => [$content_group],
+            'content_group' => $content_group,
         ];
         return $this->render('frameworks/show.html.twig', $data);
     }
