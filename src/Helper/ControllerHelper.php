@@ -45,7 +45,7 @@ class ControllerHelper
         return $slug;
     }
 
-    public static function toSlugList(string $prefix = "", array $inputArray): string
+    public static function toSlugList(array $inputArray, string $prefix = ""): string
     {
         $slugList = array_reduce(
             $inputArray,

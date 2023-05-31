@@ -108,7 +108,7 @@ class NewsController extends AbstractController
         }
 
         $listOfSector = $page->getContent()["sectors"]->getValue();
-        $content_group = ControllerHelper::toSlugList("news/", $listOfSector);
+        $content_group = ControllerHelper::toSlugList($listOfSector, "news/");
 
         return $this->render('news/show.html.twig', [
             'url'           => sprintf('/news/%s', $slug),
