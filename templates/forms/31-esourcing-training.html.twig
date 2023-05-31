@@ -48,7 +48,7 @@
 
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-                    <form class="govuk-!-width-three-quarters" action="/esourcing-training/submit" method="POST">
+                    <form class="govuk-!-width-three-quarters" action="/esourcing-training/submit" method="POST" {{ formErrors is defined ? "data-evt-state='error'" }}>
 
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
