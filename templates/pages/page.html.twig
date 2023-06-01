@@ -286,7 +286,7 @@
                                                     <p>{{ page.content.contact_form_form_sub_heading }}</p>
                                                 {% endif %}
 
-                                                <form id="js-contact-form" class="govuk-!-width-three-quarters pardot-submit" action="/{{slug}}" method="post" {{ formErrors is defined ? "data-evt-state='error'" }}>
+                                                <form id="js-contact-form" class="govuk-!-width-three-quarters pardot-submit" action="/{{slug}}" method="post" data-evt-type='page_form_enquiry' {{ formErrors is defined ? "data-evt-state='error'" }}>
 
                                                     <input type="hidden" name="subject" value="{{ page.content.contact_form_form_campaign_code is not empty ? page.content.contact_form_form_campaign_code : '' }}">
 
