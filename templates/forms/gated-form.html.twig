@@ -1,4 +1,4 @@
-<form class="govuk-!-width-three-quarters pardot-submit" action="{{form_action}}" method="post" {{ formErrors is defined ? "data-evt-state='error'" }}>
+<form class="govuk-!-width-three-quarters pardot-submit" action="{{form_action}}" method="post" data-evt-type='gated_form' {{ formErrors is defined ? "data-evt-state='error'" }}>
 
     {# For Pardot #}
     <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value={{subject}} />

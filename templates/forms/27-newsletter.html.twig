@@ -48,7 +48,7 @@
                     <p>Complete the form below to subscribe to the CCS newsletter and find out how we can bring power to your procurement. Each month it features framework updates, guidance, insights from our industry experts, events, case studies and much more.</p>
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-                    <form class="govuk-!-width-three-quarters" action="/newsletters/submit" method="POST" {{ formErrors is defined ? "data-evt-state='error'" }}>
+                    <form class="govuk-!-width-three-quarters" action="/newsletters/submit" method="POST" data-evt-type='newsletter' {{ formErrors is defined ? "data-evt-state='error'" }} >
 
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
