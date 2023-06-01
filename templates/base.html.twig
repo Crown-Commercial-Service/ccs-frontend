@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-
+    {% if content_group is defined %}
+        <meta name="content_group" value={{content_group}}>
+    {% endif%}
     {#
      # The minus is to remove whitespace
      # https://twig.symfony.com/doc/2.x/templates.html#whitespace-control

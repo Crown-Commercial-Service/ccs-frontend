@@ -5,10 +5,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Validation\FormValidation;
-use App\Validation\ContactCCSFormValidation;
-use App\Validation\EsourcingRegisterFormValidation;
-use App\Validation\EsourcingTrainingFormValidation;
-use App\Validation\GatedFormValidation;
 use App\Helper\ControllerHelper;
 use App\Controller\WhitepaperController;
 use Strata\Frontend\Cms\RestData;
@@ -191,6 +187,9 @@ class FormController extends AbstractController
             'contactedBefore'       => $params->get('contactedBefore', null),
             'caseNumber'            => $params->get('00N4L000009vOyr', null),
             'callbackTimeslot'      => $params->get('callbackTimeslot', null),
+            'callbackTimeslotForC'  => $params->get('callbackTimeslotForC', null),
+            'customerType'          => $params->get('customerType', null),
+            'contactWay'            => $params->get('contactWay', null),
         ];
 
         if (!empty($formData)) {
@@ -272,7 +271,7 @@ class FormController extends AbstractController
         }
     }
 
-    public static function sendToSalesforce($params, $data, $campaignCode, $description)
+    public static function sendToSalesforceForDownload($params, $data, $campaignCode, $description)
     {
         $formErrors = self::validateGatedForm($data);
 
@@ -300,12 +299,20 @@ class FormController extends AbstractController
     {
         $errorMessages = [];
 
-        $errorMessages['nameErr'] = ContactCCSFormValidation::validationName($data['name']);
-        $errorMessages['jobTitleErr'] = ContactCCSFormValidation::validationJobTitle($data['jobTitle']);
-        $errorMessages['emailErr'] = ContactCCSFormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] = ContactCCSFormValidation::validationPhone($data['phone'], $data['callback']);
-        $errorMessages['companyErr'] = ContactCCSFormValidation::validationCompany($data['company']);
-        $errorMessages['moreDetailErr'] = ContactCCSFormValidation::validationMoreDetail($data['moreDetail']);
+        $errorMessages['nameErr'] =         FormValidation::validationName($data['name']);
+        $errorMessages['jobTitleErr'] =     FormValidation::validationJobTitleForContactCCS($data['jobTitle']);
+        $errorMessages['emailErr'] =        FormValidation::validationEmail($data['email']);
+
+        if ($data['enquiryType'] == "Website - Complaint") {
+            $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
+            $errorMessages['customerTypeErr'] = FormValidation::validationCustomerType($data['customerType']);
+            $errorMessages['contactWayErr'] = FormValidation::validationContactWay($data['contactWay']);
+        } elseif (!($data['callback'] == "No" || $data['callback'] == null)) {
+            $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
+        }
+
+        $errorMessages['companyErr'] =      FormValidation::validationCompany($data['company']);
+        $errorMessages['moreDetailErr'] =   FormValidation::validationMoreDetail($data['moreDetail']);
 
         return $this->formatErrorMessages($errorMessages);
     }
@@ -314,28 +321,21 @@ class FormController extends AbstractController
     {
         $errorMessages = [];
 
-        $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
-        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
-        $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
-        $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
+        $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
+        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitleForContactCCS($data['jobTitle']);
+        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
+        $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
 
-
-        foreach ($errorMessages as $type => $value) {
-            if (!empty($errorMessages[$type]['errors'])) {
-                return $errorMessages;
-            }
-        }
-
-        return false;
+        return $this->formatErrorMessages($errorMessages);
     }
 
     public function validateEsourcingRegister(array $data)
     {
         $errorMessages = [];
 
-        $errorMessages['nameErr'] = EsourcingRegisterFormValidation::validationName($data['name']);
-        $errorMessages['emailErr'] = EsourcingRegisterFormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] = EsourcingRegisterFormValidation::validationPhone($data['phone']);
+        $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
+        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] =    FormValidation::validationPhone($data['phone']);
 
         return $this->formatErrorMessages($errorMessages);
     }
@@ -344,31 +344,30 @@ class FormController extends AbstractController
     {
         $errorMessages = [];
 
-        $errorMessages['customerTypeErr'] = EsourcingTrainingFormValidation::validatioCustomerType($data['customerType']);
-        $errorMessages['dateErr'] = EsourcingTrainingFormValidation::validationDate($data['customerType'], $data['buyerDate'], $data['supplierDate']);
-
-        $errorMessages['nameErr'] = EsourcingTrainingFormValidation::validationName($data['name']);
-        $errorMessages['emailErr'] = EsourcingTrainingFormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] = EsourcingTrainingFormValidation::validationPhone($data['phone']);
+        $errorMessages['customerTypeErr'] =     FormValidation::validatioCustomerType($data['customerType']);
+        $errorMessages['dateErr'] =             FormValidation::validationDate($data['customerType'], $data['buyerDate'], $data['supplierDate']);
+        $errorMessages['nameErr'] =             FormValidation::validationNameForEsourcingTraining($data['name']);
+        $errorMessages['emailErr'] =            FormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] =            FormValidation::validationPhone($data['phone']);
 
         return $this->formatErrorMessages($errorMessages);
     }
 
-    public static function validateGatedForm(array $data)
+    public function validateGatedForm(array $data)
     {
         $errorMessages = [];
 
-        $errorMessages['nameErr'] = GatedFormValidation::validationName($data['name']);
-        $errorMessages['jobTitleErr'] = GatedFormValidation::validationJobTitle($data['jobTitle']);
-        $errorMessages['emailErr'] = GatedFormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] = GatedFormValidation::validationPhone($data['phone']);
-        $errorMessages['companyErr'] = GatedFormValidation::validationCompany($data['company']);
+        $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
+        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
+        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] =    FormValidation::validationPhone($data['phone']);
+        $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
 
 
-        return self::formatErrorMessages($errorMessages);
+        return $this->formatErrorMessages($errorMessages);
     }
 
-    public function formatErrorMessages($errorMessages)
+    private function formatErrorMessages($errorMessages)
     {
 
         foreach ($errorMessages as $type => $value) {
