@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    {% if content_group is defined %}
+    {% if content_group is defined and content_group is not empty %}
         <meta name="content_group" value={{content_group}}>
     {% endif%}
     {#
