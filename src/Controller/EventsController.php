@@ -105,13 +105,15 @@ class EventsController extends AbstractController
             throw new NotFoundHttpException('Event not found', $e);
         }
 
-        $listOfSector = $event->getContent()["sectors"]->getValue();
-        $content_group = ControllerHelper::toSlugList($listOfSector, "events/");
+        if (isset($event->getContent()["sectors"])){
+            $listOfSector = $event->getContent()["sectors"]->getValue();
+            $content_group = ControllerHelper::toSlugList($listOfSector, "events/");
+        }
 
         $data = [
             'event'         => $event,
             'schema'        => $this->createEventSchemaJSON($event),
-            'content_group' => $content_group,
+            'content_group' => isset($content_group) ? $content_group : null,
         ];
 
         return $this->render('events/show.html.twig', $data);

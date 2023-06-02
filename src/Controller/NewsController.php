@@ -107,14 +107,16 @@ class NewsController extends AbstractController
             throw new NotFoundHttpException('News page not found', $e);
         }
 
-        $listOfSector = $page->getContent()["sectors"]->getValue();
-        $content_group = ControllerHelper::toSlugList($listOfSector, "news/");
+        if (isset($page->getContent()["sectors"])){
+            $listOfSector = $page->getContent()["sectors"]->getValue();
+            $content_group = ControllerHelper::toSlugList($listOfSector, "news/");
+        }
 
         return $this->render('news/show.html.twig', [
             'url'           => sprintf('/news/%s', $slug),
             'page'          => $page,
             'authorText'    => $authorText,
-            'content_group' => $content_group,
+            'content_group' => isset($content_group) ? $content_group : null,
         ]);
     }
 
