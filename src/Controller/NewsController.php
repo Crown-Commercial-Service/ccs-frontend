@@ -107,7 +107,7 @@ class NewsController extends AbstractController
             throw new NotFoundHttpException('News page not found', $e);
         }
 
-        if (isset($page->getContent()["sectors"])){
+        if (isset($page->getContent()["sectors"])) {
             $listOfSector = $page->getContent()["sectors"]->getValue();
             $content_group = ControllerHelper::toSlugList($listOfSector, "news/");
         }

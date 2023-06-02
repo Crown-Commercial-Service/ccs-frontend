@@ -105,7 +105,7 @@ class EventsController extends AbstractController
             throw new NotFoundHttpException('Event not found', $e);
         }
 
-        if (isset($event->getContent()["sectors"])){
+        if (isset($event->getContent()["sectors"])) {
             $listOfSector = $event->getContent()["sectors"]->getValue();
             $content_group = ControllerHelper::toSlugList($listOfSector, "events/");
         }
