@@ -243,6 +243,35 @@
                         buyerTrainingRadios = document.getElementsByName("buyer-training-dates");
                         supplierTrainingRadios = document.getElementsByName("supplier-training-dates");
 
+                        buyerTrainingRadios.forEach(option => {
+                            option.addEventListener("change", function(event) {
+                                document.getElementById("how-contacted-conditional-1").checked = true;
+                                unCheckArray(supplierTrainingRadios);
+                            })
+                        });
+
+                        supplierTrainingRadios.forEach(option => {
+                            option.addEventListener("change", function(event) {
+                                document.getElementById("how-contacted-conditional-2").checked = true;
+                                unCheckArray(buyerTrainingRadios);
+                            })
+                        });
+
+                        customerTypeRadios.forEach((option) => {
+                            option.addEventListener("change", function(event) {
+                                if (event.target.value == "Buyer"){
+                                    unCheckArray(supplierTrainingRadios);
+                                } else 
+                                    unCheckArray(buyerTrainingRadios);
+                            });
+                        });
+
+                        function unCheckArray(arrayToUnCheck) {
+                            arrayToUnCheck.forEach(radioButton => {
+                                radioButton.checked = false;
+                            });
+                        }
+
                         // The field were we collect all the data for Salesforce
                         dataCollectionFieldForSalesforce = document.getElementById("salesforce-textarea");
 
