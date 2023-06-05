@@ -271,7 +271,7 @@ class FormController extends AbstractController
         }
     }
 
-    public static function sendToSalesforceForDownload($params, $data, $campaignCode, $description)
+    public function sendToSalesforceForDownload($params, $data, $campaignCode, $description)
     {
         $formErrors = self::validateGatedForm($data);
 
