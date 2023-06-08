@@ -278,7 +278,6 @@ class FormController extends AbstractController
 
     public function eventsSubmit(Request $request)
     {
-
         $params = $request->request;
 
         ControllerHelper::honeyPot($params->get('surname', null));
@@ -313,10 +312,7 @@ class FormController extends AbstractController
                 return new Response($response->getContent());
             }
         }
-
         return  $this->redirectToRoute('form_contact_thanks');
-
-
     }
 
     public static function sendToSalesforceForDownload($params, $data, $campaignCode, $description)
