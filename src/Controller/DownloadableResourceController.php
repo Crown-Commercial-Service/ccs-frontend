@@ -23,6 +23,7 @@ class DownloadableResourceController extends AbstractController
      * @var Wordpress
      */
     protected $api;
+    protected $formController;
 
     public function __construct(CacheItemPoolInterface $cache)
     {
@@ -35,6 +36,7 @@ class DownloadableResourceController extends AbstractController
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
+        $this->formController = new FormController($cache);
     }
 
     public function request($id, $slug, Request $request)
@@ -57,7 +59,7 @@ class DownloadableResourceController extends AbstractController
         $description   = $downloadable_resource->getContent()->get('description') ? $downloadable_resource->getContent()->get('description')->getValue() : '';
 
         if ($request->isMethod('POST')) {
-            $formErrors = FormController::sendToSalesforceForDownload($params, $formData, $campaignCode, $description);
+            $formErrors = $this->formController->sendToSalesforceForDownload($params, $formData, $campaignCode, $description);
 
             if ($formErrors instanceof Response) {
                 return $formErrors;

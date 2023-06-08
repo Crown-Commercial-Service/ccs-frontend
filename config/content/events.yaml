@@ -28,3 +28,5 @@ address_region:
   type: text
 address_country:
   type: text
+sectors:
+  type: plainarray

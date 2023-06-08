@@ -536,6 +536,8 @@
                             queryUrl += '&page=' + this.currentPage;
                         }
 
+                        queryUrl += this.utmTagsRemain();
+
                         return queryUrl != '/?' ? queryUrl : "";
                         
                     },
@@ -545,6 +547,24 @@
                     }
                 },   
                 methods: {
+                    utmTagsRemain:function(){
+                        urlParams = new URLSearchParams(window.location.href);
+
+                        utmParams = '';
+
+                        for ( var param of urlParams) {
+                            [key, value] = param;
+                                                    
+                            if (key.startsWith("utm")) {
+                                utmParams += `&${key}=${value}`;
+                            }
+                        }
+
+                        if (utmParams != ''){
+                            return utmParams;
+                        }
+                        return "";
+                    },
                     formatDate:function(date){
                         var self = this;
                         date = new Date(Date.parse(date));

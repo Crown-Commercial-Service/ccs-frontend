@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Helper\ControllerHelper;
 use App\Utils\FrameworkCategories;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Psr16Cache;
@@ -106,10 +107,16 @@ class NewsController extends AbstractController
             throw new NotFoundHttpException('News page not found', $e);
         }
 
+        if (isset($page->getContent()["sectors"])) {
+            $listOfSector = $page->getContent()["sectors"]->getValue();
+            $content_group = ControllerHelper::toSlugList($listOfSector, "news/");
+        }
+
         return $this->render('news/show.html.twig', [
             'url'           => sprintf('/news/%s', $slug),
             'page'          => $page,
-            'authorText'    => $authorText
+            'authorText'    => $authorText,
+            'content_group' => isset($content_group) ? $content_group : null,
         ]);
     }
 

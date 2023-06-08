@@ -47,7 +47,7 @@
 
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-                    <form class="govuk-!-width-three-quarters" action="/esourcing-register/submit" method="POST" novalidate>
+                    <form class="govuk-!-width-three-quarters" action="/esourcing-register/submit" method="POST" novalidate data-evt-type='eSourcing_access' {{ formErrors is defined ? "data-evt-state='error'" }}>
 
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}

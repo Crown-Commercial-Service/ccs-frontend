@@ -48,7 +48,7 @@
 
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-                    <form class="govuk-!-width-three-quarters" action="/esourcing-training/submit" method="POST">
+                    <form class="govuk-!-width-three-quarters" action="/esourcing-training/submit" method="POST" data-evt-type='eSourcing_training' {{ formErrors is defined ? "data-evt-state='error'" }}>
 
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
@@ -242,6 +242,35 @@
                         customerTypeRadios = document.getElementsByName("customer-type");
                         buyerTrainingRadios = document.getElementsByName("buyer-training-dates");
                         supplierTrainingRadios = document.getElementsByName("supplier-training-dates");
+
+                        buyerTrainingRadios.forEach(option => {
+                            option.addEventListener("change", function(event) {
+                                document.getElementById("how-contacted-conditional-1").checked = true;
+                                unCheckArray(supplierTrainingRadios);
+                            })
+                        });
+
+                        supplierTrainingRadios.forEach(option => {
+                            option.addEventListener("change", function(event) {
+                                document.getElementById("how-contacted-conditional-2").checked = true;
+                                unCheckArray(buyerTrainingRadios);
+                            })
+                        });
+
+                        customerTypeRadios.forEach((option) => {
+                            option.addEventListener("change", function(event) {
+                                if (event.target.value == "Buyer"){
+                                    unCheckArray(supplierTrainingRadios);
+                                } else 
+                                    unCheckArray(buyerTrainingRadios);
+                            });
+                        });
+
+                        function unCheckArray(arrayToUnCheck) {
+                            arrayToUnCheck.forEach(radioButton => {
+                                radioButton.checked = false;
+                            });
+                        }
 
                         // The field were we collect all the data for Salesforce
                         dataCollectionFieldForSalesforce = document.getElementById("salesforce-textarea");
