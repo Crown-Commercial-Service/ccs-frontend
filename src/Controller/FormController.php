@@ -271,6 +271,51 @@ class FormController extends AbstractController
         }
     }
 
+    public function events(Request $request)
+    {
+        return $this->render('forms/34-events-form.html.twig');
+    }
+
+    public function eventsSubmit(Request $request)
+    {
+        $params = $request->request;
+
+        ControllerHelper::honeyPot($params->get('surname', null));
+
+        $formData = [
+            'name'          => $params->get('name', null),
+            'email'         => $params->get('email', null),
+            'jobTitle'      => $params->get('00Nb0000009IXEs'),
+            'phone'         => $params->get('phone', null),
+            'company'       => $params->get('company', null),
+            'moreDetail'    => $params->get('more-detail', null),
+        ];
+
+        $formErrors = $this->validateEventsForm($formData);
+
+        if ($formErrors) {
+            return $this->render('forms/34-events-form.html.twig', [
+                'formErrors'    => $formErrors,
+                'formData'      => $formData,
+            ]);
+        } else {
+            $params->set('subject', 'Events Form');
+            $params->set('origin', 'Website - Event');
+            $params->set('priority', 'Green');
+            $params->set('description', 'Website - Event, more-detail: ' . $formData['moreDetail']);
+            $params->set('orgid', ControllerHelper::getOrgId());
+
+            $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                'query'         => $params->all(),
+            ]);
+
+            if (!is_null($params->get('debug'))) {
+                return new Response($response->getContent());
+            }
+        }
+        return  $this->redirectToRoute('form_contact_thanks');
+    }
+
     public static function sendToSalesforceForDownload($params, $data, $campaignCode, $description)
     {
         $formErrors = self::validateGatedForm($data);
@@ -363,6 +408,20 @@ class FormController extends AbstractController
         $errorMessages['phoneErr'] =    FormValidation::validationPhone($data['phone']);
         $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
 
+
+        return $this->formatErrorMessages($errorMessages);
+    }
+
+    public function validateEventsForm(array $data)
+    {
+        $errorMessages = [];
+
+
+        $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
+        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitleForContactCCS($data['jobTitle']);
+        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
+        $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
+        $errorMessages['phoneErr'] =    FormValidation::validationPhone($data['phone']);
 
         return $this->formatErrorMessages($errorMessages);
     }
