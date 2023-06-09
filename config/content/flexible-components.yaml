@@ -50,6 +50,8 @@ components:
   accordion_accordion:
     accordion_accordion_heading:
       type: text
+    accordion_accordion_open_all_by_default:
+      type: boolean
     accordion_accordion_introduction:
       type: richtext
     accordion_accordion_items:
