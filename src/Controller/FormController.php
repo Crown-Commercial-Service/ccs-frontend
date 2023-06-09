@@ -302,6 +302,7 @@ class FormController extends AbstractController
             $params->set('subject', 'Events Form');
             $params->set('origin', 'Website - Event');
             $params->set('priority', 'Green');
+            $params->set('description', 'Website - Event, more-detail: ' . $formData['moreDetail']);
             $params->set('orgid', ControllerHelper::getOrgId());
 
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
