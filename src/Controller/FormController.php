@@ -32,6 +32,8 @@ class FormController extends AbstractController
     protected $api;
 
     protected $client;
+    
+    protected $s3_client;
 
     public function __construct(CacheItemPoolInterface $cache)
     {
@@ -44,6 +46,15 @@ class FormController extends AbstractController
         $this->api->setCache($psr16Cache);
 
         $this->client = HttpClient::create();
+
+        $this->s3_client = new S3Client([
+            'region' => 'eu-west-2',
+            'version' => 'latest',
+            'credentials' => [
+                'key'    => getenv('s3documentHanding_key'),
+                'secret' => getenv('s3documentHanding_secret'),
+            ]
+        ]);
     }
 
     public function esourcingRegisterSubmit(Request $request)
@@ -438,26 +449,15 @@ class FormController extends AbstractController
         return false;
     }
 
-    function downloadAttachmentForCSC($attachmentId)
+    public function downloadAttachmentForCSC($attachmentId)
     {
-
-        $s3_client = new S3Client([
-            'region' => 'eu-west-2',
-            'version' => 'latest',
-            'credentials' => [
-                'key'    => getenv('s3documentHanding_key'),
-                'secret' => getenv('s3documentHanding_secret'),
-            ]
-        ]);
-        $client = HttpClient::create();
-
         try {
-            $response = $client->request('GET', getenv('documentHanding_endpoint') . $attachmentId, ['headers' => array('x-api-key' => getenv('documentHanding_key'), 'Content-Type' => 'application/json')]);
+            $response = $this->client->request('GET', getenv('documentHanding_endpoint') . $attachmentId, ['headers' => array('x-api-key' => getenv('documentHanding_key'), 'Content-Type' => 'application/json')]);
 
             $documentKey = $response->toArray()["documentFile"]["url"];
             $documentName = substr($documentKey, strpos($documentKey, $attachmentId) + strlen($attachmentId) + 1);
 
-            $fileContents = $s3_client->getObject([
+            $fileContents = $this->s3_client->getObject([
                 'Bucket' => getenv('s3documentHanding_bucket_name'),
                 'Key'    => $documentKey,
             ])->get('Body')->getContents();
