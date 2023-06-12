@@ -268,7 +268,7 @@ class PageController extends AbstractController
                     $response->getContent()
                 );
             }
-            return $this->redirectToRoute($formCampaignCode == 'alwayson_newsletter' ? 'form_newsletter_thanks' : 'form_thank_you');
+            return $this->redirectToRoute($formCampaignCode == 'alwayson_newsletter' ? 'form_newsletter_thanks' : 'form_contact_thanks');
         }
 
         return $formErrors;
