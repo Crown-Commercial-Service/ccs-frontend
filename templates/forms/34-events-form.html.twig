@@ -117,7 +117,7 @@
 
                             <div class="govuk-form-group {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                                 <label class="govuk-label" for="phone" id="phone-label"> 
-                                    {{ formData.callback is defined and formData.callback == true ? 'Telephone number' : 'Telephone number (optional)' }}
+                                    {{ formData.callback is defined and formData.callback == true ? 'Telephone number' : 'Telephone number' }}
                                 </label>
 
                                 {% if formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 %}
