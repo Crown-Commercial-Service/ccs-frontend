@@ -184,6 +184,10 @@ form_contact_thanks_complaint:
   defaults:
     template: forms/25-contact-thanks-complaint.html.twig
 
+downloadAttachmentForCSC:
+  path: /attachment/{attachmentId}
+  controller: App\Controller\FormController::downloadAttachmentForCSC
+
 glossary:
   path: /glossary
   controller: App\Controller\PageController::glossary
@@ -257,13 +261,6 @@ form_newsletter_thanks:
  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
  defaults:
    template: forms/28-newsletter-thanks.html.twig
-
-form_thank_you:
-  path: /form-thank-you
-  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-  defaults:
-    template: forms/thank-you.html.twig
-
 
 form_esourcing_training:
   path: /esourcing-training
