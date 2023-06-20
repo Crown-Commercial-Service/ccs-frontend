@@ -65,6 +65,7 @@ class FormController extends AbstractController
 
         $formData = [
             'name'      => $params->get('name', null),
+            'jobTitle'  => $params->get('00Nb0000009IXEs'),
             'email'     => $params->get('email', null),
             'phone'     => $params->get('phone', null),
             'company'   => $params->get('company', null),
@@ -133,6 +134,7 @@ class FormController extends AbstractController
             "buyerDate"     => $params-> get('buyer-training-dates', null),
             "supplierDate"  => $params-> get('supplier-training-dates', null),
             'name'          => $params->get('name', null),
+            'jobTitle'      => $params->get('00Nb0000009IXEs'),
             'email'         => $params->get('email', null),
             'phone'         => $params->get('phone', null),
             'company'       => $params->get('company', null),
@@ -391,7 +393,6 @@ class FormController extends AbstractController
 
         $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] =    FormValidation::validationPhone($data['phone']);
 
         return $this->formatErrorMessages($errorMessages);
     }
@@ -416,7 +417,6 @@ class FormController extends AbstractController
         $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
         $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] =    FormValidation::validationPhone($data['phone']);
         $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
 
 
