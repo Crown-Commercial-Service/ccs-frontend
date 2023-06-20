@@ -105,7 +105,6 @@ class DownloadableResourceController extends AbstractController
         return [
             'name' => $params->get('name', null),
             'email' => $params->get('email', null),
-            'phone' => $params->get('phone', null),
             'company' => $params->get('company', null),
             'jobTitle' => $params->get('00Nb0000009IXEs', null),
         ];
