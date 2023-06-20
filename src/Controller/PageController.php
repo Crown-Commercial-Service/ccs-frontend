@@ -261,7 +261,7 @@ class PageController extends AbstractController
             $origin = $params->get('newsletterForm') ? 'Website - Newsletter' : 'Website - Page form enquiry';
 
             $params->set('origin', $origin);
-            $params->set('description', $origin . ', callback: ' .$formData['callbackTimeslot'] . ', more-detail: ' . $formData['description']);
+            $params->set('description', $origin . ', callback: ' . $formData['callbackTimeslot'] . ', more-detail: ' . $formData['description']);
 
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                 'query' => $params->all(),
