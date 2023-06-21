@@ -172,7 +172,7 @@ class FormController extends AbstractController
 
     public function contactCCS(Request $request)
     {
-        $referrer = $request->headers->get('referer');
+        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
 
         $cscMessage = ControllerHelper::getCSCMessage();
 
