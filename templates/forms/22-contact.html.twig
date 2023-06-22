@@ -360,7 +360,7 @@
                         function prepareCheckboxOptionToSfField(checkboxesName){
                            for (var i = 0, length = checkboxesName.length; i < length; i++) {
                                 if (checkboxesName[i].checked) {
-                                    return checkboxesName[i].name + ": " + checkboxesName[i].value + ", ";
+                                    return checkboxesName[i].name + ": " + checkboxesName[i].value + ", \n";
                                 }
                             }
                             return "";
@@ -373,11 +373,11 @@
 
                             const elementName = document.getElementById("subject").value == "Website - Complaint" ? "callbackTimeslotForC" : "callbackTimeslot";
                             const callbackTimeslotCheckboxes = document.getElementsByName(elementName);
-                            returnValue = "Callback: No preference, ";
+                            returnValue = "Callback: No preference, \n";
                             
                             for (var i = 0, length = callbackTimeslotCheckboxes.length; i < length; i++) {
                                 if (callbackTimeslotCheckboxes[i].checked) {
-                                    returnValue = "Callback: " + callbackTimeslotCheckboxes[i].value + ", ";
+                                    returnValue = "Callback: " + callbackTimeslotCheckboxes[i].value + ", \n";
                                     break;
                                 }
                             }
