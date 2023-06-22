@@ -420,7 +420,7 @@ class FormController extends AbstractController
         $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
 
 
-        return $this->formatErrorMessages($errorMessages);
+        return self::formatErrorMessages($errorMessages);
     }
 
     public function validateEventsForm(array $data)
