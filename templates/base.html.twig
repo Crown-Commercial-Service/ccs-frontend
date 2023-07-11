@@ -6,6 +6,13 @@
     {% if content_group is defined and content_group is not empty %}
         <meta name="content_group" value={{content_group}}>
     {% endif%}
+    
+    {% if homepage_meta is defined %}
+        <meta name="thumbnail" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
+        <meta property="og:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
+        <meta property="twitter:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
+    {% endif %}
+
     {#
      # The minus is to remove whitespace
      # https://twig.symfony.com/doc/2.x/templates.html#whitespace-control
