@@ -40,3 +40,19 @@ Disallow: *?sectors=*
 Disallow: *&sectors=*
 Disallow: *?products_services=*
 Disallow: *&products_services=*
+Disallow: *?audience_tag=*
+Disallow: *&audience_tag=*
+
+#              ________
+#   __,_,     |        |
+#  [_|_/      |   OK   |
+#   //        |________|
+# _//    __  /
+#(_|)   |@@|
+# \ \__ \--/ __
+#  \o__|----|  |   __
+#      \ }{ /\ )_ / _\
+#      /\__/\ \__O (__
+#     (--/\--)    \__/
+#     _)(  )(_
+#    `---''---`
