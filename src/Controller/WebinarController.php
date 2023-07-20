@@ -52,13 +52,15 @@ class WebinarController extends AbstractController
 
         $formErrors = null;
         $params = $request->request;
-        $formData = $this->getFormData($params);
+        $formData = ControllerHelper::getFormData($params);
         $returnURL = getenv('APP_BASE_URL') . '/webinar/confirmation/' . $webinar->getId() . '/' . $webinar->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING);
         $campaignCode = $webinar->getContent()->get('campaign_code') ? $webinar->getContent()->get('campaign_code')->getValue() : '';
         $description   = $webinar->getContent()->get('description') ? $webinar->getContent()->get('description')->getValue() : '';
 
 
         if ($request->isMethod('POST')) {
+            ControllerHelper::honeyPot($params->get('surname', null));
+
             $formErrors = $this->formController->sendToSalesforceForDownload($params, $formData, $campaignCode, $description);
 
             if ($formErrors instanceof Response) {
@@ -99,15 +101,5 @@ class WebinarController extends AbstractController
             'webinar' => $webinar
         ];
         return $this->render('webinars/confirmation.html.twig', $data);
-    }
-
-    public function getFormData($params)
-    {
-        return [
-            'name' => $params->get('name', null),
-            'email' => $params->get('email', null),
-            'company' => $params->get('company', null),
-            'jobTitle' => $params->get('00Nb0000009IXEs', null),
-        ];
     }
 }
