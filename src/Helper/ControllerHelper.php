@@ -54,4 +54,14 @@ class ControllerHelper
 
         return rtrim($slugList, "|");
     }
+
+    public static function getFormData($params)
+    {
+        return [
+            'name' => $params->get('name', null),
+            'email' => $params->get('email', null),
+            'company' => $params->get('company', null),
+            'jobTitle' => $params->get('00Nb0000009IXEs', null),
+        ];
+    }
 }
