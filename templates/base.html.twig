@@ -13,6 +13,15 @@
         <meta property="twitter:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
     {% endif %}
 
+    {% if canonical is defined and canonical is not empty %}
+        
+        {% if canonical[-1] == '/' %}
+            {% set canonical = canonical | slice(0, -1) %}
+        {% endif %}
+
+        <link rel="canonical" href="{{ site_url }}{{ canonical }}" />
+    {% endif %}
+
     {#
      # The minus is to remove whitespace
      # https://twig.symfony.com/doc/2.x/templates.html#whitespace-control
