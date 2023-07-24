@@ -15,7 +15,7 @@
 
     {% if canonical is defined and canonical is not empty %}
         
-        {% if canonical[-1] == '/' %}
+        {% if canonical|last == '/' %}
             {% set canonical = canonical | slice(0, -1) %}
         {% endif %}
 
