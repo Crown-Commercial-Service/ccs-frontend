@@ -19,7 +19,10 @@
 
 # Allow crawling of all content
 User-agent: *
+Disallow: *?q==*
+Disallow: *&q==*
 Disallow: *?all==*
+Disallow: *&all==*
 Disallow: *?statuses%5B%5D=*
 Disallow: *&statuses%5B%5D=*
 Disallow: *?statuses=*
