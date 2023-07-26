@@ -61,6 +61,6 @@
     "@babel/preset-env": "^7.14.4",
     "postcss": "^8.3.6",
     "postcss-cli": "^8.3.1",
-    "zombie": "^5.0.8"
+    "zombie": "^6.1.4"
   }
 }
