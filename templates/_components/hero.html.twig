@@ -32,8 +32,13 @@
 
 
 
-                        <div class="hero__caption">
-                            <h2 class="govuk-heading-xl hero__title">{{ heading }}</h2>
+                        <div class="hero__caption {{news_page_banner is defined ? 'hero_caption_news'}}">
+
+                            {% if H1title is not defined %}
+                                <h2 class="govuk-heading-xl hero__title">{{ heading }}</h2>
+                            {% else %}
+                                <h1 class="govuk-heading-xl hero__title">{{ heading }}</h1>
+                            {% endif %}
 
                             <div class="hero__content">
                                 {{ content | raw }}

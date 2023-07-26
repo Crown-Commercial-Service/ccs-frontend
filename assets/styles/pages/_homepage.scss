@@ -32,7 +32,7 @@
 
     @include govuk-media-query($from: 961) {
 
-        max-width: 66%;
+        max-width: 100%;
         margin: 0 auto;
 
     }
@@ -114,177 +114,6 @@
     }
 }
 
-@include govuk-media-query($from: desktop) {
-
-
-    .govuk-homepage-hero-full-width {
-        width: 100%;
-        position: relative;
-        left: calc(-50vw + 50%);
-        background-color:#41424d;
-    }
-
-    // make full width for bg image
-    .govuk-hero-img-container {
-        width: 100vw;
-        position: relative;
-        left: calc(-50vw + 50%);
-    }
-
-    .govuk-margin-left-right-30 {
-        margin-left: 0;
-        margin-right: 0;
-    }
-
-    .govuk-hero-content {
-        background-image: url('/assets/images/LG-Homepage-Hero.jpg');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        // full width image
-        width: 100vw;
-        position: relative;
-        left: calc(-50vw + 50%);
-        margin-bottom: 25px;
-        // make bg image height only as big as it needs to be calc by (img-height/width *100)
-        padding-top:29.25%;
-        @media only print {
-            background-image: none;
-        }
-    }
-    
-    .govuk-hero-homepage-caption-container {
-            position: absolute;
-            top: 0px;
-            bottom: 0px;
-            // This is for the homepage banner text to appear on the left
-            right:50.5%;
-            //
-            // This is for the homepage banner text to appear on the right
-            // right: 0px;
-            // left:57.5%;
-            //
-            float:right;
-            width: 40%;
-            display: table;
-            height: 100%;
-            @media only print {
-                left: 10%;
-                width: 80%;
-                margin-right: 15%;
-                height: fit-content; // fix the gap between nav items and caption heading in firefox
-            }
-        }
-    
-    .govuk-hero-caption {
-            display: table-cell;
-            vertical-align: middle;
-            border-bottom: none !important;
-        }
-
-    .govuk-hero-margin-right-35 {
-        margin-right: 35px;
-    }
-
-    // change to default bg color on desktop
-    .govuk-bg-mobile-color {
-        background-color: rgba(109,2,39,0.41);
-    }
-    
-    .govuk-hero-homepage-caption-container {
-    
-        .govuk-caption-heading {
-            
-            font-size: 1.8rem;
-            color: white !important;
-            
-        }
-    
-        .govuk-caption-link {
-            font-size: 1.3rem;
-            color: white;
-            text-underline-offset:3px;
-        }
-
-        .govuk-caption-button {
-            margin-top:10px;
-        }
-    
-        a:hover {
-            text-decoration: none;
-        }
-    }
-
-    // remove full width on desktop to align image properly
-    .govuk-homepage-hero-full-width {
-        left:0;
-        // remove mobile bg color
-        background-color:transparent;
-    }
-}
-
-// tablet
-@include govuk-media-query($from: 770) {
-   
-    .govuk-hero-homepage-caption-container {
-
-        .govuk-caption-heading {
-            
-            font-size: 1.38rem!important;
-        }
-    
-        .govuk-caption-link {
-            font-size: 1rem!important;
-        }
-
-    }
-   
-}
-
-// laptop
-@include govuk-media-query($from: 996) {
-    // fix text overlapping container below 1138px
-
-    .govuk-hero-homepage-caption-container {
-
-        .govuk-caption-heading {
-            
-            font-size: 1.8rem!important;
-        }
-    
-        .govuk-caption-link {
-            font-size: 1.3rem!important;
-        }
-
-        .govuk-caption-button {
-            margin-top: 30px!important;
-        }
-    }
-   
-}
-
-//desktop
-@include govuk-media-query($from: 1338) {
-    // fix text overlapping container below 1138px
-
-    .govuk-hero-homepage-caption-container {
-
-        .govuk-caption-heading {
-            
-            font-size: 2.7rem!important;
-        }
-    
-        .govuk-caption-link {
-            font-size: 1.5rem!important;
-        }
-
-        .govuk-caption-button {
-            margin-top: 30px!important;
-        }
-    }
-   
-}
-
-
 .homepage-hero__search-button {
 
     background: $ccs-button-colour url("../images/icon-search-white.png") center center no-repeat;
@@ -361,6 +190,7 @@
 }
 
 .govuk-main-wrapper {
+
     // firefox print layout fix: prevent events list jumping to next page
     @media only print {
         padding-bottom: 0;
@@ -368,6 +198,7 @@
 }
 
 .govuk-main-wrapper--tight {
+
     // firefox print layout fix: prevent events list jumping to next page
     @media only print {
         padding-top: 0 !important;
@@ -411,4 +242,193 @@
     text-align: left;
     font-size: 1em;
     min-height: 30px;
+}
+
+// from 769
+@include govuk-media-query($from: desktop) {
+
+
+    .govuk-homepage-hero-full-width {
+        width: 100%;
+        position: relative;
+        left: calc(-50vw + 50%);
+        background-color: #41424d;
+    }
+
+    // make full width for bg image
+    .govuk-hero-img-container {
+        width: 100vw;
+        position: relative;
+        left: calc(-50vw + 50%);
+        background-image: url('/assets/images/2023_homepage_banner.jpg');
+        background-repeat: no-repeat;
+        background-size: contain;
+        // full width image
+        width: 100vw;
+        position: relative;
+        left: calc(-50vw + 50%);
+        // make bg image height only as big as it needs to be calc by (img-height/width *100)
+        padding-top: 29.25%;
+
+        @media only print {
+            background-image: none;
+        }
+    }
+
+    .govuk-margin-left-right-30 {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .govuk-hero-homepage-caption-container {
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        // This is for the homepage banner text to appear on the left
+        right: 50.5%;
+        //
+        // This is for the homepage banner text to appear on the right
+        // right: 0px;
+        // left:57.5%;
+        float: right;
+        width: 40%;
+        display: table;
+        height: 100%;
+
+        @media only print {
+            left: 10%;
+            width: 80%;
+            margin-right: 15%;
+            height: fit-content; // fix the gap between nav items and caption heading in firefox
+        }
+    }
+
+    .govuk-hero-caption {
+        display: table-cell;
+        vertical-align: middle;
+        border-bottom: none !important;
+    }
+
+    .govuk-hero-margin-right-35 {
+        margin-right: 35px;
+    }
+
+    // change to default bg color on desktop
+    .govuk-bg-mobile-color {
+        background-color: rgba(109, 2, 39, 0.41);
+    }
+
+    .govuk-hero-homepage-caption-container {
+
+        .govuk-caption-heading {
+
+            font-size: 1rem;
+            color: white !important;
+
+        }
+
+        .govuk-caption-link {
+            font-size: 0.8rem;
+            color: white;
+            text-underline-offset: 3px;
+        }
+
+        .govuk-caption-button {
+            margin-top: 10px;
+            font-size:1rem;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+    }
+
+    // remove full width on desktop to align image properly
+    .govuk-homepage-hero-full-width {
+        left: 0;
+        // remove mobile bg color
+        background-color: transparent;
+    }
+
+    .govuk-homepage-search-forms {
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+// laptop
+@include govuk-media-query($from: 996) {
+    // fix text overlapping container below 1138px
+
+    .govuk-hero-homepage-caption-container {
+
+        .govuk-hero-caption {
+            padding-bottom: 60px;
+        }
+
+        .govuk-caption-heading {
+            margin-top: 10px;
+            font-size: 1.8rem !important;
+            font-size: 2.1vw !important;
+        }
+
+        .govuk-caption-link {
+            font-size: 1.3rem !important;
+            font-size: 1.4vw !important;
+        }
+
+        .govuk-caption-button {
+            margin-top: 30px !important;
+        }
+    }
+
+    .govuk-hero-img-container {
+        padding-top: 23%;
+    }
+
+    .govuk-homepage-search-forms {
+        width: 70%;
+        margin: 0 auto;
+    }
+
+}
+
+@include govuk-media-query($from: 1338) {
+
+    .govuk-hero-homepage-caption-container {
+
+        .govuk-caption-heading {
+            font-size: 2.7rem !important;
+            font-size: 2.1vw !important;
+        }
+
+        .govuk-caption-link {
+            font-size: 1.5rem !important;
+            font-size: 1.4vw !important;
+        }
+
+        .govuk-caption-button {
+            font-size:1.1875rem;
+            margin-top: 30px !important;
+        }
+    }
+
+        .govuk-hero-img-container {
+            padding-top: 24.25%;
+        }
+
+}
+
+
+@include govuk-media-query($from: 1705) {
+    .govuk-hero-img-container {
+        padding-top: 30%;
+    }
+}
+
+// for larger screens
+@include govuk-media-query($from: 2166) {
+    .govuk-hero-img-container {
+        padding-top: 35%;
+    }
 }
