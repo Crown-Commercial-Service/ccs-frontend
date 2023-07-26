@@ -581,13 +581,18 @@
 
 
         document.querySelectorAll('input[name="00Nb0000009IXEg"]').forEach((option) => {
-                option.addEventListener("change", function(event) {
-                    if (event.target.value == "Yes"){
-                        setPhoneTextOptional(false);
-                    } else 
-                        setPhoneTextOptional(true);
-                });
+            option.addEventListener("change", function(event) {
+                if (event.target.value == "Yes"){
+                    setPhoneTextOptional(false);
+                } else 
+                    setPhoneTextOptional(true);
             });
+        });
+
+        formSubmitBTN = document.getElementById("submit");
+        formSubmitBTN.addEventListener("click", function(){
+            formSubmitBTN.disabled = true;
+        });
 
          function setPhoneTextOptional(toggle){
             if(toggle){
