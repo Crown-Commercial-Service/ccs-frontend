@@ -6,6 +6,22 @@
     {% if content_group is defined and content_group is not empty %}
         <meta name="content_group" value={{content_group}}>
     {% endif%}
+    
+    {% if homepage_meta is defined %}
+        <meta name="thumbnail" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
+        <meta property="og:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
+        <meta property="twitter:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
+    {% endif %}
+
+    {% if canonical is defined and canonical is not empty %}
+        
+        {% if canonical|last == '/' %}
+            {% set canonical = canonical | slice(0, -1) %}
+        {% endif %}
+
+        <link rel="canonical" href="{{ site_url }}{{ canonical }}" />
+    {% endif %}
+
     {#
      # The minus is to remove whitespace
      # https://twig.symfony.com/doc/2.x/templates.html#whitespace-control
@@ -31,12 +47,12 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.11">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.14">
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.11">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.14">
     {% endif %}
 
     {% block blocking_javascript %}

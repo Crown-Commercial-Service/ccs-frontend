@@ -1,5 +1,61 @@
 # www.robotstxt.org/
+#    .__________________________.
+#    | .___________________. |==|
+#    | | ................. | |  |
+#    | | ::[ Dear robot ]: | |  |
+#    | | ::::[ be nice ]:: | |  |
+#    | | ::::::::::::::::: | |  |
+#    | | ::::::::::::::::: | |  |
+#    | | ::::::::::::::::: | |  |
+#    | | ::::::::::::::::: | | ,|
+#    | !___________________! |(c|
+#    !_______________________!__!
+#   /                            \
+#  /  [][][][][][][][][][][][][]  \
+# /  [][][][][][][][][][][][][][]  \
+#(  [][][][][____________][][][][]  )
+# \ ------------------------------ /
+#  \______________________________/
 
 # Allow crawling of all content
 User-agent: *
-Disallow:
+Disallow: *?q==*
+Disallow: *&q==*
+Disallow: *?all==*
+Disallow: *&all==*
+Disallow: *?statuses%5B%5D=*
+Disallow: *&statuses%5B%5D=*
+Disallow: *?statuses=*
+Disallow: *&statuses=*
+
+Disallow: *?search=*
+Disallow: *&search=*
+Disallow: *?framework=*
+Disallow: *&framework=*
+Disallow: *?lot-filter-nested=*
+Disallow: *&lot-filter-nested=*
+Disallow: *?limit=*
+Disallow: *&limit=*
+
+Disallow: *?categories=*
+Disallow: *&categories=*
+Disallow: *?sectors=*
+Disallow: *&sectors=*
+Disallow: *?products_services=*
+Disallow: *&products_services=*
+Disallow: *?audience_tag=*
+Disallow: *&audience_tag=*
+
+#              ________
+#   __,_,     |        |
+#  [_|_/      |   OK   |
+#   //        |________|
+# _//    __  /
+#(_|)   |@@|
+# \ \__ \--/ __
+#  \o__|----|  |   __
+#      \ }{ /\ )_ / _\
+#      /\__/\ \__O (__
+#     (--/\--)    \__/
+#     _)(  )(_
+#    `---''---`

@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Psr16Cache;
+use Aws\S3\S3Client;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Form controller
@@ -31,6 +33,8 @@ class FormController extends AbstractController
 
     protected $client;
 
+    protected $s3_client;
+
     public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new RestData(
@@ -42,6 +46,15 @@ class FormController extends AbstractController
         $this->api->setCache($psr16Cache);
 
         $this->client = HttpClient::create();
+
+        $this->s3_client = new S3Client([
+            'region' => 'eu-west-2',
+            'version' => 'latest',
+            'credentials' => [
+                'key'    => getenv('s3documentHanding_key'),
+                'secret' => getenv('s3documentHanding_secret'),
+            ]
+        ]);
     }
 
     public function esourcingRegisterSubmit(Request $request)
@@ -52,6 +65,7 @@ class FormController extends AbstractController
 
         $formData = [
             'name'      => $params->get('name', null),
+            'jobTitle'  => $params->get('00Nb0000009IXEs'),
             'email'     => $params->get('email', null),
             'phone'     => $params->get('phone', null),
             'company'   => $params->get('company', null),
@@ -120,6 +134,7 @@ class FormController extends AbstractController
             "buyerDate"     => $params-> get('buyer-training-dates', null),
             "supplierDate"  => $params-> get('supplier-training-dates', null),
             'name'          => $params->get('name', null),
+            'jobTitle'      => $params->get('00Nb0000009IXEs'),
             'email'         => $params->get('email', null),
             'phone'         => $params->get('phone', null),
             'company'       => $params->get('company', null),
@@ -157,7 +172,7 @@ class FormController extends AbstractController
 
     public function contactCCS(Request $request)
     {
-        $referrer = $request->headers->get('referer');
+        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
 
         $cscMessage = ControllerHelper::getCSCMessage();
 
@@ -218,10 +233,8 @@ class FormController extends AbstractController
                     return new Response(
                         $response->getContent()
                     );
-                } elseif ($params->get('origin') != 'Website - Complaint') {
-                    return $this->redirectToRoute('form_contact_thanks');
                 } else {
-                    return $this->redirectToRoute('form_contact_thanks_complaint');
+                    return $this->redirectToRoute('form_contact_thanks');
                 }
             }
         }
@@ -269,6 +282,51 @@ class FormController extends AbstractController
                 }
             }
         }
+    }
+
+    public function events(Request $request)
+    {
+        return $this->render('forms/34-events-form.html.twig');
+    }
+
+    public function eventsSubmit(Request $request)
+    {
+        $params = $request->request;
+
+        ControllerHelper::honeyPot($params->get('surname', null));
+
+        $formData = [
+            'name'          => $params->get('name', null),
+            'email'         => $params->get('email', null),
+            'jobTitle'      => $params->get('00Nb0000009IXEs'),
+            'phone'         => $params->get('phone', null),
+            'company'       => $params->get('company', null),
+            'moreDetail'    => $params->get('more-detail', null),
+        ];
+
+        $formErrors = $this->validateEventsForm($formData);
+
+        if ($formErrors) {
+            return $this->render('forms/34-events-form.html.twig', [
+                'formErrors'    => $formErrors,
+                'formData'      => $formData,
+            ]);
+        } else {
+            $params->set('subject', 'Events Form');
+            $params->set('origin', 'Website - Event');
+            $params->set('priority', 'Green');
+            $params->set('description', 'Website - Event, more-detail: ' . $formData['moreDetail']);
+            $params->set('orgid', ControllerHelper::getOrgId());
+
+            $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                'query'         => $params->all(),
+            ]);
+
+            if (!is_null($params->get('debug'))) {
+                return new Response($response->getContent());
+            }
+        }
+        return  $this->redirectToRoute('form_contact_thanks');
     }
 
     public static function sendToSalesforceForDownload($params, $data, $campaignCode, $description)
@@ -335,7 +393,6 @@ class FormController extends AbstractController
 
         $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] =    FormValidation::validationPhone($data['phone']);
 
         return $this->formatErrorMessages($errorMessages);
     }
@@ -360,9 +417,22 @@ class FormController extends AbstractController
         $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
         $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] =    FormValidation::validationPhone($data['phone']);
         $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
 
+
+        return self::formatErrorMessages($errorMessages);
+    }
+
+    public function validateEventsForm(array $data)
+    {
+        $errorMessages = [];
+
+
+        $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
+        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitleForContactCCS($data['jobTitle']);
+        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
+        $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
+        $errorMessages['phoneErr'] =    FormValidation::validationPhone($data['phone']);
 
         return $this->formatErrorMessages($errorMessages);
     }
@@ -377,5 +447,31 @@ class FormController extends AbstractController
         }
 
         return false;
+    }
+
+    public function downloadAttachmentForCSC($attachmentId)
+    {
+        try {
+            $response = $this->client->request('GET', getenv('documentHanding_endpoint') . $attachmentId, ['headers' => array('x-api-key' => getenv('documentHanding_key'), 'Content-Type' => 'application/json')]);
+
+            $documentKey = $response->toArray()["documentFile"]["url"];
+            $documentName = substr($documentKey, strpos($documentKey, $attachmentId) + strlen($attachmentId) + 1);
+
+            $fileContents = $this->s3_client->getObject([
+                'Bucket' => getenv('s3documentHanding_bucket_name'),
+                'Key'    => $documentKey,
+            ])->get('Body')->getContents();
+
+            header('Content-Description: File Transfer');
+            header('Content-Disposition: attachment; filename="' . basename($documentName));
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . strlen($fileContents));
+
+            echo $fileContents;
+        } catch (\Exception $exception) {
+            throw new NotFoundHttpException('Failed to download file from AWS', $exception);
+        }
     }
 }

@@ -257,7 +257,11 @@ class PageController extends AbstractController
             $params->set('recordType', '012b00000005NWC');
             $params->set('priority', 'Green');
             $params->set('orgid', ControllerHelper::getOrgId());
-            $params->set('origin', $params->get('newsletterForm') ? 'Website - Newsletter' : 'Website - Page form enquiry');
+
+            $origin = $params->get('newsletterForm') ? 'Website - Newsletter' : 'Website - Page form enquiry';
+
+            $params->set('origin', $origin);
+            $params->set('description', $origin . ', callback: ' . $formData['callbackTimeslot'] . ', more-detail: ' . $formData['description']);
 
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                 'query' => $params->all(),
@@ -268,7 +272,7 @@ class PageController extends AbstractController
                     $response->getContent()
                 );
             }
-            return $this->redirectToRoute($formCampaignCode == 'alwayson_newsletter' ? 'form_newsletter_thanks' : 'form_thank_you');
+            return $this->redirectToRoute($formCampaignCode == 'alwayson_newsletter' ? 'form_newsletter_thanks' : 'form_contact_thanks');
         }
 
         return $formErrors;
@@ -281,8 +285,11 @@ class PageController extends AbstractController
         $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
         $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] =    FormValidation::validationPhone($data['phone'], $data['callback']);
         $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
+
+        if (!($data['callback'] == "No" || $data['callback'] == null)) {
+            $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
+        }
 
 
         foreach ($errorMessages as $type => $value) {
@@ -324,6 +331,7 @@ class PageController extends AbstractController
             'jobTitle' => $params->get('00Nb0000009IXEs', null),
             'aggregationOption' =>  $params->get('00Nb0000009IXEW', null),
             'callback' => $params->get('00Nb0000009IXEg', null),
+            'callbackTimeslot' => $params->get('callbackTimeslot', null),
             'description' =>  $params->get('description', null),
             'aggregationCheckbox' => $params->get('00Nb0000009IXEd', null),
             'validateAggregationOption' => $params->get('validateAggregationOption', null),

@@ -182,7 +182,7 @@
                 <div class="govuk-grid-column-three-quarters news-list-pagination-container">
 
                     <div v-if="responseAvailable">
-                            <div v-for="result in results">
+                            <div class="resultCards govuk-visually-hidden" v-for="result in results">
                                 <div class ="news_div" >
                                     <div class="govuk-width-container">
                                         <div class="govuk-grid-row news_wrapper ">
@@ -472,6 +472,13 @@
                     popstateLoad: false
                 },
                 created: function() {
+                    const resultCards = document.querySelectorAll('.resultCards');
+
+                    resultCards.forEach(card => {
+                    if (card.classList.contains('govuk-visually-hidden')) {
+                        card.classList.remove('govuk-visually-hidden');
+                    }});
+
                     // unfortunately we have to update the results when we instantiate
                     // the Vue app so it hooks in all the correct event handlers etc.
                     this.fetchAPIData(null, this.currentPage);
