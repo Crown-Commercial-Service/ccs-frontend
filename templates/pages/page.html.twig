@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% set canonical = '/' ~ slug %}
 
 {#
  # The minus is to remove whitespace
@@ -493,7 +494,7 @@
                                                     <p>You will receive an email when you submit your details. You can unsubscribe using the link in the email.</p>
 
                                                     <div class="govuk-form-group">
-                                                        <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit gtm--submit-aggregation-form">
+                                                        <button data-prevent-double-click="true" data-module="govuk-button" type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit gtm--submit-aggregation-form">
                                                             Submit
                                                         </button>
                                                     </div>
@@ -580,13 +581,18 @@
 
 
         document.querySelectorAll('input[name="00Nb0000009IXEg"]').forEach((option) => {
-                option.addEventListener("change", function(event) {
-                    if (event.target.value == "Yes"){
-                        setPhoneTextOptional(false);
-                    } else 
-                        setPhoneTextOptional(true);
-                });
+            option.addEventListener("change", function(event) {
+                if (event.target.value == "Yes"){
+                    setPhoneTextOptional(false);
+                } else 
+                    setPhoneTextOptional(true);
             });
+        });
+
+        formSubmitBTN = document.getElementById("submit");
+        formSubmitBTN.addEventListener("click", function(){
+            formSubmitBTN.disabled = true;
+        });
 
          function setPhoneTextOptional(toggle){
             if(toggle){
