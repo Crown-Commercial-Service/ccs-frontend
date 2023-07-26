@@ -35,7 +35,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testCategories()
     {
         $categories = FrameworkCategories::getAll();
-        $this->assertEquals(19, count($categories));
+        $this->assertEquals(20, count($categories));
         $first = current($categories);
         $this->assertEquals('below-threshold', $first);
         $last = end($categories);
@@ -78,5 +78,27 @@ class FrameworkCategoriesTest extends WebTestCase
         $this->assertEquals(302, $response->getStatusCode());
 
         $this->assertResponseRedirects('/agreements/category/travel-transport-accommodation-and-venues');
+    }
+
+    public function testRedirectFromDigitalFuturesToDigitalSpecialists()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/agreements/category/digital-future');
+        $response = $client->getResponse();
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->assertResponseRedirects('/agreements/category/digital-specialists');
+    }
+
+    public function testRedirectFromNetworkServicesToNetworkSolutions()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/agreements/category/network-services');
+        $response = $client->getResponse();
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->assertResponseRedirects('/agreements/category/network-solutions');
     }
 }

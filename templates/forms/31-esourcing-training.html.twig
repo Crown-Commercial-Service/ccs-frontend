@@ -42,13 +42,15 @@
                 <div class="govuk-grid-column-three-quarters">
 
                     <h1 class="govuk-heading-xl page-title">Book online training for the CCS eSourcing tool</h1>
-                    <p class="govuk-body-l">Complete the form below to book a place on one of our online training sessions.</p>
-                    <p>The sessions are between 1 and 1.5 hours long. Login details will be issued in a meeting invitation sent to you about one week before the training date.</p>
+                    <p class="govuk-body-l">Complete the form below to book a place on one of our online training sessions. 
+                        The sessions are between 1 and 1.5 hours long. 
+                        Sign in details will be issued in a meeting invitation sent to you about one week before the training date.
+                    </p>
 
 
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-                    <form class="govuk-!-width-three-quarters" action="/esourcing-training/submit" method="POST">
+                    <form class="govuk-!-width-three-quarters" action="/esourcing-training/submit" method="POST" data-evt-type='eSourcing_training' {{ formErrors is defined ? "data-evt-state='error'" }}>
 
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
@@ -64,9 +66,12 @@
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" aria-describedby="buyerOrSupplier">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                    <h2 class="govuk-fieldset__heading" id="buyerOrSupplier">
-                                        You will need to choose a training date. Are you a buyer or supplier?
+                                    <h2 class="govuk-fieldset__heading" id="buyerOrSupplier" style="margin-bottom: 5px">
+                                        Are you a buyer or supplier?
                                     </h2>
+                                    <p>
+                                        You will need to choose an appropriate training date 
+                                    </p>
                                 </legend>
 
                                 <div class="govuk-form-group {{formErrors.customerTypeErr is defined and formErrors.customerTypeErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
@@ -163,6 +168,7 @@
                             </fieldset>
                         </div>
 
+                        <p class="js-contact-form-sub-heading">Your details</p>
 
                         <div class="govuk-form-group {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <input type="hidden" name="subject" value="Website - eSourcing Training">
@@ -179,18 +185,33 @@
                             <input class="govuk-input gtm-form-start {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
                         </div>
 
-                         <div class="govuk-form-group {{formErrors.emailErr.errors is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
-                            <label class="govuk-label" for="email"> Email </label>
+                        <div class="govuk-form-group {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                            <label class="govuk-label" for="00Nb0000009IXEs">
+                                Job title </label>
 
-                            {% if formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 %}
-                                {% for error in formErrors.emailErr.errors %}
-                                    <span id="email-error" class="govuk-error-message">
+                            {% if formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 %}
+                                {% for error in formErrors.jobTitleErr.errors %}
+                                    <span id="job-title-error" class="govuk-error-message">
                                         <span class="govuk-visually-hidden">Error:</span>{{error}}
                                     </span>
-                                {% endfor %}                         
-                            {% endif %}    
+                                {% endfor %}                           
+                            {% endif %} 
 
-                            <input class="govuk-input {{formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="email" maxlength="80" name="email" size="20" type="email" value="{{formErrors is defined ? formData.email}}" autocomplete="email"/>
+                            <input class="govuk-input {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="organization-title"/>
+                        </div>
+
+                        <div class="govuk-form-group {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                            <label class="govuk-label" for="company"> Name of organisation </label>
+
+                            {% if formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 %}
+                                {% for error in formErrors.companyErr.errors %}
+                                    <span id="company-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
+                                {% endfor %}                            
+                            {% endif %}   
+
+                            <input class="govuk-input {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization"/>
                         </div>
 
                         <div class="govuk-form-group {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
@@ -208,19 +229,19 @@
                         </div>
 
 
-                        <div class="govuk-form-group {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
-                            <label class="govuk-label" for="company"> Organisation </label>
+                         <div class="govuk-form-group {{formErrors.emailErr.errors is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                            <label class="govuk-label" for="email"> Email </label>
 
-                            {% if formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 %}
-                                {% for error in formErrors.companyErr.errors %}
-                                    <span id="company-error" class="govuk-error-message">
+                            {% if formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 %}
+                                {% for error in formErrors.emailErr.errors %}
+                                    <span id="email-error" class="govuk-error-message">
                                         <span class="govuk-visually-hidden">Error:</span>{{error}}
                                     </span>
-                                {% endfor %}                            
-                            {% endif %}   
+                                {% endfor %}                         
+                            {% endif %}    
 
-                            <input class="govuk-input {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization"/>
-                        </div>
+                            <input class="govuk-input {{formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="email" maxlength="80" name="email" size="20" type="email" value="{{formErrors is defined ? formData.email}}" autocomplete="email"/>
+                         </div>
 
                         {# Catch-all field for additional Salesforce data #}
                         <input type="hidden" class="govuk-!-width-full" name="description" id="salesforce-textarea" />
@@ -229,7 +250,7 @@
                         <p>You will receive an email when you submit your details. You can unsubscribe using the link in the email.</p>
 
                         <div class="govuk-form-group">
-                            <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit">Book online training</button>
+                            <button data-prevent-double-click="true" data-module="govuk-button" type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit">Submit</button>
                         </div>
 
                     </form>
@@ -242,6 +263,35 @@
                         customerTypeRadios = document.getElementsByName("customer-type");
                         buyerTrainingRadios = document.getElementsByName("buyer-training-dates");
                         supplierTrainingRadios = document.getElementsByName("supplier-training-dates");
+
+                        buyerTrainingRadios.forEach(option => {
+                            option.addEventListener("change", function(event) {
+                                document.getElementById("how-contacted-conditional-1").checked = true;
+                                unCheckArray(supplierTrainingRadios);
+                            })
+                        });
+
+                        supplierTrainingRadios.forEach(option => {
+                            option.addEventListener("change", function(event) {
+                                document.getElementById("how-contacted-conditional-2").checked = true;
+                                unCheckArray(buyerTrainingRadios);
+                            })
+                        });
+
+                        customerTypeRadios.forEach((option) => {
+                            option.addEventListener("change", function(event) {
+                                if (event.target.value == "Buyer"){
+                                    unCheckArray(supplierTrainingRadios);
+                                } else 
+                                    unCheckArray(buyerTrainingRadios);
+                            });
+                        });
+
+                        function unCheckArray(arrayToUnCheck) {
+                            arrayToUnCheck.forEach(radioButton => {
+                                radioButton.checked = false;
+                            });
+                        }
 
                         // The field were we collect all the data for Salesforce
                         dataCollectionFieldForSalesforce = document.getElementById("salesforce-textarea");

@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Events Crown Commercial Services - CCS {% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="govuk-width-container">
+
+        <div class="govuk-phase-banner">
+            {% include '/includes/phase-banner-content.html.twig' %}
+        </div>
+
+        <main id="main-content" role="main" class="govuk-main-wrapper">
+
+            {% if formErrors is defined %}
+                <div class="govuk-error-summary govuk-grid-column-three-quarters" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
+                    <h2 class="govuk-error-summary__title" id="error-summary-title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                        {% for errorType in formErrors %}
+                            {% for error in errorType.errors %}
+                                <a href={{errorType.link}}><li>{{error}}</li></a>
+                            {% endfor %}
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-three-quarters">
+
+                    <h1 class="govuk-heading-xl page-title">Events Form CCS</h1>
+
+                    <form class="govuk-!-width-three-quarters pardot-submit" action="/events-form/submit" method="POST" novalidate>
+
+                        <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Events Form" />
+                        {% if app.debug %}
+                            <input type="hidden" name="debug" value=1>
+                            <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
+                        {% endif %}
+
+                        <label hidden class="visuallyhidden" aria-hidden="true" for="surname">dummy hidden label</label>
+                        <input type="checkbox" id="surname" name="surname" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
+
+                        {% set nameError = formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 %}
+                        <div>
+                            <div class="govuk-form-group {{ nameError ? 'govuk-form-group--error' : null }}">
+                                <label class="govuk-label" for="name">Name</label>
+
+                                {% if nameError %}
+                                    {% for error in formErrors.nameErr.errors %}
+                                        <span id="full-name-error" class="govuk-error-message">
+                                            <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                        </span>
+                                    {% endfor %}
+                                {% endif %}
+
+                                <input class="govuk-input pardot-field gtm-form-start {{nameError ? 'govuk-input--error' : null }}" {{nameError ? 'aria-describedby="full-name-error"' : null }} id="name" maxlength="80" name="name" size="20" type="text" value="{{formErrors is defined ? formData.name}}" autocomplete="name"/>
+                            </div>
+
+                            <div class="govuk-form-group {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                <label class="govuk-label" for="00Nb0000009IXEs">
+                                    Job title </label>
+
+                                {% if formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 %}
+                                    {% for error in formErrors.jobTitleErr.errors %}
+                                        <span id="job-title-error" class="govuk-error-message">
+                                            <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                        </span>
+                                    {% endfor %}                           
+                                {% endif %} 
+
+                                <input class="govuk-input {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="organization-title"/>
+                            </div>
+
+                             <div class="govuk-form-group {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                <label class="govuk-label" for="company">
+                                    Name of organisation </label>
+
+                                {% if formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 %}
+                                    {% for error in formErrors.companyErr.errors %}
+                                        <span id="company-error" class="govuk-error-message">
+                                            <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                        </span>
+                                    {% endfor %}                            
+                                {% endif %}   
+
+                                <input class="govuk-input pardot-field {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization"/>
+                            </div>
+
+                            <div class="govuk-form-group {{formErrors.emailErr.errors is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                <label class="govuk-label" for="email">
+                                    Email </label>
+
+                                {% if formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 %}
+                                    {% for error in formErrors.emailErr.errors %}
+                                        <span id="email-error" class="govuk-error-message">
+                                            <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                        </span>
+                                    {% endfor %}                         
+                                {% endif %}    
+
+                                <input class="govuk-input pardot-email {{formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="email" maxlength="80" name="email" size="20" type="email" value="{{formErrors is defined ? formData.email}}" autocomplete="email" required/>
+                            </div>
+                           
+                            <div class="govuk-form-group {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                <label class="govuk-label" for="phone" id="phone-label"> 
+                                    Telephone number
+                                </label>
+
+                                {% if formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 %}
+                                    {% for error in formErrors.phoneErr.errors %}
+                                        <span id="phone-error" class="govuk-error-message">
+                                            <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                        </span>
+                                    {% endfor %}                           
+                                {% endif %}
+
+                                <input class="govuk-input {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="phone" maxlength="20" name="phone" size="20" type="text" value="{{formErrors is defined ? formData.phone}}" autocomplete="tel" required/>
+                            </div>
+
+                            <div class="govuk-form-group {{formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                <label id="more-detail-label" class="govuk-label" for="more-detail">Provide more details</label>
+                                <h2 class="govuk-heading-m govuk-visually-hidden" id="complaintTitle">Tell us about your complaint</h2>
+
+                                {% if formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 %}
+                                    {% for error in formErrors.moreDetailErr.errors %}
+                                        <span id="more-detail-error" class="govuk-error-message">
+                                            <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                        </span>
+                                    {% endfor %}                      
+                                {% endif %}
+
+                                <div id="more-detail-hint" class="govuk-hint">Tell us more about your question or describe the problem you are having. Do not include personal or financial information, like your credit card details.</div>
+                                <div id="complaintHint" class="govuk-hint govuk-visually-hidden">Do not include: 
+                                    <ul>
+                                        <li>personal or financial details, like your credit card details</li>
+                                        <li>any data that could potentially identify a specific individual, such as names</li>
+                                    </ul>
+                                </div>
+                                <textarea maxlength="3000" class="govuk-textarea" style="margin-bottom: 0px; {{formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 ? 'border: 4px solid #b10e1e' : null }}" id="more-detail" name="more-detail" rows="10" aria-describedby="more-detail-hint" required>{{formErrors is defined ? formData.moreDetail}}</textarea>
+                                <p class="govuk-hint">You can enter up to 3000 characters</p>
+                            </div>
+                            <div class="govuk-form-group">
+                                <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit">
+                                    Submit
+                                </button>
+                            </div>
+                            <input data-prevent-double-click="true" data-module="govuk-button" type="hidden" class="govuk-!-width-full" name="description" id="salesforce-textarea"/>
+                        </div>
+                    </form>    
+                </div>
+            </div>
+        </main>
+    </div>
+
+{% endblock %}
+
+{% block nonblocking_javascript %}
+    {{ parent() }}
+    <script src="/assets/scripts/pardot.js"></script>
+{% endblock %}

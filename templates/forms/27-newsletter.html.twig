@@ -11,7 +11,7 @@
 
 {% block body %}
 
-    {% include '_components/hero.html.twig' with {'image': '/assets/images/newsletters.jpg', 'heading': 'Subscribe to our buyer newsletter', 'notFromWordpress': 'true', 'cta_label': '', 'content': '', 'cta_label': '', 'cta_destination': ''} %}
+    {% include '_components/hero.html.twig' with {'image': '/assets/images/newsletters.jpg', 'heading': 'Subscribe to our customer newsletter', 'notFromWordpress': 'true', 'cta_label': '', 'content': '', 'cta_label': '', 'cta_destination': ''} %}
 
     <!-- required wrapper 1 -->
     <div class="govuk-width-container">
@@ -43,12 +43,12 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-three-quarters">
 
-                    <h2 class="govuk-heading-m">Keep up to date with the latest news from CCS</h2>
+                    <h2 class="govuk-heading-l page-title">Keep up to date with the latest news from CCS</h2>
                     
-                    <p>Complete the form below to subscribe to the CCS newsletter and find out how we can bring power to your procurement. Each month it features framework updates, guidance, insights from our industry experts, events, case studies and much more.</p>
+                    <p>Complete the form below to subscribe to the CCS customer newsletter and find out how we can bring power to your procurement. Each month it features framework updates, guidance, insights from our industry experts, events, case studies and much more.</p>
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
-                    <form class="govuk-!-width-three-quarters" action="/newsletters/submit" method="POST">
+                    <form class="govuk-!-width-three-quarters" action="/newsletters/submit" method="POST" data-evt-type='newsletter' {{ formErrors is defined ? "data-evt-state='error'" }} >
 
                         {# See https://symfony.com/doc/current/templating/app_variable.html #}
                         {% if app.debug %}
@@ -59,6 +59,8 @@
                         <label hidden class="visuallyhidden" aria-hidden="true" for="surname">dummy hidden label</label>
                         <input type="checkbox" id="surname" name="surname" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
                         <input type="hidden" name="subject" value="Website - Newsletter">
+
+                        <p class="js-contact-form-sub-heading">Your details</p>
 
                         <div class="govuk-form-group {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="name">Name</label>
@@ -89,6 +91,21 @@
                             <input class="govuk-input {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="organization-title"/>
                         </div>
 
+                         <div class="govuk-form-group {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                            <label class="govuk-label" for="company">
+                                Name of organisation </label>
+
+                            {% if formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 %}
+                                {% for error in formErrors.companyErr.errors %}
+                                    <span id="company-error" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                    </span>
+                                {% endfor %}                            
+                            {% endif %}   
+
+                            <input class="govuk-input pardot-field {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization"/>
+                        </div>
+
                         <div class="govuk-form-group {{formErrors.emailErr.errors is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                             <label class="govuk-label" for="email">
                                 Email </label>
@@ -104,26 +121,11 @@
                             <input class="govuk-input pardot-email {{formErrors.emailErr is defined and formErrors.emailErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="email" maxlength="80" name="email" size="20" type="email" value="{{formErrors is defined ? formData.email}}" autocomplete="email"/>
                         </div>
 
-                        <div class="govuk-form-group {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
-                            <label class="govuk-label" for="company">
-                                Organisation </label>
-
-                            {% if formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 %}
-                                {% for error in formErrors.companyErr.errors %}
-                                    <span id="company-error" class="govuk-error-message">
-                                        <span class="govuk-visually-hidden">Error:</span>{{error}}
-                                    </span>
-                                {% endfor %}                            
-                            {% endif %}   
-
-                            <input class="govuk-input pardot-field {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization"/>
-                        </div>
-
                         <p>For information about how we use your data, you can read our <a href="https://www.gov.uk/government/publications/crown-commercial-service-privacy-notice">privacy notice</a>. When you submit this form we will add you to our mailing list and send you our newsletters, or information about our products and services.</p>
                         <p>You will receive an email when you submit your details. You can unsubscribe using the link in the email.</p>
 
                         <div class="govuk-form-group">
-                            <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit">Submit</button>
+                            <button data-prevent-double-click="true" data-module="govuk-button" type="submit" id="submit" class="govuk-!-font-weight-bold govuk-button gtm-form-submit">Submit</button>
                         </div>
 
                     </form>
