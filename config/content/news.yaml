@@ -1,2 +1,4 @@
 post_lead_text:
   type: text
+sectors:
+  type: plainarray

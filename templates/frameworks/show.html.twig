@@ -219,7 +219,7 @@
                                                     </dt>
                                                     <dd class="apollo-list--definition__value">
                                                         {% if lot.description %}
-                                                            <div class="govuk-!-margin-bottom-2">{{ lot.description | raw }}</div>
+                                                            <div class="govuk-!-margin-bottom-2">{{ lot.description | raw |nl2br }}</div>
                                                         {% endif %}
 
                                                         {# don't show this information if the lot has expired already #}
@@ -396,7 +396,7 @@
                                 <div class="apollo-enclosure">
                                     <h2 class="aside__heading">Contact</h2>
 
-                                    <p class="govuk-body"> {{ cscMessage }}</p>
+                                    <p class="govuk-body"> {{ cscMessage | raw}}</p>
 
                                     <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">
                                         Email:</h3>
