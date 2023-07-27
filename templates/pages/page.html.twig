@@ -589,12 +589,6 @@
             });
         });
 
-        formSubmitBTN = document.getElementById("submit");
-        formSubmitBTN.addEventListener("click", function(){
-            document.getElementById("js-contact-form").submit();
-            formSubmitBTN.disabled = true;
-        });
-
          function setPhoneTextOptional(toggle){
             if(toggle){
                 document.getElementById("phone-label").textContent = "Telephone number (optional)";
