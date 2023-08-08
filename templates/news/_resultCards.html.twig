@@ -22,7 +22,7 @@
         {% set postLink = app_base_url ~ "/digital_brochure/request/" ~ page.id ~ "/" ~ page.urlSlug %}
     {% elseif page.content.category_type == 'Downloadable'%}
         {% set categoryName = page.content.content_type_name %}
-        {% set categoriesLink = app_base_url ~"/news?contentType=" ~ page.content.content_type_id %}
+        {% set categoriesLink = app_base_url ~"/news?downloadable[]=" ~ page.content.content_type_id %}
         {% set postLink = app_base_url ~ "/downloadable-resource/request/" ~ page.id ~ "/" ~ page.urlSlug %}
     {% endif %}
 
@@ -32,7 +32,7 @@
                 <div class="{{ page.featuredImage.url is defined ? "govuk-grid-column-one-half" : "govuk-grid-column-full" }} govuk-grid-column-one-half news-listing-block">
                     <p class="news-listing-meta">
                         {% if categoriesLink == '' %}
-                            <a href="{{ path('news_page', {'slug': page.urlSlug}) }}">{{ page.taxonomies.categories.current.name }}</a>
+                            <a href="{{ path('news_list', {'categories[]': page.taxonomies.categories.current.id|number_format }) }}">{{ page.taxonomies.categories.current.name }}</a>
                         {% else %}
                             <a href={{categoriesLink}}>{{ categoryName is not null ?  categoryName : page.content.category_type   }}</a>
                         {% endif %}
