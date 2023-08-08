@@ -9,16 +9,21 @@
 {% for page in pages %}
     {% set categoryName = null %}
     {% set categoriesLink = '' %}
+    {% set postLink = '' %}
 
     {% if page.content.category_type ==  'Whitepaper' %}
         {% set categoriesLink = app_base_url ~ "/news/?&whitepaper=1" %}
+        {% set postLink = app_base_url ~ "/whitepaper/request/" ~ page.id ~ "/" ~ page.urlSlug %}
     {% elseif page.content.category_type == 'Webinar'%}
         {% set categoriesLink = app_base_url ~ "/news/?&webinar=1" %}
+        {% set postLink = app_base_url ~ "/webinar/request/" ~ page.id ~ "/" ~ page.urlSlug %}
     {% elseif page.content.category_type == 'Digital Brochure'%}
         {% set categoriesLink = app_base_url ~ "/news/?&digitalBrochure=1" %}
+        {% set postLink = app_base_url ~ "/digital_brochure/request/" ~ page.id ~ "/" ~ page.urlSlug %}
     {% elseif page.content.category_type == 'Downloadable'%}
         {% set categoryName = page.content.content_type_name %}
         {% set categoriesLink = app_base_url ~"/news?contentType=" ~ page.content.content_type_id %}
+        {% set postLink = app_base_url ~ "/downloadable-resource/request/" ~ page.id ~ "/" ~ page.urlSlug %}
     {% endif %}
 
     <div class ="news_div" >
@@ -34,7 +39,11 @@
                         <span> {{ page.datePublished.format('jS F Y') }} </span>
                     </p>
                     <h2 class="news-listing-title">
-                        <a href="{{ path('news_page', {'slug': page.urlSlug}) }}">{{ page.title|raw }}</a>
+                        {% if postLink == '' %}
+                            <a href="{{ path('news_page', {'slug': page.urlSlug}) }}">{{ page.title|raw }}</a>
+                        {% else %}
+                            <a href="{{ postLink }}">{{ page.title|raw }}</a>
+                        {% endif %}
                     </h2>
 
                     <p class="govuk-body govuk-!-font-size-17featured">
