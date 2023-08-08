@@ -269,6 +269,20 @@ End Usersnap code #}
         }
     }
 
+    // toggle mobile menu icon
+    var iconClosed = document.querySelector(".icon-menu-closed");
+    var iconOpen =  document.querySelector(".icon-menu-open");
+
+    iconClosed.addEventListener("click", function () {
+        iconClosed.style.display = "none";
+        iconOpen.style.display = "inline-block";
+    });
+
+    iconOpen.addEventListener("click", function () {
+        iconClosed.style.display = "none";
+        iconOpen.style.display = "inline-block";
+    });
+
   
 </script>
 
