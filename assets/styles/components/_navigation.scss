@@ -92,7 +92,7 @@
 
 .nav-list--primary {
 
-    order: 2;
+    order: 0;
 
     @include govuk-media-query($from: desktop) {
 
@@ -147,6 +147,46 @@
 
 }
 
+.nav-list-ppg {
+
+    order: 1;
+    padding-top: govuk-px-to-rem(30);
+    position: relative;
+    padding-bottom: govuk-px-to-rem(30);
+
+    @include govuk-media-query($from: desktop) {
+
+        display: none;
+
+    }
+
+    .nav-list__link {
+                font-weight: 400;
+                font-size: 1.25rem;
+                line-height: 1.05;
+    }
+
+    p {
+        margin-bottom: 0px;
+        color: white;
+        font-weight: 600 !important;
+    }
+
+    &:before {
+
+        content: " ";
+        display: block;
+        position: absolute;
+        top: govuk-px-to-rem(20);
+        left: govuk-px-to-rem(15);
+        width: calc(100% - 30px);
+        height: govuk-px-to-rem(1);
+        background-color: rgba(white, 0.42);
+
+
+    }
+}
+
 
 
 
@@ -199,7 +239,13 @@
 
     // GDS uses an 8-key font scale which predefines which sizes are available.
     // This allows fonts to scale with breakpoints
-    @include govuk-font(20, $weight: bold);
+    @include govuk-font(20, $weight: regular);
+
+    @include govuk-media-query($from: desktop) {
+    
+            @include govuk-font(20, $weight: bold);
+    
+        }
 
 }
 
@@ -210,7 +256,7 @@
 
     // GDS uses an 8-key font scale which predefines which sizes are available.
     // This allows fonts to scale with breakpoints
-    @include govuk-font(18, $weight: regular);
+    @include govuk-font(20, $weight: regular);
 
 }
 
@@ -260,12 +306,12 @@
     border: 0;
     border-radius: govuk-px-to-rem(3);
     color: #9B1A47;
-    padding: govuk-px-to-rem(11) govuk-px-to-rem(14);
+    padding: govuk-px-to-rem(7) govuk-px-to-rem(14);
     position: absolute;
     right: govuk-px-to-rem(15);
     top: govuk-px-to-rem(41);
-
-    @include govuk-font(19, $weight: regular);
+    font-size: govuk-px-to-rem(18);
+    font-weight: 500;
 
     @include govuk-media-query($from: 641) {
 
@@ -287,14 +333,9 @@
     }
 }
 
-.header-global--home .global-navigation__toggler {
-
-     top: govuk-px-to-rem(78);
-
-}
 
 .nav-list--primary,
-.nav-list--secondary {
+.nav-list--secondary, nav-list-ppg {
     @media only print {
         display: flex;
         flex-direction: row;
