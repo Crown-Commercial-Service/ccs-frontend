@@ -47,12 +47,12 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.15">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.16">
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.15">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.16">
     {% endif %}
 
     {% block blocking_javascript %}
@@ -270,17 +270,20 @@ End Usersnap code #}
     }
 
     // toggle mobile menu icon
+    var menuIcon = document.querySelector(".global-navigation__toggler");
     var iconClosed = document.querySelector(".icon-menu-closed");
     var iconOpen =  document.querySelector(".icon-menu-open");
 
-    iconClosed.addEventListener("click", function () {
-        iconClosed.style.display = "none";
-        iconOpen.style.display = "inline-block";
-    });
+    menuIcon.addEventListener("click", function () {
+        if(window.getComputedStyle(iconClosed, null).display == "inline") {
+            iconClosed.style.display = "none";
+            iconOpen.style.display = "inline";
+        }
 
-    iconOpen.addEventListener("click", function () {
-        iconClosed.style.display = "none";
-        iconOpen.style.display = "inline-block";
+        else if(window.getComputedStyle(iconOpen, null).display == "inline") {
+            iconOpen.style.display = "none";
+            iconClosed.style.display = "inline";
+        }
     });
 
   
