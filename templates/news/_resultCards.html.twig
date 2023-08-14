@@ -49,8 +49,6 @@
                     <p class="govuk-body govuk-!-font-size-17featured">
                         {{ page.content.post_lead_text  | raw }}
                     </p>
-
-                    <a href="{{ path('news_page', {'slug': page.urlSlug}) }}"> Read more </a> 
                 </div>
                 {% if page.content.featured_image_url is defined %}
                     <div class="govuk-grid-column-one-half news-img-container">

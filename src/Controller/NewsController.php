@@ -166,6 +166,7 @@ class NewsController extends AbstractController
         $checkType = array(
             'categories',
             'sectors',
+            'PandS',
             'content_type',
             'whitepaper',
             'webinar',
