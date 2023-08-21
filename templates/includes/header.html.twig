@@ -8,7 +8,7 @@
         {% endblock %}
 
         {% block ppglogin %}
-            {% if 'Public Procurement Gateway: guides' in page.title %}
+            {% if (page.title is defined) and ('Public Procurement Gateway: guides' in page.title) %}
                 {% include '/includes/ppg-login.html.twig' %}
             {% endif %}
         {% endblock %}
