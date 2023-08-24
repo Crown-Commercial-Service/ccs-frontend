@@ -9,10 +9,13 @@
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Buyer and supplier guides</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Buyer guides</span>
                 </h2>
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                <p>Before buying from this agreement you should read the buyer guide and how to use contractual documents.</p>
+                <p>The buyer guide will help you understand how the agreement works and what you can or can’t use the agreement for.</p>
+                <p>This section might also include further guides or lists you will need to look at and make selections from, as well as previous webinar slides and Q&A scripts from sessions with buyers and suppliers.</p>
                 <div class="wysiwyg-content">{{ framework.content.customer_guide|raw }}</div>
             </div>
         </div>
@@ -26,6 +29,8 @@
                 </h2>
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                <p>The core terms form part of the framework and call-off contracts and must be used on every contract. They cannot be changed.</p>
+                <p>The core terms are CCS’s standard commercial terms. They govern the supplier’s relationship with CCS and every customer who has a call-off contract.</p>
                 <div class="wysiwyg-content">{{ framework.content.core_terms_conditions|raw }}</div>
             </div>
         </div>
@@ -39,6 +44,25 @@
                 </h2>
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                <p>When a customer decides to buy from a supplier, they’ll complete an order form with important information about the call-off contract.</p>
+                <p>Customers can change any of their chosen schedules by adding special terms in the call-off order form.</p>
+
+                <p>A completed order form will contain:
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>what will be supplied</li>
+                        <li>how it will be supplied</li>
+                        <li>how much it will cost</li>
+                        <li>contact details for suppliers and customers</li>
+                        <li>a list of all the call-off and joint schedules</li>
+                    </ul>
+                </p>
+                <p>The call-off contract will be created when both parties either agree to:
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>sign a completed order form</li>
+                        <li>create a binding electronic purchase order which includes the information in the order form</li>
+                    </ul>
+                </p>
+    
                 <div class="wysiwyg-content">{{ framework.content.call_off_order_form|raw }}</div>
             </div>
         </div>
