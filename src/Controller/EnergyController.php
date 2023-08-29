@@ -19,20 +19,7 @@ class EnergyController extends AbstractController
     public function start(Request $request)
     {
         $error      = false;
-        $history    = isset($_REQUEST["history"]) ? $_REQUEST["history"] : null ;
-
-        if ($history != null) {
-            $history    =  json_decode($history, true);
-            $this->setCurrentQuestionAndAnswers((int) $this->getCurrentQuesitonID($history));
-        } else {
-            $this->setCurrentQuestionAndAnswers(0);
-            $history = [
-                [
-                    'questionID'    => '0',
-                    'selectedAnswer' => null
-                ],
-            ];
-        }
+        $history    = $this->getHistory($request);
 
         if ($request->isMethod('POST')) {
             $userAnswer = $request->request-> get('answer', null);
@@ -69,31 +56,24 @@ class EnergyController extends AbstractController
         ]);
     }
 
-    private function processToNextStage($history)
+    private function getHistory($request)
     {
-
-        $lastEntry = $history[array_key_last($history)];
-
-        $selectedAnswer = (int) $lastEntry['selectedAnswer'];
-
-        $decision = EnergySolutionToolDecision::getDecision((int) $lastEntry['questionID']);
-        $nextStage = $decision[$selectedAnswer];
-
-        if (!is_string($nextStage)) {
-            $history = $this->addQuestionToHistory($history, $nextStage);
-            return $this->redirectToRoute('energy_question', ['history' => json_encode($history)]);
+        $history = null;
+        
+        if (isset($_REQUEST["history"])){
+            $history =  json_decode($_REQUEST["history"], true);
+            $this->setCurrentQuestionAndAnswers((int) $this->getCurrentQuesitonID($history));
         } else {
-            return $this->redirectToRoute('energy_result', ['history' => $history, 'recommendation' => $nextStage]);
-        };
-    }
+            $this->setCurrentQuestionAndAnswers(0);
+            $history = [
+                [
+                    'questionID'    => '0',
+                    'selectedAnswer' => null
+                ],
+            ];
+        }
 
-    private function setCurrentQuestionAndAnswers(int $id)
-    {
-        $result = EnergySolutionToolQuestions::getQuestionAndAnswers($id);
-
-        $this->currentQuestion      = $result['question'];
-        $this->currentQuestionHint  = $result['hint'] ?? null;
-        $this->currentAnswer        = $result['answer'];
+        return $history;
     }
 
     private function getCurrentQuesitonID($history)
@@ -110,6 +90,33 @@ class EnergyController extends AbstractController
         $history[$lastIndex]['selectedAnswer'] = $userSelectedOption;
 
         return $history;
+    }
+
+    private function setCurrentQuestionAndAnswers(int $id)
+    {
+        $result = EnergySolutionToolQuestions::getQuestionAndAnswers($id);
+
+        $this->currentQuestion      = $result['question'];
+        $this->currentQuestionHint  = $result['hint'] ?? null;
+        $this->currentAnswer        = $result['answer'];
+    }
+
+    private function processToNextStage($history)
+    {
+
+        $lastEntry = $history[array_key_last($history)];
+
+        $selectedAnswer = (int) $lastEntry['selectedAnswer'];
+
+        $decision = EnergySolutionToolDecision::getDecision((int) $lastEntry['questionID']);
+        $nextStage = $decision[$selectedAnswer];
+
+        if (!is_string($nextStage)) {
+            $history = $this->addQuestionToHistory($history, $nextStage);
+            return $this->redirectToRoute('energy_question', ['history' => json_encode($history)]);
+        } else {
+            return $this->redirectToRoute('energy_result', ['history' => $history, 'recommendation' => $nextStage]);
+        };
     }
 
     private function addQuestionToHistory($history, int $questionID)
