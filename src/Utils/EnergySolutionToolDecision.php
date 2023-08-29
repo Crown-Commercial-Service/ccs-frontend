@@ -6,7 +6,7 @@ namespace App\Utils;
 
 use Symfony\Component\Yaml\Yaml;
 
-class EnergySolutionTool_Decision
+class EnergySolutionToolDecision
 {
     protected static function loadConfig()
     {

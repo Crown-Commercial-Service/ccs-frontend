@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Utils\EnergySolutionTool_Questions;
-use App\Utils\EnergySolutionTool_Decision;
+use App\Utils\EnergySolutionToolQuestions;
+use App\Utils\EnergySolutionToolDecision;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\History;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +26,7 @@ class EnergyController extends AbstractController
             $this->setCurrentQuestionAndAnswers((int) $this->getCurrentQuesitonID($history));
         } else {
             $this->setCurrentQuestionAndAnswers(0);
-            $history = $history = [
+            $history = [
                 [
                     'questionID'    => '0',
                     'selectedAnswer' => null
@@ -76,7 +76,7 @@ class EnergyController extends AbstractController
 
         $selectedAnswer = (int) $lastEntry['selectedAnswer'];
 
-        $decision = EnergySolutionTool_Decision::getDecision((int) $lastEntry['questionID']);
+        $decision = EnergySolutionToolDecision::getDecision((int) $lastEntry['questionID']);
         $nextStage = $decision[$selectedAnswer];
 
         if (!is_string($nextStage)) {
@@ -89,7 +89,7 @@ class EnergyController extends AbstractController
 
     private function setCurrentQuestionAndAnswers(int $id)
     {
-        $result = EnergySolutionTool_Questions::getQuestionAndAnswers($id);
+        $result = EnergySolutionToolQuestions::getQuestionAndAnswers($id);
 
         $this->currentQuestion      = $result['question'];
         $this->currentQuestionHint  = $result['hint'] ?? null;
@@ -136,7 +136,7 @@ class EnergyController extends AbstractController
         $historyArray = array();
 
         foreach ($history as $index => $eachSelection) {
-            $qAndA = EnergySolutionTool_Questions::getQuestionAndSingleAnswer((int) $eachSelection["questionID"], (int) $eachSelection["selectedAnswer"]);
+            $qAndA = EnergySolutionToolQuestions::getQuestionAndSingleAnswer((int) $eachSelection["questionID"], (int) $eachSelection["selectedAnswer"]);
             $qAndA['history'] = json_encode(array_slice($history, 0, $index + 1));
 
             $historyArray[] = $qAndA;
