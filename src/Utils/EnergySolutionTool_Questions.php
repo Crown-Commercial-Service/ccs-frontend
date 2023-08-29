@@ -35,6 +35,6 @@ class EnergySolutionTool_Questions
         $question = $questionData["question"];
         $answer = array_keys($questionData["answer"])[$answerID];
 
-        return array('question'=>$question, 'answer' =>$answer);
+        return array('question' => $question, 'answer' => $answer);
     }
 }
