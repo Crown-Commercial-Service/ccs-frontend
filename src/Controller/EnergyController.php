@@ -59,8 +59,8 @@ class EnergyController extends AbstractController
     private function getHistory($request)
     {
         $history = null;
-        
-        if (isset($_REQUEST["history"])){
+
+        if (isset($_REQUEST["history"])) {
             $history =  json_decode($_REQUEST["history"], true);
             $this->setCurrentQuestionAndAnswers((int) $this->getCurrentQuesitonID($history));
         } else {
