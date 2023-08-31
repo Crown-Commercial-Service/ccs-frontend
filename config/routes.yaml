@@ -292,12 +292,6 @@ form_esourcing_register_thanks:
   defaults:
     template: forms/30-esourcing-register-thanks.html.twig
 
-energy_start:
-  path: /find-an-energy-solution/start
-  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-  defaults:
-    template: energy/start.html.twig
-
 energy_question:
   path: /find-an-energy-solution/question
   controller: App\Controller\EnergyController::start
