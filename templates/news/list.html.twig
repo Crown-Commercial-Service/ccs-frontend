@@ -198,22 +198,11 @@
                                     <div class="govuk-width-container">
                                         <div class="govuk-grid-row news_wrapper">
 
-                                            <div v-if="result.imageSet" class="govuk-grid-column-one-half news-listing-block">
+                                            <div class="news-listing-block" :class="{'govuk-grid-column-one-half': result.imageSet, 'govuk-grid-column-full':!result.imageSet}">
                                                 <p class="news-listing-meta"> 
                                                     <a :href="result.CategoriesLink">{[ result.postType ]}</a>
-                                                    <span v-if="result.postType != 'Digital Brochure'"> {[result.postedDate]} </span> 
+                                                    <span> {[result.postedDate]} </span> 
                                                 </p>
-                                                <h2 class="news-listing-title">
-                                                    <a :href="result.postLink" v-html="result.title.rendered"></a>
-                                                </h2>
-                                                <p v-html="result.postDescription"></p> 
-                                            </div>
-                                            <div v-else class="govuk-grid-column-full news-listing-block">
-                                                <p class="news-listing-meta"> 
-                                                    <a :href="result.CategoriesLink">{[ result.postType ]}</a>
-                                                    <span v-if="result.postType != 'Digital Brochure'"> {[result.postedDate]} </span> 
-                                                </p>
-                                                
                                                 <h2 class="news-listing-title">
                                                     <a :href="result.postLink" v-html="result.title.rendered"></a>
                                                 </h2>
