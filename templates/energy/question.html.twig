@@ -41,6 +41,8 @@
 
                     {% if back != "[]" %}
                         <a class="govuk-back-link" href="{{ path('energy_question', {'history': back }) }}">Back</a> 
+                    {% else %}
+                        <a class="govuk-back-link" href="{{ path('frameworks_show', {'rmNumber': 'RM6251' }) }}">Back</a> 
                     {% endif %}
                     
                     <form action={{ path('energy_question')}} method="POST">
