@@ -10,7 +10,7 @@
     hint:       '<p>The monthly price you pay will reflect the current market at the time of buying.</p>
                 <p>This means that the longer we spend buying the energy, the lower the risk.</p>'
     answer: {   'Low risk': 'I want CCS to spread the buying of my energy over a longer period of time (12 months).', 
-                'High risk': 'I want CCS to spread the buying of my energy over a shorter period of time (6 months).' }
+                'Moderate risk': 'I want CCS to spread the buying of my energy over a shorter period of time (6 months).' }
 2:
     question: 'Do you want fixed or varible pricing?'
     answer: {   'Fixed pricing': 'Fixed pricing can help you to manage budgets. This is because you will pay the same price per unit each month. For example, if your unit rate is fixed at 17p you will always pay 17p per  kWh no matter how much energy you use.', 
