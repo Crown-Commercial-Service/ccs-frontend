@@ -125,7 +125,7 @@
             };
 
             var cookiePreferences = JSON.parse(decodeURIComponent(readCookie('cookie_preferences')));
-            if (cookiePreferences !== null && '{{ app.environment }}' == "prod") {
+            if ('{{ app.environment }}' == "local" || '{{ app.environment }}' == "prod") {
                     (function (w, d, s, l, i) {
                         w[l] = w[l] || [];
                         w[l].push({
