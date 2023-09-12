@@ -112,34 +112,34 @@ var docCookies = {
             ]
         },
 
-        {
-            title: "Measuring website usage (Glassbox)",
-            description: `<p>We use Glassbox software to collect information about how you use CCS. We do this to help make sure the site is meeting the needs of its users and to help us make improvements</p>
-                          <p>Glassbox stores information about:</p>
-                          <ul>
-                            <li>Browsing activity</li>
-                            <li>Click-stream activity</li>
-                            <li>Session heatmaps and</li>
-                            <li>Scrolls</li>
-                          </ul>
-                          <p>This information can’t be used to identify who you are.</p>
-                          <p>We don’t allow Glassbox to use or share our analytics data.</p>`,
-            cookie_type: "glassbox",
-            enabled: null,
-            adjustable: true,
-            cookies: [
-                {
-                    "name": "_cls_s",
-                    "path": "/",
-                    "domain": ".crowncommercial.gov.uk"
-                },
-                {
-                    "name": "_cls_v",
-                    "path": "/",
-                    "domain": ".crowncommercial.gov.uk"
-                },
-            ]
-        },
+        // {
+        //     title: "Measuring website usage (Glassbox)",
+        //     description: `<p>We use Glassbox software to collect information about how you use CCS. We do this to help make sure the site is meeting the needs of its users and to help us make improvements</p>
+        //                   <p>Glassbox stores information about:</p>
+        //                   <ul>
+        //                     <li>Browsing activity</li>
+        //                     <li>Click-stream activity</li>
+        //                     <li>Session heatmaps and</li>
+        //                     <li>Scrolls</li>
+        //                   </ul>
+        //                   <p>This information can’t be used to identify who you are.</p>
+        //                   <p>We don’t allow Glassbox to use or share our analytics data.</p>`,
+        //     cookie_type: "glassbox",
+        //     enabled: null,
+        //     adjustable: true,
+        //     cookies: [
+        //         {
+        //             "name": "_cls_s",
+        //             "path": "/",
+        //             "domain": ".crowncommercial.gov.uk"
+        //         },
+        //         {
+        //             "name": "_cls_v",
+        //             "path": "/",
+        //             "domain": ".crowncommercial.gov.uk"
+        //         },
+        //     ]
+        // },
 
         {
             title: "Cookies that help with our communications and marketing",
@@ -195,6 +195,7 @@ var docCookies = {
         acceptAllCookies();
         updateCookieOnSafari();
         fireGTM();
+        setDataLayer(true, false, true)
     }
 
     function fireGTM() {
@@ -203,6 +204,15 @@ var docCookies = {
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','GTM-5NQGRQN');
+    }
+
+    function setDataLayer(usage_consent, glassbox_consent, marketing_consent) {
+        window.dataLayer.push({
+            event: 'gtm_consent_update',
+            usage_consent: usage_consent ? 'granted' : 'not granted',
+            glassbox_consent: glassbox_consent ? 'granted' : 'not granted',
+            marketing_consent: marketing_consent ? 'granted' : 'not granted'
+        });
     }
 
     function updateSeenCookie() {
@@ -282,6 +292,8 @@ var docCookies = {
 
     function UpdateCookiePreferences() {
 
+        let selectedCookie = [];
+
         // update the cookie references based on user selection
         initial_cookie_preferences.forEach((datarecord, idx) => {
 
@@ -295,9 +307,13 @@ var docCookies = {
                     // send the cookie type
                     deleteDisabledCookies(datarecord.cookie_type);
                 }
+                selectedCookie.push(cookie_preferences[datarecord.cookie_type]);
             }
 
         });
+
+        setDataLayer(selectedCookie[0], false, selectedCookie[1]);
+
 
         const cookie_timer = (cookie_preferences['usage'] === false && cookie_preferences['marketing'] === false)
             ? twodays
@@ -318,8 +334,6 @@ var docCookies = {
         SettingsUpdatedArea[0].innerHTML = "<p>Your cookie settings were saved.</p>";
 
     }
-
-
 
     function generateCookieSettingsPageContent(appendTo) {
 
@@ -427,7 +441,6 @@ var docCookies = {
 
     }
 
-
     /**
      * Programatically creates the cookie message notification
      */
@@ -478,7 +491,6 @@ var docCookies = {
         document.body.insertBefore(cookieMessageContainer, toContent);
         cookieMessageContainer.style.display = 'block';
     }
-
 
     /**
      * Only show the cookie message if the user hasn't previously dismissed it (and we're NOT on the cookie-settings page, matches based on the slug)
