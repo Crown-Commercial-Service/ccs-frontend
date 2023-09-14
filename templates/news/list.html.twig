@@ -201,7 +201,7 @@
                                             <div class="news-listing-block" :class="{'govuk-grid-column-one-half': result.imageSet, 'govuk-grid-column-full':!result.imageSet}">
                                                 <p class="news-listing-meta"> 
                                                     <a :href="result.CategoriesLink">{[ result.postType ]}</a>
-                                                    <span> {[result.postedDate]} </span> 
+                                                    <span> {[result.modifiedDate]} </span> 
                                                 </p>
                                                 <h2 class="news-listing-title">
                                                     <a :href="result.postLink" v-html="result.title.rendered"></a>
@@ -709,9 +709,8 @@
                         .then(function(jsonResponse) {
                             self.numberOfPages = jsonResponse.meta['X-WP-TotalPages'];
                             self.totalResults = jsonResponse.meta['X-WP-Total'];
-                                
                             for(var i = 0; i < jsonResponse.body.length; i++) {                         
-                                jsonResponse.body[i].postedDate = self.formatDate(jsonResponse.body[i].date);
+                                jsonResponse.body[i].modifiedDate = self.formatDate(jsonResponse.body[i].modified);
                                 jsonResponse.body[i].postType = jsonResponse.body[i].acf.category_type;
                                 jsonResponse.body[i].index = i;
                                 
