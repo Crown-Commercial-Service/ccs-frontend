@@ -45,7 +45,6 @@
                             {{ category.name }}{% if loop.index < page.taxonomies.categories|length %}, {% endif %}
                         {% endfor %}
                         {% endif %}
-                        | {{ page.datePublished|date('j F Y') }}</div>
                     <h1 class="govuk-heading-xl govuk-!-font-size-48 page-title news-listing-title--featured">{{ page.title|raw }}</h1>
 
                 </div>
@@ -80,6 +79,7 @@
             <div class="govuk-grid-column-two-thirds">
 
                 {% if page.content.post_lead_text %}
+                <p>Last Updated {{ page.dateModified|date('j F Y') }}</p>
                 <p class="govuk-body-l">
                     {{ page.content.post_lead_text }}
                 </p>
@@ -103,7 +103,6 @@
                             {% endif %}
                         {% endfor %}
                     {% endif %}
-                    | {{ page.datePublished|date('j F Y') }}
                     {% if authorText != null and isBlog %}
                         | Written by {{authorText}}
                     {% endif %}
