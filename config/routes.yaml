@@ -292,6 +292,14 @@ form_esourcing_register_thanks:
   defaults:
     template: forms/30-esourcing-register-thanks.html.twig
 
+energy_question:
+  path: /find-an-energy-solution/question
+  controller: App\Controller\EnergyController::start
+
+energy_result:
+  path: /find-an-energy-solution/energy_result
+  controller: App\Controller\EnergyController::resultPage
+
 page:
   path: /{slug}
   controller: App\Controller\PageController::page

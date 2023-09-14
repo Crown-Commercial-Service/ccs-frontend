@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Energy Solution Tool - Result {{recommendation}}
+{% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block flourishClasses %}{% endblock %}
+
+{% block body %}
+    {% set recommendationTitle = "Error" %}
+    {% set recommendationBody  = "Something went wrong"%}
+
+    {% if recommendation == 'L12' %}
+        {% set recommendationTitle  =   "Medium term locked" %}
+        {% set recommendationBody   =   "We designed this solution to be market reflective but it reduces some risk as we buy and collect energy over a longer period of time: 
+                                        <ul class='govuk-list govuk-list--bullet'>
+                                            <li>this solution will last for 24 months</li>
+                                            <li>the total buying time is 12 months and we buy all energy before you start using it</li>
+                                            <li>you will then be able to use the energy over 12 months once the buying window has ended</li>
+                                            <li>the price of energy is fixed, this means you will pay the same price per unit each month</li>
+                                        </ul> "%}
+    {% elseif recommendation == 'L6' %}
+        {% set recommendationTitle  =   "Short term locked" %}
+        {% set recommendationBody   =   "We designed this solution to be market reflective:
+                                        <ul class='govuk-list govuk-list--bullet'>
+                                            <li>this solution will last for 18 months </li>
+                                            <li>the total buying time is 6 months and we buy all energy before you start using it</li>
+                                            <li>you will then be able to use the energy over 12 months once the 6 month buying window has ended</li>
+                                            <li>the price of energy is fixed, this means you will pay the same price per unit each month</li>
+                                        </ul> "%}
+    {% elseif recommendation == 'V6' %}
+        {% set recommendationTitle  =   "Short term variable" %}
+        {% set recommendationBody   =   "We designed this solution to be market reflective:
+                                        <ul class='govuk-list govuk-list--bullet'>
+                                            <li>this solution will last for 18 months and you will be able to use the energy over 12 months</li>
+                                            <li>we begin buying energy 6 months before you start using it and continue throughout </li>
+                                            <li>the price of energy will change on a monthly basis to reflect the current buying market</li>
+                                        </ul> "%}
+    {% elseif recommendation == 'L24' %}
+        {% set recommendationTitle  =   "Long term locked" %}
+        {% set recommendationBody   =   "We designed this solution to help mitigate risks by buying energy over a longer period of time:
+                                        <ul class='govuk-list govuk-list--bullet'>
+                                            <li>this solution will last for 36 months </li>
+                                            <li>the total buying time is 24 months and we buy all energy before you start using it</li>
+                                            <li>you will then be able to use the energy over 12 months once the buying time has ended</li>
+                                            <li>the price of energy is fixed, this means you will pay the same price per unit each month</li>
+                                        </ul> "%}
+    {% elseif recommendation == 'V30' %}
+        {% set recommendationTitle  =   "Long term variable" %}
+        {% set recommendationBody   =   "We designed this solution to help mitigate risks by buying energy over a longer period of time:
+                                        <ul class='govuk-list govuk-list--bullet'>
+                                            <li>this solution will last for 42 months and you will be able to use the energy over 12 months</li>
+                                            <li>we begin buying energy 30 months before you start using it and continue throughout</li>
+                                            <li>the price of energy will change on a monthly basis but price changes will be small </li>
+                                        </ul> "%}
+    {% endif %}
+
+    <div class="govuk-width-container">
+        <div class="govuk-phase-banner">
+            {% include '/includes/phase-banner-content.html.twig' %}
+        </div>
+
+        <main id="main-content" role="main" class="govuk-main-wrapper">
+            {% if back != "[]" %}
+                <a class="govuk-back-link" href="{{ path('energy_question', {'history': back }) }}">Back</a> 
+            {% endif %}
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <h1 class="govuk-heading-xl page-title">Energy Solution Results</h1>
+                    <span class="govuk-caption-l">Based on your answers, we suggest using the following energy solution:</span>
+                    <div class="grey-backgroud">
+                        <h3 class="govuk-heading-m">{{ recommendationTitle }}</h3>
+                        <p>{{ recommendationBody|raw }}</p>
+                    </div>
+
+                    <div class="govuk-body journey-answers">
+                        <h2 class="govuk-heading-l">Next steps</h2>
+
+                        <p>For more information, <a href="https://www.crowncommercial.gov.uk/webinar/request/47666/introduction-to-ccs-energy">watch our energy solution webinar</a>.</p>
+                        
+                        <p>Once you have watched the webinar you can register for your preferred energy solution by <a href={{ path('form_contact') }}>getting in touch with our energy team</a>.</p>
+
+                        <h2 class="govuk-heading-l">Your Answers</h2>
+                        {% for key in history %}
+                            <div class="govuk-summary-list__row">
+                                <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--xl govuk-!-margin-0">
+                                <dl class="govuk-summary-list">
+                                    <dt class="govuk-summary-list__key govuk-!-font-weight-bold"> {{ history[loop.index0]['question'] }}</dt>
+                                    <dd class="govuk-summary-list__value"> {{ history[loop.index0]['answer'] }}</dd>
+                                    <dd class="govuk-summary-list__value no-print"><a href="{{ path('energy_question', {'history': history[loop.index0]['history'] }) }}">Change</a></dd>
+                                </dl>
+                            </div>
+                        {% endfor %}
+                        {# <div class="govuk-summary-list__row">
+                            <dl class="govuk-summary-list">
+                                <dt class="govuk-summary-list__key"> Energy solution recommendations</dt>
+                                <dd class="govuk-summary-list__value"> {{ recommendation }}</dd>
+                                <dd class="govuk-summary-list__value no-print"></dd>
+                            </dl>
+                        </div> #}
+                    </div>
+                    <div class="app-c-print-link">
+                        <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">Print this page</button>
+                    </div>
+                    <br>
+                    <p>Need help witht this service? <a href={{ path('form_contact') }}>Contact CCS</a> </p>
+                    
+                    <a class="grey-govuk-button govuk-button govuk-button--secondary no-print" data-module="govuk-button" href="{{ path('energy_question') }}" >Start again to change your answers</a>
+                    <div class="grey-backgroud">
+                        <h3 class="govuk-heading-m">Tell us what you think</h3>
+                        <p> <a href="https://www.smartsurvey.co.uk/s/QWDZX">Provide feedback</a> to help us improve this service. The survey takes about 1 minute to complete. All of the questions are optional.</p>
+                    </div>
+
+                    <br>
+                    <h2 class="govuk-heading-m">RM6251 Supply of Energy 2</h2>
+                    <p>Central government and wider public sector organisations can access the supply of electricity and gas. For more information, <a href="{{ path('frameworks_show', {'rmNumber':  'RM6251' }) }}">read our agreement page</a>.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
