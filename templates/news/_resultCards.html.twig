@@ -36,7 +36,7 @@
                         {% else %}
                             <a href={{categoriesLink}}>{{ categoryName is not null ?  categoryName : page.content.category_type   }}</a>
                         {% endif %}
-                        <span> {{ page.datePublished.format('jS F Y') }} </span>
+                        <span> {{ page.dateModified.format('jS F Y') }} </span>
                     </p>
                     <h2 class="news-listing-title">
                         {% if postLink == '' %}

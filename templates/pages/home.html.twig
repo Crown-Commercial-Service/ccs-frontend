@@ -363,7 +363,7 @@
                                                             {{ category.name }}{% if loop.index < news_item.taxonomies.categories|length %}, {% endif %}
                                                         {% endfor %}
                                                     {% endif %}
-                                                    | {{ news_item.datePublished.format('j F Y') }}
+                                                    | {{ news_item.dateModified.format('j F Y') }}
                                                 </div>
                                                 <h3 class="news-listing-title">
                                                     <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}">{{ news_item.title|raw }}</a>
