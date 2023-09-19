@@ -46,7 +46,7 @@
                                     {{ category.name|raw }}{% if loop.index < article.content.taxonomies.categories|length %}, {% endif %}
                                 {% endfor %}
                             {% endif %}
-                            | {{ article.content.datePublished.format('jS F Y') }}
+                            | {{ article.content.dateModified.format('jS F Y') }}
                         </div>
                         <h2 class="news-listing-title">
                             <a href="{{ path('news_page', {'slug': article.content.urlSlug}) }}">{{ article.content.title|raw }}</a>
