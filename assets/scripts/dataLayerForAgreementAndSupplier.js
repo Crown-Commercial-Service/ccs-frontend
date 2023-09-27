@@ -1,12 +1,15 @@
 //this is only ran on show framework and show supplier page
 window.onload = function() {
-    const externalLinks = document.querySelectorAll('main a');
+    const externalLinks = Array.from(document.querySelectorAll('main a')).filter(link => !(link.href.includes('crowncommercial') || link.href.includes('tel')) );
 
     externalLinks.forEach(link => {
-    if (!(link.href.includes('crowncommercial') || link.href.includes('tel'))) {
         link.addEventListener('click', () => {
-            portal_click(link.textContent.trim(), link.href);
+            pushToDataLayer({
+                "event":        'portal_click',
+                "page_URL":     window.location.href,
+                "link_text":    link.textContent.trim(),
+                "link_url":     link.href
+            });
         });
-    }
     });
 }
