@@ -7,7 +7,7 @@ window.onload = function() {
             pushToDataLayer({
                 "event":        'print_page',
                 "link_text":    printLink.textContent.trim(),
-                "page_URL":     window.location.href
+                "page_url":     window.location.href
             });
         });
     }

@@ -6,7 +6,7 @@ window.onload = function() {
         link.addEventListener('click', () => {
             pushToDataLayer({
                 "event":        'portal_click',
-                "page_URL":     window.location.href,
+                "page_url":     window.location.href,
                 "link_text":    link.textContent.trim(),
                 "link_url":     link.href
             });
