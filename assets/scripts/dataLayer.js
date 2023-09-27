@@ -1,3 +1,4 @@
+// this is ran on all the pages and assign print_page() to the print button
 window.onload = function() {
     const printLink = document.querySelector('.app-c-print-link__link');
 
@@ -21,5 +22,13 @@ function print_page(link_text){
         "event": 'print_page',
         "link_text":        link_text !== null ? link_text : null,
         "page_URL":         window.location.href
+    });
+}
+
+function portal_click(link_text, link_url){
+    window.dataLayer.push({
+        "event": 'portal_click',
+        "link_text":    link_text !== null ? link_text : null,
+        "link_url":     link_url !== null ? link_url : null
     });
 }
