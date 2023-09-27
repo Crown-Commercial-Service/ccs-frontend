@@ -203,6 +203,7 @@
                                         {% for pillar_item in pillars.pillars %}
                                             <li>
                                                 <a class="{{pillar is defined and pillar == pillar_item.name ? 'govuk-!-font-weight-bold'}}" 
+                                                    onclick="search_interaction('filter by pillar', '{{ pillar_item.name }}');"
                                                     href="{{ path('frameworks_list_by_pillar',
                                                     {   'pillar': pillar_item.slug, 
                                                         'query': query is defined and query|trim is not empty ? query : '',
@@ -214,6 +215,7 @@
                                                     {% for category_item in pillar_item.categories %}
                                                         <li>
                                                             <a class="{{category is defined and category == category_item.name ? 'govuk-!-font-weight-bold' }}" 
+                                                                onclick="search_interaction('filter by category', '{{ category_item.name }}');"
                                                                 href="{{ path('frameworks_list_by_category', 
                                                                 {   'category': category_item.slug, 
                                                                     'query': query is defined and query|trim is not empty ? query : '',
