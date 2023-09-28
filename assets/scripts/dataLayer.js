@@ -6,8 +6,7 @@ window.onload = function() {
         printLink.addEventListener('click', () => {
             pushToDataLayer({
                 "event":        'print_page',
-                "link_text":    printLink.textContent.trim(),
-                "page_url":     window.location.href
+                "link_text":    printLink.textContent.trim()
             });
         });
     }
