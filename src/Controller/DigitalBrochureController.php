@@ -65,6 +65,8 @@ class DigitalBrochureController extends AbstractController
         $formErrors = null;
         $params = $request->request;
         $formData = ControllerHelper::getFormData($params);
+        $utmParams = $request->query->all();
+
         $returnURL = getenv('APP_BASE_URL') . '/digital_brochure/confirmation/' . $digital_brochure->getId() . '/' . $digital_brochure->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING);
         $campaignCode = $digital_brochure->getContent()->get('campaign_code') ? $digital_brochure->getContent()->get('campaign_code')->getValue() : '';
         $description   = $digital_brochure->getContent()->get('description') ? $digital_brochure->getContent()->get('description')->getValue() : '';
@@ -72,7 +74,7 @@ class DigitalBrochureController extends AbstractController
         if ($request->isMethod('POST')) {
             ControllerHelper::honeyPot($params->get('surname', null));
 
-            $formErrors = $this->formController->sendToSalesforceForDownload($params, $formData, $campaignCode, $description);
+            $formErrors = $this->formController->sendToSalesforceForDownload($params, $utmParams, $formData, $campaignCode, $description);
 
             if ($formErrors instanceof Response) {
                 return $formErrors;
