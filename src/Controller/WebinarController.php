@@ -53,6 +53,8 @@ class WebinarController extends AbstractController
         $formErrors = null;
         $params = $request->request;
         $formData = ControllerHelper::getFormData($params);
+        $utmParams = $request->query->all();
+
         $returnURL = getenv('APP_BASE_URL') . '/webinar/confirmation/' . $webinar->getId() . '/' . $webinar->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING);
         $campaignCode = $webinar->getContent()->get('campaign_code') ? $webinar->getContent()->get('campaign_code')->getValue() : '';
         $description   = $webinar->getContent()->get('description') ? $webinar->getContent()->get('description')->getValue() : '';
@@ -61,7 +63,7 @@ class WebinarController extends AbstractController
         if ($request->isMethod('POST')) {
             ControllerHelper::honeyPot($params->get('surname', null));
 
-            $formErrors = $this->formController->sendToSalesforceForDownload($params, $formData, $campaignCode, $description);
+            $formErrors = $this->formController->sendToSalesforceForDownload($params, $utmParams, $formData, $campaignCode, $description);
 
             if ($formErrors instanceof Response) {
                 return $formErrors;
