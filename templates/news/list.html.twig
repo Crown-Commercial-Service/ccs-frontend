@@ -695,6 +695,7 @@
                         var self = this;
                         this.responseAvailable = false;
                         this.emptyResult = false;
+                        const utmTags = '?' + this.utmTagsRemain().substring(1);
 
                         this.currentPage = page === null ? 1 : page;
                         var requestUrl = this.searchRequestUrl(categoriesSlug, this.currentPage);
@@ -716,23 +717,23 @@
                                 
                                 switch(jsonResponse.body[i].postType) {
                                     case 'Whitepaper':
-                                        postLink = appBaseUrl+ "/whitepaper/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        postLink = appBaseUrl+ "/whitepaper/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
                                         categoriesLink = appBaseUrl + "/news/?&whitepaper=1";
                                         break;
                                     case 'Webinar':
-                                        postLink = appBaseUrl+ "/webinar/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        postLink = appBaseUrl+ "/webinar/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
                                         categoriesLink = appBaseUrl + "/news/?&webinar=1";
                                         break;
                                     case 'Digital Brochure':
-                                        postLink = appBaseUrl+ "/digital_brochure/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        postLink = appBaseUrl+ "/digital_brochure/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
                                         categoriesLink = appBaseUrl + "/news/?&digitalBrochure=1";
                                         break;
                                     case 'Downloadable':
                                         jsonResponse.body[i].postType = jsonResponse.body[i].acf.content_type_name;
-                                        postLink = appBaseUrl+ "/downloadable-resource/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        postLink = appBaseUrl+ "/downloadable-resource/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
                                         categoriesLink = appBaseUrl +"/news?contentType=" + jsonResponse.body[i].content_type_id;
                                         break;
