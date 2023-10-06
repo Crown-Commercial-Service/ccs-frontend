@@ -329,12 +329,14 @@ class FormController extends AbstractController
         return  $this->redirectToRoute('form_contact_thanks');
     }
 
-    public static function sendToSalesforceForDownload($params, $data, $campaignCode, $description)
+    public static function sendToSalesforceForDownload($params, $utmParams, $data, $campaignCode, $description)
     {
         $formErrors = self::validateGatedForm($data);
 
         if (!$formErrors) {
             $client = HttpClient::create();
+
+            $params = self::checkUTM($utmParams, $params);
 
             $params->set('subject', $campaignCode);
             $params->set('00Nb0000009IXEW', $campaignCode);
@@ -473,5 +475,33 @@ class FormController extends AbstractController
         } catch (\Exception $exception) {
             throw new NotFoundHttpException('Failed to download file from AWS', $exception);
         }
+    }
+
+    private function checkUTM($utmArray, $params)
+    {
+        if (empty($utmArray)) {
+            return $params;
+        }
+
+        foreach ($utmArray as $utmKey => $utmValue) {
+            $params = self::setUTM($params, $utmKey, $utmValue);
+        }
+
+        return $params;
+    }
+    private function setUTM($params, $utmKey, $utmValue)
+    {
+        $utmMap = array(
+            "utm_campaign" => "Case_Marketing_Campaign__c",
+            "utm_content" => "Case_Marketing_Content__c",
+            "utm_medium" => "Case_Marketing_Medium__c",
+            "utm_source" => "Case_Marketing_Source__c"
+        );
+
+        if (array_key_exists($utmKey, $utmMap)) {
+            $params->set($utmMap[$utmKey], $utmValue);
+        }
+
+        return $params;
     }
 }
