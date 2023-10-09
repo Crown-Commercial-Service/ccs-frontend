@@ -435,3 +435,9 @@
         margin-top: 20px !important;
      }
 }
+// for extra large screens
+@include govuk-media-query($from: 2560) {
+    .govuk-hero-img-container {
+        padding-top: 45%;
+    }
+}
