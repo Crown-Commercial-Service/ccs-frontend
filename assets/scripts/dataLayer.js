@@ -27,8 +27,38 @@ function frameworkAndSupplierPage() {
     });
 }
 
+function fileDownload( fileURL, fileName, fileSize) {
+
+    const fileSizeString = formatFileSize(fileSize);
+    const fileType = fileURL.substring(fileURL.lastIndexOf('.')+1);
+    const actualFileName = fileURL.substr(fileURL.lastIndexOf('/')+1,fileURL.lastIndexOf('.')-1 - fileURL.lastIndexOf('/'));
+
+    pushToDataLayer({
+        "event":        'file_download',
+        "link_text": fileName,
+        "link_url": fileURL,
+        "file_extension": fileType,
+        "file_size": fileSizeString,
+        "file_name": actualFileName
+    });
+
+}
+
 function pushToDataLayer(array){
+    console.log("dada");
     array = (typeof array === 'string')? JSON.parse(array) : array;
 
     window.dataLayer.push(array);
+}
+
+function formatFileSize(bytes, decimals = 2) {
+    if (!+bytes) return '0 Bytes'
+
+    const k = 1024
+    const dm = decimals < 0 ? 0 : decimals
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
 }

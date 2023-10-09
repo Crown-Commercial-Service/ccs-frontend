@@ -92,6 +92,9 @@
                             </div>
                         </div>
                         {% if query is defined and query|trim is not empty %}
+
+                            <script>pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'agreements', 'search_term': '{{query}}'});</script>
+
                             <div class="guided-match-area">
                                 <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-margin-bottom-2 text-white">Need help finding the right agreement</h2>
                                 <p class="govuk-body text-white">Answer some questions to find the best agreement for your needs</br></p>

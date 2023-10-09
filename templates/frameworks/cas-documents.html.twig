@@ -77,7 +77,7 @@
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
                 {% for jointSchedule in framework.content.joint_schedules %}
-                    <p class="joint-schedule-title"><a href={{ jointSchedule.joint_schedule_document}}><strong>{{ jointSchedule.joint_schedule_document_name }}</strong></a></p>
+                    <p class="joint-schedule-title"><a onclick="fileDownload('{{ jointSchedule.joint_schedules_document }}', '{{ jointSchedule.joint_schedules_document_name }}', '{{ jointSchedule.joint_schedules_file_size }}');" href={{ jointSchedule.joint_schedule_document}}><strong>{{ jointSchedule.joint_schedule_document_name }}</strong></a></p>
                     <p class="joint-schedule-title">{{ jointSchedule.joint_schedule_document_type}}</p>
                     <p class="joint-schedule-title">{{ jointSchedule.joint_schedule_document_usage}}</p>
                     <div class="wysiwyg-content">{{ jointSchedule.joint_schedule_document_description|raw }}</div>
@@ -99,7 +99,7 @@
                 <p>You can choose which schedules to include and whether to edit these template schedules when they form a call-off contract.</p>
                 
                 {% for callOffSchedules in framework.content.call_off_schedules %}
-                    <p class="joint-schedule-title"><a href={{ callOffSchedules.call_off_schedule_document}}><strong>{{ callOffSchedules.call_off_schedule_document_name }}</strong></a></p>
+                    <p class="joint-schedule-title"><a onclick="fileDownload('{{ callOffSchedules.call_off_schedule_document }}', '{{ callOffSchedules.call_off_schedule_document_name }}', '{{ callOffSchedules.call_off_schedule_file_size }}');" href={{ callOffSchedules.call_off_schedule_document}}><strong>{{ callOffSchedules.call_off_schedule_document_name }}</strong></a></p>
                     <p class="joint-schedule-title">{{ callOffSchedules.call_off_schedule_document_type}}</p>
                     <p class="joint-schedule-title">{{ callOffSchedules.call_off_schedule_document_usage}}</p>
                     <div class="wysiwyg-content">{{ callOffSchedules.call_off_schedule_document_description|raw }}</div>
@@ -120,7 +120,7 @@
                 <p>Framework schedules are used by CCS to set up the agreement with suppliers.</p>
 
                 {% for frameworkSchedules in framework.content.framework_schedules %}
-                    <p class="joint-schedule-title"><a href={{ frameworkSchedules.framework_schedule_document}}><strong>{{ frameworkSchedules.framework_schedule_document_name }}</strong></a></p>
+                    <p class="joint-schedule-title"><a onclick="fileDownload('{{ frameworkSchedules.framework_schedule_schedule_document }}', '{{ frameworkSchedules.framework_schedule_document_name }}', '{{ frameworkSchedules.framework_schedule_file_size }}');" href={{ frameworkSchedules.framework_schedule_document}}><strong>{{ frameworkSchedules.framework_schedule_document_name }}</strong></a></p>
                     <p class="joint-schedule-title">{{ frameworkSchedules.framework_schedule_document_usage}}</p>
                     <div class="wysiwyg-content">{{ frameworkSchedules.framework_schedule_document_description|raw }}</div>
                 {% endfor %}
