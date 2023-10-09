@@ -112,29 +112,30 @@
                                <h2 class="govuk-heading-m">Apply filters</h2>
                             </div>
                              <div class="govuk-grid-column-one-half" style="text-align:right;">
-                                {% set clearText = 'Clear filters' %}
+                                {% set clearLink = "/agreements" %}
 
                                 {% if query is defined %}
                                 
                                     {% if pillar is defined and pillar|trim is not empty %}
-                                        <a href="{{"/agreements/search?q=#{query}&pillar=#{pillar_slug}"}}" class="govuk-link" >{{ clearText }}</a>
+                                        {% set clearLink = "/agreements/search?q=#{query}&pillar=#{pillar_slug}" %} 
                                     {% elseif category is defined and category|trim is not empty %}
-                                        <a href="{{"/agreements/search?q=#{query}&category=#{category_slug}"}}" class="govuk-link" >{{ clearText }}</a>
+                                        {% set clearLink = "/agreements/search?q=#{query}&category=#{category_slug}" %}
                                     {% else %}
-                                        <a href="{{"/agreements/search?q=#{query}"}}" class="govuk-link" >{{ clearText }}</a>
+                                        {% set clearLink = "/agreements/search?q=#{query}" %}
                                     {% endif %}
 
                                 {% else %} 
 
                                     {% if pillar is defined and pillar|trim is not empty %}
-                                        <a href="{{"/agreements/pillar/#{pillar_slug}"}}" class="govuk-link" >{{ clearText }}</a>
+                                        {% set clearLink = "/agreements/pillar/#{pillar_slug}" %}
                                     {% elseif category is defined and category|trim is not empty %}
-                                        <a href="{{"/agreements/category/#{category_slug}"}}" class="govuk-link" >{{ clearText }}</a>
+                                        {% set clearLink = "/agreements/category/#{category_slug}" %}
                                     {% else %}
-                                        <a href="{{"/agreements"}}" class="govuk-link" >{{ clearText }}</a>
+                                        {% set clearLink = "/agreements" %}
                                     {% endif %}
                                     
                                 {% endif %}
+                                <a onclick="pushToDataLayer({'event': 'search_filter', 'interaction_type': 'clear'});" href={{ clearLink }} class="govuk-link" >Clear filters</a>
                             </div>
                         </div>
                         
@@ -430,5 +431,6 @@
 
         </main>
     </div>
+    <script> searchFilterAgreement(); </script>
 
 {% endblock %}

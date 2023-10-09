@@ -27,6 +27,21 @@ function frameworkAndSupplierPage() {
     });
 }
 
+
+function searchFilterAgreement() {
+    const statusCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+
+    statusCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('click', () => {
+            pushToDataLayer({
+                "event":                'search_filter',
+                "interaction_type":     checkbox.checked ? "checking" : "unchecking" ,
+                "interaction_detail":   checkbox.value
+            });
+        });
+    });
+}
+
 function fileDownload( fileURL, fileName, fileSize) {
 
     const fileSizeString = formatFileSize(fileSize);
