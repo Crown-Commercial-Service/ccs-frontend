@@ -27,7 +27,6 @@ function frameworkAndSupplierPage() {
     });
 }
 
-
 function searchFilterAgreement() {
     const statusCheckboxes = document.querySelectorAll('input[type="checkbox"]');
 
@@ -40,6 +39,18 @@ function searchFilterAgreement() {
             });
         });
     });
+}
+
+function formStart(formType) {
+    const firstField = document.querySelectorAll('input[type="text"], textarea')[0];
+
+    firstField.addEventListener('input', () => {
+        console.log("event is captured only once. ");
+        pushToDataLayer({
+            "event":        'form_start',
+            'form_type':    formType
+        })
+      }, { once: true });
 }
 
 function fileDownload( fileURL, fileName, fileSize) {

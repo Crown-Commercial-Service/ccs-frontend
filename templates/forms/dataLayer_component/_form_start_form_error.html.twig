@@ -1,0 +1,13 @@
+<script>
+        var formType = "{{formName}}";
+
+        {% if formErrors is defined and formErrors is not empty %}
+            {% for errorType in formErrors %}
+                {% for error in errorType.errors %}
+                    pushToDataLayer({"event":'form_error', 'form_type':formType, 'interaction_detail':"{{ error }}" });
+                {% endfor %}
+            {% endfor %}
+        {% else %}
+            formStart(formType);
+        {% endif %}
+</script>

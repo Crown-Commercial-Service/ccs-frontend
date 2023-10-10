@@ -61,6 +61,7 @@
         <button data-prevent-double-click="true" data-module="govuk-button" type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit">
             Download
         </button>
-        {#                            <a href="/webinar/confirmation/{{ webinar.ID }}/{{ webinar.urlSlug }}/" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button">Submit</a>#}
     </div>
 </form>
+
+{% include 'forms/dataLayer_component/_form_start_form_error.html.twig' with {'formName': "Gated form" } %}
