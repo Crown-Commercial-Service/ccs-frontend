@@ -4,37 +4,41 @@ window.onload = function() {
     const accordionButtons = document.querySelectorAll('.govuk-accordion__section-button');
     const ctaButtons = document.querySelectorAll('.govuk-button');
 
-    if (printLink != null) {
-        printLink.addEventListener('click', () => {
-            pushToDataLayer({
-                "event":        'print_page',
-                "link_text":    printLink.textContent.trim()
-            });
-        });
-    }
+    printLink != null           ? assignPrintLinkWithAction(printLink) : null;
+    accordionButtons != null    ? assignAccordionWithAction(accordionButtons) : null;
+    ctaButtons != null          ? assignCtaButtonWithAction(ctaButtons) : null;
+}
 
-    if (accordionButtons != null) {
-        accordionButtons.forEach(accordionButton => {
-            accordionButton.addEventListener('click', () => {
-                accordionButtonClick(accordionButton);
-            });
+function assignPrintLinkWithAction(printLink){
+    printLink.addEventListener('click', () => {
+        pushToDataLayer({
+            "event":        'print_page',
+            "link_text":    printLink.textContent.trim()
         });
-    }
+    });
+}
 
-    if (ctaButtons != null) {
-        ctaButtons.forEach(ctaButton => {
-            ctaButton.addEventListener('click', () => {
-                
-                dataArray = {"event":'cta_button_click', "link_text": ctaButton.innerText}
-                
-                if (ctaButton.href != null){
-                    dataArray['link_url'] =  ctaButton.href;
-                }
+function assignCtaButtonWithAction(ctaButtons){
+    ctaButtons.forEach(ctaButton => {
+        ctaButton.addEventListener('click', () => {
+            
+            dataArray = {"event":'cta_button_click', "link_text": ctaButton.innerText}
+            
+            if (ctaButton.href != null){
+                dataArray['link_url'] =  ctaButton.href;
+            }
 
-                pushToDataLayer(dataArray);
-            });
+            pushToDataLayer(dataArray);
         });
-    }
+    });
+}
+
+function assignAccordionWithAction(accordionButtons){
+    accordionButtons.forEach(accordionButton => {
+        accordionButton.addEventListener('click', () => {
+            accordionButtonClick(accordionButton);
+        });
+    });
 }
 
 function accordionButtonClick(accordionButton){
@@ -104,7 +108,6 @@ function fileDownload( fileURL, fileName, fileSize) {
 }
 
 function pushToDataLayer(array){
-    console.log("dada");
     array = (typeof array === 'string')? JSON.parse(array) : array;
 
     window.dataLayer.push(array);
