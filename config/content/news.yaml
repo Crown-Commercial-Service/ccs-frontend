@@ -1,2 +1,16 @@
 post_lead_text:
   type: text
+sectors:
+  type: plainarray
+authorName:
+  type: text
+category_type:
+  type: text
+featured_image_url:
+  type: text
+content_type_id:
+  type: text
+content_type_name:
+  type: text
+alt_text:
+  type: text

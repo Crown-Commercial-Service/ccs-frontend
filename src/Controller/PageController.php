@@ -47,6 +47,8 @@ class PageController extends AbstractController
      */
     protected $glossaryApi;
 
+    protected $client;
+
     public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new Wordpress(
@@ -193,7 +195,7 @@ class PageController extends AbstractController
         }
 
         if ($request->isMethod('POST')) {
-            $formErrors = $this->sendToSalesforce($request->request, $formData, $formCampaignCode);
+            $formErrors = $this->sendToSalesforceForPageEnquiry($request->request, $formData, $formCampaignCode);
 
             if ($formErrors instanceof Response) {
                 return $formErrors;
@@ -242,26 +244,24 @@ class PageController extends AbstractController
         return '';
     }
 
-    private function sendToSalesforce($params, $formData, $formCampaignCode)
+    private function sendToSalesforceForPageEnquiry($params, $formData, $formCampaignCode)
     {
 
         ControllerHelper::honeyPot($params->get('surname', null));
 
-        if ($params->get('validateAggregationOption')) {
-            $formErrors = $this->validateAggregationOptionForm($formData);
-        } else {
-            $formErrors = $this->validateForm($formData);
-        }
+        $formErrors = $params->get('validateAggregationOption') ? $this->validateAggregationOptionForm($formData) : $this->validateForm($formData);
 
-        if ($formErrors) {
-            return $formErrors;
-        } else {
+        if (!$formErrors) {
             $params->set('subject', $formCampaignCode);
             $params->set('00Nb0000009IXEW', $params->get('validateAggregationOption') ? $params->get('00Nb0000009IXEW') : $formCampaignCode);
             $params->set('recordType', '012b00000005NWC');
             $params->set('priority', 'Green');
             $params->set('orgid', ControllerHelper::getOrgId());
-            $params->set('origin', $params->get('newsletterForm') ? 'Website - Newsletter' : 'Website - Page form enquiry');
+
+            $origin = $params->get('newsletterForm') ? 'Website - Newsletter' : 'Website - Page form enquiry';
+
+            $params->set('origin', $origin);
+            $params->set('description', $origin . ', callback: ' . $formData['callbackTimeslot'] . ', more-detail: ' . $formData['description']);
 
             $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                 'query' => $params->all(),
@@ -272,19 +272,24 @@ class PageController extends AbstractController
                     $response->getContent()
                 );
             }
-            return $this->redirectToRoute($formCampaignCode == 'alwayson_newsletter' ? 'form_newsletter_thanks' : 'form_thank_you');
+            return $this->redirectToRoute($formCampaignCode == 'alwayson_newsletter' ? 'form_newsletter_thanks' : 'form_contact_thanks');
         }
+
+        return $formErrors;
     }
 
     private function validateForm($data)
     {
         $errorMessages = [];
 
-        $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
+        $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
-        $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone'], $data['callback']);
-        $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
+        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
+        $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
+
+        if (!($data['callback'] == "No" || $data['callback'] == null)) {
+            $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
+        }
 
 
         foreach ($errorMessages as $type => $value) {
@@ -300,11 +305,11 @@ class PageController extends AbstractController
     {
         $errorMessages = [];
 
-        $errorMessages['nameErr'] = FormValidation::validationName($data['name']);
-        $errorMessages['emailErr'] = FormValidation::validationEmail($data['email']);
-        $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
-        $errorMessages['companyErr'] = FormValidation::validationCompany($data['company']);
-        $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
+        $errorMessages['nameErr'] =              FormValidation::validationName($data['name']);
+        $errorMessages['emailErr'] =             FormValidation::validationEmail($data['email']);
+        $errorMessages['phoneErr'] =             FormValidation::validationPhone($data['phone']);
+        $errorMessages['companyErr'] =           FormValidation::validationCompany($data['company']);
+        $errorMessages['jobTitleErr'] =          FormValidation::validationJobTitle($data['jobTitle']);
         $errorMessages['aggregationOptionErr'] = FormValidation::validationAggregationOption($data['aggregationOption']);
 
         foreach ($errorMessages as $type => $value) {
@@ -326,6 +331,7 @@ class PageController extends AbstractController
             'jobTitle' => $params->get('00Nb0000009IXEs', null),
             'aggregationOption' =>  $params->get('00Nb0000009IXEW', null),
             'callback' => $params->get('00Nb0000009IXEg', null),
+            'callbackTimeslot' => $params->get('callbackTimeslot', null),
             'description' =>  $params->get('description', null),
             'aggregationCheckbox' => $params->get('00Nb0000009IXEd', null),
             'validateAggregationOption' => $params->get('validateAggregationOption', null),

@@ -1,7 +1,7 @@
 <ul class="nav-list nav-list--primary">
     {% for menu_item in menu.children %}
         <li class="nav-list__item">
-            <a class="nav-list__link {% if menu_item.active %} item-current {% endif %} " href="{{ menu_item.url }}">{{ menu_item.label }}</a>
+            <a class="nav-list__link {% if menu_item.active %} item-current {% endif %} " href="{{ menu_item.url }}" data-evt-placement="header">{{ menu_item.label }}</a>
         </li>
     {% endfor %}
     {#<li class="nav-list__item">#}

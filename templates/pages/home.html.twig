@@ -4,6 +4,7 @@
 
 {% block title %}Crown Commercial Service - CCS{% endblock %}
 {% block metadescription %}Crown Commercial Service (CCS) helps 17,000 public sector buyers and charities save £725m a year when buying common products and services.{% endblock %}
+{% set homepage_meta = true %}
 
 {% block header %}
 
@@ -13,14 +14,7 @@
         {% endblock %}
 
        {% block ppglogin %}
-           <div class="ppg-login">
-                <ul class="ppg-login-links">
-
-                    <li class="ppg-login-link"><p class="ppg-login-text">Public Procurement Gateway: </p></li>
-                    <li class="ppg-login-link"><p class="ppg-login-text"><a href="{{ppgCreateAccount}}">Create account</a> or <a href="{{ppgLogin}}">Sign in</a></p></li>
-
-                </ul>
-            </div>
+            {% include '/includes/ppg-login.html.twig' %}
         {% endblock %}
 
         {% block featuredcontent %}
@@ -35,9 +29,8 @@
 
                                     {% if default %}
                                         <div class="govuk-hero-caption">
-                                                <h1 class="govuk-caption-heading">Digital brochure 2023-2024: procurement at your fingertips</h1>
-                                                <a class="govuk-caption-link" href="https://www.crowncommercial.gov.uk/power-to-your-procurement">Learn more about our carbon net zero, social value and modern slavery initiatives, explore our commercial agreements and much more</a>
-                                                <br />
+                                                <h1 class="govuk-caption-heading">Digital brochure 2023 - 2024: procurement at your fingertips</h1>
+                                                <p class="govuk-caption-link" style="color:white; margin-bottom: 0">Our updated digital brochure highlights our carbon net zero, social value and modern slavery initiatives, our commercial agreements and much more.</p>
                                                 <a class="govuk-button govuk-caption-button" href="https://www.crowncommercial.gov.uk/digital_brochure/request/30384/commercial-agreements-digital-brochure">Download our brochure</a>
                                         </div>   
                                     {% else %}
@@ -369,7 +362,7 @@
                                                             {{ category.name }}{% if loop.index < news_item.taxonomies.categories|length %}, {% endif %}
                                                         {% endfor %}
                                                     {% endif %}
-                                                    | {{ news_item.datePublished.format('j F Y') }}
+                                                    | {{ news_item.dateModified.format('j F Y') }}
                                                 </div>
                                                 <h3 class="news-listing-title">
                                                     <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}">{{ news_item.title|raw }}</a>

@@ -3,6 +3,24 @@
 
 <head>
     <meta charset="utf-8">
+    {% if content_group is defined and content_group is not empty %}
+        <meta name="content_group" value={{content_group}}>
+    {% endif%}
+    
+    {% if homepage_meta is defined %}
+        <meta name="thumbnail" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
+        <meta property="og:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
+        <meta property="twitter:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
+    {% endif %}
+
+    {% if canonical is defined and canonical is not empty %}
+        
+        {% if canonical|last == '/' %}
+            {% set canonical = canonical | slice(0, -1) %}
+        {% endif %}
+
+        <link rel="canonical" href="{{ site_url }}{{ canonical }}" />
+    {% endif %}
 
     {#
      # The minus is to remove whitespace
@@ -29,12 +47,12 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.11">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.20">
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.11">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.20">
     {% endif %}
 
     {% block blocking_javascript %}
@@ -107,7 +125,7 @@
             };
 
             var cookiePreferences = JSON.parse(decodeURIComponent(readCookie('cookie_preferences')));
-            if (cookiePreferences !== null && '{{ app.environment }}' == "prod") {
+            if ('{{ app.environment }}' == "local" || '{{ app.environment }}' == "prod") {
                     (function (w, d, s, l, i) {
                         w[l] = w[l] || [];
                         w[l].push({
@@ -125,6 +143,7 @@
             }
         </script>
         {# End Google Tag Manager #}
+        <script src="/assets/scripts/dataLayer.js"></script>
 
     {% endblock %}
 </head>
@@ -250,6 +269,23 @@ End Usersnap code #}
                })();
         }
     }
+
+    // toggle mobile menu icon
+    var menuIcon = document.querySelector(".global-navigation__toggler");
+    var iconClosed = document.querySelector(".icon-menu-closed");
+    var iconOpen =  document.querySelector(".icon-menu-open");
+
+    menuIcon.addEventListener("click", function () {
+        if(window.getComputedStyle(iconClosed, null).display == "inline") {
+            iconClosed.style.display = "none";
+            iconOpen.style.display = "inline";
+        }
+
+        else if(window.getComputedStyle(iconOpen, null).display == "inline") {
+            iconOpen.style.display = "none";
+            iconClosed.style.display = "inline";
+        }
+    });
 
   
 </script>

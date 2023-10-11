@@ -38,4 +38,30 @@ class ControllerHelper
 
         return $cscMessage->getContent()->get('csc_message')->getValue();
     }
+
+    public static function toSlug(string $string): string
+    {
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string)));
+        return $slug;
+    }
+
+    public static function toSlugList(array $inputArray, string $prefix = ""): string
+    {
+        $slugList = array_reduce(
+            $inputArray,
+            fn($output, $each) => $output .= $prefix . ControllerHelper::toSlug($each) . "|"
+        );
+
+        return rtrim($slugList, "|");
+    }
+
+    public static function getFormData($params)
+    {
+        return [
+            'name' => $params->get('name', null),
+            'email' => $params->get('email', null),
+            'company' => $params->get('company', null),
+            'jobTitle' => $params->get('00Nb0000009IXEs', null),
+        ];
+    }
 }

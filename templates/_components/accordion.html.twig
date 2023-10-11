@@ -11,7 +11,7 @@
         <div class="govuk-accordion govuk-!-margin-top-4" data-module="govuk-accordion" id="accordion-default">
 
             {% for accordion_item in component.accordion_accordion_items %}
-                <div class="govuk-accordion__section ">
+                <div class="govuk-accordion__section {{ component.accordion_accordion_open_all_by_default.value ? 'govuk-accordion__section--expanded' }}">
                     <div class="govuk-accordion__section-header">
                         <h2 class="govuk-accordion__section-heading">
                     <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ loop.index }}">

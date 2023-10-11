@@ -21,8 +21,6 @@ if (cookiePreferences !== null) {
 
             console.log('Sending to Pardot.');
 
-            event.preventDefault();
-
             var email = $("form.pardot-submit input.pardot-email").val();
             
             var data = { "email": email };
@@ -50,7 +48,6 @@ if (cookiePreferences !== null) {
                 complete: function(){
                     pardotSubmitted = true;
                     console.log('Proceeding with submission.');
-                    $("form.pardot-submit button[type=submit]").click();
                 }
             });
         });

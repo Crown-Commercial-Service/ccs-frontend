@@ -103,7 +103,7 @@
             <dl class="apollo-list apollo-list--definition grey-margin-bottom">
                 <dt class="apollo-list--definition__key">
                     {% if framework.content.rm_number ==  "RM1557.13L4" %}
-                        <span class="apollo-list--definition__key__inner"><strong>Lot {{ lot.lot_number }} {{ lot.title|raw }}</strong></span>
+                        <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id=RM1557.13&lotNum=4">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
                     {% else %}
                         <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id={{ framework.content.rm_number }}&lotNum={{ lot.lot_number }}">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
                     {% endif %}
@@ -158,7 +158,7 @@
                 <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Telephone:</h3>
                 <p ><a href="tel:03454102222">0345 410 2222</a></p>
 
-                <p>{{ cscMessage }}</p>
+                <p>{{ cscMessage | raw}}</p>
             </div>
             <div class="apollo-enclosure">
                 <h2 class="aside__heading">Do you need an accessible version of a document?</h2>

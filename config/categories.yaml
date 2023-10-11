@@ -87,9 +87,9 @@ pillars:
         db_value: 'Digital Specialists'
         slug: 'digital-specialists'
 
-      - name: 'Network Services'
-        db_value: 'Network Services'
-        slug: 'network-services'
+      - name: 'Network Solutions'
+        db_value: 'Network Solutions'
+        slug: 'network-solutions'
 
       - name: 'Technology Solutions & Outcomes'
         db_value: 'Technology Solutions & Outcomes'

@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Energy Solution Tool - Question - {{question}}
+{% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+
+{% block flourishClasses %}{% endblock %}
+
+
+{% block body %}
+    <div class="govuk-width-container">
+        <div class="govuk-phase-banner">
+            {% include '/includes/phase-banner-content.html.twig' %}
+        </div>
+    
+        <main id="main-content" role="main" class="govuk-main-wrapper">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    {% if error is defined and error %}
+                        <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
+                            <h2 class="govuk-error-summary__title" id="error-summary-title"> There is a problem</h2>
+                            <div class="govuk-error-summary__body">
+                                <ul class="govuk-list govuk-error-summary__list">
+                                    <a href="#error-id"><li>You will need to select one option</li></a>
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {# {{ dump(history)}}
+                    {{ dump(selectedIndex)}}
+                    {{ dump(back)}} #}
+
+                    {% if back != "[]" %}
+                        <a class="govuk-back-link" href="{{ path('energy_question', {'history': back }) }}">Back</a> 
+                    {% else %}
+                        <a class="govuk-back-link" href="{{ path('frameworks_show', {'rmNumber': 'RM6251' }) }}">Back</a> 
+                    {% endif %}
+                    
+                    <form action={{ path('energy_question')}} method="POST">
+                        
+                        <input type="hidden" name="history" id="history" name="history" value="{{ history }}">
+
+                        <div class="govuk-form-group {{ error is defined and error ? 'govuk-form-group--error' : ''}}" id="form-layout">
+                            <fieldset class="govuk-fieldset ">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading">{{question}}</h1>
+                                </legend>
+                                <div role="complementary">
+                                    <div class="govuk-hint">
+                                        {{ questionHint|raw }}
+                                    </div>
+                                </div>
+
+                                {% if error is defined and error %}
+                                    <span id="error-id" class="govuk-error-message">
+                                        <span class="govuk-visually-hidden">Error:</span>You will need to select one option
+                                    </span>
+                                {% endif %} 
+                                <br>
+                                <div class="govuk-radios">
+                                    {% for key in options|keys %}
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input v-selector" id="{{ key }}" name="answer" type="radio" value="{{loop.index0}}" {{ selectedIndex is defined and selectedIndex is not null and selectedIndex == loop.index0 ? 'checked' }} >
+                                            <label class="govuk-label govuk-radios__label govuk-label--s" for="{{ key }}">{{ key }}</label>
+                                            <div id="{{ key }}" class="govuk-hint govuk-radios__hint">
+                                                {{ options[key] }}
+                                            </div>
+                                        </div>
+
+                                    {% endfor %}
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button class="govuk-button" data-module="govuk-button" type="submit">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}

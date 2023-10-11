@@ -25,7 +25,11 @@
             </p>
         </div>
 
-        {% set filterSet = title is defined and title is not empty ? true : false %}
+        {% set categoriesForTwig = filters.categories is defined and filters.categories is not empty ? filters.categories|split(',') : [] %}
+        {% set downloadableForTwig = filters.digitalDownload is defined and filters.digitalDownload is not empty ? filters.digitalDownload|split(',') : [] %}
+
+        {% set sectorsForTwig = filters.sectors is defined and filters.sectors is not empty ? filters.sectors|split(',') : [] %}
+        {% set products_servicesForTwig = filters.products_services is defined and filters.products_services is not empty ? filters.products_services|split(',') : [] %}
 
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
@@ -40,14 +44,17 @@
                 <div class="govuk-grid-column-one-quarter">
 
                     <div class="govuk-grid-row">
+                    <form action="{{ path('news_list') }}" method="GET" id="form1">
                         <div class="govuk-grid-column-one-half">
                             <h2 class="govuk-heading-m">Apply filters</h2>
                         </div>
                             <div class="govuk-grid-column-one-half" style="text-align:right;">
                                 <a href={{ path('news_list') }} class="govuk-link"> Clear filters </a>
                             </div>
-                         </div>
-
+                        </div>
+                        <button class="govuk-button" data-module="govuk-button" v-show="!javascriptVersion">
+                            Filter
+                        </button>
                         <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_article">
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section">
                                 <div class="govuk-accordion__section-header">
@@ -60,7 +67,7 @@
                                
                                 <div id="audience-tag-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-for-categories">
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input v-on:change=fetchAPIData(null,null) v-model="checkedCategories" value="allCategories" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allCategories" type="checkbox">
+                                        <input v-on:change=fetchAPIData(null,null) v-model="checkedCategories" name="allCategories" value="allCategories" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allCategories" type="checkbox" {{ filters.categories is not defined ? 'checked' }}>
                                         <label class="govuk-label govuk-checkboxes__label" for="allCategories">
                                             View all
                                         </label>
@@ -68,7 +75,7 @@
                                     {% if categoriesFilters is not empty %}
                                         {% for item in categoriesFilters|sort %}
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedCategories" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox">
+                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedCategories" name="categories[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in categoriesForTwig ? 'checked' }}>
                                                 <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
                                                     {{ item.name }}
                                                 </label>
@@ -76,19 +83,19 @@
                                         {% endfor %}
                                     {% endif %}
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input v-on:change=fetchAPIData(whitepaper,null) v-model="whitepaper" value=true class="govuk-checkboxes__input govuk-checkboxes__input--small" id="whitepaper" type="checkbox">
+                                        <input v-on:change=fetchAPIData(whitepaper,null) v-model="whitepaper" name="whitepaper" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="whitepaper" type="checkbox" {{ filters.whitepaper is defined and filters.whitepaper is not null  ? 'checked' }}>
                                         <label class="govuk-label govuk-checkboxes__label" for="whitepaper">
                                             Whitepaper
                                         </label>
                                     </div>
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input v-on:change=fetchAPIData(webinar,null) v-model="webinar" value=true class="govuk-checkboxes__input govuk-checkboxes__input--small" id="webinar" type="checkbox">
+                                        <input v-on:change=fetchAPIData(webinar,null) v-model="webinar" name="webinar" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="webinar" type="checkbox" {{ filters.webinar is defined and filters.webinar is not null  ? 'checked' }}>
                                         <label class="govuk-label govuk-checkboxes__label" for="webinar">
                                             Webinar
                                         </label>
                                     </div>
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input v-on:change=fetchAPIData(digitalBrochure,null) v-model="digitalBrochure" value=true class="govuk-checkboxes__input govuk-checkboxes__input--small" id="digitalBrochure" type="checkbox">
+                                        <input v-on:change=fetchAPIData(digitalBrochure,null) v-model="digitalBrochure" name="digitalBrochure" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="digitalBrochure" type="checkbox" {{ filters.digitalBrochure is defined and filters.digitalBrochure is not null  ? 'checked' }}>
                                         <label class="govuk-label govuk-checkboxes__label" for="digitalBrochure">
                                             Digital brochure
                                         </label>
@@ -102,7 +109,7 @@
                                             {% set tempDigitalDownload = tempDigitalDownload|merge([item.id]) %}
 
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedDigitalDownload" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox">
+                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedDigitalDownload" name="downloadable[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in downloadableForTwig ? 'checked' }}>
                                                 <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
                                                     {{ item.name }}
                                                 </label>
@@ -125,7 +132,7 @@
                                
                                 <div id="audience-tag-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-for-sectors">
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input v-on:change=fetchAPIData(null,null) v-model="checkedSectors" value="allSectors" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allSectors" type="checkbox">
+                                        <input v-on:change=fetchAPIData(null,null) v-model="checkedSectors" name="allSectors" value="allSectors" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allSectors" type="checkbox" {{ filters.sectors is not defined or filters.sectors is null ? 'checked' }}>
                                         <label class="govuk-label govuk-checkboxes__label" for="allSectors">
                                             View all
                                         </label>
@@ -133,7 +140,7 @@
                                     {% if sectorsFilters is not empty %}
                                         {% for item in sectorsFilters %}
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedSectors" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox">
+                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedSectors" name="sectors[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in sectorsForTwig ? 'checked' }}>
                                                 <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
                                                     {{ item.name }}
                                                 </label>
@@ -158,7 +165,7 @@
                                
                                 <div id="audience-tag-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-for-ps">
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input v-on:change=fetchAPIData(null,null) v-model="checkedProducts_services" value="allPS" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allPS" type="checkbox">
+                                        <input v-on:change=fetchAPIData(null,null) v-model="checkedProducts_services" name="allPS" value="allPS" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allPS" type="checkbox" {{ filters.products_services is not defined or filters.products_services is null ? 'checked' }}>
                                         <label class="govuk-label govuk-checkboxes__label" for="allPS">
                                             View all
                                         </label>
@@ -166,7 +173,7 @@
                                     {% if productsServicesFilters is not empty %}
                                         {% for item in productsServicesFilters %}
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedProducts_services" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox">
+                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedProducts_services" name="PandS[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in products_servicesForTwig ? 'checked' }}>
                                                 <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
                                                     {{ item.name }}
                                                 </label>
@@ -178,31 +185,24 @@
                                 
                             </div>
                         </div>
+                        <button class="govuk-button" data-module="govuk-button" v-show="!javascriptVersion">
+                            Filter
+                        </button>
+                    </form>
                 </div>
                 <div class="govuk-grid-column-three-quarters news-list-pagination-container">
 
-                    <div v-if="responseAvailable">
-                            <div v-for="result in results">
+                    <div v-if="responseAvailable" class="hideWithoutJS govuk-visually-hidden">
+                            <div v-show="javascriptVersion" v-for="result in results">
                                 <div class ="news_div" >
                                     <div class="govuk-width-container">
-                                        <div class="govuk-grid-row news_wrapper ">
+                                        <div class="govuk-grid-row news_wrapper">
 
-                                            <div v-if="result.imageSet" class="govuk-grid-column-one-half news-listing-block">
+                                            <div class="news-listing-block" :class="{'govuk-grid-column-one-half': result.imageSet, 'govuk-grid-column-full':!result.imageSet}">
                                                 <p class="news-listing-meta"> 
                                                     <a :href="result.CategoriesLink">{[ result.postType ]}</a>
-                                                    <span v-if="result.postType != 'Digital Brochure'"> {[result.postedDate]} </span> 
+                                                    <span> {[result.modifiedDate]} </span> 
                                                 </p>
-                                                <h2 class="news-listing-title">
-                                                    <a :href="result.postLink" v-html="result.title.rendered"></a>
-                                                </h2>
-                                                <p v-html="result.postDescription"></p> 
-                                            </div>
-                                            <div v-else class="govuk-grid-column-full news-listing-block">
-                                                <p class="news-listing-meta"> 
-                                                    <a :href="result.CategoriesLink">{[ result.postType ]}</a>
-                                                    <span v-if="result.postType != 'Digital Brochure'"> {[result.postedDate]} </span> 
-                                                </p>
-                                                
                                                 <h2 class="news-listing-title">
                                                     <a :href="result.postLink" v-html="result.title.rendered"></a>
                                                 </h2>
@@ -238,13 +238,17 @@
 
 
                     </div>
-                    <div v-else-if="responseAvailable === false">
+                    <div v-else-if="responseAvailable === false" class="hideWithoutJS govuk-visually-hidden">
                         <p>Loading...</p>
                     </div>
-                    <div v-if="emptyResult">
+                    <div v-if="emptyResult" class="hideWithoutJS govuk-visually-hidden">
                         <p>There are no matching results.</p>
                     </div>
-            </div>
+
+                    <div v-show="!javascriptVersion">
+                        {% include '/news/_resultCards.html.twig' %}
+                    </div>
+                </div>
 
         </main>
 
@@ -453,6 +457,7 @@
                     this.otherPostType();
                 },
                 data: {
+                    javascriptVersion: true,
                     results: "",
                     responseAvailable: null,
                     emptyResult: false,
@@ -472,6 +477,13 @@
                     popstateLoad: false
                 },
                 created: function() {
+                    const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
+
+                    hideWithOutJS.forEach(card => {
+                    if (card.classList.contains('govuk-visually-hidden')) {
+                        card.classList.remove('govuk-visually-hidden');
+                    }});
+
                     // unfortunately we have to update the results when we instantiate
                     // the Vue app so it hooks in all the correct event handlers etc.
                     this.fetchAPIData(null, this.currentPage);
@@ -536,6 +548,8 @@
                             queryUrl += '&page=' + this.currentPage;
                         }
 
+                        queryUrl += this.utmTagsRemain();
+
                         return queryUrl != '/?' ? queryUrl : "";
                         
                     },
@@ -545,6 +559,24 @@
                     }
                 },   
                 methods: {
+                    utmTagsRemain:function(){
+                        urlParams = new URLSearchParams(window.location.href);
+
+                        utmParams = '';
+
+                        for ( var param of urlParams) {
+                            [key, value] = param;
+                                                    
+                            if (key.startsWith("utm")) {
+                                utmParams += `&${key}=${value}`;
+                            }
+                        }
+
+                        if (utmParams != ''){
+                            return utmParams;
+                        }
+                        return "";
+                    },
                     formatDate:function(date){
                         var self = this;
                         date = new Date(Date.parse(date));
@@ -663,6 +695,7 @@
                         var self = this;
                         this.responseAvailable = false;
                         this.emptyResult = false;
+                        const utmTags = '?' + this.utmTagsRemain().substring(1);
 
                         this.currentPage = page === null ? 1 : page;
                         var requestUrl = this.searchRequestUrl(categoriesSlug, this.currentPage);
@@ -677,31 +710,30 @@
                         .then(function(jsonResponse) {
                             self.numberOfPages = jsonResponse.meta['X-WP-TotalPages'];
                             self.totalResults = jsonResponse.meta['X-WP-Total'];
-                                
                             for(var i = 0; i < jsonResponse.body.length; i++) {                         
-                                jsonResponse.body[i].postedDate = self.formatDate(jsonResponse.body[i].date);
-                                jsonResponse.body[i].postType = jsonResponse.body[i].category_type;
+                                jsonResponse.body[i].modifiedDate = self.formatDate(jsonResponse.body[i].modified);
+                                jsonResponse.body[i].postType = jsonResponse.body[i].acf.category_type;
                                 jsonResponse.body[i].index = i;
                                 
                                 switch(jsonResponse.body[i].postType) {
                                     case 'Whitepaper':
-                                        postLink = appBaseUrl+ "/whitepaper/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        postLink = appBaseUrl+ "/whitepaper/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
                                         categoriesLink = appBaseUrl + "/news/?&whitepaper=1";
                                         break;
                                     case 'Webinar':
-                                        postLink = appBaseUrl+ "/webinar/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        postLink = appBaseUrl+ "/webinar/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
                                         categoriesLink = appBaseUrl + "/news/?&webinar=1";
                                         break;
                                     case 'Digital Brochure':
-                                        postLink = appBaseUrl+ "/digital_brochure/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        postLink = appBaseUrl+ "/digital_brochure/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
                                         categoriesLink = appBaseUrl + "/news/?&digitalBrochure=1";
                                         break;
                                     case 'Downloadable':
-                                        jsonResponse.body[i].postType = jsonResponse.body[i].content_type_name;
-                                        postLink = appBaseUrl+ "/downloadable-resource/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        jsonResponse.body[i].postType = jsonResponse.body[i].acf.content_type_name;
+                                        postLink = appBaseUrl+ "/downloadable-resource/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
                                         categoriesLink = appBaseUrl +"/news?contentType=" + jsonResponse.body[i].content_type_id;
                                         break;
@@ -718,10 +750,10 @@
 
 
                                 jsonResponse.body[i].imageSet = false;
-                                if (jsonResponse.body[i].featured_image_url != false) {
+                                if (jsonResponse.body[i].acf.featured_image_url != false) {
                                     jsonResponse.body[i].imageSet = true;
-                                    jsonResponse.body[i].imageURL = jsonResponse.body[i].featured_image_url;
-                                    jsonResponse.body[i].altText  = jsonResponse.body[i].alt_text;
+                                    jsonResponse.body[i].imageURL = jsonResponse.body[i].acf.featured_image_url;
+                                    jsonResponse.body[i].altText  = jsonResponse.body[i].acf.alt_text;
                                 }
                             }
                             self.results = jsonResponse.body;

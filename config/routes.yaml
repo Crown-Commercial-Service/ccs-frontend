@@ -184,6 +184,10 @@ form_contact_thanks_complaint:
   defaults:
     template: forms/25-contact-thanks-complaint.html.twig
 
+downloadAttachmentForCSC:
+  path: /attachment/{attachmentId}
+  controller: App\Controller\FormController::downloadAttachmentForCSC
+
 glossary:
   path: /glossary
   controller: App\Controller\PageController::glossary
@@ -234,6 +238,14 @@ event_show:
   requirements:
     id: '\d+'
 
+form_events:
+  path: /events-form
+  controller: App\Controller\FormController::events
+
+form_events_sends:
+  path: /events-form/submit
+  controller: App\Controller\FormController::eventsSubmit
+
 form_newsletter:
  path: /newsletter
  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
@@ -249,13 +261,6 @@ form_newsletter_thanks:
  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
  defaults:
    template: forms/28-newsletter-thanks.html.twig
-
-form_thank_you:
-  path: /form-thank-you
-  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-  defaults:
-    template: forms/thank-you.html.twig
-
 
 form_esourcing_training:
   path: /esourcing-training
@@ -286,6 +291,14 @@ form_esourcing_register_thanks:
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
   defaults:
     template: forms/30-esourcing-register-thanks.html.twig
+
+energy_question:
+  path: /find-an-energy-solution/question
+  controller: App\Controller\EnergyController::start
+
+energy_result:
+  path: /find-an-energy-solution/energy_result
+  controller: App\Controller\EnergyController::resultPage
 
 page:
   path: /{slug}

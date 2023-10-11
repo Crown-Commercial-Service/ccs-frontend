@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Helper\ControllerHelper;
 use App\Utils\FrameworkCategories;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Psr16Cache;
@@ -40,50 +41,64 @@ class NewsController extends AbstractController
 
     public function list(Request $request, $page = 1)
     {
-        $requestedPage = (int) filter_var($request->query->get('page'), FILTER_SANITIZE_NUMBER_INT);
-        $page  = $requestedPage != 0 ? $requestedPage : 1;
+        if ($page == 1) {
+            $requestedPage = (int) filter_var($request->query->get('page'), FILTER_SANITIZE_NUMBER_INT);
+            $page  = $requestedPage != 0 ? $requestedPage : 1;
+        } else {
+            $page = intval(filter_var($page, FILTER_SANITIZE_NUMBER_INT));
+        }
 
         $this->api->setCacheKey($request->getRequestUri());
 
-        $categoriesFilters          = $this->api->getAllTerms('categories');
-        $sectorsFilters             = $this->api->getAllTerms('sectors');
-        $productsServicesFilters    = $this->api->getAllTerms('products_services');
-        $contentTypeFilters         = $this->api->getAllTerms('content_type');
+        $defaultOptions = [
+            'whitepaper'        => 1,
+            'webinar'           => 1,
+            'digitalBrochure'   => 1,
+            'per_page'          => 5,
+            'digitalDownload'   => $this->formatIdFromObject($this->api->getAllTerms('content_type')),
+        ];
 
+        $categoriesOption       =   $this->converArrayToStringForWordpress($request->query->get('categories', null));
+        $downloadableOption     =   $this->converArrayToStringForWordpress($request->query->get('downloadable', null));
 
-        $selectedCategories         = $request->query->get('categories');
-        $selectedSectors            = $request->query->get('sectors');
-        $selectedProducts_services  = $request->query->get('products_services');
-        $selectedDigitalDownload    = $request->query->get('digitalDownload');
+        $sectorsOption          =   $this->converArrayToStringForWordpress($request->query->get('sectors', null));
+        $productsServicesOption =   $this->converArrayToStringForWordpress($request->query->get('products_services', null));
 
 
         $options = [
-            'categories'        => $selectedCategories ?? null,
-            'sectors'           => $selectedSectors ?? null,
-            'products_services' => $selectedProducts_services ?? null,
-            'digitalDownload'   => $selectedDigitalDownload ?? null,
+            'categories'        => $categoriesOption,
+            'noPost'            => $categoriesOption == null ? 1 : 0,
+            'sectors'           => $sectorsOption,
+            'products_services' => $productsServicesOption,
+            'whitepaper'        => $request->query->get('whitepaper', null),
+            'webinar'           => $request->query->get('webinar', null),
+            'digitalBrochure'   => $request->query->get('digitalBrochure', null),
             'per_page'          => 5,
-            'whitepaper'        => $request->query->get('whitepaper') ?? null,
-            'webinar'           => $request->query->get('webinar') ??  null,
-            'digitalBrochure'   => $request->query->get('digitalBrochure') ?? null,
+            'digitalDownload'   => $downloadableOption,
         ];
+
+
+        $options = $this->prepareOptionForWordpress($options, $defaultOptions, $request);
 
         try {
             $list = $this->api->listPages($page, $options);
+            $list->getPagination()->setResultsPerPage(5);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('News page not found', $e);
         }
+
+        $options = $options == $defaultOptions ? $this->resetCategoriesOption($options) : $options;
 
         return $this->render('news/list.html.twig', [
             'url'                       => sprintf('/news/page/%s', $page),
             'api_base_url'              => getenv('SEARCH_API_BASE_URL'),
             'app_base_url'              => getenv('APP_BASE_URL'),
             'pageNumber'                => $page,
-            'categoriesFilters'         => $categoriesFilters,
-            'sectorsFilters'            => $sectorsFilters,
-            'productsServicesFilters'   => $productsServicesFilters,
-            'contentTypeFilters'        => $contentTypeFilters,
-            'title'                     => $this->getTitle($categoriesFilters, $sectorsFilters, $productsServicesFilters, $options),
+            'categoriesFilters'         => $this->api->getAllTerms('categories'),
+            'sectorsFilters'            => $this->api->getAllTerms('sectors'),
+            'productsServicesFilters'   => $this->api->getAllTerms('products_services'),
+            'contentTypeFilters'        => $this->api->getAllTerms('content_type'),
+            'pagination'                => $list->getPagination(),
             'pages'                     => $list,
             'filters'                   => $options
         ]);
@@ -106,23 +121,82 @@ class NewsController extends AbstractController
             throw new NotFoundHttpException('News page not found', $e);
         }
 
+        if (isset($page->getContent()["sectors"])) {
+            $listOfSector = $page->getContent()["sectors"]->getValue();
+            $content_group = ControllerHelper::toSlugList($listOfSector, "news/");
+        }
+
         return $this->render('news/show.html.twig', [
             'url'           => sprintf('/news/%s', $slug),
             'page'          => $page,
-            'authorText'    => $authorText
+            'authorText'    => $authorText,
+            'content_group' => isset($content_group) ? $content_group : null,
         ]);
     }
 
-    private function getTitle($categoriesFilters, $sectorsFilters, $productsServicesFilters, $options)
+    private function formatIdFromObject($filtersOption)
     {
-        $filteredId = $options['categories'] ?? $options['sectors'] ?? $options['products_services'];
+        $returnArray = array();
 
-        foreach ([$categoriesFilters, $sectorsFilters, $productsServicesFilters] as $filter) {
-            foreach ($filter as $each) {
-                if ($each->getID() == $filteredId) {
-                    return $each->getName();
-                }
+        foreach ($filtersOption as $each) {
+            $returnArray[] = $each->getId();
+        };
+
+        return implode(',', $returnArray);
+    }
+
+    private function converArrayToStringForWordpress($selectedArray)
+    {
+        if ($selectedArray == null) {
+            return null;
+        }
+        $dada = (array) $selectedArray;
+        return implode(',', (array) $selectedArray);
+    }
+
+    private function prepareOptionForWordpress(array $options, array $defaultOptions, $request)
+    {
+
+        $options = $request->query->get('allCategories') != null ? $this->resetCategoriesOption($options) : $options;
+        $options["sectors"] = ($request->query->get('allSectors') != null) ? null : $options["sectors"];
+        $options["products_services"] = ($request->query->get('allPS') != null) ? null : $options["products_services"];
+
+        $allEmpty = true;
+
+        $checkType = array(
+            'categories',
+            'sectors',
+            'PandS',
+            'content_type',
+            'whitepaper',
+            'webinar',
+            'digitalBrochure',
+            'downloadable'
+        );
+
+        foreach ($checkType as $each) {
+            if (!empty($request->query->get($each))) {
+                $allEmpty = false;
+                break;
             }
         }
+
+        if ($allEmpty) {
+            $options = $defaultOptions;
+        }
+
+        return $options;
+    }
+
+    private function resetCategoriesOption($options)
+    {
+        unset($options["categories"]);
+        unset($options["noPost"]);
+        unset($options["whitepaper"]);
+        unset($options["webinar"]);
+        unset($options["digitalBrochure"]);
+        unset($options["digitalDownload"]);
+
+        return $options;
     }
 }

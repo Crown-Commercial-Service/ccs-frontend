@@ -23,6 +23,7 @@ class DigitalBrochureController extends AbstractController
      * @var Wordpress
      */
     protected $api;
+    protected $formController;
 
     public function __construct(CacheItemPoolInterface $cache)
     {
@@ -35,6 +36,7 @@ class DigitalBrochureController extends AbstractController
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
+        $this->formController = new FormController($cache);
     }
 
     public function request($id, $slug, Request $request)
@@ -62,13 +64,17 @@ class DigitalBrochureController extends AbstractController
 
         $formErrors = null;
         $params = $request->request;
-        $formData = $this->getFormData($params);
+        $formData = ControllerHelper::getFormData($params);
+        $utmParams = $request->query->all();
+
         $returnURL = getenv('APP_BASE_URL') . '/digital_brochure/confirmation/' . $digital_brochure->getId() . '/' . $digital_brochure->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING);
         $campaignCode = $digital_brochure->getContent()->get('campaign_code') ? $digital_brochure->getContent()->get('campaign_code')->getValue() : '';
         $description   = $digital_brochure->getContent()->get('description') ? $digital_brochure->getContent()->get('description')->getValue() : '';
 
         if ($request->isMethod('POST')) {
-            $formErrors = FormController::sendToSalesforce($params, $formData, $campaignCode, $description);
+            ControllerHelper::honeyPot($params->get('surname', null));
+
+            $formErrors = $this->formController->sendToSalesforceForDownload($params, $utmParams, $formData, $campaignCode, $description);
 
             if ($formErrors instanceof Response) {
                 return $formErrors;
@@ -107,16 +113,5 @@ class DigitalBrochureController extends AbstractController
         return $this->render('digital_brochures/confirmation.html.twig', [
             'digital_brochure' => $digital_brochure
         ]);
-    }
-
-    public function getFormData($params)
-    {
-        return [
-            'name' => $params->get('name', null),
-            'email' => $params->get('email', null),
-            'phone' => $params->get('phone', null),
-            'company' => $params->get('company', null),
-            'jobTitle' => $params->get('00Nb0000009IXEs', null),
-        ];
     }
 }

@@ -2,11 +2,12 @@
     color: white;
 }
 
-.guided-match-background{
-    background-color: #78256E;
-}
-
 .guided-match-area{
+
+    padding: govuk-px-to-rem(15) govuk-px-to-rem(20) govuk-px-to-rem(15) govuk-px-to-rem(20);
+    margin-bottom: 30px;
+    background-color: #78256E;
+
 
     .govuk-button {
 

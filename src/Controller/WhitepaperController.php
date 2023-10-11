@@ -23,6 +23,7 @@ class WhitepaperController extends AbstractController
      * @var Wordpress
      */
     protected $api;
+    protected $formController;
 
     public function __construct(CacheItemPoolInterface $cache)
     {
@@ -34,6 +35,7 @@ class WhitepaperController extends AbstractController
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
+        $this->formController = new FormController($cache);
     }
 
     public function request($id, $slug, Request $request)
@@ -50,13 +52,17 @@ class WhitepaperController extends AbstractController
 
         $formErrors = null;
         $params = $request->request;
-        $formData = $this->getFormData($params);
+        $formData = ControllerHelper::getFormData($params);
+        $utmParams = $request->query->all();
+
         $returnURL = getenv('APP_BASE_URL') . '/whitepaper/confirmation/' . $whitepaper->getId() . '/' . $whitepaper->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING);
         $campaignCode = $whitepaper->getContent()->get('campaign_code') ? $whitepaper->getContent()->get('campaign_code')->getValue() : '';
         $description = $whitepaper->getContent()->get('description') ? $whitepaper->getContent()->get('description')->getValue() : '';
 
         if ($request->isMethod('POST')) {
-            $formErrors = FormController::sendToSalesforce($params, $formData, $campaignCode, $description);
+            ControllerHelper::honeyPot($params->get('surname', null));
+
+            $formErrors = $this->formController->sendToSalesforceForDownload($params, $utmParams, $formData, $campaignCode, $description);
 
             if ($formErrors instanceof Response) {
                 return $formErrors;
@@ -95,16 +101,5 @@ class WhitepaperController extends AbstractController
         return $this->render('whitepapers/confirmation.html.twig', [
             'whitepaper' => $whitepaper
         ]);
-    }
-
-    public function getFormData($params)
-    {
-        return [
-            'name' => $params->get('name', null),
-            'email' => $params->get('email', null),
-            'phone' => $params->get('phone', null),
-            'company' => $params->get('company', null),
-            'jobTitle' => $params->get('00Nb0000009IXEs', null),
-        ];
     }
 }

@@ -1,0 +1,91 @@
+
+{% if pages|length == 0 %}
+    <p>There are no matching results.</p>
+{% endif %}
+
+
+{# {{ dump(filters) }} #}
+
+{% for page in pages %}
+    {% set categoryName = null %}
+    {% set categoriesLink = '' %}
+    {% set postLink = '' %}
+
+    {% if page.content.category_type ==  'Whitepaper' %}
+        {% set categoriesLink = app_base_url ~ "/news/?&whitepaper=1" %}
+        {% set postLink = app_base_url ~ "/whitepaper/request/" ~ page.id ~ "/" ~ page.urlSlug %}
+    {% elseif page.content.category_type == 'Webinar'%}
+        {% set categoriesLink = app_base_url ~ "/news/?&webinar=1" %}
+        {% set postLink = app_base_url ~ "/webinar/request/" ~ page.id ~ "/" ~ page.urlSlug %}
+    {% elseif page.content.category_type == 'Digital Brochure'%}
+        {% set categoriesLink = app_base_url ~ "/news/?&digitalBrochure=1" %}
+        {% set postLink = app_base_url ~ "/digital_brochure/request/" ~ page.id ~ "/" ~ page.urlSlug %}
+    {% elseif page.content.category_type == 'Downloadable'%}
+        {% set categoryName = page.content.content_type_name %}
+        {% set categoriesLink = app_base_url ~"/news?downloadable[]=" ~ page.content.content_type_id %}
+        {% set postLink = app_base_url ~ "/downloadable-resource/request/" ~ page.id ~ "/" ~ page.urlSlug %}
+    {% endif %}
+
+    <div class ="news_div" >
+        <div class="govuk-width-container">
+            <div class="govuk-grid-row news_wrapper ">
+                <div class="{{ page.featuredImage.url is defined ? "govuk-grid-column-one-half" : "govuk-grid-column-full" }} govuk-grid-column-one-half news-listing-block">
+                    <p class="news-listing-meta">
+                        {% if categoriesLink == '' %}
+                            <a href="{{ path('news_list', {'categories[]': page.taxonomies.categories.current.id|number_format }) }}">{{ page.taxonomies.categories.current.name }}</a>
+                        {% else %}
+                            <a href={{categoriesLink}}>{{ categoryName is not null ?  categoryName : page.content.category_type   }}</a>
+                        {% endif %}
+                        <span> {{ page.dateModified.format('jS F Y') }} </span>
+                    </p>
+                    <h2 class="news-listing-title">
+                        {% if postLink == '' %}
+                            <a href="{{ path('news_page', {'slug': page.urlSlug}) }}">{{ page.title|raw }}</a>
+                        {% else %}
+                            <a href="{{ postLink }}">{{ page.title|raw }}</a>
+                        {% endif %}
+                    </h2>
+
+                    <p class="govuk-body govuk-!-font-size-17featured">
+                        {{ page.content.post_lead_text  | raw }}
+                    </p>
+                </div>
+                {% if page.content.featured_image_url is defined %}
+                    <div class="govuk-grid-column-one-half news-img-container">
+                        <figure class="image-wrapper news_img">
+                            <picture class="">
+                                <source  srcset="{{ page.content.featured_image_url }}">
+                                <img src="{{ page.content.featured_image_url }}"
+                                        role="presentation"
+                                        alt= "{{ page.content.alt_text }}"
+                                        class=""
+                                        loading="lazy"/>
+                            </picture>
+                        </figure>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+
+
+{%  set pagination_data = {'pagination': pagination, 'route': 'news_list', 
+    'options': {
+                'allCategories': filters.categories is not defined  ? 'allCategories' : null,
+                'categories[]': filters.categories is defined ? filters.categories : null,
+                'whitepaper': filters.whitepaper is defined ? filters.whitepaper : null,
+                'webinar': filters.webinar is defined ? filters.webinar : null,
+                'digitalBrochure': filters.digitalBrochure is defined ? filters.digitalBrochure : null,
+                'downloadable[]': filters.digitalDownload is defined ? filters.digitalDownload : null,
+                
+                'allSectors': filters.sectors is not defined  ? 'allSectors' : null,
+                'sectors[]': filters.sectors is defined ? filters.sectors : null,
+                'allPS' : filters.products_services is not defined  ? 'allPS' : null,
+                'PandS[]': filters.products_services is defined ? filters.products_services : null, } } 
+%}
+
+{% if pagination.totalPages > 1 %}
+    {{ include('includes/pagination.html.twig', pagination_data) }}
+{% endif %}

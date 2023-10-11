@@ -40,7 +40,7 @@
                     <h1 class="govuk-heading-xl page-title">Contact CCS</h1>
                     <p class="govuk-body-l">You can use the contact form below to ask a question, give us feedback or make a complaint.</p>
 
-                    <form class="govuk-!-width-three-quarters pardot-submit" action="/contact/submit" method="POST" novalidate>
+                    <form class="govuk-!-width-three-quarters pardot-submit" action="/contact/submit" method="POST" novalidate data-evt-type='contact_form' {{ formErrors is defined ? "data-evt-state='error'" }}>
 
                         <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Website - Question" />
                         <input type="hidden" name="00N4L000009OPAj" id="referrer" name="referrer" value="{{ referrer }}">
@@ -71,18 +71,12 @@
                                         <input class="govuk-radios__input" id="how-contacted-conditional-3" name="origin" type="radio" value="Website - Complaint" aria-controls="conditional-how-contacted-conditional-3" aria-expanded="true" {{formData.enquiryType is defined and formData.enquiryType == "Website - Complaint" ? 'checked' }}>
                                         <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">Complaint</label>
                                     </div>
-                                    <div class="govuk-radios__conditional" id="conditional-how-contacted-conditional-3">
-                                        <div class="govuk-form-group">
-                                            <p>We like to receive feedback because it helps us to improve the services we offer. If you would like to give us feedback please use the form below.</p>
-                                            <p>If you're unhappy with our service you can <a href="/make-a-complaint">make a complaint</a>.</p>
-                                        </div>
-                                    </div>
                                 </div>
                             </fieldset>
                         </div>
 
                         {% set nameError = formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 %}
-                        <div id="hideForComplaint">
+                        <div id="">
                             <div class="govuk-form-group {{ nameError ? 'govuk-form-group--error' : null }}">
                                 <label class="govuk-label" for="name">Name</label>
 
@@ -158,7 +152,11 @@
                                 <input class="govuk-input {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="phone" maxlength="20" name="phone" size="20" type="text" value="{{formErrors is defined ? formData.phone}}" autocomplete="tel" required/>
                             </div>
 
-                            <div class="govuk-form-group">
+                            <div class="govuk-visually-hidden" id="complaintOptions">
+                                {% include 'forms/_complaint_form_options.html.twig' %}
+                            </div>
+
+                            <div class="govuk-form-group" id="callbackOptions">
                                 <fieldset class="govuk-fieldset" aria-describedby="callback">
                                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                         <h2 class="govuk-fieldset__heading" id="callback">Do you need a callback? (optional)</h2>
@@ -198,6 +196,7 @@
 
                             <div class="govuk-form-group {{formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                                 <label id="more-detail-label" class="govuk-label" for="more-detail">Provide more details</label>
+                                <h2 class="govuk-heading-m govuk-visually-hidden" id="complaintTitle">Tell us about your complaint</h2>
 
                                 {% if formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 %}
                                     {% for error in formErrors.moreDetailErr.errors %}
@@ -208,6 +207,12 @@
                                 {% endif %}
 
                                 <div id="more-detail-hint" class="govuk-hint">Tell us more about your question or describe the problem you are having. Do not include personal or financial information, like your credit card details.</div>
+                                <div id="complaintHint" class="govuk-hint govuk-visually-hidden">Do not include: 
+                                    <ul>
+                                        <li>personal or financial details, like your credit card details</li>
+                                        <li>any data that could potentially identify a specific individual, such as names</li>
+                                    </ul>
+                                </div>
                                 <textarea maxlength="3000" class="govuk-textarea" style="margin-bottom: 0px; {{formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 ? 'border: 4px solid #b10e1e' : null }}" id="more-detail" name="more-detail" rows="10" aria-describedby="more-detail-hint" required>{{formErrors is defined ? formData.moreDetail}}</textarea>
                                 <p class="govuk-hint">You can enter up to 3000 characters</p>
                             </div>
@@ -221,7 +226,7 @@
                                 </div>
                             {% endif %}
 
-                            <div class="govuk-form-group">
+                            <div class="govuk-form-group" id="contactedBeforeOptions">
                                 <fieldset class="govuk-fieldset" aria-describedby="contactedBefore">
                                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                                         <h2 class="govuk-fieldset__heading" id="contactedBefore">Have you contacted us before? (optional)</h2>
@@ -253,7 +258,7 @@
                             Once you submit your details, you will receive a confirmation email to let you know your case reference number and next steps.</p>
 
                             <div class="govuk-form-group">
-                                <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit">
+                                <button data-prevent-double-click="true" data-module="govuk-button" type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit">
                                     Submit
                                 </button>
                             </div>
@@ -268,15 +273,19 @@
                             Telephone: <a href="tel:03454102222">0345 410 2222</a>
                         </p>
 
-                        <p>{{cscMessage}}</p>
+                        <p>{{cscMessage | raw}}</p>
                     </div>
                     
 
                     <script>
 
-                        const fieldCheckboxes = document.getElementsByName("origin");
-                        const callbackTimeslotboxes = document.getElementsByName("callbackTimeslot");
-                        const formSubmitButton = document.getElementById("submit");
+                        const originCheckboxes              = document.getElementsByName("origin");
+                        const customerTypeCheckboxes        = document.getElementsByName("customerType");
+                        const contactWayCheckboxes          = document.getElementsByName("contactWay");
+                        const formSubmitButton              = document.getElementById("submit");
+
+                        const hideForComplaint = ["callbackOptions", "more-detail-label", "more-detail-hint"];
+                        const showForComplaint = ["complaintOptions", "complaintTitle", "complaintHint"];
 
                         dataCollectionFieldForSalesforce = document.getElementById("salesforce-textarea");
 
@@ -284,9 +293,9 @@
                         document.querySelectorAll('input[name="00Nb0000009IXEg"]').forEach((option) => {
                             option.addEventListener("change", function(event) {
                                 if (event.target.value == "Yes"){
-                                    document.getElementById("phone-label").textContent = "Telephone number";
+                                    setPhoneTextOptional(false);
                                 } else 
-                                    document.getElementById("phone-label").textContent = "Telephone number (optional)";
+                                    setPhoneTextOptional(true);
                             });
                         });
 
@@ -294,15 +303,15 @@
                             option.addEventListener("change", function(event) {
                                 switch(event.target.value) {
                                     case 'Website - Complaint':
-                                        document.getElementById("hideForComplaint").classList.add("govuk-visually-hidden");
+                                        toggleComplaintForm(true);
                                         document.getElementById("subject").value = "Website - Complaint";
                                         break;
                                     case 'Website - Feedback':
-                                        document.getElementById("hideForComplaint").classList.remove("govuk-visually-hidden");
+                                        toggleComplaintForm(false);
                                         document.getElementById("subject").value = "Website - Feedback";
                                         break;
                                     default:
-                                        document.getElementById("hideForComplaint").classList.remove("govuk-visually-hidden");
+                                        toggleComplaintForm(false);
                                         document.getElementById("subject").value = "Website - Question";
                                 }
                         });});
@@ -310,45 +319,79 @@
                         formSubmitButton.addEventListener('click', function handler (e) {
 
                             dataCollectionFieldForSalesforce.value = "";
-                            const yesCallbackChecked = document.getElementById("callback-1").checked;
-                            const noCallbackChecked = document.getElementById("callback-2").checked;
+
                             const fieldMoreDetail = document.getElementById("more-detail");
                             var calledbackOptionAddedToDataField = false;
 
-                            for (var i = 0, length = fieldCheckboxes.length; i < length; i++) {
-                                if (fieldCheckboxes[i].checked) {
-                                    dataCollectionFieldForSalesforce.value += fieldCheckboxes[i].name + ": " + fieldCheckboxes[i].value + ", ";
-                                }
-                            }
-
-                            for (var i = 0, length = callbackTimeslotboxes.length; i < length; i++) {
-                                if (callbackTimeslotboxes[i].checked && !noCallbackChecked) {
-                                    dataCollectionFieldForSalesforce.value += "Callback: " + callbackTimeslotboxes[i].value + ", ";
-                                    calledbackOptionAddedToDataField = true;
-                                    break;
-                                }
-                            }
-
-                            if (!calledbackOptionAddedToDataField && yesCallbackChecked){
-                                dataCollectionFieldForSalesforce.value += "Callback: " + callbackTimeslotboxes[2].value + ", ";
-                            }
-
+                            dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(originCheckboxes);
+                            dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(customerTypeCheckboxes);
+                            dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(contactWayCheckboxes);
+                            dataCollectionFieldForSalesforce.value += prepareCallbackTimeslotToSfField();
                             dataCollectionFieldForSalesforce.value += " " + fieldMoreDetail.name + ": " + fieldMoreDetail.value;
-
-                            if (document.getElementById('contactedBefore-2').checked) {
-                                document.getElementById('caseNumber').value = '';
-                            }
 
                             this.removeEventListener('click', handler); 
 
                         }, false);
 
-                    window.onpageshow=function(){
-                    document.getElementById("how-contacted-conditional-1").click();
-                    };
+
+                        function toggleComplaintForm(option) {
+                            setPhoneTextOptional(!option);
+                            const elementsToHide = option ? hideForComplaint : showForComplaint;
+                            const elementsToShow = option ? showForComplaint : hideForComplaint;
+                            elementsToHide.forEach(id => {
+                                document.getElementById(id).classList.add('govuk-visually-hidden');
+                            });
+                            elementsToShow.forEach(id => {
+                                document.getElementById(id).classList.remove('govuk-visually-hidden');
+                            });
+                        }
+
+                        function setPhoneTextOptional(toggle){
+                            if(toggle){
+                                document.getElementById("phone-label").textContent = "Telephone number (optional)";
+                            }else{
+                                document.getElementById("phone-label").textContent = "Telephone number";
+                            }
+                            if (document.getElementById("callback-1").checked){
+                                document.getElementById("phone-label").textContent = "Telephone number";
+                            }
+                            
+                        }
+                        function prepareCheckboxOptionToSfField(checkboxesName){
+                           for (var i = 0, length = checkboxesName.length; i < length; i++) {
+                                if (checkboxesName[i].checked) {
+                                    return checkboxesName[i].name + ": " + checkboxesName[i].value + ", \n";
+                                }
+                            }
+                            return "";
+                        }
+                        function prepareCallbackTimeslotToSfField(){
+                            
+                            if (document.getElementById("callback-2").checked || document.getElementById("contact-way-conditional-2").checked || document.getElementById("contact-way-conditional-3").checked){
+                                return "";
+                            }
+
+                            const elementName = document.getElementById("subject").value == "Website - Complaint" ? "callbackTimeslotForC" : "callbackTimeslot";
+                            const callbackTimeslotCheckboxes = document.getElementsByName(elementName);
+                            returnValue = "Callback: No preference, \n";
+                            
+                            for (var i = 0, length = callbackTimeslotCheckboxes.length; i < length; i++) {
+                                if (callbackTimeslotCheckboxes[i].checked) {
+                                    returnValue = "Callback: " + callbackTimeslotCheckboxes[i].value + ", \n";
+                                    break;
+                                }
+                            }
+
+                            return returnValue
+                        }
+
+                        window.onload = function() {
+                            if (document.getElementById("how-contacted-conditional-3").checked) {
+                                toggleComplaintForm(true);
+                            }
+                        };
 
                     </script>
-
 
                 </div>
             </div>

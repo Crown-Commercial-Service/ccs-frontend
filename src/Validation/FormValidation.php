@@ -10,6 +10,20 @@ namespace App\Validation;
  */
 class FormValidation
 {
+    public static function validationNameForEsourcingTraining($name)
+    {
+        $returnArray  = [
+            'errors' => [],
+            'link' => '#name',
+        ];
+
+        if (preg_match('~[0-9]~', $name)) {
+            $returnArray['errors'] = ['Enter your name'];
+        }
+
+        return $returnArray;
+    }
+
     public static function validationName($name)
     {
         $returnArray  = [
@@ -17,9 +31,9 @@ class FormValidation
             'link' => '#name',
         ];
 
-        if (empty($name)) {
+        if (empty(trim($name)) || preg_match('~[0-9]~', $name)) {
             $returnArray['errors'] = ['Enter your name'];
-        } elseif (!empty($name) && strlen($name) > 80) {
+        } elseif (strlen($name) > 80) {
             $returnArray['errors'] = ['Name must be 80 characters or fewer'];
         }
 
@@ -33,26 +47,25 @@ class FormValidation
             'link' => '#email',
         ];
 
-        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (empty(trim($email)) || !filter_var($email, FILTER_VALIDATE_EMAIL) || preg_match("/[*,!,#,$,%,^,&,(,),?,<,>,=]/i", $email)) {
             $returnArray['errors'] = ['Enter an email address in the correct format, like name@example.com'];
-        } elseif (!empty($email) && strlen($email) > 80) {
+        } elseif (strlen($email) > 80) {
             $returnArray['errors'] = ['Email address must be 80 characters or fewer'];
         }
 
         return $returnArray;
     }
 
-    public static function validationPhone($phone, $callback)
+    public static function validationPhone($phone)
     {
         $returnArray  = [
             'errors' => [],
             'link' => '#phone',
         ];
-
-        if ($callback && empty(trim($phone))) {
-            $returnArray['errors'] = ['Enter a telephone number'];
-        } elseif (!empty($phone) && strlen($phone) > 20) {
-            $returnArray['errors'] = ['Telephone number must be 20 characters or fewer'];
+        if (empty(trim($phone))) {
+            $returnArray['errors'] = ['Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'];
+        } elseif (preg_match("/[a-z]/i", $phone) || preg_match("/[*,!,#,$,%,^,&,?,<,>,=]/i", $phone)) {
+            $returnArray['errors'] = ['Enter a telephone number in the correct format'];
         }
 
         return $returnArray;
@@ -65,9 +78,9 @@ class FormValidation
             'link' => '#company',
         ];
 
-        if (empty($company)) {
+        if (empty(trim($company))) {
             $returnArray['errors'] = ['Enter an organisation'];
-        } elseif (!empty($company) && strlen($company) > 80) {
+        } elseif (strlen($company) > 80) {
             $returnArray['errors'] = ['Organisation must be 80 characters or fewer'];
         }
 
@@ -81,9 +94,7 @@ class FormValidation
             'link' => '#jobTitle',
         ];
 
-        if (empty($jobTitle)) {
-            $returnArray['errors'] = ['Enter your job title'];
-        }
+        $returnArray['errors'] = empty(trim($jobTitle)) ? ['Enter your job title'] : [] ;
 
         return $returnArray;
     }
@@ -112,6 +123,89 @@ class FormValidation
         if ($aggregationOption == null) {
             $returnArray['errors'] = ['Please select one option'];
         }
+
+        return $returnArray;
+    }
+
+    public static function validationJobTitleForContactCCS($jobTitle)
+    {
+        $returnArray  = [
+            'errors' => [],
+            'link' => '#00Nb0000009IXEs',
+        ];
+
+        $returnArray['errors'] = empty(trim($jobTitle)) ? ['Enter your job title'] : [] ;
+
+        return $returnArray;
+    }
+
+    public static function validationMoreDetail($moreDetail)
+    {
+        $returnArray  = [
+            'errors' => [],
+            'link' => '#more-detail',
+        ];
+
+        $returnArray['errors'] = empty(trim($moreDetail)) ? ['Enter more detail'] : [] ;
+
+        return $returnArray;
+    }
+
+    public static function validatioCustomerType($customerType)
+    {
+        $returnArray  = [
+            'errors' => [],
+            'link' => '#customerType-error',
+        ];
+
+        $returnArray['errors'] = $customerType == null ? ['Select one option'] : [] ;
+
+        return $returnArray;
+    }
+
+    public static function validationDate($customerType, $buyerDate, $supplierDate)
+    {
+        $returnArray = [
+        'errors' => [],
+        'link' => '#date-error',
+        ];
+
+        if (is_null($customerType)) {
+            return $returnArray;
+        }
+
+        if (is_null($buyerDate) && is_null($supplierDate)) {
+            $returnArray['errors'] = ['Select the date that you would like to book your eSourcing tool training'];
+        } else {
+            $inputDate = is_null($buyerDate) ? $supplierDate : $buyerDate;
+            $inputDate = strtotime(explode("-", $inputDate)[0]);
+
+            $returnArray['errors'] = strtotime(date("Y/m/d")) > $inputDate ? ['The date you have selected is in the past, select the date of an upcoming event'] : [];
+        }
+
+        return $returnArray;
+    }
+
+    public static function validationCustomerType($customerType)
+    {
+        $returnArray  = [
+            'errors' => [],
+            'link' => '#typeOfCustomer',
+        ];
+
+        $returnArray['errors'] = $customerType == null ? ['Select if you are a buyer or a supplier'] : [] ;
+
+        return $returnArray;
+    }
+
+    public static function validationContactWay($contactWay)
+    {
+        $returnArray  = [
+            'errors' => [],
+            'link' => '#contactWay',
+        ];
+
+        $returnArray['errors'] = $contactWay == null ? ['Select how you want to be contact'] : [] ;
 
         return $returnArray;
     }
