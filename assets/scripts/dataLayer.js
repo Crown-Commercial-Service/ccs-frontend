@@ -1,6 +1,8 @@
 // this is ran on all the pages and assign print_page() to the print button
 window.onload = function() {
     const printLink = document.querySelector('.app-c-print-link__link');
+    const accordionButtons = document.querySelectorAll('.govuk-accordion__section-button');
+    const ctaButtons = document.querySelectorAll('.govuk-button');
 
     if (printLink != null) {
         printLink.addEventListener('click', () => {
@@ -10,6 +12,37 @@ window.onload = function() {
             });
         });
     }
+
+    if (accordionButtons != null) {
+        accordionButtons.forEach(accordionButton => {
+            accordionButton.addEventListener('click', () => {
+                accordionButtonClick(accordionButton);
+            });
+        });
+    }
+
+    if (ctaButtons != null) {
+        ctaButtons.forEach(ctaButton => {
+            ctaButton.addEventListener('click', () => {
+                
+                dataArray = {"event":'cta_button_click', "link_text": ctaButton.innerText}
+                
+                if (ctaButton.href != null){
+                    dataArray['link_url'] =  ctaButton.href;
+                }
+
+                pushToDataLayer(dataArray);
+            });
+        });
+    }
+}
+
+function accordionButtonClick(accordionButton){
+    pushToDataLayer({
+        "event":                'accordion_use',
+        "link_text":            accordionButton.querySelector('span').textContent.trim(),
+        "interaction_type":     accordionButton.ariaExpanded === "true" ? "collapsing" : "expanding"
+    });
 }
 
 //this is only ran on show framework and show supplier page
