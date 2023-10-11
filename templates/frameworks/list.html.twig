@@ -202,7 +202,13 @@
                                     <ul class="govuk-list">
                                         {% for pillar_item in pillars.pillars %}
                                             <li>
+                                                {% set pillarArray = {
+                                                    'event': 'search_interaction',
+                                                    'interaction_type': 'filter by pillar',
+                                                    'interaction_detail':  pillar_item.name
+                                                }%}
                                                 <a class="{{pillar is defined and pillar == pillar_item.name ? 'govuk-!-font-weight-bold'}}" 
+                                                    onclick="pushToDataLayer('{{pillarArray |json_encode}}');"
                                                     href="{{ path('frameworks_list_by_pillar',
                                                     {   'pillar': pillar_item.slug, 
                                                         'query': query is defined and query|trim is not empty ? query : '',
@@ -213,7 +219,13 @@
                                                 <ul class="govuk-list">
                                                     {% for category_item in pillar_item.categories %}
                                                         <li>
+                                                            {% set categoryArray = {
+                                                                'event': 'search_interaction',
+                                                                'interaction_type': 'filter by category',
+                                                                'interaction_detail':  category_item.name
+                                                            }%}
                                                             <a class="{{category is defined and category == category_item.name ? 'govuk-!-font-weight-bold' }}" 
+                                                                onclick="pushToDataLayer('{{categoryArray |json_encode}}');"
                                                                 href="{{ path('frameworks_list_by_category', 
                                                                 {   'category': category_item.slug, 
                                                                     'query': query is defined and query|trim is not empty ? query : '',

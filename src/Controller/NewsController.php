@@ -62,7 +62,7 @@ class NewsController extends AbstractController
         $downloadableOption     =   $this->converArrayToStringForWordpress($request->query->get('downloadable', null));
 
         $sectorsOption          =   $this->converArrayToStringForWordpress($request->query->get('sectors', null));
-        $productsServicesOption =   $this->converArrayToStringForWordpress($request->query->get('PandS', null));
+        $productsServicesOption =   $this->converArrayToStringForWordpress($request->query->get('products_services', null));
 
 
         $options = [
@@ -166,6 +166,7 @@ class NewsController extends AbstractController
         $checkType = array(
             'categories',
             'sectors',
+            'PandS',
             'content_type',
             'whitepaper',
             'webinar',

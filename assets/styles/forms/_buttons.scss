@@ -23,6 +23,16 @@
 
 }
 
+.grey-govuk-button {
+
+    background-color: #E1E1E1;
+    
+    &:hover {
+        background-color : darken(#E1E1E1, 5%);
+    }
+    
+}
+
 .input--search-icon {
 
     background: white url("../images/icon-search.png") center right #{govuk-px-to-rem(10)} no-repeat;

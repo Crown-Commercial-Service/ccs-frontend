@@ -198,22 +198,11 @@
                                     <div class="govuk-width-container">
                                         <div class="govuk-grid-row news_wrapper">
 
-                                            <div v-if="result.imageSet" class="govuk-grid-column-one-half news-listing-block">
+                                            <div class="news-listing-block" :class="{'govuk-grid-column-one-half': result.imageSet, 'govuk-grid-column-full':!result.imageSet}">
                                                 <p class="news-listing-meta"> 
                                                     <a :href="result.CategoriesLink">{[ result.postType ]}</a>
-                                                    <span v-if="result.postType != 'Digital Brochure'"> {[result.postedDate]} </span> 
+                                                    <span> {[result.modifiedDate]} </span> 
                                                 </p>
-                                                <h2 class="news-listing-title">
-                                                    <a :href="result.postLink" v-html="result.title.rendered"></a>
-                                                </h2>
-                                                <p v-html="result.postDescription"></p> 
-                                            </div>
-                                            <div v-else class="govuk-grid-column-full news-listing-block">
-                                                <p class="news-listing-meta"> 
-                                                    <a :href="result.CategoriesLink">{[ result.postType ]}</a>
-                                                    <span v-if="result.postType != 'Digital Brochure'"> {[result.postedDate]} </span> 
-                                                </p>
-                                                
                                                 <h2 class="news-listing-title">
                                                     <a :href="result.postLink" v-html="result.title.rendered"></a>
                                                 </h2>
@@ -706,6 +695,7 @@
                         var self = this;
                         this.responseAvailable = false;
                         this.emptyResult = false;
+                        const utmTags = '?' + this.utmTagsRemain().substring(1);
 
                         this.currentPage = page === null ? 1 : page;
                         var requestUrl = this.searchRequestUrl(categoriesSlug, this.currentPage);
@@ -720,31 +710,30 @@
                         .then(function(jsonResponse) {
                             self.numberOfPages = jsonResponse.meta['X-WP-TotalPages'];
                             self.totalResults = jsonResponse.meta['X-WP-Total'];
-                                
                             for(var i = 0; i < jsonResponse.body.length; i++) {                         
-                                jsonResponse.body[i].postedDate = self.formatDate(jsonResponse.body[i].date);
+                                jsonResponse.body[i].modifiedDate = self.formatDate(jsonResponse.body[i].modified);
                                 jsonResponse.body[i].postType = jsonResponse.body[i].acf.category_type;
                                 jsonResponse.body[i].index = i;
                                 
                                 switch(jsonResponse.body[i].postType) {
                                     case 'Whitepaper':
-                                        postLink = appBaseUrl+ "/whitepaper/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        postLink = appBaseUrl+ "/whitepaper/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
                                         categoriesLink = appBaseUrl + "/news/?&whitepaper=1";
                                         break;
                                     case 'Webinar':
-                                        postLink = appBaseUrl+ "/webinar/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        postLink = appBaseUrl+ "/webinar/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
                                         categoriesLink = appBaseUrl + "/news/?&webinar=1";
                                         break;
                                     case 'Digital Brochure':
-                                        postLink = appBaseUrl+ "/digital_brochure/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        postLink = appBaseUrl+ "/digital_brochure/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
                                         categoriesLink = appBaseUrl + "/news/?&digitalBrochure=1";
                                         break;
                                     case 'Downloadable':
                                         jsonResponse.body[i].postType = jsonResponse.body[i].acf.content_type_name;
-                                        postLink = appBaseUrl+ "/downloadable-resource/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug;
+                                        postLink = appBaseUrl+ "/downloadable-resource/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
                                         categoriesLink = appBaseUrl +"/news?contentType=" + jsonResponse.body[i].content_type_id;
                                         break;
