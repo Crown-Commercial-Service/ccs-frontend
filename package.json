@@ -52,7 +52,7 @@
     "tunnel-agent": "^0.6.0",
     "vue": "^2.7.14",
     "watch": "^1.0.2",
-    "whatwg-fetch": "^3.6.16",
+    "whatwg-fetch": "^3.6.19",
     "yargs-parser": "^13.1.2"
   },
   "devDependencies": {
