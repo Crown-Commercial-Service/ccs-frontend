@@ -38,7 +38,7 @@
     "bl": "^2.2.1",
     "braces": "^2.3.2",
     "decompress": "^4.2.1",
-    "govuk-frontend": "^4.5.0",
+    "govuk-frontend": "^4.7.0",
     "imagemin-cli": "^7.0.0",
     "js-yaml": "^3.14.1",
     "lodash": "^4.17.21",
@@ -52,14 +52,14 @@
     "tunnel-agent": "^0.6.0",
     "vue": "^2.7.14",
     "watch": "^1.0.2",
-    "whatwg-fetch": "^3.6.2",
+    "whatwg-fetch": "^3.6.19",
     "yargs-parser": "^13.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.4",
-    "postcss": "^8.3.6",
+    "postcss": "^8.4.31",
     "postcss-cli": "^8.3.1",
     "zombie": "^6.1.4"
   }
