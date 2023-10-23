@@ -127,25 +127,14 @@
                         <div class="govuk-form-group">
                             <button data-prevent-double-click="true" data-module="govuk-button" type="submit" id="submit" class="govuk-!-font-weight-bold govuk-button gtm-form-submit">Submit</button>
                         </div>
-
                     </form>
-
-                    <script>
-
-
-
-                    </script>
-
-
-
-
                 </div>
-                {#<div class="govuk-grid-column-one-quarter">#}
-                {#</div>#}
             </div>
 
 
         </main>
     </div>
+
+    {% include 'forms/dataLayer_component/_form_start_form_error.html.twig' with {'formName': "Newsletter" } %}
 
 {% endblock %}

@@ -756,6 +756,7 @@
                 updateSearchQueryValue: function(event) {
                     event.preventDefault();
                     var searchTextInput = document.getElementById('q');
+                    pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'suppliers', 'search_term': searchTextInput.value});
                     this.searchQuery = searchTextInput.value;
                 },
                 /**

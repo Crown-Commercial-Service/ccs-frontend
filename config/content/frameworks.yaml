@@ -68,6 +68,8 @@ joint_schedules:
       type: text
     joint_schedule_document_description:
       type: richtext
+    joint_schedule_file_size:
+      type: number
 call_off_schedules:
   type: array
   content_fields:
@@ -81,6 +83,8 @@ call_off_schedules:
       type: text
     call_off_schedule_document_description:
       type: richtext
+    call_off_schedule_file_size:
+      type: number
 framework_schedules:
   type: array
   content_fields:
@@ -92,6 +96,8 @@ framework_schedules:
       type: text
     framework_schedule_document_description:
       type: richtext
+    framework_schedule_file_size:
+      type: number
 templates:
   type: richtext
 lots:
@@ -135,6 +141,8 @@ documents:
       type: text
     url:
       type: text
+    file_size:
+      type: number
 total_suppliers:
   type: number
 upcoming_deal_details:
