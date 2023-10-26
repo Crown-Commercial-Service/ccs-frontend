@@ -39,4 +39,15 @@
         </main>
     </div>
 
+
+
+    {% if '/contact' not in app.request.headers.get('referer') %}
+        {% set formName = 'Page form' %}
+    {% else %}
+        {% set formName = 'Contact CCS' %}
+    {% endif %}
+
+
+    {% include 'forms/dataLayer_component/_form_submit.html.twig' with {'formName': formName } %}
+
 {% endblock %}

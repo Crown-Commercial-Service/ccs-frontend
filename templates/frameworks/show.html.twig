@@ -309,7 +309,7 @@
                                             <ul class="govuk-list">
                                                 {% for document in framework.content.documents %}
                                                     <li>
-                                                        <a href="{{ document.url }}">{{ document.title }}</a>
+                                                        <a onclick="fileDownload('{{ document.url }}', '{{ document.title }}', '{{ document.file_size }}');" href="{{ document.url }}">{{ document.title }}</a>
                                                     </li>
                                                 {% endfor %}
                                             </ul>

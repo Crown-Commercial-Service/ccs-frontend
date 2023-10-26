@@ -17,7 +17,7 @@
     "js:copyvuejs": "shx cp -r node_modules/vue/dist/vue.js public/assets/scripts/libraries/vue.js",
     "js:copyvuejsprod": "shx cp -r node_modules/vue/dist/vue.min.js public/assets/scripts/libraries/vue.min.js",
     "js:copylibraries": "shx cp -r assets/scripts/libraries/* public/assets/scripts/libraries/",
-    "js:copygatedjs": "shx cp -r assets/scripts/gated-form.js public/assets/scripts/gated-form.js",
+    "js:copydataLayerjs": "shx cp -r assets/scripts/dataLayer.js public/assets/scripts/dataLayer.js",
     "jsmain:babel:transpile": "./node_modules/.bin/babel assets/scripts --out-dir public/assets/scripts --presets=@babel/preset-env --minified",
     "js": "npm-run-all --parallel js:copylibraries jsmain:babel:transpile js:copygovuk-frontend js:minifygovuk-frontend js:copyvuejs js:copyvuejsprod",
     "build": "npm-run-all --parallel css images fonts js",
@@ -27,6 +27,7 @@
     "watch:images:imagemin": "watch 'npm run images:imagemin' assets/images --interval=1",
     "watch:fonts": "watch 'npm run fonts' assets/fonts --interval=1",
     "watch:js:copylibraries": "watch 'npm run js:copylibraries' assets/scripts/libraries --interval=1",
+    "watch:js": "watch 'npm run js:copydataLayerjs' assets/scripts/ --interval=1",
     "watch": "npm-run-all --parallel watch:* watch:*:*"
   },
   "author": "Studio 24",
@@ -38,7 +39,7 @@
     "bl": "^2.2.1",
     "braces": "^2.3.2",
     "decompress": "^4.2.1",
-    "govuk-frontend": "^4.5.0",
+    "govuk-frontend": "^4.7.0",
     "imagemin-cli": "^7.0.0",
     "js-yaml": "^3.14.1",
     "lodash": "^4.17.21",
@@ -52,14 +53,14 @@
     "tunnel-agent": "^0.6.0",
     "vue": "^2.7.14",
     "watch": "^1.0.2",
-    "whatwg-fetch": "^3.6.2",
+    "whatwg-fetch": "^3.6.19",
     "yargs-parser": "^13.1.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.4",
-    "postcss": "^8.3.6",
+    "postcss": "^8.4.31",
     "postcss-cli": "^8.3.1",
     "zombie": "^6.1.4"
   }
