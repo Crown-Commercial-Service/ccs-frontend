@@ -53,27 +53,26 @@
                 <div class="govuk-grid-column-one-quarter">
                     <h2 class="govuk-heading-m">Filter events list</h2>
 
-                    {% if products_services is not empty %}
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="products-services-accordion">
+                    {% if event_type is not empty %}
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="event-type-accordion">
                             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
                                 <div class="govuk-accordion__section-header">
                                     <h3 class="govuk-accordion__section-heading">
-                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="products-services-accordion-heading">
-                                            Products and services
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="event-type-accordion-heading">
+                                            Event type
                                         </span>
                                     </h3>
                                 </div>
-                                <div id="products-services-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="products-services-accordion-heading">
+                                <div id="event-type-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="event-type-accordion-heading">
                                     <ul class="ccs-link-filter-list">
-                                        <li><a href="/events">All Categories</a></li>
-                                        {% for item in products_services %}
-                                            {% if filters.products_services == item.id %}
+                                        <li><a href="/events">All event type</a></li>
+                                        {% for item in event_type %}
+                                            {% if filters.event_type == item.id %}
                                                 <li>{{ item.name }}</li>
                                             {% else %}
-                                                <li><a href="/events?product_service={{ item.id }}">{{ item.name }}</a></li>
+                                                <li><a href="/events?event_type={{ item.id }}">{{ item.name }}</a></li>
                                             {% endif %}
                                         {% endfor %}
-                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -97,6 +96,32 @@
                                                 <li>{{ item.name }}</li>
                                             {% else %}
                                                 <li><a href="/events?audience_tag={{ item.id }}">{{ item.name }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if products_services is not empty %}
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="products-services-accordion">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                                <div class="govuk-accordion__section-header">
+                                    <h3 class="govuk-accordion__section-heading">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="products-services-accordion-heading">
+                                            Products and services
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div id="products-services-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="products-services-accordion-heading">
+                                    <ul class="ccs-link-filter-list">
+                                        <li><a href="/events">All Categories</a></li>
+                                        {% for item in products_services %}
+                                            {% if filters.products_services == item.id %}
+                                                <li>{{ item.name }}</li>
+                                            {% else %}
+                                                <li><a href="/events?product_service={{ item.id }}">{{ item.name }}</a></li>
                                             {% endif %}
                                         {% endfor %}
                                     </ul>

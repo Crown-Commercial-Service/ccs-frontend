@@ -49,7 +49,9 @@ class EventsController extends AbstractController
         $sectors = $this->api->getAllTerms('sectors');
         $productsServices = $this->api->getAllTerms('products_services');
         $audienceTag = $this->api->getAllTerms('audience_tag');
+        $eventType = $this->api->getAllTerms('event_type');
 
+        $eventTypeFilter    = $request->query->get('event_type');
         $audienceTagFilter    = $request->query->get('audience_tag');
         $productServiceFilter = $request->query->get('product_service');
         $sectorFilter         = $request->query->get('sector');
@@ -60,6 +62,7 @@ class EventsController extends AbstractController
         $options = [
             'products_services' => $productServiceFilter,
             'audience_tag' => $audienceTagFilter,
+            'event_type'    => $eventTypeFilter,
             'sectors' => $sectorFilter,
             'orderby'    => 'start_datetime',
             'order'      => 'asc',
@@ -77,6 +80,7 @@ class EventsController extends AbstractController
             'pagination' => $list->getPagination(),
             'sectors' => $sectors,
             'audience_tag' => $audienceTag,
+            'event_type' => $eventType,
             'products_services' => $productsServices,
             'filters' => $options
         ]);
