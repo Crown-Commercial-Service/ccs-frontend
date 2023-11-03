@@ -10,6 +10,17 @@ use Strata\Frontend\Api\Providers\RestApi;
 
 class ControllerHelper
 {
+    private static function setUpAPI($contentField)
+    {
+
+        $api = new RestData(
+            getenv('APP_API_BASE_URL'),
+            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
+        );
+        $api->setContentType($contentField);
+        return $api;
+    }
+
     public static function honeyPot($honeyPotField)
     {
         if (!empty($honeyPotField) && (bool) $honeyPotField == true) {
@@ -24,11 +35,8 @@ class ControllerHelper
 
     public static function getCSCMessage()
     {
-        $api = new RestData(
-            getenv('APP_API_BASE_URL'),
-            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
-        );
-        $api->setContentType('csc_message');
+
+        $api = ControllerHelper::setUpAPI('csc_message');
 
         try {
             $cscMessage = $api->getOne(0);
@@ -37,6 +45,26 @@ class ControllerHelper
         }
 
         return $cscMessage->getContent()->get('csc_message')->getValue();
+    }
+
+    public static function getYoutubeVideo()
+    {
+        $api = ControllerHelper::setUpAPI('homepage_content');
+
+        $defultValue = [
+            "video_link" => "https://www.youtube-nocookie.com/embed/mn-3isisTGM",
+            'video_caption' => 'CCS: power to your procurement'
+        ];
+
+        try {
+            $result = $api->getOne(0);
+        } catch (NotFoundException $e) {
+            throw new NotFoundHttpException('Homepage Content API broken, please check WordPress', $e);
+        }
+
+        $video = $result->getContent()->get('video')->getValue();
+
+        return empty($video["video_link"]) ? $defultValue : $video;
     }
 
     public static function toSlug(string $string): string
