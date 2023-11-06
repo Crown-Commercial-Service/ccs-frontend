@@ -427,11 +427,14 @@ class FrameworksController extends AbstractController
         $content_group = "agreement/" .  ControllerHelper::toSlug($results->getContent()["category"]->getValue());
         $cscMessage = ControllerHelper::getCSCMessage();
 
+        $youtubeVideo = ControllerHelper::getYoutubeVideo();
+
         $data = [
-            'framework'     => $results,
-            'show_crp'      => $this->showCRP($content['rm_number']->getValue()),
-            'cscMessage'    => $cscMessage,
-            'content_group' => $content_group,
+            'framework'         => $results,
+            'show_crp'          => $this->showCRP($content['rm_number']->getValue()),
+            'cscMessage'        => $cscMessage,
+            'content_group'     => $content_group,
+            'youtubeVideo'      => $youtubeVideo
         ];
         return $this->render('frameworks/show.html.twig', $data);
     }
