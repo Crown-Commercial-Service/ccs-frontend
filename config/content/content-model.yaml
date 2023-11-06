@@ -56,6 +56,9 @@ content_types:
   csc_message:
     api_endpoint: ccs/v1/csc-message
     content_fields: csc-message.yaml
+  homepage_content:
+    api_endpoint: ccs/v1/homepage-components
+    content_fields: homepage-content.yaml
 global:
   image_sizes:
     - thumbnail
