@@ -110,7 +110,9 @@ function fileDownload( fileURL, fileName, fileSize) {
 function pushToDataLayer(array){
     array = (typeof array === 'string')? JSON.parse(array) : array;
 
-    window.dataLayer.push(array);
+    if ('{{ app.environment }}' == "local" || '{{ app.environment }}' == "prod") {
+        window.dataLayer.push(array);
+    }
 }
 
 function formatFileSize(bytes, decimals = 2) {
