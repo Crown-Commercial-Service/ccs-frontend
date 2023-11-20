@@ -75,12 +75,17 @@
                             <div class="event-detail__location">
                                 <h2 class="govuk-heading-s">Location</h2>
                                 {% if (event.content.location_type == 'In Person' or event.content.location_type == 'Online and In Person')%}
+
+                                    {% if event.content.place_name != "" %}
+                                        <p class="govuk-!-margin-0" >{{ event.content.place_name|raw }}</p>
+                                    {% endif %}
+
                                     <p class="govuk-!-margin-0" >{{ event.content.street_address|raw }} </p>
 
                                     {% if event.content.address_region != "" %}
-                                    <p class="govuk-!-margin-0" >{{ event.content.address_region|raw }}, {{ event.content.address_locality|raw }}</p>
+                                        <p class="govuk-!-margin-0" >{{ event.content.address_region|raw }}, {{ event.content.address_locality|raw }}</p>
                                     {% else %}
-                                    <p class="govuk-!-margin-0" >{{ event.content.address_locality|raw }}</p>
+                                        <p class="govuk-!-margin-0" >{{ event.content.address_locality|raw }}</p>
                                     {% endif %}
                                     <br/>
                                 {% endif %}

@@ -710,7 +710,7 @@
                 // the URL we use to request items from the API
                 searchRequestUrl: function() {
                     console.log("update search URL");
-                    return this.searchApiBaseUrl + 'suppliers?keyword=' + this.searchQuery + '&framework=' + (this.checkedFramework.rm_number ? this.checkedFramework.rm_number : '') + '&lot=' + (this.checkedLot.id ? this.checkedLot.id : '') + '&limit=' + this.resultsLimit + '&page=' + this.currentPage;
+                    return this.searchApiBaseUrl + 'suppliers?keyword=' + this.searchQuery.replace('&','') + '&framework=' + (this.checkedFramework.rm_number ? this.checkedFramework.rm_number : '') + '&lot=' + (this.checkedLot.id ? this.checkedLot.id : '') + '&limit=' + this.resultsLimit + '&page=' + this.currentPage;
 
                     // page=
                 },
