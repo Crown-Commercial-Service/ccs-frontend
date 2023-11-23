@@ -179,6 +179,9 @@
 #}
 <body class="govuk-template__body {% block flourishClasses %}show-flourishes  {{ taxonomy }}--{{ flourish }}{% endblock %}">
 
+{# For data layer - outputs environment to be used in js file #}
+<div id="app-env" style="display: none" data-env="local"></div>
+
 {{ staging_banner(app.environment) }}
 
 {# Google Tag Manager (noscript) THIS SHOULD BE REMOVED IF EXPLICIT OPT-IN is used #}
