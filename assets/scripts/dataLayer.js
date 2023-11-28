@@ -107,10 +107,11 @@ function fileDownload( fileURL, fileName, fileSize) {
 
 }
 
-function pushToDataLayer(array){
-    array = (typeof array === 'string')? JSON.parse(array) : array;
+function pushToDataLayer(array) {
+    array = (typeof array === 'string') ? JSON.parse(array) : array;
+    var env = document.getElementById('app-env').dataset.env;
 
-    if ('{{ app.environment }}' == "local" || '{{ app.environment }}' == "prod") {
+    if (env == "local" || env == "prod") {
         window.dataLayer.push(array);
     }
 }
