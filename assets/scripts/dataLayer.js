@@ -1,12 +1,14 @@
 // this is ran on all the pages and assign print_page() to the print button
 window.onload = function() {
-    const printLink = document.querySelector('.app-c-print-link__link');
-    const accordionButtons = document.querySelectorAll('.govuk-accordion__section-button');
-    const ctaButtons = document.querySelectorAll('.govuk-button');
+    const printLink         = document.querySelector('.app-c-print-link__link');
+    const accordionButtons  = document.querySelectorAll('.govuk-accordion__section-button');
+    const ctaButtons        = document.querySelectorAll('.govuk-button');
+    const allLink           = document.querySelectorAll('a');
 
     printLink != null           ? assignPrintLinkWithAction(printLink) : null;
     accordionButtons != null    ? assignAccordionWithAction(accordionButtons) : null;
     ctaButtons != null          ? assignCtaButtonWithAction(ctaButtons) : null;
+    allLink != null             ? assignLinksWithAction(allLink) : null;
 }
 
 function assignPrintLinkWithAction(printLink){
@@ -25,7 +27,7 @@ function assignCtaButtonWithAction(ctaButtons){
             dataArray = {"event":'cta_button_click', "link_text": ctaButton.innerText}
             
             if (ctaButton.href != null){
-                dataArray['link_url'] =  ctaButton.href;
+                dataArray.push({key:   "link_url", value: ctaButton.href});
             }
 
             pushToDataLayer(dataArray);
@@ -46,6 +48,18 @@ function accordionButtonClick(accordionButton){
         "event":                'accordion_use',
         "link_text":            accordionButton.querySelector('span').textContent.trim(),
         "interaction_type":     accordionButton.ariaExpanded === "true" ? "collapsing" : "expanding"
+    });
+}
+
+function assignLinksWithAction(links){
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            pushToDataLayer({
+                "event":'page_view',
+                "page_location": link.href,
+                "page_referrer": window.location.href
+            });
+        });
     });
 }
 
