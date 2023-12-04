@@ -26,7 +26,7 @@
 
     @include govuk-media-query($from: 900) {
         float: left;
-        width: 50%;
+        width: 110%;
     }
 }
 
@@ -48,7 +48,7 @@
         right: 0;
         top: 0;
         vertical-align: middle;
-        width: 60%;
+        width: 600px;
 
     }
 
@@ -85,7 +85,7 @@
     background-color: #37464F;
     color: white;
     position: relative;
-    padding: govuk-px-to-rem(26) 0 govuk-px-to-rem(26) 0;
+    padding: govuk-px-to-rem(19) 0 govuk-px-to-rem(19) 0;
 
     .govuk-button {
 
@@ -97,19 +97,17 @@
 
         background-color: transparent;
 
-        background-image: svg-url("<svg width='240' height='240' viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'><path d='M120 240a120 120 0 100-240H0v240h120z' fill='#37474F' fill-rule='evenodd'/></svg>");
+        background-image: svg-url("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1096.000000 362.000000' preserveAspectRatio='xMidYMid meet'><g transform='translate(0.000000,362.000000) scale(0.100000,-0.100000)' stroke='none'><path d='M0 1810 l0 -1810 3403 1 c2858 1 3388 3 3312 14 -823 121 -1458 777 -1556 1610 -18 151 -6 411 25 561 145 691 659 1231 1341 1409 l90 23 -3307 1 -3308 1 0 -1810z' fill='#37474F'/></g></svg>");
         background-repeat: no-repeat;
-        background-size: govuk-px-to-rem(966) govuk-px-to-rem(966);
+        background-size: govuk-px-to-rem(1814) govuk-px-to-rem(342);
         // 100 40 (slight horizontal offset)
-        background-position: 100% 40%;
-
-        padding: govuk-px-to-rem(45) govuk-px-to-rem(80) govuk-px-to-rem(45) 0;
+        background-position: 36% 51%; 
 
     }
 
-    @include govuk-media-query($from: 1040) {
+    @include govuk-media-query($from: 1320) {
 
-        padding: govuk-px-to-rem(90) govuk-px-to-rem(80) govuk-px-to-rem(72) 0;
+        background-size: govuk-px-to-rem(1814) govuk-px-to-rem(246);
 
     }
 
@@ -124,6 +122,10 @@
     color: white;
     font-weight: 300;
     margin-bottom: govuk-px-to-rem(20);
+    
+        @include govuk-media-query($from: 900) {
+            width: 50%;
+        }
 
 }
 
@@ -138,5 +140,6 @@
 
     @include govuk-media-query($from: 900) {
         margin-bottom: govuk-px-to-rem(50);
+        width: 50%;
     }
 }
