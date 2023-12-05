@@ -290,6 +290,15 @@ End Usersnap code #}
         }
     });
 
+    // change background hero size if summary is over 200 chars
+    var heroCaption = document.querySelector('.hero__caption');
+    var heroCaptionP = document.querySelector('.hero__content p');
+    var screenSize = window.matchMedia( "(min-width: 1319px)" );
+
+    if (heroCaptionP.innerText.length > 200 && screenSize.matches) {
+        heroCaption.style.backgroundSize = "113.375rem 17.375rem";
+    }
+
   
 </script>
 
