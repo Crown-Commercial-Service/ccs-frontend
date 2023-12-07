@@ -47,12 +47,12 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.20">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.21">
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.20">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.21">
     {% endif %}
 
     {% block blocking_javascript %}
@@ -179,6 +179,9 @@
 #}
 <body class="govuk-template__body {% block flourishClasses %}show-flourishes  {{ taxonomy }}--{{ flourish }}{% endblock %}">
 
+{# For data layer - outputs environment to be used in js file #}
+<div id="app-env" style="display: none" data-env="local"></div>
+
 {{ staging_banner(app.environment) }}
 
 {# Google Tag Manager (noscript) THIS SHOULD BE REMOVED IF EXPLICIT OPT-IN is used #}
@@ -286,6 +289,15 @@ End Usersnap code #}
             iconClosed.style.display = "inline";
         }
     });
+
+    // change background hero size if summary is over 200 chars
+    var heroCaption = document.querySelector('.hero__caption');
+    var heroCaptionP = document.querySelector('.hero__content p');
+    var screenSize = window.matchMedia( "(min-width: 1319px)" );
+
+    if (heroCaption !== null && heroCaptionP.innerText.length > 200 && screenSize.matches) {
+        heroCaption.style.backgroundSize = "113.375rem 17.375rem";
+    }
 
   
 </script>
