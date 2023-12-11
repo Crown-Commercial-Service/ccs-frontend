@@ -292,11 +292,18 @@ End Usersnap code #}
 
     // change background hero size if summary is over 200 chars
     var heroCaption = document.querySelector('.hero__caption');
-    var heroCaptionP = document.querySelector('.hero__content p');
-    var screenSize = window.matchMedia( "(min-width: 1319px)" );
+    var heroTextContainer = document.querySelector('.ccs-hero-text-container');
 
-    if (heroCaption !== null && heroCaptionP.innerText.length > 200 && screenSize.matches) {
-        heroCaption.style.backgroundSize = "113.375rem 17.375rem";
+    if (heroTextContainer !== null) {
+        var containerH = heroTextContainer.clientHeight;
+
+        if (containerH < 209) {heroCaption.style.backgroundSize = "113.375rem 13.475rem";}
+        else if (containerH < 222) {heroCaption.style.backgroundSize = "113.375rem 14.475rem";}
+        else if (containerH < 247) {heroCaption.style.backgroundSize = "113.375rem 15.475rem";}
+        else if (containerH < 272) {heroCaption.style.backgroundSize = "113.375rem 17.375rem";}
+        else if (containerH < 297) {heroCaption.style.backgroundSize = "113.375rem 18.475rem";}
+        else if (containerH < 322) {heroCaption.style.backgroundSize = "113.375rem 20.575rem";}
+        else {heroCaption.style.backgroundSize = "113.375rem 25.575rem";}
     }
 
   
