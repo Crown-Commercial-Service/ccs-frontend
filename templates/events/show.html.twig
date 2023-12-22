@@ -111,5 +111,5 @@
     <script id="ldjson" type="application/ld+json">
     {{ schema|raw }}
     </script>
-
+<script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'event', 'event_name':'{{event.title|raw}}'});</script>
 {% endblock %}
