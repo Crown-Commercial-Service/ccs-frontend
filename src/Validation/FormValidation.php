@@ -209,4 +209,26 @@ class FormValidation
 
         return $returnArray;
     }
+
+    public static function validationFile($file)
+    {
+        $returnArray  = [
+            'errors' => [],
+            'link' => '#attachment',
+        ];
+
+        $allowedFileType = array('pdf', 'ppt', 'pptx', 'csv', 'xls', 'xlsx', 'doc', 'docx', 'odt', 'odp', 'ods', 'odg', 'zip', 'rar', 'tar.gz', 'tgz', 'kml', 'jpg', 'jpeg', 'png', 'bmp', 'tiff', 'tif', 'eps', 'rdf', 'rtf', 'txt', 'xml');
+
+        $filename = strtolower($file['name']);
+
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+
+        if ($file["size"] >= 100000000) {
+            $returnArray['errors'] = ['upload a file below 100000000'] ;
+        } elseif (!in_array($ext, $allowedFileType)) {
+            $returnArray['errors'] = ['upload a file in the following format pdf, ppt, pptx, csv, xls, xlsx, doc, docx, odt, odp, ods, odg, zip, rar, tar.gz, tgz, kml, jpg, jpeg, png, bmp, tiff, tif, eps, rdf, rtf, txt, xml'] ;
+        }
+
+        return $returnArray;
+    }
 }
