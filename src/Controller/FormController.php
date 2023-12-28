@@ -219,7 +219,7 @@ class FormController extends AbstractController
                 $attachmentID_filename = $this->sendToDocumentUpload();
 
                 if ($attachmentID_filename != null) {
-                    $params->set('00N0C00000IUBtG', getenv('documentHanding_path') . $attachmentID_filename);
+                    $params->set('00N4L000009vP2P', getenv('documentHanding_path') . $attachmentID_filename);
                 }
 
                 $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
