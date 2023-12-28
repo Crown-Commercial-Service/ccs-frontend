@@ -1,3 +1,4 @@
 <script>
     pushToDataLayer({"event":'form_submit', 'form_type':"{{formName}}" }); 
+    pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
 </script>
