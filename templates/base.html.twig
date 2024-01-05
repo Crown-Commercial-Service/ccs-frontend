@@ -180,7 +180,7 @@
 <body class="govuk-template__body {% block flourishClasses %}show-flourishes  {{ taxonomy }}--{{ flourish }}{% endblock %}">
 
 {# For data layer - outputs environment to be used in js file #}
-<div id="app-env" style="display: none" data-env="local"></div>
+<div id="app-env" style="display: none" data-env="{{app.environment}}"></div>
 
 {{ staging_banner(app.environment) }}
 
