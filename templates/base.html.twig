@@ -180,7 +180,7 @@
 <body class="govuk-template__body {% block flourishClasses %}show-flourishes  {{ taxonomy }}--{{ flourish }}{% endblock %}">
 
 {# For data layer - outputs environment to be used in js file #}
-<div id="app-env" style="display: none" data-env="local"></div>
+<div id="app-env" style="display: none" data-env="{{app.environment}}"></div>
 
 {{ staging_banner(app.environment) }}
 
@@ -227,9 +227,9 @@
 
 <script src="/assets/scripts/libraries/jquery-3.6.0.min.js"></script>
 <script src="/assets/scripts/libraries/objectFitPolyfill.min.js"></script>
-<script src="/assets/scripts/all.js?v=2.0"></script>
-<script src="/assets/scripts/app.js?v=2.0"></script>
-<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.0"></script>
+<script src="/assets/scripts/all.js?v=2.2"></script>
+<script src="/assets/scripts/app.js?v=2.2"></script>
+<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.2"></script>
 <script type="text/javascript">
   $('a[target^="_new-window"]').click(function() {
     var width = window.innerWidth * 0.9 ;
