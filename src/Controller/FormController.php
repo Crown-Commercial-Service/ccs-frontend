@@ -218,9 +218,7 @@ class FormController extends AbstractController
 
                 if ($formData['callbackTimeslot'] != null) {
                     $params->set('Call_Back_Preference__c', $formData['callbackTimeslot']);
-                }
-
-                else if ($formData['callbackTimeslotForC'] != null) {
+                } elseif ($formData['callbackTimeslotForC'] != null) {
                     $params->set('Call_Back_Preference__c', $formData['callbackTimeslotForC']);
                 }
 
