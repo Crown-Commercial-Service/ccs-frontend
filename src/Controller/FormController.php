@@ -216,6 +216,14 @@ class FormController extends AbstractController
                 $params->set('priority', 'Green');
                 $params->set('orgid', ControllerHelper::getOrgId());
 
+                if ($formData['callbackTimeslot'] != null) {
+                    $params->set('Call_Back_Preference__c', $formData['callbackTimeslot']);
+                }
+
+                else if ($formData['callbackTimeslotForC'] != null) {
+                    $params->set('Call_Back_Preference__c', $formData['callbackTimeslotForC']);
+                }
+
                 $attachmentID_filename = $this->sendToDocumentUpload();
 
                 if ($attachmentID_filename != null) {
