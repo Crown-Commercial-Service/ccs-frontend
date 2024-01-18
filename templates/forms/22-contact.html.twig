@@ -332,7 +332,6 @@
                             dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(originCheckboxes);
                             dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(customerTypeCheckboxes);
                             dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(contactWayCheckboxes);
-                            dataCollectionFieldForSalesforce.value += prepareCallbackTimeslotToSfField();
                             dataCollectionFieldForSalesforce.value += " " + fieldMoreDetail.name + ": " + fieldMoreDetail.value;
 
                             this.removeEventListener('click', handler); 
@@ -371,7 +370,7 @@
                             }
                             return "";
                         }
-                        function prepareCallbackTimeslotToSfField(){
+                        {# function prepareCallbackTimeslotToSfField(){
                             
                             if (document.getElementById("callback-2").checked || document.getElementById("contact-way-conditional-2").checked || document.getElementById("contact-way-conditional-3").checked){
                                 return "";
@@ -389,7 +388,7 @@
                             }
 
                             return returnValue
-                        }
+                        } #}
 
                         window.onload = function() {
                             if (document.getElementById("how-contacted-conditional-3").checked) {
