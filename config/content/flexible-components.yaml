@@ -184,5 +184,14 @@ components:
       type: richtext
     featured_featured_link_3_destination:
       type: richtext
-  
+  tabs_tabs:
+    tabs_tabs_heading:
+      type: text
+    tabs_tabs_tabs:
+      type: array
+      content_fields:
+        tabs_title:
+          type: text
+        tabs_content:
+          type: richtext
 
