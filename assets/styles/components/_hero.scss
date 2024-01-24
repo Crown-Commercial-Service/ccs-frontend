@@ -23,6 +23,7 @@
 .ccs-hero-text-container {
     box-sizing: border-box;
     padding: 0 15px;
+    height: 208px;
 
     @include govuk-media-query($from: 900) {
         float: left;
@@ -99,15 +100,9 @@
 
         background-image: svg-url("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1096.000000 362.000000' preserveAspectRatio='xMidYMid meet'><g transform='translate(0.000000,362.000000) scale(0.100000,-0.100000)' stroke='none'><path d='M0 1810 l0 -1810 3403 1 c2858 1 3388 3 3312 14 -823 121 -1458 777 -1556 1610 -18 151 -6 411 25 561 145 691 659 1231 1341 1409 l90 23 -3307 1 -3308 1 0 -1810z' fill='#37474F'/></g></svg>");
         background-repeat: no-repeat;
-        background-size: govuk-px-to-rem(1814) govuk-px-to-rem(342);
-        // 100 40 (slight horizontal offset)
-        background-position: 36% 51%; 
-
-    }
-
-    @include govuk-media-query($from: 1320) {
-
-        background-size: govuk-px-to-rem(1814) govuk-px-to-rem(246);
+        background-size: govuk-px-to-rem(1430) govuk-px-to-rem(209.28);
+        background-position: 34% 70%; 
+        height: 170px;
 
     }
 
