@@ -47,12 +47,12 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.21">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.22">
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.21">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.22">
     {% endif %}
 
     {% block blocking_javascript %}
@@ -289,22 +289,6 @@ End Usersnap code #}
             iconClosed.style.display = "inline";
         }
     });
-
-    // change background hero size if summary is over 200 chars
-    var heroCaption = document.querySelector('.hero__caption');
-    var heroTextContainer = document.querySelector('.ccs-hero-text-container');
-
-    if (heroTextContainer !== null) {
-        var containerH = heroTextContainer.clientHeight;
-
-        if (containerH < 209) {heroCaption.style.backgroundSize = "113.375rem 13.475rem";}
-        else if (containerH < 222) {heroCaption.style.backgroundSize = "113.375rem 14.475rem";}
-        else if (containerH < 247) {heroCaption.style.backgroundSize = "113.375rem 15.475rem";}
-        else if (containerH < 272) {heroCaption.style.backgroundSize = "113.375rem 17.375rem";}
-        else if (containerH < 297) {heroCaption.style.backgroundSize = "113.375rem 18.475rem";}
-        else if (containerH < 322) {heroCaption.style.backgroundSize = "113.375rem 20.575rem";}
-        else {heroCaption.style.backgroundSize = "113.375rem 25.575rem";}
-    }
 
   
 </script>
