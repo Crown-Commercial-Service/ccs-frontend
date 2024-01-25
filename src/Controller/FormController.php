@@ -496,7 +496,7 @@ class FormController extends AbstractController
 
                 $dataPartFile = DataPart::fromPath($newFilePath);
                 $debugStringFromDataPart = $dataPartFile->asDebugString();
-                $filename = str_replace(' ', '_', substr($debugStringFromDataPart, strripos($debugStringFromDataPart, ":") + 2));
+                $filename = preg_replace('/[^A-Za-z0-9\_\-\.]/', '_', substr($debugStringFromDataPart, strripos($debugStringFromDataPart, ":") + 2));
 
                 $data = [
                     'typeValidation[]'  => $_FILES["attachment"]["type"],
