@@ -40,7 +40,7 @@
                     <h1 class="govuk-heading-xl page-title">Contact CCS</h1>
                     <p class="govuk-body-l">You can use the contact form below to ask a question, give us feedback or make a complaint.</p>
 
-                    <form class="govuk-!-width-three-quarters pardot-submit" action="/contact/submit" method="POST" novalidate data-evt-type='contact_form' {{ formErrors is defined ? "data-evt-state='error'" }}>
+                    <form class="govuk-!-width-three-quarters pardot-submit" action="/contact/submit" method="POST" novalidate data-evt-type='contact_form' {{ formErrors is defined ? "data-evt-state='error'" }} enctype="multipart/form-data">
 
                         <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Website - Question" />
                         <input type="hidden" name="00N4L000009OPAj" id="referrer" name="referrer" value="{{ referrer }}">
@@ -217,14 +217,19 @@
                                 <p class="govuk-hint">You can enter up to 3000 characters</p>
                             </div>
 
-                            {% set fileUpload = false %}
+                            <div class="govuk-form-group {{formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                <label class="govuk-label" for="attachment">Upload a file (optional)</label>
 
-                            {% if fileUpload %}
-                                <div class="govuk-form-group">
-                                    <label class="govuk-label" for="attachment">Upload a file (optional)</label>
-                                    <input class="govuk-file-upload" id="attachment" name="attachment" type="file">
-                                </div>
-                            {% endif %}
+                                {% if formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 %}
+                                    {% for error in formErrors.fileErr.errors %}
+                                        <span id="file-error" class="govuk-error-message">
+                                            <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                        </span>
+                                    {% endfor %}                            
+                                {% endif %}   
+
+                                <input class="govuk-file-upload {{formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="attachment" name="attachment" type="file">
+                            </div>
 
                             <div class="govuk-form-group" id="contactedBeforeOptions">
                                 <fieldset class="govuk-fieldset" aria-describedby="contactedBefore">
@@ -327,7 +332,6 @@
                             dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(originCheckboxes);
                             dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(customerTypeCheckboxes);
                             dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(contactWayCheckboxes);
-                            dataCollectionFieldForSalesforce.value += prepareCallbackTimeslotToSfField();
                             dataCollectionFieldForSalesforce.value += " " + fieldMoreDetail.name + ": " + fieldMoreDetail.value;
 
                             this.removeEventListener('click', handler); 
@@ -366,7 +370,7 @@
                             }
                             return "";
                         }
-                        function prepareCallbackTimeslotToSfField(){
+                        {# function prepareCallbackTimeslotToSfField(){
                             
                             if (document.getElementById("callback-2").checked || document.getElementById("contact-way-conditional-2").checked || document.getElementById("contact-way-conditional-3").checked){
                                 return "";
@@ -384,7 +388,7 @@
                             }
 
                             return returnValue
-                        }
+                        } #}
 
                         window.onload = function() {
                             if (document.getElementById("how-contacted-conditional-3").checked) {
