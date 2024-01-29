@@ -66,3 +66,5 @@ DirectoryIndex index.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+
+php_value upload_max_filesize 20M
