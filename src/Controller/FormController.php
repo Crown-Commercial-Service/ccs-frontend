@@ -377,7 +377,7 @@ class FormController extends AbstractController
         $errorMessages['companyErr'] =      FormValidation::validationCompany($data['company']);
         $errorMessages['moreDetailErr'] =   FormValidation::validationMoreDetail($data['moreDetail']);
 
-        if ($_FILES['attachment']["size"] != 0) {
+        if (isset($_FILES['attachment']) && $_FILES['attachment']["size"] != 0) {
             $errorMessages['fileErr'] = FormValidation::validationFile($_FILES['attachment']);
         }
 
