@@ -31,7 +31,7 @@ class FormValidation
             'link' => '#name',
         ];
 
-        if (empty(trim($name)) || preg_match('~[0-9]~', $name)) {
+        if (is_null($name) || empty(trim($name)) || preg_match('~[0-9]~', $name)) {
             $returnArray['errors'] = ['Enter your name'];
         } elseif (strlen($name) > 80) {
             $returnArray['errors'] = ['Name must be 80 characters or fewer'];
@@ -47,7 +47,7 @@ class FormValidation
             'link' => '#email',
         ];
 
-        if (empty(trim($email)) || !filter_var($email, FILTER_VALIDATE_EMAIL) || preg_match("/[*,!,#,$,%,^,&,(,),?,<,>,=]/i", $email)) {
+        if (is_null($email) || empty(trim($email)) || !filter_var($email, FILTER_VALIDATE_EMAIL) || preg_match("/[*,!,#,$,%,^,&,(,),?,<,>,=]/i", $email)) {
             $returnArray['errors'] = ['Enter an email address in the correct format, like name@example.com'];
         } elseif (strlen($email) > 80) {
             $returnArray['errors'] = ['Email address must be 80 characters or fewer'];
@@ -62,7 +62,7 @@ class FormValidation
             'errors' => [],
             'link' => '#phone',
         ];
-        if (empty(trim($phone))) {
+        if (is_null($phone) || empty(trim($phone))) {
             $returnArray['errors'] = ['Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'];
         } elseif (preg_match("/[a-z]/i", $phone) || preg_match("/[*,!,#,$,%,^,&,?,<,>,=]/i", $phone)) {
             $returnArray['errors'] = ['Enter a telephone number in the correct format'];
@@ -78,7 +78,7 @@ class FormValidation
             'link' => '#company',
         ];
 
-        if (empty(trim($company))) {
+        if (is_null($company) || empty(trim($company))) {
             $returnArray['errors'] = ['Enter an organisation'];
         } elseif (strlen($company) > 80) {
             $returnArray['errors'] = ['Organisation must be 80 characters or fewer'];
@@ -134,7 +134,7 @@ class FormValidation
             'link' => '#00Nb0000009IXEs',
         ];
 
-        $returnArray['errors'] = empty(trim($jobTitle)) ? ['Enter your job title'] : [] ;
+        $returnArray['errors'] = is_null($jobTitle) || empty(trim($jobTitle)) ? ['Enter your job title'] : [] ;
 
         return $returnArray;
     }
@@ -146,7 +146,7 @@ class FormValidation
             'link' => '#more-detail',
         ];
 
-        $returnArray['errors'] = empty(trim($moreDetail)) ? ['Enter more detail'] : [] ;
+        $returnArray['errors'] = is_null($moreDetail) || empty(trim($moreDetail)) ? ['Enter more detail'] : [] ;
 
         return $returnArray;
     }
