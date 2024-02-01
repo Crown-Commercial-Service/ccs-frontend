@@ -184,10 +184,6 @@ form_contact_thanks_complaint:
   defaults:
     template: forms/25-contact-thanks-complaint.html.twig
 
-downloadAttachmentForCSC:
-  path: /attachment/{attachmentId}
-  controller: App\Controller\FormController::downloadAttachmentForCSC
-
 glossary:
   path: /glossary
   controller: App\Controller\PageController::glossary

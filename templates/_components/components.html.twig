@@ -76,5 +76,11 @@
         </div>
     {% endif %}
 
+     {% if component.name == "tabs_tabs" %}
+        <div class="component featured">
+            {% include '_components/tabs.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
 {% endfor %}
 {# End of Page components #}
