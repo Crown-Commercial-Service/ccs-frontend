@@ -217,7 +217,7 @@
                                 <p class="govuk-hint">You can enter up to 3000 characters</p>
                             </div>
 
-                            <div class="govuk-form-group {{formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                            {# <div class="govuk-form-group {{formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                                 <label class="govuk-label" for="attachment">Upload a file (optional)</label>
 
                                 {% if formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 %}
@@ -229,7 +229,7 @@
                                 {% endif %}   
 
                                 <input class="govuk-file-upload {{formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="attachment" name="attachment" type="file">
-                            </div>
+                            </div> #}
 
                             <div class="govuk-form-group" id="contactedBeforeOptions">
                                 <fieldset class="govuk-fieldset" aria-describedby="contactedBefore">
@@ -370,25 +370,6 @@
                             }
                             return "";
                         }
-                        {# function prepareCallbackTimeslotToSfField(){
-                            
-                            if (document.getElementById("callback-2").checked || document.getElementById("contact-way-conditional-2").checked || document.getElementById("contact-way-conditional-3").checked){
-                                return "";
-                            }
-
-                            const elementName = document.getElementById("subject").value == "Website - Complaint" ? "callbackTimeslotForC" : "callbackTimeslot";
-                            const callbackTimeslotCheckboxes = document.getElementsByName(elementName);
-                            returnValue = "Callback: No preference, \n";
-                            
-                            for (var i = 0, length = callbackTimeslotCheckboxes.length; i < length; i++) {
-                                if (callbackTimeslotCheckboxes[i].checked) {
-                                    returnValue = "Callback: " + callbackTimeslotCheckboxes[i].value + ", \n";
-                                    break;
-                                }
-                            }
-
-                            return returnValue
-                        } #}
 
                         window.onload = function() {
                             if (document.getElementById("how-contacted-conditional-3").checked) {
