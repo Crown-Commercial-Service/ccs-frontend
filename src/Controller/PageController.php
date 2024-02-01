@@ -483,6 +483,9 @@ class PageController extends AbstractController
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Glossary API broken', $e);
         }
+
+        $meta = $results->getContent()->get('meta')->getValue();
+
         $results = $results->getContent()->get('glossaries')->getValue();
 
         $glossaries = [];
@@ -500,7 +503,8 @@ class PageController extends AbstractController
 
         return $this->render('pages/glossary.html.twig', [
             'glossaries' => $glossaries,
-            'termSearch'     => $query
+            'termSearch'     => $query,
+            'intro_text' => $meta[0]['intro_text']
         ]);
     }
 }
