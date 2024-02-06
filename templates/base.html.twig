@@ -290,6 +290,30 @@ End Usersnap code #}
         }
     });
 
+    var btn = document.getElementById("BackToTopButton");
+
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        $('html, body').animate({scrollTop:0}, '300');
+    });
+
+    window.onload = function() {
+        window.addEventListener("scroll", function (event) {
+            if (window.scrollY + window.innerHeight > (document.querySelector('footer').getBoundingClientRect().top + window.pageYOffset)) {
+                btn.classList.add("fixed");
+                btn.classList.remove("flex");
+            } else {
+                btn.classList.add("flex");
+                btn.classList.remove("fixed");
+            }
+
+            if (window.scrollY > 200) {
+                btn.classList.add("show");
+            } else {
+                btn.classList.remove("show");
+            }
+        }, false);
+    };
   
 </script>
 

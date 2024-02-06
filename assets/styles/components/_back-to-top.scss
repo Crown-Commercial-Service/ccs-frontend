@@ -1,0 +1,68 @@
+// /*------------------------------------*\
+//   #Back to top
+// \*------------------------------------*/
+
+.back-to-top-button {
+    display: inline-block;
+    background-color: rgba(255,255,255,.9);
+    padding: 10px 16px 10px 16px;
+    color: #9B1A47;
+    text-align: center;
+    position: fixed;
+    bottom: auto;
+    right: 30px;
+    transition: background-color .3s,
+        opacity .5s, visibility .5s;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.back-to-top-button::after {
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2em;
+    line-height: 50px;
+    color: #fff;
+}
+
+.back-to-top-button:hover {
+    cursor: pointer;
+    color: #fff;
+    background-color: #9B1A47;
+}
+
+.back-to-top-button:hover .svg-icon {
+    fill: white !important;
+  }
+
+.back-to-top-button:active {
+    background-color: #E1E1E1;
+}
+
+.back-to-top-button.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top-button.fixed {
+    position: absolute;
+    top: -70px;
+    bottom: none;
+}
+
+.back-to-top-button.flex {
+    position: fixed;
+    top: none;
+    bottom: 30px;
+}
+
+.svg-icon {
+    fill: #9B1A47;
+    padding-left: 3px;
+    width: 1em;
+    display: inline;
+    position: relative;
+    top: 0.15em;
+}
