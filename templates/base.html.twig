@@ -47,12 +47,12 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.23">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.24">
     {% else %}
         {# To debug CSS in other environments (not live), change the below t
          # styles.css instead of styles.min.css
          #}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.23">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.24">
     {% endif %}
 
     {% block blocking_javascript %}
@@ -290,6 +290,30 @@ End Usersnap code #}
         }
     });
 
+    var btn = document.getElementById("BackToTopButton");
+
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        $('html, body').animate({scrollTop:0}, '300');
+    });
+
+    window.onload = function() {
+        window.addEventListener("scroll", function (event) {
+            if (window.scrollY + window.innerHeight > (document.querySelector('footer').getBoundingClientRect().top + window.pageYOffset)) {
+                btn.classList.add("fixed");
+                btn.classList.remove("flex");
+            } else {
+                btn.classList.add("flex");
+                btn.classList.remove("fixed");
+            }
+
+            if (window.scrollY > 200) {
+                btn.classList.add("show");
+            } else {
+                btn.classList.remove("show");
+            }
+        }, false);
+    };
   
 </script>
 
