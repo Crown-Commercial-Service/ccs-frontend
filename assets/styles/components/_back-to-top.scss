@@ -64,3 +64,9 @@
     position: relative;
     top: 0.15em;
 }
+
+@media (max-width: 1024px) {
+    .back-to-top-button{
+        display: none;
+    }
+}
