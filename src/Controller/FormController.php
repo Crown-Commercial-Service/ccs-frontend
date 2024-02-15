@@ -204,10 +204,11 @@ class FormController extends AbstractController
             if ($formErrors) {
                 $cscMessage = ControllerHelper::getCSCMessage();
                 return $this->render('forms/22-contact.html.twig', [
-                    'referrer' => $params->get('00N4L000009OPAj', null),
-                    'formErrors' => $formErrors,
-                    'formData' => $formData,
-                    'cscMessage'    => $cscMessage,
+                    'referrer'              => $params->get('00N4L000009OPAj', null),
+                    'formErrors'            => $formErrors,
+                    'formData'              => $formData,
+                    'cscMessage'            => $cscMessage,
+                    'fileAttachedBefore'    => $this->fileAttached(),
                 ]);
             } else {
                 $params->set('subject', 'Contact CCS');
@@ -222,11 +223,11 @@ class FormController extends AbstractController
                     $params->set('Call_Back_Preference__c', $formData['callbackTimeslotForC']);
                 }
 
-                // $attachmentID_filename = $this->sendToDocumentUpload();
+                $attachmentID_filename = $this->sendToDocumentUpload();
 
-                // if ($attachmentID_filename != null) {
-                //     $params->set('00N4L000009vP2P', getenv('documentHanding_path') . $attachmentID_filename);
-                // }
+                if ($attachmentID_filename != null) {
+                    $params->set('00N4L000009vP2P', getenv('documentHanding_path') . $attachmentID_filename);
+                }
 
                 $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                     'query' => $params->all(),
@@ -377,9 +378,9 @@ class FormController extends AbstractController
         $errorMessages['companyErr'] =      FormValidation::validationCompany($data['company']);
         $errorMessages['moreDetailErr'] =   FormValidation::validationMoreDetail($data['moreDetail']);
 
-        // if (isset($_FILES['attachment']) && $_FILES['attachment']["size"] != 0) {
-        //     $errorMessages['fileErr'] = FormValidation::validationFile($_FILES['attachment']);
-        // }
+        if ($this->fileAttached()) {
+            $errorMessages['fileErr'] = FormValidation::validationFile($_FILES['attachment']);
+        }
 
         return $this->formatErrorMessages($errorMessages);
     }
@@ -484,6 +485,11 @@ class FormController extends AbstractController
         }
 
         return $params;
+    }
+
+    private function fileAttached()
+    {
+        return (isset($_FILES['attachment']) && $_FILES['attachment']["size"] != 0);
     }
 
     private function sendToDocumentUpload()
