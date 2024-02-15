@@ -208,7 +208,7 @@ class FormController extends AbstractController
                     'formErrors'            => $formErrors,
                     'formData'              => $formData,
                     'cscMessage'            => $cscMessage,
-                    'fileAttachedBefore'    => $this->fileAttached(),
+                    'fileAttachedBefore'    => !(empty($formErrors["fileErr"]["errors"])) ? false : $this->fileAttached(),
                 ]);
             } else {
                 $params->set('subject', 'Contact CCS');
