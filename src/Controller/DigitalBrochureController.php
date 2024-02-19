@@ -114,4 +114,9 @@ class DigitalBrochureController extends AbstractController
             'digital_brochure' => $digital_brochure
         ]);
     }
+
+    public function redirectToDownloadableResource($id, $slug, Request $request)
+    {
+         return $this->redirect($this->generateUrl('downloadable_resource_request',  array('id' => $id, 'slug' => $slug)));
+    }
 }
