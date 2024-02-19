@@ -117,6 +117,6 @@ class DigitalBrochureController extends AbstractController
 
     public function redirectToDownloadableResource($id, $slug, Request $request)
     {
-         return $this->redirect($this->generateUrl('downloadable_resource_request',  array('id' => $id, 'slug' => $slug)));
+         return $this->redirect($this->generateUrl('downloadable_resource_request', array('id' => $id, 'slug' => $slug)));
     }
 }
