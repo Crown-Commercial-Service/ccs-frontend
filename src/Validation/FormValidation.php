@@ -217,7 +217,7 @@ class FormValidation
             'link' => '#attachment',
         ];
 
-        $allowedFileType = array('jpeg', 'png', 'svg', 'odt', 'doc', 'docx', 'odp', 'ods', 'odg', 'pdf', 'txt');
+        $allowedFileType = array('jpeg', 'jpg', 'png', 'odt', 'doc', 'docx', 'odp', 'ods', 'odg', 'pdf', 'txt');
 
         $filename = strtolower($file['name']);
 
@@ -226,7 +226,7 @@ class FormValidation
         if ($file["size"] >= 10485760) {
             $returnArray['errors'] = ['The selected file is too big. Upload a file that is 10MB or less'] ;
         } elseif (!in_array($ext, $allowedFileType)) {
-            $returnArray['errors'] = ['This file type is not accepted. The selected file must be a JPEG, PNG, SVG, ODT, DOC, DOCX, ODP, ODS, ODG, PDF or TXT'] ;
+            $returnArray['errors'] = ['This file type is not accepted. The selected file must be a JPEG, JPG, PNG, ODT, DOC, DOCX, ODP, ODS, ODG, PDF or TXT'] ;
         }
 
         return $returnArray;
