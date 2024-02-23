@@ -194,4 +194,26 @@ components:
           type: text
         tabs_content:
           type: richtext
-
+  apollos_apollos:
+    apollos_apollos_apollos:
+      type: array
+      content_fields:
+        apollos_heading:
+          type: text
+        apollos_requirement:
+          type: text
+        apollos_solution:
+          type: text
+        apollos_results:
+          type: array
+          content_fields:
+            results_result:
+              type: text
+        apollos_learn_more_text:
+          type: text
+        apollos_learn_more_url:
+          type: text
+        apollos_visit_site_text:
+          type: text
+        apollos_visit_site_url:
+          type: text
