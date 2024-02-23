@@ -77,8 +77,14 @@
     {% endif %}
 
      {% if component.name == "tabs_tabs" %}
-        <div class="component featured">
+        <div class="component tabs">
             {% include '_components/tabs.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
+     {% if component.name == "apollos_apollos" %}
+        <div class="component apollo">
+            {% include '_components/apollo_card.html.twig' with {'component': component.content } %}
         </div>
     {% endif %}
 
