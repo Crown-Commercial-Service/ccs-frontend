@@ -349,6 +349,7 @@ class ApiController extends AbstractController
             'corpsol'   => getenv('PARDOT_EMAIL_FORM_HANDLER_CORPORATE_URL'),
             'buildings' => getenv('PARDOT_EMAIL_FORM_HANDLER_BUILDINGS_URL'),
             'tech'      => getenv('PARDOT_EMAIL_FORM_HANDLER_TECH_URL'),
+            'guide'     => getenv('PARDOT_EMAIL_FORM_HANDLER_GUIDE_URL'),
             'cnz'       => getenv('PARDOT_EMAIL_FORM_HANDLER_CNZ_URL'),
             'digitransformation' => getenv('PARDOT_EMAIL_FORM_HANDLER_DIGITRANS_URL'),
             'digilg'    => getenv('PARDOT_EMAIL_FORM_HANDLER_DIGILG_URL'),

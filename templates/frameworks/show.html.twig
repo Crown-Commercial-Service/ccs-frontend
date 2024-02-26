@@ -219,7 +219,7 @@
                                                     </dt>
                                                     <dd class="apollo-list--definition__value">
                                                         {% if lot.description %}
-                                                            <div class="govuk-!-margin-bottom-2">{{ lot.description | raw |nl2br }}</div>
+                                                            <div class="govuk-!-margin-bottom-2">{{ lot.description |replace({"&nbsp;": "</br>"})| raw   }}</div>
                                                         {% endif %}
 
                                                         {# don't show this information if the lot has expired already #}

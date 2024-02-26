@@ -94,12 +94,12 @@
                                             Webinar
                                         </label>
                                     </div>
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                    {# <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                         <input v-on:change=fetchAPIData(digitalBrochure,null) v-model="digitalBrochure" name="digitalBrochure" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="digitalBrochure" type="checkbox" {{ filters.digitalBrochure is defined and filters.digitalBrochure is not null  ? 'checked' }}>
                                         <label class="govuk-label govuk-checkboxes__label" for="digitalBrochure">
                                             Digital brochure
                                         </label>
-                                    </div>
+                                    </div> #}
 
                                     {% set tempDigitalDownload = [] %}
 
