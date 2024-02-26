@@ -4,7 +4,7 @@
                         {% if component.apollos_apollos_apollos|length > 0 %}
                         {% for apollo in component.apollos_apollos_apollos %}
                             <li class="apollo-card-old how-to-buy-list__item">
-                                <h2 class="apollo-card-old__heading govuk-heading-m govuk-!-font-size-24">Further competitions</h2>
+                                <h2 class="apollo-card-old__heading govuk-heading-m govuk-!-font-size-24">{{ apollo.apollos_heading }}</h2>
                                 <dl class="apollo-list--definition--card">
                                     <dt>Requirement</dt>
                                     <dd>{{ apollo.apollos_requirement }}</dd>
