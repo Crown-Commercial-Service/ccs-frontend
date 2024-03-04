@@ -47,12 +47,12 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.24">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.26">
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.24">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.26">
     {% endif %}
 
     {# Browser icon #}

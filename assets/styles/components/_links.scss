@@ -32,3 +32,8 @@
     display: none;
   }
 }
+
+.govuk-error-summary__list a:link,
+.govuk-error-summary__list a:visited {
+  color: #a62a16;
+}
