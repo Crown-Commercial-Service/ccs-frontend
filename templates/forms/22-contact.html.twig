@@ -231,6 +231,7 @@
                             {% endif %}
 
                             <div class="govuk-form-group {{formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                <div class="govuk-hint">You can upload a file to support your query. If you wish to do this, the file must be smaller than 10MB</div>
                                 <label class="govuk-label" for="attachment">Upload a file (optional)</label>
 
                                 {% if formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 %}
