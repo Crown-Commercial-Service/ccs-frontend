@@ -116,7 +116,7 @@
 
 .homepage-hero__search-button {
 
-    background: $ccs-button-colour url("../images/icon-search-white.png") center center no-repeat;
+    background: $ccs-button-colour url("../images/icon-search.png") center center no-repeat;
     background-size: 19px 19px;
     border: 0;
     // 40px to match the input height (this is fickle)
@@ -260,7 +260,7 @@
         width: 100vw;
         position: relative;
         left: calc(-50vw + 50%);
-        background-image: url('/assets/images/CCS_landing_page_dt.jpg');
+        background-image: url('/assets/images/Homepage-Hero-Health.jpg');
         background-repeat: no-repeat;
         background-size: contain;
         // full width image
@@ -366,6 +366,10 @@
             padding-bottom: 60px;
         }
 
+        .govuk-caption-button {
+            margin-top: 8px !important;
+        }
+
         .govuk-caption-heading {
             margin-top: 10px;
             font-size: 1.8rem !important;
@@ -404,6 +408,7 @@
         }
 
         .govuk-caption-button {
+            margin-top: 15px !important;
             font-size:1.1875rem;
         }
     }
