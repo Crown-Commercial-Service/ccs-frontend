@@ -123,12 +123,33 @@
         padding-right: 5px;
         text-decoration: none;
         font-size: 1.188rem;
+
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: underline;
+        }
     }
 
     span {
         padding-left: 7px;
         border-left: 2px solid black;
         font-size:1.05rem;
+    }
+}
+
+.news-listing-title{
+
+    a {
+        padding-right: 5px;
+        text-decoration: none;
+        font-size: 1.188rem;
+
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: underline;
+        }
     }
 }
 
