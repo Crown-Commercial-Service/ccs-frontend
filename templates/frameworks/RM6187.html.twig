@@ -179,41 +179,7 @@
 
                 </div>
 
-                <div class="govuk-grid-column-one-third">
-
-                    <aside class="aside">
-                        <div class="apollo-enclosure">
-                            <h2 class="aside__heading">Contact</h2>
-                            <p >You can contact us by email, phone or using the <a class="govuk-link" href="/contact">enquiry form</a>.</p>
-
-                            <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Email:</h3>
-                            <p ><a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a></p>
-
-                            <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Telephone:</h3>
-                            <p ><a href="tel:03454102222">0345 410 2222</a></p>
-
-                            <p >CCS customer services team is available Monday to Friday, 9am to 5pm.</p>
-                        </div>
-
-                        <div class="apollo-enclosure">
-                            <h2 class="aside__heading">Useful information </h2>
-                            <p class="govuk-body">
-                                <a href="{{ path('glossary')}}">Glossary</a>
-                            </p>
-                        </div>
-
-                        <div class="apollo-enclosure">
-                            <h2 class="aside__heading">Do you need an accessible version of a document?</h2>
-                            <br />
-                            <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Email:</h3>
-                            <p ><a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a></p>
-
-                            <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Telephone:</h3>
-                            <p ><a href="tel:03454102222">0345 410 2222</a></p>
-                        </div>
-
-                    </aside>
-                </div>
+                {% include '/frameworks/_side-summary.html.twig' with {'framework': null, 'cscMessage' : "CCS customer services team is available Monday to Friday, 9am to 5pm."} %}
             </div>
         </main>
     </div>
