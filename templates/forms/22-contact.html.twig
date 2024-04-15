@@ -29,6 +29,9 @@
                                 <a href={{errorType.link}}><li>{{error}}</li></a>
                             {% endfor %}
                         {% endfor %}
+                        {% if fileAttachedBefore is defined and fileAttachedBefore == true %}
+                            <a href="#fileAttachedBefore"><li>You must to re-upload your document</li></a>
+                        {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -206,7 +209,8 @@
                                     {% endfor %}                      
                                 {% endif %}
 
-                                <div id="more-detail-hint" class="govuk-hint">Tell us more about your question or describe the problem you are having. Do not include personal or financial information, like your credit card details.</div>
+                                <div id="more-detail-hint" class="govuk-hint">Tell us more about your question or describe the problem you are having. Include specific details such as the agreement RM number (RMXXXX) or the name of the digital platform you are using. 
+                                        <br /><br />Do not include personal or financial information, like your credit card details.</div>
                                 <div id="complaintHint" class="govuk-hint govuk-visually-hidden">Do not include: 
                                     <ul>
                                         <li>personal or financial details, like your credit card details</li>
@@ -217,7 +221,17 @@
                                 <p class="govuk-hint">You can enter up to 3000 characters</p>
                             </div>
 
+                            {% if fileAttachedBefore is defined and fileAttachedBefore == true %}
+                                <div id="fileAttachedBefore" class="govuk-warning-text">
+                                    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                                    <strong class="govuk-warning-text__text">
+                                        <span class="govuk-visually-hidden">Warning</span>You must to re-upload your document
+                                    </strong>
+                                </div>
+                            {% endif %}
+
                             <div class="govuk-form-group {{formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                <div class="govuk-hint">You can upload a file to support your query. If you wish to do this, the file must be smaller than 10MB</div>
                                 <label class="govuk-label" for="attachment">Upload a file (optional)</label>
 
                                 {% if formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 %}
@@ -226,7 +240,7 @@
                                             <span class="govuk-visually-hidden">Error:</span>{{error}}
                                         </span>
                                     {% endfor %}                            
-                                {% endif %}   
+                                {% endif %}
 
                                 <input class="govuk-file-upload {{formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="attachment" name="attachment" type="file">
                             </div>
@@ -332,7 +346,6 @@
                             dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(originCheckboxes);
                             dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(customerTypeCheckboxes);
                             dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(contactWayCheckboxes);
-                            dataCollectionFieldForSalesforce.value += prepareCallbackTimeslotToSfField();
                             dataCollectionFieldForSalesforce.value += " " + fieldMoreDetail.name + ": " + fieldMoreDetail.value;
 
                             this.removeEventListener('click', handler); 
@@ -370,25 +383,6 @@
                                 }
                             }
                             return "";
-                        }
-                        function prepareCallbackTimeslotToSfField(){
-                            
-                            if (document.getElementById("callback-2").checked || document.getElementById("contact-way-conditional-2").checked || document.getElementById("contact-way-conditional-3").checked){
-                                return "";
-                            }
-
-                            const elementName = document.getElementById("subject").value == "Website - Complaint" ? "callbackTimeslotForC" : "callbackTimeslot";
-                            const callbackTimeslotCheckboxes = document.getElementsByName(elementName);
-                            returnValue = "Callback: No preference, \n";
-                            
-                            for (var i = 0, length = callbackTimeslotCheckboxes.length; i < length; i++) {
-                                if (callbackTimeslotCheckboxes[i].checked) {
-                                    returnValue = "Callback: " + callbackTimeslotCheckboxes[i].value + ", \n";
-                                    break;
-                                }
-                            }
-
-                            return returnValue
                         }
 
                         window.onload = function() {

@@ -206,11 +206,11 @@ webinar_confirmation:
 
 digital_brochure_request:
   path: /digital_brochure/request/{id}/{slug}
-  controller: App\Controller\DigitalBrochureController::request
+  controller: App\Controller\DigitalBrochureController::redirectToDownloadableResource
 
-digital_brochure_confirmation:
-  path: /digital_brochure/confirmation/{id}/{slug}
-  controller: App\Controller\DigitalBrochureController::show
+# digital_brochure_confirmation:
+#   path: /digital_brochure/confirmation/{id}/{slug}
+#   controller: App\Controller\DigitalBrochureController::show
 
 downloadable_resource_request:
   path: /downloadable-resource/request/{id}/{slug}
