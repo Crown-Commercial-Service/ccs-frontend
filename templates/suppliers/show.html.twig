@@ -425,6 +425,7 @@
         </main>
     </div>
     <script> frameworkAndSupplierPage(); </script>
+    <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'supplier', 'supplier':'{{name}}'});</script>
 
 {% endblock %}
 

@@ -25,7 +25,7 @@
                             <div class="govuk-hero-content">
                                 <div class="govuk-hero-homepage-caption-container govuk-hero-margin-right-35">
 
-                                    {% set default = true %}
+                                    {% set default = false %}
 
                                     {% if default %}
                                         <div class="govuk-hero-caption">
@@ -35,10 +35,9 @@
                                         </div>   
                                     {% else %}
                                         <div class="govuk-hero-caption">
-                                                <h1 class="govuk-caption-heading">Regenerate your local community</h1>
-                                                <p class="govuk-caption-link" style="color:white; margin-bottom: 0">Find out how we can help local authorities provide projects that will improve the lives of citizens</p>
-                                                <br />
-                                                <a class="govuk-button govuk-caption-button" href="https://www.crowncommercial.gov.uk/sectors/local-government/regeneration-and-placemaking/">View our regeneration webpage</a>
+                                                <h1 class="govuk-caption-heading">The power of place-based procurement in the health sector</h1>
+                                                <p class="govuk-caption-link" style="color:white; margin-bottom: 0">Read our newly published whitepaper on how integrated care systems in England can maximise their procurement through local partnerships.</p>
+                                                <a class="govuk-button govuk-caption-button" href="https://www.crowncommercial.gov.uk/downloadable-resource/request/63630/place-based-procurement-strategies-for-integrated-care-systems">Download our whitepaper</a>
                                         </div>
                                     {% endif %}
 
@@ -185,40 +184,49 @@
                                     {{homepageContent.catalogues.title is defined ?
                                      homepageContent.catalogues.title : "Catalogues" }}
                                 </h2>
-                                <p class="govuk-body govuk-!-margin-bottom-0">
-                                    <a href="{{ homepageContent.catalogue1.link_url is defined ? homepageContent.catalogue1.link_url : '/buy-and-supply/purchasing-platform/'}}">
-                                    {{homepageContent.catalogue1.title is defined ?
-                                     homepageContent.catalogue1.title : "Purchasing Platform" }}
-                                    </a>
-                                </p>
-                                <p class="govuk-body govuk-!-font-size-16">
-                                    {{homepageContent.catalogue1.description is defined ?
-                                     homepageContent.catalogue1.description : 
-                                     "Technology products, office supplies, multifunctional devices" }}
-                                </p>
-                                <p class="govuk-body govuk-!-margin-bottom-0">
-                                    <a href="{{ homepageContent.catalogue2.link_url is defined ? homepageContent.catalogue2.link_url : '/buy-and-supply/digital-marketplace/'}}">
-                                    {{homepageContent.catalogue2.title is defined ?
-                                     homepageContent.catalogue2.title : "Digital marketplace" }}
-                                     </a>
-                                </p>
-                                <p class="govuk-body govuk-!-font-size-16">
-                                    {{homepageContent.catalogue2.description is defined ?
-                                     homepageContent.catalogue2.description : 
-                                     "Cloud hosting, digital specialists, data centre space, user research" }}
-                                </p>
-                                <p class="govuk-body govuk-!-margin-bottom-0">
-                                    <a href="{{ homepageContent.catalogue3.link_url is defined ? homepageContent.catalogue3.link_url : '/buy-and-supply/emarketplace/'}}">
-                                    {{homepageContent.catalogue3.title is defined ?
-                                     homepageContent.catalogue3.title : "eMarketplace" }}
-                                     </a>
-                                </p>
-                                <p class="govuk-body govuk-!-font-size-16">
-                                    {{homepageContent.catalogue3.description is defined ?
-                                     homepageContent.catalogue3.description : 
-                                     "Local authority software, wider public sector office
-                                    supplies" }}
-                                </p>
+
+                                {% if homepageContent.catalogue1| length != 0 %}
+                                    <p class="govuk-body govuk-!-margin-bottom-0">
+                                        <a href="{{ homepageContent.catalogue1.link_url is defined ? homepageContent.catalogue1.link_url : '/buy-and-supply/purchasing-platform/'}}">
+                                        {{homepageContent.catalogue1.title is defined ?
+                                        homepageContent.catalogue1.title : "Purchasing Platform" }}
+                                        </a>
+                                    </p>
+                                    <p class="govuk-body govuk-!-font-size-16">
+                                        {{homepageContent.catalogue1.description is defined ?
+                                        homepageContent.catalogue1.description : 
+                                        "Technology products, office supplies, multifunctional devices" }}
+                                    </p>
+                                {% endif %}
+
+                                {% if homepageContent.catalogue2| length != 0 %}
+                                    <p class="govuk-body govuk-!-margin-bottom-0">
+                                        <a href="{{ homepageContent.catalogue2.link_url is defined ? homepageContent.catalogue2.link_url : '/buy-and-supply/digital-marketplace/'}}">
+                                        {{homepageContent.catalogue2.title is defined ?
+                                        homepageContent.catalogue2.title : "Digital marketplace" }}
+                                        </a>
+                                    </p>
+                                    <p class="govuk-body govuk-!-font-size-16">
+                                        {{homepageContent.catalogue2.description is defined ?
+                                        homepageContent.catalogue2.description : 
+                                        "Cloud hosting, digital specialists, data centre space, user research" }}
+                                    </p>
+                                {% endif %}
+
+                                {% if homepageContent.catalogue3| length != 0 %}
+                                    <p class="govuk-body govuk-!-margin-bottom-0">
+                                        <a href="{{ homepageContent.catalogue3.link_url is defined ? homepageContent.catalogue3.link_url : '/buy-and-supply/emarketplace/'}}">
+                                        {{homepageContent.catalogue3.title is defined ?
+                                        homepageContent.catalogue3.title : "eMarketplace" }}
+                                        </a>
+                                    </p>
+                                    <p class="govuk-body govuk-!-font-size-16">
+                                        {{homepageContent.catalogue3.description is defined ?
+                                        homepageContent.catalogue3.description : 
+                                        "Local authority software, wider public sector office
+                                        supplies" }}
+                                    </p>
+                                {% endif %}
 
                             </div>
                         </div>
@@ -400,4 +408,5 @@
         </main>
     </div>
 
+<script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'homepage'});</script>
 {% endblock %}

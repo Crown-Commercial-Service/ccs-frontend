@@ -1,0 +1,30 @@
+
+<div class="govuk-width-container">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            
+            {% if component.tabs_tabs_heading is defined and component.tabs_tabs_heading|length > 0 %}
+                <h2 class="govuk-heading-m" id="ataglance">{{component.tabs_tabs_heading}}</h2>
+            {% endif %}
+
+            <div class="govuk-tabs" data-module="govuk-tabs">
+                <ul class="govuk-tabs__list" role="tablist">
+                    {% for tab in component.tabs_tabs_tabs %}
+                        {% set title = tab.tabs_title|lower|replace({' ':'', "'": ''}) %}
+                        {% set tabId = 'tab_' ~ title %}
+                        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
+                            <a class="govuk-tabs__tab" href="#{{title}}" id="tabId" role="tab" aria-controls="title" aria-selected="true" tabindex="0" onclick="pushToDataLayer({'event': 'tab_navigation', 'link_text': {{title}}});">{{tab.tabs_title}}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            
+                {% for tab in component.tabs_tabs_tabs %}
+                    {% set title = tab.tabs_title|lower|replace({' ':'', "'": ''}) %}
+                    <div class="govuk-tabs__panel" id="{{title}}" role="tabpanel" aria-labelledby="'tab_'{{title}}">
+                        <div class="wysiwyg-content">{{ tab.tabs_content | raw }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

@@ -50,13 +50,19 @@
 
                     <h1 class="govuk-heading-xl page-title">Search suppliers</h1>
 
+                    <p>Changes to Carbon Reduction Plan labelling in supplier search <a href="http://www.crowncommercial.gov.uk/news/removal-of-carbon-reduction-plan-label-functionality-on-ccs-website-supplier-search">read more here</a></p>
+
                     <div class="govuk-warning-text">
                         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
                         <strong class="govuk-warning-text__text">
                             <span class="govuk-warning-text__assistive">Important</span>
-                            Some of our suppliers will not be displayed on this page
-                        </strong>
-                        <p>Select <a href="https://supplierregistration.cabinetoffice.gov.uk/dps">Dynamic Purchasing Systems</a>, <a href="https://www.digitalmarketplace.service.gov.uk/g-cloud/suppliers">G-Cloud</a> or <a href="{{ path('frameworks_show', {'rmNumber': 'RM1043.8'})}}">Digital Outcomes & Specialists</a> (DOS) to see suppliers for that type of agreement. To find out more abut our different types of framework agreements, <a href="https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/help-for-new-buyers-and-suppliers/start-buying">read our start buying page</a>.</p>	
+                            Some of our suppliers will not be displayed on this page, select one of the links outlined below to see suppliers for the type of agreement required.
+                        </strong>	
+                        <br />
+                        <p><a href="https://supplierregistration.cabinetoffice.gov.uk/dps">Dynamic Purchasing Systems</a> - to buy a range of common products and services, from simple to complex requirements, from low to high volumes of products.</p>
+                        <p><a href="https://www.applytosupply.digitalmarketplace.service.gov.uk/g-cloud/suppliers">G-Cloud</a> - for cloud supporting services, products and solutions. </p>
+                        <p><a href="{{ path('frameworks_show', {'rmNumber': 'RM1043.8'})}}">Digital Outcomes & Specialists (DOS)</a>to access agile development and user-centred design services.</p>
+                        <p>To find out more abut our different types of framework agreements, <a href="https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/help-for-new-buyers-and-suppliers/start-buying">read our start buying page.</a></p>
                     </div>
 
                 </div>
@@ -346,7 +352,6 @@
 
                             <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
                                 <a :href="result.url">{[ result.name ]}</a>
-                                <span v-if="result.crp_url" class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--lower-case ccs-tag--crp">Carbon Reduction Plan</span>
                                 <span class="ccs-subtle-notification" v-if="result.alternative_trading_names.length > 0">
                                     Trading as
                                     <span class="trading-name" v-for="trading_name in result.alternative_trading_names">{[ trading_name ]}</span>
@@ -376,10 +381,6 @@
                             {#{{ dump(item.content) }}#}
                             <h3 class="govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
                                 <a href="{{ path('suppliers_show', {'id': item.content.id, 'slug': slugify(name)} ) }}">{{ name }}</a>
-
-                                {% if item.content.crp_url != null and item.content.crp_url != ""  %}
-                                    <span class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--lower-case ccs-tag--crp">Carbon Reduction Plan</span>
-                                {% endif %}
 
                                 {% if item.content.trading_name %}
                                     <span class="ccs-subtle-notification">Trading as {{ item.content.trading_name }}</span>
@@ -427,6 +428,7 @@
             </div>
 
 
+        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'supplier'});</script>
 
         </main>
     </div>

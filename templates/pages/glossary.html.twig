@@ -11,7 +11,7 @@
 
 {% block body %}
 
-    {% include '_components/hero.html.twig' with {'image': '/assets/images/glossary.png', 'heading': 'Search our glossary for common procurement terms', 'notFromWordpress': 'true', 'cta_label': '', 'content': '', 'cta_label': '', 'cta_destination': ''} %}
+    {% include '_components/hero.html.twig' with {'image': '/assets/images/Glossary-CCS.jpg', 'heading': 'Search our glossary for common procurement terms', 'notFromWordpress': 'true', 'cta_label': '', 'content': '', 'cta_label': '', 'cta_destination': ''} %}
 
     <div class="govuk-width-container">
         <div class="govuk-phase-banner">
@@ -39,7 +39,19 @@
 
                 <div class="govuk-grid-column-full">
                         <h1 class="govuk-heading-xl page-title">Glossary</h1>
+                        {% if intro_text is defined and intro_text is not empty %}
+                            <p> {{ intro_text }}</p>
+                            <br /><br />
+                        {% else %}
+                            <p>We understand that procurement can be confusing. 
+                            Organisations often use different terms to describe the same thing. With that in mind, 
+                            we designed this glossary to make buying with us and navigating our website easier. 
+                            It is not designed to be an extensive list of all procurement terms.</p>
+                            <br /><br />
+                        {% endif %}
+           
                 </div>
+              
                 <div class="govuk-grid-column-one-third">
                 
                     <div class="govuk-form-group govuk-form-group--enclosure">
@@ -106,4 +118,5 @@
         </main>
 
     </div>
+<script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});</script>
 {% endblock %}

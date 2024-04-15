@@ -18,6 +18,8 @@ use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Psr16Cache;
 use Aws\S3\S3Client;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Mime\Part\DataPart;
+use Symfony\Component\Mime\Part\Multipart\FormDataPart;
 
 /**
  * Form controller
@@ -33,8 +35,6 @@ class FormController extends AbstractController
 
     protected $client;
 
-    protected $s3_client;
-
     public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new RestData(
@@ -46,15 +46,6 @@ class FormController extends AbstractController
         $this->api->setCache($psr16Cache);
 
         $this->client = HttpClient::create();
-
-        $this->s3_client = new S3Client([
-            'region' => 'eu-west-2',
-            'version' => 'latest',
-            'credentials' => [
-                'key'    => getenv('s3documentHanding_key'),
-                'secret' => getenv('s3documentHanding_secret'),
-            ]
-        ]);
     }
 
     public function esourcingRegisterSubmit(Request $request)
@@ -213,10 +204,11 @@ class FormController extends AbstractController
             if ($formErrors) {
                 $cscMessage = ControllerHelper::getCSCMessage();
                 return $this->render('forms/22-contact.html.twig', [
-                    'referrer' => $params->get('00N4L000009OPAj', null),
-                    'formErrors' => $formErrors,
-                    'formData' => $formData,
-                    'cscMessage'    => $cscMessage,
+                    'referrer'              => $params->get('00N4L000009OPAj', null),
+                    'formErrors'            => $formErrors,
+                    'formData'              => $formData,
+                    'cscMessage'            => $cscMessage,
+                    'fileAttachedBefore'    => !(empty($formErrors["fileErr"]["errors"])) ? false : $this->fileAttached(),
                 ]);
             } else {
                 $params->set('subject', 'Contact CCS');
@@ -224,6 +216,18 @@ class FormController extends AbstractController
                 $params->set('recordType', '012b00000005NWC');
                 $params->set('priority', 'Green');
                 $params->set('orgid', ControllerHelper::getOrgId());
+
+                if ($formData['callbackTimeslot'] != null) {
+                    $params->set('Call_Back_Preference__c', $formData['callbackTimeslot']);
+                } elseif ($formData['callbackTimeslotForC'] != null) {
+                    $params->set('Call_Back_Preference__c', $formData['callbackTimeslotForC']);
+                }
+
+                $attachmentID_filename = $this->sendToDocumentUpload();
+
+                if ($attachmentID_filename != null) {
+                    $params->set('00N4L000009vP2P', getenv('documentHanding_path') . $attachmentID_filename);
+                }
 
                 $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
                     'query' => $params->all(),
@@ -374,6 +378,10 @@ class FormController extends AbstractController
         $errorMessages['companyErr'] =      FormValidation::validationCompany($data['company']);
         $errorMessages['moreDetailErr'] =   FormValidation::validationMoreDetail($data['moreDetail']);
 
+        if ($this->fileAttached()) {
+            $errorMessages['fileErr'] = FormValidation::validationFile($_FILES['attachment']);
+        }
+
         return $this->formatErrorMessages($errorMessages);
     }
 
@@ -451,32 +459,6 @@ class FormController extends AbstractController
         return false;
     }
 
-    public function downloadAttachmentForCSC($attachmentId)
-    {
-        try {
-            $response = $this->client->request('GET', getenv('documentHanding_endpoint') . $attachmentId, ['headers' => array('x-api-key' => getenv('documentHanding_key'), 'Content-Type' => 'application/json')]);
-
-            $documentKey = $response->toArray()["documentFile"]["url"];
-            $documentName = substr($documentKey, strpos($documentKey, $attachmentId) + strlen($attachmentId) + 1);
-
-            $fileContents = $this->s3_client->getObject([
-                'Bucket' => getenv('s3documentHanding_bucket_name'),
-                'Key'    => $documentKey,
-            ])->get('Body')->getContents();
-
-            header('Content-Description: File Transfer');
-            header('Content-Disposition: attachment; filename="' . basename($documentName));
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . strlen($fileContents));
-
-            echo $fileContents;
-        } catch (\Exception $exception) {
-            throw new NotFoundHttpException('Failed to download file from AWS', $exception);
-        }
-    }
-
     private function checkUTM($utmArray, $params)
     {
         if (empty($utmArray)) {
@@ -503,5 +485,47 @@ class FormController extends AbstractController
         }
 
         return $params;
+    }
+
+    private function fileAttached()
+    {
+        return (isset($_FILES['attachment']) && $_FILES['attachment']["size"] != 0);
+    }
+
+    private function sendToDocumentUpload()
+    {
+        if ((!empty($_FILES["attachment"])) && ($_FILES['attachment']['error'] == 0)) {
+            try {
+                $uploadedFilePath = substr($_FILES["attachment"]["tmp_name"], 0, strripos($_FILES["attachment"]["tmp_name"], '/') + 1);
+                $newFilePath = $uploadedFilePath . $_FILES["attachment"]["name"];
+                copy($_FILES["attachment"]["tmp_name"], $newFilePath);
+
+                $dataPartFile = DataPart::fromPath($newFilePath);
+                $debugStringFromDataPart = $dataPartFile->asDebugString();
+                $filename = preg_replace('/[^A-Za-z0-9\_\-\.]/', '_', substr($debugStringFromDataPart, strripos($debugStringFromDataPart, ":") + 2));
+
+                $data = [
+                    'typeValidation[]'  => $_FILES["attachment"]["type"],
+                    'sizeValidation'    => strval($_FILES["attachment"]["size"]),
+                    'documentFile'      => $dataPartFile
+                ];
+
+                $formData = new FormDataPart($data);
+
+                $headers = $formData->getPreparedHeaders()->toArray();
+                $headers['x-api-key'] = getenv('documentHanding_key');
+
+                $response = $this->client->request('POST', getenv('documentHanding_endpoint'), [
+                    'headers'   => $headers,
+                    'body'      => $formData->bodyToIterable(),
+                ]);
+
+                unlink($newFilePath);
+                return $response->toArray()["id"] . "/" . $filename;
+            } catch (\Exception $exception) {
+                throw new NotFoundHttpException('Failed to upload (Document Upload)', $exception);
+                return null;
+            }
+        }
     }
 }

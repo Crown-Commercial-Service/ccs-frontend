@@ -12,14 +12,22 @@
     padding-right: govuk-px-to-rem(30);
 
     width: auto;
+    color: black;
 
     &:hover,
     &:active,
     &:focus {
 
         background-color: $ccs-button-hover-colour;
+        color: black !important;
 
     }
+
+    &:link,
+    &:visited {
+        color: black;
+    } 
+
 
 }
 

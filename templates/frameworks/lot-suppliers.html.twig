@@ -67,10 +67,6 @@
                       <li>
                          <h3 class="{{ item.content.supplier_crp_url ? 'ccs-tag--inline' : '' }} govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
                              <a href="{{ path('suppliers_show', {'id': item.content.supplier_id, 'slug': slugify(item.content.supplier_name|trim)} ) }}">{{ item.content.supplier_name }}</a></h3>
-                           
-                           {% if item.content.supplier_crp_url %}
-                              <span class="govuk-tag govuk-tag--subtle ccs-tag ccs-tag--lower-case ccs-tag--crp">Carbon Reduction Plan</span>
-                           {% endif %}
 
                           {% if item.content.supplier_contact_email is not empty %}
                               <p class="govuk-list govuk-!-font-size-17featured ccs-framework-list">
@@ -147,5 +143,5 @@
       </main>
    </div>
 
-
+<script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});</script>
 {% endblock %}
