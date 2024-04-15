@@ -82,6 +82,12 @@
         color: #007194;
         text-decoration: none;
     }
+
+    &:hover,
+    &:focus,
+    &:active {
+        text-decoration: underline;
+    }
 }
 
 

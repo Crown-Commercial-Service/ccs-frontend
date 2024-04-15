@@ -1,8 +1,8 @@
 // this is ran on all the pages and assign print_page() to the print button
 window.onload = function() {
-    const printLink = document.querySelector('.app-c-print-link__link');
-    const accordionButtons = document.querySelectorAll('.govuk-accordion__section-button');
-    const ctaButtons = document.querySelectorAll('.govuk-button');
+    const printLink         = document.querySelector('.app-c-print-link__link');
+    const accordionButtons  = document.querySelectorAll('.govuk-accordion__section-button');
+    const ctaButtons        = document.querySelectorAll('.govuk-button');
 
     printLink != null           ? assignPrintLinkWithAction(printLink) : null;
     accordionButtons != null    ? assignAccordionWithAction(accordionButtons) : null;
@@ -22,13 +22,13 @@ function assignCtaButtonWithAction(ctaButtons){
     ctaButtons.forEach(ctaButton => {
         ctaButton.addEventListener('click', () => {
             
-            dataArray = {"event":'cta_button_click', "link_text": ctaButton.innerText}
-            
             if (ctaButton.href != null){
-                dataArray['link_url'] =  ctaButton.href;
+                pushToDataLayer({
+                    "event":        'cta_button_click',
+                    "link_text":    ctaButton.innerText,
+                    "link_url":     ctaButton.href
+                });
             }
-
-            pushToDataLayer(dataArray);
         });
     });
 }
@@ -107,10 +107,13 @@ function fileDownload( fileURL, fileName, fileSize) {
 
 }
 
-function pushToDataLayer(array){
-    array = (typeof array === 'string')? JSON.parse(array) : array;
+function pushToDataLayer(array) {
+    array = (typeof array === 'string') ? JSON.parse(array) : array;
+    var env = document.getElementById('app-env').dataset.env;
 
-    window.dataLayer.push(array);
+    if (env == "local" || env == "prod") {
+        window.dataLayer.push(array);
+    }
 }
 
 function formatFileSize(bytes, decimals = 2) {

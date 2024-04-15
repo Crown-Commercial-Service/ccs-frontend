@@ -184,5 +184,36 @@ components:
       type: richtext
     featured_featured_link_3_destination:
       type: richtext
-  
-
+  tabs_tabs:
+    tabs_tabs_heading:
+      type: text
+    tabs_tabs_tabs:
+      type: array
+      content_fields:
+        tabs_title:
+          type: text
+        tabs_content:
+          type: richtext
+  apollos_apollos:
+    apollos_apollos_apollos:
+      type: array
+      content_fields:
+        apollos_heading:
+          type: text
+        apollos_requirement:
+          type: text
+        apollos_solution:
+          type: text
+        apollos_results:
+          type: array
+          content_fields:
+            results_result:
+              type: text
+        apollos_learn_more_text:
+          type: text
+        apollos_learn_more_url:
+          type: text
+        apollos_visit_site_text:
+          type: text
+        apollos_visit_site_url:
+          type: text

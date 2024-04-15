@@ -1,0 +1,34 @@
+<div class="govuk-width-container">
+     <div class="govuk-grid-column-three-quarters">
+                        <ul class="how-to-buy-list">
+                        {% if component.apollos_apollos_apollos|length > 0 %}
+                        {% for apollo in component.apollos_apollos_apollos %}
+                            <li class="apollo-card-old how-to-buy-list__item">
+                                <h2 class="apollo-card-old__heading govuk-heading-m govuk-!-font-size-24">{{ apollo.apollos_heading }}</h2>
+                                <dl class="apollo-list--definition--card">
+                                    <dt>Requirement</dt>
+                                    <dd>{{ apollo.apollos_requirement }}</dd>
+                                    <dt>Solution</dt>
+                                        <dd>{{ apollo.apollos_solution }}</dd>
+                                    <dt>Results</dt>
+                                        {% for result in apollo.apollos_results %}
+                                        <dd>
+                                            <ul class="govuk-list govuk-list--bullet">
+                                                <li>{{ result }}</li>
+                                            </ul>
+                                        </dd>
+                                        {% endfor %}
+                                    <dt class="visuallyhidden">Links</dt>
+                                        <dd>
+                                            <ul class="govuk-list list--inline">
+                                                <li><a class="govuk-!-font-size-17featured" href="{{ apollo.apollos_visit_site_url|length > 0 ? apollo.apollos_visit_site_url : '/'}}">{{ apollo.apollos_visit_site_text|length > 0 ? apollo.apollos_visit_site_text : 'Visit Site' }}</a></li>
+                                                <li><a class="govuk-!-font-size-17featured" href="{{ apollo.apollos_learn_more_url|length > 0 ? apollo.apollos_learn_more_url : '/' }}">{{apollo.apollos_learn_more_text|length > 0 ? apollo.apollos_learn_more_text : 'Learn more'}}</a></li>
+                                            </ul>
+                                        </dd>
+                                </dl>
+                            </li>
+                         {% endfor %}
+                         {% endif %}
+                        </ul>
+    </div>
+</div>
