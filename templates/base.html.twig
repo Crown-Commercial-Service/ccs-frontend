@@ -47,13 +47,16 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.21">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.28">
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.21">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.28">
     {% endif %}
+
+    {# Browser icon #}
+    <link rel="icon" href="/assets/images/favicon.ico?v=1" />
 
     {% block blocking_javascript %}
 
@@ -180,7 +183,7 @@
 <body class="govuk-template__body {% block flourishClasses %}show-flourishes  {{ taxonomy }}--{{ flourish }}{% endblock %}">
 
 {# For data layer - outputs environment to be used in js file #}
-<div id="app-env" style="display: none" data-env="local"></div>
+<div id="app-env" style="display: none" data-env="{{app.environment}}"></div>
 
 {{ staging_banner(app.environment) }}
 
@@ -227,9 +230,9 @@
 
 <script src="/assets/scripts/libraries/jquery-3.6.0.min.js"></script>
 <script src="/assets/scripts/libraries/objectFitPolyfill.min.js"></script>
-<script src="/assets/scripts/all.js?v=2.1"></script>
-<script src="/assets/scripts/app.js?v=2.1"></script>
-<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.1"></script>
+<script src="/assets/scripts/all.js?v=2.2"></script>
+<script src="/assets/scripts/app.js?v=2.2"></script>
+<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.2"></script>
 <script type="text/javascript">
   $('a[target^="_new-window"]').click(function() {
     var width = window.innerWidth * 0.9 ;
@@ -290,22 +293,54 @@ End Usersnap code #}
         }
     });
 
-    // change background hero size if summary is over 200 chars
-    var heroCaption = document.querySelector('.hero__caption');
-    var heroTextContainer = document.querySelector('.ccs-hero-text-container');
+    var btn = document.getElementById("BackToTopButton");
 
-    if (heroTextContainer !== null) {
-        var containerH = heroTextContainer.clientHeight;
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        $('html, body').animate({scrollTop:0}, '300');
+    });
 
-        if (containerH < 209) {heroCaption.style.backgroundSize = "113.375rem 13.475rem";}
-        else if (containerH < 222) {heroCaption.style.backgroundSize = "113.375rem 14.475rem";}
-        else if (containerH < 247) {heroCaption.style.backgroundSize = "113.375rem 15.475rem";}
-        else if (containerH < 272) {heroCaption.style.backgroundSize = "113.375rem 17.375rem";}
-        else if (containerH < 297) {heroCaption.style.backgroundSize = "113.375rem 18.475rem";}
-        else if (containerH < 322) {heroCaption.style.backgroundSize = "113.375rem 20.575rem";}
-        else {heroCaption.style.backgroundSize = "113.375rem 25.575rem";}
-    }
+    window.onload = function() {
+        window.addEventListener("scroll", function (event) {
+            if (window.scrollY + window.innerHeight > (document.querySelector('footer').getBoundingClientRect().top + window.pageYOffset)) {
+                btn.classList.add("fixed");
+                btn.classList.remove("flex");
+            } else {
+                btn.classList.add("flex");
+                btn.classList.remove("fixed");
+            }
 
+            if (window.scrollY > 200) {
+                btn.classList.add("show");
+            } else {
+                btn.classList.remove("show");
+            }
+        }, false);
+    };
+
+    // add download notification to links
+    var links = document.querySelectorAll("a");
+
+    links.forEach(link => {
+            var href = link.getAttribute("href");
+            var exts = ["doc", "docx", "xlsx", "pptx", "csv", "odt", "ods", "zip"];
+            var target = link.getAttribute("target");
+            var span = document.createElement("span");
+
+            if (target === "_blank" ) {
+                span.innerText = "Opens in new window";
+                link.classList.add("download-info")
+                link.appendChild(span);
+            }
+ 
+            if (exts.some(ext => href.includes(ext))) { 
+                span.innerText = "This file will download"; 
+                link.classList.add("download-info")
+                link.appendChild(span);
+            }
+
+            
+    })
   
 </script>
 

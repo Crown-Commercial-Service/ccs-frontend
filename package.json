@@ -51,7 +51,7 @@
     "shx": "^0.3.4",
     "svgo": "2.8.0",
     "tunnel-agent": "^0.6.0",
-    "vue": "^2.7.14",
+    "vue": "^2.7.15",
     "watch": "^1.0.2",
     "whatwg-fetch": "^3.6.20",
     "yargs-parser": "^13.1.2"

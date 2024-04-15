@@ -78,12 +78,13 @@
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
 
-                {% if page.content.post_lead_text %}
-                <p>Last updated {{ page.dateModified|date('j F Y') }}</p>
-                <p class="govuk-body-l">
-                    {{ page.content.post_lead_text }}
-                </p>
+                {% if page.content.post_lead_text and page.content.post_lead_text is not empty %}
+                    <p class="govuk-body-l">{{ page.content.post_lead_text }}</p>
                 {% endif %}
+
+                <p class="govuk-body-s govuk-!-margin-0">Published {{ page.datePublished|date('j F Y') }}</p>
+                <p class="govuk-body-s govuk-!-margin-0">Last updated {{ page.dateModified|date('j F Y') }}</p>
+                <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
                 <div class="wysiwyg-content">
 

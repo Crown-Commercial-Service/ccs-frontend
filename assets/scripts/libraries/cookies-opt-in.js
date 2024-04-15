@@ -184,7 +184,7 @@ var docCookies = {
         acceptAllCookies();
         updateCookieOnSafari();
         fireGTM();
-        setDataLayer(true, false, true)
+        setDataLayer(true, true, true)
     }
 
     function fireGTM() {
@@ -195,13 +195,17 @@ var docCookies = {
         })(window,document,'script','dataLayer','GTM-5NQGRQN');
     }
 
-    function setDataLayer(usage_consent, glassbox_consent, marketing_consent) {
-        window.dataLayer.push({
-            event: 'gtm_consent_update',
-            usage_consent: usage_consent ? 'granted' : 'not granted',
-            glassbox_consent: glassbox_consent ? 'granted' : 'not granted',
-            marketing_consent: marketing_consent ? 'granted' : 'not granted'
-        });
+    function setDataLayer(usage_consent, cs_consent, marketing_consent) {
+        var env = document.getElementById('app-env').dataset.env;
+        
+        if (env == "local" || env == "prod") {
+            window.dataLayer.push({
+                event: 'gtm_consent_update',
+                usage_consent: usage_consent ? 'granted' : 'not granted',
+                glassbox_consent: cs_consent ? 'granted' : 'not granted',
+                marketing_consent: marketing_consent ? 'granted' : 'not granted'
+            });
+        }
     }
 
     function updateSeenCookie() {
@@ -305,7 +309,7 @@ var docCookies = {
 
         });
 
-        setDataLayer(selectedCookie[0], false, selectedCookie[1]);
+        setDataLayer(selectedCookie[0], selectedCookie[1], selectedCookie[2]);
 
 
         const cookie_timer = (cookie_preferences['usage'] === false && cookie_preferences['marketing'] === false)

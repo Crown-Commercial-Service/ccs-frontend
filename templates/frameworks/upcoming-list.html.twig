@@ -101,9 +101,6 @@
 
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
-                                <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
-                                    Pillar
-                                </th>
                                 <th class="govuk-table__header govuk-!-font-size-19" scope="col">
                                     Agreement title
                                 </th>
@@ -119,9 +116,6 @@
 
                                 {% for upcoming_deal in awarded_pipeline %}
                                     <tr class="govuk-table__row">
-                                        <td class="govuk-table__cell govuk-!-font-size-16">
-                                            {{ upcoming_deal.pillar }}
-                                        </td>
                                         <td class="govuk-table__cell">
                                             <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
                                                 <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
@@ -178,9 +172,6 @@
 
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
-                                <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
-                                    Pillar
-                                </th>
                                 <th class="govuk-table__header govuk-!-font-size-19" scope="col">
                                     Agreement title
                                 </th>
@@ -197,9 +188,6 @@
                         {% for upcoming_deal in underway_pipeline %}
 
                             <tr class="govuk-table__row">
-                                <td class="govuk-table__cell govuk-!-font-size-16">
-                                    {{ upcoming_deal.pillar }}
-                                </td>
                                 <td class="govuk-table__cell">
                                     <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
                                         <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
@@ -254,9 +242,6 @@
 
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
-                                <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
-                                    Pillar
-                                </th>
                                 <th class="govuk-table__header govuk-!-font-size-19" scope="col">
                                     Agreement title
                                 </th>
@@ -270,9 +255,6 @@
                             {% for upcoming_deal in dynamic_purchasing_systems %}
 
                                 <tr class="govuk-table__row">
-                                    <td class="govuk-table__cell govuk-!-font-size-16">
-                                        {{ upcoming_deal.pillar }}
-                                    </td>
                                     <td class="govuk-table__cell">
                                         <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
                                             <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
@@ -324,9 +306,6 @@
 
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
-                                <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
-                                    Pillar
-                                </th>
                                 <th class="govuk-table__header govuk-!-font-size-19" scope="col">
                                     Agreement title
                                 </th>
@@ -343,9 +322,6 @@
                             {% for upcoming_deal in planned_pipeline %}
 
                                 <tr class="govuk-table__row">
-                                    <td class="govuk-table__cell govuk-!-font-size-16">
-                                        {{ upcoming_deal.pillar }}
-                                    </td>
                                     <td class="govuk-table__cell">
                                         <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
                                             <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
@@ -401,9 +377,6 @@
 
                             <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
-                                <th class="govuk-table__header govuk-!-font-size-19 govuk-!-width-one-quarter" scope="col">
-                                    Pillar
-                                </th>
                                 <th class="govuk-table__header govuk-!-font-size-19" scope="col">
                                     Agreement title
                                 </th>
@@ -414,9 +387,6 @@
                             {% for upcoming_deal in future_pipeline %}
 
                                 <tr class="govuk-table__row">
-                                    <td class="govuk-table__cell govuk-!-font-size-16">
-                                        {{ upcoming_deal.pillar }}
-                                    </td>
                                     <td class="govuk-table__cell">
                                         <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
                                             <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>

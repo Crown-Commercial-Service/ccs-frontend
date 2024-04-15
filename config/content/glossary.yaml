@@ -3,6 +3,8 @@ meta:
   content_fields:
     total_results:
       type: number
+    intro_text:
+      type: text
 glossaries:
   type: array
   content_fields:

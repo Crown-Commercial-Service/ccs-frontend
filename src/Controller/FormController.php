@@ -204,10 +204,11 @@ class FormController extends AbstractController
             if ($formErrors) {
                 $cscMessage = ControllerHelper::getCSCMessage();
                 return $this->render('forms/22-contact.html.twig', [
-                    'referrer' => $params->get('00N4L000009OPAj', null),
-                    'formErrors' => $formErrors,
-                    'formData' => $formData,
-                    'cscMessage'    => $cscMessage,
+                    'referrer'              => $params->get('00N4L000009OPAj', null),
+                    'formErrors'            => $formErrors,
+                    'formData'              => $formData,
+                    'cscMessage'            => $cscMessage,
+                    'fileAttachedBefore'    => !(empty($formErrors["fileErr"]["errors"])) ? false : $this->fileAttached(),
                 ]);
             } else {
                 $params->set('subject', 'Contact CCS');
@@ -215,6 +216,12 @@ class FormController extends AbstractController
                 $params->set('recordType', '012b00000005NWC');
                 $params->set('priority', 'Green');
                 $params->set('orgid', ControllerHelper::getOrgId());
+
+                if ($formData['callbackTimeslot'] != null) {
+                    $params->set('Call_Back_Preference__c', $formData['callbackTimeslot']);
+                } elseif ($formData['callbackTimeslotForC'] != null) {
+                    $params->set('Call_Back_Preference__c', $formData['callbackTimeslotForC']);
+                }
 
                 $attachmentID_filename = $this->sendToDocumentUpload();
 
@@ -371,7 +378,7 @@ class FormController extends AbstractController
         $errorMessages['companyErr'] =      FormValidation::validationCompany($data['company']);
         $errorMessages['moreDetailErr'] =   FormValidation::validationMoreDetail($data['moreDetail']);
 
-        if ($_FILES['attachment']["size"] != 0) {
+        if ($this->fileAttached()) {
             $errorMessages['fileErr'] = FormValidation::validationFile($_FILES['attachment']);
         }
 
@@ -480,6 +487,11 @@ class FormController extends AbstractController
         return $params;
     }
 
+    private function fileAttached()
+    {
+        return (isset($_FILES['attachment']) && $_FILES['attachment']["size"] != 0);
+    }
+
     private function sendToDocumentUpload()
     {
         if ((!empty($_FILES["attachment"])) && ($_FILES['attachment']['error'] == 0)) {
@@ -490,7 +502,7 @@ class FormController extends AbstractController
 
                 $dataPartFile = DataPart::fromPath($newFilePath);
                 $debugStringFromDataPart = $dataPartFile->asDebugString();
-                $filename = str_replace(' ', '_', substr($debugStringFromDataPart, strripos($debugStringFromDataPart, ":") + 2));
+                $filename = preg_replace('/[^A-Za-z0-9\_\-\.]/', '_', substr($debugStringFromDataPart, strripos($debugStringFromDataPart, ":") + 2));
 
                 $data = [
                     'typeValidation[]'  => $_FILES["attachment"]["type"],
