@@ -29,6 +29,7 @@ DirectoryIndex index.php
     # the following 2 lines to eliminate the overhead.
     RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
     RewriteRule ^(.*) - [E=BASE:%1]
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
 
     # Sets the HTTP_AUTHORIZATION header removed by Apache
     RewriteCond %{HTTP:Authorization} .
