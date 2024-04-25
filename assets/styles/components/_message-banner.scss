@@ -1,23 +1,22 @@
-.emergency-banner {
+.message-banner {
   font-family: "Source Sans Pro","HelveticaNeue","Helvetica Neue","Arial","Helvetica",sans-serif;
   background-color: govuk-colour("mid-grey");
   color: govuk-colour("white");
-  margin-top: 2px;
   padding: govuk-spacing(3) 0;
-  background-color: #1d70b8;
+  background-color: #37484F;
 
   @include govuk-media-query($from: tablet) {
     padding: govuk-spacing(6) 0;
   }
 }
 
-.emergency-banner-heading {
+.message-banner-heading {
   font-weight: bold;
   font-size:2rem;
   margin: 0;
 }
 
-.emergency-banner-description {
+.message-banner-description {
   color: govuk-colour("white");
   margin-top: 0;
   margin-bottom: govuk-spacing(4);
@@ -27,7 +26,7 @@
   }
 }
 
-.emergency-banner-link {
+.message-banner-link {
     font-size:1.2rem;
   &.govuk-link:link,
   &.govuk-link:visited {
