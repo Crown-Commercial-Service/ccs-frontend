@@ -1,0 +1,14 @@
+message_banner:
+  type: array
+  content_fields:
+    show_banner:
+      type: boolean
+    title:
+      type: text
+    description:
+      type: text
+    link:
+      type: text
+    link_url:
+      type: text
+    

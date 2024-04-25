@@ -47,6 +47,19 @@ class ControllerHelper
         return $cscMessage->getContent()->get('csc_message')->getValue();
     }
 
+    public static function getHomeMessageBanner() 
+    {
+        $api = ControllerHelper::setUpAPI('message_banner');
+
+        try {
+            $messageBanner = $api->getOne(0);
+        } catch (NotFoundException $e) {
+            throw new NotFoundHttpException('MessageBanner API broken, please check WordPress', $e);
+        }
+
+        return $messageBanner->getContent()->get('message_banner')->getValue()[0];
+    }
+
     public static function getYoutubeVideo()
     {
         $api = ControllerHelper::setUpAPI('homepage_content');

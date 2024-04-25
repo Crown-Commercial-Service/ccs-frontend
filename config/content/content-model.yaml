@@ -59,6 +59,9 @@ content_types:
   homepage_content:
     api_endpoint: ccs/v1/homepage-components
     content_fields: homepage-content.yaml
+  message_banner:
+    api_endpoint: ccs/v1/message-banner
+    content_fields: message-banner.yaml
 global:
   image_sizes:
     - thumbnail
