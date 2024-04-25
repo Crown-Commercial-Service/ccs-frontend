@@ -96,13 +96,13 @@ class PageController extends AbstractController
 
         // request to homepage components
         $homepageCompUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/homepage-components/0';
-
+        $messageBanner = ControllerHelper::getHomeMessageBanner($this->api);
+        // dd($messageBanner);
         $client = HttpClient::create();
         $response = $client->request(
             'GET',
             $homepageCompUrl,
         );
-
         $homepageContent = null;
 
         if ($response->getStatusCode() == 200) {
@@ -113,6 +113,7 @@ class PageController extends AbstractController
             'news' => $news,
             'guided_match_flag' => $flag,
             'homepageContent' => $homepageContent,
+            'messageBanner' => $messageBanner,
 
         ]);
     }

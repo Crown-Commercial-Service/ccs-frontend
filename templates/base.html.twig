@@ -47,12 +47,12 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.28">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.29">
     {% else %}
         {# To debug CSS in other environments (not live), change the below t
          # styles.css instead of styles.min.css
          #}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.28">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.29">
     {% endif %}
 
     {# Browser icon #}
@@ -323,7 +323,7 @@ End Usersnap code #}
 
     links.forEach(link => {
             var href = link.getAttribute("href");
-            var exts = ["doc", "docx", "xlsx", "pptx", "csv", "odt", "ods", "zip"];
+            var exts = [".doc", ".docx", ".xlsx", ".pptx", ".csv", ".odt", ".ods", ".zip"];
             var target = link.getAttribute("target");
             var span = document.createElement("span");
 

@@ -8,6 +8,12 @@
 
 {% block header %}
 
+     {% block homeMessageBanner %}
+            {%  if messageBanner.show_banner == 'true' %}
+                {% include '/includes/home-message-banner.html.twig' with {'title': messageBanner.title, 'description': messageBanner.description, 'link': messageBanner.link, 'link_url': messageBanner.link_url } %}
+            {% endif %}
+     {% endblock %}
+
     {% embed '/includes/header.html.twig' %}
         {% block headerclasses %}
             header-global header-global--home
@@ -15,7 +21,7 @@
 
        {% block ppglogin %}
             {% include '/includes/ppg-login.html.twig' %}
-        {% endblock %}
+       {% endblock %}
 
         {% block featuredcontent %}
                 <div class="homepage-hero govuk-homepage-hero-full-width">
