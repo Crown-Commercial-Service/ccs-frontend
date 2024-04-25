@@ -47,7 +47,7 @@ class ControllerHelper
         return $cscMessage->getContent()->get('csc_message')->getValue();
     }
 
-    public static function getHomeMessageBanner() 
+    public static function getHomeMessageBanner()
     {
         $api = ControllerHelper::setUpAPI('message_banner');
 
