@@ -332,12 +332,15 @@ End Usersnap code #}
                 link.classList.add("download-info")
                 link.appendChild(span);
             }
- 
-            if (exts.some(ext => href.includes(ext))) { 
+
+            if (href != null) {
+                 if (exts.some(ext => href.includes(ext))) { 
                 span.innerText = "This file will download"; 
                 link.classList.add("download-info")
                 link.appendChild(span);
+                }
             }
+           
 
             
     })
