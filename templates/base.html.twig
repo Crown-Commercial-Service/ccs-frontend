@@ -301,6 +301,7 @@ End Usersnap code #}
     });
 
     window.onload = function() {
+        dataLayerSetup();
         window.addEventListener("scroll", function (event) {
             if (window.scrollY + window.innerHeight > (document.querySelector('footer').getBoundingClientRect().top + window.pageYOffset)) {
                 btn.classList.add("fixed");
