@@ -22,7 +22,7 @@
         {% set postLink = app_base_url ~ "/digital_brochure/request/" ~ page.id ~ "/" ~ page.urlSlug %}
     {% elseif page.content.category_type == 'Downloadable'%}
         {% set categoryName = page.content.content_type_name %}
-        {% set categoriesLink = app_base_url ~"/news?downloadable[]=" ~ page.content.content_type_id %}
+        {% set categoriesLink = app_base_url ~"/news?digitalDownload[]=" ~ page.content.content_type_id %}
         {% set postLink = app_base_url ~ "/downloadable-resource/request/" ~ page.id ~ "/" ~ page.urlSlug %}
     {% endif %}
 

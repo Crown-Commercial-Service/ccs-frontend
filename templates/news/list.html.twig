@@ -109,7 +109,7 @@
                                             {% set tempDigitalDownload = tempDigitalDownload|merge([item.id]) %}
 
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedDigitalDownload" name="downloadable[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in downloadableForTwig ? 'checked' }}>
+                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedDigitalDownload" name="digitalDownload[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in downloadableForTwig ? 'checked' }}>
                                                 <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
                                                     {{ item.name }}
                                                 </label>
