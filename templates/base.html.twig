@@ -49,7 +49,7 @@
     {% if app.environment == "prod" %}
         <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.30">
     {% else %}
-        {# To debug CSS in other environments (not live), change the below t
+        {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
         <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.30">
@@ -345,6 +345,35 @@ End Usersnap code #}
 
             
     })
+
+    // make cards same height in list
+    var cardLists = document.querySelectorAll("ul.card-list");
+    var maxHeight = 0;
+    var windowWidth = window.innerWidth;
+
+    if (cardLists != null) {
+        cardLists.forEach(function(cardList) {
+            cards = cardList.querySelectorAll("li");
+
+            if (cards.length > 1) {
+                cards.forEach(function(card) {
+                    var cardHeight = card.querySelector(".card-list__item__wrapper").offsetHeight;
+                    if(cardHeight > maxHeight) {
+                        maxHeight = cardHeight;
+                    }
+                });
+            }
+            
+            cards.forEach(function(card) {
+                card.querySelector(".card-list__item__wrapper").style.height = maxHeight - 50 + "px"; 
+                
+                if (windowWidth < 600) {
+                    card.querySelector(".card-list__item__wrapper").style.height = "auto";
+                }
+            })
+        })
+    }
+
   
 </script>
 
