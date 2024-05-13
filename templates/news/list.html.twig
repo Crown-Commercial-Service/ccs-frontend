@@ -39,7 +39,7 @@
         </div>
 
         <main id="main-content" role="main"  class="govuk-main-wrapper">
-            
+
             <div class="govuk-grid-row" >
                 <div class="govuk-grid-column-one-quarter">
 
@@ -736,7 +736,7 @@
                                         jsonResponse.body[i].postType = jsonResponse.body[i].acf.content_type_name;
                                         postLink = appBaseUrl+ "/downloadable-resource/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
-                                        categoriesLink = appBaseUrl +"/news?contentType=" + jsonResponse.body[i].content_type_id;
+                                        categoriesLink = appBaseUrl +"/news/?digitalDownload=" + jsonResponse.body[i].acf.content_type_id;
                                         break;
                                     default:
                                         postLink = appBaseUrl+ "/news/" + jsonResponse.body[i].slug;

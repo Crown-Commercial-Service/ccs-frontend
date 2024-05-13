@@ -59,7 +59,7 @@ class NewsController extends AbstractController
         ];
 
         $categoriesOption       =   $this->converArrayToStringForWordpress($request->query->get('categories', null));
-        $downloadableOption     =   $this->converArrayToStringForWordpress($request->query->get('downloadable', null));
+        $downloadableOption     =   $this->converArrayToStringForWordpress($request->query->get('digitalDownload', null));
 
         $sectorsOption          =   $this->converArrayToStringForWordpress($request->query->get('sectors', null));
         $productsServicesOption =   $this->converArrayToStringForWordpress($request->query->get('products_services', null));
@@ -171,7 +171,7 @@ class NewsController extends AbstractController
             'whitepaper',
             'webinar',
             'digitalBrochure',
-            'downloadable'
+            'digitalDownload'
         );
 
         foreach ($checkType as $each) {
