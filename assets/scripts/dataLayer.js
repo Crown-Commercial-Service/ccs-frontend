@@ -1,5 +1,5 @@
-// this is ran on all the pages and assign print_page() to the print button
-window.onload = function() {
+// this is called from base.html
+function dataLayerSetup() {
     const printLink         = document.querySelector('.app-c-print-link__link');
     const accordionButtons  = document.querySelectorAll('.govuk-accordion__section-button');
     const ctaButtons        = document.querySelectorAll('.govuk-button');
