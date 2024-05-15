@@ -353,7 +353,7 @@ End Usersnap code #}
 
     if (cardLists != null) {
         cardLists.forEach(function(cardList) {
-            cards = cardList.querySelectorAll("li");
+            cards = cardList.querySelectorAll("li.card-list__item");
 
             if (cards.length > 1) {
                 cards.forEach(function(card) {
@@ -362,15 +362,15 @@ End Usersnap code #}
                         maxHeight = cardHeight;
                     }
                 });
+
+                cards.forEach(function(card) {
+                    card.querySelector(".card-list__item__wrapper").style.height = maxHeight - 50 + "px"; 
+                    
+                    if (windowWidth < 600) {
+                        card.querySelector(".card-list__item__wrapper").style.height = "auto";
+                    }
+                })
             }
-            
-            cards.forEach(function(card) {
-                card.querySelector(".card-list__item__wrapper").style.height = maxHeight - 50 + "px"; 
-                
-                if (windowWidth < 600) {
-                    card.querySelector(".card-list__item__wrapper").style.height = "auto";
-                }
-            })
         })
     }
 
