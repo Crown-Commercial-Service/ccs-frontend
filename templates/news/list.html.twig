@@ -39,7 +39,7 @@
         </div>
 
         <main id="main-content" role="main"  class="govuk-main-wrapper">
-            
+
             <div class="govuk-grid-row" >
                 <div class="govuk-grid-column-one-quarter">
 
@@ -109,7 +109,7 @@
                                             {% set tempDigitalDownload = tempDigitalDownload|merge([item.id]) %}
 
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedDigitalDownload" name="downloadable[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in downloadableForTwig ? 'checked' }}>
+                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedDigitalDownload" name="digitalDownload[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in downloadableForTwig ? 'checked' }}>
                                                 <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
                                                     {{ item.name }}
                                                 </label>
@@ -435,7 +435,7 @@
                             </li>
 
                             <li class="pagination__item pagination__item--next" v-if="currentPage != numberOfPages">
-                                <a rel="next" v-on:click="updatePageNumber($event, nextPage)">
+                                <a href="#" rel="next" v-on:click="updatePageNumber($event, nextPage)">
                                     <span>Next</span> <span class="visuallyhidden">page</span>
                                     <span class="icon">
                                         <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"></path></svg>
@@ -736,7 +736,7 @@
                                         jsonResponse.body[i].postType = jsonResponse.body[i].acf.content_type_name;
                                         postLink = appBaseUrl+ "/downloadable-resource/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
-                                        categoriesLink = appBaseUrl +"/news?contentType=" + jsonResponse.body[i].content_type_id;
+                                        categoriesLink = appBaseUrl +"/news/?digitalDownload=" + jsonResponse.body[i].acf.content_type_id;
                                         break;
                                     default:
                                         postLink = appBaseUrl+ "/news/" + jsonResponse.body[i].slug;

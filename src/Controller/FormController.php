@@ -164,12 +164,15 @@ class FormController extends AbstractController
     public function contactCCS(Request $request)
     {
         $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+        $formType = $request->query->get('type', null);
+
 
         $cscMessage = ControllerHelper::getCSCMessage();
 
         $data = [
-            'referrer' => $referrer,
+            'referrer'      => $referrer,
             'cscMessage'    => $cscMessage,
+            'formType'      => $formType,
         ];
 
         return $this->render('forms/22-contact.html.twig', $data);

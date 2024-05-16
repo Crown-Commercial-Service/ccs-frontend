@@ -22,7 +22,7 @@
         {% set postLink = app_base_url ~ "/digital_brochure/request/" ~ page.id ~ "/" ~ page.urlSlug %}
     {% elseif page.content.category_type == 'Downloadable'%}
         {% set categoryName = page.content.content_type_name %}
-        {% set categoriesLink = app_base_url ~"/news?downloadable[]=" ~ page.content.content_type_id %}
+        {% set categoriesLink = app_base_url ~"/news?digitalDownload[]=" ~ page.content.content_type_id %}
         {% set postLink = app_base_url ~ "/downloadable-resource/request/" ~ page.id ~ "/" ~ page.urlSlug %}
     {% endif %}
 
@@ -78,7 +78,7 @@
                 'whitepaper': filters.whitepaper is defined ? filters.whitepaper : null,
                 'webinar': filters.webinar is defined ? filters.webinar : null,
                 'digitalBrochure': filters.digitalBrochure is defined ? filters.digitalBrochure : null,
-                'downloadable[]': filters.digitalDownload is defined ? filters.digitalDownload : null,
+                'digitalDownload[]': filters.digitalDownload is defined ? filters.digitalDownload : null,
                 
                 'allSectors': filters.sectors is not defined  ? 'allSectors' : null,
                 'sectors[]': filters.sectors is defined ? filters.sectors : null,

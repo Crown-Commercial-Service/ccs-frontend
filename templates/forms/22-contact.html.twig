@@ -385,6 +385,11 @@
                             return "";
                         }
 
+                        if ('{{formType}}' == 'complaint'){
+                            document.getElementById("how-contacted-conditional-3").checked = true;
+                            toggleComplaintForm(true);
+                        }
+
                         window.onload = function() {
                             if (document.getElementById("how-contacted-conditional-3").checked) {
                                 toggleComplaintForm(true);
