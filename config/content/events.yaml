@@ -28,5 +28,7 @@ address_region:
   type: text
 address_country:
   type: text
+event_type:
+  type: text
 sectors:
   type: plainarray
