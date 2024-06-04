@@ -15,11 +15,11 @@ class FrameworkCategoriesTest extends WebTestCase
         $cat = FrameworkCategories::find('Corporate');
         $this->assertEquals(5, count($cat['categories']));
         $this->assertTrue(isset($cat['categories']));
-        
+
         $cat = FrameworkCategories::find('Estates');
         $this->assertEquals(4, count($cat['categories']));
         $this->assertTrue(isset($cat['categories']));
-        
+
         $cat = FrameworkCategories::find('Technology');
         $this->assertEquals(5, count($cat['categories']));
         $this->assertTrue(isset($cat['categories']));
@@ -98,5 +98,4 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertResponseRedirects('/agreements/category/digital-specialists');
     }
-
 }
