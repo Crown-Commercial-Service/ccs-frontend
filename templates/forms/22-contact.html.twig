@@ -63,15 +63,15 @@
                                 <div id="how-contacted-conditional-hint" class="govuk-hint">Select one option.</div>
                                 <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="origin" type="radio" value="Website - Question" data-aria-controls="conditional-how-contacted-conditional-1" checked="">
+                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="origin" type="radio" value="Website - Question" checked="">
                                         <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-1">Ask a question</label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-2" name="origin" type="radio" value="Website - Feedback" data-aria-controls="conditional-how-contacted-conditional-2" {{formData.enquiryType is defined and formData.enquiryType == "Website - Feedback" ? 'checked' }}>
+                                        <input class="govuk-radios__input" id="how-contacted-conditional-2" name="origin" type="radio" value="Website - Feedback" {{formData.enquiryType is defined and formData.enquiryType == "Website - Feedback" ? 'checked' }}>
                                         <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">Feedback</label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-3" name="origin" type="radio" value="Website - Complaint" aria-controls="conditional-how-contacted-conditional-3" aria-expanded="true" {{formData.enquiryType is defined and formData.enquiryType == "Website - Complaint" ? 'checked' }}>
+                                        <input class="govuk-radios__input" id="how-contacted-conditional-3" name="origin" type="radio" value="Website - Complaint" aria-expanded="true" {{formData.enquiryType is defined and formData.enquiryType == "Website - Complaint" ? 'checked' }}>
                                         <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">Complaint</label>
                                     </div>
                                 </div>
@@ -166,7 +166,7 @@
                                     </legend>
                                     <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="callback-1" name="00Nb0000009IXEg" type="radio" value="Yes" aria-controls="conditional-callback-1" aria-expanded="true" {{formData.callback is defined and formData.callback == 'Yes' ? 'checked' }}>
+                                            <input class="govuk-radios__input" id="callback-1" name="00Nb0000009IXEg" type="radio" value="Yes" data-aria-controls="conditional-callback-1" aria-expanded="true" {{formData.callback is defined and formData.callback == 'Yes' ? 'checked' }}>
                                             <label class="govuk-label govuk-radios__label" for="callback-1">Yes</label>
                                         </div>
                                         <div class="govuk-radios__conditional" id="conditional-callback-1">
@@ -190,7 +190,7 @@
                                             </div>
                                         </div>
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="callback-2" name="00Nb0000009IXEg" type="radio" value="No" data-aria-controls="conditional-callback-2" {{formData.callback is defined and formData.callback == 'No' ? 'checked' }}>
+                                            <input class="govuk-radios__input" id="callback-2" name="00Nb0000009IXEg" type="radio" value="No" {{formData.callback is defined and formData.callback == 'No' ? 'checked' }}>
                                             <label class="govuk-label govuk-radios__label" for="callback-2">No</label>
                                         </div>
                                     </div>
@@ -252,7 +252,7 @@
                                     </legend>
                                     <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="contactedBefore-1" name="contactedBefore" type="radio" value="Yes" aria-controls="conditional-contactedBefore-1" aria-expanded="true" {{formData.contactedBefore is defined and formData.contactedBefore == "Yes" ? 'checked' }}>
+                                            <input class="govuk-radios__input" id="contactedBefore-1" name="contactedBefore" type="radio" value="Yes" data-aria-controls="conditional-contactedBefore-1" aria-expanded="true" {{formData.contactedBefore is defined and formData.contactedBefore == "Yes" ? 'checked' }}>
                                             <label class="govuk-label govuk-radios__label" for="contactedBefore-1">Yes</label>
                                         </div>
                                         <div class="govuk-radios__conditional" id="conditional-contactedBefore-1">
@@ -263,7 +263,7 @@
                                             </div>
                                         </div>
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="contactedBefore-2" name="contactedBefore" type="radio" value="No" data-aria-controls="conditional-contactedBefore-2" {{formData.contactedBefore is defined and formData.contactedBefore == "No" ? 'checked' }}>
+                                            <input class="govuk-radios__input" id="contactedBefore-2" name="contactedBefore" type="radio" value="No" {{formData.contactedBefore is defined and formData.contactedBefore == "No" ? 'checked' }}>
                                             <label class="govuk-label govuk-radios__label" for="contactedBefore-2">No</label>
                                         </div>
                                     </div>
