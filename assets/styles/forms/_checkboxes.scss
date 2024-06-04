@@ -29,7 +29,12 @@
 
     padding: 0px 15px 0px;
     line-height: 24px;
+    max-width: none;
 
+}
+
+.govuk-checkboxes__input {
+    position: absolute;
 }
 
 .govuk-checkboxes__input--small,

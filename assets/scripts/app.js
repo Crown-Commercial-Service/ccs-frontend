@@ -2,14 +2,6 @@
 
 document.addEventListener("DOMContentLoaded", function (event) {
 
-
-    if (typeof jQuery != 'undefined') {
-        $('body').addClass('js-enabled');
-        // Initialise all the GOV.UK Frontend components
-        window.GOVUKFrontend.initAll();
-    }
-
-
         // Check for if an element exists
         function exists (elem) {
             return (elem != null && (elem.length >= 0 || elem.innerHTML.length >= 0))
