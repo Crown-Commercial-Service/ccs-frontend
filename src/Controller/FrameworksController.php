@@ -227,7 +227,6 @@ class FrameworksController extends AbstractController
             "office-and-travel" => "travel-transport-accommodation-and-venues",
             "travel"            => "travel-transport-accommodation-and-venues",
             "digital-future"    => "digital-specialists",
-            "network-services"  => "network-solutions",
         );
 
         if (array_key_exists($category, $redirect)) {
