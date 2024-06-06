@@ -8,7 +8,7 @@
                     <h2 class="govuk-heading-l intro__heading">{{ component.pillars_pillars_heading }}</h2>
                 {% endif %}
 
-                <ul class="card-list govuk-!-margin-top-6 card-list--four-on-large">
+                <ul class="card-list govuk-!-margin-top-6 card-pillars card-list--four-on-large">
 
                     {% for pillar in component.pillars_pillars_pillars %}
                         <li class="card-list__item [ pillar--{{ pillar.pillars_taxonomy.value.slug }} ]">

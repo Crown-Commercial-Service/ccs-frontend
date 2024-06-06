@@ -13,15 +13,15 @@
         <div id="customer-type-conditional-hint" class="govuk-hint">Select one option.</div>
         <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
             <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="customer-type-conditional-1" name="customerType" type="radio" value="Buyer" data-aria-controls="conditional-customer-type-conditional-1" {{formData.customerType is defined and formData.customerType == "Buyer" ? 'checked' }}>
+                <input class="govuk-radios__input" id="customer-type-conditional-1" name="customerType" type="radio" value="Buyer" {{formData.customerType is defined and formData.customerType == "Buyer" ? 'checked' }}>
                 <label class="govuk-label govuk-radios__label" for="customer-type-conditional-1">Buyer</label>
             </div>
             <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="customer-type-conditional-2" name="customerType" type="radio" value="Supplier" data-aria-controls="conditional-customer-type-conditional-2" {{formData.customerType is defined and formData.customerType == "Email" ? 'checked' }}>
+                <input class="govuk-radios__input" id="customer-type-conditional-2" name="customerType" type="radio" value="Supplier" {{formData.customerType is defined and formData.customerType == "Email" ? 'checked' }}>
                 <label class="govuk-label govuk-radios__label" for="customer-type-conditional-2">Supplier</label>
             </div>
             <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="customer-type-conditional-3" name="customerType" type="radio" value="Both" aria-controls="conditional-customer-type-conditional-3" {{formData.customerType is defined and formData.customerType == "Both" ? 'checked' }}>
+                <input class="govuk-radios__input" id="customer-type-conditional-3" name="customerType" type="radio" value="Both"  {{formData.customerType is defined and formData.customerType == "Both" ? 'checked' }}>
                 <label class="govuk-label govuk-radios__label" for="customer-type-conditional-3">Both</label>
             </div>
         </div>
@@ -68,11 +68,11 @@
                 </div>
             </div>
             <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="contact-way-conditional-2" name="contactWay" type="radio" value="Email" data-aria-controls="conditional-contact-way-conditional-2" {{formData.contactWay is defined and formData.contactWay == "Email" ? 'checked' }}>
+                <input class="govuk-radios__input" id="contact-way-conditional-2" name="contactWay" type="radio" value="Email"  {{formData.contactWay is defined and formData.contactWay == "Email" ? 'checked' }}>
                 <label class="govuk-label govuk-radios__label" for="contact-way-conditional-2">Email</label>
             </div>
             <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="contact-way-conditional-3" name="contactWay" type="radio" value="No preference" aria-controls="conditional-contact-way-conditional-3" {{formData.contactWay is defined and formData.contactWay == "No preference" ? 'checked' }}>
+                <input class="govuk-radios__input" id="contact-way-conditional-3" name="contactWay" type="radio" value="No preference" {{formData.contactWay is defined and formData.contactWay == "No preference" ? 'checked' }}>
                 <label class="govuk-label govuk-radios__label" for="contact-way-conditional-3">No preference</label>
             </div>
         </div>

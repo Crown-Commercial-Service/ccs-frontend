@@ -87,6 +87,11 @@
                                     {% else %}
                                         <p class="govuk-!-margin-0" >{{ event.content.address_locality|raw }}</p>
                                     {% endif %}
+
+                                    {% if  event.content.postal_code is defined and event.content.postal_code != "" %}
+                                        <p class="govuk-!-margin-0" >{{ event.content.postal_code|raw }}</p>
+                                    {% endif %}
+
                                     <br/>
                                 {% endif %}
                                 {% if event.content.location_type == 'Online and In Person' %}

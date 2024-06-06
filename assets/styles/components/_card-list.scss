@@ -18,9 +18,15 @@
 
         display: flex;
         flex-flow: row wrap;
-
     }
 
+}
+
+.card-pillars {
+
+    @include govuk-media-query($from: desktop) {
+            justify-content: center;
+        }
 }
 
 
