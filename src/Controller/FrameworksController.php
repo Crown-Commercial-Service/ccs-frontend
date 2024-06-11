@@ -221,16 +221,33 @@ class FrameworksController extends AbstractController
         $query = filter_var($query, FILTER_SANITIZE_STRING);
         $statuses = $this->getAgreementFilterStatusArray($request);
 
-        $redirect = array(
+        $redirectToCat = array(
             "utilities-fuels"   => "energy",
-            "software-cyber"    => "technology-solutions-outcomes",
-            "office-and-travel" => "travel-transport-accommodation-and-venues",
-            "travel"            => "travel-transport-accommodation-and-venues",
-            "digital-future"    => "digital-specialists",
+            "software-cyber"    => "software-and-hardware",
+            "office-and-travel" => "travel-accommodation-and-Venues",
+            "travel"            => "travel-accommodation-and-Venues",
+            "digital-future"    => "digital-capability-and-delivery",
+            "digital-specialists"                           => "digital-capability-and-delivery",
+            "network-solutions"                             => "network-services",
+            "technology-solutions-outcomes"                 => "software-and-hardware",
+            "document-management-logistics"                 => "estates-support-services",
+            "marcomms-research"                             => "professional-services",
+            "travel-transport-accommodation-and-venues"     => "travel-accommodation-and-Venues",
+            "psr-permanent-recruitment"                     => "hr-and-workforce-services",
+            "workforce-health-education"                    => "hr-and-workforce-services",
+            "people-services"                               => "hr-and-workforce-services",
         );
 
-        if (array_key_exists($category, $redirect)) {
-            return $this->redirectToRoute('frameworks_list_by_category', ['category' => $redirect[$category]]);
+        $redirectToPillar = array(
+            "workplace"                     => "estates",
+            "technology-products-services"  => "technology",
+        );
+
+
+        if (array_key_exists($category, $redirectToCat)) {
+            return $this->redirectToRoute('frameworks_list_by_category', ['category' => $redirectToCat[$category]]);
+        } elseif (array_key_exists($category, $redirectToPillar)) {
+            return $this->redirectToRoute('frameworks_list_by_pillar', ['pillar' => $redirectToPillar[$category]]);
         }
 
         // Map category slug to category db value

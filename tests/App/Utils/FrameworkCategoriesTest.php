@@ -81,7 +81,7 @@ class FrameworkCategoriesTest extends WebTestCase
         $this->assertResponseRedirects('/agreements/category/energy');
     }
 
-    public function testRedirectFromTravelToTravelTransportAccommodationAndVenuesCategory()
+    public function testRedirectFromTravelToTravelAccommodationAndVenuesCategory()
     {
         $client = static::createClient();
         $client->request('GET', '/agreements/category/travel');
@@ -89,10 +89,10 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertResponseRedirects('/agreements/category/travel-transport-accommodation-and-venues');
+        $this->assertResponseRedirects('/agreements/category/travel-accommodation-and-Venues');
     }
 
-    public function testRedirectFromDigitalFuturesToDigitalSpecialists()
+    public function testRedirectFromDigitalFuturesToDigitalCapabilityAndDelivery()
     {
         $client = static::createClient();
         $client->request('GET', '/agreements/category/digital-future');
@@ -100,6 +100,49 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertResponseRedirects('/agreements/category/digital-specialists');
+        $this->assertResponseRedirects('/agreements/category/digital-capability-and-delivery');
+    }
+
+    public function testRedirectFromNetworkSolutionsToNetworkServices()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/agreements/category/network-solutions');
+        $response = $client->getResponse();
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->assertResponseRedirects('/agreements/category/network-services');
+    }
+
+    public function testRedirectFromWorkplaceToEstates()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/agreements/category/workplace');
+        $response = $client->getResponse();
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->assertResponseRedirects('/agreements/pillar/estates');
+    }
+
+    public function testRedirectFromtechnologyProductsServicesToTechnology()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/agreements/category/technology-products-services');
+        $response = $client->getResponse();
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->assertResponseRedirects('/agreements/pillar/technology');
+    }
+    public function testRedirectFromWorkforceHealthEducationToHrAndWorkforceServices()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/agreements/category/workforce-health-education');
+        $response = $client->getResponse();
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->assertResponseRedirects('/agreements/category/hr-and-workforce-services');
     }
 }
