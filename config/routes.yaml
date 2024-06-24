@@ -146,6 +146,12 @@ api_news:
   defaults:
     _format: json
 
+api_events:
+  path: /api/events
+  controller: App\Controller\ApiController::events
+  defaults:
+    _format: json
+
 api_pardot_email:
   path: /api/pardot-email
   controller: App\Controller\ApiController::pardotEmail

@@ -1,0 +1,248 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Events - CCS{% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+
+{% block flourishClasses %}{% endblock %}
+
+
+{% block body %}
+    {% include '_components/hero.html.twig' with {'image': '/assets/images/CCS-events.jpg', 'heading': 'Events', 'notFromWordpress': 'true', 'cta_label': '', 'content': '', 'cta_label': '', 'cta_destination': ''} %}
+
+    <div class="govuk-width-container">
+        <div class="govuk-phase-banner">{% include '/includes/phase-banner-content.html.twig' %}</div>
+
+
+        <div class="govuk-breadcrumbs">
+            <ol class="govuk-breadcrumbs__list">
+                <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="/">Home</a></li>
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">Events</li>
+            </ol>
+        </div>
+
+        <main id="main-content" role="main" class="govuk-main-wrapper govuk-main-wrapper--tight">
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds page-introduction">
+                    <h1 class="govuk-heading-xl page-title page-title--tight">Events</h1>
+                    <p class="govuk-body-l">Take a look at our upcoming events. You can filter them by category or sector. Click on the event to see more details and how to register to attend.</p>
+                </div>
+            </div>
+
+            <p class="visuallyhidden">This is a page with JS</p>
+
+            <div class="govuk-grid-row events-page-listing">
+                <div class="govuk-grid-column-one-quarter">
+                    <h2 class="govuk-heading-m">Filter events list</h2>
+
+                    {% if event_type is not empty %}
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="event-type-accordion">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                                <div class="govuk-accordion__section-header">
+                                    <h3 class="govuk-accordion__section-heading">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="event-type-accordion-heading">
+                                            Event type
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div id="event-type-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="event-type-accordion-heading">
+                                    <ul class="ccs-link-filter-list">
+                                        <li><a href="/events">All event type</a></li>
+                                        {% for item in event_type %}
+                                            {% if filters.event_type == item.id %}
+                                                <li>{{ item.name }}</li>
+                                            {% else %}
+                                                <li><a href="/events?event_type={{ item.id }}">{{ item.name }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if audience_tag is not empty %}
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="audience-tag-accordion">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                                <div class="govuk-accordion__section-header">
+                                    <h3 class="govuk-accordion__section-heading">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="audience-tag-accordion-heading">
+                                            Event audience
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div id="audience-tag-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="audience-tag-accordion-heading">
+                                    <ul class="ccs-link-filter-list">
+                                        <li><a href="/events">All event audiences</a></li>
+                                        {% for item in audience_tag %}
+                                            {% if filters.audience_tag == item.id %}
+                                                <li>{{ item.name }}</li>
+                                            {% else %}
+                                                <li><a href="/events?audience_tag={{ item.id }}">{{ item.name }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if products_services is not empty %}
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="products-services-accordion">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                                <div class="govuk-accordion__section-header">
+                                    <h3 class="govuk-accordion__section-heading">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="products-services-accordion-heading">
+                                            Products and services
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div id="products-services-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="products-services-accordion-heading">
+                                    <ul class="ccs-link-filter-list">
+                                        <li><a href="/events">All Categories</a></li>
+                                        {% for item in products_services %}
+                                            {% if filters.products_services == item.id %}
+                                                <li>{{ item.name }}</li>
+                                            {% else %}
+                                                <li><a href="/events?product_service={{ item.id }}">{{ item.name }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if sectors is not empty %}
+
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="sectors-accordion">
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                                <div class="govuk-accordion__section-header">
+                                    <h3 class="govuk-accordion__section-heading">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="sectors-accordion-heading">
+                                            Sectors
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div id="sectors-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="sectors-accordion-heading">
+                                    <ul class="ccs-link-filter-list">
+                                        <li><a href="/events">All Sectors</a></li>
+                                        {% for sector in sectors %}
+                                            {% if filters.sectors == sector.id %}
+                                                <li>{{ sector.name }}</li>
+                                            {% else %}
+                                                <li><a href="/events?sector={{ sector.id }}">{{ sector.name }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="govuk-grid-column-three-quarters events-list-container">
+                    {% if pagination.totalResults == 1 %}
+                        <h2 class="govuk-heading-m">{{ pagination.totalResults }} event(s) found</h2>
+                    {% else %}
+                        <h2 class="govuk-heading-m">{{ pagination.totalResults }} event(s) found</h2>
+                    {% endif %}
+
+                    {% if events %}
+                        <ol class="events-list">
+                            {% for event in events %}
+                                <li class="event-list__item">
+                                    {% if event.content.image %}
+                                        <a class="event-list__image" aria-hidden="true"  href="/events/{{ event.id }}/{{ slugify(event.title) }}">
+                                            <img src="{{ event.content.image.byName('news-size-s') }}" alt="{{ event.title|raw }}" />
+                                        </a>
+                                    {% endif %}
+
+                                    <div class="event-list__details">
+                                        <h3 class="event-list__title govuk-!-margin-bottom-2 ">
+                                            <a href="/events/{{ event.id }}/{{ slugify(event.title) }}">{{ event.title|raw }}</a>
+                                        </h3>
+
+
+                                        <ul class="event-list__meta list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                            {% if event.content.start_datetime|date('j F Y') == event.content.end_datetime|date('j F Y') %}
+                                                <li><strong>Date:</strong> {{ event.content.start_datetime|date('j F Y') }}</li>
+                                            {% else %}
+                                                <li><strong>Start Date:</strong> {{ event.content.start_datetime|date('j F Y') }}</li>
+                                                <li><strong>End Date:</strong> {{ event.content.end_datetime|date('j F Y') }}</li>
+                                            {% endif %}
+                                            <li><strong>Type:</strong> {{ event.content.event_type }}</li>
+                                        </ul>
+                                    </div>
+
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    {% endif %}
+
+                    <div class="events-pagination">
+                        {{ include('includes/pagination.html.twig', {'pagination': pagination, 'route': 'events_list', 'options': {}}) }}
+                    </div>
+                </div>
+            </div>
+
+
+
+        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'event'});</script>
+        </main>
+
+        {% if app.environment == "prod" %}
+            <script src="/assets/scripts/libraries/vue.min.js?v=1"></script>
+        {% else %}
+            <script src="/assets/scripts/libraries/vue.js?v=1"></script>
+        {% endif %}
+
+        <script>
+            /**
+            * Function to test if the browser supports ES6 template literals
+            */
+            function supportsLiterals() {
+                try{
+                    return eval("''===``");
+                }
+                catch(e){
+                    return false;
+                }
+            }
+
+            if(!('Promise' in window) || !supportsLiterals() || !window.fetch) {
+                throw new Error("Your browser doesn't support the necessary JavaScript functions to use the enhanced search and has been served a non-JavaScript version");
+            }
+
+            var apiBaseUrl                  = '{{ api_base_url }}';
+            var appBaseUrl                  = '{{ app_base_url }}';
+            var pageNumber                  = {% if pageNumber is defined and pageNumber is not empty %}{{ pageNumber }}{% else %}1{% endif %};
+            var checkedEventType            = [];
+            var checkedEventAudience        = [];
+            var checkedProductsServices     = [];
+            var checkedSectors              = [];
+
+            {% if filters.event_type is defined and filters.event_type is not empty %}
+                var checkedEventType   = Array.from([{{filters.event_type}}]);
+            {% endif %}
+
+            {% if filters.audience_tag is defined and filters.audience_tag is not empty %}
+                var checkedEventAudience   = Array.from([{{filters.audience_tag}}]);
+            {% endif %}
+
+            {% if filters.products_services is defined and filters.products_services is not empty %}
+                var checkedProductsServices   = Array.from([{{filters.products_services}}]);
+            {% endif %}
+            
+            {% if filters.sectors is defined and filters.sectors is not empty %}
+                var checkedSectors   = Array.from([{{filters.sectors}}]);
+            {% endif %}
+
+
+        </script>
+    </div>
+{% endblock %}
