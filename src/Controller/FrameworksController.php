@@ -143,7 +143,8 @@ class FrameworksController extends AbstractController
             'pagination' => $results->getPagination(),
             'results'    => $results,
             'categories' => FrameworkCategories::getAll(),
-            'pillars'    => FrameworkCategories::getAllPillars()
+            'pillars'    => FrameworkCategories::getAllPillars(),
+            'statuses'     => ["live"]
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
