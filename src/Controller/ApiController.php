@@ -231,12 +231,14 @@ class ApiController extends AbstractController
         $apiUrl = $this->getCmsUrl('/wp-json/wp/v2/event');
 
         $allowedFilters = [
-            'sectors'           => FILTER_SANITIZE_STRING,
+            'sectors'            => FILTER_SANITIZE_STRING,
              'products_services' => FILTER_SANITIZE_STRING,
              'event_type'        => FILTER_SANITIZE_STRING,
              'audience_tag'      => FILTER_SANITIZE_STRING,
              'page'              => FILTER_SANITIZE_NUMBER_INT,
              'per_page'          => FILTER_SANITIZE_NUMBER_INT,
+             'orderby'           => FILTER_SANITIZE_STRING,
+             'order'             => FILTER_SANITIZE_STRING,
         ];
 
         $response = $this->getResponse($apiUrl, $request, $allowedFilters);
