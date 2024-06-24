@@ -88,14 +88,16 @@ class EventsController extends AbstractController
         } else {
             // This is for DEV and UAT
             return $this->render('events/list_with_JS.html.twig', [
-                'url' => sprintf('/events/page/%s', $page),
-                'events' => $list,
-                'pagination' => $list->getPagination(),
-                'sectors' => $sectors,
-                'audience_tag' => $audienceTag,
-                'event_type' => $eventType,
-                'products_services' => $productsServices,
-                'filters' => $options
+                'api_base_url'          => getenv('SEARCH_API_BASE_URL'),
+                'app_base_url'          => getenv('APP_BASE_URL'),
+                'url'                   => sprintf('/events/page/%s', $page),
+                'events'                => $list,
+                'pagination'            => $list->getPagination(),
+                'sectors'               => $sectors,
+                'audience_tag'          => $audienceTag,
+                'event_type'            => $eventType,
+                'products_services'     => $productsServices,
+                'filters'               => $options
             ]);
         }
     }
