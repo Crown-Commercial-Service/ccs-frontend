@@ -48,10 +48,54 @@
         <!-- required wrapper 2 -->
         <main id="main-content" role="main"  class="govuk-main-wrapper">
 
-
-
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
+                <div class="govuk-grid-column-one-third">
+                    <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
+                        <div class="govuk-accordion__controls">
+                            <button type="button" class="govuk-accordion__show-all" aria-expanded="true">
+                            <span class="govuk-accordion-nav__chevron"></span>
+                            <span class="govuk-accordion__show-all-text">Hide all sections</span>
+                            </button>
+                        </div>
+                        <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
+                            <div class="govuk-accordion__section-header">
+                            <h2 class="govuk-accordion__section-heading">
+                                <button type="button" aria-controls="accordion-with-summary-sections-content-1" class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" aria-expanded="true" aria-label="Filter by agreement status , Hide this section">
+                                <span class="govuk-accordion__section-heading-text" id="accordion-with-summary-sections-heading-3">
+                                    <span class="govuk-accordion__section-heading-text-focus"> Filter by agreement status </span>
+                                </span>
+                                <span class="govuk-visually-hidden govuk-accordion__section-heading-divider"> </span>
+                                </button>
+                            </h2>
+                            <span class="govuk-body-s"><span class="upcoming-num-selected">5</span> selected</span>
+                            </div>
+                            <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
+                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                <input onchange="toggleFuture()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="future-pipeline" name="statuses[]" type="checkbox" value="all" checked>
+                                <label class="govuk-label govuk-checkboxes__label" for="all"> Future pipeline </label>
+                            </div>
+                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                <input onchange="togglePlan()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="planned-procurement" name="statuses[]" type="checkbox" value="live" checked>
+                                <label class="govuk-label govuk-checkboxes__label" for="live"> Planned procurements </label>
+                            </div>
+                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                <input onchange="toggleProcProg()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="procurement-progress" name="statuses[]" type="checkbox" value="live" checked>
+                                <label class="govuk-label govuk-checkboxes__label" for="live"> Procurement in Progress </label>
+                            </div>
+                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                <input onchange="toggleAwarded()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="recently-awarded" name="statuses[]" type="checkbox" value="upcoming" checked>
+                                <label class="govuk-label govuk-checkboxes__label" for="upcoming"> Recently awarded </label>
+                            </div>
+                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                <input onchange="toggleDPS()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="dps" name="statuses[]" type="checkbox" value="expired" checked>
+                                <label class="govuk-label govuk-checkboxes__label" for="expired"> DPS </label>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="govuk-grid-column-two-thirds">
 
 
                     {% if upcoming_deals_content and upcoming_deals_content.upcomingDealsInfo.title and upcoming_deals_content.upcomingDealsInfo.page_description  %}
@@ -79,42 +123,182 @@
                     {#{{ dump(dynamic_purchasing_systems) }}#}
                     {#{{ dump(planned_pipeline) }}#}
                     {#{{ dump(future_pipeline) }}#}
+                    <div class="proc-recent-awarded">
+                        {% if upcoming_deals_content and upcoming_deals_content.table_0.title %}
 
-                    {% if upcoming_deals_content and upcoming_deals_content.table_0.title %}
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_0.title }}</h2>
 
-                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_0.title }}</h2>
+                        {% else %}
 
-                    {% else %}
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements recently awarded</h2>
 
-                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements recently awarded</h2>
+                        {% endif %}
+                        
+                        {% if awarded_pipeline|length >= 1 %}
 
-                    {% endif %}
-                    
-                    {% if awarded_pipeline|length >= 1 %}
+                            <table class="govuk-table ccs-table--upcoming-agreements">
+                                {% if upcoming_deals_content and upcoming_deals_content.table_0.caption|length > 0 %}
 
-                        <table class="govuk-table ccs-table--upcoming-agreements">
-                            {% if upcoming_deals_content and upcoming_deals_content.table_0.caption|length > 0 %}
+                                    <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_0.caption }}</caption>
 
-                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_0.caption }}</caption>
+                                {% endif %}
 
-                            {% endif %}
+                                <thead class="govuk-table__head">
+                                <tr class="govuk-table__row">
+                                    <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                        Agreement title
+                                    </th>
+                                    <th class="govuk-table__header govuk-table__header--numeric govuk-!-font-size-19" scope="col">
+                                        Awarded Date
+                                    </th>
+                                    <th class="govuk-table__header govuk-table__header--numeric govuk-!-font-size-19" scope="col">
+                                        Live/Expected live
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="govuk-table__body">
 
-                            <thead class="govuk-table__head">
-                            <tr class="govuk-table__row">
-                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
-                                    Agreement title
-                                </th>
-                                <th class="govuk-table__header govuk-table__header--numeric govuk-!-font-size-19" scope="col">
-                                    Awarded Date
-                                </th>
-                                <th class="govuk-table__header govuk-table__header--numeric govuk-!-font-size-19" scope="col">
-                                    Live/Expected live
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody class="govuk-table__body">
+                                    {% for upcoming_deal in awarded_pipeline %}
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">
+                                                <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
+                                                    <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
+                                                </p>
+                                                <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Agreement ID:</strong> {{ upcoming_deal.rm_number }}</p>
+                                            </td>
+                                            <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
+                                                {% if upcoming_deal.expected_award_date is not null %}
+                                                    {{ upcoming_deal.expected_award_date.format('d/m/Y') }}
+                                                {% endif %}
+                                            </td>
+                                            <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
+                                                {% if upcoming_deal.expected_live_date is not null %}
+                                                    {{ upcoming_deal.expected_live_date.format('d/m/Y') }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
 
-                                {% for upcoming_deal in awarded_pipeline %}
+                                </tbody>
+                            </table>
+
+                        {% else %}
+
+                            <p>No procurements recently awarded at the moment.</p>
+
+                        {% endif %}
+                    </div>
+
+                    <div class="proc-in-progress">
+                        {% if upcoming_deals_content and upcoming_deals_content.table_1.title %}
+
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_1.title }}</h2>
+
+                        {% else %}
+
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements in progress</h2>
+
+                        {% endif %}
+
+                        {% if underway_pipeline|length >= 1 %}
+
+                            <table class="govuk-table ccs-table--upcoming-agreements">
+
+                                {% if upcoming_deals_content and upcoming_deals_content.table_1.caption %}
+
+                                    <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_1.caption }}</caption>
+
+                                {% else %}
+
+                                    <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">The links provided in the agreement section below give further information about the procurement, including the OJEU notice and details on how to tender for interested suppliers.
+                                    </caption>
+
+                                {% endif %}
+
+                                <thead class="govuk-table__head">
+                                <tr class="govuk-table__row">
+                                    <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                        Agreement title
+                                    </th>
+                                    <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
+                                        Tenders close
+                                    </th>
+                                    <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
+                                        Expected award
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="govuk-table__body">
+
+                            {% for upcoming_deal in underway_pipeline %}
+
+                                <tr class="govuk-table__row">
+                                    <td class="govuk-table__cell">
+                                        <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
+                                            <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
+                                        </p>
+                                        <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Agreement ID:</strong> {{ upcoming_deal.rm_number }}</p>
+                                    </td>
+                                    <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
+                                {% if upcoming_deal.tenders_close_date is not null %}
+                                    {{ upcoming_deal.tenders_close_date.format('d/m/Y') }}
+                                {% endif %}
+                                    </td>
+                                    <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
+                                        {% if upcoming_deal.expected_award_date is not null  %}
+                                            {{ upcoming_deal.expected_award_date.format('d/m/Y') }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+
+                                </tbody>
+                            </table>
+
+                        {% else %}
+
+                            <p>No procurements in progress at the moment.</p>
+
+                        {% endif %}
+                    </div>
+
+
+
+                    <div class="dps">
+                        {% if upcoming_deals_content and upcoming_deals_content.table_2.title %}
+
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_2.title }}</h2>
+
+                        {% else %}
+
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Dynamic Purchasing Systems currently open</h2>
+
+                        {% endif %}
+
+                        {% if dynamic_purchasing_systems|length >= 1 %}
+
+                            <table class="govuk-table ccs-table--upcoming-agreements">
+                                {% if upcoming_deals_content and upcoming_deals_content.table_2.caption|length > 0 %}
+
+                                    <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_2.caption }}</caption>
+
+                                {% endif %}
+
+                                <thead class="govuk-table__head">
+                                <tr class="govuk-table__row">
+                                    <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                        Agreement title
+                                    </th>
+                                    <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
+                                        Live
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="govuk-table__body">
+
+                                {% for upcoming_deal in dynamic_purchasing_systems %}
+
                                     <tr class="govuk-table__row">
                                         <td class="govuk-table__cell">
                                             <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
@@ -123,294 +307,149 @@
                                             <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Agreement ID:</strong> {{ upcoming_deal.rm_number }}</p>
                                         </td>
                                         <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
-                                            {% if upcoming_deal.expected_award_date is not null %}
-                                                {{ upcoming_deal.expected_award_date.format('d/m/Y') }}
-                                            {% endif %}
-                                        </td>
-                                        <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
-                                            {% if upcoming_deal.expected_live_date is not null %}
+                                            {% if upcoming_deal.expected_live_date is not null  %}
                                                 {{ upcoming_deal.expected_live_date.format('d/m/Y') }}
                                             {% endif %}
                                         </td>
                                     </tr>
+
                                 {% endfor %}
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
 
-                    {% else %}
+                        {% else %}
 
-                        <p>No procurements recently awarded at the moment.</p>
+                            <p>No Dynamic Purchasing Systems currently open at the moment.</p>
 
-                    {% endif %}
+                        {% endif %}
+                    </div>
 
 
-                    {% if upcoming_deals_content and upcoming_deals_content.table_1.title %}
 
-                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_1.title }}</h2>
 
-                    {% else %}
+                    <div class="planned-proc">
+                        {% if upcoming_deals_content and upcoming_deals_content.table_3.title %}
 
-                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements in progress</h2>
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_3.title }}</h2>
 
-                    {% endif %}
+                        {% else %}
 
-                    {% if underway_pipeline|length >= 1 %}
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Planned procurements</h2>
 
-                        <table class="govuk-table ccs-table--upcoming-agreements">
+                        {% endif %}
 
-                            {% if upcoming_deals_content and upcoming_deals_content.table_1.caption %}
+                        {% if planned_pipeline|length >= 1 %}
 
-                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_1.caption }}</caption>
+                            <table class="govuk-table ccs-table--upcoming-agreements">
+
+                                {% if upcoming_deals_content and upcoming_deals_content.table_3.caption|length > 0 %}
+
+                                    <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_3.caption }}</caption>
+
+                                {% endif %}
+
+                                <thead class="govuk-table__head">
+                                <tr class="govuk-table__row">
+                                    <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                        Agreement title
+                                    </th>
+                                    <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
+                                        Tenders open
+                                    </th>
+                                    <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
+                                        Expected live
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="govuk-table__body">
+
+                                {% for upcoming_deal in planned_pipeline %}
+
+                                    <tr class="govuk-table__row">
+                                        <td class="govuk-table__cell">
+                                            <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
+                                                <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
+                                            </p>
+                                            <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Agreement ID:</strong> {{ upcoming_deal.rm_number }}</p>
+                                        </td>
+                                        <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
+                                            {% if upcoming_deal.tenders_open_date is not null %}
+                                                {{ upcoming_deal.tenders_open_date.format('M Y') }}
+                                            {% endif %}
+                                        </td>
+                                        <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
+                                            {% if upcoming_deal.expected_live_date is not null  %}
+                                                {{ upcoming_deal.expected_live_date.format('d/m/Y') }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
 
                             {% else %}
 
-                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">The links provided in the agreement section below give further information about the procurement, including the OJEU notice and details on how to tender for interested suppliers.
-                                </caption>
+                                <p>No planned procurements at the moment.</p>
 
-                            {% endif %}
-
-                            <thead class="govuk-table__head">
-                            <tr class="govuk-table__row">
-                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
-                                    Agreement title
-                                </th>
-                                <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
-                                    Tenders close
-                                </th>
-                                <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
-                                    Expected award
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody class="govuk-table__body">
-
-                        {% for upcoming_deal in underway_pipeline %}
-
-                            <tr class="govuk-table__row">
-                                <td class="govuk-table__cell">
-                                    <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
-                                        <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
-                                    </p>
-                                    <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Agreement ID:</strong> {{ upcoming_deal.rm_number }}</p>
-                                </td>
-                                <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
-                            {% if upcoming_deal.tenders_close_date is not null %}
-                                {{ upcoming_deal.tenders_close_date.format('d/m/Y') }}
-                            {% endif %}
-                                </td>
-                                <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
-                                    {% if upcoming_deal.expected_award_date is not null  %}
-                                        {{ upcoming_deal.expected_award_date.format('d/m/Y') }}
-                                    {% endif %}
-                                </td>
-                            </tr>
-
-                        {% endfor %}
-
-                            </tbody>
-                        </table>
-
-                    {% else %}
-
-                        <p>No procurements in progress at the moment.</p>
-
-                    {% endif %}
+                        {% endif %}
+                    </div>
 
 
+                    <div class="future">
+                        {% if upcoming_deals_content and upcoming_deals_content.table_4.title %}
 
-
-
-                    {% if upcoming_deals_content and upcoming_deals_content.table_2.title %}
-
-                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_2.title }}</h2>
-
-                    {% else %}
-
-                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Dynamic Purchasing Systems currently open</h2>
-
-                    {% endif %}
-
-                    {% if dynamic_purchasing_systems|length >= 1 %}
-
-                        <table class="govuk-table ccs-table--upcoming-agreements">
-                            {% if upcoming_deals_content and upcoming_deals_content.table_2.caption|length > 0 %}
-
-                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_2.caption }}</caption>
-
-                            {% endif %}
-
-                            <thead class="govuk-table__head">
-                            <tr class="govuk-table__row">
-                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
-                                    Agreement title
-                                </th>
-                                <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
-                                    Live
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody class="govuk-table__body">
-
-                            {% for upcoming_deal in dynamic_purchasing_systems %}
-
-                                <tr class="govuk-table__row">
-                                    <td class="govuk-table__cell">
-                                        <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
-                                            <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
-                                        </p>
-                                        <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Agreement ID:</strong> {{ upcoming_deal.rm_number }}</p>
-                                    </td>
-                                    <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
-                                        {% if upcoming_deal.expected_live_date is not null  %}
-                                            {{ upcoming_deal.expected_live_date.format('d/m/Y') }}
-                                        {% endif %}
-                                    </td>
-                                </tr>
-
-                            {% endfor %}
-
-                            </tbody>
-                        </table>
-
-                    {% else %}
-
-                        <p>No Dynamic Purchasing Systems currently open at the moment.</p>
-
-                    {% endif %}
-
-
-
-
-
-
-                    {% if upcoming_deals_content and upcoming_deals_content.table_3.title %}
-
-                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_3.title }}</h2>
-
-                    {% else %}
-
-                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Planned procurements</h2>
-
-                    {% endif %}
-
-                    {% if planned_pipeline|length >= 1 %}
-
-                        <table class="govuk-table ccs-table--upcoming-agreements">
-
-                            {% if upcoming_deals_content and upcoming_deals_content.table_3.caption|length > 0 %}
-
-                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_3.caption }}</caption>
-
-                            {% endif %}
-
-                            <thead class="govuk-table__head">
-                            <tr class="govuk-table__row">
-                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
-                                    Agreement title
-                                </th>
-                                <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
-                                    Tenders open
-                                </th>
-                                <th class="govuk-table__header --govuk-!-font-size-19 govuk-table__header--numeric" scope="col">
-                                    Expected live
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody class="govuk-table__body">
-
-                            {% for upcoming_deal in planned_pipeline %}
-
-                                <tr class="govuk-table__row">
-                                    <td class="govuk-table__cell">
-                                        <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
-                                            <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
-                                        </p>
-                                        <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Agreement ID:</strong> {{ upcoming_deal.rm_number }}</p>
-                                    </td>
-                                    <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
-                                        {% if upcoming_deal.tenders_open_date is not null %}
-                                            {{ upcoming_deal.tenders_open_date.format('M Y') }}
-                                        {% endif %}
-                                    </td>
-                                    <td class="govuk-table__cell govuk-table__cell--numeric govuk-!-font-size-16">
-                                        {% if upcoming_deal.expected_live_date is not null  %}
-                                            {{ upcoming_deal.expected_live_date.format('d/m/Y') }}
-                                        {% endif %}
-                                    </td>
-                                </tr>
-
-                            {% endfor %}
-
-                            </tbody>
-                        </table>
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_4.title }}</h2>
 
                         {% else %}
 
-                            <p>No planned procurements at the moment.</p>
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Future pipeline</h2>
 
-                    {% endif %}
+                        {% endif %}
 
+                        {% if future_pipeline|length >= 1 %}
 
+                            <table class="govuk-table ccs-table--upcoming-agreements">
 
+                                {% if upcoming_deals_content and upcoming_deals_content.table_4.caption|length > 0 %}
 
+                                    <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_4.caption }}</caption>
 
-                    {% if upcoming_deals_content and upcoming_deals_content.table_4.title %}
+                                {% endif %}
 
-                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_4.title }}</h2>
-
-                    {% else %}
-
-                        <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Future pipeline</h2>
-
-                    {% endif %}
-
-                    {% if future_pipeline|length >= 1 %}
-
-                        <table class="govuk-table ccs-table--upcoming-agreements">
-
-                            {% if upcoming_deals_content and upcoming_deals_content.table_4.caption|length > 0 %}
-
-                                <caption class="govuk-table__caption govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_4.caption }}</caption>
-
-                            {% endif %}
-
-                            <thead class="govuk-table__head">
-                            <tr class="govuk-table__row">
-                                <th class="govuk-table__header govuk-!-font-size-19" scope="col">
-                                    Agreement title
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody class="govuk-table__body">
-
-                            {% for upcoming_deal in future_pipeline %}
-
+                                <thead class="govuk-table__head">
                                 <tr class="govuk-table__row">
-                                    <td class="govuk-table__cell">
-                                        <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
-                                            <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
-                                        </p>
-                                        <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Agreement ID:</strong> {{ upcoming_deal.rm_number }}</p>
-                                    </td>
+                                    <th class="govuk-table__header govuk-!-font-size-19" scope="col">
+                                        Agreement title
+                                    </th>
                                 </tr>
+                                </thead>
+                                <tbody class="govuk-table__body">
 
-                            {% endfor %}
+                                {% for upcoming_deal in future_pipeline %}
 
-                            </tbody>
-                        </table>
+                                    <tr class="govuk-table__row">
+                                        <td class="govuk-table__cell">
+                                            <p class="govuk-!-font-size-18 govuk-!-font-weight-regular govuk-!-margin-0">
+                                                <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
+                                            </p>
+                                            <p class="govuk-!-font-size-16 govuk-!-margin-0"><strong>Agreement ID:</strong> {{ upcoming_deal.rm_number }}</p>
+                                        </td>
+                                    </tr>
 
-                        {% else %}
+                                {% endfor %}
 
-                            <p>No future pipelines at the moment.</p>
+                                </tbody>
+                            </table>
 
-                    {% endif %}
+                            {% else %}
 
+                                <p>No future pipelines at the moment.</p>
 
-
-
-
-
+                        {% endif %}
+                    </div>
 
 
                 </div>
@@ -421,5 +460,59 @@
         </main>
     </div>
 
-<script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});</script>
+<script>
+pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
+
+// filter upcoming agreement
+    var numSelected = 5;
+    var numSelectedElem = document.querySelector(".upcoming-num-selected");
+    var futDisplay = true;
+    var planDisplay = true;
+    var procProgDisplay = true;
+    var awardedDisplay = true;
+    var dpsDisplay = true;
+
+    function toggleFuture () {
+        futDisplay = !futDisplay;
+        futElem = document.querySelector(".future");
+        toggleAgreement(futElem, futDisplay); 
+    }
+
+     function togglePlan () {
+        planDisplay = !planDisplay;
+        planElem = document.querySelector(".planned-proc");
+        toggleAgreement(planElem, planDisplay); 
+    }
+
+     function toggleProcProg () {
+        procProgDisplay = !procProgDisplay;
+        procElem = document.querySelector(".proc-in-progress");
+        toggleAgreement(procElem, procProgDisplay); 
+    }
+
+     function toggleAwarded () {
+        awardedDisplay = !awardedDisplay;
+        awardedElem = document.querySelector(".proc-recent-awarded");
+        toggleAgreement(awardedElem, awardedDisplay); 
+    }
+
+     function toggleDPS () {
+        dpsDisplay = !dpsDisplay;
+        dpsElem = document.querySelector(".dps");
+        toggleAgreement(dpsElem, dpsDisplay); 
+    }
+
+    function toggleAgreement (agreement, agreementDisplay) {
+        if (agreementDisplay) {
+            numSelected++;
+            agreement.style.display = "block";
+        } else {
+            numSelected--
+            agreement.style.display = "none";
+        }
+
+        numSelectedElem.innerHTML = numSelected;
+    }
+
+</script>
 {% endblock %}
