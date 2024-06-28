@@ -67,27 +67,31 @@
                                 <span class="govuk-visually-hidden govuk-accordion__section-heading-divider"> </span>
                                 </button>
                             </h2>
-                            <span class="govuk-body-s"><span class="upcoming-num-selected">5</span> selected</span>
+                            <span class="govuk-body-s"><span class="upcoming-num-selected">0</span> selected</span>
                             </div>
                             <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input onchange="toggleFuture()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="future-pipeline" name="statuses[]" type="checkbox" value="all" checked>
+                                <input onchange="toggleAll()" class="govuk-checkboxes__input govuk-checkboxes__input--small view-all-checkbox" id="future-pipeline" name="statuses[]" type="checkbox" value="all" checked>
+                                <label class="govuk-label govuk-checkboxes__label" for="all"> View All </label>
+                            </div>
+                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="future-pipeline" name="statuses[]" type="checkbox" value="future">
                                 <label class="govuk-label govuk-checkboxes__label" for="all"> Future pipeline </label>
                             </div>
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input onchange="togglePlan()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="planned-procurement" name="statuses[]" type="checkbox" value="live" checked>
+                                <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="planned-procurement" name="statuses[]" type="checkbox" value="planned">
                                 <label class="govuk-label govuk-checkboxes__label" for="live"> Planned procurements </label>
                             </div>
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input onchange="toggleProcProg()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="procurement-progress" name="statuses[]" type="checkbox" value="live" checked>
+                                <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="procurement-progress" name="statuses[]" type="checkbox" value="proc">
                                 <label class="govuk-label govuk-checkboxes__label" for="live"> Procurement in Progress </label>
                             </div>
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input onchange="toggleAwarded()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="recently-awarded" name="statuses[]" type="checkbox" value="upcoming" checked>
+                                <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="recently-awarded" name="statuses[]" type="checkbox" value="awarded">
                                 <label class="govuk-label govuk-checkboxes__label" for="upcoming"> Recently awarded </label>
                             </div>
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input onchange="toggleDPS()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="dps" name="statuses[]" type="checkbox" value="expired" checked>
+                                <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="dps" name="statuses[]" type="checkbox" value="dps">
                                 <label class="govuk-label govuk-checkboxes__label" for="expired"> DPS </label>
                             </div>
                             </div>
@@ -464,54 +468,58 @@
 pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
 
 // filter upcoming agreement
-    var numSelected = 5;
     var numSelectedElem = document.querySelector(".upcoming-num-selected");
-    var futDisplay = true;
-    var planDisplay = true;
-    var procProgDisplay = true;
-    var awardedDisplay = true;
-    var dpsDisplay = true;
-
-    function toggleFuture () {
-        futDisplay = !futDisplay;
-        futElem = document.querySelector(".future");
-        toggleAgreement(futElem, futDisplay); 
+    var viewAll = document.querySelector(".view-all-checkbox");
+    var filterCheckboxes = document.getElementsByClassName("upcoming-agreement-filter");
+    
+    var upcomingAgreements = {
+        "future" :  document.querySelector(".future"),
+        "planned" : document.querySelector(".planned-proc"),
+        "proc" : document.querySelector(".proc-in-progress"),
+        "awarded": document.querySelector(".proc-recent-awarded"),
+        "dps" : document.querySelector(".dps")
     }
 
-     function togglePlan () {
-        planDisplay = !planDisplay;
-        planElem = document.querySelector(".planned-proc");
-        toggleAgreement(planElem, planDisplay); 
+    
+    function toggleAgreements() {
+        var numSelected = 0;
+        for(var checkbox of filterCheckboxes) {
+            if (checkbox.checked) {
+                numSelected++;
+                viewAll.checked = false;
+                toggleAgreement(upcomingAgreements[checkbox.value], true);
+                
+            } else {
+                toggleAgreement(upcomingAgreements[checkbox.value], false);
+            }
+            
+        }
+        numSelectedElem.innerHTML = numSelected;
     }
 
-     function toggleProcProg () {
-        procProgDisplay = !procProgDisplay;
-        procElem = document.querySelector(".proc-in-progress");
-        toggleAgreement(procElem, procProgDisplay); 
-    }
+    function toggleAll() {
+        if (viewAll.checked) {
+             for(var checkbox of filterCheckboxes) {
+                checkbox.checked = false;
+             }
 
-     function toggleAwarded () {
-        awardedDisplay = !awardedDisplay;
-        awardedElem = document.querySelector(".proc-recent-awarded");
-        toggleAgreement(awardedElem, awardedDisplay); 
-    }
-
-     function toggleDPS () {
-        dpsDisplay = !dpsDisplay;
-        dpsElem = document.querySelector(".dps");
-        toggleAgreement(dpsElem, dpsDisplay); 
+            Object.keys(upcomingAgreements).forEach(function(agreement) {
+                upcomingAgreements[agreement].style.display = "block";
+            });
+        } else {
+            Object.keys(upcomingAgreements).forEach(function(agreement) {
+                upcomingAgreements[agreement].style.display = "none";
+            });
+        }
+        
     }
 
     function toggleAgreement (agreement, agreementDisplay) {
         if (agreementDisplay) {
-            numSelected++;
             agreement.style.display = "block";
         } else {
-            numSelected--
             agreement.style.display = "none";
         }
-
-        numSelectedElem.innerHTML = numSelected;
     }
 
 </script>
