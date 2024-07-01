@@ -67,7 +67,7 @@
                                 <span class="govuk-visually-hidden govuk-accordion__section-heading-divider"> </span>
                                 </button>
                             </h2>
-                            <span class="govuk-body-s"><span class="upcoming-num-selected">0</span> selected</span>
+                            <span class="govuk-body-s"><span class="upcoming-num-selected">1</span> selected</span>
                             </div>
                             <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
@@ -494,6 +494,12 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
             }
             
         }
+
+        if (numSelected == 5) {
+            resetFilterUpcoming();
+            numSelected = 1;
+        } 
+
         numSelectedElem.innerHTML = numSelected;
     }
 
@@ -506,6 +512,8 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
             Object.keys(upcomingAgreements).forEach(function(agreement) {
                 upcomingAgreements[agreement].style.display = "block";
             });
+
+            numSelectedElem.innerHTML = 1;
         } else {
             Object.keys(upcomingAgreements).forEach(function(agreement) {
                 upcomingAgreements[agreement].style.display = "none";
@@ -520,6 +528,16 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
         } else {
             agreement.style.display = "none";
         }
+    }
+
+    function resetFilterUpcoming () {
+         for(var checkbox of filterCheckboxes) {
+            if (checkbox.checked) {
+                checkbox.checked = false;
+            }  
+        }
+
+        viewAll.checked = true;
     }
 
 </script>
