@@ -71,28 +71,28 @@
                             </div>
                             <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input onchange="toggleAll()" class="govuk-checkboxes__input govuk-checkboxes__input--small view-all-checkbox" id="future-pipeline" name="statuses[]" type="checkbox" value="all" checked>
+                                <input onchange="toggleAll()" class="govuk-checkboxes__input govuk-checkboxes__input--small view-all-checkbox" id="all" name="statuses[]" type="checkbox" value="all" checked>
                                 <label class="govuk-label govuk-checkboxes__label" for="all"> View All </label>
                             </div>
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                 <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="future-pipeline" name="statuses[]" type="checkbox" value="future">
-                                <label class="govuk-label govuk-checkboxes__label" for="all"> Future pipeline </label>
+                                <label class="govuk-label govuk-checkboxes__label" for="future-pipeline"> Future pipeline </label>
                             </div>
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                 <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="planned-procurement" name="statuses[]" type="checkbox" value="planned">
-                                <label class="govuk-label govuk-checkboxes__label" for="live"> Planned procurements </label>
+                                <label class="govuk-label govuk-checkboxes__label" for="planned-procurement"> Planned procurements </label>
                             </div>
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                 <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="procurement-progress" name="statuses[]" type="checkbox" value="proc">
-                                <label class="govuk-label govuk-checkboxes__label" for="live"> Procurement in Progress </label>
+                                <label class="govuk-label govuk-checkboxes__label" for="procurement-progress"> Procurement in Progress </label>
                             </div>
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                 <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="recently-awarded" name="statuses[]" type="checkbox" value="awarded">
-                                <label class="govuk-label govuk-checkboxes__label" for="upcoming"> Recently awarded </label>
+                                <label class="govuk-label govuk-checkboxes__label" for="recently-awarded"> Recently awarded </label>
                             </div>
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                 <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="dps" name="statuses[]" type="checkbox" value="dps">
-                                <label class="govuk-label govuk-checkboxes__label" for="expired"> DPS </label>
+                                <label class="govuk-label govuk-checkboxes__label" for="dps"> DPS </label>
                             </div>
                             </div>
                         </div>
@@ -483,6 +483,7 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
     
     function toggleAgreements() {
         var numSelected = 0;
+
         for(var checkbox of filterCheckboxes) {
             if (checkbox.checked) {
                 numSelected++;
@@ -495,8 +496,9 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
             
         }
 
-        if (numSelected == 5) {
+        if (numSelected == 5 || numSelected == 0) {
             resetFilterUpcoming();
+            toggleAll();
             numSelected = 1;
         } 
 
