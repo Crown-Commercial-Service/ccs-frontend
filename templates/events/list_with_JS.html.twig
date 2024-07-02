@@ -450,6 +450,10 @@
                             queryUrl += '&event_type=' + this.checkedEventType.join();
                         }
 
+                         if(this.currentPage ){
+                            queryUrl += '&page=' + this.currentPage;
+                        }
+
                         return queryUrl != '/?' ? queryUrl : "";
                         
                     },
@@ -567,6 +571,8 @@
                             }
 
                             self.checkedEventType = event.state.checkedEventType;
+
+                            self.fetchAPIData(null, self.currentPage);
                         }
                     },
                 }
