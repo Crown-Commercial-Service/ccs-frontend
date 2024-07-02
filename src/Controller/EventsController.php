@@ -39,7 +39,12 @@ class EventsController extends AbstractController
 
     public function list(Request $request, $page = 1)
     {
-        $page = (int) filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+        if ($page == 1) {
+            $requestedPage = (int) filter_var($request->query->get('page'), FILTER_SANITIZE_NUMBER_INT);
+            $page  = $requestedPage != 0 ? $requestedPage : 1;
+        } else {
+            $page = intval(filter_var($page, FILTER_SANITIZE_NUMBER_INT));
+        }
 
         $this->api->setCacheKey($request->getRequestUri());
 
@@ -93,6 +98,7 @@ class EventsController extends AbstractController
                 'url'                   => sprintf('/events/page/%s', $page),
                 'events'                => $list,
                 'pagination'            => $list->getPagination(),
+                'pageNumber'            => $page,
                 'sectors'               => $sectors,
                 'audience_tag'          => $audienceTag,
                 'event_type'            => $eventType,

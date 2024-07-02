@@ -1,0 +1,41 @@
+{% if pagination.totalResults == 1 %}
+    <h2 class="govuk-heading-m">{{ pagination.totalResults }} event found</h2>
+{% else %}
+    <h2 class="govuk-heading-m">{{ pagination.totalResults }} event(s) found</h2>
+{% endif %}
+
+{% if events %}
+    <ol class="events-list">
+        {% for event in events %}
+            <li class="event-list__item">
+                {% if event.content.image %}
+                    <a class="event-list__image" aria-hidden="true"  href="/events/{{ event.id }}/{{ slugify(event.title) }}">
+                        <img src="{{ event.content.image.byName('news-size-s') }}" alt="{{ event.title|raw }}" />
+                    </a>
+                {% endif %}
+
+                <div class="event-list__details">
+                    <h3 class="event-list__title govuk-!-margin-bottom-2 ">
+                        <a href="/events/{{ event.id }}/{{ slugify(event.title) }}">{{ event.title|raw }}</a>
+                    </h3>
+
+
+                    <ul class="event-list__meta list--inline govuk-body-s govuk-!-margin-bottom-2">
+                        {% if event.content.start_datetime|date('j F Y') == event.content.end_datetime|date('j F Y') %}
+                            <li><strong>Date:</strong> {{ event.content.start_datetime|date('j F Y') }}</li>
+                        {% else %}
+                            <li><strong>Start Date:</strong> {{ event.content.start_datetime|date('j F Y') }}</li>
+                            <li><strong>End Date:</strong> {{ event.content.end_datetime|date('j F Y') }}</li>
+                        {% endif %}
+                        <li><strong>Type:</strong> {{ event.content.event_type }}</li>
+                    </ul>
+                </div>
+
+            </li>
+        {% endfor %}
+    </ol>
+{% endif %}
+
+<div class="events-pagination">
+    {{ include('includes/pagination.html.twig', {'pagination': pagination, 'route': 'events_list', 'options': {}}) }}
+</div>
