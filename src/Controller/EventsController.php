@@ -79,7 +79,7 @@ class EventsController extends AbstractController
             throw new NotFoundHttpException('Events page not found', $e);
         }
 
-        if (getenv('APP_API_BASE_URL') == 'prod') {
+        if (getenv('APP_ENV') == 'prod') {
             return $this->render('events/list.html.twig', [
                 'url' => sprintf('/events/page/%s', $page),
                 'events' => $list,
