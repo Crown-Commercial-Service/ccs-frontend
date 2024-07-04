@@ -17,6 +17,7 @@ html {
  */
 .flourish-box-effect {
     position: relative;
+    display: none;
 
     &:before {
         background-color: #9b1a47;
@@ -34,6 +35,12 @@ html {
 
 .flourish-box-effect__inner {
     position: relative;
+}
+
+@include govuk-media-query($from: 641) {
+    .flourish-box-effect {
+        display: block;
+    }
 }
 
 
