@@ -44,26 +44,36 @@
 
 
                     {% if audience_tag is not empty %}
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="audience-tag-accordion">
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_audience_tag">
+
+                            {% set AudienceForTwig = filters.audience_tag is defined and filters.audience_tag is not empty ? filters.audience_tag|split(',') : [] %}
+
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section">
                                 <div class="govuk-accordion__section-header">
-                                    <h3 class="govuk-accordion__section-heading">
-                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="audience-tag-accordion-heading">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-audience-tag">
                                             Event audience
                                         </span>
-                                    </h3>
+                                    </h2>
                                 </div>
-                                <div id="audience-tag-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="audience-tag-accordion-heading">
-                                    <ul class="ccs-link-filter-list">
-                                        <li><a href="/events">All event audiences</a></li>
-                                        {% for item in audience_tag %}
-                                            {% if filters.audience_tag == item.id %}
-                                                <li>{{ item.name }}</li>
-                                            {% else %}
-                                                <li><a href="/events?audience_tag={{ item.id }}">{{ item.name }}</a></li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
+
+                                <div id="audience-tag-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-for-audience-tag">
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input v-on:change=fetchAPIData(null,null) v-model="checkedEventAudience" name="allAudience" value="allAudience" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allAudience" type="checkbox" {{ filters.audience_tag is defined and filters.audience_tag is empty  ? 'checked' }}>
+                                        <label class="govuk-label govuk-checkboxes__label" for="allAudience">
+                                            View all
+                                        </label>
+                                    </div>
+
+                                    {% for item in audience_tag|sort %}
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedEventAudience" name="audience[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in AudienceForTwig ? 'checked' }}>
+                                            <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
+                                                {{ item.name }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+
                                 </div>
                             </div>
                         </div>
@@ -398,6 +408,7 @@
                 el: '#main-content',
                 mounted:function(){
                     this.typeFilter();
+                    this.audienceFilter();
                 },
                 data: {
                     javascriptVersion: true,
@@ -406,6 +417,7 @@
                     emptyResult: false,
                     apiURL:  apiBaseUrl + "events?",
                     checkedEventType: checkedEventType,
+                    checkedEventAudience: checkedEventAudience,
                     currentPage: pageNumber,
                     numberOfPages: Number,
                     totalResults: Number,
@@ -435,7 +447,8 @@
                         // JS History API
                         if(this.popstateLoad === false) {
                             history.pushState({
-                                checkedEventType: this.checkedEventType,
+                                checkedEventType:       this.checkedEventType,
+                                checkedEventAudience:   this.checkedEventAudience,
                             }, 'Events', this.frontendSearchUrl);
                         }
 
@@ -449,6 +462,10 @@
 
                         if(this.checkedEventType.length != 0) {
                             queryUrl += '&event_type=' + this.checkedEventType.join();
+                        }
+
+                        if(this.checkedEventAudience.length != 0) {
+                            queryUrl += '&audience_tag=' + this.checkedEventAudience.join();
                         }
 
                          if(this.currentPage ){
@@ -488,15 +505,33 @@
 
                         return typeFilter;
                     },
+                    audienceFilter: function(audienceSlug){
+                        var self = this;
+                        var audienceFilter = "";
+
+                        if (self.checkedEventAudience.includes("allAudience") || self.checkedEventAudience.length == 0 || self.checkedEventAudience.length == "{{audience_tag|length}}"){
+                            self.checkedEventAudience = [];
+                            document.getElementById("allAudience").checked = true;
+                            document.getElementById(audienceSlug) != null ? document.getElementById(audienceSlug).checked = false : null
+                        }else{
+                            document.getElementById("allAudience").checked = false;
+                            audienceFilter = "&audience_tag=" + self.checkedEventAudience.join()
+                        }
+
+                        return audienceFilter;
+                    },
                     searchRequestUrl: function(categoriesSlug, page) {
 
-                        fetchURL = this.apiURL + this.typeFilter(categoriesSlug);
+                        fetchURL =    this.apiURL 
+                                    + this.typeFilter(categoriesSlug) 
+                                    + this.audienceFilter(categoriesSlug);
                         
                         fetchURL = fetchURL + "&per_page=10&page=" + this.currentPage;
 
                         if(this.popstateLoad === false) {
                             history.pushState({
-                                checkedEventType: this.checkedEventType,
+                                checkedEventType:       this.checkedEventType,
+                                checkedEventAudience:   this.checkedEventAudience,
                             }, 'Events', this.frontendSearchUrl);
                         }
 
@@ -567,11 +602,13 @@
                             self.popstateLoad = true;
 
                             if(event.state == null) {
-                                self.checkedEventType = [];
-                                return;
+                                self.checkedEventType       = []
+                                self.checkedEventAudience   = []
+                                return
                             }
 
-                            self.checkedEventType = event.state.checkedEventType;
+                            self.checkedEventType       = event.state.checkedEventType;
+                            self.checkedEventAudience   = event.state.checkedEventAudience;
 
                             self.fetchAPIData(null, self.currentPage);
                         }
