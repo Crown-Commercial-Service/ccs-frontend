@@ -39,7 +39,12 @@ class EventsController extends AbstractController
 
     public function list(Request $request, $page = 1)
     {
-        $page = (int) filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+        if ($page == 1) {
+            $requestedPage = (int) filter_var($request->query->get('page'), FILTER_SANITIZE_NUMBER_INT);
+            $page  = $requestedPage != 0 ? $requestedPage : 1;
+        } else {
+            $page = intval(filter_var($page, FILTER_SANITIZE_NUMBER_INT));
+        }
 
         $this->api->setCacheKey($request->getRequestUri());
 
@@ -74,16 +79,33 @@ class EventsController extends AbstractController
             throw new NotFoundHttpException('Events page not found', $e);
         }
 
-        return $this->render('events/list.html.twig', [
-            'url' => sprintf('/events/page/%s', $page),
-            'events' => $list,
-            'pagination' => $list->getPagination(),
-            'sectors' => $sectors,
-            'audience_tag' => $audienceTag,
-            'event_type' => $eventType,
-            'products_services' => $productsServices,
-            'filters' => $options
-        ]);
+        if (getenv('APP_ENV') == 'prod') {
+            return $this->render('events/list.html.twig', [
+                'url' => sprintf('/events/page/%s', $page),
+                'events' => $list,
+                'pagination' => $list->getPagination(),
+                'sectors' => $sectors,
+                'audience_tag' => $audienceTag,
+                'event_type' => $eventType,
+                'products_services' => $productsServices,
+                'filters' => $options
+            ]);
+        } else {
+            // This is for DEV and UAT
+            return $this->render('events/list_with_JS.html.twig', [
+                'api_base_url'          => getenv('SEARCH_API_BASE_URL'),
+                'app_base_url'          => getenv('APP_BASE_URL'),
+                'url'                   => sprintf('/events/page/%s', $page),
+                'events'                => $list,
+                'pagination'            => $list->getPagination(),
+                'pageNumber'            => $page,
+                'sectors'               => $sectors,
+                'audience_tag'          => $audienceTag,
+                'event_type'            => $eventType,
+                'products_services'     => $productsServices,
+                'filters'               => $options
+            ]);
+        }
     }
 
     /**
