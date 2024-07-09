@@ -407,8 +407,8 @@
                 delimiters: ['{[', ']}'],
                 el: '#main-content',
                 mounted:function(){
-                    this.typeFilter();
-                    this.audienceFilter();
+                    this.filtering(null, "type")
+                    this.filtering(null, "audience")
                 },
                 data: {
                     javascriptVersion: true,
@@ -490,41 +490,46 @@
                         const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][date.getMonth()];
                         return date.getDate() + ' ' + month + ' ' + date.getFullYear();
                     },
-                    typeFilter: function(typeSlug){
-                        var self = this;
-                        var typeFilter = "";
+                    filtering: function(selectedSlug, filtertingOption){
+                        filterArray = null
+                        viewAllCheckboxID = null
+                        selectedFilterFromControllerLength = null
+                        paramaString = null
+                        returnFilter = ""
 
-                        if (self.checkedEventType.includes("allType") || self.checkedEventType.length == 0 || self.checkedEventType.length == "{{event_type|length}}"){
-                            self.checkedEventType = [];
-                            document.getElementById("allType").checked = true;
-                            document.getElementById(typeSlug) != null ? document.getElementById(typeSlug).checked = false : null
-                        }else{
-                            document.getElementById("allType").checked = false;
-                            typeFilter = "&event_type=" + self.checkedEventType.join()
+                        switch(filtertingOption) {
+                            case "type":
+                                filterArray                         = this.checkedEventType
+                                viewAllCheckboxID                   = "allType"
+                                selectedFilterFromControllerLength  = Number("{{event_type|length}}")
+                                paramaString                        = "&event_type="
+                                break;
+                            case "audience":
+                                filterArray                         = this.checkedEventAudience
+                                viewAllCheckboxID                   = "allAudience"
+                                selectedFilterFromControllerLength  = Number("{{audience_tag|length}}")
+                                paramaString                        = "&audience_tag="
+                                break;
+                            default:
+                                console.log('An error occurred');
+                                return
                         }
 
-                        return typeFilter;
-                    },
-                    audienceFilter: function(audienceSlug){
-                        var self = this;
-                        var audienceFilter = "";
-
-                        if (self.checkedEventAudience.includes("allAudience") || self.checkedEventAudience.length == 0 || self.checkedEventAudience.length == "{{audience_tag|length}}"){
-                            self.checkedEventAudience = [];
-                            document.getElementById("allAudience").checked = true;
-                            document.getElementById(audienceSlug) != null ? document.getElementById(audienceSlug).checked = false : null
+                        if (filterArray.includes(viewAllCheckboxID) || filterArray.length == 0 || filterArray.length == selectedFilterFromControllerLength){
+                            filterArray.splice(0);
+                            document.getElementById(viewAllCheckboxID).checked = true;
+                            document.getElementById(selectedSlug) != null ? document.getElementById(selectedSlug).checked = false : null
                         }else{
-                            document.getElementById("allAudience").checked = false;
-                            audienceFilter = "&audience_tag=" + self.checkedEventAudience.join()
+                            document.getElementById(viewAllCheckboxID).checked = false;
+                            returnFilter = paramaString + filterArray.join()
                         }
-
-                        return audienceFilter;
+                        return returnFilter;
                     },
-                    searchRequestUrl: function(categoriesSlug, page) {
+                    searchRequestUrl: function(selectionSlug, page) {
 
                         fetchURL =    this.apiURL 
-                                    + this.typeFilter(categoriesSlug) 
-                                    + this.audienceFilter(categoriesSlug);
+                                    + this.filtering(selectionSlug, "type")
+                                    + this.filtering(selectionSlug, "audience");
                         
                         fetchURL = fetchURL + "&per_page=10&page=" + this.currentPage;
 
@@ -574,9 +579,7 @@
                                     self.results[i].altText  = self.results[i].acf.alt_text;
                                 }
                             }
-                            
 
-                            
                             if( Object.keys(jsonResponse.body).length === 0 ){
                                 self.emptyResult = true;
                                 self.responseAvailable = null;
@@ -615,7 +618,6 @@
                     },
                 }
             });
-
 
         </script>
     </div>
