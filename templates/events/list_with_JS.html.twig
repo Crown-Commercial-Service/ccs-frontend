@@ -67,8 +67,8 @@
 
                                     {% for item in audience_tag|sort %}
                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedEventAudience" name="audience[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in AudienceForTwig ? 'checked' }}>
-                                            <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
+                                            <input v-on:change=fetchAPIData("{{item.id}}+{{item.slug}}",null) v-model="checkedEventAudience" name="audience[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.id}}+{{item.slug}}" type="checkbox" {{ item.id in AudienceForTwig ? 'checked' }}>
+                                            <label class="govuk-label govuk-checkboxes__label" for="{{item.id}}+{{item.slug}}">
                                                 {{ item.name }}
                                             </label>
                                         </div>
@@ -103,8 +103,8 @@
 
                                     {% for item in event_type|sort %}
                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedEventType" name="type[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in TypeForTwig ? 'checked' }}>
-                                            <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
+                                            <input v-on:change=fetchAPIData("{{item.id}}+{{item.slug}}",null) v-model="checkedEventType" name="type[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.id}}+{{item.slug}}" type="checkbox" {{ item.id in TypeForTwig ? 'checked' }}>
+                                            <label class="govuk-label govuk-checkboxes__label" for="{{item.id}}+{{item.slug}}">
                                                 {{ item.name }}
                                             </label>
                                         </div>
@@ -140,8 +140,8 @@
 
                                     {% for item in products_services|sort %}
                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedProductsServices" name="PandS[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in PSForTwig ? 'checked' }}>
-                                            <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
+                                            <input v-on:change=fetchAPIData("{{item.id}}+{{item.slug}}",null) v-model="checkedProductsServices" name="PandS[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.id}}+{{item.slug}}" type="checkbox" {{ item.id in PSForTwig ? 'checked' }}>
+                                            <label class="govuk-label govuk-checkboxes__label" for="{{item.id}}+{{item.slug}}">
                                                 {{ item.name }}
                                             </label>
                                         </div>
@@ -508,7 +508,7 @@
                         const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][date.getMonth()];
                         return date.getDate() + ' ' + month + ' ' + date.getFullYear();
                     },
-                    filtering: function(selectedSlug, filtertingOption){
+                    filtering: function(selectedIdandSlug, filtertingOption){
                         filterArray = null
                         viewAllCheckboxID = null
                         selectedFilterFromControllerLength = null
@@ -525,7 +525,7 @@
                             case "PS":
                                 filterArray                         = this.checkedProductsServices
                                 viewAllCheckboxID                   = "allPS"
-                                selectedFilterFromControllerLength  = Number("{products_services|length}}")
+                                selectedFilterFromControllerLength  = Number("{{products_services|length}}")
                                 paramaString                        = "&products_services="
                                 break;
                             case "audience":
@@ -542,19 +542,19 @@
                         if (filterArray.includes(viewAllCheckboxID) || filterArray.length == 0 || filterArray.length == selectedFilterFromControllerLength){
                             filterArray.splice(0);
                             document.getElementById(viewAllCheckboxID).checked = true;
-                            document.getElementById(selectedSlug) != null ? document.getElementById(selectedSlug).checked = false : null
+                            document.getElementById(selectedIdandSlug) != null ? document.getElementById(selectedIdandSlug).checked = false : null
                         }else{
                             document.getElementById(viewAllCheckboxID).checked = false;
                             returnFilter = paramaString + filterArray.join()
                         }
                         return returnFilter;
                     },
-                    searchRequestUrl: function(selectionSlug, page) {
+                    searchRequestUrl: function(selectedIdandSlug, page) {
 
                         fetchURL =    this.apiURL 
-                                    + this.filtering(selectionSlug, "type")
-                                    + this.filtering(selectionSlug, "PS")
-                                    + this.filtering(selectionSlug, "audience");
+                                    + this.filtering(selectedIdandSlug, "type")
+                                    + this.filtering(selectedIdandSlug, "PS")
+                                    + this.filtering(selectedIdandSlug, "audience");
                         
                         fetchURL = fetchURL + "&per_page=10&page=" + this.currentPage;
 
@@ -637,8 +637,9 @@
                                 return
                             }
 
-                            self.checkedEventType       = event.state.checkedEventType;
-                            self.checkedEventAudience   = event.state.checkedEventAudience;
+                            self.checkedEventType           = event.state.checkedEventType;
+                            self.checkedProductsServices    = event.state.checkedProductsServices;
+                            self.checkedEventAudience       = event.state.checkedEventAudience;
 
                             self.fetchAPIData(null, self.currentPage);
                         }
