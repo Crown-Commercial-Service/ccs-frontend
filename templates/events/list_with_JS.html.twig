@@ -418,8 +418,9 @@
                 delimiters: ['{[', ']}'],
                 el: '#main-content',
                 mounted:function(){
-                    this.filtering(null, "type")
-                    this.filtering(null, "audience")
+                    this.filtering(null, "type");
+                    this.filtering(null, "PS");
+                    this.filtering(null, "audience");
                 },
                 data: {
                     javascriptVersion: true,
@@ -521,6 +522,12 @@
                                 selectedFilterFromControllerLength  = Number("{{event_type|length}}")
                                 paramaString                        = "&event_type="
                                 break;
+                            case "PS":
+                                filterArray                         = this.checkedProductsServices
+                                viewAllCheckboxID                   = "allPS"
+                                selectedFilterFromControllerLength  = Number("{products_services|length}}")
+                                paramaString                        = "&products_services="
+                                break;
                             case "audience":
                                 filterArray                         = this.checkedEventAudience
                                 viewAllCheckboxID                   = "allAudience"
@@ -546,6 +553,7 @@
 
                         fetchURL =    this.apiURL 
                                     + this.filtering(selectionSlug, "type")
+                                    + this.filtering(selectionSlug, "PS")
                                     + this.filtering(selectionSlug, "audience");
                         
                         fetchURL = fetchURL + "&per_page=10&page=" + this.currentPage;
@@ -588,7 +596,6 @@
                                 self.results[i].eventURL = appBaseUrl + "/events/" + self.results[i].id + "/" + self.results[i].slug;
                                 self.results[i].startDate = self.formatDate(jsonResponse.body[i].acf.start_datetime.split(' ')[0]);
                                 self.results[i].endDate = self.formatDate(jsonResponse.body[i].acf.end_datetime.split(' ')[0]);
-                                self.results[i].event_type = self.results[i].acf.event_type;
                                 self.results[i].event_type = self.results[i].acf.event_type;
 
                                 self.results[i].imageSet = false;
