@@ -40,9 +40,14 @@
 
             <div class="govuk-grid-row events-page-listing">
                 <div class="govuk-grid-column-one-quarter">
-                    <h2 class="govuk-heading-m">Filter events list</h2>
-
-
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-one-half">
+                        <h2 class="govuk-heading-m">Filter events</h2>
+                    </div>
+                     <div class="govuk-grid-column-one-half" style="text-align:right;">
+                         <a href={{ path('events_list') }} class="govuk-link"> Clear filters </a>
+                    </div>
+                </div>
                     {% if audience_tag is not empty %}
                         <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_audience_tag">
 
