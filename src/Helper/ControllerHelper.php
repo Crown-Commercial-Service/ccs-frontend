@@ -108,7 +108,7 @@ class ControllerHelper
 
     public static function converArrayToStringForWordpress($selectedArray, $totalOption)
     {
-        if ($selectedArray == null || count($selectedArray) == $totalOption ) {
+        if ($selectedArray == null || count($selectedArray) == $totalOption) {
             return null;
         }
         $dada = (array) $selectedArray;

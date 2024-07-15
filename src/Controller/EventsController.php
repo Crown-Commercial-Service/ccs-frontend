@@ -55,10 +55,10 @@ class EventsController extends AbstractController
         $sectors            = $this->api->getAllTerms('sectors');
 
         //Get taxonomies that user has selected
-        $audienceTagFilter      = ControllerHelper::converArrayToStringForWordpress($request->query->get('audience_tag'),      $audienceTag!=null ? $audienceTag->count() : null);
-        $eventTypeFilter        = ControllerHelper::converArrayToStringForWordpress($request->query->get('event_type'),        $eventType!=null ? $eventType->count() : null);
-        $productServiceFilter   = ControllerHelper::converArrayToStringForWordpress($request->query->get('product_service'),   $productsServices!=null ? $productsServices->count() : null);
-        $sectorFilter           = ControllerHelper::converArrayToStringForWordpress($request->query->get('sector'),            $sectors!=null ? $sectors->count() : null);
+        $audienceTagFilter      = ControllerHelper::converArrayToStringForWordpress($request->query->get('audience_tag'), $audienceTag != null ? $audienceTag->count() : null);
+        $eventTypeFilter        = ControllerHelper::converArrayToStringForWordpress($request->query->get('event_type'), $eventType != null ? $eventType->count() : null);
+        $productServiceFilter   = ControllerHelper::converArrayToStringForWordpress($request->query->get('product_service'), $productsServices != null ? $productsServices->count() : null);
+        $sectorFilter           = ControllerHelper::converArrayToStringForWordpress($request->query->get('sector'), $sectors != null ? $sectors->count() : null);
 
         //Define options for Rest API query and check if view all option has been checked
         $options = [
