@@ -105,4 +105,13 @@ class ControllerHelper
             'jobTitle' => $params->get('00Nb0000009IXEs', null),
         ];
     }
+
+    public static function converArrayToStringForWordpress($selectedArray, $totalOption)
+    {
+        if ($selectedArray == null || count($selectedArray) == $totalOption) {
+            return null;
+        }
+        $dada = (array) $selectedArray;
+        return implode(',', (array) $selectedArray);
+    }
 }

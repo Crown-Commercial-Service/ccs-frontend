@@ -36,6 +36,24 @@
     </ol>
 {% endif %}
 
-<div class="events-pagination">
-    {{ include('includes/pagination.html.twig', {'pagination': pagination, 'route': 'events_list', 'options': {}}) }}
-</div>
+{%  set pagination_data = {'pagination': pagination, 'route': 'events_list', 
+    'options': {
+                'allAudience': filters.audience_tag is not defined  ? 'allAudience' : null,
+                'allType': filters.event_type is not defined  ? 'allType' : null,
+                'allPS': filters.products_services is not defined  ? 'allPS' : null,
+                'allSectors': filters.sectors is not defined  ? 'allSectors' : null,
+
+
+                'audience_tag[]': filters.audience_tag is defined ? filters.audience_tag : null,
+                'event_type[]': filters.event_type is defined ? filters.event_type : null,
+                'product_service[]': filters.products_services is defined ? filters.products_services : null,
+                'sector[]': filters.sectors is defined ? filters.sectors : null, } } 
+%}
+{{dump(pagination_data)}}
+
+{% if pagination.totalPages > 1 %}
+
+    <div class="events-pagination">
+        {{ include('includes/pagination.html.twig', pagination_data) }}
+    </div>
+{% endif %}
