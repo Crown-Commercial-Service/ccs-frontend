@@ -40,8 +40,16 @@
 
             <div class="govuk-grid-row events-page-listing">
                 <div class="govuk-grid-column-one-quarter">
+                
                     <form action="{{ path('events_list') }}" method="GET">
-                        <h2 class="govuk-heading-m">Filter events list</h2>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-one-half">
+                                <h2 class="govuk-heading-m">Filter events</h2>
+                            </div>
+                            <div class="govuk-grid-column-one-half" style="text-align:right;">
+                                <a href={{ path('events_list') }} class="govuk-link"> Clear filters </a>
+                            </div>
+                         </div>
 
                         <button class="govuk-button" data-module="govuk-button" v-show="!javascriptVersion"> Filter </button>
 
