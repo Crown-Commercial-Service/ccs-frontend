@@ -128,6 +128,8 @@ class FrameworksController extends AbstractController
 
         $this->searchApi->setCacheKey($request->getRequestUri());
 
+        $cscMessage = ControllerHelper::getCSCMessage();
+
         // We are overriding the content model here
         $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
@@ -142,6 +144,7 @@ class FrameworksController extends AbstractController
         $data = [
             'pagination' => $results->getPagination(),
             'results'    => $results,
+            'cscMessage' => $cscMessage,
             'categories' => FrameworkCategories::getAll(),
             'pillars'    => FrameworkCategories::getAllPillars(),
             'statuses'     => ["live"]
@@ -260,6 +263,8 @@ class FrameworksController extends AbstractController
         // We are overriding the content model here
         $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
+        $cscMessage = ControllerHelper::getCSCMessage();
+
         try {
             $results = $this->searchApi->list($page, [
                 'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
@@ -274,6 +279,7 @@ class FrameworksController extends AbstractController
         $data = [
             'query'         => $query,
             'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($query),
+            'cscMessage'    => $cscMessage,
             'category'      => $categoryName,
             'category_slug' => $category,
             'pagination'    => $results->getPagination(),
@@ -317,6 +323,8 @@ class FrameworksController extends AbstractController
         // We are overriding the content model here
         $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
+        $cscMessage = ControllerHelper::getCSCMessage();
+
         try {
             $results = $this->searchApi->list($page, [
                 'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
@@ -331,6 +339,7 @@ class FrameworksController extends AbstractController
         $data = [
             'query'         => $query,
             'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($query),
+            'cscMessage'    => $cscMessage,
             'pillar'        => $pillarName,
             'pillar_slug'   => $pillar,
             'pagination'    => $results->getPagination(),
@@ -384,6 +393,7 @@ class FrameworksController extends AbstractController
         $categoryName = $this-> getPillarOrCategoryName($request, 'category');
         $pillarName = $this-> getPillarOrCategoryName($request, 'pillar');
 
+        $cscMessage = ControllerHelper::getCSCMessage();
         try {
             $results = $this->searchApi->list($page, [
                 'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
@@ -397,6 +407,7 @@ class FrameworksController extends AbstractController
         }
 
         $data = [
+            'cscMessage' => $cscMessage,
             'query'         => $query,
             'pagination'    => $results->getPagination(),
             'results'       => $results,
