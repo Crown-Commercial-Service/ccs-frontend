@@ -1,3 +1,5 @@
+{% if page == "upcoming" %}
+
 <aside class="aside">
     <div class="apollo-enclosure">
         <h2 class="aside__heading">Contact</h2>
@@ -28,3 +30,34 @@
         </ul>
     </div>
 </aside>
+
+{% else %}
+<aside class="aside">
+    <div class="apollo-enclosure">
+        <h2 class="aside__heading">Upcoming Agreements</h2>
+
+        <p><a href="/agreements/upcoming">View our upcoming agreement page</a> for agreements that are being developed and are not yet live.</p>
+        
+    </div>
+
+    <div class="apollo-enclosure">
+        <h2 class="aside__heading">Helpful Links</h2>
+        <ul class="govuk-list">
+            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/glossary">Glossary</a></li>
+            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/start-buying">How to buy</a></li>
+            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/start-supplying">How to supply</a></li>
+            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/transforming-public-procurement">Transforming Public Procurement</a></li>
+            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/news/?&categories=168&page=1">Procurement Essentials</a></li>
+
+        </ul>
+    </div>
+
+    <div class="apollo-enclosure">
+        <h2 class="aside__heading">Do you need help requesting agreement pricing?</h2>
+        <p>If pricing is available you will find instructions on how to access pricing in the 'how to buy' section of the agreement webpage. <a class="govuk-link" href="/agreements">Search for an agreement</a>.</p>
+        <p>You will need to specify the framework (RM number) and lot(s) in your request.</p>
+    </div>
+</aside>
+
+
+{% endif %}
