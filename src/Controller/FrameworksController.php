@@ -174,16 +174,18 @@ class FrameworksController extends AbstractController
             throw new NotFoundHttpException('Page not found', $e);
         }
 
-         // request to upcoming deals information api for titles and description
-         $upcomingDealsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/upcoming-deals-page/0';
+        // request to upcoming deals information api for titles and description
+        $upcomingDealsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/upcoming-deals-page/0';
 
-         $client = HttpClient::create();
-         $response = $client->request(
-             'GET',
-             $upcomingDealsUrl,
-         );
+        $client = HttpClient::create();
+        $response = $client->request(
+            'GET',
+            $upcomingDealsUrl,
+        );
 
-         $upcomingDealsContent = null;
+        $upcomingDealsContent = null;
+
+        $cscMessage = ControllerHelper::getCSCMessage();
 
         if ($response->getStatusCode() == 200) {
             $upcomingDealsContent = json_decode($response->getContent());
@@ -196,6 +198,7 @@ class FrameworksController extends AbstractController
             'planned_pipeline'              => $results->getContent()->get('planned_pipeline'),
             'future_pipeline'               => $results->getContent()->get('future_pipeline'),
             'upcoming_deals_content'        => $upcomingDealsContent,
+            'cscMessage'                    => $cscMessage,
         ];
 
         return $this->render('frameworks/upcoming-list.html.twig', $data);

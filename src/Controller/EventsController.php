@@ -48,29 +48,26 @@ class EventsController extends AbstractController
 
         $this->api->setCacheKey($request->getRequestUri());
 
-        /**
-         * Get taxonomies for filtering results
-         */
-        $sectors = $this->api->getAllTerms('sectors');
-        $productsServices = $this->api->getAllTerms('products_services');
-        $audienceTag = $this->api->getAllTerms('audience_tag');
-        $eventType = $this->api->getAllTerms('event_type');
+        //Get taxonomies for filtering option
+        $audienceTag        = $this->api->getAllTerms('audience_tag');
+        $eventType          = $this->api->getAllTerms('event_type');
+        $productsServices   = $this->api->getAllTerms('products_services');
+        $sectors            = $this->api->getAllTerms('sectors');
 
-        $eventTypeFilter    = $request->query->get('event_type');
-        $audienceTagFilter    = $request->query->get('audience_tag');
-        $productServiceFilter = $request->query->get('product_service');
-        $sectorFilter         = $request->query->get('sector');
+        //Get taxonomies that user has selected
+        $audienceTagFilter      = ControllerHelper::converArrayToStringForWordpress($request->query->get('audience_tag'), $audienceTag != null ? $audienceTag->count() : null);
+        $eventTypeFilter        = ControllerHelper::converArrayToStringForWordpress($request->query->get('event_type'), $eventType != null ? $eventType->count() : null);
+        $productServiceFilter   = ControllerHelper::converArrayToStringForWordpress($request->query->get('product_service'), $productsServices != null ? $productsServices->count() : null);
+        $sectorFilter           = ControllerHelper::converArrayToStringForWordpress($request->query->get('sector'), $sectors != null ? $sectors->count() : null);
 
-        /**
-         * Define options for Rest API query
-         */
+        //Define options for Rest API query and check if view all option has been checked
         $options = [
-            'products_services' => $productServiceFilter,
-            'audience_tag' => $audienceTagFilter,
-            'event_type'    => $eventTypeFilter,
-            'sectors' => $sectorFilter,
-            'orderby'    => 'start_datetime',
-            'order'      => 'asc',
+            'audience_tag'          => $request->query->get('allAudience') != null ? null : $audienceTagFilter,
+            'event_type'            => $request->query->get('allType') != null ? null : $eventTypeFilter,
+            'products_services'     => $request->query->get('allPS') != null ? null : $productServiceFilter,
+            'sectors'               => $request->query->get('allSectors') != null ? null : $sectorFilter,
+            'orderby'               => 'start_datetime',
+            'order'                 => 'asc',
         ];
 
         try {
@@ -79,33 +76,19 @@ class EventsController extends AbstractController
             throw new NotFoundHttpException('Events page not found', $e);
         }
 
-        if (getenv('APP_ENV') == 'prod') {
-            return $this->render('events/list.html.twig', [
-                'url' => sprintf('/events/page/%s', $page),
-                'events' => $list,
-                'pagination' => $list->getPagination(),
-                'sectors' => $sectors,
-                'audience_tag' => $audienceTag,
-                'event_type' => $eventType,
-                'products_services' => $productsServices,
-                'filters' => $options
-            ]);
-        } else {
-            // This is for DEV and UAT
-            return $this->render('events/list_with_JS.html.twig', [
-                'api_base_url'          => getenv('SEARCH_API_BASE_URL'),
-                'app_base_url'          => getenv('APP_BASE_URL'),
-                'url'                   => sprintf('/events/page/%s', $page),
-                'events'                => $list,
-                'pagination'            => $list->getPagination(),
-                'pageNumber'            => $page,
-                'sectors'               => $sectors,
-                'audience_tag'          => $audienceTag,
-                'event_type'            => $eventType,
-                'products_services'     => $productsServices,
-                'filters'               => $options
-            ]);
-        }
+        return $this->render('events/list.html.twig', [
+            'api_base_url'          => getenv('SEARCH_API_BASE_URL'),
+            'app_base_url'          => getenv('APP_BASE_URL'),
+            'url'                   => sprintf('/events/page/%s', $page),
+            'events'                => $list,
+            'pagination'            => $list->getPagination(),
+            'pageNumber'            => $page,
+            'sectors'               => $sectors,
+            'audience_tag'          => $audienceTag,
+            'event_type'            => $eventType,
+            'products_services'     => $productsServices,
+            'filters'               => $options
+        ]);
     }
 
     /**
