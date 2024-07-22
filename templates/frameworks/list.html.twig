@@ -178,14 +178,6 @@
 
                                          <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
 
-                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="upcoming" name="statuses[]" type="checkbox" value="upcoming" {{ statuses is defined and 'upcoming' in statuses ? "checked" : "" }} >
-                                            <label class="govuk-label govuk-checkboxes__label" for="upcoming">
-                                                Upcoming
-                                            </label>
-                                        </div>
-
-                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-
                                             <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="expired" name="statuses[]" type="checkbox" value="expired" {{ statuses is defined and 'expired' in statuses ? "checked" : "" }} >
                                             <label class="govuk-label govuk-checkboxes__label" for="expired">
                                                 Expired
@@ -267,7 +259,6 @@
                 {% set statusAll = '&statuses%5B%5D=all' %}
                 {% set statusLive = '&statuses%5B%5D=live' %}
                 {% set statusExpired = '&statuses%5B%5D=expired' %}
-                {% set statusUpcoming = '&statuses%5B%5D=upcoming' %}
 
                 {% if statuses is not defined or 'all' not in statuses %}
 
@@ -285,30 +276,14 @@
                                         </li>
                                     {% elseif 'live' in statuses %}
                                          <li class="ccs-filters-summary__facet">
-                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'upcoming' in statuses ? statusUpcoming : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
+                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
                                                 <span> Live </span>
                                             </a>  
                                         </li>
                                     {% endif %}
 
                                     {% if statuses is defined %}
-                                        {% if 'live' in statuses and ('upcoming' in statuses or 'expired' in statuses) %}
-                                            <div style="display: inline; padding-right: 5px;" >and</div>
-                                        {% endif %}
-
-                                        {% if 'upcoming' in statuses %}
-                                        <li class="ccs-filters-summary__facet">
-                                            {% if statuses|length == 1 %}
-                                                <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{statusAll}" }}" class="ccs-filters-summary__facet__cancel"> 
-                                            {% else %}
-                                                <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{'expired' in statuses ? statusExpired : '' }#{'live' in statuses ? statusLive : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
-                                            {% endif %}
-                                                <span> Upcoming </span>
-                                            </a>  
-                                        </li>
-                                        {% endif %}
-
-                                        {% if 'upcoming' in statuses and 'expired' in statuses %}
+                                        {% if 'live' in statuses and 'expired' in statuses %}
                                             <div style="display: inline; padding-right: 5px;" >and</div>
                                         {% endif %}
 
@@ -317,7 +292,7 @@
                                             {% if statuses|length == 1 %}
                                                 <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{statusAll}" }}" class="ccs-filters-summary__facet__cancel"> 
                                             {% else %}
-                                                <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{'upcoming' in statuses ? statusUpcoming : '' }#{'live' in statuses ? statusLive : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
+                                                <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{'live' in statuses ? statusLive : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
                                             {% endif %}
                                                     <span> Expired </span>
                                                 </a>  
@@ -340,15 +315,15 @@
                                 <ul class="ccs-filters-summary__list">
                                     <li class="ccs-filters-summary__facet">
                                         {% if category is defined and category|trim is not empty %}
-                                            <a href=" {{"/agreements/search?q=&category=#{category_slug}#{ statuses is defined and 'upcoming' in statuses ? statusUpcoming : '' }#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'all' in statuses ? statusAll : '' }" }}" class="ccs-filters-summary__facet__cancel">
+                                            <a href=" {{"/agreements/search?q=&category=#{category_slug}#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'all' in statuses ? statusAll : '' }" }}" class="ccs-filters-summary__facet__cancel">
                                                 <span>{{ query }}</span>
                                             </a>
                                         {% elseif pillar is defined and pillar|trim is not empty %}
-                                            <a href=" {{"/agreements/search?q=&pillar=#{pillar_slug}#{ statuses is defined and 'upcoming' in statuses ? statusUpcoming : '' }#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'all' in statuses ? statusAll : '' }" }}" class="ccs-filters-summary__facet__cancel">
+                                            <a href=" {{"/agreements/search?q=&pillar=#{pillar_slug}#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'all' in statuses ? statusAll : '' }" }}" class="ccs-filters-summary__facet__cancel">
                                                 <span>{{ query }}</span>
                                             </a>
                                         {% else %}
-                                            <a href=" {{"/agreements/search?q=#{ statuses is defined and 'upcoming' in statuses ? statusUpcoming : '' }#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'all' in statuses ? statusAll : '' }" }}" class="ccs-filters-summary__facet__cancel">
+                                            <a href=" {{"/agreements/search?q=#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'all' in statuses ? statusAll : '' }" }}" class="ccs-filters-summary__facet__cancel">
                                                 <span>{{ query }}</span>
                                             </a>
                                         {% endif %}
