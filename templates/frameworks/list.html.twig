@@ -155,19 +155,6 @@
                                 </div>
                                
                                 <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
-                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            
-                                            {% if statuses is defined and 'all' in statuses %}
-                                            {# checked #}
-                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="all" name="all" type="checkbox" value="true" checked >
-                                            {% else %}
-                                            {# unchecked #}
-                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="all" name="statuses[]" type="checkbox" value="all" >
-                                            {% endif %}
-                                            <label class="govuk-label govuk-checkboxes__label" for="all">
-                                                View all
-                                            </label>
-                                        </div>
 
                                          <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                             <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="live"name="statuses[]" type="checkbox" value="live" {{ statuses is not defined or statuses is empty or 'live' in statuses ? "checked" : "" }} >
@@ -183,6 +170,7 @@
                                                 Expired
                                             </label>
                                         </div>
+
                                 </div>
                             </div>
                         </div>
@@ -255,12 +243,10 @@
                             <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreements found</h2>
                         {% endif %}
                  </div>
-                    
-                {% set statusAll = '&statuses%5B%5D=all' %}
-                {% set statusLive = '&statuses%5B%5D=live' %}
-                {% set statusExpired = '&statuses%5B%5D=expired' %}
 
-                {% if statuses is not defined or 'all' not in statuses %}
+                {% if statuses is defined %}
+                    {% set statusLive = '&statuses%5B%5D=live' %}
+                    {% set statusExpired = '&statuses%5B%5D=expired' %}
 
                     <div class="govuk-grid-column-two-thirds">
                         <div class="ccs-filters-summary ccs-filter-summary-frameworks">
@@ -268,36 +254,24 @@
                                 <span class="ccs-filters-summary__label">Matching</span>
                                 <ul class="ccs-filters-summary__list">
 
-                                    {% if statuses is not defined or statuses is empty or (statuses|length == 1 and 'live' in statuses)%}
+                                    {% if 'live' in statuses %}
                                         <li class="ccs-filters-summary__facet">
-                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{statusAll} " }}" class="ccs-filters-summary__facet__cancel"> 
-                                                <span> Live </span>
-                                            </a>  
-                                        </li>
-                                    {% elseif 'live' in statuses %}
-                                         <li class="ccs-filters-summary__facet">
-                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
+                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{ 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
                                                 <span> Live </span>
                                             </a>  
                                         </li>
                                     {% endif %}
 
-                                    {% if statuses is defined %}
-                                        {% if 'live' in statuses and 'expired' in statuses %}
-                                            <div style="display: inline; padding-right: 5px;" >and</div>
-                                        {% endif %}
+                                    {% if statuses|length > 1 %}
+                                        <div style="display: inline; padding-right: 5px;" >and</div>
+                                    {% endif %}
 
-                                        {% if 'expired' in statuses %}
-                                            <li class="ccs-filters-summary__facet">
-                                            {% if statuses|length == 1 %}
-                                                <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{statusAll}" }}" class="ccs-filters-summary__facet__cancel"> 
-                                            {% else %}
-                                                <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{'live' in statuses ? statusLive : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
-                                            {% endif %}
-                                                    <span> Expired </span>
-                                                </a>  
-                                            </li>
-                                        {% endif %}
+                                    {% if 'expired' in statuses%}
+                                        <li class="ccs-filters-summary__facet">
+                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{'live' in statuses ? statusLive : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
+                                                <span> Expired </span>
+                                            </a>  
+                                        </li>
                                     {% endif %}
 
                                 </ul>
@@ -315,15 +289,15 @@
                                 <ul class="ccs-filters-summary__list">
                                     <li class="ccs-filters-summary__facet">
                                         {% if category is defined and category|trim is not empty %}
-                                            <a href=" {{"/agreements/search?q=&category=#{category_slug}#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'all' in statuses ? statusAll : '' }" }}" class="ccs-filters-summary__facet__cancel">
+                                            <a href=" {{"/agreements/search?q=&category=#{category_slug}#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel">
                                                 <span>{{ query }}</span>
                                             </a>
                                         {% elseif pillar is defined and pillar|trim is not empty %}
-                                            <a href=" {{"/agreements/search?q=&pillar=#{pillar_slug}#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'all' in statuses ? statusAll : '' }" }}" class="ccs-filters-summary__facet__cancel">
+                                            <a href=" {{"/agreements/search?q=&pillar=#{pillar_slug}#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel">
                                                 <span>{{ query }}</span>
                                             </a>
                                         {% else %}
-                                            <a href=" {{"/agreements/search?q=#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }#{ statuses is defined and 'all' in statuses ? statusAll : '' }" }}" class="ccs-filters-summary__facet__cancel">
+                                            <a href=" {{"/agreements/search?q=#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel">
                                                 <span>{{ query }}</span>
                                             </a>
                                         {% endif %}
@@ -344,28 +318,17 @@
                                     <a href="{{ path('frameworks_show', {'rmNumber':  item.content.rm_number }) }}">{{ item.content.title }}</a> {# <strong class="govuk-tag govuk-tag--subtle">{{ item.content.status }}</strong> #}
                                     {% if item.content.status == 'Expired - Data Still Received' %}
                                         <span class="govuk-tag ccs-tag ccs-tag--error">Expired: {{ item.content.end_date.format('d/m/Y') }}</span>
-                                    {% elseif item.content.status == 'Future (Pipeline)'%}
-                                        <span class="govuk-tag ccs-tag--lower-case govuk-tag--subtle">Future</span>
-                                    {% elseif item.content.status == 'Planned (Pipeline)'%}
-                                        <span class="govuk-tag ccs-tag--lower-case govuk-tag--subtle">Planned</span>
-                                    {% elseif item.content.status == 'Underway (Pipeline)'%}
-                                        <span class="govuk-tag ccs-tag--lower-case govuk-tag--subtle">Underway</span>
-                                    {% elseif item.content.status == 'Awarded (Pipeline)'%}
-                                        <span class="govuk-tag ccs-tag--lower-case govuk-tag--subtle">Awarded</span>
                                     {% endif %}
                                 </h3>
+                                
                                 <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
-                                    <li><strong>Agreement
-                                            ID:</strong> {{ item.content.rm_number }}
-                                    </li>
-                                    <li><strong>Start
-                                            Date:</strong> {{ item.content.start_date.format('d/m/Y') }}
-                                    </li>
+                                    <li> <strong>Agreement ID:</strong> {{ item.content.rm_number }} </li>
+                                    <li> <strong>Start Date:</strong> {{ item.content.start_date.format('d/m/Y') }} </li>
+                                    
                                     {% if item.content.status != 'Expired - Data Still Received' %}
-                                        <li><strong>End
-                                                Date:</strong> {{ item.content.end_date.format('d/m/Y') }}
-                                        </li>
+                                        <li> <strong>End Date:</strong> {{ item.content.end_date.format('d/m/Y') }} </li>
                                     {% endif %}
+
                                 </ul>
                                 <p class="govuk-body-s">{{ item.content.summary | striptags | raw }}</p>
                             </li>
