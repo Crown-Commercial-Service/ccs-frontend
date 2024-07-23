@@ -144,7 +144,7 @@ class FrameworksController extends AbstractController
             'results'    => $results,
             'categories' => FrameworkCategories::getAll(),
             'pillars'    => FrameworkCategories::getAllPillars(),
-            'statuses'     => ["live"]
+            'statuses'   => ["live"]
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
@@ -700,12 +700,6 @@ class FrameworksController extends AbstractController
 
     private function getAgreementFilterStatusArray(Request $request)
     {
-        $statuses = (array) $request->query->get('statuses', []);
-
-        if (count($statuses) === 2 || in_array('all', $statuses)) {
-            return ['all'];
-        } elseif ($request->query->has('statuses')) {
-            return $statuses;
-        }
+        return (array) $request->query->get('statuses', ["live"]);
     }
 }
