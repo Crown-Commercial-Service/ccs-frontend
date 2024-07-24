@@ -25,31 +25,14 @@
 
         {% block featuredcontent %}
                 <div class="homepage-hero govuk-homepage-hero-full-width">
+                    <div class="govuk-hero-homepage-caption-container govuk-hero-margin">
+                        <div class="govuk-hero-caption">
+                                <h1 class="govuk-caption-heading">Powering up public <br /> procurement</h1>
+                                <p class="govuk-caption-link" style="color:white; margin-bottom: 0"><a href="/information-for-buyers-and-suppliers">Learn how we help the UK public sector get better value when buying products and services.</a></p>
+                        </div>   
+                    </div>
 
-                    <div class="govuk-grid-row govuk-margin-left-right-30">
-                        <div class="govuk-hero-img-container">
-                            <div class="govuk-hero-content">
-                                <div class="govuk-hero-homepage-caption-container govuk-hero-margin-right-35">
-
-                                    {% set default = false %}
-
-                                    {% if default %}
-                                        <div class="govuk-hero-caption">
-                                                <h1 class="govuk-caption-heading">Digital brochure 2023 - 2024: procurement at your fingertips</h1>
-                                                <p class="govuk-caption-link" style="color:white; margin-bottom: 0">Our updated digital brochure highlights our carbon net zero, social value and modern slavery initiatives, our commercial agreements and much more.</p>
-                                                <a class="govuk-button govuk-caption-button" href="https://www.crowncommercial.gov.uk/digital_brochure/request/30384/commercial-agreements-digital-brochure">Download our brochure</a>
-                                        </div>   
-                                    {% else %}
-                                        <div class="govuk-hero-caption">
-                                                <h1 class="govuk-caption-heading">Digital brochure 2024-2025: Unlock the power of procurement with CCS</h1>
-                                                <p class="govuk-caption-link" style="color:white; margin-bottom: 0">Discover guidance on getting to grips with procurement, customer case studies and how to access our products and services</p>
-                                                <a class="govuk-button govuk-caption-button" href="https://www.crowncommercial.gov.uk/downloadable-resource/request/30384/commercial-agreements-digital-brochure">Download our brochure</a>
-                                        </div>
-                                    {% endif %}
-
-                                </div>
-                            </div>
-                        </div>
+                    <div class="homepage-hero-capsule">
                         <div class="govuk-homepage-search-forms">
                             <div class="govuk-grid-column-one-half">
 
@@ -57,12 +40,12 @@
 
                                     <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage govuk-bg-mobile-color">
                                         <div class="govuk-form-group homepage-hero__search-group">
-                                            <label class="govuk-label" for="framework_q">Search
-                                                agreements</label>
+                                            <label class="govuk-label" for="framework_q"><a href="/agreements">Search
+                                                agreements</a></label>
                                             <input class="govuk-input" id="framework_q" name="q" type="text">
 
                                             <button class="homepage-hero__search-button">
-                                                <span class="visuallyhidden">Search agreements</span>
+                                                <span class="visuallyhidden"><a href="/agreements">Search agreements</a></span>
                                             </button>
                                         </div>
                                     </div>
@@ -77,8 +60,8 @@
 
                                     <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage govuk-bg-mobile-color">
                                         <div class="govuk-form-group homepage-hero__search-group">
-                                            <label class="govuk-label" for="supplier_q">Search
-                                                suppliers</label>
+                                            <label class="govuk-label" for="supplier_q"><a href="/suppliers">Search
+                                                suppliers</a></label>
                                             <input class="govuk-input" id="supplier_q" name="q" type="text">
                                             <button class="homepage-hero__search-button">
                                                 <span class="visuallyhidden">Search suppliers</span>
@@ -91,10 +74,7 @@
 
                             </div>
                         </div>
-
                     </div>
-
-
                 </div>
         {% endblock %}
     {% endembed %}
