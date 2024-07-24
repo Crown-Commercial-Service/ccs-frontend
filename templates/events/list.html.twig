@@ -15,30 +15,17 @@
 
 {% block body %}
 
-    <!-- required wrapper 1 -->
     <div class="govuk-width-container">
-
-        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
-
-
-        <div class="govuk-phase-banner">
-            {% include '/includes/phase-banner-content.html.twig' %}
-        </div>
+        <div class="govuk-phase-banner">{% include '/includes/phase-banner-content.html.twig' %}</div>
 
 
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
-                <li class="govuk-breadcrumbs__list-item">
-                    <a class="govuk-breadcrumbs__link" href="/">Home</a>
-                </li>
-                <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                    Events
-                </li>
+                <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="/">Home</a></li>
+                <li class="govuk-breadcrumbs__list-item" aria-current="page">Events</li>
             </ol>
         </div>
 
-
-        <!-- required wrapper 2 -->
         <main id="main-content" role="main" class="govuk-main-wrapper govuk-main-wrapper--tight">
 
             <div class="govuk-grid-row">
@@ -48,160 +35,674 @@
                 </div>
             </div>
 
+            <p class="visuallyhidden">This is a page with JS</p>
+
             <div class="govuk-grid-row events-page-listing">
                 <div class="govuk-grid-column-one-quarter">
-                    <h2 class="govuk-heading-m">Filter events list</h2>
-
-                    {% if audience_tag is not empty %}
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="audience-tag-accordion">
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
-                                <div class="govuk-accordion__section-header">
-                                    <h3 class="govuk-accordion__section-heading">
-                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="audience-tag-accordion-heading">
-                                            Event audience
-                                        </span>
-                                    </h3>
-                                </div>
-                                <div id="audience-tag-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="audience-tag-accordion-heading">
-                                    <ul class="ccs-link-filter-list">
-                                        <li><a href="/events">All event audiences</a></li>
-                                        {% for item in audience_tag %}
-                                            {% if filters.audience_tag == item.id %}
-                                                <li>{{ item.name }}</li>
-                                            {% else %}
-                                                <li><a href="/events?audience_tag={{ item.id }}">{{ item.name }}</a></li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                </div>
+                
+                    <form action="{{ path('events_list') }}" method="GET">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-one-half">
+                                <h2 class="govuk-heading-m">Filter events</h2>
                             </div>
-                        </div>
-                    {% endif %}
-
-                    {% if event_type is not empty %}
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="event-type-accordion">
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
-                                <div class="govuk-accordion__section-header">
-                                    <h3 class="govuk-accordion__section-heading">
-                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="event-type-accordion-heading">
-                                            Event type
-                                        </span>
-                                    </h3>
-                                </div>
-                                <div id="event-type-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="event-type-accordion-heading">
-                                    <ul class="ccs-link-filter-list">
-                                        <li><a href="/events">All event type</a></li>
-                                        {% for item in event_type %}
-                                            {% if filters.event_type == item.id %}
-                                                <li>{{ item.name }}</li>
-                                            {% else %}
-                                                <li><a href="/events?event_type={{ item.id }}">{{ item.name }}</a></li>
-                                            {% endif %}
-                                        {% endfor %}
-                                </div>
+                            <div class="govuk-grid-column-one-half" style="text-align:right;">
+                                <a href={{ path('events_list') }} class="govuk-link"> Clear filters </a>
                             </div>
-                        </div>
-                    {% endif %}
+                         </div>
 
-                    {% if products_services is not empty %}
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="products-services-accordion">
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
-                                <div class="govuk-accordion__section-header">
-                                    <h3 class="govuk-accordion__section-heading">
-                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="products-services-accordion-heading">
-                                            Products and services
-                                        </span>
-                                    </h3>
-                                </div>
-                                <div id="products-services-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="products-services-accordion-heading">
-                                    <ul class="ccs-link-filter-list">
-                                        <li><a href="/events">All Categories</a></li>
-                                        {% for item in products_services %}
-                                            {% if filters.products_services == item.id %}
-                                                <li>{{ item.name }}</li>
-                                            {% else %}
-                                                <li><a href="/events?product_service={{ item.id }}">{{ item.name }}</a></li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
+                        <button class="govuk-button" data-module="govuk-button" v-show="!javascriptVersion"> Filter </button>
 
-                    {% if sectors is not empty %}
+                        {% if audience_tag is not empty %}
+                            <fieldset class="govuk-fieldset" aria-describedby="filter_audience_tag">
+                                <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_audience_tag">
 
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="sectors-accordion">
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
-                                <div class="govuk-accordion__section-header">
-                                    <h3 class="govuk-accordion__section-heading">
-                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="sectors-accordion-heading">
-                                            Sectors
-                                        </span>
-                                    </h3>
+                                    {% set AudienceForTwig = filters.audience_tag is defined and filters.audience_tag is not empty ? filters.audience_tag|split(',') : [] %}
+
+                                    <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section">
+                                        <div class="govuk-accordion__section-header">
+                                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                                <h2 class="govuk-accordion__section-heading">
+                                                    <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-audience-tag">
+                                                        Event audience
+                                                    </span>
+                                                </h2>
+                                            </legend>
+                                        </div>
+
+                                        <div id="audience-tag-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-for-audience-tag">
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                <input v-on:change=fetchAPIData(null,null) v-model="checkedEventAudience" name="allAudience" value="allAudience" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allAudience" type="checkbox" {{ filters.audience_tag is defined and filters.audience_tag is empty  ? 'checked' }}>
+                                                <label class="govuk-label govuk-checkboxes__label" for="allAudience">
+                                                    View all
+                                                </label>
+                                            </div>
+
+                                            {% for item in audience_tag|sort %}
+                                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                    <input v-on:change=fetchAPIData("{{item.id}}+{{item.slug}}",null) v-model="checkedEventAudience" name="audience_tag[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.id}}+{{item.slug}}" type="checkbox" {{ item.id in AudienceForTwig ? 'checked' }}>
+                                                    <label class="govuk-label govuk-checkboxes__label" for="{{item.id}}+{{item.slug}}">
+                                                        {{ item.name }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+
+                                        </div>
+                                    </div>
                                 </div>
-                                <div id="sectors-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="sectors-accordion-heading">
-                                    <ul class="ccs-link-filter-list">
-                                        <li><a href="/events">All Sectors</a></li>
-                                        {% for sector in sectors %}
-                                            {% if filters.sectors == sector.id %}
-                                                <li>{{ sector.name }}</li>
-                                            {% else %}
-                                                <li><a href="/events?sector={{ sector.id }}">{{ sector.name }}</a></li>
-                                            {% endif %}
-                                        {% endfor %}
+                            </fieldset>
+                        {% endif %}
+
+                        {% if event_type is not empty %}
+                            <fieldset class="govuk-fieldset" aria-describedby="filter_events">
+                                <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_events">
+
+                                    {% set TypeForTwig = filters.event_type is defined and filters.event_type is not empty ? filters.event_type|split(',') : [] %}
+
+                                    <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section">
+                                        <div class="govuk-accordion__section-header">
+                                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                                <h2 class="govuk-accordion__section-heading">
+                                                    <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-event-type">
+                                                        Event type
+                                                    </span>
+                                                </h2>
+                                            </legend>
+                                        </div>
+
+                                        <div id="event-type-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-for-event-type">
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                <input v-on:change=fetchAPIData(null,null) v-model="checkedEventType" name="allType" value="allType" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" type="checkbox" {{ filters.event_type is defined and filters.event_type is empty  ? 'checked' }}>
+                                                <label class="govuk-label govuk-checkboxes__label" for="allType">
+                                                    View all
+                                                </label>
+                                            </div>
+
+                                            {% for item in event_type|sort %}
+                                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                    <input v-on:change=fetchAPIData("{{item.id}}+{{item.slug}}",null) v-model="checkedEventType" name="event_type[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.id}}+{{item.slug}}" type="checkbox" {{ item.id in TypeForTwig ? 'checked' }}>
+                                                    <label class="govuk-label govuk-checkboxes__label" for="{{item.id}}+{{item.slug}}">
+                                                        {{ item.name }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    {% endif %}
+                            </fieldset>
+                        {% endif %}
+
+                        {% if products_services is not empty %}
+                            <fieldset class="govuk-fieldset" aria-describedby="products-services-accordion">
+                                <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="products-services-accordion">
+                                
+                                    {% set PSForTwig = filters.products_services is defined and filters.products_services is not empty ? filters.products_services|split(',') : [] %}
+
+                                    <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                                        <div class="govuk-accordion__section-header">
+                                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                                <h2 class="govuk-accordion__section-heading">
+                                                    <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="products-services-accordion-heading">
+                                                        Products and services
+                                                    </span>
+                                                </h2>
+                                            </legend>
+                                        </div>
+
+                                        <div id="products-services-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="products-services-accordion-heading">
+
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                <input v-on:change=fetchAPIData(null,null) v-model="checkedProductsServices" name="allPS" value="allPS" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allPS" type="checkbox" {{ filters.products_services is defined and filters.products_services is empty  ? 'checked' }}>
+                                                <label class="govuk-label govuk-checkboxes__label" for="allPS">
+                                                    View all
+                                                </label>
+                                            </div>
+
+                                            {% for item in products_services|sort %}
+                                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                    <input v-on:change=fetchAPIData("{{item.id}}+{{item.slug}}",null) v-model="checkedProductsServices" name="product_service[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.id}}+{{item.slug}}" type="checkbox" {{ item.id in PSForTwig ? 'checked' }}>
+                                                    <label class="govuk-label govuk-checkboxes__label" for="{{item.id}}+{{item.slug}}">
+                                                        {{ item.name }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        {% endif %}
+
+                        {% if sectors is not empty %}
+                            <fieldset class="govuk-fieldset" aria-describedby="sectors-accordion">
+
+                                <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="sectors-accordion">
+
+                                    {% set sectorsForTwig = filters.sectors is defined and filters.sectors is not empty ? filters.sectors|split(',') : [] %}
+
+                                    <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                                        <div class="govuk-accordion__section-header">
+                                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                                <h3 class="govuk-accordion__section-heading">
+                                                    <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="sectors-accordion-heading">
+                                                        Sectors
+                                                    </span>
+                                                </h3>
+                                            </legend>
+                                        </div>
+                                        <div id="sectors-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="sectors-accordion-heading">
+
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                <input v-on:change=fetchAPIData(null,null) v-model="checkedSectors" name="allSectors" value="allSectors" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allSectors" type="checkbox" {{ filters.sectors is defined and filters.sectors is empty  ? 'checked' }}>
+                                                <label class="govuk-label govuk-checkboxes__label" for="allSectors">
+                                                    View all
+                                                </label>
+                                            </div>
+
+                                            {% for item in sectors|sort %}
+                                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                    <input v-on:change=fetchAPIData("{{item.id}}+{{item.slug}}",null) v-model="checkedSectors" name="sector[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.id}}+{{item.slug}}" type="checkbox" {{ item.id in sectorsForTwig ? 'checked' }}>
+                                                    <label class="govuk-label govuk-checkboxes__label" for="{{item.id}}+{{item.slug}}">
+                                                        {{ item.name }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        {% endif %}
+
+                        <button class="govuk-button" data-module="govuk-button" v-show="!javascriptVersion"> Filter </button>
+                    </form>
                 </div>
                 <div class="govuk-grid-column-three-quarters events-list-container">
-                    {% if pagination.totalResults == 1 %}
-                        <h2 class="govuk-heading-m">{{ pagination.totalResults }} event(s) found</h2>
-                    {% else %}
-                        <h2 class="govuk-heading-m">{{ pagination.totalResults }} event(s) found</h2>
-                    {% endif %}
-
-                    {% if events %}
+                    <div v-if="responseAvailable" class="hideWithoutJS govuk-visually-hidden">
+                        <h2 class="govuk-heading-m" v-if="totalResults == 1"> {[totalResults]} event found</h2>
+                        <h2 class="govuk-heading-m" v-else>                   {[totalResults]} event(s) found</h2>
+                        
                         <ol class="events-list">
-                            {% for event in events %}
+                            <div v-show="javascriptVersion" v-for="result in results">
                                 <li class="event-list__item">
-                                    {% if event.content.image %}
-                                        <a class="event-list__image" aria-hidden="true"  href="/events/{{ event.id }}/{{ slugify(event.title) }}">
-                                            <img src="{{ event.content.image.byName('news-size-s') }}" alt="{{ event.title|raw }}" />
+                                    <picture>
+                                        <a v-if=result.imageSet class="event-list__image" aria-hidden="true">
+                                            <img :src="result.imageURL"
+                                                    :alt="result.altText"
+                                                    role="presentation"
+                                                    class=""
+                                                    loading="lazy"/>
                                         </a>
-                                    {% endif %}
-
+                                    </picture>
+                                    
                                     <div class="event-list__details">
                                         <h3 class="event-list__title govuk-!-margin-bottom-2 ">
-                                            <a href="/events/{{ event.id }}/{{ slugify(event.title) }}">{{ event.title|raw }}</a>
+                                            <a :href="result.eventURL" v-html="result.title.rendered"></a>
                                         </h3>
 
-
                                         <ul class="event-list__meta list--inline govuk-body-s govuk-!-margin-bottom-2">
-                                            {% if event.content.start_datetime|date('j F Y') == event.content.end_datetime|date('j F Y') %}
-                                                <li><strong>Date:</strong> {{ event.content.start_datetime|date('j F Y') }}</li>
-                                            {% else %}
-                                                <li><strong>Start Date:</strong> {{ event.content.start_datetime|date('j F Y') }}</li>
-                                                <li><strong>End Date:</strong> {{ event.content.end_datetime|date('j F Y') }}</li>
-                                            {% endif %}
-                                            <li><strong>Type:</strong> {{ event.content.event_type }}</li>
+                                            <li  v-if="result.startDate == result.endDate"><strong>Date:</strong> {[result.startDate]} </li>
+                                            <template v-else>
+                                                <li><strong>Start Date:</strong> {[result.startDate]} </li>
+                                                <li><strong>End Date:</strong> {[result.endDate]} </li>
+                                            </template>
+                                            <li><strong>Type:</strong> {[result.event_type]}</li>
                                         </ul>
                                     </div>
-
                                 </li>
-                            {% endfor %}
+                            </div>
                         </ol>
-                    {% endif %}
 
-                    <div class="events-pagination">
-                        {{ include('includes/pagination.html.twig', {'pagination': pagination, 'route': 'events_list', 'options': {}}) }}
-                    </div>
+                        <results-pagination 
+                            :total-results="totalResults" 
+                            :number-of-pages="numberOfPages" 
+                            :current-page="currentPage" 
+                            v-on:update-page="updatePageValue($event)" 
+                        ></results-pagination>
+
+
+                </div>
+                <div v-else-if="responseAvailable === false" class="hideWithoutJS govuk-visually-hidden">
+                    <p>Loading...</p>
+                </div>
+                <div v-if="emptyResult" class="hideWithoutJS govuk-visually-hidden">
+                    <p>There are no matching results.</p>
+                </div>
+
+                <div v-show="!javascriptVersion">
+                    {% include '/events/_resultWithoutJS.html.twig' %}
+                </div>
+
                 </div>
             </div>
 
         </main>
-    </div>
 
-<script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'event'});</script>
+        {% if app.environment == "prod" %}
+            <script src="/assets/scripts/libraries/vue.min.js?v=1"></script>
+        {% else %}
+            <script src="/assets/scripts/libraries/vue.js?v=1"></script>
+        {% endif %}
+
+        <script>
+            pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'event'});
+            
+            /**
+            * Function to test if the browser supports ES6 template literals
+            */
+            function supportsLiterals() {
+                try{
+                    return eval("''===``");
+                }
+                catch(e){
+                    return false;
+                }
+            }
+
+            if(!('Promise' in window) || !supportsLiterals() || !window.fetch) {
+                throw new Error("Your browser doesn't support the necessary JavaScript functions to use the enhanced search and has been served a non-JavaScript version");
+            }
+
+            var apiBaseUrl                  = '{{ api_base_url }}';
+            var appBaseUrl                  = '{{ app_base_url }}';
+            var pageNumber                  = {% if pageNumber is defined and pageNumber is not empty %}{{ pageNumber }}{% else %}1{% endif %};
+            var checkedEventType            = [];
+            var checkedEventAudience        = [];
+            var checkedProductsServices     = [];
+            var checkedSectors              = [];
+
+            {% if filters.event_type is defined and filters.event_type is not empty %}
+                var checkedEventType   = Array.from([{{filters.event_type}}]);
+            {% endif %}
+
+            {% if filters.audience_tag is defined and filters.audience_tag is not empty %}
+                var checkedEventAudience   = Array.from([{{filters.audience_tag}}]);
+            {% endif %}
+
+            {% if filters.products_services is defined and filters.products_services is not empty %}
+                var checkedProductsServices   = Array.from([{{filters.products_services}}]);
+            {% endif %}
+            
+            {% if filters.sectors is defined and filters.sectors is not empty %}
+                var checkedSectors   = Array.from([{{filters.sectors}}]);
+            {% endif %}
+
+            Vue.component('results-pagination', {
+                delimiters: ['{[', ']}'],
+                props: {
+                    currentPage: Number,
+                    totalResults: Number,
+                    numberOfPages: Number,
+                },
+                computed: {
+                    nextPage: function() {
+                        if(this.currentPage == this.numberOfPages) {
+                            return this.currentPage;
+                        }
+                        return this.currentPage + 1;
+                    },
+                    previousPage: function() {
+                        if(this.currentPage == 1) {
+                            return this.currentPage;
+                        }
+                        return this.currentPage - 1;
+                    },
+                    paginationStartNumber: function() {
+                        // start page defaults to 2 (second page) because the
+                        // first page link is always output by default
+                        var linksStartPage = 1;
+
+                        // if the start page is at the beginning of the pagination
+                        // then account for this
+                        if ((this.currentPage - 2) < 2 ) {
+                            linksStartPage = 2;
+                        } else {
+                            // otherwise the start page is equal to the current
+                            // page minus 2, this means that the pagination should
+                            // have a couple of links either side of the current
+                            // page, e.g.   2 3 [4] 5 6
+                            linksStartPage = this.currentPage - 2;
+                        }
+
+                        // if the start page is very close to the last page, then
+                        // account for this
+                        if((this.currentPage + 2) > this.numberOfPages) {
+                            linksStartPage = linksStartPage - 2;
+                        }
+
+                        if(linksStartPage <= 1 ) {
+                            linksStartPage = 2;
+                        }
+
+                        return linksStartPage;
+                    },
+                    paginationEndNumber: function() {
+                        var linksEndPage   = this.paginationStartNumber + 4;
+
+                        // if there aren't more pages than the number we
+                        // want to show by minimum, then the end page is just equal
+                        // to the final result page
+
+                        if ((linksEndPage >= this.numberOfPages)) {
+                            // minus 1 because the last page is always output
+                            linksEndPage = this.numberOfPages - 1;
+                        }
+
+                        if(this.numberOfPages == 1) {
+                            linksEndPage = 1;
+                        }
+
+                        return linksEndPage;
+                    }
+                },
+                methods: {
+                    updatePageNumber: function(event, newPage) {
+                        event.preventDefault();
+                        this.$emit('update-page', newPage);
+                        search.fetchAPIData(null, newPage)
+                    },
+                    range : function (start, end) {
+                        return Array(end - start + 1).fill().map(function(_, idx) {
+                            return start + idx;
+                        });
+                    }
+                },
+                template: 
+                    `
+                    <div class="events-pagination">
+                        <ul class="list--inline pagination govuk-body" role="list" aria-label="Pagination" v-if="numberOfPages > 0">
+                            <li class="pagination__item pagination__item--previous" v-if="currentPage != 1">
+                                <a href="#" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
+                                    <span class="icon">
+                                        <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M6.7 0l1.4 1.4-4.3 4.3h13v2H3.9l4.2 4-1.4 1.4L0 6.7z" fill="#007194" fill-rule="evenodd"></path></svg>
+                                    </span>
+                                    <span>Previous</span> <span class="visuallyhidden">page</span>
+                                </a>
+                            </li>
+
+                            <li class="pagination__item">
+                                <span v-if="currentPage == 1"><span class="visuallyhidden">Page </span>1</span>
+                                <a v-else href="#" v-on:click="updatePageNumber($event, 1)"><span class="visuallyhidden">Page </span>1</a>
+                            </li>
+
+                            <li class="pagination__item" v-if="paginationStartNumber > 2">…</li>
+
+                            <li class="pagination__item" v-for="page in range(paginationStartNumber, paginationEndNumber)" v-if="numberOfPages > 1">
+                                <span v-if="page == currentPage"><span class="visuallyhidden">Page </span>{[ page ]}</span>
+                                <a v-else href="#" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
+                            </li>
+
+                            <li class="pagination__item" v-if="(paginationEndNumber + 1) < numberOfPages">…</li>
+
+                            <li class="pagination__item" v-if="numberOfPages > 1">
+                                <span v-if="currentPage == numberOfPages"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</span>
+                                <a v-else href="#" v-on:click="updatePageNumber($event, numberOfPages)"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</a>
+                            </li>
+
+                            <li class="pagination__item pagination__item--next" v-if="currentPage != numberOfPages">
+                                <a href="#" rel="next" v-on:click="updatePageNumber($event, nextPage)">
+                                    <span>Next</span> <span class="visuallyhidden">page</span>
+                                    <span class="icon">
+                                        <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"></path></svg>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    `
+            });
+
+
+             var search = new Vue({
+                delimiters: ['{[', ']}'],
+                el: '#main-content',
+                mounted:function(){
+                    this.filtering(null, "type");
+                    this.filtering(null, "PS");
+                    this.filtering(null, "audience");
+                    this.filtering(null, "sectors");
+                },
+                data: {
+                    javascriptVersion: true,
+                    results: "",
+                    responseAvailable: null,
+                    emptyResult: false,
+                    apiURL:  apiBaseUrl + "events?",
+                    checkedEventType: checkedEventType,
+                    checkedProductsServices: checkedProductsServices,
+                    checkedEventAudience: checkedEventAudience,
+                    checkedSectors: checkedSectors,
+                    currentPage: pageNumber,
+                    numberOfPages: Number,
+                    totalResults: Number,
+
+                    popstateLoad: false
+                },
+                created: function() {
+                    const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
+
+                    hideWithOutJS.forEach(card => {
+                    if (card.classList.contains('govuk-visually-hidden')) {
+                        card.classList.remove('govuk-visually-hidden');
+                    }});
+
+                    // unfortunately we have to update the results when we instantiate
+                    // the Vue app so it hooks in all the correct event handlers etc.
+                    this.fetchAPIData(null, this.currentPage);
+
+                    // setup popstate event listener for History API
+                    this.setupHistoryApi();                   
+                },
+                watch: {
+                    searchRequestUrl: function() {
+
+                        // if the searchRequestUrl hasn't been updated by a popstate
+                        // event (back/forward button) then we push a state item to the
+                        // JS History API
+                        if(this.popstateLoad === false) {
+                            history.pushState({
+                                checkedEventType:       this.checkedEventType,
+                                checkedProductsServices: this.checkedProductsServices,
+                                checkedEventAudience:   this.checkedEventAudience,
+                                checkedSectors:   this.checkedSectors,
+                            }, 'Events', this.frontendSearchUrl);
+                        }
+
+                        // reset the popstateLoad property to false
+                        this.popstateLoad = false;
+                    }
+                },
+                computed: {
+                    frontendQueryUrl: function() {
+                        var queryUrl = '/?';
+
+                        if(this.checkedEventType.length != 0) {
+                            queryUrl += '&event_type=' + this.checkedEventType.join();
+                        }
+
+                        if(this.checkedProductsServices.length != 0) {
+                            queryUrl += '&products_services=' + this.checkedProductsServices.join();
+                        }
+                        
+                        if(this.checkedEventAudience.length != 0) {
+                            queryUrl += '&audience_tag=' + this.checkedEventAudience.join();
+                        }
+
+                        if(this.checkedSectors.length != 0) {
+                            queryUrl += '&sectors=' + this.checkedSectors.join();
+                        }
+
+                         if(this.currentPage ){
+                            queryUrl += '&page=' + this.currentPage;
+                        }
+
+                        return queryUrl != '/?' ? queryUrl : "";
+                        
+                    },
+                    frontendSearchUrl: function() {
+                        var searchUrl = '/events' + this.frontendQueryUrl ;
+                        return searchUrl;
+                    }
+                },
+                methods: {
+                    formatDate:function(dateString){
+                        date = new Date();
+                        date.setDate(dateString.split('-')[0])
+                        date.setMonth(dateString.split('-')[1]-1)
+                        date.setFullYear(dateString.split('-')[2])
+
+                        const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][date.getMonth()];
+                        return date.getDate() + ' ' + month + ' ' + date.getFullYear();
+                    },
+                    filtering: function(selectedIdandSlug, filtertingOption){
+                        filterArray = null
+                        viewAllCheckboxID = null
+                        selectedFilterFromControllerLength = null
+                        paramaString = null
+                        returnFilter = ""
+
+                        switch(filtertingOption) {
+                            case "type":
+                                filterArray                         = this.checkedEventType
+                                viewAllCheckboxID                   = "allType"
+                                selectedFilterFromControllerLength  = Number("{{event_type|length}}")
+                                paramaString                        = "&event_type="
+                                break;
+                            case "PS":
+                                filterArray                         = this.checkedProductsServices
+                                viewAllCheckboxID                   = "allPS"
+                                selectedFilterFromControllerLength  = Number("{{products_services|length}}")
+                                paramaString                        = "&products_services="
+                                break;
+                            case "audience":
+                                filterArray                         = this.checkedEventAudience
+                                viewAllCheckboxID                   = "allAudience"
+                                selectedFilterFromControllerLength  = Number("{{audience_tag|length}}")
+                                paramaString                        = "&audience_tag="
+                                break;
+                            case "sectors":
+                                filterArray                         = this.checkedSectors
+                                viewAllCheckboxID                   = "allSectors"
+                                selectedFilterFromControllerLength  = Number("{{sectors|length}}")
+                                paramaString                        = "&sectors="
+                                break;
+                            default:
+                                console.log('An error occurred');
+                                return
+                        }
+
+                        if (filterArray.includes(viewAllCheckboxID) || filterArray.length == 0 || filterArray.length == selectedFilterFromControllerLength){
+                            filterArray.splice(0);
+                            document.getElementById(viewAllCheckboxID).checked = true;
+                            document.getElementById(selectedIdandSlug) != null ? document.getElementById(selectedIdandSlug).checked = false : null
+                        }else{
+                            document.getElementById(viewAllCheckboxID).checked = false;
+                            returnFilter = paramaString + filterArray.join()
+                        }
+                        return returnFilter;
+                    },
+                    searchRequestUrl: function(selectedIdandSlug, page) {
+
+                        fetchURL =    this.apiURL 
+                                    + this.filtering(selectedIdandSlug, "type")
+                                    + this.filtering(selectedIdandSlug, "PS")
+                                    + this.filtering(selectedIdandSlug, "audience")
+                                    + this.filtering(selectedIdandSlug, "sectors");
+                        
+                        fetchURL = fetchURL + "&orderby=start_datetime&order=asc&per_page=10&page=" + this.currentPage;
+
+                        if(this.popstateLoad === false) {
+                            history.pushState({
+                                checkedEventType:       this.checkedEventType,
+                                checkedProductsServices: this.checkedProductsServices,
+                                checkedEventAudience:   this.checkedEventAudience,
+                                checkedSectors:         this.checkedSectors,
+                            }, 'Events', this.frontendSearchUrl);
+                        }
+
+                        // reset the popstateLoad property to false
+                        this.popstateLoad = false;
+
+                        return fetchURL;
+                    },
+                    fetchAPIData: function(input, page) {
+                        var self = this;
+                        this.responseAvailable = false;
+                        this.emptyResult = false;
+                        this.currentPage = page === null ? 1 : page;
+
+                        var requestUrl = this.searchRequestUrl(input, this.currentPage);
+                        console.log(requestUrl);
+                        
+                        fetch(requestUrl)
+                        .then(async function(response) {
+                            if (!response.ok) {
+                                throw new Error('HTTP error, status = ' + response.status);
+                            }
+                            return response.json();
+                        })
+                        .then(function(jsonResponse) {
+                            self.numberOfPages = jsonResponse.meta['X-WP-TotalPages'];
+                            self.totalResults = jsonResponse.meta['X-WP-Total'];
+                            self.results = jsonResponse.body;
+
+                            for(var i = 0; i < self.results.length; i++) {  
+                                self.results[i].eventURL = appBaseUrl + "/events/" + self.results[i].id + "/" + self.results[i].slug;
+                                self.results[i].startDate = self.formatDate(jsonResponse.body[i].acf.start_datetime.split(' ')[0]);
+                                self.results[i].endDate = self.formatDate(jsonResponse.body[i].acf.end_datetime.split(' ')[0]);
+                                self.results[i].event_type = self.results[i].acf.event_type;
+
+                                self.results[i].imageSet = false;
+                                if (self.results[i].acf.featured_image_url != false) {
+                                    self.results[i].imageSet = true;
+                                    self.results[i].imageURL = self.results[i].acf.featured_image_url;
+                                    self.results[i].altText  = self.results[i].acf.alt_text;
+                                }
+                            }
+
+                            if( Object.keys(jsonResponse.body).length === 0 ){
+                                self.emptyResult = true;
+                                self.responseAvailable = null;
+                            }else{
+                                self.responseAvailable = true;
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log('An error occurred');
+                            console.log(error);
+                            this.responseAvailable = false;
+                        });
+                    },
+                    updatePageValue: function(newPageValue) {
+                        this.currentPage = newPageValue;
+                    },
+                    setupHistoryApi: function() {
+                        var self = this;
+                        window.onpopstate = function(event) {
+                            // set the popstate variable to true so that we can
+                            // tell in other parts of the code that the state change
+                            // is being caused by the back/forward button
+                            self.popstateLoad = true;
+
+                            if(event.state == null) {
+                                self.checkedEventType       = [];
+                                self.checkedProductsServices = [];
+                                self.checkedEventAudience   = [];
+                                self.checkedSectors  = [];
+                                return
+                            }
+
+                            self.checkedEventType           = event.state.checkedEventType;
+                            self.checkedProductsServices    = event.state.checkedProductsServices;
+                            self.checkedEventAudience       = event.state.checkedEventAudience;
+                            self.checkedSectors             = event.state.checkedSectors;
+
+                            self.fetchAPIData(null, self.currentPage);
+                        }
+                    },
+                }
+            });
+
+        </script>
+    </div>
 {% endblock %}
