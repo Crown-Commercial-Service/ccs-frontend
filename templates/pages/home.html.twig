@@ -58,7 +58,7 @@
 
                                 <form action="{{ path('suppliers_search') }}" method="GET">
 
-                                    <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage govuk-bg-mobile-color">
+                                    <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage govuk-bg-mobile-color search-supp">
                                         <div class="govuk-form-group homepage-hero__search-group">
                                             <label class="govuk-label" for="supplier_q"><a href="/suppliers">Search
                                                 suppliers</a></label>
@@ -89,16 +89,16 @@
 
 
         {# required wrapper 2 #}
-        <main id="main-content" class="govuk-main-wrapper">
+        <main id="main-content" class="govuk-main-wrapper govuk-home-main-wrapper">
 
 
-            <div class="apollo-island">
+            <div class="apollo-island homepage-apollo-island">
                 {% if homepageContent %}
-                    <div class="govuk-width-container">
+                    <div class="govuk-grid-column-full homepage-card-container">
 
-                        <div class="govuk-grid-row">
-                            <div class="govuk-grid-column-one-quarter">
-                                <h2 class="govuk-heading-m govuk-!-font-size-24">
+                        <div class="govuk-grid-row homepage-card-wrapper">
+                            <div class="govuk-grid-column-one-third card-list__item__wrapper homepage-card-component">
+                                <h2 class="govuk-heading-m">
                                     {{ homepageContent.how_to_buy.title is defined ? 
                                     homepageContent.how_to_buy.title : "How to Buy" }}
                                 </h2>
@@ -118,9 +118,9 @@
                                 </p>
 
                             </div>
-                            <div class="govuk-grid-column-one-quarter">
+                            <div class="govuk-grid-column-one-third card-list__item__wrapper homepage-card-component homepage-card-2">
 
-                                <h2 class="govuk-heading-m govuk-!-font-size-24">
+                                <h2 class="govuk-heading-m">
                                     {{ homepageContent.agreements.title is defined ? 
                                     homepageContent.agreements.title : "Agreements" }}
                                 </h2>
@@ -141,9 +141,8 @@
                                 </p>
 
                             </div>
-                            <div class="govuk-grid-column-one-quarter">
-
-                                <h2 class="govuk-heading-m govuk-!-font-size-24">
+                            <div class="govuk-grid-column-one-third card-list__item__wrapper homepage-card-component ">
+                                <h2 class="govuk-heading-m">
                                     {{ homepageContent.upcoming_deals.title is defined ? 
                                     homepageContent.upcoming_deals.title : "Upcoming deals" }}
                                 </h2>
@@ -162,58 +161,6 @@
                                         <span class="visuallyhidden">about Upcoming deals</span>
                                     </a>
                                 </p>
-
-                            </div>
-                            <div class="govuk-grid-column-one-quarter">
-
-                                <h2 class="govuk-heading-m govuk-!-font-size-24">
-                                    {{homepageContent.catalogues.title is defined ?
-                                     homepageContent.catalogues.title : "Catalogues" }}
-                                </h2>
-
-                                {% if homepageContent.catalogue1| length != 0 %}
-                                    <p class="govuk-body govuk-!-margin-bottom-0">
-                                        <a href="{{ homepageContent.catalogue1.link_url is defined ? homepageContent.catalogue1.link_url : '/buy-and-supply/purchasing-platform/'}}">
-                                        {{homepageContent.catalogue1.title is defined ?
-                                        homepageContent.catalogue1.title : "Purchasing Platform" }}
-                                        </a>
-                                    </p>
-                                    <p class="govuk-body govuk-!-font-size-16">
-                                        {{homepageContent.catalogue1.description is defined ?
-                                        homepageContent.catalogue1.description : 
-                                        "Technology products, office supplies, multifunctional devices" }}
-                                    </p>
-                                {% endif %}
-
-                                {% if homepageContent.catalogue2| length != 0 %}
-                                    <p class="govuk-body govuk-!-margin-bottom-0">
-                                        <a href="{{ homepageContent.catalogue2.link_url is defined ? homepageContent.catalogue2.link_url : '/buy-and-supply/digital-marketplace/'}}">
-                                        {{homepageContent.catalogue2.title is defined ?
-                                        homepageContent.catalogue2.title : "Digital marketplace" }}
-                                        </a>
-                                    </p>
-                                    <p class="govuk-body govuk-!-font-size-16">
-                                        {{homepageContent.catalogue2.description is defined ?
-                                        homepageContent.catalogue2.description : 
-                                        "Cloud hosting, digital specialists, data centre space, user research" }}
-                                    </p>
-                                {% endif %}
-
-                                {% if homepageContent.catalogue3| length != 0 %}
-                                    <p class="govuk-body govuk-!-margin-bottom-0">
-                                        <a href="{{ homepageContent.catalogue3.link_url is defined ? homepageContent.catalogue3.link_url : '/buy-and-supply/emarketplace/'}}">
-                                        {{homepageContent.catalogue3.title is defined ?
-                                        homepageContent.catalogue3.title : "eMarketplace" }}
-                                        </a>
-                                    </p>
-                                    <p class="govuk-body govuk-!-font-size-16">
-                                        {{homepageContent.catalogue3.description is defined ?
-                                        homepageContent.catalogue3.description : 
-                                        "Local authority software, wider public sector office
-                                        supplies" }}
-                                    </p>
-                                {% endif %}
-
                             </div>
                         </div>
 
@@ -394,5 +341,19 @@
         </main>
     </div>
 
-<script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'homepage'});</script>
+<script>
+pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'homepage'});
+
+var searchSupFormX = document.querySelector('.search-supp').getBoundingClientRect().right;
+var captionTextX = document.querySelector('.govuk-hero-homepage-caption-container').getBoundingClientRect().left;
+var mainHomeWrapper = document.querySelector('.govuk-home-main-wrapper');
+
+var mainContentWidth = searchSupFormX - captionTextX;
+
+mainHomeWrapper.style.width = mainContentWidth + "px";
+mainHomeWrapper.style.margin = "auto";
+mainHomeWrapper.style.marginLeft = captionTextX + "px";
+
+
+</script>
 {% endblock %}
