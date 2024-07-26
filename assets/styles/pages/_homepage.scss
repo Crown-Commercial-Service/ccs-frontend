@@ -84,7 +84,7 @@ overflow: hidden;
 
 .govuk-hero-caption {
     margin: 0 15px 40px 15px;
-    padding-bottom: 60px;
+    padding-bottom: 18px;
     @media only print {
         border-bottom: none;
     }
@@ -324,6 +324,7 @@ overflow: hidden;
         display: table-cell;
         vertical-align: middle;
         border-bottom: none !important;
+        padding-bottom: 60px;
     }
 
     .govuk-hero-margin {
