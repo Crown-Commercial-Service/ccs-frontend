@@ -246,12 +246,9 @@
                 {% endif %}
             </div>
             
-
-
-            <div class="apollo-island apollo-island--emphasised">
-                <div class="govuk-width-container">
-                    <div class="govuk-grid-row">
-                        <div class="govuk-grid-column-one-half">
+                <div class="govuk-full-width-container">
+                    <div class="govuk-grid-row homepage-lower-components-container">
+                        <div class="govuk-grid-column-one-half homepage-news-list">
 
                             <h2 class="govuk-heading-m">Latest news</h2>
 
@@ -318,26 +315,18 @@
 
 
                         </div>
-                        <div class="govuk-grid-column-one-half">
+                        <div class="govuk-grid-column-one-half homepage-campaign-box">
+                            {# <h2 class="govuk-heading-m">{{ homepageContent.video.title is defined ? homepageContent.video.title : "Learn about CCS" }}</h2> #}
+                            <div class= "homepage-campaign-box-content">
+                                <h2 class="govuk-heading-xl">{{ homepageContent.campaign.title is defined and homepageContent.campaign.title is not empty  ? homepageContent.campaign.title : "Digital Brochure 2024-2025: Procurement with the power to make a difference" }}</h2>
 
-                            <h2 class="govuk-heading-m">{{ homepageContent.video.title is defined ? homepageContent.video.title : "Learn about CCS" }}</h2>
+                                <p>{{ homepageContent.campaign.description is defined and homepageContent.campaign.description is not empty ? homepageContent.campaign.description  : "Discover our carbon net zero and modern slavery initiatives,  our commercial agreements and more" }}</p>
 
-                            <p class="responsive-video widescreen">
-                                <iframe title="{{ homepageContent.video.video_caption is defined ? homepageContent.video.video_caption : 'An overview of CCS in 30 seconds' }}" width="560" height="315" src="{{homepageContent.video.video_link is defined ? homepageContent.video.video_link : 'https://www.youtube-nocookie.com/embed/_p61ZX4zQHU' }}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </p>
-                            <p>
-                                <a href=" {{ homepageContent.video.link_url is defined ? homepageContent.video.link_url : '/buy-and-supply/' }}">
-                                {{ homepageContent.video.link_text is defined ?
-                                 homepageContent.video.link_text : "Browse all help and support guides" }}
-                                </a>
-                            </p>
-
+                                <a class="govuk-button govuk-caption-button" href="{{ homepageContent.campaign.button_link is defined ? homepageContent.campaign.button_link and homepageContent.campaign.button_link is not empty : "downloadable-resource/request/30384/commercial-agreements-digital-brochure" }}">{{ homepageContent.campaign.button_text is defined and homepageContent.campaign.button_text is not empty ? homepageContent.campaign.button_text : "Download our digital brochure" }}</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
         </main>
     </div>
 
