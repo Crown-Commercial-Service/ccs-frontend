@@ -305,7 +305,7 @@
                                                     </p>
                                                 {% endif %}
 
-                                                <a href="{{ path('news_page', {'slug': news_item.content.urlSlug}) }}">Read more <span class="visuallyhidden">about {{ news_item.content.title|raw }}</span></a>
+                                                <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}">Read more <span class="visuallyhidden">about {{ news_item.content.title|raw }}</span></a>
 
                                             </div>
                                         </li>
