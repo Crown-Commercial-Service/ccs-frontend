@@ -277,9 +277,9 @@
                                                         <!--[if IE 9]></video><![endif]-->
                                                         <!-- Fallback -->
                                                         {% if news_item.featuredImage.byName('news-size-m') %}
-                                                            <img src="{{ news_item.featuredImage.byName('news-size-m') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true">
+                                                            <img src="{{ news_item.featuredImage.byName('news-size-m') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1">
                                                         {% else %}
-                                                            <img src="{{ news_item.featuredImage.byName('full') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true">
+                                                            <img src="{{ news_item.featuredImage.byName('full') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1">
                                                         {% endif %}
 
                                                     </a>
