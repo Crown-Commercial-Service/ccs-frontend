@@ -324,8 +324,18 @@
                             </div>
                         </div>
                     </div>
+
+                    <p class="homepage-browse-all"><a href="/news">Browse all news articles</a></p>
+
                 </div>
         </main>
+        <div class="glossary-box-container">
+            <div class="glossary-box">
+                    <h3 class="govuk-heading-m">Glossary</h3>
+                    <p>We understand procurement can be confusing. Use our glossary to learn about common public procurement terms and abbreviations.</p>
+                    <p><a href="/glossary">Read the glossary</a></p>
+            </div>
+        </div>
     </div>
 
 <script>
@@ -335,12 +345,19 @@ var searchSupFormX = document.querySelector('.search-supp').getBoundingClientRec
 var captionTextX = document.querySelector('.govuk-hero-homepage-caption-container').getBoundingClientRect().left;
 var mainHomeWrapper = document.querySelector('.govuk-home-main-wrapper');
 var newsSummary = document.querySelectorAll('.homepage-truncate-overflow');
+var glossaryBox = document.querySelector('.glossary-box');
 
 var mainContentWidth = searchSupFormX - captionTextX;
 
 mainHomeWrapper.style.width = mainContentWidth + "px";
 mainHomeWrapper.style.margin = "auto";
 mainHomeWrapper.style.marginLeft = captionTextX + "px";
+
+glossaryBox.style.width = mainContentWidth + "px";
+glossaryBox.style.margin = "auto";
+glossaryBox.style.marginLeft = captionTextX + "px";
+
+
 
 newsSummary.forEach(function (summary) {
     summary.innerText = truncate(summary.innerText);
