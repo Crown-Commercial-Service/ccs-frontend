@@ -676,7 +676,7 @@ overflow: hidden;
     }
 
     .homepage-news-listing-item {
-        max-width: 45%;
+        max-width: 47%;
     }
 }
 
@@ -687,6 +687,10 @@ overflow: hidden;
 
     .homepage-hero-capsule {
         margin-left: 32vw;
+    }
+
+    .homepage-lower-components-container {
+        gap: 30px;
     }
 }
 
@@ -736,8 +740,8 @@ overflow: hidden;
     }
 
     .homepage-campaign-box {
-        padding: 59px 0px 69px 87px;
-        width: 100%;
+        padding: 59px 70px 69px 67px;
+        width: 680px;
         height: 481px;
         margin-left: 0;
         margin-right: 0;
@@ -783,7 +787,8 @@ overflow: hidden;
     }
 
     .homepage-news-list {
-        width: 100%;
+        width: 680px;
+        margin-left: -30px;
     }
 
     .homepage-news-listing {
