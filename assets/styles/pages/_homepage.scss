@@ -507,9 +507,13 @@ overflow: hidden;
     }
 
     .homepage-campaign-box {
-        width:50%;
+        width:100%;
         order: 3;
         overflow: hidden;
+    }
+
+    .homepage-news-list {
+        width: 100%;
     }
 
     .homepage-news-listing-item {
@@ -557,7 +561,6 @@ overflow: hidden;
 
     .homepage-hero-capsule {
         width: 100%;
-        margin-left: 232px;
     }
 
     .homepage-card-component {
@@ -571,7 +574,7 @@ overflow: hidden;
 
     .homepage-lower-components-container {
         margin-top: 94px;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
     }
 
     .homepage-news-listing-item {
@@ -652,6 +655,18 @@ overflow: hidden;
        margin-left: 32vw;
     }
 
+    .homepage-lower-components-container {
+        flex-wrap: nowrap;
+    }
+
+    .homepage-campaign-box {
+        width: 50%;
+    }
+
+    .homepage-news-list {
+        width: 50%;
+    }
+
 
 }
 
@@ -665,13 +680,13 @@ overflow: hidden;
     }
 }
 
-@include govuk-media-query($from: 1246) {
+@include govuk-media-query($from: 1244) {
     .govuk-caption-link {
         width: govuk-px-to-rem(400);
     }
 
     .homepage-hero-capsule {
-        margin-left: 0;
+        margin-left: 32vw;
     }
 }
 
