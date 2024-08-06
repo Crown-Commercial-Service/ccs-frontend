@@ -771,6 +771,15 @@ overflow: hidden;
         width: 100%;
     }
 
+    .homepage-news-listing {
+        height: 477px;
+        overflow: hidden;
+
+        .homepage-news-listing-item {
+            height: 100%;
+        }
+    }
+
 }
 
 
