@@ -557,7 +557,6 @@ overflow: hidden;
 
     .homepage-hero-capsule {
         width: 100%;
-        margin-left: 232px;
     }
 
     .homepage-card-component {
@@ -665,13 +664,13 @@ overflow: hidden;
     }
 }
 
-@include govuk-media-query($from: 1246) {
+@include govuk-media-query($from: 1244) {
     .govuk-caption-link {
         width: govuk-px-to-rem(400);
     }
 
     .homepage-hero-capsule {
-        margin-left: 0;
+        margin-left: 32vw;
     }
 }
 
