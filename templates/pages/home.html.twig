@@ -295,7 +295,7 @@
                                                     {% endif %}
                                                     | {{ news_item.dateModified.format('jS F Y') }}
                                                 </div>
-                                                <h2 class="news-listing-title">
+                                                <h2 class="news-listing-title homepage-news-title-truncate">
                                                     <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}">{{ news_item.title|raw }}</a>
                                                 </h2>
 
@@ -345,6 +345,7 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'p
 var mainHomeWrapper = document.querySelector('.govuk-home-main-wrapper');
 var newsSummary = document.querySelectorAll('.homepage-truncate-overflow');
 var glossaryBox = document.querySelector('.glossary-box');
+var newsHeading = document.querySelector('.homepage-news-title-truncate').innerText;
 
 adjustHomeAlignment();
 
@@ -374,10 +375,17 @@ newsSummary.forEach(function (summary) {
 
 
 function truncate(input) {
+    var newsSummary = input;
    if (input.length > 5) {
-      return input.substring(0, 110) + '...';
+      newsSummary = input.substring(0, 110) + '...';
    }
-   return input;
+
+   if (newsHeading.length > 79 ) {
+        newsSummary = input.substring(0, 95) + '...';
+   }
+
+   return newsSummary;
+    
 };
 
 
