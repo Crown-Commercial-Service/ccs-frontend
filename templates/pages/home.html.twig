@@ -295,7 +295,7 @@
                                                     {% endif %}
                                                     | {{ news_item.dateModified.format('jS F Y') }}
                                                 </div>
-                                                <h2 class="news-listing-title">
+                                                <h2 class="news-listing-title homepage-news-title-truncate">
                                                     <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}">{{ news_item.title|raw }}</a>
                                                 </h2>
 
@@ -317,9 +317,9 @@
                         <div class="govuk-grid-column-one-half homepage-campaign-box">
                             {# <h2 class="govuk-heading-m">{{ homepageContent.video.title is defined ? homepageContent.video.title : "Learn about CCS" }}</h2> #}
                             <div class= "homepage-campaign-box-content">
-                                <h2 class="govuk-heading-xl">{{ homepageContent.campaign.title is defined and homepageContent.campaign.title is not empty  ? homepageContent.campaign.title : "Digital Brochure 2024-2025: Procurement with the power to make a difference" }}</h2>
+                                <h2 class="govuk-heading-xl">{{ homepageContent.campaign.title is defined and homepageContent.campaign.title is not empty  ? homepageContent.campaign.title : "Digital brochure 2024-2025: Your buying decisions can make a difference" }}</h2>
 
-                                <p>{{ homepageContent.campaign.description is defined and homepageContent.campaign.description is not empty ? homepageContent.campaign.description  : "Discover our carbon net zero and modern slavery initiatives,  our commercial agreements and more" }}</p>
+                                <p>{{ homepageContent.campaign.description is defined and homepageContent.campaign.description is not empty ? homepageContent.campaign.description  : "Discover procurement guidance, customer case studies and how to access our agreements" }}</p>
 
                                 <a class="govuk-button govuk-caption-button" href="{{ homepageContent.campaign.button_link is defined and homepageContent.campaign.button_link is not empty ? homepageContent.campaign.button_link : "downloadable-resource/request/30384/commercial-agreements-digital-brochure" }}">{{ homepageContent.campaign.button_text is defined and homepageContent.campaign.button_text is not empty ? homepageContent.campaign.button_text : "Download our digital brochure" }}</a>
                             </div>
@@ -345,6 +345,7 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'p
 var mainHomeWrapper = document.querySelector('.govuk-home-main-wrapper');
 var newsSummary = document.querySelectorAll('.homepage-truncate-overflow');
 var glossaryBox = document.querySelector('.glossary-box');
+var newsHeading = document.querySelector('.homepage-news-title-truncate').innerText;
 
 adjustHomeAlignment();
 
@@ -374,10 +375,17 @@ newsSummary.forEach(function (summary) {
 
 
 function truncate(input) {
+    var newsSummary = input;
    if (input.length > 5) {
-      return input.substring(0, 110) + '...';
+      newsSummary = input.substring(0, 110) + '...';
    }
-   return input;
+
+   if (newsHeading.length > 79 ) {
+        newsSummary = input.substring(0, 95) + '...';
+   }
+
+   return newsSummary;
+    
 };
 
 
