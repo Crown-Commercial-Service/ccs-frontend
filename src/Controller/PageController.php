@@ -204,6 +204,7 @@ class PageController extends AbstractController
         }
 
         $cscMessage = ControllerHelper::getCSCMessage();
+        $resourcesWithIndex = $this->extractResourcesFromContent($page->getContent());
 
         return $this->render('pages/page.html.twig', [
             'page'                       => $page,
@@ -217,7 +218,30 @@ class PageController extends AbstractController
             'formData'                   => $formData,
             'featureNewsProperties'      => $featureNewsProperties,
             'cscMessage'                 => $cscMessage,
+            'resourcesWithIndex'         => $resourcesWithIndex
          ]);
+    }
+
+    private function extractResourcesFromContent($content) {
+        $resources = [];
+        $index = 1;
+        if (array_key_exists('brochures_list_brochures_list', $content)) {
+            $resources['brochures_list_brochures_list'] = $index++ ;
+        }
+        if (array_key_exists('whitepapers_list_whitepapers', $content)) {
+            $resources['whitepapers_list_whitepapers'] = $index++ ;
+        }
+        if (array_key_exists('webinars_list_webinars', $content)) {
+            $resources['webinars_list_webinars'] = $index++;
+        }
+        if (array_key_exists('digital_brochures_list_digital_brochures', $content)) {
+            $resources['digital_brochures_list_digital_brochures'] = $index++;
+        }
+        if (array_key_exists('downloadable_list_downloadable_resource', $content)) {
+            $resources['downloadable_list_downloadable_resource'] = $index++;
+        }
+
+        return $resources;
     }
 
     private function checkRedirect($slug)
