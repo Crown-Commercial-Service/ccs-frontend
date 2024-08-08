@@ -222,7 +222,8 @@ class PageController extends AbstractController
          ]);
     }
 
-    private function extractResourcesFromContent($content) {
+    private function extractResourcesFromContent($content)
+    {
         $resources = [];
         $index = 1;
         if (array_key_exists('brochures_list_brochures_list', $content)) {
