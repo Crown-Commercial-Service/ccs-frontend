@@ -293,28 +293,39 @@ End Usersnap code #}
         }
     });
 
-    var btn = document.getElementById("BackToTopButton");
+    var backToTopBtn = document.getElementById("BackToTopButton");
 
-    btn.addEventListener('click', (e) => {
+    backToTopBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        $('html, body').animate({scrollTop:0}, '300');
+        animateScrollToTop();
     });
+
+    backToTopBtn.addEventListener('keypress', function (e) {
+        e.preventDefault();
+        if (e.key === 'Enter') {
+        animateScrollToTop();
+        }       
+    });
+
+    function animateScrollToTop() {
+        $('html, body').animate({scrollTop:0}, '300');
+    }
 
     window.onload = function() {
         dataLayerSetup();
         window.addEventListener("scroll", function (event) {
             if (window.scrollY + window.innerHeight > (document.querySelector('footer').getBoundingClientRect().top + window.pageYOffset)) {
-                btn.classList.add("fixed");
-                btn.classList.remove("flex");
+                backToTopBtn.classList.add("fixed");
+                backToTopBtn.classList.remove("flex");
             } else {
-                btn.classList.add("flex");
-                btn.classList.remove("fixed");
+                backToTopBtn.classList.add("flex");
+                backToTopBtn.classList.remove("fixed");
             }
 
             if (window.scrollY > 200) {
-                btn.classList.add("show");
+                backToTopBtn.classList.add("show");
             } else {
-                btn.classList.remove("show");
+                backToTopBtn.classList.remove("show");
             }
         }, false);
     };
