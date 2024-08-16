@@ -11,7 +11,7 @@
 
 {% block body %}
 
-    {% include '_components/hero.html.twig' with {'image': '/assets/images/newsletters.jpg', 'heading': 'Subscribe to our customer newsletter', 'notFromWordpress': 'true', 'cta_label': '', 'content': '', 'cta_label': '', 'cta_destination': ''} %}
+    {% include '_components/hero.html.twig' with {'image': '/assets/images/Newsletter-Page-Banner.jpg', 'heading': 'Subscribe to our customer newsletter', 'notFromWordpress': 'true', 'cta_label': '', 'content': '', 'cta_label': '', 'cta_destination': ''} %}
 
     <!-- required wrapper 1 -->
     <div class="govuk-width-container">
@@ -45,7 +45,7 @@
 
                     <h2 class="govuk-heading-l page-title">Keep up to date with the latest news from CCS</h2>
                     
-                    <p>Complete the form below to subscribe to the CCS customer newsletter and find out how we can bring power to your procurement. Each month it features framework updates, guidance, insights from our industry experts, events, case studies and much more.</p>
+                    <p>Complete the form below to subscribe to the CCS customer newsletter and find out how we can help you unlock the power of procurement. Each month we share agreement updates, guidance, insights from our industry experts, events, webinars and much more.</p>
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
                     <form class="govuk-!-width-three-quarters" action="/newsletters/submit" method="POST" data-evt-type='newsletter' {{ formErrors is defined ? "data-evt-state='error'" }} >
