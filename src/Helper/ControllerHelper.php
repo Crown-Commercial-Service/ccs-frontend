@@ -129,5 +129,3 @@ class ControllerHelper
         return null;
     }
 }
-
-[a-zA-Z]
