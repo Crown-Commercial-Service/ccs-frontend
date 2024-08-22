@@ -120,7 +120,7 @@ class ControllerHelper
         if (!(empty(trim($referrer)) || is_null($referrer))) {
             $referrerInArray = explode("agreements/RM", $referrer);
 
-            $regex = "/^\d{4}(\.\d{1,2})?$/";   //4 digits follow by 2 decimal places
+            $regex = "/^\d{4}(\.[a-zA-Z0-9]{1,4})?$/";   //4 digits follow by 4 decimal places
 
             if (isset($referrerInArray[1]) && preg_match($regex, $referrerInArray[1])) {
                 return "RM{$referrerInArray[1]}";
@@ -129,3 +129,5 @@ class ControllerHelper
         return null;
     }
 }
+
+[a-zA-Z]
