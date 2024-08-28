@@ -21,6 +21,7 @@
                 {% for tab in component.tabs_tabs_tabs %}
                     {% set title = tab.tabs_title|lower|replace({' ':'', "'": ''}) %}
                     <div class="govuk-tabs__panel" id="{{title}}" role="tabpanel" aria-labelledby="'tab_'{{title}}">
+                        <h2 class="govuk-heading-l">{{title}}</h2>
                         <div class="wysiwyg-content">{{ tab.tabs_content | raw }}</div>
                     </div>
                 {% endfor %}
