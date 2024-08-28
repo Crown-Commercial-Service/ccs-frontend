@@ -49,7 +49,7 @@
     min-width: govuk-px-to-rem(280);
 
     * + * {
-        margin-left: govuk-px-to-rem(20);
+        margin-left: govuk-px-to-rem(24);
     }
 
     @include govuk-media-query($from: desktop) {
