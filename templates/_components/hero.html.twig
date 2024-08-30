@@ -16,7 +16,7 @@
                     alt="{{image.alt}}">
         </picture>
         {% else %}
-            <picture class="hero__picture">
+            <picture class="hero__picture {{newsletter == true ? 'hero__picture_newsletter' : ''}}">
                 <img src="{{ image }}"
                     role="presentation" class="hero__image" loading="lazy" data-object-fit="cover" data-object-position="right center" alt="">
             </picture>
