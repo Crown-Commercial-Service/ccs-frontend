@@ -8,6 +8,7 @@
     {% endif%}
     
     {% if homepage_meta is defined %}
+        <meta name="description" content="We help the UK public sector get better value for money when buying products and services. Unlock the power of procurement with Crown Commercial Service.">
         <meta name="thumbnail" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
         <meta property="og:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
         <meta property="twitter:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
@@ -47,12 +48,12 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.51">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.54">
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.51">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.54">
     {% endif %}
 
     {# Browser icon #}

@@ -111,7 +111,21 @@ class ControllerHelper
         if ($selectedArray == null || count($selectedArray) == $totalOption) {
             return null;
         }
-        $dada = (array) $selectedArray;
+
         return implode(',', (array) $selectedArray);
+    }
+
+    public static function extractRmNumberFromReferrer($referrer)
+    {
+        if (!(empty(trim($referrer)) || is_null($referrer))) {
+            $referrerInArray = explode("agreements/RM", $referrer);
+
+            $regex = "/^\d{4}(\.[a-zA-Z0-9]{1,4})?$/";   //4 digits follow by 4 decimal places
+
+            if (isset($referrerInArray[1]) && preg_match($regex, $referrerInArray[1])) {
+                return "RM{$referrerInArray[1]}";
+            }
+        }
+        return null;
     }
 }
