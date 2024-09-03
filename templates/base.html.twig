@@ -312,23 +312,31 @@ End Usersnap code #}
         $('html, body').animate({scrollTop:0}, '300');
     }
 
-    window.onload = function() {
-        dataLayerSetup();
-        window.addEventListener("scroll", function (event) {
-            if (window.scrollY + window.innerHeight > (document.querySelector('footer').getBoundingClientRect().top + window.pageYOffset)) {
-                backToTopBtn.classList.add("fixed");
-                backToTopBtn.classList.remove("flex");
-            } else {
-                backToTopBtn.classList.add("flex");
-                backToTopBtn.classList.remove("fixed");
-            }
+    function showOrHideBackToTop() {
 
-            if (window.scrollY > 200) {
-                backToTopBtn.classList.add("show");
-            } else {
-                backToTopBtn.classList.remove("show");
-            }
+        if (window.scrollY + window.innerHeight > (document.querySelector('footer').getBoundingClientRect().top + window.pageYOffset)) {
+            backToTopBtn.classList.add("fixed");
+            backToTopBtn.classList.remove("flex");
+        } else {
+            backToTopBtn.classList.add("flex");
+            backToTopBtn.classList.remove("fixed");
+        }
+        
+        if (window.scrollY > 200) {
+            backToTopBtn.classList.add("show");
+        } else {
+            backToTopBtn.classList.remove("show");
+        }
+    }
+
+    window.onload = function () {
+        dataLayerSetup();
+        showOrHideBackToTop()
+
+        window.addEventListener("scroll", function (event) {
+            showOrHideBackToTop()
         }, false);
+
     };
 
     // add download notification to links
