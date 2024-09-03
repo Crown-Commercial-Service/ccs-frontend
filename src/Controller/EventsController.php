@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Helper\ControllerHelper;
+use Error;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Psr16Cache;
 use Strata\Frontend\Cms\Wordpress;
@@ -110,6 +111,8 @@ class EventsController extends AbstractController
 
         try {
             $event = $this->api->getPage((int) $id);
+        } catch (Error $e) {
+            return $this->render('events/error.html.twig');
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Event not found', $e);
         }
