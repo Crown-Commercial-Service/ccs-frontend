@@ -319,7 +319,7 @@ End Usersnap code #}
     }
 
     function showOrHideBackToTop() {
-        var pageTitle = document.querySelector(".page-title").innerText;
+        var pageTitle = document.querySelector(".page-title");
 
         if (window.scrollY + window.innerHeight > (document.querySelector('footer').getBoundingClientRect().top + window.pageYOffset)) {
             backToTopBtn.classList.add("fixed");
@@ -335,8 +335,10 @@ End Usersnap code #}
             backToTopBtn.classList.remove("show");
         }
 
-        if (pageTitle.toLowerCase().includes("contact")) {
-            makeBackToTopFocusable();
+        if (pageTitle !== null) {
+            if(pageTitle.innerText.toLowerCase().includes("contact")) {
+                makeBackToTopFocusable();
+            }  
         }
          
     }
