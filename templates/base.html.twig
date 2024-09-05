@@ -295,6 +295,7 @@ End Usersnap code #}
     });
 
     var backToTopBtn = document.getElementById("BackToTopButton");
+    var skipLink = document.querySelector(".govuk-skip-link");
 
     backToTopBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -310,10 +311,16 @@ End Usersnap code #}
 
     function animateScrollToTop() {
         $('html, body').animate({scrollTop:0}, '300');
+        // reset focus on page
+        if(skipLink !== null) {
+            skipLink.focus();
+        }
+        
     }
 
     function showOrHideBackToTop() {
-
+        var contactForm = document.querySelector("form");
+        
         if (window.scrollY + window.innerHeight > (document.querySelector('footer').getBoundingClientRect().top + window.pageYOffset)) {
             backToTopBtn.classList.add("fixed");
             backToTopBtn.classList.remove("flex");
@@ -327,6 +334,34 @@ End Usersnap code #}
         } else {
             backToTopBtn.classList.remove("show");
         }
+
+        if (contactForm !== null) {
+            if(contactForm.getAttribute("data-evt-type") == "contact_form") {
+                makeBackToTopFocusable();
+            }  
+        }
+         
+    }
+
+    // this is to fix an edge case where back to top is not focusable properly on contact page
+    function makeBackToTopFocusable() {
+            var links = document.querySelectorAll("main a");
+            var lastLink = links[links.length - 1];
+            var contactCard = document.querySelector("#submit");
+
+            lastLink.addEventListener("keydown", function (event) {
+                if(event.key === "Tab" && !event.shiftKey) {
+                    event.preventDefault();
+                    contactCard.scrollIntoView({ behaviour: "smooth", block: "start"});
+                    // set timeout in order for scrollIntoView to finish firing first
+                    setTimeout(function (){
+                        backToTopBtn.classList.add("show");
+                        backToTopBtn.style.position="absolute";
+                        backToTopBtn.focus();
+                    }, 200)
+                    
+                }
+            })
     }
 
     window.onload = function () {
