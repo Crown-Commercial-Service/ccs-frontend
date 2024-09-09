@@ -69,7 +69,7 @@
                                             </legend>
                                         </div>
 
-                                        <div id="filter_audience_tag-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-for-audience-tag">
+                                        <div id="filter_audience_tag-content-1" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-for-audience-tag">
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                                 <input v-on:change=fetchAPIData(null,null) v-model="checkedEventAudience" name="allAudience" value="allAudience" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allAudience" type="checkbox" {{ filters.audience_tag is defined and filters.audience_tag is empty  ? 'checked' }}>
                                                 <label class="govuk-label govuk-checkboxes__label" for="allAudience">
@@ -109,7 +109,7 @@
                                             </legend>
                                         </div>
 
-                                        <div id="filter_events-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-for-event-type">
+                                        <div id="filter_events-content-1" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-for-event-type">
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                                 <input v-on:change=fetchAPIData(null,null) v-model="checkedEventType" name="allType" value="allType" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" type="checkbox" {{ filters.event_type is defined and filters.event_type is empty  ? 'checked' }}>
                                                 <label class="govuk-label govuk-checkboxes__label" for="allType">
@@ -149,7 +149,7 @@
                                             </legend>
                                         </div>
 
-                                        <div id="products-services-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="products-services-accordion-heading">
+                                        <div id="products-services-accordion-content-1" role="region" class="govuk-accordion__section-content" aria-labelledby="products-services-accordion-heading">
 
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                                 <input v-on:change=fetchAPIData(null,null) v-model="checkedProductsServices" name="allPS" value="allPS" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allPS" type="checkbox" {{ filters.products_services is defined and filters.products_services is empty  ? 'checked' }}>
@@ -190,7 +190,7 @@
                                                 </h3>
                                             </legend>
                                         </div>
-                                        <div id="sectors-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="sectors-accordion-heading">
+                                        <div id="sectors-accordion-content-1" role="region" class="govuk-accordion__section-content" aria-labelledby="sectors-accordion-heading">
 
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                                 <input v-on:change=fetchAPIData(null,null) v-model="checkedSectors" name="allSectors" value="allSectors" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allSectors" type="checkbox" {{ filters.sectors is defined and filters.sectors is empty  ? 'checked' }}>
