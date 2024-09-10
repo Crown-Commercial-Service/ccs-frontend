@@ -243,12 +243,16 @@ overflow: hidden;
 
     h2 {
         font-size: 1.5rem;
-        margin-bottom: 0px;
+        margin-bottom: 10px;
     }
 
     .homepage-news-listing {
         margin-top: -20px;
     }
+}
+
+.homepage-truncate-overflow {
+    margin-bottom: 41px;
 }
 
 .homepage-campaign-box {
@@ -548,7 +552,6 @@ overflow: hidden;
         }
 
         .homepage-news-listing {
-            border: 1px solid #D8D8D8;
             margin-right: 0;
             margin-left: 0;
             justify-content: space-between;
