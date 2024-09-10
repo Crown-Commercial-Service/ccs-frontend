@@ -285,7 +285,7 @@
                                                 </picture>
                                             {% endif %}
 
-                                            <div class="feature-news__item__details news-listing__item__caption">
+                                            <div class="feature-news__item__details news-listing__item__caption home-news-item-truncate">
                                                 <div class="news-listing-meta">
                                                     {% if news_item.taxonomies.categories  %}
                                                         {% for category in news_item.taxonomies.categories %}
@@ -342,24 +342,33 @@
 <script>
 pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'homepage'});
 
-var newsSummary = document.querySelectorAll('.homepage-truncate-overflow');
-var newsHeading = document.querySelector('.homepage-news-title-truncate').innerText;
+var newsItems = document.querySelectorAll('.home-news-item-truncate');
 
-newsSummary.forEach(function (summary) {
-    summary.innerText = truncate(summary.innerText);
+newsItems.forEach(function (item) {
+    var heading = item.querySelector(".homepage-news-title-truncate a");
+    var summary = item.querySelector(".homepage-truncate-overflow");
+
+    truncatedContent = truncate(heading.innerText, summary.innerText);
+
+    heading.innerText = truncatedContent["truncatedHeading"];
+    summary.innerText = truncatedContent["truncatedSummary"];
 })
 
-function truncate(input) {
-    var newsSummary = input;
-   if (input.length > 5) {
-      newsSummary = input.substring(0, 110) + '...';
+function truncate(heading, summary) {
+    var newsContent = {
+        "truncatedHeading": heading,
+        "truncatedSummary": summary
+    };
+
+   if (heading.length > 44 ) {
+        newsContent["truncatedHeading"] = heading.substring(0, 44) + '...';
+   } 
+
+   if (summary.length > 5) {
+      newsContent["truncatedSummary"] = summary.substring(0, 110) + '...';
    }
 
-   if (newsHeading.length > 79 ) {
-        newsSummary = input.substring(0, 95) + '...';
-   }
-
-   return newsSummary;
+   return newsContent;
     
 };
 
