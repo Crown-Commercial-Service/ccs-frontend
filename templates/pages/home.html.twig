@@ -33,7 +33,7 @@
 
                     <div class="homepage-hero-capsule">
                         <div class="govuk-homepage-search-forms">
-                            <div class="govuk-grid-column-one-half">
+                            <div class="govuk-grid-column-one-half homepage-agreement-search">
 
                                 <form action="{{ path('frameworks_search') }}" method="GET">
 
@@ -88,14 +88,14 @@
 
 
         {# required wrapper 2 #}
-        <main id="main-content" class="govuk-main-wrapper govuk-home-main-wrapper">
+        <main id="main-content" class="govuk-main-wrapper govuk-home-main-wrapper ccs-width-container">
 
 
             <div class="apollo-island homepage-apollo-island">
                 {% if homepageContent %}
                     <div class="govuk-grid-column-full homepage-card-container">
 
-                        <div class="govuk-grid-row homepage-card-wrapper">
+                        <div class="homepage-card-wrapper">
                             <div class="govuk-grid-column-one-third card-list__item__wrapper homepage-card-component">
                                 <h2 class="govuk-heading-m">
                                     {{ homepageContent.how_to_buy.title is defined ? 
@@ -246,7 +246,7 @@
             </div>
             
                 <div class="govuk-full-width-container">
-                    <div class="govuk-grid-row homepage-lower-components-container">
+                    <div class="homepage-lower-components-container">
                         <div class="govuk-grid-column-one-half homepage-news-list">
 
                             <h2 class="govuk-heading-m">Latest news</h2>
@@ -312,7 +312,6 @@
                                 {% endfor %}
                             </ol>
                         </div>
-                        <div class="fill-remaining-space"></div>
                         <div class="govuk-grid-column-one-half homepage-campaign-box">
                             {# <h2 class="govuk-heading-m">{{ homepageContent.video.title is defined ? homepageContent.video.title : "Learn about CCS" }}</h2> #}
                             <div class= "homepage-campaign-box-content">
@@ -328,14 +327,16 @@
                     <p class="homepage-browse-all"><a href="/news">Browse all news articles</a></p>
 
                 </div>
+                 <div class="glossary-box-container">
+                 <div class="glossary-box-background"></div>
+                    <div class="glossary-box">
+                            <h3 class="govuk-heading-m">Glossary</h3>
+                            <p>We understand procurement can be confusing. Use our glossary to learn about common public procurement terms and abbreviations.</p>
+                            <p><a href="/glossary">Read the glossary</a></p>
+                    </div>
+                </div>
         </main>
-        <div class="glossary-box-container">
-            <div class="glossary-box">
-                    <h3 class="govuk-heading-m">Glossary</h3>
-                    <p>We understand procurement can be confusing. Use our glossary to learn about common public procurement terms and abbreviations.</p>
-                    <p><a href="/glossary">Read the glossary</a></p>
-            </div>
-        </div>
+       
     </div>
 
 <script>
@@ -346,7 +347,7 @@ var newsSummary = document.querySelectorAll('.homepage-truncate-overflow');
 var glossaryBox = document.querySelector('.glossary-box');
 var newsHeading = document.querySelector('.homepage-news-title-truncate').innerText;
 
-adjustHomeAlignment();
+{# adjustHomeAlignment();
 
 window.addEventListener('resize', adjustHomeAlignment);
 
@@ -362,7 +363,7 @@ function adjustHomeAlignment () {
     glossaryBox.style.width = mainContentWidth + "px";
     glossaryBox.style.margin = "auto";
     glossaryBox.style.marginLeft = captionTextX + "px";
-}
+} #}
 
 
 
