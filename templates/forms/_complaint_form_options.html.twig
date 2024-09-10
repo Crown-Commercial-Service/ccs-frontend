@@ -43,7 +43,7 @@
         <div id="contact-way-conditional-hint" class="govuk-hint">Select one option.</div>
         <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
             <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="contact-way-conditional-1" name="contactWay" type="radio" value="Phone" data-aria-controls="conditional-contact-way-conditional-1" {{formData.contactWay is defined and formData.contactWay == "Phone" ? 'checked' }}>
+                <input class="govuk-radios__input" id="contact-way-conditional-1" name="contactWay" type="radio" value="Phone" role="region" data-aria-controls="conditional-contact-way-conditional-1" {{formData.contactWay is defined and formData.contactWay == "Phone" ? 'checked' }}>
                 <label class="govuk-label govuk-radios__label" for="contact-way-conditional-1">Phone</label>
             </div>
             <div class="govuk-radios__conditional" id="conditional-contact-way-conditional-1">
