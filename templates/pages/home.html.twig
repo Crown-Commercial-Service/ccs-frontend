@@ -342,37 +342,12 @@
 <script>
 pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'homepage'});
 
-var mainHomeWrapper = document.querySelector('.govuk-home-main-wrapper');
 var newsSummary = document.querySelectorAll('.homepage-truncate-overflow');
-var glossaryBox = document.querySelector('.glossary-box');
 var newsHeading = document.querySelector('.homepage-news-title-truncate').innerText;
-
-{# adjustHomeAlignment();
-
-window.addEventListener('resize', adjustHomeAlignment);
-
-function adjustHomeAlignment () {
-    var searchSupFormX = document.querySelector('.search-supp').getBoundingClientRect().right;
-    var captionTextX = document.querySelector('.govuk-hero-homepage-caption-container').getBoundingClientRect().left;
-    var mainContentWidth = searchSupFormX - captionTextX;
-
-    mainHomeWrapper.style.width = mainContentWidth + "px";
-    mainHomeWrapper.style.margin = "auto";
-    mainHomeWrapper.style.marginLeft = captionTextX + "px";
-
-    glossaryBox.style.width = mainContentWidth + "px";
-    glossaryBox.style.margin = "auto";
-    glossaryBox.style.marginLeft = captionTextX + "px";
-} #}
-
-
-
-
 
 newsSummary.forEach(function (summary) {
     summary.innerText = truncate(summary.innerText);
 })
-
 
 function truncate(input) {
     var newsSummary = input;
