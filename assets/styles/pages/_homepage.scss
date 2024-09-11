@@ -739,6 +739,7 @@ overflow: hidden;
 
         .homepage-news-listing-item {
             height: 100%;
+            max-width: 297px;
         }
     }
 
@@ -784,15 +785,16 @@ overflow: hidden;
     .homepage-hero-capsule {
         margin-left: 542px;
     }
+
+    .govuk-homepage-search-forms {
+        width: 733px;
+    }
 }
 
 // for larger screens
 @include govuk-media-query($from: 2266) {
     .homepage-hero-capsule {
             width: 110%;
-    }
-    .govuk-homepage-search-forms {
-        width: 741px;
     }
 }
 // for extra large screens
