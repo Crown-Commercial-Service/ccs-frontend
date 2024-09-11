@@ -223,8 +223,7 @@
                         <h2 class="govuk-heading-m" v-else>                   {[totalResults]} event(s) found</h2>
                         
                         <ol class="events-list">
-                            <div v-show="javascriptVersion" v-for="result in results">
-                                <li class="event-list__item">
+                                <li class="event-list__item" v-show="javascriptVersion" v-for="result in results">
                                     <picture>
                                         <a v-if=result.imageSet class="event-list__image" aria-hidden="true">
                                             <img :src="result.imageURL"
@@ -250,7 +249,6 @@
                                         </ul>
                                     </div>
                                 </li>
-                            </div>
                         </ol>
 
                         <results-pagination 
