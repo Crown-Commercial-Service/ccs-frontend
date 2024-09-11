@@ -790,7 +790,10 @@ overflow: hidden;
 @include govuk-media-query($from: 2266) {
     .homepage-hero-capsule {
             width: 110%;
-        }
+    }
+    .govuk-homepage-search-forms {
+        width: 741px;
+    }
 }
 // for extra large screens
 @include govuk-media-query($from: 2560) {
