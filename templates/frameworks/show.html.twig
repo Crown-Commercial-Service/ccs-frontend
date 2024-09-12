@@ -96,6 +96,7 @@
                     </div>
 
 
+                    {% set indexForAccordion = 1 %}
                     <div class="govuk-grid-row">
                         <div class="govuk-grid-column-two-thirds">
 
@@ -108,15 +109,16 @@
                             <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
 
                                 {% if framework.content.updates and framework.content.updates != "" %}
+                                    {% set indexForAccordion = indexForAccordion + 1 %}
                                     <div class="govuk-accordion__section ">
                                         <div class="govuk-accordion__section-header">
                                             <h2 class="govuk-accordion__section-heading">
-                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
+                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ indexForAccordion }}">
                                                 Updates
                                                 </span>
                                             </h2>
                                         </div>
-                                        <div id="accordion-default-content-1" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                                        <div id="accordion-default-content-{{ indexForAccordion }}" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ indexForAccordion }}">
 
                                             <div class="wysiwyg-content">
                                                 {{ framework.content.updates | raw }}
@@ -127,15 +129,16 @@
                                 {% endif %}
 
                                 {% if framework.content.description and framework.content.description != "" and framework.content.status != 'Expired - Data Still Received' %}
+                                    {% set indexForAccordion = indexForAccordion + 1 %}
                                     <div class="govuk-accordion__section ">
                                         <div class="govuk-accordion__section-header">
                                             <h2 class="govuk-accordion__section-heading">
-                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
+                                                <span class="govuk-accordion__section-button" aria-controls="accordion-default-content-{{ indexForAccordion }}" id="accordion-default-heading-{{ indexForAccordion }}">
                                                 Description
                                                 </span>
                                             </h2>
                                         </div>
-                                        <div id="accordion-default-content-2" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">
+                                        <div id="accordion-default-content-{{ indexForAccordion }}" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ indexForAccordion }}">
 
                                             <div class="wysiwyg-content">
                                                 {{ framework.content.description | raw }}
@@ -146,15 +149,16 @@
                                 {% endif %}
 
                                 {% if framework.content.benefits and framework.content.benefits != "" and framework.content.status != 'Expired - Data Still Received' %}
+                                    {% set indexForAccordion = indexForAccordion + 1 %}
                                     <div class="govuk-accordion__section ">
                                         <div class="govuk-accordion__section-header">
                                             <h2 class="govuk-accordion__section-heading">
-                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
+                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ indexForAccordion }}">
                                                 Benefits
                                                 </span>
                                             </h2>
                                         </div>
-                                        <div id="accordion-default-content-3" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3">
+                                        <div id="accordion-default-content-{{ indexForAccordion }}" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ indexForAccordion }}">
 
                                             <div class="wysiwyg-content">
                                                 {{ framework.content.benefits | raw }}
@@ -171,15 +175,16 @@
                                 {% endif %}
 
                                 {% if framework.content.lots and framework.content.lots != "" and framework.content.status != 'Expired - Data Still Received' %}
+                                    {% set indexForAccordion = indexForAccordion + 1 %}
                                     <div class="govuk-accordion__section ">
                                         <div class="govuk-accordion__section-header">
                                             <h2 class="govuk-accordion__section-heading">
-                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-4">
+                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ indexForAccordion }}">
                                                 Products and suppliers
                                                 </span>
                                             </h2>
                                         </div>
-                                        <div id="accordion-default-content-4" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4">
+                                        <div id="accordion-default-content-{{ indexForAccordion }}" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ indexForAccordion }}">
 
                                             {% if framework.content.terms == "DPS" %}
                                                 <p>Please read the 'How to buy' tab
@@ -252,15 +257,16 @@
                                 {% endif %}
 
                                 {% if framework.content.how_to_buy and framework.content.how_to_buy != "" and framework.content.status != 'Expired - Data Still Received' %}
+                                    {% set indexForAccordion = indexForAccordion + 1 %}
                                     <div class="govuk-accordion__section ">
                                         <div class="govuk-accordion__section-header">
                                             <h2 class="govuk-accordion__section-heading">
-                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-5">
+                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ indexForAccordion }}">
                                                 How to buy
                                                 </span>
                                             </h2>
                                         </div>
-                                        <div id="accordion-default-content-5" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-5">
+                                        <div id="accordion-default-content-{{ indexForAccordion }}" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ indexForAccordion }}">
 
                                             <div class="wysiwyg-content">
                                                 {{ framework.content.how_to_buy | raw }}
@@ -271,15 +277,16 @@
                                 {% endif %}
 
                                 {% if framework.content.documents and framework.content.documents != "" %}
+                                    {% set indexForAccordion = indexForAccordion + 1 %}
                                     <div class="govuk-accordion__section ">
                                         <div class="govuk-accordion__section-header">
                                             <h2 class="govuk-accordion__section-heading">
-                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-6">
+                                                <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ indexForAccordion }}">
                                                 Documents
                                                 </span>
                                             </h2>
                                         </div>
-                                        <div id="accordion-default-content-6" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-6">
+                                        <div id="accordion-default-content-{{ indexForAccordion }}" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ indexForAccordion }}">
 
 
                                         {% if framework.content.document_updates and framework.content.document_updates != "" %}
