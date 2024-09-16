@@ -154,7 +154,7 @@
                                     <span class="govuk-body-s">{{ statuses is not defined or statuses is empty ? 1 : statuses|length }} selected</span>
                                 </div>
                                
-                                <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3">
+                                <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3" role="region">
 
                                          <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                             <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="live"name="statuses[]" type="checkbox" value="live" {{ statuses is not defined or statuses is empty or 'live' in statuses ? "checked" : "" }} >
@@ -192,7 +192,7 @@
                                     </h2> 
                                 </div>
 
-                                <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1">
+                                <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1" role="region">
                                     <ul class="govuk-list">
                                         {% for pillar_item in pillars.pillars %}
                                             <li>
@@ -269,7 +269,7 @@
                                     {% endif %}
 
                                     {% if statuses|length > 1 %}
-                                        <div style="display: inline; padding-right: 5px;" >and</div>
+                                        <li style="display: inline; padding-right: 5px;" >and</li>
                                     {% endif %}
 
                                     {% if 'expired' in statuses%}
