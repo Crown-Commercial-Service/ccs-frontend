@@ -638,6 +638,18 @@ overflow: hidden;
     .homepage-news-listing-item {
         max-width: 47%;
     }
+
+    .homepage-campaign-box-content {
+        h2 {
+            font-size: 2.5rem;
+        }
+    }
+
+    .homepage-campaign-box{
+        width: 47%;
+        padding-top: 35px;
+        padding-bottom: 35px;
+    }
 }
 
 @include govuk-media-query($from: 1244) {
@@ -647,6 +659,11 @@ overflow: hidden;
 
     .homepage-hero-capsule {
         margin-left: 423px;
+    }
+
+    .homepage-campaign-box {
+        padding-top:57px;
+        padding-bottom: 57px;
     }
 }
 
@@ -702,7 +719,6 @@ overflow: hidden;
         position: relative;
 
         h2 {
-            font-size: 2.5rem;
             margin-bottom: 30px;
             width: 502px;
         }
