@@ -32,6 +32,14 @@
                             {{ framework.content.total_suppliers }}
                         </dd>
                     {% endif %}
+
+                    {% if tpp_feature_toggle == true %}
+                        <dt>Agreement type</dt>
+                        <dd class="apollo-list--definition__value">
+                            {{ framework.content.regulation_type }}
+                        </dd>
+                    {% endif %}
+
                 </dl>
             </div>
 
