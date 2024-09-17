@@ -450,11 +450,12 @@ class FrameworksController extends AbstractController
         $youtubeVideo = ControllerHelper::getYoutubeVideo();
 
         $data = [
-            'framework'         => $results,
-            'show_crp'          => $this->showCRP($content['rm_number']->getValue()),
-            'cscMessage'        => $cscMessage,
-            'content_group'     => $content_group,
-            'youtubeVideo'      => $youtubeVideo
+            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
+            'framework'          => $results,
+            'show_crp'           => $this->showCRP($content['rm_number']->getValue()),
+            'cscMessage'         => $cscMessage,
+            'content_group'      => $content_group,
+            'youtubeVideo'       => $youtubeVideo
         ];
         return $this->render('frameworks/show.html.twig', $data);
     }
