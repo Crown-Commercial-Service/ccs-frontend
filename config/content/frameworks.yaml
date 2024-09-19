@@ -33,6 +33,10 @@ category:
   type: text
 status:
   type: text
+regulation:
+  type: text
+regulation_type:
+  type: text
 start_date:
   type: date
 end_date:
