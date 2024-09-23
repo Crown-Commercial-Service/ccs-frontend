@@ -192,6 +192,7 @@ class FrameworksController extends AbstractController
         }
 
         $data = [
+            'tpp_feature_toggle'            => getenv('TPP_feature_toggle'),
             'awarded_pipeline'              => $results->getContent()->get('awarded_pipeline'),
             'underway_pipeline'             => $results->getContent()->get('underway_pipeline'),
             'dynamic_purchasing_systems'    => $results->getContent()->get('dynamic_purchasing_systems'),
