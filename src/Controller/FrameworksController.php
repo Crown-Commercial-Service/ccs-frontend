@@ -140,6 +140,7 @@ class FrameworksController extends AbstractController
         }
 
         $data = [
+            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
             'pagination' => $results->getPagination(),
             'results'    => $results,
             'categories' => FrameworkCategories::getAll(),
@@ -276,6 +277,7 @@ class FrameworksController extends AbstractController
         }
 
         $data = [
+            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
             'query'         => $query,
             'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($query),
             'category'      => $categoryName,
@@ -333,6 +335,7 @@ class FrameworksController extends AbstractController
         }
 
         $data = [
+            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
             'query'         => $query,
             'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($query),
             'pillar'        => $pillarName,
@@ -401,6 +404,7 @@ class FrameworksController extends AbstractController
         }
 
         $data = [
+            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
             'query'         => $query,
             'pagination'    => $results->getPagination(),
             'results'       => $results,
