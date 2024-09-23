@@ -49,6 +49,8 @@ awarded_pipeline:
       type: date
     published_status:
       type: text
+    regulation:
+      type: text
     document_updates:
       type: richtext
     upcoming_deal_summary:
@@ -90,6 +92,8 @@ underway_pipeline:
     expected_award_date:
       type: date
     published_status:
+      type: text
+    regulation:
       type: text
     document_updates:
       type: richtext
@@ -133,6 +137,8 @@ dynamic_purchasing_systems:
       type: date
     published_status:
       type: text
+    regulation:
+      type: text
     document_updates:
       type: richtext
     upcoming_deal_summary:
@@ -175,6 +181,8 @@ planned_pipeline:
       type: date
     published_status:
       type: text
+    regulation:
+      type: text
     document_updates:
       type: richtext
     upcoming_deal_summary:
@@ -216,6 +224,8 @@ future_pipeline:
     expected_award_date:
       type: date
     published_status:
+      type: text
+    regulation:
       type: text
     document_updates:
       type: richtext

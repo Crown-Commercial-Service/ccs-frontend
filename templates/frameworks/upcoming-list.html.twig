@@ -168,8 +168,14 @@
                                                     {% else %}
                                                         <li> <strong>Expected Live:</strong> N/A </li>
                                                     {% endif %}
-                                                
 
+                                                    {% if tpp_feature_toggle == true %}
+                                                        {% if upcoming_deal.regulation is not null %}
+                                                        <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
+                                                        {% else %}
+                                                            <li> <strong>Regulation:</strong></li>
+                                                        {% endif %}
+                                                    {% endif %}
                                                 </ul>
                                                 <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
                                             </li>
@@ -223,6 +229,14 @@
                                                     <li> <strong>End Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                 {% else %}
                                                     <li> <strong>End Live:</strong> N/A </li>
+                                                {% endif %}
+
+                                                {% if tpp_feature_toggle == true %}
+                                                    {% if upcoming_deal.regulation is not null %}
+                                                    <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
+                                                    {% else %}
+                                                        <li> <strong>Regulation:</strong></li>
+                                                    {% endif %}
                                                 {% endif %}
                                             </ul>
                                             <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
@@ -285,6 +299,14 @@
                                             {% else %}
                                                 <li> <strong>Expected Award:</strong> N/A </li>
                                             {% endif %}
+
+                                            {% if tpp_feature_toggle == true %}
+                                                {% if upcoming_deal.regulation is not null %}
+                                                <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
+                                                {% else %}
+                                                    <li> <strong>Regulation:</strong></li>
+                                                {% endif %}
+                                            {% endif %}
                                         </ul>
                                         <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
                                     </li>
@@ -336,6 +358,14 @@
                                                     <li> <strong>Expected Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                 {% else %}
                                                     <li> <strong>Expected Live:</strong> N/A </li>
+                                                {% endif %}
+
+                                                {% if tpp_feature_toggle == true %}
+                                                    {% if upcoming_deal.regulation is not null %}
+                                                    <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
+                                                    {% else %}
+                                                        <li> <strong>Regulation:</strong></li>
+                                                    {% endif %}
                                                 {% endif %}
                                             </ul>
                                             <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
@@ -390,6 +420,14 @@
                                                     <li> <strong>End Date:</strong> {{ upcoming_deal.end_date.format('d/m/Y') }} </li>
                                                 {% else %}
                                                     <li> <strong>End Date:</strong> N/A </li>
+                                                {% endif %}
+
+                                                {% if tpp_feature_toggle == true %}
+                                                    {% if upcoming_deal.regulation is not null %}
+                                                    <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
+                                                    {% else %}
+                                                        <li> <strong>Regulation:</strong></li>
+                                                    {% endif %}
                                                 {% endif %}
                                             </ul>
                                             <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
