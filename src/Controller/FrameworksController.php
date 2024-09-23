@@ -140,6 +140,7 @@ class FrameworksController extends AbstractController
         }
 
         $data = [
+            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
             'pagination' => $results->getPagination(),
             'results'    => $results,
             'categories' => FrameworkCategories::getAll(),
