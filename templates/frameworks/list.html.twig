@@ -181,115 +181,132 @@
 
                         </div>
 
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
-                                <div class="govuk-accordion__section-header">
-                                    <h2 class="govuk-accordion__section-heading">
-                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-2">
-                                            Regulation
-                                        </span>
-                                    </h2>
-                                </div>
-                                
-                                <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2" role="region">
+                        {% if tpp_feature_toggle == true %}
+                            <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
+                                <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
+                                            <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-2">
+                                                Regulation
+                                            </span>
+                                        </h2>
+                                    </div>
+                                    
+                                    <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2" role="region">
 
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allRegulation" name="regulation[]" type="checkbox" value="allRegulation" >
-                                        <label class="govuk-label govuk-checkboxes__label" for="allRegulation">
-                                            View All
-                                        </label>
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            {% if regulation is defined and 'allRegulation' in regulation %}
+                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allRegulation" name="allRegulation" type="checkbox" value="true" checked >
+                                            {% else %}
+                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allRegulation" name="regulation[]" type="checkbox" value="allRegulation" >
+                                            {% endif %}
+                                            <label class="govuk-label govuk-checkboxes__label" for="allRegulation">
+                                                View All
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PA2023" name="regulation[]" type="checkbox" value="PA2023" {{ 'PA2023' in regulation ? "checked" }} >
+                                            <label class="govuk-label govuk-checkboxes__label" for="PA2023">
+                                                PA2023
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PCR2015" name="regulation[]" type="checkbox" value="PCR2015" {{ 'PCR2015' in regulation ? "checked" }} >
+                                            <label class="govuk-label govuk-checkboxes__label" for="PCR2015">
+                                                PCR2015
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PCR2006" name="regulation[]" type="checkbox" value="PCR2006" {{ 'PCR2006' in regulation ? "checked" }} >
+                                            <label class="govuk-label govuk-checkboxes__label" for="PCR2006">
+                                                PCR2006
+                                            </label>
+                                        </div>
                                     </div>
-                                    
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PCR2006" name="regulation[]" type="checkbox" value="PCR2006">
-                                        <label class="govuk-label govuk-checkboxes__label" for="PCR2006">
-                                            PCR2006
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PCR2015" name="agreementType[]" type="checkbox" value="PCR2015">
-                                        <label class="govuk-label govuk-checkboxes__label" for="PCR2015">
-                                            PCR2015
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PA2023" name="agreementType[]" type="checkbox" value="PA2023">
-                                        <label class="govuk-label govuk-checkboxes__label" for="PA2023">
-                                            PA2023
-                                        </label>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
-                                <div class="govuk-accordion__section-header">
-                                    <h2 class="govuk-accordion__section-heading">
-                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-3">
-                                            Agreement type
-                                        </span>
-                                    </h2>
-                                </div>
-                                
-                                <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3" role="region">
-
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allAgreementType" name="agreementType[]" type="checkbox" value="allAgreementType" >
-                                        <label class="govuk-label govuk-checkboxes__label" for="allAgreementType">
-                                            View All
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Dynamic_Purchasing_System" name="agreementType[]" type="checkbox" value="Dynamic_Purchasing_System">
-                                        <label class="govuk-label govuk-checkboxes__label" for="Dynamic_Purchasing_System">
-                                            Dynamic Purchasing System 
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Dynamic_Market" name="agreementType[]" type="checkbox" value="Dynamic_Market">
-                                        <label class="govuk-label govuk-checkboxes__label" for="Dynamic_Market">
-                                            Dynamic Market 
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Open_Framework" name="agreementType[]" type="checkbox" value="Open_Framework">
-                                        <label class="govuk-label govuk-checkboxes__label" for="Open_Framework">
-                                            Open Framework
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Closed_Framework" name="agreementType[]" type="checkbox" value="Closed_Framework">
-                                        <label class="govuk-label govuk-checkboxes__label" for="Closed_Framework">
-                                            Closed Framework 
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PCR15_Framework" name="agreementType[]" type="checkbox" value="PCR15_Framework">
-                                        <label class="govuk-label govuk-checkboxes__label" for="PCR15_Framework">
-                                            PCR15 Framework
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PCR06_Framework" name="agreementType[]" type="checkbox" value="PCR06_Framework">
-                                        <label class="govuk-label govuk-checkboxes__label" for="PCR06_Framework">
-                                            PCR06 Framework
-                                        </label>
-                                    </div>
-                                    
                                 </div>
                             </div>
-                        </div>
+
+
+                            <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
+                                <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
+                                            <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-3">
+                                                Agreement type
+                                            </span>
+                                        </h2>
+                                    </div>
+                                    
+                                    <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3" role="region">
+
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            {% if regulationType is defined and 'allType' in regulationType %}
+                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" name="allType" type="checkbox" value="true" checked >
+                                            {% else %}
+                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" name="regulationType[]" type="checkbox" value="allType" >
+                                            {% endif %}
+                                            <label class="govuk-label govuk-checkboxes__label" for="allType">
+                                                View All
+                                            </label>
+                                        </div>
+                                        
+                                        {% if regulation is defined and 'allRegulation' in regulation or 'PCR2015' in regulation %}
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Dynamic_Purchasing_System" name="regulationType[]" type="checkbox" value="Dynamic Purchasing System"{{ regulationType is not defined or regulationType is empty or 'Dynamic Purchasing System' in regulationType ? "checked" : "" }} >
+                                                <label class="govuk-label govuk-checkboxes__label" for="Dynamic_Purchasing_System">
+                                                    Dynamic Purchasing System 
+                                                </label>
+                                            </div>
+                                        {% endif %}
+                                        
+                                        {% if regulation is defined and 'allRegulation' in regulation or 'PA2023' in regulation %}                                        
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Dynamic_Market" name="regulationType[]" type="checkbox" value="Dynamic Market"{{ regulationType is not defined or regulationType is empty or 'Dynamic Market' in regulationType ? "checked" : "" }} >
+                                                <label class="govuk-label govuk-checkboxes__label" for="Dynamic_Market">
+                                                    Dynamic Market 
+                                                </label>
+                                            </div>
+
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Open_Framework" name="regulationType[]" type="checkbox" value="Open Framework"{{ regulationType is not defined or regulationType is empty or 'Open Framework' in regulationType ? "checked" : "" }} >
+                                                <label class="govuk-label govuk-checkboxes__label" for="Open_Framework">
+                                                    Open Framework
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Closed_Framework" name="regulationType[]" type="checkbox" value="Closed Framework"{{ regulationType is not defined or regulationType is empty or 'Closed Framework' in regulationType ? "checked" : "" }} >
+                                                <label class="govuk-label govuk-checkboxes__label" for="Closed_Framework">
+                                                    Closed Framework 
+                                                </label>
+                                            </div>
+                                        {% endif %}
+
+                                        {% if regulation is defined and 'allRegulation' in regulation or 'PCR2015' in regulation %}
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PCR15_Framework" name="regulationType[]" type="checkbox" value="PCR15 Framework"{{ regulationType is not defined or regulationType is empty or 'PCR15 Framework' in regulationType ? "checked" : "" }} >
+                                                <label class="govuk-label govuk-checkboxes__label" for="PCR15_Framework">
+                                                    PCR15 Framework
+                                                </label>
+                                            </div>
+                                        {% endif %}
+                                        
+                                        {% if regulation is defined and 'allRegulation' in regulation or 'PCR2006' in regulation %}
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PCR06_Framework" name="regulationType[]" type="checkbox" value="PCR06 Framework"{{ regulationType is not defined or regulationType is empty or 'PCR06 Framework' in regulationType ? "checked" : "" }} >
+                                                <label class="govuk-label govuk-checkboxes__label" for="PCR06_Framework">
+                                                    PCR06 Framework
+                                                </label>
+                                            </div>
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                         
 
 
@@ -452,7 +469,9 @@
                         {% endfor %}
                     </ul>
 
-                    {% if results|length == 0 %}
+                    {% if tpp_feature_toggle == true and results|length == 0 and 'PA2023' in regulation and regulation|length == 1 %}
+                        <p>There are 0 agreements on regulation PA2023, go to the <a href="{{ path('frameworks_upcoming_deals') }}">upcoming agreement page</a> for further information</p>
+                    {% elseif results|length == 0 %}
                         <h3>There are no matching results.</h3>
                         <p class="govuk-!-margin-bottom-0">Improve your search results by:</p>
                         <ul>

@@ -127,8 +127,6 @@ class FrameworksController extends AbstractController
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         $this->searchApi->setCacheKey($request->getRequestUri());
-
-        // We are overriding the content model here
         $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
@@ -140,11 +138,14 @@ class FrameworksController extends AbstractController
         }
 
         $data = [
-            'pagination' => $results->getPagination(),
-            'results'    => $results,
-            'categories' => FrameworkCategories::getAll(),
-            'pillars'    => FrameworkCategories::getAllPillars(),
-            'statuses'   => ["live"]
+            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
+            'pagination'        => $results->getPagination(),
+            'results'           => $results,
+            'categories'        => FrameworkCategories::getAll(),
+            'pillars'           => FrameworkCategories::getAllPillars(),
+            'statuses'          => ["live"],
+            'regulation'        => ["allRegulation"],
+            'regulationType'    => ["allType"],
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
@@ -254,27 +255,32 @@ class FrameworksController extends AbstractController
             return $this->redirectToRoute('frameworks_list_by_pillar', ['pillar' => $redirectToPillar[$category]]);
         }
 
-        // Map category slug to category db value
         $categoryName = FrameworkCategories::getDbValueBySlug($category);
         if ($categoryName === null) {
             $this->redirectToRoute('frameworks_list');
         }
         $this->searchApi->setCacheKey($request->getRequestUri());
-        // We are overriding the content model here
         $this->searchApi->getContentType()->setApiEndpoint('frameworks');
+
+        $RegulationAndType   = $this->getRegulationAndType($request);
+        $regulationFilter   = $RegulationAndType[0];
+        $typeFilter         = $RegulationAndType[1];
 
         try {
             $results = $this->searchApi->list($page, [
                 'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
                 'category' => $categoryName,
                 'limit' => 20,
-                'status' => $statuses
+                'status' => $statuses,
+                'regulation'        => $this->removeViewAllForAPI($regulationFilter),
+                'regulation_type'   => $this->removeViewAllForAPI($typeFilter)
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
 
         $data = [
+            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
             'query'         => $query,
             'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($query),
             'category'      => $categoryName,
@@ -283,7 +289,9 @@ class FrameworksController extends AbstractController
             'results'       => $results,
             'categories'    => FrameworkCategories::getAll(),
             'pillars'       => FrameworkCategories::getAllPillars(),
-            'statuses' => $statuses
+            'statuses'      => $statuses,
+            'regulation'    => $regulationFilter,
+            'regulationType' => $typeFilter,
         ];
         return $this->render('frameworks/list.html.twig', $data);
     }
@@ -309,29 +317,33 @@ class FrameworksController extends AbstractController
         $query = filter_var($query, FILTER_SANITIZE_STRING);
         $statuses = $this->getAgreementFilterStatusArray($request);
 
-        // Map category slug to category db value
         $pillarName = FrameworkCategories::getDbValueBySlug($pillar);
         if ($pillarName === null) {
             $this->redirectToRoute('frameworks_list');
         }
 
         $this->searchApi->setCacheKey($request->getRequestUri());
-
-        // We are overriding the content model here
         $this->searchApi->getContentType()->setApiEndpoint('frameworks');
+
+        $RegulationAndType   = $this->getRegulationAndType($request);
+        $regulationFilter   = $RegulationAndType[0];
+        $typeFilter         = $RegulationAndType[1];
 
         try {
             $results = $this->searchApi->list($page, [
                 'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
                 'pillar' => $pillarName,
                 'limit' => 20,
-                'status' => $statuses
+                'status' => $statuses,
+                'regulation'        => $this->removeViewAllForAPI($regulationFilter),
+                'regulation_type'   => $this->removeViewAllForAPI($typeFilter)
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
 
         $data = [
+            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
             'query'         => $query,
             'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($query),
             'pillar'        => $pillarName,
@@ -340,7 +352,9 @@ class FrameworksController extends AbstractController
             'results'       => $results,
             'categories'    => FrameworkCategories::getAll(),
             'pillars'       => FrameworkCategories::getAllPillars(),
-            'statuses' => $statuses
+            'statuses'      => $statuses,
+            'regulation'    => $regulationFilter,
+            'regulationType' => $typeFilter,
         ];
         return $this->render('frameworks/list.html.twig', $data);
     }
@@ -374,8 +388,6 @@ class FrameworksController extends AbstractController
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         $this->searchApi->setCacheKey($request->getRequestUri());
-
-        // We are overriding the content model here
         $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
@@ -387,19 +399,26 @@ class FrameworksController extends AbstractController
         $categoryName = $this-> getPillarOrCategoryName($request, 'category');
         $pillarName = $this-> getPillarOrCategoryName($request, 'pillar');
 
+        $RegulationAndType   = $this->getRegulationAndType($request);
+        $regulationFilter   = $RegulationAndType[0];
+        $typeFilter         = $RegulationAndType[1];
+
         try {
             $results = $this->searchApi->list($page, [
                 'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
                 'limit'     => $limit,
                 'category'  => $categoryName ?? null,
                 'pillar'    => $pillarName ?? null,
-                'status'    => $statuses
+                'status'    => $statuses,
+                'regulation'        => $this->removeViewAllForAPI($regulationFilter),
+                'regulation_type'   => $this->removeViewAllForAPI($typeFilter)
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
 
         $data = [
+            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
             'query'         => $query,
             'pagination'    => $results->getPagination(),
             'results'       => $results,
@@ -410,7 +429,9 @@ class FrameworksController extends AbstractController
             'pillar'        => (!empty($pillarName) ? $pillarName : null),
             'pillar_slug'   => (!empty($pillar) ? $pillar : null),
             'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($orginalSearch),
-            'statuses'      => $statuses
+            'statuses'      => $statuses,
+            'regulation'    => $regulationFilter,
+            'regulationType' => $typeFilter,
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
@@ -702,5 +723,48 @@ class FrameworksController extends AbstractController
     private function getAgreementFilterStatusArray(Request $request)
     {
         return (array) $request->query->get('statuses', ["live"]);
+    }
+
+    private function getRegulationAndType(Request $request)
+    {
+        $notAllowRegulation = array();
+        $regulationFilter   = (array) $request->query->get("regulation", []);
+        $typeFilter         = (array) $request->query->get("regulationType", []);
+        $maxTypeFilterCount = 0;
+
+        $regulationAndType = array(
+            "PA2023"    => array("Closed Framework", "Dynamic Market", "Open Framework"),
+            "PCR2015"   => array("Dynamic Purchasing System", "PCR15 Framework"),
+            "PCR2006"   => array("PCR06 Framework"),
+        );
+
+        if (count($regulationFilter) == 3 || count($regulationFilter) == 0 || in_array('allRegulation', $regulationFilter)) {
+            $regulationFilter =  ['allRegulation'];
+        }
+
+        foreach ($regulationAndType as $eachRegulation => $data) {
+            if (!in_array($eachRegulation, $regulationFilter)) {
+                $notAllowRegulation = array_merge($notAllowRegulation, $data);
+            } else {
+                $maxTypeFilterCount += sizeof($data);
+            }
+        }
+
+        if (sizeof($notAllowRegulation) != 6) {
+            $typeFilter = ControllerHelper::removeFromArray($typeFilter, $notAllowRegulation);
+        }
+
+        if (count($typeFilter) == $maxTypeFilterCount || count($typeFilter) == 0 || in_array('allType', $typeFilter)) {
+            $typeFilter =  ['allType'];
+        }
+        return [$regulationFilter, $typeFilter];
+    }
+
+    private function removeViewAllForAPI(array $arrayToRemove)
+    {
+
+        $arrayToRemove = ControllerHelper::removeFromArray($arrayToRemove, ["allRegulation","allType", "true"]);
+
+        return !$arrayToRemove ? null : $arrayToRemove;
     }
 }
