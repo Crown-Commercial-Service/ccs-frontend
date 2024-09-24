@@ -463,6 +463,13 @@
                                         <li> <strong>End Date:</strong> {{ item.content.end_date.format('d/m/Y') }} </li>
                                     {% endif %}
 
+                                    {% if tpp_feature_toggle == true %}
+                                        {% if item.content.regulation is not null %}
+                                        <li> <strong>Regulation:</strong> {{ item.content.regulation }} </li>
+                                        {% else %}
+                                            <li> <strong>Regulation:</strong></li>
+                                        {% endif %}
+                                    {% endif %}
                                 </ul>
                                 <p class="govuk-body-s">{{ item.content.summary | striptags | raw }}</p>
                             </li>
