@@ -727,20 +727,27 @@ class FrameworksController extends AbstractController
 
     private function getRegulationAndType(Request $request)
     {
-        $notAllowRegulation = array();
         $regulationFilter   = (array) $request->query->get("regulation", []);
         $typeFilter         = (array) $request->query->get("regulationType", []);
-        $maxTypeFilterCount = 0;
 
+        if (count($regulationFilter) == 3 || count($regulationFilter) == 0 || in_array('allRegulation', $regulationFilter)) {
+            $regulationFilter =  ['allRegulation'];
+        }
+
+        $typeFilter = $this->removeTypeFromRegulation($regulationFilter, $typeFilter);
+
+        return [$regulationFilter, $typeFilter];
+    }
+
+    private function removeTypeFromRegulation($regulationFilter, $typeFilter)
+    {
+        $maxTypeFilterCount = 0;
+        $notAllowRegulation = array();
         $regulationAndType = array(
             "PA2023"    => array("Closed Framework", "Dynamic Market", "Open Framework"),
             "PCR2015"   => array("Dynamic Purchasing System", "PCR15 Framework"),
             "PCR2006"   => array("PCR06 Framework"),
         );
-
-        if (count($regulationFilter) == 3 || count($regulationFilter) == 0 || in_array('allRegulation', $regulationFilter)) {
-            $regulationFilter =  ['allRegulation'];
-        }
 
         foreach ($regulationAndType as $eachRegulation => $data) {
             if (!in_array($eachRegulation, $regulationFilter)) {
@@ -757,7 +764,8 @@ class FrameworksController extends AbstractController
         if (count($typeFilter) == $maxTypeFilterCount || count($typeFilter) == 0 || in_array('allType', $typeFilter)) {
             $typeFilter =  ['allType'];
         }
-        return [$regulationFilter, $typeFilter];
+
+        return $typeFilter;
     }
 
     private function removeViewAllForAPI(array $arrayToRemove)
