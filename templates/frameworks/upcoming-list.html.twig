@@ -567,14 +567,14 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
         // feature toggle
          if (document.getElementById("dps") != null) {
             if (numSelected == 5 || numSelected == 0) {
-            resetFilterUpcoming(filterAgreementTypeCheckboxes);
-            viewAllType.checked = true;
-            toggleAllType();
+            resetFilterUpcoming(filterCheckboxes);
+            viewAll.checked = true;
+            toggleAll();
             numSelected = 1;
             }   
         }   else if (numSelected == 4 || numSelected == 0) {
-            resetFilterUpcoming(filterAgreementTypeCheckboxes);
-            viewAllType.checked = true;
+            resetFilterUpcoming(filterCheckboxes);
+            viewAll.checked = true;
             toggleAll();
             numSelected = 1;
         }   
@@ -593,6 +593,10 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
             Object.keys(upcomingAgreements).forEach(function(agreement) {
                 upcomingAgreements[agreement].style.display = "block";
             });
+
+            if (viewAllType.checked) {
+                toggleAllType();
+            }
 
             numSelectedElem.innerHTML = 1;
         } else {
