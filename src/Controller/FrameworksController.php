@@ -742,7 +742,7 @@ class FrameworksController extends AbstractController
 
     private function removeTypeFromRegulation($regulationFilter, $typeFilter)
     {
-        $maxTypeFilterCount = 0;
+        $maxTypeFilterCount = 6;
         $notAllowRegulation = array();
         $regulationAndType = array(
             "PA2023"    => array("Closed Framework", "Dynamic Market", "Open Framework"),
