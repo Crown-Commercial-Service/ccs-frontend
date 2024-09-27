@@ -163,6 +163,20 @@ class ApiController extends AbstractController
                 case 'category':
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
                     break;
+                case 'regulation':
+                    if (!is_array($param)) {
+                        $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    } else {
+                        $filtered[$name] = filter_var_array($param);
+                    }
+                    break;
+                case 'regulation_type':
+                    if (!is_array($param)) {
+                        $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    } else {
+                        $filtered[$name] = filter_var_array($param);
+                    }
+                    break;
             }
         }
         return $filtered;

@@ -128,4 +128,14 @@ class ControllerHelper
         }
         return null;
     }
+
+    public static function removeFromArray(array $arrayToRemove, array $valuesToRemove)
+    {
+        foreach ($arrayToRemove as $key => $value) {
+            if (in_array($value, $valuesToRemove)) {
+                unset($arrayToRemove[$key]);
+            }
+        }
+        return $arrayToRemove;
+    }
 }
