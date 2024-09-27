@@ -82,7 +82,7 @@
                             <div class="govuk-accordion__section-header">
                                 <h2 class="govuk-accordion__section-heading">
                                     <div type="button" aria-controls="accordion-with-summary-sections-content-1" class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" aria-expanded="true" aria-label="Filter by agreement status , Hide this section">
-                                    <span class="govuk-accordion__section-heading-text" id="accordion-with-summary-sections-heading-3">
+                                    <span class="govuk-accordion__section-heading-text" id="accordion-with-summary-sections-heading-2">
                                         <span class="govuk-accordion__section-heading-text-focus"> Filter by agreement status </span>
                                     </span>
                                     <span class="govuk-visually-hidden govuk-accordion__section-heading-divider"> </span>
@@ -92,7 +92,7 @@
                                 <span class="govuk-body-s"><span class="upcoming-num-selected">1</span> selected</span>
                             </div>
 
-                            <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3" role="region">
+                            <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2" role="region">
                                 <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                     <input onchange="toggleAll()" class="govuk-checkboxes__input govuk-checkboxes__input--small view-all-checkbox" id="all" name="statuses[]" type="checkbox" value="all" checked>
                                     <label class="govuk-label govuk-checkboxes__label" for="all"> View All </label>
@@ -113,14 +113,69 @@
                                     <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="recently-awarded" name="statuses[]" type="checkbox" value="awarded">
                                     <label class="govuk-label govuk-checkboxes__label" for="recently-awarded"> Recently awarded </label>
                                 </div>
-                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                    <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="dps" name="statuses[]" type="checkbox" value="dps">
-                                    <label class="govuk-label govuk-checkboxes__label" for="dps"> Dynamic purchase system </label>
-                                </div>
+                                {% if tpp_feature_toggle == false %}
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="dps" name="statuses[]" type="checkbox" value="dps">
+                                        <label class="govuk-label govuk-checkboxes__label" for="dps"> Dynamic purchase system </label>
+                                    </div>
+                                {% endif %}
 
                             </div>
                         </div>
                     </div>
+                    {% if tpp_feature_toggle == true %}
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
+                            <div class="govuk-accordion__controls">
+                                <button type="button" class="govuk-accordion__show-all" aria-expanded="true">
+                                    <span class="govuk-accordion-nav__chevron"></span>
+                                    <span class="govuk-accordion__show-all-text">Hide all sections</span>
+                                </button>
+                            </div>
+
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <div type="button" aria-controls="accordion-with-summary-sections-content-2" class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" aria-expanded="true" aria-label="Filter by agreement status , Hide this section">
+                                        <span class="govuk-accordion__section-heading-text" id="accordion-with-summary-sections-heading-3">
+                                            <span class="govuk-accordion__section-heading-text-focus"> Agreement type </span>
+                                        </span>
+                                        <span class="govuk-visually-hidden govuk-accordion__section-heading-divider"> </span>
+                                        </div>
+                                    </h2>
+                                    
+                                    <span class="govuk-body-s"><span class="upcoming-num-selected-type">1</span> selected</span>
+                                </div>
+
+                                <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3" role="region">
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onchange="toggleAllType()" class="govuk-checkboxes__input govuk-checkboxes__input--small view-all-up-type-checkbox" id="all-up-agreement-type" name="statuses[]" type="checkbox" value="all" checked>
+                                        <label class="govuk-label govuk-checkboxes__label" for="all"> View All </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onchange="toggleAgreementType()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-dps" name="statuses[]" type="checkbox" value="Dynamic Purchasing System">
+                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-dps">Dynamic Purchasing System</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onchange="toggleAgreementType()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-dynamic-market" name="statuses[]" type="checkbox" value="Dynamic Market">
+                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-dynamic-market">Dynamic Market</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onchange="toggleAgreementType()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-open-framework" name="statuses[]" type="checkbox" value="Open Framework">
+                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-open-framework">Open Framework</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onchange="toggleAgreementType()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-closed-framework" name="statuses[]" type="checkbox" value="Closed Framework">
+                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-closed-framework">Closed Framework</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onchange="toggleAgreementType()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-pcr15" name="statuses[]" type="checkbox" value="PCR15 Framework">
+                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-pcr15">PCR15 Framework</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
 
                     {% include '/frameworks/_helpful_info.html.twig' with {'page': 'upcoming'} %}
 
@@ -149,7 +204,7 @@
                                 <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
 
                                     {% for upcoming_deal in future_pipeline %}                             
-                                            <li>
+                                            <li class="upcoming-result">
                                                 <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
                                                     <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
                                                 </p>
@@ -174,6 +229,10 @@
                                                         <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
                                                         {% else %}
                                                             <li> <strong>Regulation:</strong></li>
+                                                        {% endif %}
+
+                                                         {% if upcoming_deal.regulation_type is not null %}
+                                                        <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
                                                         {% endif %}
                                                     {% endif %}
                                                 </ul>
@@ -211,7 +270,7 @@
 
                                     {% for upcoming_deal in planned_pipeline %}
 
-                                    <li>
+                                    <li class="upcoming-result">
                                             <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
                                                 <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
                                             </p>
@@ -236,6 +295,10 @@
                                                     <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
                                                     {% else %}
                                                         <li> <strong>Regulation:</strong></li>
+                                                    {% endif %}
+
+                                                    {% if upcoming_deal.regulation_type is not null %}
+                                                        <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
                                                     {% endif %}
                                                 {% endif %}
                                             </ul>
@@ -280,7 +343,7 @@
                             <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
                                 {% for upcoming_deal in underway_pipeline %}
 
-                                    <li>
+                                    <li class="upcoming-result">
                                         <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
                                             <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
                                         </p>
@@ -306,6 +369,10 @@
                                                 {% else %}
                                                     <li> <strong>Regulation:</strong></li>
                                                 {% endif %}
+
+                                                {% if upcoming_deal.regulation_type is not null %}
+                                                    <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
+                                                 {% endif %}
                                             {% endif %}
                                         </ul>
                                         <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
@@ -340,7 +407,7 @@
                                 {% endif %}
                                 <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
                                     {% for upcoming_deal in awarded_pipeline %}
-                                        <li>
+                                        <li class="upcoming-result">
                                             <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
                                                 <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
                                             </p>
@@ -365,6 +432,10 @@
                                                     <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
                                                     {% else %}
                                                         <li> <strong>Regulation:</strong></li>
+                                                    {% endif %}
+
+                                                    {% if upcoming_deal.regulation_type is not null %}
+                                                        <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
                                                     {% endif %}
                                                 {% endif %}
                                             </ul>
@@ -402,7 +473,7 @@
                                 <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
                                     {% for upcoming_deal in dynamic_purchasing_systems %}
 
-                                         <li>
+                                         <li class="upcoming-result">
                                             <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
                                                 <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
                                             </p>
@@ -424,9 +495,13 @@
 
                                                 {% if tpp_feature_toggle == true %}
                                                     {% if upcoming_deal.regulation is not null %}
-                                                    <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
+                                                    <li> <strong>Regulation:</strong>{{ upcoming_deal.regulation }}</li>
                                                     {% else %}
                                                         <li> <strong>Regulation:</strong></li>
+                                                    {% endif %}
+
+                                                    {% if upcoming_deal.regulation_type is not null %}
+                                                        <li class="upcoming_regulation_type" style="display: none"> {{ upcoming_deal.regulation_type }} </li>
                                                     {% endif %}
                                                 {% endif %}
                                             </ul>
@@ -455,8 +530,13 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
 
 // filter upcoming agreement
     var numSelectedElem = document.querySelector(".upcoming-num-selected");
+    var numSelectedType = document.querySelector(".upcoming-num-selected-type");
     var viewAll = document.querySelector(".view-all-checkbox");
+    var viewAllType = document.querySelector(".view-all-up-type-checkbox")
     var filterCheckboxes = document.getElementsByClassName("upcoming-agreement-filter");
+    var filterAgreementTypeCheckboxes = document.getElementsByClassName("upcoming-agreement-type-filter");
+    var upcomingResults = document.getElementsByClassName("upcoming-result");
+    var upcomingResultsType = document.getElementsByClassName("upcoming_regulation_type");
     
     var upcomingAgreements = {
         "future" :  document.querySelector(".future"),
@@ -482,11 +562,24 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
             
         }
 
-        if (numSelected == 5 || numSelected == 0) {
-            resetFilterUpcoming();
+        toggleAgreement(upcomingAgreements["dps"], false);
+
+        // feature toggle
+         if (document.getElementById("dps") != null) {
+            if (numSelected == 5 || numSelected == 0) {
+            resetFilterUpcoming(filterCheckboxes);
+            viewAll.checked = true;
             toggleAll();
             numSelected = 1;
-        } 
+            }   
+        }   else if (numSelected == 4 || numSelected == 0) {
+            resetFilterUpcoming(filterCheckboxes);
+            viewAll.checked = true;
+            toggleAll();
+            numSelected = 1;
+        }   
+
+   
 
         numSelectedElem.innerHTML = numSelected;
     }
@@ -500,6 +593,10 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
             Object.keys(upcomingAgreements).forEach(function(agreement) {
                 upcomingAgreements[agreement].style.display = "block";
             });
+
+            if (viewAllType.checked) {
+                toggleAllType();
+            }
 
             numSelectedElem.innerHTML = 1;
         } else {
@@ -518,14 +615,66 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
         }
     }
 
-    function resetFilterUpcoming () {
-         for(var checkbox of filterCheckboxes) {
+    function resetFilterUpcoming (filter) {
+         for(var checkbox of filter) {
             if (checkbox.checked) {
                 checkbox.checked = false;
             }  
         }
+    }
 
-        viewAll.checked = true;
+    function toggleAgreementType() {
+        var numSelected = 0;
+
+        for(var checkbox of filterAgreementTypeCheckboxes) {
+            if (checkbox.checked) {
+                numSelected++;
+                viewAllType.checked = false;
+                toggleAllType();
+                toggleAgreementResult(checkbox.value, true)
+            } else {
+                toggleAgreementResult(checkbox.value, false)
+            }  
+        }
+
+        if (upcomingAgreements["dps"] !== null) {
+            if (numSelected == 5 || numSelected == 0) {
+            resetFilterUpcoming(filterAgreementTypeCheckboxes);
+            viewAllType.checked = true;
+            toggleAllType();
+            numSelected = 1;
+            }   
+        }
+       
+
+        numSelectedType.innerHTML = numSelected;
+    }
+
+    function toggleAgreementResult(checkboxVal, show) {
+        for (var result of upcomingResults) {
+           var agreementType = result.querySelector(".upcoming_regulation_type");
+                if (agreementType != null) {
+                     if (agreementType.innerText.trim() == checkboxVal.trim()) {
+                        toggleAgreement(agreementType.closest(".upcoming-result"), show);
+                     }
+                } else {
+                    toggleAgreement(result, false);
+                }
+        }
+    }
+
+    function toggleAllType () {
+        if (viewAllType.checked) {
+            for(var checkbox of filterAgreementTypeCheckboxes) {
+                checkbox.checked = false;
+             }
+
+            for (var result of upcomingResults) {
+                toggleAgreement(result, true);
+            }
+
+            numSelectedType.innerHTML = 1;
+        } 
     }
 
 </script>
