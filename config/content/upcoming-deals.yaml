@@ -51,6 +51,8 @@ awarded_pipeline:
       type: text
     regulation:
       type: text
+    regulation_type:
+      type: text
     document_updates:
       type: richtext
     upcoming_deal_summary:
@@ -94,6 +96,8 @@ underway_pipeline:
     published_status:
       type: text
     regulation:
+      type: text
+    regulation_type:
       type: text
     document_updates:
       type: richtext
@@ -139,6 +143,8 @@ dynamic_purchasing_systems:
       type: text
     regulation:
       type: text
+    regulation_type:
+      type: text
     document_updates:
       type: richtext
     upcoming_deal_summary:
@@ -183,6 +189,8 @@ planned_pipeline:
       type: text
     regulation:
       type: text
+    regulation_type:
+      type: text
     document_updates:
       type: richtext
     upcoming_deal_summary:
@@ -226,6 +234,8 @@ future_pipeline:
     published_status:
       type: text
     regulation:
+      type: text
+    regulation_type:
       type: text
     document_updates:
       type: richtext
