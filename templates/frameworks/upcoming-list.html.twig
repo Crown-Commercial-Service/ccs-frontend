@@ -651,9 +651,14 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
     }
 
     function toggleAgreementResult(checkboxVal, show) {
-        for (var agreementType of upcomingResultsType) {
-                if (agreementType.innerText == checkboxVal ) {
-                toggleAgreement(agreementType.closest(".upcoming-result"), show);
+        for (var result of upcomingResults) {
+           var agreementType = result.querySelector(".upcoming_regulation_type");
+                if (agreementType != null) {
+                     if (agreementType.innerText.trim() == checkboxVal.trim()) {
+                        toggleAgreement(agreementType.closest(".upcoming-result"), show);
+                     }
+                } else {
+                    toggleAgreement(result, false);
                 }
         }
     }
@@ -669,12 +674,7 @@ pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
             }
 
             numSelectedType.innerHTML = 1;
-
-        } else {
-            for (var result of upcomingResults) {
-                toggleAgreement(result, false);
-            }
-        }
+        } 
     }
 
 </script>
