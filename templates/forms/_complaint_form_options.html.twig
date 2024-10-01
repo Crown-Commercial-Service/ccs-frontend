@@ -1,3 +1,5 @@
+<h2 class="govuk-heading-m govuk-visually-hidden" id="complaintTitle">Tell us about your complaint</h2>
+
 <div class="govuk-form-group {{formErrors.customerTypeErr is defined and formErrors.customerTypeErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
     <fieldset class="govuk-fieldset" aria-describedby="typeOfCustomer">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
@@ -78,3 +80,11 @@
         </div>
     </fieldset>
 </div>
+
+ {# <div id="complaintHint" class="govuk-hint govuk-visually-hidden">Do not include: 
+                                    <ul>
+                                        <li>personal or financial details, like your credit card details</li>
+                                        <li>any data that could potentially identify a specific individual, such as names</li>
+                                    </ul>
+                                     document.getElementById("subject").value = "Website - Complaint";
+</div> #}
