@@ -43,10 +43,11 @@
                     <h1 class="govuk-heading-xl page-title">Complaint form</h1>
                     <p class="govuk-body-l">You can use the contact form below to ask a question, give us feedback or make a complaint.</p>
 
-                    <form class="govuk-!-width-three-quarters pardot-submit" action="/contact/submit" method="POST" novalidate data-evt-type='contact_form' {{ formErrors is defined ? "data-evt-state='error'" }} enctype="multipart/form-data">
+                    <form class="govuk-!-width-three-quarters pardot-submit" action="/contact/complaint/submit" method="POST" novalidate data-evt-type='contact_form' {{ formErrors is defined ? "data-evt-state='error'" }} enctype="multipart/form-data">
 
                         <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Website - Complaint" />
                         <input type="hidden" name="00N4L000009OPAj" id="referrer" name="referrer" value="{{ referrer }}">
+                        <input type="hidden" name="origin" value="Website - Complaint">
                         {% if app.debug %}
                             <input type="hidden" name="debug" value=1>
                             <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
@@ -308,6 +309,42 @@
                     </div>
                     
                     {% include 'forms/dataLayer_component/_form_start_form_error.html.twig' with {'formName': "Complaint Form" } %}
+                    <script>
+
+                        const originCheckboxes              = document.getElementsByName("origin")[0];
+                        const customerTypeCheckboxes        = document.getElementsByName("customerType");
+                        const contactWayCheckboxes          = document.getElementsByName("contactWay");
+                        const formSubmitButton              = document.getElementById("submit");
+
+                        dataCollectionFieldForSalesforce = document.getElementById("salesforce-textarea");
+
+                        formSubmitButton.addEventListener('click', function handler (e) {
+
+                            dataCollectionFieldForSalesforce.value = "";
+
+                            const fieldMoreDetail = document.getElementById("more-detail");
+                            var calledbackOptionAddedToDataField = false;
+
+                            dataCollectionFieldForSalesforce.value += "origin: "originCheckboxes.value + ", ";
+                            dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(customerTypeCheckboxes);
+                            dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(contactWayCheckboxes);
+                            dataCollectionFieldForSalesforce.value += " " + fieldMoreDetail.name + ": " + fieldMoreDetail.value;
+
+                            this.removeEventListener('click', handler); 
+
+                        }, false);
+
+                         function prepareCheckboxOptionToSfField(checkboxesName){
+                           for (var i = 0, length = checkboxesName.length; i < length; i++) {
+                                if (checkboxesName[i].checked) {
+                                    return checkboxesName[i].name + ": " + checkboxesName[i].value + ", \n";
+                                }
+                            }
+                            return "";
+                        }
+
+                    </script>
+
 
                 </div>
 
