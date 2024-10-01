@@ -248,6 +248,24 @@ class FormController extends AbstractController
         }
     }
 
+    public function complaintForm(Request $request)
+    {
+        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+        $formType = $request->query->get('type', null);
+
+
+        $cscMessage = ControllerHelper::getCSCMessage();
+
+        $data = [
+            'referrer'      => $referrer,
+            'cscMessage'    => $cscMessage,
+            'formType'      => $formType,
+        ];
+
+        return $this->render('forms/complaint_form.html.twig', $data);
+    }
+
+
     public function newsletters(Request $request)
     {
         $params = $request->request;
