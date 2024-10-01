@@ -165,7 +165,7 @@ class FrameworksController extends AbstractController
 
         if (getenv('APP_API_BASE_URL') == 'prod' || getenv('APP_API_BASE_URL') == 'test') {
             return $this->render('frameworks/list.html.twig', $data);
-        }else{
+        } else {
             return $this->render('frameworks/list_with_vue.html.twig', $data);
         }
     }
