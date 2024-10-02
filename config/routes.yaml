@@ -185,13 +185,13 @@ form_contact_thanks:
     template: forms/23-contact-thanks.html.twig
 
 form_complaint:
-  path: contact/complaint
+  path: /complaint
   controller: App\Controller\FormController::complaintForm
   defaults:
    template: forms/complaint_form.html.twig
 
 form_complaint_sends:
-  path: contact/complaint/submit
+  path: /complaint/submit
   controller: App\Controller\FormController::complaintFormSubmit
 
 form_contact_thanks_complaint:
