@@ -248,6 +248,94 @@ class FormController extends AbstractController
         }
     }
 
+    public function complaintForm(Request $request)
+    {
+        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+        $formType = $request->query->get('type', null);
+
+
+        $cscMessage = ControllerHelper::getCSCMessage();
+
+        $data = [
+            'referrer'      => $referrer,
+            'cscMessage'    => $cscMessage,
+            'formType'      => $formType,
+        ];
+
+        return $this->render('forms/complaint_form.html.twig', $data);
+    }
+
+    public function complaintFormSubmit(Request $request)
+    {
+        $params = $request->request;
+
+        ControllerHelper::honeyPot($params->get('surname', null));
+
+        $formData = [
+            'enquiryType'           => $params->get('origin', null),
+            'name'                  => $params->get('name', null),
+            'email'                 => $params->get('email', null),
+            'phone'                 => $params->get('phone', null),
+            'company'               => $params->get('company', null),
+            'jobTitle'              => $params->get('00Nb0000009IXEs', null),
+            'moreDetail'            => $params->get('more-detail', null),
+            'callback'              => $params->get('00Nb0000009IXEg', null),
+            'contactedBefore'       => $params->get('contactedBefore', null),
+            'caseNumber'            => $params->get('00N4L000009vOyr', null),
+            'callbackTimeslot'      => $params->get('callbackTimeslot', null),
+            'callbackTimeslotForC'  => $params->get('callbackTimeslotForC', null),
+            'customerType'          => $params->get('customerType', null),
+            'contactWay'            => $params->get('contactWay', null),
+        ];
+
+        if (!empty($formData)) {
+            $formErrors = $this->validateContactCCS($formData);
+
+            if ($formErrors) {
+                $cscMessage = ControllerHelper::getCSCMessage();
+                return $this->render('forms/complaint_form.html.twig', [
+                    'referrer'              => $params->get('00N4L000009OPAj', null),
+                    'formErrors'            => $formErrors,
+                    'formData'              => $formData,
+                    'cscMessage'            => $cscMessage,
+                    'fileAttachedBefore'    => !(empty($formErrors["fileErr"]["errors"])) ? false : $this->fileAttached(),
+                ]);
+            } else {
+                $params->set('subject', 'Contact CCS');
+                $params->set('00Nb0000009IXEW', 'General-Enquiry');
+                $params->set('00NS90000025xmH', ControllerHelper::extractRmNumberFromReferrer($params->get('00N4L000009OPAj', null)));
+                $params->set('recordType', '012b00000005NWC');
+                $params->set('priority', 'Green');
+                $params->set('orgid', ControllerHelper::getOrgId());
+
+                if ($formData['callbackTimeslot'] != null) {
+                    $params->set('Call_Back_Preference__c', $formData['callbackTimeslot']);
+                } elseif ($formData['callbackTimeslotForC'] != null) {
+                    $params->set('Call_Back_Preference__c', $formData['callbackTimeslotForC']);
+                }
+
+                $attachmentID_filename = $this->sendToDocumentUpload();
+
+                if ($attachmentID_filename != null) {
+                    $params->set('00N4L000009vP2P', getenv('documentHanding_path') . $attachmentID_filename);
+                }
+
+                $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                    'query' => $params->all(),
+                ]);
+
+                if (!is_null($params->get('debug'))) {
+                    return new Response(
+                        $response->getContent()
+                    );
+                } else {
+                    return $this->redirectToRoute('form_contact_thanks_complaint');
+                }
+            }
+        }
+    }
+
+
     public function newsletters(Request $request)
     {
         $params = $request->request;

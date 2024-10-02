@@ -184,6 +184,16 @@ form_contact_thanks:
   defaults:
     template: forms/23-contact-thanks.html.twig
 
+form_complaint:
+  path: contact/complaint
+  controller: App\Controller\FormController::complaintForm
+  defaults:
+   template: forms/complaint_form.html.twig
+
+form_complaint_sends:
+  path: contact/complaint/submit
+  controller: App\Controller\FormController::complaintFormSubmit
+
 form_contact_thanks_complaint:
   path: /contact/thanks-complaint
   controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController

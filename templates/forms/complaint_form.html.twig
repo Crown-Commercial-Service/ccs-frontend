@@ -1,6 +1,7 @@
+
 {% extends 'base.html.twig' %}
 
-{% block title %} Contact Crown Commercial Services - CCS {% endblock %}
+{% block title %}Complaint Form - CCS{% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -10,14 +11,13 @@
 {% endblock %}
 
 {% block body %}
-
     <div class="govuk-width-container">
-
-        <div class="govuk-phase-banner">
+          <div class="govuk-phase-banner">
             {% include '/includes/phase-banner-content.html.twig' %}
-        </div>
+          </div>
 
-        <main id="main-content" role="main" class="govuk-main-wrapper">
+
+            <main id="main-content" role="main" class="govuk-main-wrapper">
 
             {% if formErrors is defined %}
                 <div class="govuk-error-summary govuk-grid-column-three-quarters" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
@@ -40,13 +40,14 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
 
-                    <h1 class="govuk-heading-xl page-title">Contact CCS</h1>
-                    <p class="govuk-body-l">You can use the contact form below to ask a question or give us feedback</p>
+                    <h1 class="govuk-heading-xl page-title">Complaint form</h1>
+                    <p class="govuk-body-l">You can use the contact form below make a complaint.</p>
 
-                    <form class="govuk-!-width-three-quarters pardot-submit" action="/contact/submit" method="POST" novalidate data-evt-type='contact_form' {{ formErrors is defined ? "data-evt-state='error'" }} enctype="multipart/form-data">
+                    <form class="govuk-!-width-three-quarters pardot-submit" action="/contact/complaint/submit" method="POST" novalidate data-evt-type='contact_form' {{ formErrors is defined ? "data-evt-state='error'" }} enctype="multipart/form-data">
 
-                        <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Website - Question" />
+                        <input type="hidden" id="subject" maxlength="80" name="subject" size="20" value="Website - Complaint" />
                         <input type="hidden" name="00N4L000009OPAj" id="referrer" name="referrer" value="{{ referrer }}">
+                        <input type="hidden" name="origin" value="Website - Complaint">
                         {% if app.debug %}
                             <input type="hidden" name="debug" value=1>
                             <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
@@ -54,25 +55,6 @@
 
                         <label hidden class="visuallyhidden" aria-hidden="true" for="surname">dummy hidden label</label>
                         <input type="checkbox" id="surname" name="surname" value="1" style="display:none !important" tabindex="-1" autocomplete="off">
-
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" aria-describedby="typeOfEnquiry">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                    <h2 class="govuk-fieldset__heading" id="typeOfEnquiry">Type of enquiry</h2>
-                                </legend>
-                                <div id="how-contacted-conditional-hint" class="govuk-hint">Select one option.</div>
-                                <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="origin" type="radio" value="Website - Question" checked="">
-                                        <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-1">Ask a question</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-2" name="origin" type="radio" value="Website - Feedback" {{formData.enquiryType is defined and formData.enquiryType == "Website - Feedback" ? 'checked' }}>
-                                        <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">Feedback</label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
 
                         {% set nameError = formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 %}
                         <div id="">
@@ -136,9 +118,7 @@
                             </div>
 
                             <div class="govuk-form-group {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
-                                <label class="govuk-label" for="phone" id="phone-label"> 
-                                    {{ formData.callback is defined and formData.callback == true ? 'Telephone number' : 'Telephone number (optional)' }}
-                                </label>
+                                <label class="govuk-label" for="phone" id="phone-label"> Telephone number</label>
 
                                 {% if formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 %}
                                     {% for error in formErrors.phoneErr.errors %}
@@ -151,46 +131,90 @@
                                 <input class="govuk-input {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="phone" maxlength="20" name="phone" size="20" type="text" value="{{formErrors is defined ? formData.phone}}" autocomplete="tel" required/>
                             </div>
 
-                            <div class="govuk-form-group" id="callbackOptions">
-                                <fieldset class="govuk-fieldset" aria-describedby="callback">
+                            <div class="govuk-form-group {{formErrors.customerTypeErr is defined and formErrors.customerTypeErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                <fieldset class="govuk-fieldset" aria-describedby="typeOfCustomer">
                                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                        <h2 class="govuk-fieldset__heading" id="callback">Do you need a callback? (optional)</h2>
+                                        <h2 class="govuk-fieldset__heading" id="typeOfCustomer">Are you a buyer or supplier?</h2>
                                     </legend>
+                                    {% if formErrors.customerTypeErr is defined and formErrors.customerTypeErr.errors|length > 0 %}
+                                        {% for error in formErrors.customerTypeErr.errors %}
+                                            <span id="phone-error" class="govuk-error-message">
+                                                <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                            </span>
+                                        {% endfor %}                           
+                                    {% endif %}
+                                    <div id="customer-type-conditional-hint" class="govuk-hint">Select one option.</div>
                                     <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="callback-1" name="00Nb0000009IXEg" type="radio" value="Yes" data-aria-controls="conditional-callback-1" aria-expanded="true" role="region" {{formData.callback is defined and formData.callback == 'Yes' ? 'checked' }}>
-                                            <label class="govuk-label govuk-radios__label" for="callback-1">Yes</label>
+                                            <input class="govuk-radios__input" id="customer-type-conditional-1" name="customerType" type="radio" value="Buyer" {{formData.customerType is defined and formData.customerType == "Buyer" ? 'checked' }}>
+                                            <label class="govuk-label govuk-radios__label" for="customer-type-conditional-1">Buyer</label>
                                         </div>
-                                        <div class="govuk-radios__conditional" id="conditional-callback-1">
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="customer-type-conditional-2" name="customerType" type="radio" value="Supplier" {{formData.customerType is defined and formData.customerType == "Email" ? 'checked' }}>
+                                            <label class="govuk-label govuk-radios__label" for="customer-type-conditional-2">Supplier</label>
+                                        </div>
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="customer-type-conditional-3" name="customerType" type="radio" value="Both"  {{formData.customerType is defined and formData.customerType == "Both" ? 'checked' }}>
+                                            <label class="govuk-label govuk-radios__label" for="customer-type-conditional-3">Both</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="govuk-form-group {{formErrors.contactWayErr is defined and formErrors.contactWayErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                <fieldset class="govuk-fieldset" aria-describedby="contactWay">
+                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                        <h2 class="govuk-fieldset__heading" id="contactWay">How should we contact you?</h2>
+                                    </legend>
+                                    {% if formErrors.contactWayErr is defined and formErrors.contactWayErr.errors|length > 0 %}
+                                        {% for error in formErrors.contactWayErr.errors %}
+                                            <span id="phone-error" class="govuk-error-message">
+                                                <span class="govuk-visually-hidden">Error:</span>{{error}}
+                                            </span>
+                                        {% endfor %}                           
+                                    {% endif %}
+                                    <div id="contact-way-conditional-hint" class="govuk-hint">Select one option.</div>
+                                    <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="contact-way-conditional-1" name="contactWay" type="radio" value="Phone" role="region" data-aria-controls="conditional-contact-way-conditional-1" {{formData.contactWay is defined and formData.contactWay == "Phone" ? 'checked' }}>
+                                            <label class="govuk-label govuk-radios__label" for="contact-way-conditional-1">Phone</label>
+                                        </div>
+                                        <div class="govuk-radios__conditional" id="conditional-contact-way-conditional-1">
+                                            <p>When should we contact you?</p>
                                             <div class="govuk-form-group">
                                                 <fieldset class="govuk-fieldset">
                                                     <div class="govuk-radios" data-module="govuk-radios">
                                                         <div class="govuk-radios__item">
-                                                            <input class="govuk-radios__input" id="callbackTimeslot-1" name="callbackTimeslot" type="radio" value="Between 9am to 12pm" {{formData.callbackTimeslot is defined and formData.callbackTimeslot == "Between 9am to 12pm" ? 'checked' }}>
-                                                            <label class="govuk-label govuk-radios__label" for="callbackTimeslot-1">Between 9am to 12pm</label>
+                                                            <input class="govuk-radios__input" id="callbackTimeslotForC-1" name="callbackTimeslotForC" type="radio" value="Between 9am to 12pm" {{formData.callbackTimeslotForC is defined and formData.callbackTimeslotForC == "Between 9am to 12pm" ? 'checked' }}>
+                                                            <label class="govuk-label govuk-radios__label" for="callbackTimeslotForC-1">Between 9am to 12pm</label>
                                                         </div>
                                                         <div class="govuk-radios__item">
-                                                            <input class="govuk-radios__input" id="callbackTimeslot-2" name="callbackTimeslot" type="radio" value="Between 2pm to 5pm" {{formData.callbackTimeslot is defined and formData.callbackTimeslot == "Between 2pm to 5pm" ? 'checked' }}>
-                                                            <label class="govuk-label govuk-radios__label" for="callbackTimeslot-2">Between 2pm to 5pm</label>
+                                                            <input class="govuk-radios__input" id="callbackTimeslotForC-2" name="callbackTimeslotForC" type="radio" value="Between 2pm to 5pm" {{formData.callbackTimeslotForC is defined and formData.callbackTimeslotForC == "Between 2pm to 5pm" ? 'checked' }}>
+                                                            <label class="govuk-label govuk-radios__label" for="callbackTimeslotForC-2">Between 2pm to 5pm</label>
                                                         </div>
                                                         <div class="govuk-radios__item">
-                                                            <input class="govuk-radios__input" id="callbackTimeslot-3" name="callbackTimeslot" type="radio" value="No preference" {{formData.callbackTimeslot is defined and formData.callbackTimeslot == "No preference" ? 'checked' }}>
-                                                            <label class="govuk-label govuk-radios__label" for="callbackTimeslot-3">No preference</label>
+                                                            <input class="govuk-radios__input" id="callbackTimeslotForC-3" name="callbackTimeslotForC" type="radio" value="No preference" {{formData.callbackTimeslotForC is defined and formData.callbackTimeslotForC == "No preference" ? 'checked' }}>
+                                                            <label class="govuk-label govuk-radios__label" for="callbackTimeslotForC-3">No preference</label>
                                                         </div>
                                                     </div>
                                                 </fieldset>
                                             </div>
                                         </div>
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="callback-2" name="00Nb0000009IXEg" type="radio" value="No" {{formData.callback is defined and formData.callback == 'No' ? 'checked' }}>
-                                            <label class="govuk-label govuk-radios__label" for="callback-2">No</label>
+                                            <input class="govuk-radios__input" id="contact-way-conditional-2" name="contactWay" type="radio" value="Email"  {{formData.contactWay is defined and formData.contactWay == "Email" ? 'checked' }}>
+                                            <label class="govuk-label govuk-radios__label" for="contact-way-conditional-2">Email</label>
+                                        </div>
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="contact-way-conditional-3" name="contactWay" type="radio" value="No preference" {{formData.contactWay is defined and formData.contactWay == "No preference" ? 'checked' }}>
+                                            <label class="govuk-label govuk-radios__label" for="contact-way-conditional-3">No preference</label>
                                         </div>
                                     </div>
                                 </fieldset>
                             </div>
 
                             <div class="govuk-form-group {{formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
-                                <label id="more-detail-label" class="govuk-label" for="more-detail">Provide more details</label>
+                                <label id="more-detail-label" class="govuk-label govuk-visually-hidden" for="more-detail">Provide more details</label>
+                                <h2 class="govuk-heading-m" id="complaintTitle">Tell us about your complaint</h2>
 
                                 {% if formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 %}
                                     {% for error in formErrors.moreDetailErr.errors %}
@@ -199,9 +223,12 @@
                                         </span>
                                     {% endfor %}                      
                                 {% endif %}
-
-                                <div id="more-detail-hint" class="govuk-hint">Tell us more about your question or describe the problem you are having. Include specific details such as the agreement RM number (RMXXXX) or the name of the digital platform you are using. 
-                                        <br /><br />Do not include personal or financial information, like your credit card details.</div>
+                                <div id="complaintHint" class="govuk-hint">Do not include: 
+                                    <ul>
+                                        <li>personal or financial details, like your credit card details</li>
+                                        <li>any data that could potentially identify a specific individual, such as names</li>
+                                    </ul>
+                                </div>
                                 <textarea maxlength="3000" class="govuk-textarea" style="margin-bottom: 0px; {{formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 ? 'border: 4px solid #b10e1e' : null }}" id="more-detail" name="more-detail" rows="10" aria-describedby="more-detail-hint" required>{{formErrors is defined ? formData.moreDetail}}</textarea>
                                 <p class="govuk-hint">You can enter up to 3000 characters</p>
                             </div>
@@ -281,39 +308,15 @@
                         <p>{{cscMessage | raw}}</p>
                     </div>
                     
-                    {% include 'forms/dataLayer_component/_form_start_form_error.html.twig' with {'formName': "Contact CCS" } %}
-
+                    {% include 'forms/dataLayer_component/_form_start_form_error.html.twig' with {'formName': "Complaint Form" } %}
                     <script>
 
-                        const originCheckboxes              = document.getElementsByName("origin");
+                        const originCheckboxes              = document.getElementsByName("origin")[0];
                         const customerTypeCheckboxes        = document.getElementsByName("customerType");
                         const contactWayCheckboxes          = document.getElementsByName("contactWay");
                         const formSubmitButton              = document.getElementById("submit");
 
                         dataCollectionFieldForSalesforce = document.getElementById("salesforce-textarea");
-
-
-                        document.querySelectorAll('input[name="00Nb0000009IXEg"]').forEach((option) => {
-                            option.addEventListener("change", function(event) {
-                                if (event.target.value == "Yes"){
-                                    setPhoneTextOptional(false);
-                                } else 
-                                    setPhoneTextOptional(true);
-                            });
-                        });
-
-                        document.querySelectorAll('input[name="origin"]').forEach((option) => {
-                            option.addEventListener("change", function(event) {
-                                switch(event.target.value) {
-                                    case 'Website - Feedback':
-                                        toggleComplaintForm(false);
-                                        document.getElementById("subject").value = "Website - Feedback";
-                                        break;
-                                    default:
-                                        toggleComplaintForm(false);
-                                        document.getElementById("subject").value = "Website - Question";
-                                }
-                        });});
 
                         formSubmitButton.addEventListener('click', function handler (e) {
 
@@ -322,7 +325,7 @@
                             const fieldMoreDetail = document.getElementById("more-detail");
                             var calledbackOptionAddedToDataField = false;
 
-                            dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(originCheckboxes);
+                            dataCollectionFieldForSalesforce.value += "origin: "originCheckboxes.value + ", ";
                             dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(customerTypeCheckboxes);
                             dataCollectionFieldForSalesforce.value += prepareCheckboxOptionToSfField(contactWayCheckboxes);
                             dataCollectionFieldForSalesforce.value += " " + fieldMoreDetail.name + ": " + fieldMoreDetail.value;
@@ -331,18 +334,7 @@
 
                         }, false);
 
-                        function setPhoneTextOptional(toggle){
-                            if(toggle){
-                                document.getElementById("phone-label").textContent = "Telephone number (optional)";
-                            }else{
-                                document.getElementById("phone-label").textContent = "Telephone number";
-                            }
-                            if (document.getElementById("callback-1").checked){
-                                document.getElementById("phone-label").textContent = "Telephone number";
-                            }
-                            
-                        }
-                        function prepareCheckboxOptionToSfField(checkboxesName){
+                         function prepareCheckboxOptionToSfField(checkboxesName){
                            for (var i = 0, length = checkboxesName.length; i < length; i++) {
                                 if (checkboxesName[i].checked) {
                                     return checkboxesName[i].name + ": " + checkboxesName[i].value + ", \n";
@@ -351,13 +343,8 @@
                             return "";
                         }
 
-                        window.onload = function() {
-                            if (document.getElementById("how-contacted-conditional-3").checked) {
-                                toggleComplaintForm(true);
-                            }
-                        };
-
                     </script>
+
 
                 </div>
 
@@ -365,12 +352,6 @@
                     <aside class="aside">
                     
                         {% include '/libraries/_helpful_links.html.twig' %}
-
-                        <div class="apollo-enclosure">
-                            <h2 class="aside__heading">Make a complaint</h2>
-                            <p>We're sorry you are unhappy with the service you have received from us. Let us know what went wrong so we can try to fix the problem.</a>.</p>
-                            <p><a href="contact/complaint">I want to make a complaint</a></p>
-                        </div>
 
                         <div class="apollo-enclosure">
                             <h2 class="aside__heading">Do you need help requesting agreement pricing?</h2>
@@ -383,10 +364,5 @@
             </div>
         </main>
     </div>
-
-{% endblock %}
-
-{% block nonblocking_javascript %}
-    {{ parent() }}
-    <script src="/assets/scripts/pardot.js"></script>
+    
 {% endblock %}
