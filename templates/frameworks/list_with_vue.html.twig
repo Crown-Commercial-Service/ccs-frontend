@@ -12,11 +12,7 @@
 
 {% block body %}
 
-    <!-- required wrapper 1 -->
     <div class="govuk-width-container">
-
-        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
-
         <div class="govuk-phase-banner">
             {% include '/includes/phase-banner-content.html.twig' %}
         </div>
@@ -45,10 +41,7 @@
             </ol>
         </div>
 
-
-        <!-- required wrapper 2 -->
-        <main id="main-content" class="govuk-main-wrapper">
-
+        <main id="main-content" role="main" class="govuk-main-wrapper">
 
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
@@ -75,11 +68,8 @@
                 {% include '/frameworks/filter_options.html.twig' %}
 
                  <div class="govuk-grid-column-two-thirds">
-                        {% if pagination.totalResults == 1 %}
-                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreement found</h2>
-                        {% else %}
-                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreements found</h2>
-                        {% endif %}
+                        <h2 class="govuk-heading-m" v-if="totalResults == 1"> {[totalResults]} agreement found</h2>
+                        <h2 class="govuk-heading-m" v-else>                   {[totalResults]} agreements found</h2>
                  </div>
 
                 {% if statuses is defined %}
@@ -147,72 +137,46 @@
                 {% endif %}
 
                 <div class="govuk-grid-column-two-thirds">
-                    {# see https://Strata.github.io/frontend/templating/content-fields.html #}
 
-                    <ul class="govuk-list govuk-list--frameworks">
-                        {% for item in results %}
-                            <li>
-                                <h3 class="govuk-heading-m ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22">
-                                    <a href="{{ path('frameworks_show', {'rmNumber':  item.content.rm_number }) }}">{{ item.content.title }}</a> {# <strong class="govuk-tag govuk-tag--subtle">{{ item.content.status }}</strong> #}
-                                    {% if item.content.status == 'Expired - Data Still Received' %}
-                                        <span class="govuk-tag ccs-tag ccs-tag--error">Expired: {{ item.content.end_date.format('d/m/Y') }}</span>
-                                    {% endif %}
-                                </h3>
-                                
-                                <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
-                                    <li> <strong>Agreement ID:</strong> {{ item.content.rm_number }} </li>
-                                    <li> <strong>Start Date:</strong> {{ item.content.start_date.format('d/m/Y') }} </li>
-                                    
-                                    {% if item.content.status != 'Expired - Data Still Received' %}
-                                        <li> <strong>End Date:</strong> {{ item.content.end_date.format('d/m/Y') }} </li>
-                                    {% endif %}
+                    <div v-if="responseAvailable" class="hideWithoutJS govuk-visually-hidden">
+                        <ul class="govuk-list govuk-list--frameworks" v-show="javascriptVersion">
+                                <li v-show="javascriptVersion" v-for="result in results">
+                                    <h3 class="govuk-heading-m ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22">
+                                        <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
+                                        <span v-if="result.status == 'Expired - Data Still Received'" class="govuk-tag ccs-tag ccs-tag--error"> Expired: {[ result.end_date | toDateDMY ]} </span>
+                                    </h3>
 
-                                    {% if tpp_feature_toggle == true %}
-                                        {% if item.content.regulation is not null %}
-                                        <li> <strong>Regulation:</strong> {{ item.content.regulation }} </li>
-                                        {% else %}
-                                            <li> <strong>Regulation:</strong></li>
+                                    <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                        <li> <strong>Agreement ID:</strong> {[ result.rm_number ]}   </li>
+                                        <li> <strong>Start Date:</strong>   {[ result.start_date | toDateDMY ]}  </li>
+                                        
+                                        <li v-if="result.status == 'Expired - Data Still Received'"> <strong>End Date:</strong> {[ result.end_date | toDateDMY ]} </li>
+
+                                        {% if tpp_feature_toggle == true %}
+                                                <li v-if="result.regulation != null"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
+                                                <li v-else> <strong>Regulation:</strong></li>
                                         {% endif %}
-                                    {% endif %}
-                                </ul>
-                                <p class="govuk-body-s">{{ item.content.summary | striptags | raw }}</p>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                                    </ul>
+                                    <p class="govuk-body-s" v-html="result.summary"></p> 
+                                </li>
 
-                    {% if tpp_feature_toggle == true and results|length == 0 and 'PA2023' in regulation and regulation|length == 1 %}
-                        <p>There are 0 agreements on regulation PA2023, go to the <a href="{{ path('frameworks_upcoming_deals') }}">upcoming agreement page</a> for further information</p>
-                    {% elseif results|length == 0 %}
-                        <h3>There are no matching results.</h3>
-                        <p class="govuk-!-margin-bottom-0">Improve your search results by:</p>
-                        <ul>
-                            <li><p class="govuk-!-margin-bottom-1">removing filters</p></li>
-                            <li><p class="govuk-!-margin-bottom-1">double-checking your spelling</p></li>
-                            <li><p class="govuk-!-margin-bottom-1">using fewer keywords</p></li>
-                            <li><p class="govuk-!-margin-bottom-1">clicking 'start now' and answering a few simple questions to find the best agreement for your needs</p></li>
+                            <results-pagination 
+                                :total-results="totalResults" 
+                                :number-of-pages="numberOfPages" 
+                                :current-page="currentPage" 
+                                v-on:update-page="updatePageValue($event)" 
+                            ></results-pagination>
                         </ul>
-                        <br>
-                        <p>If you are still unable to find what you need, contact our customer service centre using our <a class="govuk-link" href="/contact">contact us form</a>.</p>
-                    {% endif %}
+                    </div>
 
+                    <div v-else-if="!responseAvailable" class="hideWithoutJS govuk-visually-hidden">
+                        <p>Loading...</p>
+                    </div>
 
-                    {% set statusData = statuses is defined and statuses is not empty ? {'statuses' : statuses} : {} %}
-                    {% set queryData = query is defined and query|trim is not empty ? {'q' : query} : {} %}
+                    <div v-if="emptyResult" class="hideWithoutJS govuk-visually-hidden">
+                        <p>There are no matching results.</p>
+                    </div>
 
-                    {# Pagination #}
-                    {% if pillar is defined and pillar|trim is not empty %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'pillar': pillar_slug}|merge(statusData)|merge(queryData)} %}
-                    {% elseif category is defined and category|trim is not empty %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'category': category_slug}|merge(statusData)|merge(queryData)} %}
-                    {% elseif query is defined and query|trim is not empty %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'q': query}|merge(statusData)} %}
-                    {% else %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': statusData} %}
-                    {% endif %}
-
-                    {% if pagination.totalPages > 1 %}
-                        {{ include('includes/pagination.html.twig', pagination_data) }}
-                    {% endif %}
 
                 </div>
             </div>
@@ -220,14 +184,15 @@
 
         </main>
     </div>
-    <script> searchFilterAgreement(); </script>
 
     {% if app.environment == "prod" %}
         <script src="/assets/scripts/libraries/vue.min.js?v=1"></script>
     {% else %}
         <script src="/assets/scripts/libraries/vue.js?v=1"></script>
     {% endif %}
-    <script>
+
+    <script type="application/javascript"> 
+        searchFilterAgreement();
 
         function supportsLiterals() {
             try{
@@ -253,10 +218,10 @@
         var checkedCategory             = [];
         
         {% if filters.checkedStatus is defined and filters.checkedStatus is not empty %}
-            var checkedStatus   = Array.from([{{filters.checkedStatus}}]);
+            var checkedStatus   = JSON.parse('{{ filters.checkedStatus|json_encode|e("js") }}');
         {% endif %}
 
-        {% if filters.checkedRegulation is defined and filters.checkedRegulation is not empty %}
+        {# {% if filters.checkedRegulation is defined and filters.checkedRegulation is not empty %}
             var checkedRegulation   = Array.from([{{filters.checkedRegulation}}]);
         {% endif %}
 
@@ -270,7 +235,7 @@
 
         {% if filters.checkedCategory is defined and filters.checkedCategory is not empty %}
             var checkedCategory   = Array.from([{{filters.checkedCategory}}]);
-        {% endif %}
+        {% endif %} #}
 
         Vue.component('results-pagination', {
             delimiters: ['{[', ']}'],
@@ -354,7 +319,7 @@
             },
             template: 
                 `
-                <div class="events-pagination">
+                <div>
                     <ul class="list--inline pagination govuk-body" role="list" aria-label="Pagination" v-if="numberOfPages > 0">
                         <li class="pagination__item pagination__item--previous" v-if="currentPage != 1">
                             <a href="#" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
@@ -397,16 +362,15 @@
                 `
         });
 
-
         var search = new Vue({
             delimiters: ['{[', ']}'],
             el: '#main-content',
             mounted:function(){
                 this.filtering(null, "status");
-                this.filtering(null, "regulation");
-                this.filtering(null, "type");
-                this.filtering(null, "pillar");
-                this.filtering(null, "category");
+                //this.filtering(null, "regulation");
+                //this.filtering(null, "type");
+                //this.filtering(null, "pillar");
+                //this.filtering(null, "category");
             },
             data: {
                 javascriptVersion: true,
@@ -425,12 +389,19 @@
 
                 popstateLoad: false
             },
+            filters: {
+                toDateDMY: function (value) {
+                    if (!value) return ''
+                    date = new Date(value);
+                    return date.getDate().toString().padStart(2, '0') + '/'+ (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getFullYear();
+                }
+            },
             created: function() {
                 const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
 
-                hideWithOutJS.forEach(card => {
-                if (card.classList.contains('govuk-visually-hidden')) {
-                    card.classList.remove('govuk-visually-hidden');
+                hideWithOutJS.forEach(component => {
+                if (component.classList.contains('govuk-visually-hidden')) {
+                    component.classList.remove('govuk-visually-hidden');
                 }});
 
                 // unfortunately we have to update the results when we instantiate
@@ -438,7 +409,7 @@
                 this.fetchAPIData(null, this.currentPage);
 
                 // setup popstate event listener for History API
-                this.setupHistoryApi();                   
+                this.setupHistoryApi();
             },
             watch: {
                 searchRequestUrl: function() {
@@ -449,10 +420,10 @@
                     if(this.popstateLoad === false) {
                         history.pushState({
                             checkedStatus:      this.checkedStatus,
-                            checkedRegulation:  this.checkedRegulation,
-                            checkedType:        this.checkedType,
-                            checkedPillar:      this.checkedPillar,
-                            checkedCategory:    this.checkedCategory,
+                            //checkedRegulation:  this.checkedRegulation,
+                            //checkedType:        this.checkedType,
+                            //checkedPillar:      this.checkedPillar,
+                            //checkedCategory:    this.checkedCategory,
                         }, 'Agreements', this.frontendSearchUrl);
                     }
 
@@ -497,8 +468,119 @@
                 }
             },
             methods: {
+                filtering: function(selected, filtertingOption){
+                    filterArray = null
+                    viewAllCheckboxID = null
+                    paramaString = null
+                    returnFilter = ""
 
+                    switch(filtertingOption) {
+                        case "status":
+                            filterArray         = this.checkedStatus
+                            paramaString        = "&status[]="
+                            viewAllCheckboxID   = "Live"
+                    }
+
+                    if (filterArray.length == 0){
+                        if(filtertingOption == "status"){
+                            this.checkedStatus = ["Live"]
+                            document.getElementById(viewAllCheckboxID).checked = true;
+                        }
+                    }else{
+                        filterArray.forEach((currentElement) => {
+                            returnFilter += paramaString + currentElement
+                        })
+                    }
+
+                    return returnFilter;
+                },
+                searchRequestUrl: function(selected, page) {
+                    fetchURL =    this.apiURL 
+                        + this.filtering(selected, "status")
+                    
+                    fetchURL = fetchURL + "&per_page=20&page=" + this.currentPage;
+
+                    if(this.popstateLoad === false) {
+                        history.pushState({
+                            checkedEventType:           this.checkedEventType,
+                            checkedProductsServices:    this.checkedProductsServices,
+                            checkedEventAudience:       this.checkedEventAudience,
+                            checkedSectors:             this.checkedSectors,
+                        }, 'Agreements', this.frontendSearchUrl);
+                    }
+
+                    // reset the popstateLoad property to false
+                    this.popstateLoad = false;
+
+                    return fetchURL;
+                },
+                fetchAPIData: function(input, page) {
+                    var self = this;
+                    this.responseAvailable = false;
+                    this.emptyResult = false;
+                    this.currentPage = page === null ? 1 : page;
+
+                    var requestUrl = this.searchRequestUrl(input, this.currentPage);
+                    console.log(requestUrl);
+
+                    fetch(requestUrl)
+                    .then(async function(response) {
+                        if (!response.ok) {
+                            throw new Error('HTTP error, status = ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(function(jsonResponse) {
+                        self.numberOfPages  = parseInt(Math.floor(jsonResponse.meta.total_results / jsonResponse.meta.limit))
+                        self.totalResults   = parseInt(jsonResponse.meta.total_results)
+                        this.results        = jsonResponse.results;
+
+                        self.results = jsonResponse.results;
+                        if( Object.keys(jsonResponse.results).length === 0 ){
+                            self.emptyResult = true;
+                        }else{
+                            self.responseAvailable = true;
+                            console.log(self.checkedStatus)
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log('An error occurred');
+                        console.log(error);
+                        self.responseAvailable = false;
+                    });
+                },
+                updatePageValue: function(newPageValue) {
+                    this.currentPage = newPageValue;
+                },
+                setupHistoryApi: function() {
+
+                    window.onpopstate = function(event) {
+                        // set the popstate variable to true so that we can
+                        // tell in other parts of the code that the state change
+                        // is being caused by the back/forward button
+                        this.popstateLoad = true;
+
+                        if(event.state == null) {
+                            this.checkedStatus               = [];
+                            //this.checkedRegulation           = [];
+                            //this.checkedType                 = [];
+                            //this.checkedPillar               = [];
+                            //this.checkedCategory             = [];
+                            return
+                        }
+
+                        this.checkedStatus          = event.state.checkedStatus;
+                        //this.checkedRegulation      = event.state.checkedRegulation;
+                        //this.checkedType            = event.state.checkedType;
+                        //this.checkedPillar          = event.state.checkedPillar;
+                        //this.checkedCategory        = event.state.checkedCategory;
+
+                        this.fetchAPIData(null, this.currentPage);
+                    }
+                },
             }
+        });
+
     </script>
 
 {% endblock %}
