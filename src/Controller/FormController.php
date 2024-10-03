@@ -216,7 +216,8 @@ class FormController extends AbstractController
             } else {
                 $params->set('subject', 'Contact CCS');
                 $params->set('00Nb0000009IXEW', 'General-Enquiry');
-                $params->set('00NS90000025xmH', ControllerHelper::extractRmNumberFromReferrer($params->get('00N4L000009OPAj', null)));
+                // tech debt - 00NS90000025xmH is the value for PREPROD SF for the RM number field
+                $params->set('00NRz000001CR2H', ControllerHelper::extractRmNumberFromReferrer($params->get('00N4L000009OPAj', null)));
                 $params->set('recordType', '012b00000005NWC');
                 $params->set('priority', 'Green');
                 $params->set('orgid', ControllerHelper::getOrgId());
