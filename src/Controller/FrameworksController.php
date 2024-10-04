@@ -131,12 +131,14 @@ class FrameworksController extends AbstractController
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
 
+        $checkedStatusArray = $request->query->get('status') != null ? explode(",", $request->query->get('status')) : ["Live"];
+
         $options = [
-            $checkedStatus               = [],
-            $checkedRegulation           = [],
-            $checkedType                 = [],
-            $checkedPillar               = [],
-            $checkedCategory             = [],
+            "checkedStatus"               => $checkedStatusArray,
+            "checkedRegulation"           => [],
+            "checkedType"                 => [],
+            "checkedPillar"               => [],
+            "checkedCategory"             => [],
         ];
 
 
@@ -163,7 +165,7 @@ class FrameworksController extends AbstractController
             'regulationType'    => ["allType"],
         ];
 
-        if (getenv('APP_API_BASE_URL') == 'prod' || getenv('APP_API_BASE_URL') == 'test') {
+        if (getenv('APP_ENV') == 'prod' || getenv('APP_ENV') == 'test') {
             return $this->render('frameworks/list.html.twig', $data);
         } else {
             return $this->render('frameworks/list_with_vue.html.twig', $data);
