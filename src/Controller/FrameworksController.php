@@ -165,7 +165,7 @@ class FrameworksController extends AbstractController
             'regulationType'    => ["allType"],
         ];
 
-        if (getenv('APP_API_BASE_URL') == 'prod' || getenv('APP_API_BASE_URL') == 'test') {
+        if (getenv('APP_ENV') == 'prod' || getenv('APP_ENV') == 'test') {
             return $this->render('frameworks/list.html.twig', $data);
         } else {
             return $this->render('frameworks/list_with_vue.html.twig', $data);
