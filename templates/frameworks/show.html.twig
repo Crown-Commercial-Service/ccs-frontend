@@ -316,12 +316,10 @@
                                             <ul class="govuk-list">
                                                 {% for document in framework.content.documents %}
                                                     <li>
-                                                        <a class="framework-document" onclick="fileDownload('{{ document.url }}', '{{ document.title }}', '{{ document.file_size }}');" href="{{ document.url }}">{{ document.title }}</a>
+                                                        <a onclick="fileDownload('{{ document.url }}', '{{ document.title }}', '{{ document.file_size }}');" href="{{ document.url }}">{{ document.title }}</a>
                                                     </li>
                                                 {% endfor %}
                                             </ul>
-
-                                            <button class="zipBtn">Download as zip</button>
 
 
                                             {#<table class="govuk-table">#}
@@ -401,41 +399,4 @@
 {% block nonblocking_javascript %}
     {{ parent() }}
     <script src="/assets/scripts/dataLayer.js"></script>
-    <script>
-
-    var documents = document.querySelectorAll(".framework-document");
-    var zipBtn = document.querySelector(".zipBtn");
-
-    // Example usage  
-        const fileUrls = [];
-
-        documents.forEach(function (document) {
-            fileUrls.push(document.href);
-        })
-
-        async function downloadFilesAsZip(fileUrls) {
-        const zip = new JSZip();
-
-        // Fetch each file and add it to the ZIP  
-        for (const fileUrl of fileUrls) {
-            const response = await fetch(fileUrl);
-            const blob = await response.blob();
-            const fileName = fileUrl.split('/').pop(); // Extract filename from URL  
-            zip.file(fileName, blob);
-        }
-
-        // Generate the ZIP file and trigger the download  
-        zip.generateAsync({ type: 'blob' })
-            .then(function(content) {
-                saveAs(content, 'ccs-download.zip'); // Use FileSaver.js to save the zip file  
-            });
-        }
-
-        // Trigger the downloa
-        zipBtn.addEventListener("click", function () {
-            downloadFilesAsZip(fileUrls);
-        })
-        
-    </script>
-
 {% endblock %}
