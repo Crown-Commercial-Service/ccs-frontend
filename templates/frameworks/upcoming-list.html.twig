@@ -116,7 +116,7 @@
                                 {% if tpp_feature_toggle == false %}
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                         <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="dps" name="statuses[]" type="checkbox" value="dps">
-                                        <label class="govuk-label govuk-checkboxes__label" for="dps"> Dynamic purchase system </label>
+                                        <label class="govuk-label govuk-checkboxes__label" for="dps"> Dynamic purchasing systems </label>
                                     </div>
                                 {% endif %}
 
@@ -285,9 +285,9 @@
                                                 {% endif %}
 
                                                 {% if upcoming_deal.expected_live_date is not null %}
-                                                    <li> <strong>End Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
+                                                    <li> <strong>Expected Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>End Live:</strong> N/A </li>
+                                                    <li> <strong>Expected Live:</strong> N/A </li>
                                                 {% endif %}
 
                                                 {% if tpp_feature_toggle == true %}
