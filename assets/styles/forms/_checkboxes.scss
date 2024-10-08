@@ -27,10 +27,14 @@
 
 .govuk-checkboxes__item--small .govuk-checkboxes__label {
 
-    padding: 0px 15px 0px;
+    padding: 0px 8px 0px;
     line-height: 24px;
     max-width: none;
 
+}
+
+label.govuk-label.govuk-checkboxes__label.search-subcategory-label {
+    padding-left: 25px;
 }
 
 .govuk-checkboxes__input {
@@ -45,6 +49,10 @@
     top: 10px;
     left: 10px;
 
+}
+
+label.govuk-label.govuk-checkboxes__label.search-subcategory-label::before {
+    left: 27px;
 }
 
 .govuk-checkboxes__input--small + .govuk-checkboxes__label::after {

@@ -226,7 +226,7 @@
                     </div>
                 </div>
             </div>
-        {% endif %}
+        {% endif %} #}
         
 
 
@@ -241,50 +241,48 @@
                 </div>
 
                 <div id="accordion-with-summary-sections-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-4" role="region">
-                    <ul class="govuk-list">
-                        {% for pillar_item in pillars.pillars %}
-                            <li>
-                                {% set pillarArray = {
+                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                            <input v-on:change=fetchAPIData(null,null) v-model="checkedCategory" name="allCategory" value="allCategory" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allCategory" type="checkbox" {{ filters.checkedCategory is defined and filters.checkedCategory is empty  ? 'checked' }}>
+                            <label class="govuk-label govuk-checkboxes__label" style="font-weight:600" for="allCategory">
+                                View all
+                            </label>
+                         </div>
+
+                         {% for pillar_item in pillars.pillars %}
+
+                            {% set pillarArray = {
                                     'event': 'search_interaction',
                                     'interaction_type': 'filter by pillar',
                                     'interaction_detail':  pillar_item.name
-                                }%}
-                                <a class="{{pillar is defined and pillar == pillar_item.name ? 'govuk-!-font-weight-bold'}}" 
-                                    onclick="pushToDataLayer('{{pillarArray |json_encode}}');"
-                                    href="{{ path('frameworks_list_by_pillar',
-                                    {   'pillar': pillar_item.slug, 
-                                        'query': query is defined and query|trim is not empty ? query : '',
-                                        'statuses': statuses is defined ? statuses
-                                    }) }}">
-                                {{ pillar_item.name }}</a>
+                                }
+                            %}
 
-                                <ul class="govuk-list">
-                                    {% for category_item in pillar_item.categories %}
-                                        <li>
-                                            {% set categoryArray = {
-                                                'event': 'search_interaction',
-                                                'interaction_type': 'filter by category',
-                                                'interaction_detail':  category_item.name
-                                            }%}
-                                            <a class="{{category is defined and category == category_item.name ? 'govuk-!-font-weight-bold' }}" 
-                                                onclick="pushToDataLayer('{{categoryArray |json_encode}}');"
-                                                href="{{ path('frameworks_list_by_category', 
-                                                {   'category': category_item.slug, 
-                                                    'query': query is defined and query|trim is not empty ? query : '',
-                                                    'statuses': statuses is defined ? statuses
-                                                }) }}">
-                                            {{ category_item.name }}
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
+                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                <input v-on:change=fetchAPIData(null,null) onclick="pushToDataLayer('{{pillarArray |json_encode}}');" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{pillar_item.slug}}" name="{{pillar_item.slug}}" type="checkbox" value="{{ pillar_item.name }}">
+                                <label class="govuk-label govuk-checkboxes__label" style="font-weight: 600" for="{{pillar_item.slug}}">
+                                    {{ pillar_item.name }}
+                                </label>
+                            </div>
+                             {% for category_item in pillar_item.categories %}
 
-                            </li>
+                              {% set categoryArray = {
+                                    'event': 'search_interaction',
+                                    'interaction_type': 'filter by category',
+                                    'interaction_detail':  category_item.name
+                              }%}
+
+                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                <input v-on:change=fetchAPIData(null,null) onclick="pushToDataLayer('{{categoryArray |json_encode}}');" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{category_item.slug}}" name="{{category_item.slug}}" type="checkbox" value="{{ category_item.name }}">
+                                <label class="govuk-label govuk-checkboxes__label search-subcategory-label" for="{{ category_item.name }}">
+                                    {{ category_item.name }}
+                                </label>
+                            </div>
+                            {% endfor %}
                         {% endfor %}
-                    </ul>
+                
                 </div>
             </div>
-        </div> #}
+        </div> 
 
         {% include '/frameworks/_helpful_info.html.twig' with {'page' : 'search'} %}
 
