@@ -225,11 +225,11 @@
             var checkedRegulation   = JSON.parse('{{ filters.checkedRegulation|json_encode|e("js") }}');
         {% endif %}
 
-        {# {% if filters.checkedType is defined and filters.checkedType is not empty %}
-            var checkedType   = Array.from([{{filters.checkedType}}]);
+        {% if filters.checkedType is defined and filters.checkedType is not empty %}
+            var checkedType   = JSON.parse('{{ filters.checkedType|json_encode|e("js") }}');
         {% endif %}
 
-        {% if filters.checkedPillar is defined and filters.checkedPillar is not empty %}
+        {# {% if filters.checkedPillar is defined and filters.checkedPillar is not empty %}
             var checkedPillar   = Array.from([{{filters.checkedPillar}}]);
         {% endif %}
 
@@ -368,7 +368,7 @@
             mounted:function(){
                 this.filtering(null, "status");
                 this.filtering(null, "regulation");
-                //this.filtering(null, "type");
+                this.filtering(null, "type");
                 //this.filtering(null, "pillar");
                 //this.filtering(null, "category");
             },
@@ -421,7 +421,7 @@
                         history.pushState({
                             checkedStatus:      this.checkedStatus,
                             checkedRegulation:  this.checkedRegulation,
-                            //checkedType:        this.checkedType,
+                            checkedType:        this.checkedType,
                             //checkedPillar:      this.checkedPillar,
                             //checkedCategory:    this.checkedCategory,
                         }, 'Agreements', this.frontendSearchUrl);
@@ -443,7 +443,8 @@
                         queryUrl += '&regulation=' + this.checkedRegulation.join();
                     }
                     
-                    if(this.checkedType.length != 0) {
+                    if(this.checkedType.length != 0 && !this.checkedType.includes("allType")) {
+                        this.checkedType = this.checkedType.map(str => str.replace(/ /g, '+'));
                         queryUrl += '&type=' + this.checkedType.join();
                     }
 
@@ -477,16 +478,14 @@
 
                     switch(filtertingOption) {
                         case "status":
-                            filterArray         = this.checkedStatus
-                            paramaString        = "&status[]="
-                            filterArray.forEach((currentElement) => {
-                                returnFilter += paramaString + currentElement
+                            this.checkedStatus.forEach((currentElement) => {
+                                returnFilter += "&status[]=" + currentElement
                             })
-
-                            if (filterArray.length == 0){
+                            if (this.checkedStatus.length == 0){
                                 document.getElementById("Live").checked = true;
                                 this.checkedStatus = ["Live"]
                             }
+                            
                             return returnFilter
                             break
                         case "regulation":
@@ -494,6 +493,12 @@
                             paramaString        = "&regulation[]="
                             viewAllCheckboxID   = "allRegulation"
                             maxFilter           = 3
+                            break
+                        case "type":
+                            filterArray         = this.checkedType
+                            paramaString        = "&regulation_type[]="
+                            viewAllCheckboxID   = "allType"
+                            maxFilter           = 6
                             break
                          default:
                             console.log('An error occurred');
@@ -521,6 +526,7 @@
                     fetchURL =    this.apiURL 
                         + this.filtering(selected, "status")
                         + this.filtering(selected, "regulation")
+                        + this.filtering(selected, "type")
                     
                     fetchURL = fetchURL + "&per_page=20&page=" + this.currentPage;
 
@@ -528,7 +534,7 @@
                         history.pushState({
                             checkedStatus          :this.checkedStatus,
                             checkedRegulation      :this.checkedRegulation,
-                            //checkedType            :this.checkedType,
+                            checkedType            :this.checkedType,
                             //checkedPillar          :this.checkedPillar,
                             //checkedCategory        :this.checkedCategory,
                         }, 'Agreements', this.frontendSearchUrl);
@@ -586,7 +592,7 @@
                         if(event.state == null) {
                             this.checkedStatus               = [];
                             this.checkedRegulation           = [];
-                            //this.checkedType                 = [];
+                            this.checkedType                 = [];
                             //this.checkedPillar               = [];
                             //this.checkedCategory             = [];
                             return
@@ -594,7 +600,7 @@
 
                         this.checkedStatus          = event.state.checkedStatus;
                         this.checkedRegulation      = event.state.checkedRegulation;
-                        //this.checkedType            = event.state.checkedType;
+                        this.checkedType            = event.state.checkedType;
                         //this.checkedPillar          = event.state.checkedPillar;
                         //this.checkedCategory        = event.state.checkedCategory;
 

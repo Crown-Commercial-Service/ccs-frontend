@@ -68,6 +68,8 @@
         
         {% set statusesForTwig = ["Live", "Expired"] %}
         {% set regulationsForTwig = ['PA2023', 'PCR2015', 'PCR2006'] %}
+        {% set typeStatusesForTwig = ["Dynamic+Purchasing+System", "Dynamic+Marketing", "Open+Framework", "Closed+Framework", "PCR15+Framework", "PCR06+Framework"] %}
+
 
         <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
@@ -136,7 +138,7 @@
             </div>
 
 
-            {# <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
+            <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
                 <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
                     <div class="govuk-accordion__section-header">
                         <h2 class="govuk-accordion__section-heading">
@@ -144,77 +146,32 @@
                                 Agreement type
                             </span>
                         </h2>
+                        {# <span class="govuk-body-s">{[ checkedType.length ]} selected</span> #}
+
                     </div>
                     
                     <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3" role="region">
 
-                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                            {% if regulationType is defined and 'allType' in regulationType %}
-                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" name="allType" type="checkbox" value="true" checked >
-                            {% else %}
-                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" name="regulationType[]" type="checkbox" value="allType" >
-                            {% endif %}
+                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                            <input v-on:change=fetchAPIData(null,null) v-model="checkedType" name="allType" value="allType" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" type="checkbox" {{ filters.checkedType is defined and filters.checkedType is empty  ? 'checked' }}>
                             <label class="govuk-label govuk-checkboxes__label" for="allType">
                                 View All
                             </label>
                         </div>
-                        
-                        {% if regulation is defined and 'allRegulation' in regulation or 'PCR2015' in regulation %}
-                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Dynamic_Purchasing_System" name="regulationType[]" type="checkbox" value="Dynamic Purchasing System"{{ regulationType is not defined or regulationType is empty or 'Dynamic Purchasing System' in regulationType ? "checked" : "" }} >
-                                <label class="govuk-label govuk-checkboxes__label" for="Dynamic_Purchasing_System">
-                                    Dynamic Purchasing System 
-                                </label>
-                            </div>
-                        {% endif %}
-                        
-                        {% if regulation is defined and 'allRegulation' in regulation or 'PA2023' in regulation %}                                        
-                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Dynamic_Market" name="regulationType[]" type="checkbox" value="Dynamic Market"{{ regulationType is not defined or regulationType is empty or 'Dynamic Market' in regulationType ? "checked" : "" }} >
-                                <label class="govuk-label govuk-checkboxes__label" for="Dynamic_Market">
-                                    Dynamic Market 
-                                </label>
-                            </div>
 
+                        {% for item in typeStatusesForTwig %}
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Open_Framework" name="regulationType[]" type="checkbox" value="Open Framework"{{ regulationType is not defined or regulationType is empty or 'Open Framework' in regulationType ? "checked" : "" }} >
-                                <label class="govuk-label govuk-checkboxes__label" for="Open_Framework">
-                                    Open Framework
+                                <input v-on:change=fetchAPIData("{{item}}",null) v-model="checkedType" name="type[]" value="{{item}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}" type="checkbox" {{ item in filters.checkedType ? 'checked' }}>
+                                <label class="govuk-label govuk-checkboxes__label" for="{{item}}">
+                                    {{  item |replace({'+': ' '}) }}
                                 </label>
                             </div>
-                            
-                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Closed_Framework" name="regulationType[]" type="checkbox" value="Closed Framework"{{ regulationType is not defined or regulationType is empty or 'Closed Framework' in regulationType ? "checked" : "" }} >
-                                <label class="govuk-label govuk-checkboxes__label" for="Closed_Framework">
-                                    Closed Framework 
-                                </label>
-                            </div>
-                        {% endif %}
-
-                        {% if regulation is defined and 'allRegulation' in regulation or 'PCR2015' in regulation %}
-                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PCR15_Framework" name="regulationType[]" type="checkbox" value="PCR15 Framework"{{ regulationType is not defined or regulationType is empty or 'PCR15 Framework' in regulationType ? "checked" : "" }} >
-                                <label class="govuk-label govuk-checkboxes__label" for="PCR15_Framework">
-                                    PCR15 Framework
-                                </label>
-                            </div>
-                        {% endif %}
-                        
-                        {% if regulation is defined and 'allRegulation' in regulation or 'PCR2006' in regulation %}
-                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PCR06_Framework" name="regulationType[]" type="checkbox" value="PCR06 Framework"{{ regulationType is not defined or regulationType is empty or 'PCR06 Framework' in regulationType ? "checked" : "" }} >
-                                <label class="govuk-label govuk-checkboxes__label" for="PCR06_Framework">
-                                    PCR06 Framework
-                                </label>
-                            </div>
-                        {% endif %}
+                        {% endfor %}
 
                     </div>
                 </div>
-            </div> #}
+            </div>
         {% endif %}
-        
-
 
         {# <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">

@@ -133,11 +133,12 @@ class FrameworksController extends AbstractController
 
         $checkedStatusArray = $request->query->get('status') != null ? explode(",", $request->query->get('status')) : ["Live"];
         $checkedRegulationArray = $request->query->get('regulation') != null ? explode(",", $request->query->get('regulation')) : [];
+        $checkedTypeArray = $request->query->get('type') != null ? explode(",", $request->query->get('type')) : [];
 
         $options = [
             "checkedStatus"               => $checkedStatusArray,
             "checkedRegulation"           => $checkedRegulationArray,
-            "checkedType"                 => [],
+            "checkedType"                 => $checkedTypeArray,
             "checkedPillar"               => [],
             "checkedCategory"             => [],
         ];
