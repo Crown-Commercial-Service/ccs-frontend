@@ -221,11 +221,11 @@
             var checkedStatus   = JSON.parse('{{ filters.checkedStatus|json_encode|e("js") }}');
         {% endif %}
 
-        {# {% if filters.checkedRegulation is defined and filters.checkedRegulation is not empty %}
-            var checkedRegulation   = Array.from([{{filters.checkedRegulation}}]);
+        {% if filters.checkedRegulation is defined and filters.checkedRegulation is not empty %}
+            var checkedRegulation   = JSON.parse('{{ filters.checkedRegulation|json_encode|e("js") }}');
         {% endif %}
 
-        {% if filters.checkedType is defined and filters.checkedType is not empty %}
+        {# {% if filters.checkedType is defined and filters.checkedType is not empty %}
             var checkedType   = Array.from([{{filters.checkedType}}]);
         {% endif %}
 
@@ -367,7 +367,7 @@
             el: '#main-content',
             mounted:function(){
                 this.filtering(null, "status");
-                //this.filtering(null, "regulation");
+                this.filtering(null, "regulation");
                 //this.filtering(null, "type");
                 //this.filtering(null, "pillar");
                 //this.filtering(null, "category");
@@ -420,7 +420,7 @@
                     if(this.popstateLoad === false) {
                         history.pushState({
                             checkedStatus:      this.checkedStatus,
-                            //checkedRegulation:  this.checkedRegulation,
+                            checkedRegulation:  this.checkedRegulation,
                             //checkedType:        this.checkedType,
                             //checkedPillar:      this.checkedPillar,
                             //checkedCategory:    this.checkedCategory,
@@ -439,7 +439,7 @@
                         queryUrl += '&status=' + this.checkedStatus.join();
                     }
 
-                    if(this.checkedRegulation.length != 0) {
+                    if(this.checkedRegulation.length != 0 && !this.checkedRegulation.includes("allRegulation")) {
                         queryUrl += '&regulation=' + this.checkedRegulation.join();
                     }
                     
@@ -473,39 +473,64 @@
                     viewAllCheckboxID = null
                     paramaString = null
                     returnFilter = ""
+                    maxFilter = 0
 
                     switch(filtertingOption) {
                         case "status":
                             filterArray         = this.checkedStatus
                             paramaString        = "&status[]="
-                            viewAllCheckboxID   = "Live"
+                            filterArray.forEach((currentElement) => {
+                                returnFilter += paramaString + currentElement
+                            })
+
+                            if (filterArray.length == 0){
+                                document.getElementById("Live").checked = true;
+                                this.checkedStatus = ["Live"]
+                            }
+                            return returnFilter
+                            break
+                        case "regulation":
+                            filterArray         = this.checkedRegulation
+                            paramaString        = "&regulation[]="
+                            viewAllCheckboxID   = "allRegulation"
+                            maxFilter           = 3
+                            break
+                         default:
+                            console.log('An error occurred');
+                            return
                     }
 
-                    if (filterArray.length == 0){
-                        if(filtertingOption == "status"){
-                            this.checkedStatus = ["Live"]
-                            document.getElementById(viewAllCheckboxID).checked = true;
-                        }
+                    if((selected == "Live" || selected == "Expired") && filtertingOption == "status"){
+                        return ""
+                    }
+
+                    //if nothing is check || everything is checked || View all is checked 
+                    if (filterArray.length == 0 || filterArray.length == maxFilter || filterArray.includes(viewAllCheckboxID) ){
+                        filterArray.splice(0);
+                        document.getElementById(viewAllCheckboxID).checked = true;
+                        document.getElementById(selected) != null ? document.getElementById(selected).checked = false : null
                     }else{
+                        document.getElementById(viewAllCheckboxID) != null ? document.getElementById(viewAllCheckboxID).checked = false : null
                         filterArray.forEach((currentElement) => {
                             returnFilter += paramaString + currentElement
                         })
                     }
-
                     return returnFilter;
                 },
                 searchRequestUrl: function(selected, page) {
                     fetchURL =    this.apiURL 
                         + this.filtering(selected, "status")
+                        + this.filtering(selected, "regulation")
                     
                     fetchURL = fetchURL + "&per_page=20&page=" + this.currentPage;
 
                     if(this.popstateLoad === false) {
                         history.pushState({
-                            checkedEventType:           this.checkedEventType,
-                            checkedProductsServices:    this.checkedProductsServices,
-                            checkedEventAudience:       this.checkedEventAudience,
-                            checkedSectors:             this.checkedSectors,
+                            checkedStatus          :this.checkedStatus,
+                            checkedRegulation      :this.checkedRegulation,
+                            //checkedType            :this.checkedType,
+                            //checkedPillar          :this.checkedPillar,
+                            //checkedCategory        :this.checkedCategory,
                         }, 'Agreements', this.frontendSearchUrl);
                     }
 
@@ -538,10 +563,8 @@
                         self.results = jsonResponse.results;
                         if( Object.keys(jsonResponse.results).length === 0 ){
                             self.emptyResult = true;
-                        }else{
-                            self.responseAvailable = true;
-                            console.log(self.checkedStatus)
                         }
+                        self.responseAvailable = true;
                     })
                     .catch(function(error) {
                         console.log('An error occurred');
@@ -562,7 +585,7 @@
 
                         if(event.state == null) {
                             this.checkedStatus               = [];
-                            //this.checkedRegulation           = [];
+                            this.checkedRegulation           = [];
                             //this.checkedType                 = [];
                             //this.checkedPillar               = [];
                             //this.checkedCategory             = [];
@@ -570,7 +593,7 @@
                         }
 
                         this.checkedStatus          = event.state.checkedStatus;
-                        //this.checkedRegulation      = event.state.checkedRegulation;
+                        this.checkedRegulation      = event.state.checkedRegulation;
                         //this.checkedType            = event.state.checkedType;
                         //this.checkedPillar          = event.state.checkedPillar;
                         //this.checkedCategory        = event.state.checkedCategory;
