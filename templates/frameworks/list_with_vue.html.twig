@@ -46,7 +46,7 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
 
-                    {% if category is defined and category|trim is not empty  %}
+                    {# {% if category is defined and category|trim is not empty  %}
                         <h1 class="govuk-heading-xl page-title">{{ query is defined and query|trim is not empty ? "Search agreements for #{query} in #{category} category" : "Search agreements in #{category} category" }}</h1>
                         <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement', 'category':'{{category}}'});</script>
                     {% elseif pillar is defined and pillar|trim is not empty %}
@@ -58,7 +58,7 @@
                     {% else %}
                         <h1 class="govuk-heading-xl page-title">Search agreements</h1>
                         <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement'});</script>
-                    {% endif %}
+                    {% endif %} #}
 
                 </div>
             </div>
@@ -470,6 +470,9 @@
             },
             methods: {
                 filtering: function(selected, filtertingOption){
+                    console.log(selected)
+                    console.log(filtertingOption)
+
                     filterArray = null
                     viewAllCheckboxID = null
                     paramaString = null
@@ -485,7 +488,6 @@
                                 document.getElementById("Live").checked = true;
                                 this.checkedStatus = ["Live"]
                             }
-                            
                             return returnFilter
                             break
                         case "regulation":
@@ -505,8 +507,8 @@
                             return
                     }
 
-                    if((selected == "Live" || selected == "Expired") && filtertingOption == "status"){
-                        return ""
+                    if((selected == "Live" || selected == "Expired") && filtertingOption != "status"){
+                        selected = "dummy value"
                     }
 
                     //if nothing is check || everything is checked || View all is checked 
