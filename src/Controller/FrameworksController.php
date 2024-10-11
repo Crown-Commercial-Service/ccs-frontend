@@ -132,11 +132,13 @@ class FrameworksController extends AbstractController
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
 
         $checkedStatusArray = $request->query->get('status') != null ? explode(",", $request->query->get('status')) : ["Live"];
+        $checkedRegulationArray = $request->query->get('regulation') != null ? explode(",", $request->query->get('regulation')) : [];
+        $checkedTypeArray = $request->query->get('type') != null ? explode(",", $request->query->get('type')) : [];
 
         $options = [
             "checkedStatus"               => $checkedStatusArray,
-            "checkedRegulation"           => [],
-            "checkedType"                 => [],
+            "checkedRegulation"           => $checkedRegulationArray,
+            "checkedType"                 => $checkedTypeArray,
             "checkedPillar"               => [],
             "checkedCategory"             => [],
         ];
