@@ -186,8 +186,8 @@
 
                 <div id="accordion-with-summary-sections-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-4" role="region">
                          <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                            <input v-on:change=fetchAPIData(null,null) v-model="checkedCategory" name="allCategory" value="allCategory" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allCategory" type="checkbox" {{ filters.checkedCategory is defined and filters.checkedCategory is empty  ? 'checked' }}>
-                            <label class="govuk-label govuk-checkboxes__label" style="font-weight:600" for="allCategory">
+                            <input v-on:change=fetchAPIData("allPillarAndCategory",null) v-model="checkedPillar" name="allPillarAndCategory" value="allPillarAndCategory" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allPillarAndCategory" type="checkbox" {{ filters.checkedCategory is defined and filters.checkedCategory is empty  ? 'checked' }}>
+                            <label class="govuk-label govuk-checkboxes__label" style="font-weight:600" for="allPillarAndCategory">
                                 View all
                             </label>
                          </div>
@@ -202,7 +202,7 @@
                             %}
 
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input v-on:change=fetchAPIData(null,null) onclick="pushToDataLayer('{{pillarArray |json_encode}}');" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{pillar_item.slug}}" name="{{pillar_item.slug}}" type="checkbox" value="{{ pillar_item.name }}">
+                                <input v-on:change=fetchAPIData("{{ pillar_item.slug }}",null) v-model="checkedPillar" onclick="pushToDataLayer('{{pillarArray |json_encode}}');" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{pillar_item.slug}}" name="{{pillar_item.slug}}" type="checkbox" value="{{ pillar_item.name }}" {{ pillar_item.name in filters.checkedPillar ? 'checked' }}>
                                 <label class="govuk-label govuk-checkboxes__label" style="font-weight: 600" for="{{pillar_item.slug}}">
                                     {{ pillar_item.name }}
                                 </label>
@@ -216,8 +216,8 @@
                               }%}
 
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input v-on:change=fetchAPIData(null,null) onclick="pushToDataLayer('{{categoryArray |json_encode}}');" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{category_item.slug}}" name="{{category_item.slug}}" type="checkbox" value="{{ category_item.name }}">
-                                <label class="govuk-label govuk-checkboxes__label search-subcategory-label" for="{{ category_item.name }}">
+                                <input v-on:change=fetchAPIData("{{ category_item.slug }}",null) v-model="checkedCategory" onclick="pushToDataLayer('{{categoryArray |json_encode}}');" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{category_item.slug}}" name="{{category_item.slug}}" type="checkbox" value="{{ category_item.name |replace({' ': '+'}) }}" {{ category_item.name in filters.checkedCategory ? 'checked' }}>
+                                <label class="govuk-label govuk-checkboxes__label search-subcategory-label" for="{{ category_item.slug }}">
                                     {{ category_item.name }}
                                 </label>
                             </div>

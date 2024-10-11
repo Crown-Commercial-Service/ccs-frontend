@@ -138,4 +138,9 @@ class ControllerHelper
         }
         return $arrayToRemove;
     }
+
+    public static function getArrayFromStringForParam($request, string $paramName)
+    {
+        return $request->query->get($paramName) != null ? explode(",", $request->query->get($paramName)) : [];
+    }
 }
