@@ -46,7 +46,7 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
 
-                    {# {% if category is defined and category|trim is not empty  %}
+                    {% if category is defined and category|trim is not empty  %}
                         <h1 class="govuk-heading-xl page-title">{{ query is defined and query|trim is not empty ? "Search agreements for #{query} in #{category} category" : "Search agreements in #{category} category" }}</h1>
                         <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement', 'category':'{{category}}'});</script>
                     {% elseif pillar is defined and pillar|trim is not empty %}
@@ -58,7 +58,7 @@
                     {% else %}
                         <h1 class="govuk-heading-xl page-title">Search agreements</h1>
                         <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement'});</script>
-                    {% endif %} #}
+                    {% endif %}
 
                 </div>
             </div>
@@ -216,6 +216,8 @@
         var checkedType                 = [];
         var checkedPillar               = [];
         var checkedCategory             = [];
+        var pillarsSize                 = '{{ pillars.pillars|length }}';
+        var categorySize                = '{{ categories|length }}';
         
         {% if filters.checkedStatus is defined and filters.checkedStatus is not empty %}
             var checkedStatus   = JSON.parse('{{ filters.checkedStatus|json_encode|e("js") }}');
@@ -229,13 +231,13 @@
             var checkedType   = JSON.parse('{{ filters.checkedType|json_encode|e("js") }}');
         {% endif %}
 
-        {# {% if filters.checkedPillar is defined and filters.checkedPillar is not empty %}
-            var checkedPillar   = Array.from([{{filters.checkedPillar}}]);
+        {% if filters.checkedPillar is defined and filters.checkedPillar is not empty %}
+            var checkedPillar   = JSON.parse('{{ filters.checkedPillar|json_encode|e("js") }}');
         {% endif %}
 
         {% if filters.checkedCategory is defined and filters.checkedCategory is not empty %}
-            var checkedCategory   = Array.from([{{filters.checkedCategory}}]);
-        {% endif %} #}
+            var checkedCategory   = JSON.parse('{{ filters.checkedCategory|json_encode|e("js") }}');
+        {% endif %}
 
         Vue.component('results-pagination', {
             delimiters: ['{[', ']}'],
@@ -369,8 +371,8 @@
                 this.filtering(null, "status");
                 this.filtering(null, "regulation");
                 this.filtering(null, "type");
-                //this.filtering(null, "pillar");
-                //this.filtering(null, "category");
+                this.filtering(null, "pillar");
+                this.filtering(null, "category");
             },
             data: {
                 javascriptVersion: true,
@@ -384,6 +386,8 @@
                 checkedPillar: checkedPillar,
                 checkedCategory: checkedCategory,
                 currentPage: pageNumber,
+                pillarsSize: pillarsSize,   
+                categorySize: categorySize,
                 numberOfPages: Number,
                 totalResults: Number,
 
@@ -422,8 +426,8 @@
                             checkedStatus:      this.checkedStatus,
                             checkedRegulation:  this.checkedRegulation,
                             checkedType:        this.checkedType,
-                            //checkedPillar:      this.checkedPillar,
-                            //checkedCategory:    this.checkedCategory,
+                            checkedPillar:      this.checkedPillar,
+                            checkedCategory:    this.checkedCategory,
                         }, 'Agreements', this.frontendSearchUrl);
                     }
 
@@ -448,11 +452,12 @@
                         queryUrl += '&type=' + this.checkedType.join();
                     }
 
-                    if(this.checkedPillar.length != 0) {
+                    if(this.checkedPillar.length != 0 && !this.checkedPillar.includes("allPillarAndCategory")) {
                         queryUrl += '&pillar=' + this.checkedPillar.join();
                     }
 
                     if(this.checkedCategory.length != 0) {
+                        this.checkedCategory = this.checkedCategory.map(str => str.replace(/ /g, '+'));
                         queryUrl += '&category=' + this.checkedCategory.join();
                     }
 
@@ -470,9 +475,6 @@
             },
             methods: {
                 filtering: function(selected, filtertingOption){
-                    console.log(selected)
-                    console.log(filtertingOption)
-
                     filterArray = null
                     viewAllCheckboxID = null
                     paramaString = null
@@ -502,6 +504,29 @@
                             viewAllCheckboxID   = "allType"
                             maxFilter           = 6
                             break
+                        case "pillar":
+                            filterArray         = this.checkedPillar
+                            paramaString        = "&pillar[]="
+                            viewAllCheckboxID   = "allPillarAndCategory"
+                            maxFilter           = this.pillarsSize
+                            break
+                        case "category":
+                            if (this.checkedCategory.length == this.categorySize || selected == "allPillarAndCategory"){
+                                document.getElementById("allPillarAndCategory").checked = true
+                                document.getElementById("corporate").checked = false
+                                document.getElementById("estates").checked = false  
+                                document.getElementById("technology").checked = false
+                                this.checkedCategory= [];
+                                this.checkedPillar= [];
+
+                                return ""
+                            }else if(this.checkedCategory.length != 0){
+                                document.getElementById("allPillarAndCategory").checked = false
+                            }
+                            this.checkedCategory.forEach((currentElement) => {
+                                returnFilter += "&category[]=" + currentElement
+                            })
+                            return returnFilter
                          default:
                             console.log('An error occurred');
                             return
@@ -514,7 +539,7 @@
                     //if nothing is check || everything is checked || View all is checked 
                     if (filterArray.length == 0 || filterArray.length == maxFilter || filterArray.includes(viewAllCheckboxID) ){
                         filterArray.splice(0);
-                        document.getElementById(viewAllCheckboxID).checked = true;
+                        document.getElementById(viewAllCheckboxID) != null ? document.getElementById(viewAllCheckboxID).checked = true : null
                         document.getElementById(selected) != null ? document.getElementById(selected).checked = false : null
                     }else{
                         document.getElementById(viewAllCheckboxID) != null ? document.getElementById(viewAllCheckboxID).checked = false : null
@@ -529,6 +554,8 @@
                         + this.filtering(selected, "status")
                         + this.filtering(selected, "regulation")
                         + this.filtering(selected, "type")
+                        + this.filtering(selected, "pillar")
+                        + this.filtering(selected, "category")
                     
                     fetchURL = fetchURL + "&per_page=20&page=" + this.currentPage;
 
@@ -537,8 +564,8 @@
                             checkedStatus          :this.checkedStatus,
                             checkedRegulation      :this.checkedRegulation,
                             checkedType            :this.checkedType,
-                            //checkedPillar          :this.checkedPillar,
-                            //checkedCategory        :this.checkedCategory,
+                            checkedPillar          :this.checkedPillar,
+                            checkedCategory        :this.checkedCategory,
                         }, 'Agreements', this.frontendSearchUrl);
                     }
 
@@ -564,7 +591,7 @@
                         return response.json();
                     })
                     .then(function(jsonResponse) {
-                        self.numberOfPages  = parseInt(Math.floor(jsonResponse.meta.total_results / jsonResponse.meta.limit))
+                        self.numberOfPages  = parseInt(Math.ceil(jsonResponse.meta.total_results / jsonResponse.meta.limit))
                         self.totalResults   = parseInt(jsonResponse.meta.total_results)
                         this.results        = jsonResponse.results;
 
@@ -595,16 +622,16 @@
                             this.checkedStatus               = [];
                             this.checkedRegulation           = [];
                             this.checkedType                 = [];
-                            //this.checkedPillar               = [];
-                            //this.checkedCategory             = [];
+                            this.checkedPillar               = [];
+                            this.checkedCategory             = [];
                             return
                         }
 
                         this.checkedStatus          = event.state.checkedStatus;
                         this.checkedRegulation      = event.state.checkedRegulation;
                         this.checkedType            = event.state.checkedType;
-                        //this.checkedPillar          = event.state.checkedPillar;
-                        //this.checkedCategory        = event.state.checkedCategory;
+                        this.checkedPillar          = event.state.checkedPillar;
+                        this.checkedCategory        = event.state.checkedCategory;
 
                         this.fetchAPIData(null, this.currentPage);
                     }

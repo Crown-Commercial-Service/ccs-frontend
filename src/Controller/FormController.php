@@ -171,6 +171,7 @@ class FormController extends AbstractController
 
         $data = [
             'referrer'      => $referrer,
+            'rmNumber'      => $referrer != null ? ControllerHelper::extractRmNumberFromReferrer($referrer) : null,
             'cscMessage'    => $cscMessage,
             'formType'      => $formType,
         ];
@@ -252,12 +253,14 @@ class FormController extends AbstractController
     {
         $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
         $formType = $request->query->get('type', null);
+        $rmNumber = $request->query->get('agreement', null);
 
 
         $cscMessage = ControllerHelper::getCSCMessage();
 
         $data = [
             'referrer'      => $referrer,
+            'rmNumber'      => $rmNumber,
             'cscMessage'    => $cscMessage,
             'formType'      => $formType,
         ];
@@ -303,7 +306,7 @@ class FormController extends AbstractController
             } else {
                 $params->set('subject', 'Contact CCS');
                 $params->set('00Nb0000009IXEW', 'General-Enquiry');
-                $params->set('00NS90000025xmH', ControllerHelper::extractRmNumberFromReferrer($params->get('00N4L000009OPAj', null)));
+                $params->set('00NS90000025xmH', $params->get('00NS90000025xmH', null));
                 $params->set('recordType', '012b00000005NWC');
                 $params->set('priority', 'Green');
                 $params->set('orgid', ControllerHelper::getOrgId());
