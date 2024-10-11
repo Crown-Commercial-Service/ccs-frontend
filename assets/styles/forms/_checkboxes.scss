@@ -66,6 +66,10 @@ label.govuk-label.govuk-checkboxes__label.search-subcategory-label::before {
 
 }
 
+label.govuk-label.govuk-checkboxes__label.search-subcategory-label::after {
+    left: 33px;
+}
+
 .govuk-checkboxes__conditional {
 
     background-color: white;
