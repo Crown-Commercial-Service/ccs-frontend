@@ -298,6 +298,7 @@ class FormController extends AbstractController
                 $cscMessage = ControllerHelper::getCSCMessage();
                 return $this->render('forms/complaint_form.html.twig', [
                     'referrer'              => $params->get('00N4L000009OPAj', null),
+                    'rmNumber'              => $params->get('00NS90000025xmH', null),
                     'formErrors'            => $formErrors,
                     'formData'              => $formData,
                     'cscMessage'            => $cscMessage,
