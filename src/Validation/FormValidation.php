@@ -205,7 +205,7 @@ class FormValidation
             'link' => '#contactWay',
         ];
 
-        $returnArray['errors'] = $contactWay == null ? ['Select how you want to be contact'] : [] ;
+        $returnArray['errors'] = $contactWay == null ? ['Select how you want to be contacted'] : [] ;
 
         return $returnArray;
     }
