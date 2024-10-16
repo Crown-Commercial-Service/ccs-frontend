@@ -70,6 +70,16 @@
 
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-third">
+
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-one-half">
+                            <h2 class="govuk-heading-m">Apply filters</h2>
+                        </div>
+                        <div class="govuk-grid-column-one-half" style="text-align:right;">
+                            <a onclick="pushToDataLayer({'event': 'search_filter', 'interaction_type': 'clear'});" href="/agreements/upcoming" class="govuk-link" >Clear filters</a>
+                        </div>
+                    </div>
+
                     <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
                         <div class="govuk-accordion__controls">
                             <button type="button" class="govuk-accordion__show-all" aria-expanded="true">
