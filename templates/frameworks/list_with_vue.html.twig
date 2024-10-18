@@ -216,6 +216,7 @@
         var checkedType                 = [];
         var checkedPillar               = [];
         var checkedCategory             = [];
+        var pillars                     = new Map();
         var pillarsSize                 = '{{ pillars.pillars|length }}';
         var categorySize                = '{{ categories|length }}';
         
@@ -237,6 +238,15 @@
 
         {% if filters.checkedCategory is defined and filters.checkedCategory is not empty %}
             var checkedCategory   = JSON.parse('{{ filters.checkedCategory|json_encode|e("js") }}');
+        {% endif %}
+
+         {% if pillars.pillars is defined and pillars.pillars is not empty %}
+            var allPillar   = JSON.parse('{{ pillars.pillars|json_encode|e("js") }}');
+
+            for(var i = 0; i < allPillar.length; i++) {  
+                categoryNames = allPillar[i].categories.map(category => category.slug.toLowerCase());
+                pillars.set(allPillar[i].name, categoryNames);
+            }
         {% endif %}
 
         Vue.component('results-pagination', {
@@ -385,6 +395,7 @@
                 checkedType: checkedType,
                 checkedPillar: checkedPillar,
                 checkedCategory: checkedCategory,
+                pillars: pillars,
                 currentPage: pageNumber,
                 pillarsSize: pillarsSize,   
                 categorySize: categorySize,
@@ -523,6 +534,14 @@
                             }else if(this.checkedCategory.length != 0){
                                 document.getElementById("allPillarAndCategory").checked = false
                             }
+
+                            seletedOptions = this.checkedCategory.map(str => str.replace(/,/g, '').replace(/[+]/g, '-').toLowerCase());
+
+                            for (let [key, value] of pillars) {
+                                key = key.toLowerCase()
+                                document.getElementById(key).checked = value.every(value => seletedOptions.includes(value)) ? true : false;
+                            }
+
                             this.checkedCategory.forEach((currentElement) => {
                                 returnFilter += "&category[]=" + currentElement
                             })
