@@ -145,7 +145,7 @@ class FrameworksController extends AbstractController
         $checkedCategoryArray       = ControllerHelper::getArrayFromStringForParam($request, "category");
 
         $options = [
-            "keyword"                     => $query,  
+            "keyword"                     => $query,
             "checkedStatus"               => $checkedStatusArray,
             "checkedRegulation"           => $checkedRegulationArray,
             "checkedType"                 => $checkedTypeArray,
