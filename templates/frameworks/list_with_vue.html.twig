@@ -580,6 +580,10 @@
 
                     //if nothing is check || everything is checked || View all is checked 
                     if (filterArray.length == 0 || filterArray.length == maxFilter || filterArray.includes(viewAllCheckboxID) ){
+                    
+                        //edge case where there are some category checked but all the pullar has also been checked
+                        this.checkedCategory = filtertingOption == "pillar" && filterArray.length == maxFilter ? [] : this.checkedCategory; 
+
                         filterArray.splice(0);
                         document.getElementById(viewAllCheckboxID) != null ? document.getElementById(viewAllCheckboxID).checked = true : null
                         document.getElementById(selected) != null ? document.getElementById(selected).checked = false : null
