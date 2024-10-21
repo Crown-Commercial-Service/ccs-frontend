@@ -558,6 +558,7 @@
 
                             for (let [key, value] of pillars) {
                                 if (value.every(value => seletedOptions.includes(value))) {
+                                        this.checkedPillar.includes(key) ? null : this.checkedPillar.push(key);
                                         document.getElementById(key.toLowerCase()).checked = true ;
                                     }else if (value.includes(selected)) {
                                         document.getElementById(key.toLowerCase()).checked = false ;
