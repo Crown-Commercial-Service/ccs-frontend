@@ -663,6 +663,31 @@
                         this.fetchAPIData(null, this.currentPage);
                     }
                 },
+                shouldShowTypeCheckbox: function (item) {
+                    if (this.checkedRegulation.length == 0) {
+                        return true;
+                    }
+
+                    if (item == "Closed Framework" || item == "Dynamic Marketing" || item == "Open Framework") {
+                        if (this.checkedRegulation.includes("PA2023")) {
+                            return true;
+                        }
+                    }
+
+                    if (item == "Dynamic Purchasing System" || item == "PCR15 Framework") {
+                        if (this.checkedRegulation.includes("PCR2015")) {
+                            return true;
+                        }
+                    }
+
+                     if (item == "PCR06 Framework") {
+                        if (this.checkedRegulation.includes("PCR2006")) {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                },
             }
         });
 

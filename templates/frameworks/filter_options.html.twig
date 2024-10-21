@@ -160,7 +160,7 @@
                         </div>
 
                         {% for item in typeStatusesForTwig %}
-                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                            <div v-if="shouldShowTypeCheckbox('{{ item | replace({'+': ' '}) }}')" class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                 <input v-on:change=fetchAPIData("{{item}}",null) v-model="checkedType" name="type[]" value="{{item}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}" type="checkbox" {{ item in filters.checkedType ? 'checked' }}>
                                 <label class="govuk-label govuk-checkboxes__label" for="{{item}}">
                                     {{  item |replace({'+': ' '}) }}
