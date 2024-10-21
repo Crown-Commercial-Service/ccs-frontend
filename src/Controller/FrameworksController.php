@@ -124,6 +124,13 @@ class FrameworksController extends AbstractController
             }
         }
 
+        // check if user is bot and block the request
+        $this->blockBot($request->headers->get('User-Agent'));
+
+        // Get search query
+        // strip special characters and tags from search query
+        $orginalSearch = str_replace('/', '', strip_tags(html_entity_decode($request->query->get('keyword'))));
+        $query = preg_replace("/[^a-zA-Z0-9\s]/", "", $orginalSearch);
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         $this->searchApi->setCacheKey($request->getRequestUri());
@@ -138,6 +145,7 @@ class FrameworksController extends AbstractController
         $checkedCategoryArray       = ControllerHelper::getArrayFromStringForParam($request, "category");
 
         $options = [
+            "keyword"                     => $query,  
             "checkedStatus"               => $checkedStatusArray,
             "checkedRegulation"           => $checkedRegulationArray,
             "checkedType"                 => $checkedTypeArray,
@@ -165,6 +173,7 @@ class FrameworksController extends AbstractController
             'statuses'          => ["live"],
             'regulation'        => ["allRegulation"],
             'regulationType'    => ["allType"],
+            'match_url'          => getenv('GUIDED_MATCH_URL')
         ];
 
         if (getenv('APP_ENV') == 'prod' || getenv('APP_ENV') == 'test') {

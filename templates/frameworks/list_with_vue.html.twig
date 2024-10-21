@@ -211,6 +211,7 @@
         var apiBaseUrl                  = '{{ api_base_url }}';
         var appBaseUrl                  = '{{ app_base_url }}';
         var pageNumber                  = {% if pageNumber is defined and pageNumber is not empty %}{{ pageNumber }}{% else %}1{% endif %};
+        var keyword                     = null;
         var checkedStatus               = [];
         var checkedRegulation           = [];
         var checkedType                 = [];
@@ -220,6 +221,10 @@
         var pillarsSize                 = '{{ pillars.pillars|length }}';
         var categorySize                = '{{ categories|length }}';
         
+        {% if filters.keyword is defined and filters.keyword is not null and filters.keyword is not empty %}
+            var keyword = '{{ filters.keyword }}';
+        {% endif %}
+
         {% if filters.checkedStatus is defined and filters.checkedStatus is not empty %}
             var checkedStatus   = JSON.parse('{{ filters.checkedStatus|json_encode|e("js") }}');
         {% endif %}
@@ -390,6 +395,7 @@
                 responseAvailable: null,
                 emptyResult: false,
                 apiURL:  apiBaseUrl + "frameworks?",
+                keyword: keyword,
                 checkedStatus: checkedStatus,
                 checkedRegulation: checkedRegulation,
                 checkedType: checkedType,
@@ -427,6 +433,14 @@
                 this.setupHistoryApi();
             },
             watch: {
+                keyword(keyword){
+                    if(this.keyword.trim().length == 0 || /^[\-\(\)&]*$/.test(this.keyword)){
+                        this.keyword = "";
+                    }
+                    this.keyword = this.keyword
+                        .replace(/\//g, "")                   // Remove slashes
+                        .replace(/[^a-zA-Z0-9\s\-&()]/g, ""); // Allow letters, numbers, spaces, and the specified characters
+                },
                 searchRequestUrl: function() {
 
                     // if the searchRequestUrl hasn't been updated by a popstate
@@ -439,6 +453,7 @@
                             checkedType:        this.checkedType,
                             checkedPillar:      this.checkedPillar,
                             checkedCategory:    this.checkedCategory,
+                            keyword:            this.keyword,
                         }, 'Agreements', this.frontendSearchUrl);
                     }
 
@@ -470,6 +485,10 @@
                     if(this.checkedCategory.length != 0) {
                         this.checkedCategory = this.checkedCategory.map(str => str.replace(/ /g, '+'));
                         queryUrl += '&category=' + this.checkedCategory.join();
+                    }
+
+                    if(this.keyword) {
+                        queryUrl += '&keyword=' + this.keyword;
                     }
 
                     if(this.currentPage ){
@@ -589,6 +608,7 @@
                             checkedType            :this.checkedType,
                             checkedPillar          :this.checkedPillar,
                             checkedCategory        :this.checkedCategory,
+                            keyword                :this.keyword,
                         }, 'Agreements', this.frontendSearchUrl);
                     }
 
@@ -597,13 +617,37 @@
 
                     return fetchURL;
                 },
+                searchKeyword: function() {
+
+                    if (this.keyword){
+                        pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'agreements', 'search_term': this.keyword});
+                        
+                        if(this.popstateLoad === false) {
+                            history.pushState({
+                                checkedStatus          :this.checkedStatus,
+                                checkedRegulation      :this.checkedRegulation,
+                                checkedType            :this.checkedType,
+                                checkedPillar          :this.checkedPillar,
+                                checkedCategory        :this.checkedCategory,
+                                keyword                :this.keyword,
+                            }, 'Agreements', this.frontendSearchUrl);
+                        }
+
+                        // reset the popstateLoad property to false
+                        this.popstateLoad = false;
+                        
+                        return "&keyword=" + this.keyword
+                    }
+                    return ""
+                },
                 fetchAPIData: function(input, page) {
                     var self = this;
                     this.responseAvailable = false;
                     this.emptyResult = false;
-                    this.currentPage = page === null ? 1 : page;
+                    this.currentPage = page === null || page === undefined ? 1 : page;
 
-                    var requestUrl = this.searchRequestUrl(input, this.currentPage);
+                    var requestUrl = this.searchRequestUrl(input, this.currentPage) + this.searchKeyword();
+                    
                     console.log(requestUrl);
 
                     fetch(requestUrl)
@@ -647,6 +691,7 @@
                             this.checkedType                 = [];
                             this.checkedPillar               = [];
                             this.checkedCategory             = [];
+                            this.keyword                     = null;
                             return
                         }
 
@@ -655,6 +700,7 @@
                         this.checkedType            = event.state.checkedType;
                         this.checkedPillar          = event.state.checkedPillar;
                         this.checkedCategory        = event.state.checkedCategory;
+                        this.keyword                = event.state.keyword;
 
                         this.fetchAPIData(null, this.currentPage);
                     }
