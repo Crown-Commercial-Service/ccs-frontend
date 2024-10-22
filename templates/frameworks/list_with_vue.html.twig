@@ -641,7 +641,7 @@
                         // reset the popstateLoad property to false
                         this.popstateLoad = false;
                         
-                        return "&keyword=" + this.keyword
+                        return "&keyword=" + this.keyword.replace(/&/g, '');
                     }
                     return ""
                 },
