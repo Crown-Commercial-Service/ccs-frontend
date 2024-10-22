@@ -710,6 +710,44 @@
                         this.fetchAPIData(null, this.currentPage);
                     }
                 },
+                shouldShowTypeCheckbox: function (item) {
+                     if (this.checkedRegulation.length === 0) {
+                        return true;
+                     }
+
+                    const regulationMap = {
+                        "Closed Framework": "PA2023",
+                        "Dynamic Marketing": "PA2023",
+                        "Open Framework": "PA2023",
+                        "Dynamic Purchasing System": "PCR2015",
+                        "PCR15 Framework": "PCR2015",
+                        "PCR06 Framework": "PCR2006"
+                    };
+
+                    const requiredRegulation = regulationMap[item];
+                    return requiredRegulation ? this.checkedRegulation.includes(requiredRegulation) : false;
+                },
+                removeTypeBasedOnReg: function () {
+                    const checkboxMap = {
+                        "PA2023": ["Closed+Framework", "Dynamic+Marketing", "Open+Framework"],
+                        "PCR2015": ["Dynamic+Purchasing+System", "PCR15+Framework"],
+                        "PCR2006": ["PCR06+Framework"]
+                    };
+
+                    for (const [key, types] of Object.entries(checkboxMap)) {
+                        const currentCheckbox = document.getElementById(key);
+                        if (currentCheckbox && !currentCheckbox.checked) {
+                            types.forEach(type => {
+                                const index = this.checkedType.indexOf(type);
+                                if (index !== -1) {
+                                    this.checkedType.splice(index, 1);
+                                    this.filtering(null, "type");
+                                }
+                            });
+                        }
+                    }
+                    
+                },
             }
         });
 
