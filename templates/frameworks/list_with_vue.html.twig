@@ -735,6 +735,48 @@
 
                     return false;
                 },
+                removeTypeBasedOnReg: function (checkbox) {
+                    var pa2023Checkbox = document.getElementById("PA2023");
+                    var pcr2006Checkbox = document.getElementById("PCR2006");
+                    var pcr2015Checkbox = document.getElementById("PCR2015");
+
+                        if (pa2023Checkbox !=  null && pa2023Checkbox.checked == false) {
+                            if(this.checkedType.includes("Closed+Framework")) {
+                                this.checkedType.splice(this.checkedType.indexOf("Closed+Framework"), 1);
+                                this.filtering(null, "type");
+                            }
+
+                            if(this.checkedType.includes("Dynamic+Marketing")) {
+                                this.checkedType.splice(this.checkedType.indexOf("Dynamic+Marketing"), 1);
+                                this.filtering(null, "type");
+                            }
+
+                            if(this.checkedType.includes("Open+Framework")) {
+                                this.checkedType.splice(this.checkedType.indexOf("Open+Framework"), 1);
+                                this.filtering(null, "type");
+                            }
+                        }
+
+                         if (pcr2015Checkbox !=  null && pcr2015Checkbox.checked == false) {
+                            if(this.checkedType.includes("Dynamic+Purchasing+System")) {
+                                this.checkedType.splice(this.checkedType.indexOf("Dynamic+Purchasing+System"), 1);
+                                this.filtering(null, "type");
+                            }
+
+                             if(this.checkedType.includes("PCR15+Framework")) {
+                                this.checkedType.splice(this.checkedType.indexOf("PCR15+Framework"), 1);
+                                this.filtering(null, "type");
+                            }
+                        }
+                   
+                        if (pcr2006Checkbox !=  null && pcr2006Checkbox.checked == false) {
+                            if(this.checkedType.includes("PCR06+Framework")) {
+                                this.checkedType.splice(this.checkedType.indexOf("PCR06+Framework"), 1);
+                                this.filtering(null, "type");
+                            }
+                        }
+                    
+                },
             }
         });
 

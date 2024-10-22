@@ -121,7 +121,7 @@
                     
                         {% for item in regulationsForTwig %}
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input v-on:change=fetchAPIData("{{item}}",null) v-model="checkedRegulation" name="regulation[]" value="{{item}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}" type="checkbox" {{ item in filters.checkedRegulation ? 'checked' }}>
+                                <input v-on:change="fetchAPIData('{{item}}', null); removeTypeBasedOnReg()"  v-model="checkedRegulation" name="regulation[]" value="{{item}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}" type="checkbox" {{ item in filters.checkedRegulation ? 'checked' }}>
                                 <label class="govuk-label govuk-checkboxes__label" for="{{item}}">
                                     {{  item }}
                                 </label>
