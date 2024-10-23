@@ -754,11 +754,12 @@
                                 const index = this.checkedType.indexOf(type);
                                 if (index !== -1) {
                                     this.checkedType.splice(index, 1);
-                                    this.filtering(null, "type");
+                                    this.fetchAPIData(type, this.currentPage);
                                 }
                             });
                         }
                     }
+                    console.log(this.checkedType);
                     
                 },
             }
