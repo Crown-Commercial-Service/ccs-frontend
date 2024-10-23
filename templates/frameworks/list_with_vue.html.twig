@@ -174,7 +174,16 @@
                     </div>
 
                     <div v-if="emptyResult" class="hideWithoutJS govuk-visually-hidden">
-                        <p>There are no matching results.</p>
+                        <h3>There are no matching results.</h3>
+                        <p class="govuk-!-margin-bottom-0">Improve your search results by:</p>
+                        <ul>
+                            <li><p class="govuk-!-margin-bottom-1">removing filters</p></li>
+                            <li v-if="keyword"><p class="govuk-!-margin-bottom-1">double-checking your spelling</p></li>
+                            <li v-if="keyword"><p class="govuk-!-margin-bottom-1">using fewer keywords</p></li>
+                            <li v-if="keyword"><p class="govuk-!-margin-bottom-1">clicking 'start now' and answering a few simple questions to find the best agreement for your needs</p></li>
+                        </ul>
+                        <br>
+                        <p>If you are still unable to find what you need, contact our customer service centre using our <a class="govuk-link" href="/contact">contact us form</a>.</p>
                     </div>
 
 
@@ -668,9 +677,7 @@
                         this.results        = jsonResponse.results;
 
                         self.results = jsonResponse.results;
-                        if( Object.keys(jsonResponse.results).length === 0 ){
-                            self.emptyResult = true;
-                        }
+                        self.emptyResult = Object.keys(jsonResponse.results).length === 0 ? true : false
                         self.responseAvailable = true;
                     })
                     .catch(function(error) {
