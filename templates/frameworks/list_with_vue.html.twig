@@ -174,7 +174,7 @@
                     </div>
 
                     <div v-if="emptyResult" class="hideWithoutJS govuk-visually-hidden">
-                        <div v-if="checkedRegulation.length == 1 && checkedRegulation.includes('PCR2006')" >
+                        <div v-if="checkedRegulation.length == 1 && checkedRegulation.includes('PCR2006') || checkedType.length == 1 && checkedType.includes('PCR06+Framework')" >
                             <p>All agreements under The Public Contracts Regulation (PCR) 2006 are now expired. <br>You can view these archived agreements by clicking 'Expired' on the left side of this page.</p>
                         </div>
                         <div v-else>
