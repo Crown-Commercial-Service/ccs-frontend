@@ -17,27 +17,16 @@
             {% include '/includes/phase-banner-content.html.twig' %}
         </div>
 
-        <p style="color:blue;font-size:50px;">Dont mess with me, I have VUE JS</p>
+        <p style="color:blue;font-size:50px;">Dont mess with me, I have VUE JS (I am going soon T.T)</p>
 
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="/">Home</a>
                 </li>
-                    {% if category is defined or pillar is defined %}
-                    <li class="govuk-breadcrumbs__list-item">
-                        <a class="govuk-breadcrumbs__link" href="/agreements">Search agreements </a>
-                    </li>
-                    {% if category is defined and category|trim is not empty  %}
-                        <li class="govuk-breadcrumbs__list-item" aria-current="page">{{ category }}</li>
-                    {% elseif pillar is defined and pillar|trim is not empty %}
-                        <li class="govuk-breadcrumbs__list-item" aria-current="page">{{ pillar }}</li>
-                    {% endif %}
-                {% else %}
-                    <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                        Search agreements
-                    </li>
-                {% endif %}
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/agreements">Search agreements </a>
+                </li>
             </ol>
         </div>
 
@@ -45,21 +34,8 @@
 
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-
-                    {% if category is defined and category|trim is not empty  %}
-                        <h1 class="govuk-heading-xl page-title">{{ query is defined and query|trim is not empty ? "Search agreements for #{query} in #{category} category" : "Search agreements in #{category} category" }}</h1>
-                        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement', 'category':'{{category}}'});</script>
-                    {% elseif pillar is defined and pillar|trim is not empty %}
-                        <h1 class="govuk-heading-xl page-title">{{ query is defined and query|trim is not empty ? "Search agreements for #{query} in #{pillar} category" : "Search agreements in #{pillar} category" }}</h1>
-                        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement', 'pillar':'{{pillar}}'});</script>
-                    {% elseif query is defined and query|trim is not empty %}
-                        <h1 class="govuk-heading-xl page-title">Search agreements for {{ query }}</h1>
-                        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement'});</script>
-                    {% else %}
-                        <h1 class="govuk-heading-xl page-title">Search agreements</h1>
-                        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement'});</script>
-                    {% endif %}
-
+                    <h1 v-if="displayKeyword"class="govuk-heading-xl page-title">Search agreements for {[displayKeyword]}</h1>
+                    <h1 v-else class="govuk-heading-xl page-title">Search agreements</h1>
                 </div>
             </div>
 
@@ -72,69 +48,18 @@
                         <h2 class="govuk-heading-m" v-else>                   {[totalResults]} agreements found</h2>
                  </div>
 
-                {% if statuses is defined %}
-                    {% set statusLive = '&statuses%5B%5D=live' %}
-                    {% set statusExpired = '&statuses%5B%5D=expired' %}
-
-                    <div class="govuk-grid-column-two-thirds">
-                        <div class="ccs-filters-summary ccs-filter-summary-frameworks">
-                            <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
-                                <span class="ccs-filters-summary__label">Matching</span>
-                                <ul class="ccs-filters-summary__list">
-
-                                    {% if 'live' in statuses %}
-                                        <li class="ccs-filters-summary__facet">
-                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{ 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
-                                                <span> Live </span>
-                                            </a>  
-                                        </li>
-                                    {% endif %}
-
-                                    {% if statuses|length > 1 %}
-                                        <li style="display: inline; padding-right: 5px;" >and</li>
-                                    {% endif %}
-
-                                    {% if 'expired' in statuses%}
-                                        <li class="ccs-filters-summary__facet">
-                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{'live' in statuses ? statusLive : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
-                                                <span> Expired </span>
-                                            </a>  
-                                        </li>
-                                    {% endif %}
-
-                                </ul>
-                            </div>
+                <div v-if="displayKeyword" class="govuk-grid-column-two-thirds">
+                    <div class="ccs-filters-summary ccs-filter-summary-frameworks">
+                        <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
+                            <span class="ccs-filters-summary__label">Containing</span>
+                            <ul class="ccs-filters-summary__list">
+                                <li class="ccs-filters-summary__facet">
+                                        <a style="cursor: pointer;" @click="clearSearchKeyword" class="ccs-filters-summary__facet__cancel"> <span>{[ displayKeyword]}</span> </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                {% endif %}
-                
-
-                {% if query is defined and query|trim is not empty %}
-                    <div class="govuk-grid-column-two-thirds">
-                        <div class="ccs-filters-summary ccs-filter-summary-frameworks">
-                            <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
-                                <span class="ccs-filters-summary__label">Containing</span>
-                                <ul class="ccs-filters-summary__list">
-                                    <li class="ccs-filters-summary__facet">
-                                        {% if category is defined and category|trim is not empty %}
-                                            <a href=" {{"/agreements/search?q=&category=#{category_slug}#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel">
-                                                <span>{{ query }}</span>
-                                            </a>
-                                        {% elseif pillar is defined and pillar|trim is not empty %}
-                                            <a href=" {{"/agreements/search?q=&pillar=#{pillar_slug}#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel">
-                                                <span>{{ query }}</span>
-                                            </a>
-                                        {% else %}
-                                            <a href=" {{"/agreements/search?q=#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel">
-                                                <span>{{ query }}</span>
-                                            </a>
-                                        {% endif %}
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
+                </div>
 
                 <div class="govuk-grid-column-two-thirds">
 
@@ -174,7 +99,22 @@
                     </div>
 
                     <div v-if="emptyResult" class="hideWithoutJS govuk-visually-hidden">
-                        <p>There are no matching results.</p>
+                        <div v-if="checkedRegulation.length == 1 && checkedRegulation.includes('PCR2006') || checkedType.length == 1 && checkedType.includes('PCR06+Framework')" >
+                            <p>All agreements under The Public Contracts Regulation (PCR) 2006 are now expired. <br>You can view these archived agreements by clicking 'Expired' on the left side of this page.</p>
+                        </div>
+                        <div v-else>
+                            <h3>There are no matching results.</h3>
+                            <p class="govuk-!-margin-bottom-0">Improve your search results by:</p>
+                            <ul>
+                                <li><p class="govuk-!-margin-bottom-1">removing filters</p></li>
+                                <li v-if="keyword"><p class="govuk-!-margin-bottom-1">double-checking your spelling</p></li>
+                                <li v-if="keyword"><p class="govuk-!-margin-bottom-1">using fewer keywords</p></li>
+                                <li v-if="keyword"><p class="govuk-!-margin-bottom-1">clicking 'start now' and answering a few simple questions to find the best agreement for your needs</p></li>
+                            </ul>
+                            <br>
+                            <p>If you are still unable to find what you need, contact our customer service centre using our <a class="govuk-link" href="/contact">contact us form</a>.</p>
+                        </div>
+
                     </div>
 
 
@@ -187,6 +127,7 @@
 
     {% if app.environment == "prod" %}
         <script src="/assets/scripts/libraries/vue.min.js?v=1"></script>
+        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement'});</script>
     {% else %}
         <script src="/assets/scripts/libraries/vue.js?v=1"></script>
     {% endif %}
@@ -211,14 +152,20 @@
         var apiBaseUrl                  = '{{ api_base_url }}';
         var appBaseUrl                  = '{{ app_base_url }}';
         var pageNumber                  = {% if pageNumber is defined and pageNumber is not empty %}{{ pageNumber }}{% else %}1{% endif %};
+        var keyword                     = null;
         var checkedStatus               = [];
         var checkedRegulation           = [];
         var checkedType                 = [];
         var checkedPillar               = [];
         var checkedCategory             = [];
+        var pillars                     = new Map();
         var pillarsSize                 = '{{ pillars.pillars|length }}';
         var categorySize                = '{{ categories|length }}';
         
+        {% if filters.keyword is defined and filters.keyword is not null and filters.keyword is not empty %}
+            var keyword = '{{ filters.keyword }}';
+        {% endif %}
+
         {% if filters.checkedStatus is defined and filters.checkedStatus is not empty %}
             var checkedStatus   = JSON.parse('{{ filters.checkedStatus|json_encode|e("js") }}');
         {% endif %}
@@ -237,6 +184,15 @@
 
         {% if filters.checkedCategory is defined and filters.checkedCategory is not empty %}
             var checkedCategory   = JSON.parse('{{ filters.checkedCategory|json_encode|e("js") }}');
+        {% endif %}
+
+         {% if pillars.pillars is defined and pillars.pillars is not empty %}
+            var allPillar   = JSON.parse('{{ pillars.pillars|json_encode|e("js") }}');
+
+            for(var i = 0; i < allPillar.length; i++) {  
+                categoryNames = allPillar[i].categories.map(category => category.slug.toLowerCase());
+                pillars.set(allPillar[i].name, categoryNames);
+            }
         {% endif %}
 
         Vue.component('results-pagination', {
@@ -380,11 +336,14 @@
                 responseAvailable: null,
                 emptyResult: false,
                 apiURL:  apiBaseUrl + "frameworks?",
+                keyword: keyword,
+                displayKeyword: null,
                 checkedStatus: checkedStatus,
                 checkedRegulation: checkedRegulation,
                 checkedType: checkedType,
                 checkedPillar: checkedPillar,
                 checkedCategory: checkedCategory,
+                pillars: pillars,
                 currentPage: pageNumber,
                 pillarsSize: pillarsSize,   
                 categorySize: categorySize,
@@ -416,6 +375,14 @@
                 this.setupHistoryApi();
             },
             watch: {
+                keyword(keyword){
+                    if(this.keyword.trim().length == 0 || /^[\-\(\)&]*$/.test(this.keyword)){
+                        this.keyword = "";
+                    }
+                    this.keyword = this.keyword
+                        .replace(/\//g, "")                   // Remove slashes
+                        .replace(/[^a-zA-Z0-9\s\-&()]/g, ""); // Allow letters, numbers, spaces, and the specified characters
+                },
                 searchRequestUrl: function() {
 
                     // if the searchRequestUrl hasn't been updated by a popstate
@@ -428,6 +395,7 @@
                             checkedType:        this.checkedType,
                             checkedPillar:      this.checkedPillar,
                             checkedCategory:    this.checkedCategory,
+                            keyword:            this.keyword,
                         }, 'Agreements', this.frontendSearchUrl);
                     }
 
@@ -459,6 +427,10 @@
                     if(this.checkedCategory.length != 0) {
                         this.checkedCategory = this.checkedCategory.map(str => str.replace(/ /g, '+'));
                         queryUrl += '&category=' + this.checkedCategory.join();
+                    }
+
+                    if(this.keyword) {
+                        queryUrl += '&keyword=' + this.keyword;
                     }
 
                     if(this.currentPage ){
@@ -523,6 +495,19 @@
                             }else if(this.checkedCategory.length != 0){
                                 document.getElementById("allPillarAndCategory").checked = false
                             }
+
+                            seletedOptions = this.checkedCategory.map(str => str.replace(/,/g, '').replace(/[+]/g, '-').toLowerCase());
+
+                            for (let [key, value] of pillars) {
+                                if (value.every(value => seletedOptions.includes(value))) {
+                                        this.checkedPillar.includes(key) ? null : this.checkedPillar.push(key);
+                                        document.getElementById(key.toLowerCase()).checked = true ;
+                                    }else if (value.includes(selected)) {
+                                        document.getElementById(key.toLowerCase()).checked = false ;
+                                        this.checkedPillar = this.checkedPillar.filter(item => item !== key);
+                                    }
+                            }
+
                             this.checkedCategory.forEach((currentElement) => {
                                 returnFilter += "&category[]=" + currentElement
                             })
@@ -538,6 +523,10 @@
 
                     //if nothing is check || everything is checked || View all is checked 
                     if (filterArray.length == 0 || filterArray.length == maxFilter || filterArray.includes(viewAllCheckboxID) ){
+                    
+                        //edge case where there are some category checked but all the pullar has also been checked
+                        this.checkedCategory = filtertingOption == "pillar" && filterArray.length == maxFilter ? [] : this.checkedCategory; 
+
                         filterArray.splice(0);
                         document.getElementById(viewAllCheckboxID) != null ? document.getElementById(viewAllCheckboxID).checked = true : null
                         document.getElementById(selected) != null ? document.getElementById(selected).checked = false : null
@@ -566,6 +555,7 @@
                             checkedType            :this.checkedType,
                             checkedPillar          :this.checkedPillar,
                             checkedCategory        :this.checkedCategory,
+                            keyword                :this.keyword,
                         }, 'Agreements', this.frontendSearchUrl);
                     }
 
@@ -574,13 +564,56 @@
 
                     return fetchURL;
                 },
+                searchKeyword: function() {
+
+                    if (this.keyword){
+                        pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'agreements', 'search_term': this.keyword});
+                        
+                        if(this.popstateLoad === false) {
+                            history.pushState({
+                                checkedStatus          :this.checkedStatus,
+                                checkedRegulation      :this.checkedRegulation,
+                                checkedType            :this.checkedType,
+                                checkedPillar          :this.checkedPillar,
+                                checkedCategory        :this.checkedCategory,
+                                keyword                :this.keyword,
+                            }, 'Agreements', this.frontendSearchUrl);
+                        }
+
+                        // reset the popstateLoad property to false
+                        this.popstateLoad = false;
+
+                        this.displayKeyword = this.keyword
+                        
+                        return "&keyword=" + this.keyword.replace(/&/g, '');
+                    }
+                    this.displayKeyword = null
+                    return ""
+                },
+                clearSearchKeyword: function() {
+                    this.keyword = ""
+                    this.displayKeyword = null
+                    this.fetchAPIData(null,null)
+                },
+                resetAllFilter: function() {
+                    this.keyword = ""
+                    this.displayKeyword = null
+                    this.checkedStatus = []
+                    this.checkedRegulation = []
+                    this.checkedType = []
+                    this.checkedPillar = []
+                    this.checkedCategory = []
+                    this.pillars = []
+                    this.fetchAPIData(null,null)
+                },
                 fetchAPIData: function(input, page) {
                     var self = this;
                     this.responseAvailable = false;
                     this.emptyResult = false;
-                    this.currentPage = page === null ? 1 : page;
+                    this.currentPage = page === null || page === undefined ? 1 : page;
 
-                    var requestUrl = this.searchRequestUrl(input, this.currentPage);
+                    var requestUrl = this.searchRequestUrl(input, this.currentPage) + this.searchKeyword();
+                    
                     console.log(requestUrl);
 
                     fetch(requestUrl)
@@ -596,9 +629,7 @@
                         this.results        = jsonResponse.results;
 
                         self.results = jsonResponse.results;
-                        if( Object.keys(jsonResponse.results).length === 0 ){
-                            self.emptyResult = true;
-                        }
+                        self.emptyResult = Object.keys(jsonResponse.results).length === 0 ? true : false
                         self.responseAvailable = true;
                     })
                     .catch(function(error) {
@@ -624,6 +655,7 @@
                             this.checkedType                 = [];
                             this.checkedPillar               = [];
                             this.checkedCategory             = [];
+                            this.keyword                     = null;
                             return
                         }
 
@@ -632,9 +664,49 @@
                         this.checkedType            = event.state.checkedType;
                         this.checkedPillar          = event.state.checkedPillar;
                         this.checkedCategory        = event.state.checkedCategory;
+                        this.keyword                = event.state.keyword;
 
                         this.fetchAPIData(null, this.currentPage);
                     }
+                },
+                shouldShowTypeCheckbox: function (item) {
+                     if (this.checkedRegulation.length === 0) {
+                        return true;
+                     }
+
+                    const regulationMap = {
+                        "Closed Framework": "PA2023",
+                        "Dynamic Market": "PA2023",
+                        "Open Framework": "PA2023",
+                        "Dynamic Purchasing System": "PCR2015",
+                        "PCR15 Framework": "PCR2015",
+                        "PCR06 Framework": "PCR2006"
+                    };
+
+                    const requiredRegulation = regulationMap[item];
+                    return requiredRegulation ? this.checkedRegulation.includes(requiredRegulation) : false;
+                },
+                removeTypeBasedOnReg: function () {
+                    const checkboxMap = {
+                        "PA2023": ["Closed+Framework", "Dynamic+Market", "Open+Framework"],
+                        "PCR2015": ["Dynamic+Purchasing+System", "PCR15+Framework"],
+                        "PCR2006": ["PCR06+Framework"]
+                    };
+
+                    for (const [key, types] of Object.entries(checkboxMap)) {
+                        const currentCheckbox = document.getElementById(key);
+                        if (currentCheckbox && !currentCheckbox.checked) {
+                            types.forEach(type => {
+                                const index = this.checkedType.indexOf(type);
+                                if (index !== -1) {
+                                    this.checkedType.splice(index, 1);
+                                    this.fetchAPIData(type, this.currentPage);
+                                }
+                            });
+                        }
+                    }
+                    console.log(this.checkedType);
+                    
                 },
             }
         });

@@ -1,75 +1,39 @@
 <div class="govuk-grid-column-one-third">
 
-    <form action="{{ path('frameworks_search') }}" method="GET">
+    <form v-on:submit.prevent="fetchAPIData" action="{{ path('frameworks_search') }}" method="GET">
 
         <div class="govuk-form-group govuk-form-group--enclosure">
             <div class="govuk-form-group sidebar__search-group">
-                <label class="govuk-label" for="q"> Search
-                    agreements </label>
-                {% if query is defined and query|trim is not empty %}
-                    <input class="govuk-input" id="q" name="q" type="text" value="{{ query }}">
-                {% else %}
-                    <input class="govuk-input" id="q" name="q" type="text">
-                {% endif %}
-
+                <label class="govuk-label" for="q"> Search agreements </label>
+                <input v-model="keyword" class="govuk-input" id="q"/>
                 <button type="submit" class="sidebar__search-button govuk-input">
                     <span class="visuallyhidden">Search agreements</span>
                 </button>
             </div>
         </div>
 
-        {% if query is defined and query|trim is not empty %}
-
-            <script>pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'agreements', 'search_term': '{{query}}'});</script>
-
-            <div class="guided-match-area">
-                <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-margin-bottom-2 text-white">Need help finding the right agreement</h2>
-                <p class="govuk-body text-white">Answer some questions to find the best agreement for your needs</br></p>
-                <a href={{ match_url }}  draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-3 govuk-!-margin-bottom-3" data-module="govuk-button"> Start now
-                    <svg class="govuk-!-padding-left-2" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
-                        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
-                    </svg>
-                </a>
-            </div>
-        {% endif %}
-
+        <div v-if="keyword" class="guided-match-area">
+            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-margin-bottom-2 text-white">Need help finding the right agreement</h2>
+            <p class="govuk-body text-white">Answer some questions to find the best agreement for your needs</br></p>
+            <a v-bind:href="'{{ match_url }}'+ keyword" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-3 govuk-!-margin-bottom-3" data-module="govuk-button"> Start now
+                <svg class="govuk-!-padding-left-2" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                    <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+                </svg>
+            </a>
+        </div>
 
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-half">
                 <h2 class="govuk-heading-m">Apply filters</h2>
             </div>
                 <div class="govuk-grid-column-one-half" style="text-align:right;">
-                {% set clearLink = "/agreements" %}
-
-                {% if query is defined %}
-                
-                    {% if pillar is defined and pillar|trim is not empty %}
-                        {% set clearLink = "/agreements/search?q=#{query}&pillar=#{pillar_slug}" %} 
-                    {% elseif category is defined and category|trim is not empty %}
-                        {% set clearLink = "/agreements/search?q=#{query}&category=#{category_slug}" %}
-                    {% else %}
-                        {% set clearLink = "/agreements/search?q=#{query}" %}
-                    {% endif %}
-
-                {% else %} 
-
-                    {% if pillar is defined and pillar|trim is not empty %}
-                        {% set clearLink = "/agreements/pillar/#{pillar_slug}" %}
-                    {% elseif category is defined and category|trim is not empty %}
-                        {% set clearLink = "/agreements/category/#{category_slug}" %}
-                    {% else %}
-                        {% set clearLink = "/agreements" %}
-                    {% endif %}
-                    
-                {% endif %}
-                <a onclick="pushToDataLayer({'event': 'search_filter', 'interaction_type': 'clear'});" href={{ clearLink }} class="govuk-link" >Clear filters</a>
+                <a style="cursor: pointer;" onclick="pushToDataLayer({'event': 'search_filter', 'interaction_type': 'clear'});" @click="resetAllFilter" class="govuk-link" >Clear filters</a>
             </div>
         </div>
         
         {% set statusesForTwig = ["Live", "Expired"] %}
         {% set regulationsForTwig = ['PA2023', 'PCR2015', 'PCR2006'] %}
-        {% set typeStatusesForTwig = ["Dynamic+Purchasing+System", "Dynamic+Marketing", "Open+Framework", "Closed+Framework", "PCR15+Framework", "PCR06+Framework"] %}
-
+        {% set typeStatusesForTwig = ["Dynamic+Purchasing+System", "Dynamic+Market", "Open+Framework", "Closed+Framework", "PCR15+Framework", "PCR06+Framework"] %}
 
         <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
@@ -127,7 +91,7 @@
                     
                         {% for item in regulationsForTwig %}
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input v-on:change=fetchAPIData("{{item}}",null) v-model="checkedRegulation" name="regulation[]" value="{{item}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}" type="checkbox" {{ item in filters.checkedRegulation ? 'checked' }}>
+                                <input v-on:change="fetchAPIData('{{item}}', null); removeTypeBasedOnReg()"  v-model="checkedRegulation" name="regulation[]" value="{{item}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}" type="checkbox" {{ item in filters.checkedRegulation ? 'checked' }}>
                                 <label class="govuk-label govuk-checkboxes__label" for="{{item}}">
                                     {{  item }}
                                 </label>
@@ -160,7 +124,7 @@
                         </div>
 
                         {% for item in typeStatusesForTwig %}
-                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                            <div v-if="shouldShowTypeCheckbox('{{ item | replace({'+': ' '}) }}')" class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                 <input v-on:change=fetchAPIData("{{item}}",null) v-model="checkedType" name="type[]" value="{{item}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}" type="checkbox" {{ item in filters.checkedType ? 'checked' }}>
                                 <label class="govuk-label govuk-checkboxes__label" for="{{item}}">
                                     {{  item |replace({'+': ' '}) }}
