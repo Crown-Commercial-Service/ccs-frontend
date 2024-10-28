@@ -17,27 +17,16 @@
             {% include '/includes/phase-banner-content.html.twig' %}
         </div>
 
-        <p style="color:blue;font-size:50px;">Dont mess with me, I have VUE JS</p>
+        <p style="color:blue;font-size:50px;">Dont mess with me, I have VUE JS (I am going soon T.T)</p>
 
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="/">Home</a>
                 </li>
-                    {% if category is defined or pillar is defined %}
-                    <li class="govuk-breadcrumbs__list-item">
-                        <a class="govuk-breadcrumbs__link" href="/agreements">Search agreements </a>
-                    </li>
-                    {% if category is defined and category|trim is not empty  %}
-                        <li class="govuk-breadcrumbs__list-item" aria-current="page">{{ category }}</li>
-                    {% elseif pillar is defined and pillar|trim is not empty %}
-                        <li class="govuk-breadcrumbs__list-item" aria-current="page">{{ pillar }}</li>
-                    {% endif %}
-                {% else %}
-                    <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                        Search agreements
-                    </li>
-                {% endif %}
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/agreements">Search agreements </a>
+                </li>
             </ol>
         </div>
 
@@ -45,21 +34,8 @@
 
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-
-                    {% if category is defined and category|trim is not empty  %}
-                        <h1 class="govuk-heading-xl page-title">{{ query is defined and query|trim is not empty ? "Search agreements for #{query} in #{category} category" : "Search agreements in #{category} category" }}</h1>
-                        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement', 'category':'{{category}}'});</script>
-                    {% elseif pillar is defined and pillar|trim is not empty %}
-                        <h1 class="govuk-heading-xl page-title">{{ query is defined and query|trim is not empty ? "Search agreements for #{query} in #{pillar} category" : "Search agreements in #{pillar} category" }}</h1>
-                        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement', 'pillar':'{{pillar}}'});</script>
-                    {% elseif query is defined and query|trim is not empty %}
-                        <h1 class="govuk-heading-xl page-title">Search agreements for {{ query }}</h1>
-                        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement'});</script>
-                    {% else %}
-                        <h1 class="govuk-heading-xl page-title">Search agreements</h1>
-                        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement'});</script>
-                    {% endif %}
-
+                    <h1 v-if="displayKeyword"class="govuk-heading-xl page-title">Search agreements for {[displayKeyword]}</h1>
+                    <h1 v-else class="govuk-heading-xl page-title">Search agreements</h1>
                 </div>
             </div>
 
@@ -72,69 +48,18 @@
                         <h2 class="govuk-heading-m" v-else>                   {[totalResults]} agreements found</h2>
                  </div>
 
-                {% if statuses is defined %}
-                    {% set statusLive = '&statuses%5B%5D=live' %}
-                    {% set statusExpired = '&statuses%5B%5D=expired' %}
-
-                    <div class="govuk-grid-column-two-thirds">
-                        <div class="ccs-filters-summary ccs-filter-summary-frameworks">
-                            <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
-                                <span class="ccs-filters-summary__label">Matching</span>
-                                <ul class="ccs-filters-summary__list">
-
-                                    {% if 'live' in statuses %}
-                                        <li class="ccs-filters-summary__facet">
-                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{ 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
-                                                <span> Live </span>
-                                            </a>  
-                                        </li>
-                                    {% endif %}
-
-                                    {% if statuses|length > 1 %}
-                                        <li style="display: inline; padding-right: 5px;" >and</li>
-                                    {% endif %}
-
-                                    {% if 'expired' in statuses%}
-                                        <li class="ccs-filters-summary__facet">
-                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{'live' in statuses ? statusLive : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
-                                                <span> Expired </span>
-                                            </a>  
-                                        </li>
-                                    {% endif %}
-
-                                </ul>
-                            </div>
+                <div v-if="displayKeyword" class="govuk-grid-column-two-thirds">
+                    <div class="ccs-filters-summary ccs-filter-summary-frameworks">
+                        <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
+                            <span class="ccs-filters-summary__label">Containing</span>
+                            <ul class="ccs-filters-summary__list">
+                                <li class="ccs-filters-summary__facet">
+                                        <a style="cursor: pointer;" @click="clearSearchKeyword" class="ccs-filters-summary__facet__cancel"> <span>{[ displayKeyword]}</span> </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                {% endif %}
-                
-
-                {% if query is defined and query|trim is not empty %}
-                    <div class="govuk-grid-column-two-thirds">
-                        <div class="ccs-filters-summary ccs-filter-summary-frameworks">
-                            <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
-                                <span class="ccs-filters-summary__label">Containing</span>
-                                <ul class="ccs-filters-summary__list">
-                                    <li class="ccs-filters-summary__facet">
-                                        {% if category is defined and category|trim is not empty %}
-                                            <a href=" {{"/agreements/search?q=&category=#{category_slug}#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel">
-                                                <span>{{ query }}</span>
-                                            </a>
-                                        {% elseif pillar is defined and pillar|trim is not empty %}
-                                            <a href=" {{"/agreements/search?q=&pillar=#{pillar_slug}#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel">
-                                                <span>{{ query }}</span>
-                                            </a>
-                                        {% else %}
-                                            <a href=" {{"/agreements/search?q=#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel">
-                                                <span>{{ query }}</span>
-                                            </a>
-                                        {% endif %}
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
+                </div>
 
                 <div class="govuk-grid-column-two-thirds">
 
@@ -174,7 +99,22 @@
                     </div>
 
                     <div v-if="emptyResult" class="hideWithoutJS govuk-visually-hidden">
-                        <p>There are no matching results.</p>
+                        <div v-if="checkedRegulation.length == 1 && checkedRegulation.includes('PCR2006') || checkedType.length == 1 && checkedType.includes('PCR06+Framework')" >
+                            <p>All agreements under The Public Contracts Regulation (PCR) 2006 are now expired. <br>You can view these archived agreements by clicking 'Expired' on the left side of this page.</p>
+                        </div>
+                        <div v-else>
+                            <h3>There are no matching results.</h3>
+                            <p class="govuk-!-margin-bottom-0">Improve your search results by:</p>
+                            <ul>
+                                <li><p class="govuk-!-margin-bottom-1">removing filters</p></li>
+                                <li v-if="keyword"><p class="govuk-!-margin-bottom-1">double-checking your spelling</p></li>
+                                <li v-if="keyword"><p class="govuk-!-margin-bottom-1">using fewer keywords</p></li>
+                                <li v-if="keyword"><p class="govuk-!-margin-bottom-1">clicking 'start now' and answering a few simple questions to find the best agreement for your needs</p></li>
+                            </ul>
+                            <br>
+                            <p>If you are still unable to find what you need, contact our customer service centre using our <a class="govuk-link" href="/contact">contact us form</a>.</p>
+                        </div>
+
                     </div>
 
 
@@ -187,6 +127,7 @@
 
     {% if app.environment == "prod" %}
         <script src="/assets/scripts/libraries/vue.min.js?v=1"></script>
+        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement'});</script>
     {% else %}
         <script src="/assets/scripts/libraries/vue.js?v=1"></script>
     {% endif %}
@@ -396,6 +337,7 @@
                 emptyResult: false,
                 apiURL:  apiBaseUrl + "frameworks?",
                 keyword: keyword,
+                displayKeyword: null,
                 checkedStatus: checkedStatus,
                 checkedRegulation: checkedRegulation,
                 checkedType: checkedType,
@@ -640,10 +582,29 @@
 
                         // reset the popstateLoad property to false
                         this.popstateLoad = false;
+
+                        this.displayKeyword = this.keyword
                         
                         return "&keyword=" + this.keyword.replace(/&/g, '');
                     }
+                    this.displayKeyword = null
                     return ""
+                },
+                clearSearchKeyword: function() {
+                    this.keyword = ""
+                    this.displayKeyword = null
+                    this.fetchAPIData(null,null)
+                },
+                resetAllFilter: function() {
+                    this.keyword = ""
+                    this.displayKeyword = null
+                    this.checkedStatus = []
+                    this.checkedRegulation = []
+                    this.checkedType = []
+                    this.checkedPillar = []
+                    this.checkedCategory = []
+                    this.pillars = []
+                    this.fetchAPIData(null,null)
                 },
                 fetchAPIData: function(input, page) {
                     var self = this;
@@ -668,9 +629,7 @@
                         this.results        = jsonResponse.results;
 
                         self.results = jsonResponse.results;
-                        if( Object.keys(jsonResponse.results).length === 0 ){
-                            self.emptyResult = true;
-                        }
+                        self.emptyResult = Object.keys(jsonResponse.results).length === 0 ? true : false
                         self.responseAvailable = true;
                     })
                     .catch(function(error) {
@@ -717,7 +676,7 @@
 
                     const regulationMap = {
                         "Closed Framework": "PA2023",
-                        "Dynamic Marketing": "PA2023",
+                        "Dynamic Market": "PA2023",
                         "Open Framework": "PA2023",
                         "Dynamic Purchasing System": "PCR2015",
                         "PCR15 Framework": "PCR2015",
@@ -729,7 +688,7 @@
                 },
                 removeTypeBasedOnReg: function () {
                     const checkboxMap = {
-                        "PA2023": ["Closed+Framework", "Dynamic+Marketing", "Open+Framework"],
+                        "PA2023": ["Closed+Framework", "Dynamic+Market", "Open+Framework"],
                         "PCR2015": ["Dynamic+Purchasing+System", "PCR15+Framework"],
                         "PCR2006": ["PCR06+Framework"]
                     };
@@ -741,11 +700,12 @@
                                 const index = this.checkedType.indexOf(type);
                                 if (index !== -1) {
                                     this.checkedType.splice(index, 1);
-                                    this.filtering(null, "type");
+                                    this.fetchAPIData(type, this.currentPage);
                                 }
                             });
                         }
                     }
+                    console.log(this.checkedType);
                     
                 },
             }
