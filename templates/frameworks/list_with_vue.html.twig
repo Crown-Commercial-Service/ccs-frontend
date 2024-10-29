@@ -17,7 +17,7 @@
             {% include '/includes/phase-banner-content.html.twig' %}
         </div>
 
-        <p style="color:blue;font-size:50px;">Dont mess with me, I have VUE JS (I am going soon T.T)</p>
+        <p class="visuallyhidden">This is a page with JS</p>
 
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
@@ -31,11 +31,17 @@
         </div>
 
         <main id="main-content" role="main" class="govuk-main-wrapper">
-
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
+                <div class="govuk-grid-column-full hideWithoutJS govuk-visually-hidden">
                     <h1 v-if="displayKeyword"class="govuk-heading-xl page-title">Search agreements for {[displayKeyword]}</h1>
                     <h1 v-else class="govuk-heading-xl page-title">Search agreements</h1>
+                </div>
+                <div v-show="!javascriptVersion" class="govuk-grid-column-full">
+                    {% if filters.keyword is defined and filters.keyword|trim is not empty %}
+                        <h1 class="govuk-heading-xl page-title">Search agreements for {{filters.keyword}}</h1>
+                    {% else %}
+                        <h1 v-else class="govuk-heading-xl page-title">Search agreements</h1>
+                    {% endif %}
                 </div>
             </div>
 
@@ -43,12 +49,15 @@
             <div class="govuk-grid-row">
                 {% include '/frameworks/filter_options.html.twig' %}
 
-                 <div class="govuk-grid-column-two-thirds">
-                        <h2 class="govuk-heading-m" v-if="totalResults == 1"> {[totalResults]} agreement found</h2>
-                        <h2 class="govuk-heading-m" v-else>                   {[totalResults]} agreements found</h2>
-                 </div>
+                <div class="govuk-grid-column-two-thirds hideWithoutJS govuk-visually-hidden">
+                    <h2 class="govuk-heading-m" v-if="totalResults == 1"> {[totalResults]} agreement found</h2>
+                    <h2 class="govuk-heading-m" v-else>                   {[totalResults]} agreements found</h2>
+                </div>
+                <div v-show="!javascriptVersion" class="govuk-grid-column-two-thirds">
+                    <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreement{{pagination.totalResults != 1 ? 's'}} found</h2>
+                </div>
 
-                <div v-if="displayKeyword" class="govuk-grid-column-two-thirds">
+                <div v-if="displayKeyword" class="govuk-grid-column-two-thirds hideWithoutJS govuk-visually-hidden">
                     <div class="ccs-filters-summary ccs-filter-summary-frameworks">
                         <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
                             <span class="ccs-filters-summary__label">Containing</span>
@@ -60,6 +69,23 @@
                         </div>
                     </div>
                 </div>
+
+                {% if filters.keyword is defined and filters.keyword|trim is not empty %}
+                    <div v-show="!javascriptVersion" class="govuk-grid-column-two-thirds">
+                        <div class="ccs-filters-summary ccs-filter-summary-frameworks">
+                            <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
+                                <span class="ccs-filters-summary__label">Containing</span>
+                                <ul class="ccs-filters-summary__list">
+                                    <li class="ccs-filters-summary__facet">
+                                        <a href="/agreements" class="ccs-filters-summary__facet__cancel">
+                                            <span>{{ filters.keyword }}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
 
                 <div class="govuk-grid-column-two-thirds">
 
@@ -117,6 +143,9 @@
 
                     </div>
 
+                    <div v-show="!javascriptVersion">
+                        {% include '/frameworks/_resultWithoutJS.html.twig' %}
+                    </div>
 
                 </div>
             </div>

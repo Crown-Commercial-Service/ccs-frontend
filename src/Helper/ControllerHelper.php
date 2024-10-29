@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Helper;
 
+use App\Utils\FrameworkCategories;
 use Strata\Frontend\Cms\RestData;
 use Strata\Frontend\ContentModel\ContentModel;
 use Strata\Frontend\Api\Providers\RestApi;
@@ -139,8 +140,51 @@ class ControllerHelper
         return $arrayToRemove;
     }
 
-    public static function getArrayFromStringForParam($request, string $paramName)
+    public static function getArrayFromStringForParam($request, string $paramName, string $allSelected = "")
     {
-        return $request->query->get($paramName) != null ? explode(",", $request->query->get($paramName)) : [];
+
+        if ($request->query->get($allSelected, false)) {
+            return [];
+        }
+
+        if (!is_array($request->query->get($paramName))) {
+            return $request->query->get($paramName) != null ? explode(",", $request->query->get($paramName)) : [];
+        }
+
+        return array_map(function ($string) {
+            return str_replace('+', ' ', $string);
+        }, $request->query->get($paramName));
+    }
+
+    public static function validateCategory($request, array $pillarArray, string $paramName)
+    {
+        $pillarsAndCategories =  FrameworkCategories::getAllPillars()["pillars"];
+
+        if (!is_array($request->query->get($paramName))) {
+            return $request->query->get($paramName) != null ? explode(",", $request->query->get($paramName)) : [[], $pillarArray];
+        }
+
+        $selected = array_map(function ($string) {
+            return str_replace('+', ' ', $string);
+        }, $request->query->get($paramName));
+
+
+        foreach ($pillarsAndCategories as $eachPillar) {
+            $allCat = array_map(function ($eachCategory) {
+                return $eachCategory["name"];
+            }, $eachPillar["categories"]);
+
+            if (empty(array_diff($allCat, $selected))) {
+                if (!in_array($eachPillar["name"], $pillarArray)) {
+                    array_push($pillarArray, $eachPillar["name"]);
+                }
+            } else {
+                if (($key = array_search($eachPillar["name"], $pillarArray)) !== false) {
+                    unset($pillarArray[$key]);
+                }
+            }
+        }
+
+        return [$selected, $pillarArray];
     }
 }
