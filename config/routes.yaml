@@ -24,14 +24,6 @@ ppg_training:
   path: /ppg-guides
   controller: App\Controller\PageController::ppgTraining
 
-frameworks_search:
-  path: /agreements/search/{page}
-  controller: App\Controller\FrameworksController::search
-  requirements:
-    page: '\d+'
-  defaults:
-    page: 1
-
 frameworks_list:
   path: /agreements/{page}
   controller: App\Controller\FrameworksController::list
