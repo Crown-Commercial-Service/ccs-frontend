@@ -127,6 +127,11 @@ class FrameworksController extends AbstractController
         // check if user is bot and block the request
         $this->blockBot($request->headers->get('User-Agent'));
 
+        $redirectForCatOrPillar  = $this->redirectToCatOrPillar($request);
+        if ($redirectForCatOrPillar != null) {
+            return $this->redirectToRoute('frameworks_list', $redirectForCatOrPillar);
+        }
+
         // Get search query
         // strip special characters and tags from search query
         $orginalSearch = str_replace('/', '', strip_tags(html_entity_decode($request->query->get('keyword'))));
@@ -531,5 +536,39 @@ class FrameworksController extends AbstractController
         if (preg_match('/bot|crawl|slurp|spider/i', $userAgent)) {
             die();
         }
+    }
+
+    private function redirectToCatOrPillar($request)
+    {
+        $oldCategory    = $request->attributes->get('category', null);
+
+        $redirectToCat = array(
+            "utilities-fuels"   => "Energy",
+            "software-cyber"    => "Software and Hardware",
+            "office-and-travel" => "Travel, Accommodation and Venues",
+            "travel"            => "Travel, Accommodation and Venues",
+            "digital-future"    => "Digital Capability and Delivery",
+            "digital-specialists"                           => "Digital Capability and Delivery",
+            "network-solutions"                             => "Network Services",
+            "technology-solutions-outcomes"                 => "Software and Hardware",
+            "document-management-logistics"                 => "Estates Support Services",
+            "marcomms-research"                             => "Professional Services",
+            "travel-transport-accommodation-and-venues"     => "Travel, Accommodation and Venues",
+            "psr-permanent-recruitment"                     => "HR and Workforce Services",
+            "workforce-health-education"                    => "HR and Workforce Services",
+            "people-services"                               => "HR and Workforce Services",
+        );
+
+        $redirectToPillar = array(
+            "workplace"                     => "Estates",
+            "technology-products-services"  => "Technology",
+        );
+
+        if (isset($oldCategory) && array_key_exists($oldCategory, $redirectToCat)) {
+            return ['category' => [$redirectToCat[$oldCategory]]];
+        } elseif (isset($oldCategory) && array_key_exists($oldCategory, $redirectToPillar)) {
+            return ['pillar' => [$redirectToPillar[$oldCategory]]];
+        }
+        return null;
     }
 }

@@ -158,28 +158,30 @@ class ControllerHelper
 
     public static function validateCategory($request, array $pillarArray, string $paramName)
     {
-        $pillarsAndCategories =  FrameworkCategories::getAllPillars()["pillars"];
 
         if (!is_array($request->query->get($paramName))) {
-            return $request->query->get($paramName) != null ? explode(",", $request->query->get($paramName)) : [[], $pillarArray];
+            return $request->query->get($paramName) != null ? [explode(",", $request->query->get($paramName)), $pillarArray] : [[], $pillarArray];
         }
+
+        $pillarsAndCategories =  FrameworkCategories::getAllPillars()["pillars"];
 
         $selected = array_map(function ($string) {
             return str_replace('+', ' ', $string);
-        }, $request->query->get($paramName));
-
+        }, $request->query->get($paramName, []));
 
         foreach ($pillarsAndCategories as $eachPillar) {
-            $allCat = array_map(function ($eachCategory) {
-                return $eachCategory["name"];
-            }, $eachPillar["categories"]);
+            $allCat = array_column($eachPillar["categories"], "name");
 
-            if (empty(array_diff($allCat, $selected))) {
-                if (!in_array($eachPillar["name"], $pillarArray)) {
-                    array_push($pillarArray, $eachPillar["name"]);
+            $isPillarIncluded = !empty(array_diff($allCat, $selected));
+            $pillarName = $eachPillar["name"];
+
+            if (!$isPillarIncluded) {
+                if (!in_array($pillarName, $pillarArray)) {
+                    $pillarArray[] = $pillarName;
                 }
             } else {
-                if (($key = array_search($eachPillar["name"], $pillarArray)) !== false) {
+                $key = array_search($pillarName, $pillarArray);
+                if ($key !== false) {
                     unset($pillarArray[$key]);
                 }
             }
