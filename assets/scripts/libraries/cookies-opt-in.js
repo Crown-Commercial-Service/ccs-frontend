@@ -441,59 +441,19 @@ var docCookies = {
     /**
      * Programatically creates the cookie message notification
      */
-    function createCookieMessage() {
-        // create the cookie message container
-        var cookieMessageContainer = document.createElement('div');
-        cookieMessageContainer.classList.add('cookie-message');
-        cookieMessageContainer.setAttribute('id', 'cookie-consent-container');
-        cookieMessageContainer.setAttribute('aria-label', 'Cookie Policy');
-        cookieMessageContainer.setAttribute('aria-live', 'polite');
+    function showCookieMessage() {
+        var cookieMessage = document.getElementById("cookie-consent-container");
+        cookieMessage.style.display = "block";
 
-
-        // create the inner contents of the cookie message
-        var cookieMessageInner = document.createElement('div');
-        cookieMessageInner.classList.add('cookie-message__inner', 'govuk-width-container');
-        cookieMessageInner.classList.add('site-container');
-        cookieMessageInner.innerHTML = '<h2 class="govuk-heading-m">Cookies on crowncommercial.gov.uk</h2><div class="cookie-message__intro"><p>We use cookies to collect information about how you use crowncommercial.gov.uk.<br><br> We use this information to make the website work as well as possible and improve government services.</p></div>';
-
-        var optInButton = document.createElement('button');
-        optInButton.classList.add('govuk-!-font-size-18', 'govuk-!-font-weight-bold', 'govuk-button', 'gtm--accept-cookies-in-banner');
-        optInButton.innerHTML = "Accept all cookies";
-        optInButton.addEventListener('click', optUserIn);
-
-        var settingsButton = document.createElement('a');
-        settingsButton.classList.add('govuk-!-font-size-18', 'govuk-!-font-weight-bold', 'govuk-button');
-        settingsButton.setAttribute('href', "/cookie-settings");
-        settingsButton.innerHTML = "Set cookie preferences";
-        // optOutButton.classList.add('button');
-        // optOutButton.classList.add('button--tight');
-        // optOutButton.classList.add('button--deny');
-        // optOutButton.addEventListener('click', optUserOut);
-
-        var cookieMessageButtons = document.createElement('div');
-        cookieMessageButtons.classList.add('cookie-message__actions');
-        cookieMessageButtons.appendChild(optInButton);
-        cookieMessageButtons.appendChild(settingsButton);
-
-        cookieMessageInner.appendChild(cookieMessageButtons);
-
-
-        // append the inner contents to the cookie message container
-        cookieMessageContainer.appendChild(cookieMessageInner);
-
-
-        // add the cookie message to the start of the document body
-        //document.body.prepend(cookieMessageContainer);
-        var toContent = document.getElementById("skiplink-container");
-        document.body.insertBefore(cookieMessageContainer, toContent);
-        cookieMessageContainer.style.display = 'block';
+        var optUserInBtn = document.querySelector(".gtm--accept-cookies-in-banner");
+        optUserInBtn.addEventListener("click", optUserIn);
     }
 
     /**
      * Only show the cookie message if the user hasn't previously dismissed it (and we're NOT on the cookie-settings page, matches based on the slug)
      */
     if (!docCookies.hasItem('seen_cookie_message') && window.location.href.indexOf("cookie-settings") === -1) {
-        createCookieMessage();
+        showCookieMessage();
     }
 
 
@@ -512,7 +472,7 @@ var docCookies = {
     if (docCookies.hasItem('seen_cookie_message') && !docCookies.hasItem('cookies_reset_1')) {
         // If not on the cookie settings page, show the banner;
         if (window.location.href.indexOf("cookie-settings") === -1) {
-            createCookieMessage();
+            showCookieMessage();
         }
     }
 
