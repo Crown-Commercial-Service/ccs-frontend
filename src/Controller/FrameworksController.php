@@ -205,11 +205,7 @@ class FrameworksController extends AbstractController
             'match_url'          => getenv('GUIDED_MATCH_URL')
         ];
 
-        if (getenv('APP_ENV') == 'prod' || getenv('APP_ENV') == 'test') {
-            return $this->render('frameworks/list.html.twig', $data);
-        } else {
-            return $this->render('frameworks/list_with_vue.html.twig', $data);
-        }
+        return $this->render('frameworks/list.html.twig', $data);
     }
 
     /**
