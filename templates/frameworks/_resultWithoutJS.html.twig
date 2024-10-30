@@ -1,0 +1,71 @@
+{% if results|length != 0 %}
+   <ul class="govuk-list govuk-list--frameworks">
+        {% for item in results %}
+            <li>
+                <h3 class="govuk-heading-m ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22">
+                    <a href="{{ path('frameworks_show', {'rmNumber':  item.content.rm_number }) }}">{{ item.content.title }}</a> {# <strong class="govuk-tag govuk-tag--subtle">{{ item.content.status }}</strong> #}
+                    {% if item.content.status == 'Expired - Data Still Received' %}
+                        <span class="govuk-tag ccs-tag ccs-tag--error">Expired: {{ item.content.end_date.format('d/m/Y') }}</span>
+                    {% endif %}
+                </h3>
+                
+                <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                    <li> <strong>Agreement ID:</strong> {{ item.content.rm_number }} </li>
+                    <li> <strong>Start Date:</strong> {{ item.content.start_date.format('d/m/Y') }} </li>
+                    
+                    {% if item.content.status != 'Expired - Data Still Received' %}
+                        <li> <strong>End Date:</strong> {{ item.content.end_date.format('d/m/Y') }} </li>
+                    {% endif %}
+
+                    {% if tpp_feature_toggle == true %}
+                        {% if item.content.regulation is not null %}
+                        <li> <strong>Regulation:</strong> {{ item.content.regulation }} </li>
+                        {% else %}
+                            <li> <strong>Regulation:</strong></li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+                <p class="govuk-body-s">{{ item.content.summary | striptags | raw }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    {% if filters.checkedRegulation|length == 1 and 'PA2023' in filters.checkedRegulation %}
+        <p>There are 0 agreements on regulation PA2023, go to the <a href="{{ path('frameworks_upcoming_deals') }}">upcoming agreement page</a> for further information</p>
+    {% elseif (filters.checkedRegulation|length == 1 and "PCR2006" in filters.checkedRegulation) or  (filters.checkedType|length == 1 and "PCR06 Framework" in filters.checkedRegulation) %}
+        <p>All agreements under The Public Contracts Regulation (PCR) 2006 are now expired. <br>You can view these archived agreements by clicking 'Expired' on the left side of this page.</p>
+    {% else %}  
+        <h3>There are no matching results.</h3>
+        <p class="govuk-!-margin-bottom-0">Improve your search results by:</p>
+        <ul>
+            <li><p class="govuk-!-margin-bottom-1">removing filters</p></li>
+            {% if filters.keyword is defined and filters.keyword|trim is not empty %}
+                <li><p class="govuk-!-margin-bottom-1">double-checking your spelling</p></li>
+                <li><p class="govuk-!-margin-bottom-1">using fewer keywords</p></li>
+                <li><p class="govuk-!-margin-bottom-1">clicking 'start now' and answering a few simple questions to find the best agreement for your needs</p></li>
+            {% endif %}
+
+        </ul>
+        <br>
+        <p>If you are still unable to find what you need, contact our customer service centre using our <a class="govuk-link" href="/contact">contact us form</a>.</p>
+    {% endif %}
+{% endif %}
+
+
+
+{%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_list', 
+    'options': {
+                'keyword'       : filters.keyword,
+                'status'        : filters.checkedStatus,
+                'regulation'    : filters.checkedRegulation,
+                'type'          : filters.checkedType,
+                'pillar'        : filters.checkedPillar,
+                'category'      : filters.checkedCategory,
+                 } 
+    } 
+%}
+
+{% if pagination.totalPages > 1 %}
+
+    {{ include('includes/pagination.html.twig', pagination_data) }}
+{% endif %}

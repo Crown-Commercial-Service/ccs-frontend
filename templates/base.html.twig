@@ -48,12 +48,12 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.64">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.65">
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.64">
+        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.65">
     {% endif %}
 
     {# Browser icon #}
@@ -195,6 +195,19 @@
 </noscript>
 {# End Google Tag Manager (noscript) #}
 
+<div class="cookie-message" id="cookie-consent-container" aria-label="Cookie Policy" aria-live="polite" style="display: none;">
+    <div class="cookie-message__inner govuk-width-container site-container">
+        <h2 class="govuk-heading-m">Cookies on crowncommercial.gov.uk</h2>
+        <div class="cookie-message__intro">
+            <p>We use cookies to collect information about how you use crowncommercial.gov.uk.<br><br> We use this information to make the website work as well as possible and improve government services.</p>
+        </div>
+        <div class="cookie-message__actions">
+            <button class="govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm--accept-cookies-in-banner">Accept all cookies</button>
+            <a class="govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button" href="/cookie-settings">Set cookie preferences</a>
+        </div>
+    </div>
+</div>
+
 <div id="skiplink-container">
     <div>
         <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
@@ -233,7 +246,7 @@
 <script src="/assets/scripts/libraries/jquery-3.6.0.min.js"></script>
 <script src="/assets/scripts/libraries/objectFitPolyfill.min.js"></script>
 <script src="/assets/scripts/app.js?v=2.3"></script>
-<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.2"></script>
+<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.3"></script>
 <script type="text/javascript">
   $('a[target^="_new-window"]').click(function() {
     var width = window.innerWidth * 0.9 ;
