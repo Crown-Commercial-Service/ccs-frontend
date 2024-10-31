@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div v-if="keyword" class="guided-match-area">
+        <div v-if="keyword" class="guided-match-area hideWithoutJS govuk-visually-hidden">
             <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-margin-bottom-2 text-white">Need help finding the right agreement</h2>
             <p class="govuk-body text-white">Answer some questions to find the best agreement for your needs</br></p>
             <a v-bind:href="'{{ match_url }}'+ keyword" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-3 govuk-!-margin-bottom-3" data-module="govuk-button"> Start now
@@ -25,7 +25,7 @@
 
 
         {% if filters.keyword is defined and filters.keyword|trim is not empty %}
-            <div v-show="!javascriptVersion" class="guided-match-area hideWithoutJS govuk-visually-hidden">
+            <div v-show="!javascriptVersion" class="guided-match-area ">
                 <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-margin-bottom-2 text-white">Need help finding the right agreement</h2>
                 <p class="govuk-body text-white">Answer some questions to find the best agreement for your needs</br></p>
                 <a v-bind:href="'{{ match_url }}'+ keyword" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-3 govuk-!-margin-bottom-3" data-module="govuk-button"> Start now
