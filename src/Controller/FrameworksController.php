@@ -280,6 +280,10 @@ class FrameworksController extends AbstractController
     {
         $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
 
+        if ($rmNumber == "RM6187_cas") {
+            return $this->redirectToRoute('frameworks_show', ["rmNumber" => "RM6187"]);
+        }
+
         $this->api->setCacheKey($request->getRequestUri());
 
         try {
