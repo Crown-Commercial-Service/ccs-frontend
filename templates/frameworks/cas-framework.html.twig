@@ -11,6 +11,11 @@
             <p class="agreement-overview"> <strong> Agreement number: </strong> {{ framework.content.rm_number }} </p>
             <p class="agreement-overview"> <strong> Start date: </strong> {{ framework.content.start_date.format('d/m/Y') }} </p>
             <p class="agreement-overview"> <strong> End date: </strong> {{ framework.content.end_date.format('d/m/Y') }} </p>
+            
+            {% if tpp_feature_toggle == true and framework.content.regulation is not null and framework.content.regulation_type is not null %}
+                <p class="agreement-overview"> <strong> Regulation: </strong> {{ framework.content.regulation }} </p>
+                <p class="agreement-overview"> <strong> Agreement type: </strong> {{ framework.content.regulation_type }} </p>
+            {% endif %}
         </div>
 
         {% if framework.content.availability and framework.content.availability != "" %}
