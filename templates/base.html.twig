@@ -445,13 +445,14 @@ End Usersnap code #}
     
     // change colour of logo on focus for accessibility
     var logo = document.querySelector(".logo");
+    var logoImg = document.querySelector(".navLogo");
 
     logo.addEventListener("focus", function (event) {
-        this.firstChild.style.filter = "invert(100%)";
+        logoImg.style.filter = "invert(100%)";
     })
 
      logo.addEventListener("focusout", function (event) {
-        this.firstChild.style.filter = "invert(0)";
+        logoImg.style.filter = "invert(0)";
     })
   
 </script>
