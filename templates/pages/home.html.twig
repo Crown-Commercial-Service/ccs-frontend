@@ -275,8 +275,8 @@
                                                         {% endif %}
                                                         <!--[if IE 9]></video><![endif]-->
                                                         <!-- Fallback -->
-                                                        {% if news_item.featuredImage.byName('news-size-m') %}
-                                                            <img src="{{ news_item.featuredImage.byName('news-size-m') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1" width="640" height="427">
+                                                        {% if news_item.featuredImage.byName('news-size-s') %}
+                                                            <img src="{{ news_item.featuredImage.byName('news-size-s') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1" width="640" height="427">
                                                         {% else %}
                                                             <img src="{{ news_item.featuredImage.byName('full') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1" width="640" height="427">
                                                         {% endif %}
