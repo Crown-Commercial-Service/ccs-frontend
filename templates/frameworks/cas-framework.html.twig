@@ -109,6 +109,8 @@
                 <dt class="apollo-list--definition__key">
                     {% if framework.content.rm_number ==  "RM1557.13L4" %}
                         <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id=RM1557.13&lotNum=4">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
+                    {% elseif framework.content.rm_number ==  "RM1557.14L4" %}
+                        <span class="apollo-list--definition__key__inner"><a href="{{ path("form_esourcing_register") }}">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
                     {% elseif framework.content.rm_number ==  "RM1557.13" or framework.content.rm_number ==  "RM1557.14"  %}
                         <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/{{ framework.content.rm_number }}/lot/All">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
                     {% else %}
