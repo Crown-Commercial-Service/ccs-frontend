@@ -24,14 +24,6 @@ ppg_training:
   path: /ppg-guides
   controller: App\Controller\PageController::ppgTraining
 
-frameworks_search:
-  path: /agreements/search/{page}
-  controller: App\Controller\FrameworksController::search
-  requirements:
-    page: '\d+'
-  defaults:
-    page: 1
-
 frameworks_list:
   path: /agreements/{page}
   controller: App\Controller\FrameworksController::list
@@ -46,7 +38,7 @@ frameworks_upcoming_deals:
 
 frameworks_list_by_category:
   path: /agreements/category/{category}/{page}/{query}
-  controller: App\Controller\FrameworksController::listByCategory
+  controller: App\Controller\FrameworksController::list
   requirements:
     page: '\d+'
   defaults:
@@ -55,24 +47,12 @@ frameworks_list_by_category:
 
 frameworks_list_by_pillar:
   path: /agreements/pillar/{pillar}/{page}/{query}
-  controller: App\Controller\FrameworksController::listByPillar
+  controller: App\Controller\FrameworksController::list
   requirements:
     page: '\d+'
   defaults:
     page: 1
     query: ''
-
-frameworks_show_RM6187:
-  path: /agreements/RM6187_cas
-  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-  defaults:
-    template: frameworks/RM6187.html.twig
-
-frameworks_show_rm6187:
-  path: /agreements/rm6187_cas
-  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
-  defaults:
-    template: frameworks/RM6187.html.twig
 
 frameworks_show:
   path: /agreements/{rmNumber}

@@ -35,13 +35,13 @@
                         <div class="govuk-homepage-search-forms">
                             <div class="govuk-grid-column-one-half homepage-agreement-search">
 
-                                <form action="{{ path('frameworks_search') }}" method="GET">
+                                <form action="{{ path('frameworks_list') }}" method="GET">
 
                                     <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage govuk-bg-mobile-color">
                                         <div class="govuk-form-group homepage-hero__search-group">
                                             <label class="govuk-label" for="framework_q"><a href="/agreements">Search
                                                 agreements</a></label>
-                                            <input class="govuk-input" id="framework_q" name="q" type="text">
+                                            <input class="govuk-input" id="framework_q" name="keyword" type="text">
 
                                             <button class="homepage-hero__search-button">
                                                 <span class="visuallyhidden">Search agreements</span>
@@ -275,10 +275,10 @@
                                                         {% endif %}
                                                         <!--[if IE 9]></video><![endif]-->
                                                         <!-- Fallback -->
-                                                        {% if news_item.featuredImage.byName('news-size-m') %}
-                                                            <img src="{{ news_item.featuredImage.byName('news-size-m') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1">
+                                                        {% if news_item.featuredImage.byName('news-size-s') %}
+                                                            <img src="{{ news_item.featuredImage.byName('news-size-s') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1" width="640" height="427">
                                                         {% else %}
-                                                            <img src="{{ news_item.featuredImage.byName('full') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1">
+                                                            <img src="{{ news_item.featuredImage.byName('full') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1" width="640" height="427">
                                                         {% endif %}
 
                                                     </a>

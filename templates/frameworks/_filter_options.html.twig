@@ -1,18 +1,19 @@
+
 <div class="govuk-grid-column-one-third">
 
-    <form v-on:submit.prevent="fetchAPIData" action="{{ path('frameworks_search') }}" method="GET">
+    <form v-on:submit.prevent="fetchAPIData" action="{{ path('frameworks_list') }}" method="GET">
 
         <div class="govuk-form-group govuk-form-group--enclosure">
             <div class="govuk-form-group sidebar__search-group">
-                <label class="govuk-label" for="q"> Search agreements </label>
-                <input v-model="keyword" class="govuk-input" id="q"/>
+                <label class="govuk-label" for="keyword"> Search agreements </label>
+                <input v-model="keyword" class="govuk-input" id="keyword" name="keyword" value="{{ filters.keyword is defined and filters.keyword|trim is not empty ? filters.keyword : "" }}"/>
                 <button type="submit" class="sidebar__search-button govuk-input">
                     <span class="visuallyhidden">Search agreements</span>
                 </button>
             </div>
         </div>
 
-        <div v-if="keyword" class="guided-match-area">
+        <div v-if="keyword" class="guided-match-area hideWithoutJS govuk-visually-hidden">
             <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-margin-bottom-2 text-white">Need help finding the right agreement</h2>
             <p class="govuk-body text-white">Answer some questions to find the best agreement for your needs</br></p>
             <a v-bind:href="'{{ match_url }}'+ keyword" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-3 govuk-!-margin-bottom-3" data-module="govuk-button"> Start now
@@ -22,12 +23,26 @@
             </a>
         </div>
 
+
+        {% if filters.keyword is defined and filters.keyword|trim is not empty %}
+            <div v-show="!javascriptVersion" class="guided-match-area ">
+                <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-margin-bottom-2 text-white">Need help finding the right agreement</h2>
+                <p class="govuk-body text-white">Answer some questions to find the best agreement for your needs</br></p>
+                <a href={{ match_url}}{{filters.keyword|url_encode }}  draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-3 govuk-!-margin-bottom-3" data-module="govuk-button"> Start now
+                    <svg class="govuk-!-padding-left-2" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+                    </svg>
+                </a>
+            </div>
+        {% endif %}    
+
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-half">
                 <h2 class="govuk-heading-m">Apply filters</h2>
             </div>
-                <div class="govuk-grid-column-one-half" style="text-align:right;">
-                <a style="cursor: pointer;" onclick="pushToDataLayer({'event': 'search_filter', 'interaction_type': 'clear'});" @click="resetAllFilter" class="govuk-link" >Clear filters</a>
+            <div class="govuk-grid-column-one-half" style="text-align:right;">
+                <a style="cursor: pointer;" onclick="pushToDataLayer({'event': 'search_filter', 'interaction_type': 'clear'});" @click="resetAllFilter" class="govuk-link hideWithoutJS govuk-visually-hidden" >Clear filters</a>
+                <a v-show="!javascriptVersion" href="/agreements" class="govuk-link" >Clear filters</a>
             </div>
         </div>
         
@@ -35,6 +50,7 @@
         {% set regulationsForTwig = ['PA2023', 'PCR2015', 'PCR2006'] %}
         {% set typeStatusesForTwig = ["Dynamic+Purchasing+System", "Dynamic+Market", "Open+Framework", "Closed+Framework", "PCR15+Framework", "PCR06+Framework"] %}
 
+        <button class="govuk-button" data-module="govuk-button" v-show="!javascriptVersion"> Filter </button>
         <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
             <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
                 <div class="govuk-accordion__section-header">
@@ -43,7 +59,9 @@
                             Filter by agreement status
                         </span>
                     </h2>
-                    <span class="govuk-body-s">{[ checkedStatus.length ]} selected</span>
+                    <span class="govuk-body-s hideWithoutJS govuk-visually-hidden">{[ checkedStatus.length ]} selected</span>
+
+                    <span class="govuk-body-s" v-show="!javascriptVersion">{{ filters.checkedStatus is not defined or filters.checkedStatus is empty ? 1 : filters.checkedStatus|length }} selected</span>
                 </div>
                 
                 <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1" role="region">
@@ -125,7 +143,7 @@
 
                         {% for item in typeStatusesForTwig %}
                             <div v-if="shouldShowTypeCheckbox('{{ item | replace({'+': ' '}) }}')" class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input v-on:change=fetchAPIData("{{item}}",null) v-model="checkedType" name="type[]" value="{{item}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}" type="checkbox" {{ item in filters.checkedType ? 'checked' }}>
+                                <input v-on:change=fetchAPIData("{{item}}",null) v-model="checkedType" name="type[]" value="{{item}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}" type="checkbox" {{ item|replace({'+': ' '}) in filters.checkedType ? 'checked' }}>
                                 <label class="govuk-label govuk-checkboxes__label" for="{{item}}">
                                     {{  item |replace({'+': ' '}) }}
                                 </label>
@@ -150,7 +168,7 @@
 
                 <div id="accordion-with-summary-sections-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-4" role="region">
                          <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                            <input v-on:change=fetchAPIData("allPillarAndCategory",null) v-model="checkedPillar" name="allPillarAndCategory" value="allPillarAndCategory" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allPillarAndCategory" type="checkbox" {{ filters.checkedCategory is defined and filters.checkedCategory is empty  ? 'checked' }}>
+                            <input v-on:change=fetchAPIData("allPillarAndCategory",null) v-model="checkedPillar" name="allPillarAndCategory" value="allPillarAndCategory" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allPillarAndCategory" type="checkbox" {{ filters.checkedPillar is defined and filters.checkedPillar is empty and filters.checkedCategory is defined and filters.checkedCategory is empty  ? 'checked' }}>
                             <label class="govuk-label govuk-checkboxes__label" style="font-weight:600" for="allPillarAndCategory">
                                 View all
                             </label>
@@ -166,7 +184,7 @@
                             %}
 
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input v-on:change=fetchAPIData("{{ pillar_item.slug }}",null) v-model="checkedPillar" onclick="pushToDataLayer('{{pillarArray |json_encode}}');" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{pillar_item.slug}}" name="{{pillar_item.slug}}" type="checkbox" value="{{ pillar_item.name }}" {{ pillar_item.name in filters.checkedPillar ? 'checked' }}>
+                                <input v-on:change=fetchAPIData("{{ pillar_item.slug }}",null) v-model="checkedPillar" onclick="pushToDataLayer('{{pillarArray |json_encode}}');" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{pillar_item.slug}}" name="pillar[]" type="checkbox" value="{{ pillar_item.name }}" {{ pillar_item.name in filters.checkedPillar ? 'checked' }}>
                                 <label class="govuk-label govuk-checkboxes__label" style="font-weight: 600" for="{{pillar_item.slug}}">
                                     {{ pillar_item.name }}
                                 </label>
@@ -180,7 +198,7 @@
                               }%}
 
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input v-on:change=fetchAPIData("{{ category_item.slug }}",null) v-model="checkedCategory" onclick="pushToDataLayer('{{categoryArray |json_encode}}');" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{category_item.slug}}" name="{{category_item.slug}}" type="checkbox" value="{{ category_item.name |replace({' ': '+'}) }}" {{ category_item.name in filters.checkedCategory ? 'checked' }}>
+                                <input v-on:change=fetchAPIData("{{ category_item.slug }}",null) v-model="checkedCategory" onclick="pushToDataLayer('{{categoryArray |json_encode}}');" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{category_item.slug}}" name="category[]" type="checkbox" value="{{ category_item.name |replace({' ': '+'}) }}" {{ category_item.name in filters.checkedCategory ? 'checked' }}>
                                 <label class="govuk-label govuk-checkboxes__label search-subcategory-label" for="{{ category_item.slug }}">
                                     {{ category_item.name }}
                                 </label>
@@ -191,6 +209,7 @@
                 </div>
             </div>
         </div> 
+        <button class="govuk-button" data-module="govuk-button" v-show="!javascriptVersion"> Filter </button>
 
         {% include '/frameworks/_helpful_info.html.twig' with {'page' : 'search'} %}
 

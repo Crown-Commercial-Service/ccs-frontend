@@ -127,6 +127,11 @@ class FrameworksController extends AbstractController
         // check if user is bot and block the request
         $this->blockBot($request->headers->get('User-Agent'));
 
+        $redirectForCatOrPillar  = $this->redirectToCatOrPillar($request);
+        if ($redirectForCatOrPillar != null) {
+            return $this->redirectToRoute('frameworks_list', $redirectForCatOrPillar);
+        }
+
         // Get search query
         // strip special characters and tags from search query
         $orginalSearch = str_replace('/', '', strip_tags(html_entity_decode($request->query->get('keyword'))));
@@ -138,11 +143,27 @@ class FrameworksController extends AbstractController
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
 
-        $checkedStatusArray         = $request->query->get('status') != null ? explode(",", $request->query->get('status')) : ["Live"];
-        $checkedRegulationArray     = ControllerHelper::getArrayFromStringForParam($request, "regulation");
-        $checkedTypeArray           = ControllerHelper::getArrayFromStringForParam($request, "type");
-        $checkedPillarArray         = ControllerHelper::getArrayFromStringForParam($request, "pillar");
-        $checkedCategoryArray       = ControllerHelper::getArrayFromStringForParam($request, "category");
+
+        if (!is_array($request->query->get('status'))) {
+            $checkedStatusArray         = $request->query->get('status') != null ? explode(",", $request->query->get('status')) : ["Live"];
+        } else {
+            $checkedStatusArray = $request->query->get('status');
+        }
+
+        $checkedRegulationArray     = ControllerHelper::getArrayFromStringForParam($request, "regulation", "allRegulation");
+        $checkedTypeArray           = ControllerHelper::getArrayFromStringForParam($request, "type", "allType");
+
+        //if allPillarAndCategory is checked || all Pillars are checked || all Categories are checked
+        if ($request->query->get("allPillarAndCategory", false) || count((array) $request->query->get("pillar", [])) == FrameworkCategories::getAllPillarSize() || count((array) $request->query->get("category", [])) == FrameworkCategories::getAllCategorySize()) {
+            $checkedPillarArray   = [];
+            $checkedCategoryArray = [];
+        } else {
+            $checkedPillarArray         = ControllerHelper::getArrayFromStringForParam($request, "pillar");
+            $pillarsAndCategories       = ControllerHelper::validateCategory($request, $checkedPillarArray, "category");
+            $checkedCategoryArray       = $pillarsAndCategories[0];
+            $checkedPillarArray         = $pillarsAndCategories[1];
+        }
+
 
         $options = [
             "keyword"                     => $query,
@@ -154,7 +175,15 @@ class FrameworksController extends AbstractController
         ];
 
         try {
-            $results = $this->searchApi->list($page, ['limit' => $limit]);
+            $results = $this->searchApi->list($page, [
+                'keyword'           => $options['keyword'],
+                'status'            => $options['checkedStatus'],
+                'regulation'        => $options['checkedRegulation'],
+                'regulation_type'   => $options['checkedType'],
+                'pillar'            => $options['checkedPillar'],
+                'category'          => $options['checkedCategory'],
+                'limit'             => $limit,
+            ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
@@ -176,11 +205,7 @@ class FrameworksController extends AbstractController
             'match_url'          => getenv('GUIDED_MATCH_URL')
         ];
 
-        if (getenv('APP_ENV') == 'prod' || getenv('APP_ENV') == 'test') {
-            return $this->render('frameworks/list.html.twig', $data);
-        } else {
-            return $this->render('frameworks/list_with_vue.html.twig', $data);
-        }
+        return $this->render('frameworks/list.html.twig', $data);
     }
 
     /**
@@ -239,238 +264,6 @@ class FrameworksController extends AbstractController
     }
 
     /**
-     * List frameworks by category
-     *
-     * @param Request $request
-     * @param string $category
-     * @param int $page
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PaginationException
-     * @throws \Strata\Frontend\Exception\PermissionException
-     */
-    public function listByCategory(Request $request, string $category, string $query, int $page = 1)
-    {
-        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
-        $category = filter_var($category, FILTER_SANITIZE_STRING);
-        $query = filter_var($query, FILTER_SANITIZE_STRING);
-        $statuses = $this->getAgreementFilterStatusArray($request);
-
-        $redirectToCat = array(
-            "utilities-fuels"   => "energy",
-            "software-cyber"    => "software-and-hardware",
-            "office-and-travel" => "travel-accommodation-and-Venues",
-            "travel"            => "travel-accommodation-and-Venues",
-            "digital-future"    => "digital-capability-and-delivery",
-            "digital-specialists"                           => "digital-capability-and-delivery",
-            "network-solutions"                             => "network-services",
-            "technology-solutions-outcomes"                 => "software-and-hardware",
-            "document-management-logistics"                 => "estates-support-services",
-            "marcomms-research"                             => "professional-services",
-            "travel-transport-accommodation-and-venues"     => "travel-accommodation-and-Venues",
-            "psr-permanent-recruitment"                     => "hr-and-workforce-services",
-            "workforce-health-education"                    => "hr-and-workforce-services",
-            "people-services"                               => "hr-and-workforce-services",
-        );
-
-        $redirectToPillar = array(
-            "workplace"                     => "estates",
-            "technology-products-services"  => "technology",
-        );
-
-
-        if (array_key_exists($category, $redirectToCat)) {
-            return $this->redirectToRoute('frameworks_list_by_category', ['category' => $redirectToCat[$category]]);
-        } elseif (array_key_exists($category, $redirectToPillar)) {
-            return $this->redirectToRoute('frameworks_list_by_pillar', ['pillar' => $redirectToPillar[$category]]);
-        }
-
-        $categoryName = FrameworkCategories::getDbValueBySlug($category);
-        if ($categoryName === null) {
-            $this->redirectToRoute('frameworks_list');
-        }
-        $this->searchApi->setCacheKey($request->getRequestUri());
-        $this->searchApi->getContentType()->setApiEndpoint('frameworks');
-
-        $RegulationAndType   = $this->getRegulationAndType($request);
-        $regulationFilter   = $RegulationAndType[0];
-        $typeFilter         = $RegulationAndType[1];
-
-        try {
-            $results = $this->searchApi->list($page, [
-                'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
-                'category' => $categoryName,
-                'limit' => 20,
-                'status' => $statuses,
-                'regulation'        => $this->removeViewAllForAPI($regulationFilter),
-                'regulation_type'   => $this->removeViewAllForAPI($typeFilter)
-            ]);
-        } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
-        }
-
-        $data = [
-            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
-            'query'         => $query,
-            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($query),
-            'category'      => $categoryName,
-            'category_slug' => $category,
-            'pagination'    => $results->getPagination(),
-            'results'       => $results,
-            'categories'    => FrameworkCategories::getAll(),
-            'pillars'       => FrameworkCategories::getAllPillars(),
-            'statuses'      => $statuses,
-            'regulation'    => $regulationFilter,
-            'regulationType' => $typeFilter,
-        ];
-        return $this->render('frameworks/list.html.twig', $data);
-    }
-
-    /**
-     * List frameworks by category
-     *
-     * @param Request $request
-     * @param string $pillar
-     * @param int $page
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PaginationException
-     * @throws \Strata\Frontend\Exception\PermissionException
-     */
-    public function listByPillar(Request $request, string $pillar, string $query, int $page = 1)
-    {
-        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
-        $pillar = filter_var($pillar, FILTER_SANITIZE_STRING);
-        $query = filter_var($query, FILTER_SANITIZE_STRING);
-        $statuses = $this->getAgreementFilterStatusArray($request);
-
-        $pillarName = FrameworkCategories::getDbValueBySlug($pillar);
-        if ($pillarName === null) {
-            $this->redirectToRoute('frameworks_list');
-        }
-
-        $this->searchApi->setCacheKey($request->getRequestUri());
-        $this->searchApi->getContentType()->setApiEndpoint('frameworks');
-
-        $RegulationAndType   = $this->getRegulationAndType($request);
-        $regulationFilter   = $RegulationAndType[0];
-        $typeFilter         = $RegulationAndType[1];
-
-        try {
-            $results = $this->searchApi->list($page, [
-                'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
-                'pillar' => $pillarName,
-                'limit' => 20,
-                'status' => $statuses,
-                'regulation'        => $this->removeViewAllForAPI($regulationFilter),
-                'regulation_type'   => $this->removeViewAllForAPI($typeFilter)
-            ]);
-        } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
-        }
-
-        $data = [
-            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
-            'query'         => $query,
-            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($query),
-            'pillar'        => $pillarName,
-            'pillar_slug'   => $pillar,
-            'pagination'    => $results->getPagination(),
-            'results'       => $results,
-            'categories'    => FrameworkCategories::getAll(),
-            'pillars'       => FrameworkCategories::getAllPillars(),
-            'statuses'      => $statuses,
-            'regulation'    => $regulationFilter,
-            'regulationType' => $typeFilter,
-        ];
-        return $this->render('frameworks/list.html.twig', $data);
-    }
-
-
-    /**
-     * Search frameworks
-     *
-     * @see http://ccs-agreements.cabinetoffice.localhost/wp-json/ccs/v1/frameworks/?keyword=RM6107
-     * @see http://ccs-agreements.cabinetoffice.localhost/wp-json/ccs/v1/frameworks/?keyword=Courier%20Services
-     *
-     * @param Request $request
-     * @param int $page
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PaginationException
-     * @throws \Strata\Frontend\Exception\PermissionException
-     */
-    public function search(Request $request, int $page = 1)
-    {
-        // check if user is bot and block the request
-        $this->blockBot($request->headers->get('User-Agent'));
-
-        // Get search query
-        // strip special characters and tags from search query
-        $orginalSearch = str_replace('/', '', strip_tags(html_entity_decode($request->query->get('q'))));
-        $query = preg_replace("/[^a-zA-Z0-9\s]/", "", $orginalSearch);
-        $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
-
-        $this->searchApi->setCacheKey($request->getRequestUri());
-        $this->searchApi->getContentType()->setApiEndpoint('frameworks');
-
-        $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
-
-        $statuses = $this->getAgreementFilterStatusArray($request);
-
-        $category =  filter_var($request->query->get('category'), FILTER_SANITIZE_STRING);
-        $pillar =  filter_var($request->query->get('pillar'), FILTER_SANITIZE_STRING);
-        $categoryName = $this-> getPillarOrCategoryName($request, 'category');
-        $pillarName = $this-> getPillarOrCategoryName($request, 'pillar');
-
-        $RegulationAndType   = $this->getRegulationAndType($request);
-        $regulationFilter   = $RegulationAndType[0];
-        $typeFilter         = $RegulationAndType[1];
-
-        try {
-            $results = $this->searchApi->list($page, [
-                'keyword'   => (!empty($query) && trim($query) != '' ? $query : null),
-                'limit'     => $limit,
-                'category'  => $categoryName ?? null,
-                'pillar'    => $pillarName ?? null,
-                'status'    => $statuses,
-                'regulation'        => $this->removeViewAllForAPI($regulationFilter),
-                'regulation_type'   => $this->removeViewAllForAPI($typeFilter)
-            ]);
-        } catch (NotFoundException | PaginationException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
-        }
-
-        $data = [
-            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
-            'query'         => $query,
-            'pagination'    => $results->getPagination(),
-            'results'       => $results,
-            'categories'    => FrameworkCategories::getAll(),
-            'pillars'       => FrameworkCategories::getAllPillars(),
-            'category'      => (!empty($categoryName) ? $categoryName : null),
-            'category_slug' => (!empty($category) ? $category : null),
-            'pillar'        => (!empty($pillarName) ? $pillarName : null),
-            'pillar_slug'   => (!empty($pillar) ? $pillar : null),
-            'match_url'     => getenv('GUIDED_MATCH_URL') . rawurlencode($orginalSearch),
-            'statuses'      => $statuses,
-            'regulation'    => $regulationFilter,
-            'regulationType' => $typeFilter,
-        ];
-
-        return $this->render('frameworks/list.html.twig', $data);
-    }
-
-    /**
      * Show one framework
      *
      * @param string $rmNumber
@@ -486,6 +279,10 @@ class FrameworksController extends AbstractController
     public function show(string $rmNumber, Request $request)
     {
         $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
+
+        if ($rmNumber == "RM6187_cas") {
+            return $this->redirectToRoute('frameworks_show', ["rmNumber" => "RM6187"]);
+        }
 
         $this->api->setCacheKey($request->getRequestUri());
 
@@ -673,18 +470,6 @@ class FrameworksController extends AbstractController
         return $response;
     }
 
-    private function getPillarOrCategoryName(Request $request, string $PillarOrCategory)
-    {
-
-        if ($request->query->has($PillarOrCategory)) {
-            $category = filter_var($request->query->get($PillarOrCategory), FILTER_SANITIZE_STRING);
-            $categoryName = FrameworkCategories::getDbValueBySlug($category);
-            return $categoryName;
-        }
-
-        return null;
-    }
-
     private function setGovTableStyleForAllField($results)
     {
         $description = $results->getContent()['description']->getValue();
@@ -753,59 +538,37 @@ class FrameworksController extends AbstractController
         }
     }
 
-    private function getAgreementFilterStatusArray(Request $request)
+    private function redirectToCatOrPillar($request)
     {
-        return (array) $request->query->get('statuses', ["live"]);
-    }
+        $oldCategory    = $request->attributes->get('category', null);
 
-    private function getRegulationAndType(Request $request)
-    {
-        $regulationFilter   = (array) $request->query->get("regulation", []);
-        $typeFilter         = (array) $request->query->get("regulationType", []);
-
-        if (count($regulationFilter) == 3 || count($regulationFilter) == 0 || in_array('allRegulation', $regulationFilter)) {
-            $regulationFilter =  ['allRegulation'];
-        }
-
-        $typeFilter = $this->removeTypeFromRegulation($regulationFilter, $typeFilter);
-
-        return [$regulationFilter, $typeFilter];
-    }
-
-    private function removeTypeFromRegulation($regulationFilter, $typeFilter)
-    {
-        $maxTypeFilterCount = 6;
-        $notAllowRegulation = array();
-        $regulationAndType = array(
-            "PA2023"    => array("Closed Framework", "Dynamic Market", "Open Framework"),
-            "PCR2015"   => array("Dynamic Purchasing System", "PCR15 Framework"),
-            "PCR2006"   => array("PCR06 Framework"),
+        $redirectToCat = array(
+            "utilities-fuels"   => "Energy",
+            "software-cyber"    => "Software and Hardware",
+            "office-and-travel" => "Travel, Accommodation and Venues",
+            "travel"            => "Travel, Accommodation and Venues",
+            "digital-future"    => "Digital Capability and Delivery",
+            "digital-specialists"                           => "Digital Capability and Delivery",
+            "network-solutions"                             => "Network Services",
+            "technology-solutions-outcomes"                 => "Software and Hardware",
+            "document-management-logistics"                 => "Estates Support Services",
+            "marcomms-research"                             => "Professional Services",
+            "travel-transport-accommodation-and-venues"     => "Travel, Accommodation and Venues",
+            "psr-permanent-recruitment"                     => "HR and Workforce Services",
+            "workforce-health-education"                    => "HR and Workforce Services",
+            "people-services"                               => "HR and Workforce Services",
         );
 
-        foreach ($regulationAndType as $eachRegulation => $data) {
-            if (!in_array($eachRegulation, $regulationFilter)) {
-                $notAllowRegulation = array_merge($notAllowRegulation, $data);
-            } else {
-                $maxTypeFilterCount += sizeof($data);
-            }
+        $redirectToPillar = array(
+            "workplace"                     => "Estates",
+            "technology-products-services"  => "Technology",
+        );
+
+        if (isset($oldCategory) && array_key_exists($oldCategory, $redirectToCat)) {
+            return ['category' => [$redirectToCat[$oldCategory]]];
+        } elseif (isset($oldCategory) && array_key_exists($oldCategory, $redirectToPillar)) {
+            return ['pillar' => [$redirectToPillar[$oldCategory]]];
         }
-
-        if (sizeof($notAllowRegulation) != 6) {
-            $typeFilter = ControllerHelper::removeFromArray($typeFilter, $notAllowRegulation);
-        }
-
-        if (count($typeFilter) == $maxTypeFilterCount || count($typeFilter) == 0 || in_array('allType', $typeFilter)) {
-            $typeFilter =  ['allType'];
-        }
-
-        return $typeFilter;
-    }
-
-    private function removeViewAllForAPI(array $arrayToRemove)
-    {
-
-        $arrayToRemove = ControllerHelper::removeFromArray($arrayToRemove, ["allRegulation","allType", "true"]);
-
-        return !$arrayToRemove ? null : $arrayToRemove;
+        return null;
     }
 }

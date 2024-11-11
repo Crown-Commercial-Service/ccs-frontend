@@ -57,6 +57,13 @@
 
     }
 
+    @include govuk-media-query($until: 769) {
+
+        display: none;
+        visibility: hidden;
+
+    }
+
 }
 
 .global-navigation[aria-hidden="false"] {

@@ -12,429 +12,74 @@
 
 {% block body %}
 
-    <!-- required wrapper 1 -->
     <div class="govuk-width-container">
-
-        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
-
         <div class="govuk-phase-banner">
             {% include '/includes/phase-banner-content.html.twig' %}
         </div>
 
+        <p class="visuallyhidden">This is a page with JS</p>
 
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="/">Home</a>
                 </li>
-                    {% if category is defined or pillar is defined %}
-                    <li class="govuk-breadcrumbs__list-item">
-                        <a class="govuk-breadcrumbs__link" href="/agreements">Search agreements </a>
-                    </li>
-                    {% if category is defined and category|trim is not empty  %}
-                        <li class="govuk-breadcrumbs__list-item" aria-current="page">{{ category }}</li>
-                    {% elseif pillar is defined and pillar|trim is not empty %}
-                        <li class="govuk-breadcrumbs__list-item" aria-current="page">{{ pillar }}</li>
-                    {% endif %}
-                {% else %}
-                    <li class="govuk-breadcrumbs__list-item" aria-current="page">
-                        Search agreements
-                    </li>
-                {% endif %}
+                <li class="govuk-breadcrumbs__list-item">
+                    <a class="govuk-breadcrumbs__link" href="/agreements">Search agreements </a>
+                </li>
             </ol>
         </div>
 
-
-        <!-- required wrapper 2 -->
-        <main id="main-content" class="govuk-main-wrapper">
-
-
+        <main id="main-content" role="main" class="govuk-main-wrapper">
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-
-                    {% if category is defined and category|trim is not empty  %}
-                        <h1 class="govuk-heading-xl page-title">{{ query is defined and query|trim is not empty ? "Search agreements for #{query} in #{category} category" : "Search agreements in #{category} category" }}</h1>
-                        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement', 'category':'{{category}}'});</script>
-                    {% elseif pillar is defined and pillar|trim is not empty %}
-                        <h1 class="govuk-heading-xl page-title">{{ query is defined and query|trim is not empty ? "Search agreements for #{query} in #{pillar} category" : "Search agreements in #{pillar} category" }}</h1>
-                        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement', 'pillar':'{{pillar}}'});</script>
-                    {% elseif query is defined and query|trim is not empty %}
-                        <h1 class="govuk-heading-xl page-title">Search agreements for {{ query }}</h1>
-                        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement'});</script>
+                <div class="govuk-grid-column-full hideWithoutJS govuk-visually-hidden">
+                    <h1 v-if="displayKeyword"class="govuk-heading-xl page-title">Search agreements for {[displayKeyword]}</h1>
+                    <h1 v-else class="govuk-heading-xl page-title">Search agreements</h1>
+                </div>
+                <div v-show="!javascriptVersion" class="govuk-grid-column-full">
+                    {% if filters.keyword is defined and filters.keyword|trim is not empty %}
+                        <h1 class="govuk-heading-xl page-title">Search agreements for {{filters.keyword}}</h1>
                     {% else %}
-                        <h1 class="govuk-heading-xl page-title">Search agreements</h1>
-                        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement'});</script>
+                        <h1 v-else class="govuk-heading-xl page-title">Search agreements</h1>
                     {% endif %}
-
                 </div>
             </div>
 
 
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-third">
+                {% include '/frameworks/_filter_options.html.twig' %}
 
-                    <form action="{{ path('frameworks_search') }}" method="GET">
-
-                        <div class="govuk-form-group govuk-form-group--enclosure">
-                            <div class="govuk-form-group sidebar__search-group">
-                                <label class="govuk-label" for="q"> Search
-                                    agreements </label>
-                                {% if query is defined and query|trim is not empty %}
-                                    <input class="govuk-input" id="q" name="q" type="text" value="{{ query }}">
-                                {% else %}
-                                    <input class="govuk-input" id="q" name="q" type="text">
-                                {% endif %}
-                                {% if category is defined and category|trim is not empty  %}
-                                    <input type="hidden" name="category" value={{ category_slug }}>
-                                {% endif %}
-                                {% if pillar is defined and pillar|trim is not empty %}
-                                    <input type="hidden" name="pillar" value={{ pillar_slug }}>
-                                {% endif %}
-                                <button type="submit" class="sidebar__search-button govuk-input">
-                                    <span class="visuallyhidden">Search agreements</span>
-                                </button>
-                            </div>
-                        </div>
-                        {% if query is defined and query|trim is not empty %}
-
-                            <script>pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'agreements', 'search_term': '{{query}}'});</script>
-
-                            <div class="guided-match-area">
-                                <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-margin-bottom-2 text-white">Need help finding the right agreement</h2>
-                                <p class="govuk-body text-white">Answer some questions to find the best agreement for your needs</br></p>
-                                <a href={{ match_url }}  draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-3 govuk-!-margin-bottom-3" data-module="govuk-button"> Start now
-                                    <svg class="govuk-!-padding-left-2" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
-                                        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
-                                    </svg>
-                                </a>
-                            </div>
-                        {% endif %}
-
-
-                        <div class="govuk-grid-row">
-                            <div class="govuk-grid-column-one-half">
-                               <h2 class="govuk-heading-m">Apply filters</h2>
-                            </div>
-                             <div class="govuk-grid-column-one-half" style="text-align:right;">
-                                {% set clearLink = "/agreements" %}
-
-                                {% if query is defined %}
-                                
-                                    {% if pillar is defined and pillar|trim is not empty %}
-                                        {% set clearLink = "/agreements/search?q=#{query}&pillar=#{pillar_slug}" %} 
-                                    {% elseif category is defined and category|trim is not empty %}
-                                        {% set clearLink = "/agreements/search?q=#{query}&category=#{category_slug}" %}
-                                    {% else %}
-                                        {% set clearLink = "/agreements/search?q=#{query}" %}
-                                    {% endif %}
-
-                                {% else %} 
-
-                                    {% if pillar is defined and pillar|trim is not empty %}
-                                        {% set clearLink = "/agreements/pillar/#{pillar_slug}" %}
-                                    {% elseif category is defined and category|trim is not empty %}
-                                        {% set clearLink = "/agreements/category/#{category_slug}" %}
-                                    {% else %}
-                                        {% set clearLink = "/agreements" %}
-                                    {% endif %}
-                                    
-                                {% endif %}
-                                <a onclick="pushToDataLayer({'event': 'search_filter', 'interaction_type': 'clear'});" href={{ clearLink }} class="govuk-link" >Clear filters</a>
-                            </div>
-                        </div>
-                        
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
-                                <div class="govuk-accordion__section-header">
-                                    <h2 class="govuk-accordion__section-heading">
-                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-1">
-                                            Filter by agreement status
-                                        </span>
-                                    </h2>
-                                    <span class="govuk-body-s">{{ statuses is not defined or statuses is empty ? 1 : statuses|length }} selected</span>
-                                </div>
-                               
-                                <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-1" role="region">
-
-                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="live"name="statuses[]" type="checkbox" value="live" {{ statuses is not defined or statuses is empty or 'live' in statuses ? "checked" : "" }} >
-                                            <label class="govuk-label govuk-checkboxes__label" for="live">
-                                                Live
-                                            </label>
-                                        </div>
-
-                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-
-                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="expired" name="statuses[]" type="checkbox" value="expired" {{ statuses is defined and 'expired' in statuses ? "checked" : "" }} >
-                                            <label class="govuk-label govuk-checkboxes__label" for="expired">
-                                                Expired
-                                            </label>
-                                        </div>
-                                </div>
-                                <div class="apollo-enclosure">
-                                    <h2 class="aside__heading">Upcoming agreements</h2>
-
-                                    <p><a href="/agreements/upcoming">View our upcoming agreement page</a> for agreements that are being developed and are not yet live.</p>
-        
-                                </div>
-                            </div>
-
-                        </div>
-
-                        {% if tpp_feature_toggle == true %}
-                            <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
-                                <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
-                                    <div class="govuk-accordion__section-header">
-                                        <h2 class="govuk-accordion__section-heading">
-                                            <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-2">
-                                                Regulation
-                                            </span>
-                                        </h2>
-                                    </div>
-                                    
-                                    <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2" role="region">
-
-                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            {% if regulation is defined and 'allRegulation' in regulation %}
-                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allRegulation" name="allRegulation" type="checkbox" value="true" checked >
-                                            {% else %}
-                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allRegulation" name="regulation[]" type="checkbox" value="allRegulation" >
-                                            {% endif %}
-                                            <label class="govuk-label govuk-checkboxes__label" for="allRegulation">
-                                                View All
-                                            </label>
-                                        </div>
-                                        
-                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PA2023" name="regulation[]" type="checkbox" value="PA2023" {{ 'PA2023' in regulation ? "checked" }} >
-                                            <label class="govuk-label govuk-checkboxes__label" for="PA2023">
-                                                PA2023
-                                            </label>
-                                        </div>
-                                        
-                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PCR2015" name="regulation[]" type="checkbox" value="PCR2015" {{ 'PCR2015' in regulation ? "checked" }} >
-                                            <label class="govuk-label govuk-checkboxes__label" for="PCR2015">
-                                                PCR2015
-                                            </label>
-                                        </div>
-                                        
-                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PCR2006" name="regulation[]" type="checkbox" value="PCR2006" {{ 'PCR2006' in regulation ? "checked" }} >
-                                            <label class="govuk-label govuk-checkboxes__label" for="PCR2006">
-                                                PCR2006
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
-                                <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
-                                    <div class="govuk-accordion__section-header">
-                                        <h2 class="govuk-accordion__section-heading">
-                                            <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-3">
-                                                Agreement type
-                                            </span>
-                                        </h2>
-                                    </div>
-                                    
-                                    <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3" role="region">
-
-                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            {% if regulationType is defined and 'allType' in regulationType %}
-                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" name="allType" type="checkbox" value="true" checked >
-                                            {% else %}
-                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" name="regulationType[]" type="checkbox" value="allType" >
-                                            {% endif %}
-                                            <label class="govuk-label govuk-checkboxes__label" for="allType">
-                                                View All
-                                            </label>
-                                        </div>
-                                        
-                                        {% if regulation is defined and 'allRegulation' in regulation or 'PCR2015' in regulation %}
-                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Dynamic_Purchasing_System" name="regulationType[]" type="checkbox" value="Dynamic Purchasing System"{{ regulationType is not defined or regulationType is empty or 'Dynamic Purchasing System' in regulationType ? "checked" : "" }} >
-                                                <label class="govuk-label govuk-checkboxes__label" for="Dynamic_Purchasing_System">
-                                                    Dynamic Purchasing System 
-                                                </label>
-                                            </div>
-                                        {% endif %}
-                                        
-                                        {% if regulation is defined and 'allRegulation' in regulation or 'PA2023' in regulation %}                                        
-                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Dynamic_Market" name="regulationType[]" type="checkbox" value="Dynamic Market"{{ regulationType is not defined or regulationType is empty or 'Dynamic Market' in regulationType ? "checked" : "" }} >
-                                                <label class="govuk-label govuk-checkboxes__label" for="Dynamic_Market">
-                                                    Dynamic Market 
-                                                </label>
-                                            </div>
-
-                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Open_Framework" name="regulationType[]" type="checkbox" value="Open Framework"{{ regulationType is not defined or regulationType is empty or 'Open Framework' in regulationType ? "checked" : "" }} >
-                                                <label class="govuk-label govuk-checkboxes__label" for="Open_Framework">
-                                                    Open Framework
-                                                </label>
-                                            </div>
-                                            
-                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="Closed_Framework" name="regulationType[]" type="checkbox" value="Closed Framework"{{ regulationType is not defined or regulationType is empty or 'Closed Framework' in regulationType ? "checked" : "" }} >
-                                                <label class="govuk-label govuk-checkboxes__label" for="Closed_Framework">
-                                                    Closed Framework 
-                                                </label>
-                                            </div>
-                                        {% endif %}
-
-                                        {% if regulation is defined and 'allRegulation' in regulation or 'PCR2015' in regulation %}
-                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PCR15_Framework" name="regulationType[]" type="checkbox" value="PCR15 Framework"{{ regulationType is not defined or regulationType is empty or 'PCR15 Framework' in regulationType ? "checked" : "" }} >
-                                                <label class="govuk-label govuk-checkboxes__label" for="PCR15_Framework">
-                                                    PCR15 Framework
-                                                </label>
-                                            </div>
-                                        {% endif %}
-                                        
-                                        {% if regulation is defined and 'allRegulation' in regulation or 'PCR2006' in regulation %}
-                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="PCR06_Framework" name="regulationType[]" type="checkbox" value="PCR06 Framework"{{ regulationType is not defined or regulationType is empty or 'PCR06 Framework' in regulationType ? "checked" : "" }} >
-                                                <label class="govuk-label govuk-checkboxes__label" for="PCR06_Framework">
-                                                    PCR06 Framework
-                                                </label>
-                                            </div>
-                                        {% endif %}
-
-                                    </div>
-                                </div>
-                            </div>
-                        {% endif %}
-                        
-
-
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
-                                <div class="govuk-accordion__section-header govuk-!-padding-bottom-0">
-                                    <h2 class="govuk-accordion__section-heading">
-                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-4">
-                                            Browse by category
-                                        </span>
-                                    </h2> 
-                                </div>
-
-                                <div id="accordion-with-summary-sections-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-4" role="region">
-                                    <ul class="govuk-list">
-                                        {% for pillar_item in pillars.pillars %}
-                                            <li>
-                                                {% set pillarArray = {
-                                                    'event': 'search_interaction',
-                                                    'interaction_type': 'filter by pillar',
-                                                    'interaction_detail':  pillar_item.name
-                                                }%}
-                                                <a class="{{pillar is defined and pillar == pillar_item.name ? 'govuk-!-font-weight-bold'}}" 
-                                                    onclick="pushToDataLayer('{{pillarArray |json_encode}}');"
-                                                    href="{{ path('frameworks_list_by_pillar',
-                                                    {   'pillar': pillar_item.slug, 
-                                                        'query': query is defined and query|trim is not empty ? query : '',
-                                                        'statuses': statuses is defined ? statuses
-                                                    }) }}">
-                                                {{ pillar_item.name }}</a>
-
-                                                <ul class="govuk-list">
-                                                    {% for category_item in pillar_item.categories %}
-                                                        <li>
-                                                            {% set categoryArray = {
-                                                                'event': 'search_interaction',
-                                                                'interaction_type': 'filter by category',
-                                                                'interaction_detail':  category_item.name
-                                                            }%}
-                                                            <a class="{{category is defined and category == category_item.name ? 'govuk-!-font-weight-bold' }}" 
-                                                                onclick="pushToDataLayer('{{categoryArray |json_encode}}');"
-                                                                href="{{ path('frameworks_list_by_category', 
-                                                                {   'category': category_item.slug, 
-                                                                    'query': query is defined and query|trim is not empty ? query : '',
-                                                                    'statuses': statuses is defined ? statuses
-                                                                }) }}">
-                                                            {{ category_item.name }}
-                                                            </a>
-                                                        </li>
-                                                    {% endfor %}
-                                                </ul>
-
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                         {% include '/frameworks/_helpful_info.html.twig' with {'page' : 'search'} %}
-                    </form>
-
+                <div class="govuk-grid-column-two-thirds hideWithoutJS govuk-visually-hidden">
+                    <h2 class="govuk-heading-m" v-if="totalResults == 1"> {[totalResults]} agreement found</h2>
+                    <h2 class="govuk-heading-m" v-else>                   {[totalResults]} agreements found</h2>
+                </div>
+                <div v-show="!javascriptVersion" class="govuk-grid-column-two-thirds">
+                    <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreement{{pagination.totalResults != 1 ? 's'}} found</h2>
                 </div>
 
-                 <div class="govuk-grid-column-two-thirds">
-                        {% if pagination.totalResults == 1 %}
-                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreement found</h2>
-                        {% else %}
-                            <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreements found</h2>
-                        {% endif %}
-                 </div>
-
-                {% if statuses is defined %}
-                    {% set statusLive = '&statuses%5B%5D=live' %}
-                    {% set statusExpired = '&statuses%5B%5D=expired' %}
-
-                    <div class="govuk-grid-column-two-thirds">
-                        <div class="ccs-filters-summary ccs-filter-summary-frameworks">
-                            <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
-                                <span class="ccs-filters-summary__label">Matching</span>
-                                <ul class="ccs-filters-summary__list">
-
-                                    {% if 'live' in statuses %}
-                                        <li class="ccs-filters-summary__facet">
-                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{ 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
-                                                <span> Live </span>
-                                            </a>  
-                                        </li>
-                                    {% endif %}
-
-                                    {% if statuses|length > 1 %}
-                                        <li style="display: inline; padding-right: 5px;" >and</li>
-                                    {% endif %}
-
-                                    {% if 'expired' in statuses%}
-                                        <li class="ccs-filters-summary__facet">
-                                            <a href="{{ "/agreements/search?q=#{ query is defined and query|trim is not empty ? query : '' }#{'live' in statuses ? statusLive : '' }" }}" class="ccs-filters-summary__facet__cancel"> 
-                                                <span> Expired </span>
-                                            </a>  
-                                        </li>
-                                    {% endif %}
-
-                                </ul>
-                            </div>
+                <div v-if="displayKeyword" class="govuk-grid-column-two-thirds hideWithoutJS govuk-visually-hidden">
+                    <div class="ccs-filters-summary ccs-filter-summary-frameworks">
+                        <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
+                            <span class="ccs-filters-summary__label">Containing</span>
+                            <ul class="ccs-filters-summary__list">
+                                <li class="ccs-filters-summary__facet">
+                                        <a style="cursor: pointer;" @click="clearSearchKeyword" class="ccs-filters-summary__facet__cancel"> <span>{[ displayKeyword]}</span> </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                {% endif %}
-                
+                </div>
 
-                {% if query is defined and query|trim is not empty %}
-                    <div class="govuk-grid-column-two-thirds">
+                {% if filters.keyword is defined and filters.keyword|trim is not empty %}
+                    <div v-show="!javascriptVersion" class="govuk-grid-column-two-thirds">
                         <div class="ccs-filters-summary ccs-filter-summary-frameworks">
                             <div class="ccs-filters-summary__facets" style="display: block; margin-top:0">
                                 <span class="ccs-filters-summary__label">Containing</span>
                                 <ul class="ccs-filters-summary__list">
                                     <li class="ccs-filters-summary__facet">
-                                        {% if category is defined and category|trim is not empty %}
-                                            <a href=" {{"/agreements/search?q=&category=#{category_slug}#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel">
-                                                <span>{{ query }}</span>
-                                            </a>
-                                        {% elseif pillar is defined and pillar|trim is not empty %}
-                                            <a href=" {{"/agreements/search?q=&pillar=#{pillar_slug}#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel">
-                                                <span>{{ query }}</span>
-                                            </a>
-                                        {% else %}
-                                            <a href=" {{"/agreements/search?q=#{ statuses is defined and 'live' in statuses ? statusLive : '' }#{ statuses is defined and 'expired' in statuses ? statusExpired : '' }" }}" class="ccs-filters-summary__facet__cancel">
-                                                <span>{{ query }}</span>
-                                            </a>
-                                        {% endif %}
+                                        <a href="/agreements" class="ccs-filters-summary__facet__cancel">
+                                            <span>{{ filters.keyword }}</span>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -443,72 +88,64 @@
                 {% endif %}
 
                 <div class="govuk-grid-column-two-thirds">
-                    {# see https://Strata.github.io/frontend/templating/content-fields.html #}
 
-                    <ul class="govuk-list govuk-list--frameworks">
-                        {% for item in results %}
-                            <li>
-                                <h3 class="govuk-heading-m ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22">
-                                    <a href="{{ path('frameworks_show', {'rmNumber':  item.content.rm_number }) }}">{{ item.content.title }}</a> {# <strong class="govuk-tag govuk-tag--subtle">{{ item.content.status }}</strong> #}
-                                    {% if item.content.status == 'Expired - Data Still Received' %}
-                                        <span class="govuk-tag ccs-tag ccs-tag--error">Expired: {{ item.content.end_date.format('d/m/Y') }}</span>
-                                    {% endif %}
-                                </h3>
-                                
-                                <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
-                                    <li> <strong>Agreement ID:</strong> {{ item.content.rm_number }} </li>
-                                    <li> <strong>Start Date:</strong> {{ item.content.start_date.format('d/m/Y') }} </li>
-                                    
-                                    {% if item.content.status != 'Expired - Data Still Received' %}
-                                        <li> <strong>End Date:</strong> {{ item.content.end_date.format('d/m/Y') }} </li>
-                                    {% endif %}
+                    <div v-if="responseAvailable" class="hideWithoutJS govuk-visually-hidden">
+                        <ul class="govuk-list govuk-list--frameworks" v-show="javascriptVersion">
+                                <li v-show="javascriptVersion" v-for="result in results">
+                                    <h3 class="govuk-heading-m ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22">
+                                        <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
+                                        <span v-if="result.status == 'Expired - Data Still Received'" class="govuk-tag ccs-tag ccs-tag--error"> Expired: {[ result.end_date | toDateDMY ]} </span>
+                                    </h3>
 
-                                    {% if tpp_feature_toggle == true %}
-                                        {% if item.content.regulation is not null %}
-                                        <li> <strong>Regulation:</strong> {{ item.content.regulation }} </li>
-                                        {% else %}
-                                            <li> <strong>Regulation:</strong></li>
+                                    <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                        <li> <strong>Agreement ID:</strong> {[ result.rm_number ]}   </li>
+                                        <li> <strong>Start Date:</strong>   {[ result.start_date | toDateDMY ]}  </li>
+                                        
+                                        <li v-if="result.status == 'Expired - Data Still Received'"> <strong>End Date:</strong> {[ result.end_date | toDateDMY ]} </li>
+
+                                        {% if tpp_feature_toggle == true %}
+                                                <li v-if="result.regulation != null"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
+                                                <li v-else> <strong>Regulation:</strong></li>
                                         {% endif %}
-                                    {% endif %}
-                                </ul>
-                                <p class="govuk-body-s">{{ item.content.summary | striptags | raw }}</p>
-                            </li>
-                        {% endfor %}
-                    </ul>
+                                    </ul>
+                                    <p class="govuk-body-s" v-html="result.summary"></p> 
+                                </li>
 
-                    {% if tpp_feature_toggle == true and results|length == 0 and 'PA2023' in regulation and regulation|length == 1 %}
-                        <p>There are 0 agreements on regulation PA2023, go to the <a href="{{ path('frameworks_upcoming_deals') }}">upcoming agreement page</a> for further information</p>
-                    {% elseif results|length == 0 %}
-                        <h3>There are no matching results.</h3>
-                        <p class="govuk-!-margin-bottom-0">Improve your search results by:</p>
-                        <ul>
-                            <li><p class="govuk-!-margin-bottom-1">removing filters</p></li>
-                            <li><p class="govuk-!-margin-bottom-1">double-checking your spelling</p></li>
-                            <li><p class="govuk-!-margin-bottom-1">using fewer keywords</p></li>
-                            <li><p class="govuk-!-margin-bottom-1">clicking 'start now' and answering a few simple questions to find the best agreement for your needs</p></li>
+                            <results-pagination 
+                                :total-results="totalResults" 
+                                :number-of-pages="numberOfPages" 
+                                :current-page="currentPage" 
+                                v-on:update-page="updatePageValue($event)" 
+                            ></results-pagination>
                         </ul>
-                        <br>
-                        <p>If you are still unable to find what you need, contact our customer service centre using our <a class="govuk-link" href="/contact">contact us form</a>.</p>
-                    {% endif %}
+                    </div>
 
+                    <div v-else-if="!responseAvailable" class="hideWithoutJS govuk-visually-hidden">
+                        <p>Loading...</p>
+                    </div>
 
-                    {% set statusData = statuses is defined and statuses is not empty ? {'statuses' : statuses} : {} %}
-                    {% set queryData = query is defined and query|trim is not empty ? {'q' : query} : {} %}
+                    <div v-if="emptyResult" class="hideWithoutJS govuk-visually-hidden">
+                        <div v-if="checkedRegulation.length == 1 && checkedRegulation.includes('PCR2006') || checkedType.length == 1 && checkedType.includes('PCR06+Framework')" >
+                            <p>All agreements under The Public Contracts Regulation (PCR) 2006 are now expired. <br>You can view these archived agreements by clicking 'Expired' on the left side of this page.</p>
+                        </div>
+                        <div v-else>
+                            <h3>There are no matching results.</h3>
+                            <p class="govuk-!-margin-bottom-0">Improve your search results by:</p>
+                            <ul>
+                                <li><p class="govuk-!-margin-bottom-1">removing filters</p></li>
+                                <li v-if="keyword"><p class="govuk-!-margin-bottom-1">double-checking your spelling</p></li>
+                                <li v-if="keyword"><p class="govuk-!-margin-bottom-1">using fewer keywords</p></li>
+                                <li v-if="keyword"><p class="govuk-!-margin-bottom-1">clicking 'start now' and answering a few simple questions to find the best agreement for your needs</p></li>
+                            </ul>
+                            <br>
+                            <p>If you are still unable to find what you need, contact our customer service centre using our <a class="govuk-link" href="/contact">contact us form</a>.</p>
+                        </div>
 
-                    {# Pagination #}
-                    {% if pillar is defined and pillar|trim is not empty %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'pillar': pillar_slug}|merge(statusData)|merge(queryData)} %}
-                    {% elseif category is defined and category|trim is not empty %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'category': category_slug}|merge(statusData)|merge(queryData)} %}
-                    {% elseif query is defined and query|trim is not empty %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': {'q': query}|merge(statusData)} %}
-                    {% else %}
-                        {%  set pagination_data = {'pagination': pagination, 'route': 'frameworks_search', 'options': statusData} %}
-                    {% endif %}
+                    </div>
 
-                    {% if pagination.totalPages > 1 %}
-                        {{ include('includes/pagination.html.twig', pagination_data) }}
-                    {% endif %}
+                    <div v-show="!javascriptVersion">
+                        {% include '/frameworks/_resultWithoutJS.html.twig' %}
+                    </div>
 
                 </div>
             </div>
@@ -516,6 +153,593 @@
 
         </main>
     </div>
-    <script> searchFilterAgreement(); </script>
+
+    {% if app.environment == "prod" %}
+        <script src="/assets/scripts/libraries/vue.min.js?v=1"></script>
+        <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement'});</script>
+    {% else %}
+        <script src="/assets/scripts/libraries/vue.js?v=1"></script>
+    {% endif %}
+
+    <script type="application/javascript"> 
+        searchFilterAgreement();
+
+        function supportsLiterals() {
+            try{
+                return eval("''===``");
+            }
+            catch(e){
+                return false;
+            }
+        }
+
+        if(!('Promise' in window) || !supportsLiterals() || !window.fetch) {
+            throw new Error("Your browser doesn't support the necessary JavaScript functions to use the enhanced search and has been served a non-JavaScript version");
+        }
+
+
+        var apiBaseUrl                  = '{{ api_base_url }}';
+        var appBaseUrl                  = '{{ app_base_url }}';
+        var pageNumber                  = {% if pageNumber is defined and pageNumber is not empty %}{{ pageNumber }}{% else %}1{% endif %};
+        var keyword                     = null;
+        var checkedStatus               = [];
+        var checkedRegulation           = [];
+        var checkedType                 = [];
+        var checkedPillar               = [];
+        var checkedCategory             = [];
+        var pillars                     = new Map();
+        var pillarsSize                 = '{{ pillars.pillars|length }}';
+        var categorySize                = '{{ categories|length }}';
+        
+        {% if filters.keyword is defined and filters.keyword is not null and filters.keyword is not empty %}
+            var keyword = '{{ filters.keyword }}';
+        {% endif %}
+
+        {% if filters.checkedStatus is defined and filters.checkedStatus is not empty %}
+            var checkedStatus   = JSON.parse('{{ filters.checkedStatus|json_encode|e("js") }}');
+        {% endif %}
+
+        {% if filters.checkedRegulation is defined and filters.checkedRegulation is not empty %}
+            var checkedRegulation   = JSON.parse('{{ filters.checkedRegulation|json_encode|e("js") }}');
+        {% endif %}
+
+        {% if filters.checkedType is defined and filters.checkedType is not empty %}
+            var checkedType   = JSON.parse('{{ filters.checkedType|json_encode|e("js") }}');
+        {% endif %}
+
+        {% if filters.checkedPillar is defined and filters.checkedPillar is not empty %}
+            var checkedPillar   = JSON.parse('{{ filters.checkedPillar|json_encode|e("js") }}');
+        {% endif %}
+
+        {% if filters.checkedCategory is defined and filters.checkedCategory is not empty %}
+            var checkedCategory   = JSON.parse('{{ filters.checkedCategory|json_encode|e("js") }}');
+        {% endif %}
+
+         {% if pillars.pillars is defined and pillars.pillars is not empty %}
+            var allPillar   = JSON.parse('{{ pillars.pillars|json_encode|e("js") }}');
+
+            for(var i = 0; i < allPillar.length; i++) {  
+                categoryNames = allPillar[i].categories.map(category => category.slug.toLowerCase());
+                pillars.set(allPillar[i].name, categoryNames);
+            }
+        {% endif %}
+
+        Vue.component('results-pagination', {
+            delimiters: ['{[', ']}'],
+            props: {
+                currentPage: Number,
+                totalResults: Number,
+                numberOfPages: Number,
+            },
+            computed: {
+                nextPage: function() {
+                    if(this.currentPage == this.numberOfPages) {
+                        return this.currentPage;
+                    }
+                    return this.currentPage + 1;
+                },
+                previousPage: function() {
+                    if(this.currentPage == 1) {
+                        return this.currentPage;
+                    }
+                    return this.currentPage - 1;
+                },
+                paginationStartNumber: function() {
+                    // start page defaults to 2 (second page) because the
+                    // first page link is always output by default
+                    var linksStartPage = 1;
+
+                    // if the start page is at the beginning of the pagination
+                    // then account for this
+                    if ((this.currentPage - 2) < 2 ) {
+                        linksStartPage = 2;
+                    } else {
+                        // otherwise the start page is equal to the current
+                        // page minus 2, this means that the pagination should
+                        // have a couple of links either side of the current
+                        // page, e.g.   2 3 [4] 5 6
+                        linksStartPage = this.currentPage - 2;
+                    }
+
+                    // if the start page is very close to the last page, then
+                    // account for this
+                    if((this.currentPage + 2) > this.numberOfPages) {
+                        linksStartPage = linksStartPage - 2;
+                    }
+
+                    if(linksStartPage <= 1 ) {
+                        linksStartPage = 2;
+                    }
+
+                    return linksStartPage;
+                },
+                paginationEndNumber: function() {
+                    var linksEndPage   = this.paginationStartNumber + 4;
+
+                    // if there aren't more pages than the number we
+                    // want to show by minimum, then the end page is just equal
+                    // to the final result page
+
+                    if ((linksEndPage >= this.numberOfPages)) {
+                        // minus 1 because the last page is always output
+                        linksEndPage = this.numberOfPages - 1;
+                    }
+
+                    if(this.numberOfPages == 1) {
+                        linksEndPage = 1;
+                    }
+
+                    return linksEndPage;
+                }
+            },
+            methods: {
+                updatePageNumber: function(event, newPage) {
+                    event.preventDefault();
+                    this.$emit('update-page', newPage);
+                    search.fetchAPIData(null, newPage)
+                },
+                range : function (start, end) {
+                    return Array(end - start + 1).fill().map(function(_, idx) {
+                        return start + idx;
+                    });
+                }
+            },
+            template: 
+                `
+                <div>
+                    <ul class="list--inline pagination govuk-body" role="list" aria-label="Pagination" v-if="numberOfPages > 0">
+                        <li class="pagination__item pagination__item--previous" v-if="currentPage != 1">
+                            <a href="#" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
+                                <span class="icon">
+                                    <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M6.7 0l1.4 1.4-4.3 4.3h13v2H3.9l4.2 4-1.4 1.4L0 6.7z" fill="#007194" fill-rule="evenodd"></path></svg>
+                                </span>
+                                <span>Previous</span> <span class="visuallyhidden">page</span>
+                            </a>
+                        </li>
+
+                        <li class="pagination__item">
+                            <span v-if="currentPage == 1"><span class="visuallyhidden">Page </span>1</span>
+                            <a v-else href="#" v-on:click="updatePageNumber($event, 1)"><span class="visuallyhidden">Page </span>1</a>
+                        </li>
+
+                        <li class="pagination__item" v-if="paginationStartNumber > 2">…</li>
+
+                        <li class="pagination__item" v-for="page in range(paginationStartNumber, paginationEndNumber)" v-if="numberOfPages > 1">
+                            <span v-if="page == currentPage"><span class="visuallyhidden">Page </span>{[ page ]}</span>
+                            <a v-else href="#" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
+                        </li>
+
+                        <li class="pagination__item" v-if="(paginationEndNumber + 1) < numberOfPages">…</li>
+
+                        <li class="pagination__item" v-if="numberOfPages > 1">
+                            <span v-if="currentPage == numberOfPages"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</span>
+                            <a v-else href="#" v-on:click="updatePageNumber($event, numberOfPages)"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</a>
+                        </li>
+
+                        <li class="pagination__item pagination__item--next" v-if="currentPage != numberOfPages">
+                            <a href="#" rel="next" v-on:click="updatePageNumber($event, nextPage)">
+                                <span>Next</span> <span class="visuallyhidden">page</span>
+                                <span class="icon">
+                                    <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"></path></svg>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                `
+        });
+
+        var search = new Vue({
+            delimiters: ['{[', ']}'],
+            el: '#main-content',
+            mounted:function(){
+                this.filtering(null, "status");
+                this.filtering(null, "regulation");
+                this.filtering(null, "type");
+                this.filtering(null, "pillar");
+                this.filtering(null, "category");
+            },
+            data: {
+                javascriptVersion: true,
+                results: "",
+                responseAvailable: null,
+                emptyResult: false,
+                apiURL:  apiBaseUrl + "frameworks?",
+                keyword: keyword,
+                displayKeyword: null,
+                checkedStatus: checkedStatus,
+                checkedRegulation: checkedRegulation,
+                checkedType: checkedType,
+                checkedPillar: checkedPillar,
+                checkedCategory: checkedCategory,
+                pillars: pillars,
+                currentPage: pageNumber,
+                pillarsSize: pillarsSize,   
+                categorySize: categorySize,
+                numberOfPages: Number,
+                totalResults: Number,
+
+                popstateLoad: false
+            },
+            filters: {
+                toDateDMY: function (value) {
+                    if (!value) return ''
+                    date = new Date(value);
+                    return date.getDate().toString().padStart(2, '0') + '/'+ (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getFullYear();
+                }
+            },
+            created: function() {
+                const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
+
+                hideWithOutJS.forEach(component => {
+                if (component.classList.contains('govuk-visually-hidden')) {
+                    component.classList.remove('govuk-visually-hidden');
+                }});
+
+                // unfortunately we have to update the results when we instantiate
+                // the Vue app so it hooks in all the correct event handlers etc.
+                this.fetchAPIData(null, this.currentPage);
+
+                // setup popstate event listener for History API
+                this.setupHistoryApi();
+            },
+            watch: {
+                keyword(keyword){
+                    if(this.keyword.trim().length == 0 || /^[\-\(\)&]*$/.test(this.keyword)){
+                        this.keyword = "";
+                    }
+                    this.keyword = this.keyword
+                        .replace(/\//g, "")                   // Remove slashes
+                        .replace(/[^a-zA-Z0-9\s\-&()]/g, ""); // Allow letters, numbers, spaces, and the specified characters
+                },
+                searchRequestUrl: function() {
+
+                    // if the searchRequestUrl hasn't been updated by a popstate
+                    // event (back/forward button) then we push a state item to the
+                    // JS History API
+                    if(this.popstateLoad === false) {
+                        history.pushState({
+                            checkedStatus:      this.checkedStatus,
+                            checkedRegulation:  this.checkedRegulation,
+                            checkedType:        this.checkedType,
+                            checkedPillar:      this.checkedPillar,
+                            checkedCategory:    this.checkedCategory,
+                            keyword:            this.keyword,
+                        }, 'Agreements', this.frontendSearchUrl);
+                    }
+
+                    // reset the popstateLoad property to false
+                    this.popstateLoad = false;
+                }
+            },
+            computed: {
+                frontendQueryUrl: function() {
+                    var queryUrl = '/?';
+
+                    if(this.checkedStatus.length != 0) {
+                        queryUrl += '&status=' + this.checkedStatus.join();
+                    }
+
+                    if(this.checkedRegulation.length != 0 && !this.checkedRegulation.includes("allRegulation")) {
+                        queryUrl += '&regulation=' + this.checkedRegulation.join();
+                    }
+                    
+                    if(this.checkedType.length != 0 && !this.checkedType.includes("allType")) {
+                        this.checkedType = this.checkedType.map(str => str.replace(/ /g, '+'));
+                        queryUrl += '&type=' + this.checkedType.join();
+                    }
+
+                    if(this.checkedPillar.length != 0 && !this.checkedPillar.includes("allPillarAndCategory")) {
+                        queryUrl += '&pillar=' + this.checkedPillar.join();
+                    }
+
+                    if(this.checkedCategory.length != 0) {
+                        this.checkedCategory = this.checkedCategory.map(str => str.replace(/ /g, '+'));
+                        queryUrl += '&category=' + this.checkedCategory.join();
+                    }
+
+                    if(this.keyword) {
+                        queryUrl += '&keyword=' + this.keyword;
+                    }
+
+                    if(this.currentPage ){
+                        queryUrl += '&page=' + this.currentPage;
+                    }
+
+                    return queryUrl != '/?' ? queryUrl : "";
+                    
+                },
+                frontendSearchUrl: function() {
+                    var searchUrl = '/agreements' + this.frontendQueryUrl ;
+                    return searchUrl;
+                }
+            },
+            methods: {
+                filtering: function(selected, filtertingOption){
+                    filterArray = null
+                    viewAllCheckboxID = null
+                    paramaString = null
+                    returnFilter = ""
+                    maxFilter = 0
+
+                    switch(filtertingOption) {
+                        case "status":
+                            this.checkedStatus.forEach((currentElement) => {
+                                returnFilter += "&status[]=" + currentElement
+                            })
+                            if (this.checkedStatus.length == 0){
+                                document.getElementById("Live").checked = true;
+                                this.checkedStatus = ["Live"]
+                            }
+                            return returnFilter
+                            break
+                        case "regulation":
+                            filterArray         = this.checkedRegulation
+                            paramaString        = "&regulation[]="
+                            viewAllCheckboxID   = "allRegulation"
+                            maxFilter           = 3
+                            break
+                        case "type":
+                            filterArray         = this.checkedType
+                            paramaString        = "&regulation_type[]="
+                            viewAllCheckboxID   = "allType"
+                            maxFilter           = 6
+                            break
+                        case "pillar":
+                            filterArray         = this.checkedPillar
+                            paramaString        = "&pillar[]="
+                            viewAllCheckboxID   = "allPillarAndCategory"
+                            maxFilter           = this.pillarsSize
+                            break
+                        case "category":
+                            if (this.checkedCategory.length == this.categorySize || selected == "allPillarAndCategory"){
+                                document.getElementById("allPillarAndCategory").checked = true
+                                document.getElementById("corporate").checked = false
+                                document.getElementById("estates").checked = false  
+                                document.getElementById("technology").checked = false
+                                this.checkedCategory= [];
+                                this.checkedPillar= [];
+
+                                return ""
+                            }else if(this.checkedCategory.length != 0){
+                                document.getElementById("allPillarAndCategory").checked = false
+                            }
+
+                            seletedOptions = this.checkedCategory.map(str => str.replace(/,/g, '').replace(/[+]/g, '-').toLowerCase());
+
+                            for (let [key, value] of pillars) {
+                                if (value.every(value => seletedOptions.includes(value))) {
+                                        this.checkedPillar.includes(key) ? null : this.checkedPillar.push(key);
+                                        document.getElementById(key.toLowerCase()).checked = true ;
+                                    }else if (value.includes(selected)) {
+                                        document.getElementById(key.toLowerCase()).checked = false ;
+                                        this.checkedPillar = this.checkedPillar.filter(item => item !== key);
+                                    }
+                            }
+
+                            this.checkedCategory.forEach((currentElement) => {
+                                returnFilter += "&category[]=" + currentElement
+                            })
+                            return returnFilter
+                         default:
+                            console.log('An error occurred');
+                            return
+                    }
+
+                    if((selected == "Live" || selected == "Expired") && filtertingOption != "status"){
+                        selected = "dummy value"
+                    }
+
+                    //if nothing is check || everything is checked || View all is checked 
+                    if (filterArray.length == 0 || filterArray.length == maxFilter || filterArray.includes(viewAllCheckboxID) ){
+                    
+                        //edge case where there are some category checked but all the pullar has also been checked
+                        this.checkedCategory = filtertingOption == "pillar" && filterArray.length == maxFilter ? [] : this.checkedCategory; 
+
+                        filterArray.splice(0);
+                        document.getElementById(viewAllCheckboxID) != null ? document.getElementById(viewAllCheckboxID).checked = true : null
+                        document.getElementById(selected) != null ? document.getElementById(selected).checked = false : null
+                    }else{
+                        document.getElementById(viewAllCheckboxID) != null ? document.getElementById(viewAllCheckboxID).checked = false : null
+                        filterArray.forEach((currentElement) => {
+                            returnFilter += paramaString + currentElement
+                        })
+                    }
+                    return returnFilter;
+                },
+                searchRequestUrl: function(selected, page) {
+                    fetchURL =    this.apiURL 
+                        + this.filtering(selected, "status")
+                        + this.filtering(selected, "regulation")
+                        + this.filtering(selected, "type")
+                        + this.filtering(selected, "pillar")
+                        + this.filtering(selected, "category")
+                    
+                    fetchURL = fetchURL + "&per_page=20&page=" + this.currentPage;
+
+                    if(this.popstateLoad === false) {
+                        history.pushState({
+                            checkedStatus          :this.checkedStatus,
+                            checkedRegulation      :this.checkedRegulation,
+                            checkedType            :this.checkedType,
+                            checkedPillar          :this.checkedPillar,
+                            checkedCategory        :this.checkedCategory,
+                            keyword                :this.keyword,
+                        }, 'Agreements', this.frontendSearchUrl);
+                    }
+
+                    // reset the popstateLoad property to false
+                    this.popstateLoad = false;
+
+                    return fetchURL;
+                },
+                searchKeyword: function() {
+
+                    if (this.keyword){
+                        pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'agreements', 'search_term': this.keyword});
+                        
+                        if(this.popstateLoad === false) {
+                            history.pushState({
+                                checkedStatus          :this.checkedStatus,
+                                checkedRegulation      :this.checkedRegulation,
+                                checkedType            :this.checkedType,
+                                checkedPillar          :this.checkedPillar,
+                                checkedCategory        :this.checkedCategory,
+                                keyword                :this.keyword,
+                            }, 'Agreements', this.frontendSearchUrl);
+                        }
+
+                        // reset the popstateLoad property to false
+                        this.popstateLoad = false;
+
+                        this.displayKeyword = this.keyword
+                        
+                        return "&keyword=" + this.keyword.replace(/&/g, '');
+                    }
+                    this.displayKeyword = null
+                    return ""
+                },
+                clearSearchKeyword: function() {
+                    this.keyword = ""
+                    this.displayKeyword = null
+                    this.fetchAPIData(null,null)
+                },
+                resetAllFilter: function() {
+                    this.keyword = ""
+                    this.displayKeyword = null
+                    this.checkedStatus = []
+                    this.checkedRegulation = []
+                    this.checkedType = []
+                    this.checkedPillar = []
+                    this.checkedCategory = []
+                    this.pillars = []
+                    this.fetchAPIData(null,null)
+                },
+                fetchAPIData: function(input, page) {
+                    var self = this;
+                    this.responseAvailable = false;
+                    this.emptyResult = false;
+                    this.currentPage = page === null || page === undefined ? 1 : page;
+
+                    var requestUrl = this.searchRequestUrl(input, this.currentPage) + this.searchKeyword();
+                    
+                    console.log(requestUrl);
+
+                    fetch(requestUrl)
+                    .then(async function(response) {
+                        if (!response.ok) {
+                            throw new Error('HTTP error, status = ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(function(jsonResponse) {
+                        self.numberOfPages  = parseInt(Math.ceil(jsonResponse.meta.total_results / jsonResponse.meta.limit))
+                        self.totalResults   = parseInt(jsonResponse.meta.total_results)
+                        this.results        = jsonResponse.results;
+
+                        self.results = jsonResponse.results;
+                        self.emptyResult = Object.keys(jsonResponse.results).length === 0 ? true : false
+                        self.responseAvailable = true;
+                    })
+                    .catch(function(error) {
+                        console.log('An error occurred');
+                        console.log(error);
+                        self.responseAvailable = false;
+                    });
+                },
+                updatePageValue: function(newPageValue) {
+                    this.currentPage = newPageValue;
+                },
+                setupHistoryApi: function() {
+
+                    window.onpopstate = function(event) {
+                        // set the popstate variable to true so that we can
+                        // tell in other parts of the code that the state change
+                        // is being caused by the back/forward button
+                        this.popstateLoad = true;
+
+                        if(event.state == null) {
+                            this.checkedStatus               = [];
+                            this.checkedRegulation           = [];
+                            this.checkedType                 = [];
+                            this.checkedPillar               = [];
+                            this.checkedCategory             = [];
+                            this.keyword                     = null;
+                            return
+                        }
+
+                        this.checkedStatus          = event.state.checkedStatus;
+                        this.checkedRegulation      = event.state.checkedRegulation;
+                        this.checkedType            = event.state.checkedType;
+                        this.checkedPillar          = event.state.checkedPillar;
+                        this.checkedCategory        = event.state.checkedCategory;
+                        this.keyword                = event.state.keyword;
+
+                        this.fetchAPIData(null, this.currentPage);
+                    }
+                },
+                shouldShowTypeCheckbox: function (item) {
+                     if (this.checkedRegulation.length === 0) {
+                        return true;
+                     }
+
+                    const regulationMap = {
+                        "Closed Framework": "PA2023",
+                        "Dynamic Market": "PA2023",
+                        "Open Framework": "PA2023",
+                        "Dynamic Purchasing System": "PCR2015",
+                        "PCR15 Framework": "PCR2015",
+                        "PCR06 Framework": "PCR2006"
+                    };
+
+                    const requiredRegulation = regulationMap[item];
+                    return requiredRegulation ? this.checkedRegulation.includes(requiredRegulation) : false;
+                },
+                removeTypeBasedOnReg: function () {
+                    const checkboxMap = {
+                        "PA2023": ["Closed+Framework", "Dynamic+Market", "Open+Framework"],
+                        "PCR2015": ["Dynamic+Purchasing+System", "PCR15+Framework"],
+                        "PCR2006": ["PCR06+Framework"]
+                    };
+
+                    for (const [key, types] of Object.entries(checkboxMap)) {
+                        const currentCheckbox = document.getElementById(key);
+                        if (currentCheckbox && !currentCheckbox.checked) {
+                            types.forEach(type => {
+                                const index = this.checkedType.indexOf(type);
+                                if (index !== -1) {
+                                    this.checkedType.splice(index, 1);
+                                    this.fetchAPIData(type, this.currentPage);
+                                }
+                            });
+                        }
+                    }
+                    console.log(this.checkedType);
+                    
+                },
+            }
+        });
+
+    </script>
 
 {% endblock %}
