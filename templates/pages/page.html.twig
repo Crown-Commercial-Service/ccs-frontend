@@ -13,12 +13,6 @@
     {%- endif -%}
 {% endblock %}
 
-{% block head %}
-    {% if image|default %}
-        <link rel="prefetch" href="{{ image.byName('medium_large') }}" />
-    {% endif %}
-{% endblock %}
-
 {% block header %}
     {% embed '/includes/header.html.twig' %}
         {% block bannerarea %}
