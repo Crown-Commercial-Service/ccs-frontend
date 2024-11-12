@@ -14,7 +14,9 @@
 {% endblock %}
 
 {% block head %}
-    <link rel="prefetch" href="{{ image.byName('medium_large') }}" />
+    {% if image|default %}
+        <link rel="prefetch" href="{{ image.byName('medium_large') }}" />
+    {% endif %}
 {% endblock %}
 
 {% block header %}
@@ -616,4 +618,5 @@
 {% block nonblocking_javascript %}
     {{ parent() }}
     <script src="/assets/scripts/pardot.js"></script>
+    <script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.3"></script>
 {% endblock %}
