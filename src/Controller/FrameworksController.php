@@ -263,6 +263,89 @@ class FrameworksController extends AbstractController
         return $this->render('frameworks/upcoming-list.html.twig', $data);
     }
 
+    public function upcomingDealsSearch(Request $request) {
+        // Get search query
+        // strip special characters and tags from search query
+        $orginalSearch = str_replace('/', '', strip_tags(html_entity_decode($request->query->get('keyword'))));;
+        $query = preg_replace("/[^a-zA-Z0-9\s]/", "", $orginalSearch);
+        $page = 1;
+
+        $this->searchApi->setCacheKey($request->getRequestUri());
+        $this->searchApi->getContentType()->setApiEndpoint('frameworks');
+
+        $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 80;
+
+
+        if (!is_array($request->query->get('checkedStatus'))) {
+            $checkedStatus        = $request->query->get('checkedStatus') != null ? explode(",", $request->query->get('status')) : ["Upcoming"];
+        } else {
+            $checkedStatus = $request->query->get('checkedStatus');
+        }
+
+        $checkedRegulationArray     = ControllerHelper::getArrayFromStringForParam($request, "regulation", "allRegulation");
+
+        $options = [
+            "keyword"                     => $query,
+            "checkedStatus"               => $checkedStatus,
+        ];
+
+        try {
+            $results = $this->searchApi->list($page, [
+                'keyword'           => $options['keyword'],
+                'status'            => $options['checkedStatus'],
+                'limit'             => $limit,
+            ]);
+         
+        } catch (NotFoundException | PaginationException $e) {
+            throw new NotFoundHttpException('Page not found', $e);
+        }
+
+        // request to upcoming deals information api for titles and description
+        $upcomingDealsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/upcoming-deals-page/0';
+
+        $client = HttpClient::create();
+        $response = $client->request(
+            'GET',
+            $upcomingDealsUrl,
+        );
+
+
+        $upcomingDealsContent = null;
+
+        $cscMessage = ControllerHelper::getCSCMessage();
+
+        $data = [
+            'tpp_feature_toggle'            => getenv('TPP_feature_toggle'),
+            // 'awarded_pipeline'              => $results->getContent()->get('awarded_pipeline'),
+            // 'underway_pipeline'             => $results->getContent()->get('underway_pipeline'),
+            // 'dynamic_purchasing_systems'    => $results->getContent()->get('dynamic_purchasing_systems'),
+            // 'planned_pipeline'              => $results->getContent()->get('planned_pipeline'),
+            // 'future_pipeline'               => $results->getContent()->get('future_pipeline'),
+            'checkedStatus'                    => $checkedStatus,
+            'filters'                       => $options,
+            'results'                       => $results,
+            'upcoming_deals_content'        => $upcomingDealsContent,
+            'cscMessage'                    => $cscMessage,
+        ];
+
+        return $this->render('frameworks/upcoming-list.html.twig', $data);
+
+        // TODO make muliple params appear for checked status in url
+        // TODO Make sure checkedStatus filter works and can filter results
+        // TODO Make view all work
+        // TODO Make DSP results appear when all is checked as currently they are not aligned with upcoming
+        // TODO Add Regulation Status and allow to filter 
+        // TODO Restore Helpful links
+        // TODO Make sure other results don't appear when using search i.e if filtering future then future only agreements should show
+        // TODO Remove 'No upcoming agreements' message if agreements appear
+        // TODO Cleanup remove old upcoming controller and routes, also refactor code if needed
+
+    }
+
+    public function upcomingTypesArray($upcomingTypes) {
+
+    } 
+
     /**
      * Show one framework
      *
