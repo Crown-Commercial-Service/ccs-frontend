@@ -56,7 +56,7 @@ class FormController extends AbstractController
 
         $formData = [
             'name'      => $params->get('name', null),
-            'jobTitle'  => $params->get('00Nb0000009IXEs'),
+            'jobTitle'  => $params->get('jobTitle'),
             'email'     => $params->get('email', null),
             'phone'     => $params->get('phone', null),
             'company'   => $params->get('company', null),
@@ -125,7 +125,7 @@ class FormController extends AbstractController
             "buyerDate"     => $params-> get('buyer-training-dates', null),
             "supplierDate"  => $params-> get('supplier-training-dates', null),
             'name'          => $params->get('name', null),
-            'jobTitle'      => $params->get('00Nb0000009IXEs'),
+            'jobTitle'      => $params->get('jobTitle'),
             'email'         => $params->get('email', null),
             'phone'         => $params->get('phone', null),
             'company'       => $params->get('company', null),
@@ -191,7 +191,7 @@ class FormController extends AbstractController
             'email'                 => $params->get('email', null),
             'phone'                 => $params->get('phone', null),
             'company'               => $params->get('company', null),
-            'jobTitle'              => $params->get('00Nb0000009IXEs', null),
+            'jobTitle'              => $params->get('jobTitle', null),
             'moreDetail'            => $params->get('more-detail', null),
             'callback'              => $params->get('00Nb0000009IXEg', null),
             'contactedBefore'       => $params->get('contactedBefore', null),
@@ -280,7 +280,7 @@ class FormController extends AbstractController
             'email'                 => $params->get('email', null),
             'phone'                 => $params->get('phone', null),
             'company'               => $params->get('company', null),
-            'jobTitle'              => $params->get('00Nb0000009IXEs', null),
+            'jobTitle'              => $params->get('jobTitle', null),
             'moreDetail'            => $params->get('more-detail', null),
             'callback'              => $params->get('00Nb0000009IXEg', null),
             'contactedBefore'       => $params->get('contactedBefore', null),
@@ -350,7 +350,7 @@ class FormController extends AbstractController
             'name'          => $params->get('name', null),
             'email'         => $params->get('email', null),
             'company'       => $params->get('company', null),
-            'jobTitle'      => $params->get('00Nb0000009IXEs', null),
+            'jobTitle'      => $params->get('jobTitle', null),
         ];
 
         if (!empty($formData)) {
@@ -398,7 +398,7 @@ class FormController extends AbstractController
         $formData = [
             'name'          => $params->get('name', null),
             'email'         => $params->get('email', null),
-            'jobTitle'      => $params->get('00Nb0000009IXEs'),
+            'jobTitle'      => $params->get('jobTitle'),
             'phone'         => $params->get('phone', null),
             'company'       => $params->get('company', null),
             'moreDetail'    => $params->get('more-detail', null),
