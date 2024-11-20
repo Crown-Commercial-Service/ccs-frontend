@@ -131,7 +131,7 @@ class FormValidation
     {
         $returnArray  = [
             'errors' => [],
-            'link' => '#00Nb0000009IXEs',
+            'link' => '#jobTitle',
         ];
 
         $returnArray['errors'] = is_null($jobTitle) || empty(trim($jobTitle)) ? ['Enter your job title'] : [] ;
