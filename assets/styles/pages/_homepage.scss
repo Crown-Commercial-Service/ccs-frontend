@@ -332,6 +332,16 @@ overflow: hidden;
 
 
 // ------------ media queries ------------
+@include govuk-media-query($until: 642) {
+    .homepage-campaign-box {
+        overflow: hidden;
+        margin: 0px -15px 30px -15px;
+    }
+
+    .homepage-campaign-box-content{
+        width: unset;
+    }
+}
 
 @include govuk-media-query($from: 642) {
     .homepage-card-container {
