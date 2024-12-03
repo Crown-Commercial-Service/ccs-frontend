@@ -132,10 +132,7 @@ class FrameworksController extends AbstractController
             return $this->redirectToRoute('frameworks_list', $redirectForCatOrPillar);
         }
 
-        // Get search query
-        // strip special characters and tags from search query
-        $orginalSearch = str_replace('/', '', strip_tags(html_entity_decode($request->query->get('keyword'))));
-        $query = preg_replace("/[^a-zA-Z0-9\s]/", "", $orginalSearch);
+        $query = $this->sanitizeSearchQuery($request->query->get('keyword'));
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         $this->searchApi->setCacheKey($request->getRequestUri());
@@ -208,66 +205,8 @@ class FrameworksController extends AbstractController
         return $this->render('frameworks/list.html.twig', $data);
     }
 
-    /**
-     * List upcoming deals
-     *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentFieldNotSetException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PermissionException
-     */
-    public function upcomingDeals(Request $request)
-    {
-        $this->api->setContentType('upcoming_deals');
-        $this->api->setCacheKey($request->getRequestUri());
-
-        // @todo At present need to pass fake ID since API method is intended to return one item with an ID, review this
-        try {
-            $results = $this->api->getOne(0);
-        } catch (NotFoundException $e) {
-            throw new NotFoundHttpException('Page not found', $e);
-        }
-
-        // request to upcoming deals information api for titles and description
-        $upcomingDealsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/upcoming-deals-page/0';
-
-        $client = HttpClient::create();
-        $response = $client->request(
-            'GET',
-            $upcomingDealsUrl,
-        );
-
-        $upcomingDealsContent = null;
-
-        $cscMessage = ControllerHelper::getCSCMessage();
-
-        if ($response->getStatusCode() == 200) {
-            $upcomingDealsContent = json_decode($response->getContent());
-        }
-
-        $data = [
-            'tpp_feature_toggle'            => getenv('TPP_feature_toggle'),
-            'awarded_pipeline'              => $results->getContent()->get('awarded_pipeline'),
-            'underway_pipeline'             => $results->getContent()->get('underway_pipeline'),
-            'dynamic_purchasing_systems'    => $results->getContent()->get('dynamic_purchasing_systems'),
-            'planned_pipeline'              => $results->getContent()->get('planned_pipeline'),
-            'future_pipeline'               => $results->getContent()->get('future_pipeline'),
-            'upcoming_deals_content'        => $upcomingDealsContent,
-            'cscMessage'                    => $cscMessage,
-        ];
-
-        return $this->render('frameworks/upcoming-list.html.twig', $data);
-    }
-
     public function upcomingDealsSearch(Request $request) {
-        // Get search query
-        // strip special characters and tags from search query
-        $orginalSearch = str_replace('/', '', strip_tags(html_entity_decode($request->query->get('keyword'))));;
-        $query = preg_replace("/[^a-zA-Z0-9\s]/", "", $orginalSearch);
+        $query = $this->sanitizeSearchQuery($request->query->get('keyword'));
         $page = 1;
 
         $this->searchApi->setCacheKey($request->getRequestUri());
@@ -275,18 +214,12 @@ class FrameworksController extends AbstractController
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 80;
 
-
-        if (!is_array($request->query->get('checkedStatus'))) {
-            $checkedStatus        = $request->query->get('checkedStatus') != null ? explode(",", $request->query->get('status')) : ["Upcoming"];
-        } else {
-            $checkedStatus = $request->query->get('checkedStatus');
-        }
-
-        $checkedRegulationArray     = ControllerHelper::getArrayFromStringForParam($request, "regulation", "allRegulation");
+        $checkedTypeArray = $this->getCheckedTypeArray($request);
 
         $options = [
             "keyword"                     => $query,
-            "checkedStatus"               => $checkedStatus,
+            "checkedStatus"               => ["Upcoming", "Live"],
+            "checkedType"                 => $checkedTypeArray,
         ];
 
         try {
@@ -294,57 +227,73 @@ class FrameworksController extends AbstractController
                 'keyword'           => $options['keyword'],
                 'status'            => $options['checkedStatus'],
                 'limit'             => $limit,
+                'regulation_type'    => $options["checkedType"],
+                'terms'             => ["DPS", "Standard"],
             ]);
          
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
 
-        // request to upcoming deals information api for titles and description
-        $upcomingDealsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/upcoming-deals-page/0';
-
-        $client = HttpClient::create();
-        $response = $client->request(
-            'GET',
-            $upcomingDealsUrl,
-        );
-
-
-        $upcomingDealsContent = null;
+        $upcomingDealsContent = $this->getUpcomingDealsInfo();
 
         $cscMessage = ControllerHelper::getCSCMessage();
 
+        $statuses = (array) $request->query->get('statuses', ['all']);
+        $checkedTypes = (array) $request->query->get('type', ['allType']);
+
+        if (count($statuses) === 5 || in_array('all', $statuses)) {
+            $statuses = ['all'];
+        } 
+
+        if (!$checkedTypes || count($checkedTypes) === 5 || in_array('allType', $checkedTypes)) {
+            $checkedTypes = ["allType"];
+        } 
+
         $data = [
             'tpp_feature_toggle'            => getenv('TPP_feature_toggle'),
-            // 'awarded_pipeline'              => $results->getContent()->get('awarded_pipeline'),
-            // 'underway_pipeline'             => $results->getContent()->get('underway_pipeline'),
-            // 'dynamic_purchasing_systems'    => $results->getContent()->get('dynamic_purchasing_systems'),
-            // 'planned_pipeline'              => $results->getContent()->get('planned_pipeline'),
-            // 'future_pipeline'               => $results->getContent()->get('future_pipeline'),
-            'checkedStatus'                    => $checkedStatus,
+            'statuses'                      => $statuses,
             'filters'                       => $options,
             'results'                       => $results,
+            'type'                          => $checkedTypes,
             'upcoming_deals_content'        => $upcomingDealsContent,
             'cscMessage'                    => $cscMessage,
         ];
 
         return $this->render('frameworks/upcoming-list.html.twig', $data);
 
-        // TODO make muliple params appear for checked status in url
-        // TODO Make sure checkedStatus filter works and can filter results
-        // TODO Make view all work
-        // TODO Make DSP results appear when all is checked as currently they are not aligned with upcoming
-        // TODO Add Regulation Status and allow to filter 
-        // TODO Restore Helpful links
-        // TODO Make sure other results don't appear when using search i.e if filtering future then future only agreements should show
-        // TODO Remove 'No upcoming agreements' message if agreements appear
-        // TODO Cleanup remove old upcoming controller and routes, also refactor code if needed
-
     }
 
-    public function upcomingTypesArray($upcomingTypes) {
+    private function sanitizeSearchQuery($keyword) {
+        $originalSearch = str_replace('/', '', strip_tags(html_entity_decode($keyword)));
+        return preg_replace("/[^a-zA-Z0-9\s]/", "", $originalSearch);
+    }
 
-    } 
+    private function getCheckedTypeArray(Request $request)
+    {
+        $checkedTypeArray = ControllerHelper::getArrayFromStringForParam($request, "type");
+
+        return (in_array("allType", $checkedTypeArray) || count($checkedTypeArray) === 5)
+            ? []
+            : $checkedTypeArray;
+    }
+
+    private function getUpcomingDealsInfo()
+    {
+        $url = getenv('APP_API_BASE_URL') . 'ccs/v1/upcoming-deals-page/0';
+
+        $client = HttpClient::create();
+        $response = $client->request(
+            'GET',
+            $url,
+        );
+
+        if ($response->getStatusCode() == 200) {
+            $upcomingDealsContent = json_decode($response->getContent());
+        }
+
+        return $upcomingDealsContent;
+    }
 
     /**
      * Show one framework
@@ -654,4 +603,5 @@ class FrameworksController extends AbstractController
         }
         return null;
     }
+
 }
