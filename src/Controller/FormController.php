@@ -217,7 +217,7 @@ class FormController extends AbstractController
             } else {
                 $params->set('subject', 'Contact CCS');
                 $params->set('00Nb0000009IXEW', 'General-Enquiry');
-                $params->set('00NS90000025xmH', ControllerHelper::extractRmNumberFromReferrer($params->get('00N4L000009OPAj', null)));
+                $params->set(getenv('SF_RM_CASE_ID'), ControllerHelper::extractRmNumberFromReferrer($params->get('00N4L000009OPAj', null)));
                 $params->set('recordType', '012b00000005NWC');
                 $params->set('priority', 'Green');
                 $params->set('orgid', ControllerHelper::getOrgId());
@@ -307,7 +307,7 @@ class FormController extends AbstractController
             } else {
                 $params->set('subject', 'Contact CCS');
                 $params->set('00Nb0000009IXEW', 'General-Enquiry');
-                $params->set('00NS90000025xmH', $params->get('00NS90000025xmH', null));
+                $params->set(getenv('SF_RM_CASE_ID'), $params->get('00NS90000025xmH', null));
                 $params->set('recordType', '012b00000005NWC');
                 $params->set('priority', 'Green');
                 $params->set('orgid', ControllerHelper::getOrgId());
