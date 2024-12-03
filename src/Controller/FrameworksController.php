@@ -205,7 +205,8 @@ class FrameworksController extends AbstractController
         return $this->render('frameworks/list.html.twig', $data);
     }
 
-    public function upcomingDealsSearch(Request $request) {
+    public function upcomingDealsSearch(Request $request)
+    {
         $query = $this->sanitizeSearchQuery($request->query->get('keyword'));
         $page = 1;
 
@@ -230,7 +231,6 @@ class FrameworksController extends AbstractController
                 'regulation_type'    => $options["checkedType"],
                 'terms'             => ["DPS", "Standard"],
             ]);
-         
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
         }
@@ -244,11 +244,11 @@ class FrameworksController extends AbstractController
 
         if (count($statuses) === 5 || in_array('all', $statuses)) {
             $statuses = ['all'];
-        } 
+        }
 
         if (!$checkedTypes || count($checkedTypes) === 5 || in_array('allType', $checkedTypes)) {
             $checkedTypes = ["allType"];
-        } 
+        }
 
         $data = [
             'tpp_feature_toggle'            => getenv('TPP_feature_toggle'),
@@ -261,10 +261,10 @@ class FrameworksController extends AbstractController
         ];
 
         return $this->render('frameworks/upcoming-list.html.twig', $data);
-
     }
 
-    private function sanitizeSearchQuery($keyword) {
+    private function sanitizeSearchQuery($keyword)
+    {
         $originalSearch = str_replace('/', '', strip_tags(html_entity_decode($keyword)));
         return preg_replace("/[^a-zA-Z0-9\s]/", "", $originalSearch);
     }
@@ -603,5 +603,4 @@ class FrameworksController extends AbstractController
         }
         return null;
     }
-
 }
