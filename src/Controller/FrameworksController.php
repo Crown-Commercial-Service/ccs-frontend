@@ -213,7 +213,7 @@ class FrameworksController extends AbstractController
         $this->searchApi->setCacheKey($request->getRequestUri());
         $this->searchApi->getContentType()->setApiEndpoint('frameworks');
 
-        $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 80;
+        $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 110;
 
         $checkedTypeArray = $this->getCheckedTypeArray($request);
 
