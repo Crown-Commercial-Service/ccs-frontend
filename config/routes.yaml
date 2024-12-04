@@ -34,7 +34,9 @@ frameworks_list:
 
 frameworks_upcoming_deals:
   path: /agreements/upcoming
-  controller: App\Controller\FrameworksController::upcomingDeals
+  controller: App\Controller\FrameworksController::upcomingDealsSearch
+  requirements:
+    page: '\d+'
 
 frameworks_list_by_category:
   path: /agreements/category/{category}/{page}/{query}
