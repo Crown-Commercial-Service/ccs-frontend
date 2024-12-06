@@ -378,7 +378,7 @@
                     </div>
 
                     <div class="proc-in-progress upcoming-type-wrapper">
-                    {% if underway_pipeline|length >= 1 %}
+                    {% if underway_pipeline|length >= 1 or "proc" in statuses %}
 
                         {% if upcoming_deals_content and upcoming_deals_content.table_1.title %}
 
