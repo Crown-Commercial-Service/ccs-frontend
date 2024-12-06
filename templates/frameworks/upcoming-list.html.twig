@@ -249,7 +249,11 @@
                     {% endif %}
                 {% endfor %}
 
+
                      <div class="future upcoming-type-wrapper">
+
+                    {% if future_pipeline|length >= 1  or "future" in statuses %}
+
                         {% if upcoming_deals_content and upcoming_deals_content.table_4.title %}
 
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_4.title }}</h2>
@@ -259,8 +263,6 @@
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Future pipeline</h2>
 
                         {% endif %}
-
-                        {% if future_pipeline|length >= 1 %}
 
                                 {% if upcoming_deals_content and upcoming_deals_content.table_4.caption|length > 0 %}
 
@@ -307,14 +309,12 @@
                                     {% endfor %}
                                 </ul>
 
-                            {% else %}
-
-                                <p>No future pipelines at the moment.</p>
-
                         {% endif %}
                     </div>
 
                      <div class="planned-proc upcoming-type-wrapper">
+                     {% if planned_pipeline|length >= 1  or "planned" in statuses %}
+
                         {% if upcoming_deals_content and upcoming_deals_content.table_3.title %}
 
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_3.title }}</h2>
@@ -325,7 +325,7 @@
 
                         {% endif %}
 
-                        {% if planned_pipeline|length >= 1 %}
+                        
 
                                 {% if upcoming_deals_content and upcoming_deals_content.table_3.caption|length > 0 %}
 
@@ -374,14 +374,12 @@
                                     {% endfor %}
                                 </ul>
 
-                            {% else %}
-
-                                <p>No planned procurements at the moment.</p>
-
                         {% endif %}
                     </div>
 
                     <div class="proc-in-progress upcoming-type-wrapper">
+                    {% if underway_pipeline|length >= 1 %}
+
                         {% if upcoming_deals_content and upcoming_deals_content.table_1.title %}
 
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_1.title }}</h2>
@@ -391,9 +389,6 @@
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements in progress</h2>
 
                         {% endif %}
-
-                        {% if underway_pipeline|length >= 1 %}
-
 
                                 {% if upcoming_deals_content and upcoming_deals_content.table_1.caption %}
 
@@ -446,14 +441,12 @@
 
                                 {% endfor %}
                             </ul>
-                        {% else %}
-
-                            <p>No procurements in progress at the moment.</p>
-
+                     
                         {% endif %}
                     </div>
 
                     <div class="proc-recent-awarded upcoming-type-wrapper">
+                    {% if awarded_pipeline|length >= 1  or "awarded" in statuses %}
                         {% if upcoming_deals_content and upcoming_deals_content.table_0.title %}
 
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_0.title }}</h2>
@@ -463,8 +456,6 @@
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements recently awarded</h2>
 
                         {% endif %}
-                        
-                        {% if awarded_pipeline|length >= 1 %}
 
                                 {% if upcoming_deals_content and upcoming_deals_content.table_0.caption|length > 0 %}
 
@@ -510,14 +501,12 @@
                                     {% endfor %}
                                 </ul>
 
-                        {% else %}
-
-                            <p>No procurements recently awarded at the moment.</p>
-
                         {% endif %}
                     </div>
 
                     <div class="dps upcoming-type-wrapper">
+                    {% if dynamic_purchasing_systems|length >= 1 or "dps" in statuses %}
+
                         {% if upcoming_deals_content and upcoming_deals_content.table_2.title %}
 
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_2.title }}</h2>
@@ -527,8 +516,6 @@
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Dynamic Purchasing Systems currently open</h2>
 
                         {% endif %}
-
-                        {% if dynamic_purchasing_systems|length >= 1 %}
 
                                 {% if upcoming_deals_content and upcoming_deals_content.table_2.caption|length > 0 %}
 
@@ -576,11 +563,6 @@
 
                                     {% endfor %}
                                 </ul>
-
-                        {% else %}
-
-                            <p>No Dynamic Purchasing Systems currently open at the moment.</p>
-
                         {% endif %}
                     </div>
 
