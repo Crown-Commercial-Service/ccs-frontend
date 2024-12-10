@@ -73,10 +73,10 @@
                     <form action="{{ path('frameworks_upcoming_deals') }}" method="GET">
                         <div class="govuk-form-group govuk-form-group--enclosure">
                             <div class="govuk-form-group sidebar__search-group">
-                                <label class="govuk-label" for="keyword"> Search agreements </label>
+                                <label class="govuk-label" for="keyword"> Search upcoming agreements </label>
                                 <input class="govuk-input" id="keyword" name="keyword" value="{{ filters.keyword is defined and filters.keyword|trim is not empty ? filters.keyword : "" }}"/>
                                 <button type="submit" class="sidebar__search-button govuk-input">
-                                    <span class="visuallyhidden">Search agreements</span>
+                                    <span class="visuallyhidden">Search upcoming agreements</span>
                                 </button>
                             </div>
                         </div>
