@@ -73,6 +73,7 @@ class FormController extends AbstractController
         } else {
             $params->set('subject', 'Website - eSourcing Access');
             $params->set('recordType', '012b00000005NWC');
+            $params->set('00Nb0000009IXEs', $formData['jobTitle']);
             $params->set('priority', 'Green');
             $params->set('origin', 'Website - eSourcing Access');
             $params->set('orgid', ControllerHelper::getOrgId());
@@ -145,6 +146,7 @@ class FormController extends AbstractController
         } else {
             $params->set('subject', 'Website - eSourcing Training');
             $params->set('recordType', '012b00000005NWC');
+            $params->set('00Nb0000009IXEs', $formData['jobTitle']);
             $params->set('priority', 'Green');
             $params->set('origin', 'Website - eSourcing Training');
             $params->set('orgid', ControllerHelper::getOrgId());
@@ -219,6 +221,7 @@ class FormController extends AbstractController
                 $params->set('00Nb0000009IXEW', 'General-Enquiry');
                 $params->set(getenv('SF_RM_CASE_ID'), ControllerHelper::extractRmNumberFromReferrer($params->get('00N4L000009OPAj', null)));
                 $params->set('recordType', '012b00000005NWC');
+                $params->set('00Nb0000009IXEs', $formData['jobTitle']);
                 $params->set('priority', 'Green');
                 $params->set('orgid', ControllerHelper::getOrgId());
 
@@ -309,6 +312,7 @@ class FormController extends AbstractController
                 $params->set('00Nb0000009IXEW', 'General-Enquiry');
                 $params->set(getenv('SF_RM_CASE_ID'), $params->get('00NS90000025xmH', null));
                 $params->set('recordType', '012b00000005NWC');
+                $params->set('00Nb0000009IXEs', $formData['jobTitle']);
                 $params->set('priority', 'Green');
                 $params->set('orgid', ControllerHelper::getOrgId());
 
@@ -414,6 +418,7 @@ class FormController extends AbstractController
         } else {
             $params->set('subject', 'Events Form');
             $params->set('origin', 'Website - Event');
+            $params->set('00Nb0000009IXEs', $formData['jobTitle']);
             $params->set('priority', 'Green');
             $params->set('description', 'Website - Event, more-detail: ' . $formData['moreDetail']);
             $params->set('orgid', ControllerHelper::getOrgId());
