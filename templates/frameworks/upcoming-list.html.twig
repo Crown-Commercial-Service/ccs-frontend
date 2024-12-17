@@ -216,6 +216,22 @@
                 
                 <div class="govuk-grid-column-two-thirds">
 
+                {% if results|length == 0 %}
+                    <h3>There are no matching results.</h3>
+                    <p class="govuk-!-margin-bottom-0">Improve your search results by:</p>
+                    <ul>
+                        <li><p class="govuk-!-margin-bottom-1">removing filters</p></li>
+                        {% if filters.keyword is defined and filters.keyword|trim is not empty %}
+                            <li><p class="govuk-!-margin-bottom-1">double-checking your spelling</p></li>
+                            <li><p class="govuk-!-margin-bottom-1">using fewer keywords</p></li>
+                        {% endif %}
+
+                    </ul>
+                    <br>
+                    <p>If you are still unable to find what you need, contact our customer service centre using our <a class="govuk-link" href="/contact">contact us form</a>.</p>
+                
+                {% endif %}
+
                 {% set future_pipeline = [] %}
                 {% set planned_pipeline = [] %}
                 {% set underway_pipeline = [] %}
