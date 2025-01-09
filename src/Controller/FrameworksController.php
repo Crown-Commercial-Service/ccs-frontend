@@ -229,7 +229,6 @@ class FrameworksController extends AbstractController
                 'status'            => $options['checkedStatus'],
                 'limit'             => $limit,
                 'regulation_type'    => $options["checkedType"],
-                'terms'             => ["DPS", "Standard", "DOS"],
             ]);
         } catch (NotFoundException | PaginationException $e) {
             throw new NotFoundHttpException('Page not found', $e);
