@@ -12,6 +12,11 @@
 {% block body %}
 
 
+    {% if tpp_feature_toggle == true %}
+        {% set no_info = "TBC" %}
+    {% else %}
+        {% set no_info = "N/A" %}
+    {% endif %}
     <!-- required wrapper 1 -->
     <div class="govuk-width-container">
 
@@ -216,6 +221,22 @@
                 
                 <div class="govuk-grid-column-two-thirds">
 
+                {% if results|length == 0 %}
+                    <h3>There are no matching results.</h3>
+                    <p class="govuk-!-margin-bottom-0">Improve your search results by:</p>
+                    <ul>
+                        <li><p class="govuk-!-margin-bottom-1">removing filters</p></li>
+                        {% if filters.keyword is defined and filters.keyword|trim is not empty %}
+                            <li><p class="govuk-!-margin-bottom-1">double-checking your spelling</p></li>
+                            <li><p class="govuk-!-margin-bottom-1">using fewer keywords</p></li>
+                        {% endif %}
+
+                    </ul>
+                    <br>
+                    <p>If you are still unable to find what you need, contact our customer service centre using our <a class="govuk-link" href="/contact">contact us form</a>.</p>
+                
+                {% endif %}
+
                 {% set future_pipeline = [] %}
                 {% set planned_pipeline = [] %}
                 {% set underway_pipeline = [] %}
@@ -283,13 +304,13 @@
                                                     {% if upcoming_deal.tenders_open_date is not null %}
                                                         <li> <strong>Tenders Open:</strong> {{ upcoming_deal.tenders_open_date.format('d/m/Y') }} </li>
                                                     {% else %}
-                                                        <li> <strong>Tenders Open:</strong> N/A </li>
+                                                        <li> <strong>Tenders Open:</strong> {{ no_info }} </li>
                                                     {% endif %}
 
                                                     {% if upcoming_deal.expected_live_date is not null %}
                                                        <li> <strong>Expected Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                     {% else %}
-                                                        <li> <strong>Expected Live:</strong> N/A </li>
+                                                        <li> <strong>Expected Live:</strong> {{ no_info }} </li>
                                                     {% endif %}
 
                                                     {% if tpp_feature_toggle == true %}
@@ -347,13 +368,13 @@
                                                 {% if upcoming_deal.tenders_open_date is not null %}
                                                     <li> <strong>Tenders Open:</strong> {{ upcoming_deal.tenders_open_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Tenders Open:</strong> N/A </li>
+                                                    <li> <strong>Tenders Open:</strong> {{ no_info }} </li>
                                                 {% endif %}
 
                                                 {% if upcoming_deal.expected_live_date is not null %}
                                                     <li> <strong>Expected Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Expected Live:</strong> N/A </li>
+                                                    <li> <strong>Expected Live:</strong> {{ no_info }} </li>
                                                 {% endif %}
 
                                                 {% if tpp_feature_toggle == true %}
@@ -415,13 +436,13 @@
                                             {% if upcoming_deal.tenders_close_date is not null %}
                                                 <li> <strong>Tenders Close:</strong> {{ upcoming_deal.tenders_close_date.format('d/m/Y') }} </li>
                                             {% else %}
-                                                <li> <strong>Tenders Close:</strong> N/A </li>
+                                                <li> <strong>Tenders Close:</strong> {{ no_info }} </li>
                                             {% endif %}
 
                                             {% if upcoming_deal.expected_award_date is not null %}
                                                 <li> <strong>Expected Award:</strong> {{ upcoming_deal.expected_award_date.format('d/m/Y') }} </li>
                                             {% else %}
-                                                <li> <strong>Expected Award:</strong> N/A </li>
+                                                <li> <strong>Expected Award:</strong> {{ no_info }} </li>
                                             {% endif %}
 
                                             {% if tpp_feature_toggle == true %}
@@ -475,13 +496,13 @@
                                                 {% if upcoming_deal.expected_award_date is not null %}
                                                     <li> <strong>Awarded Date:</strong> {{ upcoming_deal.expected_award_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Awarded Date:</strong> N/A </li>
+                                                    <li> <strong>Awarded Date:</strong> {{ no_info }} </li>
                                                 {% endif %}
 
                                                 {% if upcoming_deal.expected_live_date is not null %}
                                                     <li> <strong>Expected Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Expected Live:</strong> N/A </li>
+                                                    <li> <strong>Expected Live:</strong> {{ no_info }} </li>
                                                 {% endif %}
 
                                                 {% if tpp_feature_toggle == true %}
@@ -537,13 +558,13 @@
                                                 {% if upcoming_deal.expected_live_date is not null %}
                                                     <li> <strong>Live Date:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Live Date:</strong> N/A </li>
+                                                    <li> <strong>Live Date:</strong> {{ no_info }} </li>
                                                 {% endif %}
 
                                                 {% if upcoming_deal.end_date is not null %}
                                                     <li> <strong>End Date:</strong> {{ upcoming_deal.end_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>End Date:</strong> N/A </li>
+                                                    <li> <strong>End Date:</strong> {{ no_info }} </li>
                                                 {% endif %}
 
                                                 {% if tpp_feature_toggle == true %}
