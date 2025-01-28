@@ -17,7 +17,7 @@ class FormValidation
             'link' => '#name',
         ];
 
-        if (preg_match('~[0-9]~', $name)) {
+        if (preg_match('~[0-9]~', (string) $name)) {
             $returnArray['errors'] = ['Enter your name'];
         }
 
@@ -31,9 +31,9 @@ class FormValidation
             'link' => '#name',
         ];
 
-        if (is_null($name) || empty(trim($name)) || preg_match('~[0-9]~', $name)) {
+        if (is_null($name) || empty(trim((string) $name)) || preg_match('~[0-9]~', (string) $name)) {
             $returnArray['errors'] = ['Enter your name'];
-        } elseif (strlen($name) > 80) {
+        } elseif (strlen((string) $name) > 80) {
             $returnArray['errors'] = ['Name must be 80 characters or fewer'];
         }
 
@@ -47,9 +47,9 @@ class FormValidation
             'link' => '#email',
         ];
 
-        if (is_null($email) || empty(trim($email)) || !filter_var($email, FILTER_VALIDATE_EMAIL) || preg_match("/[*,!,#,$,%,^,&,(,),?,<,>,=]/i", $email)) {
+        if (is_null($email) || empty(trim((string) $email)) || !filter_var($email, FILTER_VALIDATE_EMAIL) || preg_match("/[*,!,#,$,%,^,&,(,),?,<,>,=]/i", (string) $email)) {
             $returnArray['errors'] = ['Enter an email address in the correct format, like name@example.com'];
-        } elseif (strlen($email) > 80) {
+        } elseif (strlen((string) $email) > 80) {
             $returnArray['errors'] = ['Email address must be 80 characters or fewer'];
         }
 
@@ -62,9 +62,9 @@ class FormValidation
             'errors' => [],
             'link' => '#phone',
         ];
-        if (is_null($phone) || empty(trim($phone))) {
+        if (is_null($phone) || empty(trim((string) $phone))) {
             $returnArray['errors'] = ['Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'];
-        } elseif (preg_match("/[a-z]/i", $phone) || preg_match("/[*,!,#,$,%,^,&,?,<,>,=]/i", $phone)) {
+        } elseif (preg_match("/[a-z]/i", (string) $phone) || preg_match("/[*,!,#,$,%,^,&,?,<,>,=]/i", (string) $phone)) {
             $returnArray['errors'] = ['Enter a telephone number in the correct format'];
         }
 
@@ -78,9 +78,9 @@ class FormValidation
             'link' => '#company',
         ];
 
-        if (is_null($company) || empty(trim($company))) {
+        if (is_null($company) || empty(trim((string) $company))) {
             $returnArray['errors'] = ['Enter an organisation'];
-        } elseif (strlen($company) > 80) {
+        } elseif (strlen((string) $company) > 80) {
             $returnArray['errors'] = ['Organisation must be 80 characters or fewer'];
         }
 
@@ -94,7 +94,7 @@ class FormValidation
             'link' => '#jobTitle',
         ];
 
-        $returnArray['errors'] = empty(trim($jobTitle)) ? ['Enter your job title'] : [] ;
+        $returnArray['errors'] = empty(trim((string) $jobTitle)) ? ['Enter your job title'] : [] ;
 
         return $returnArray;
     }
@@ -134,7 +134,7 @@ class FormValidation
             'link' => '#jobTitle',
         ];
 
-        $returnArray['errors'] = is_null($jobTitle) || empty(trim($jobTitle)) ? ['Enter your job title'] : [] ;
+        $returnArray['errors'] = is_null($jobTitle) || empty(trim((string) $jobTitle)) ? ['Enter your job title'] : [] ;
 
         return $returnArray;
     }
@@ -146,7 +146,7 @@ class FormValidation
             'link' => '#more-detail',
         ];
 
-        $returnArray['errors'] = is_null($moreDetail) || empty(trim($moreDetail)) ? ['Enter more detail'] : [] ;
+        $returnArray['errors'] = is_null($moreDetail) || empty(trim((string) $moreDetail)) ? ['Enter more detail'] : [] ;
 
         return $returnArray;
     }
@@ -178,7 +178,7 @@ class FormValidation
             $returnArray['errors'] = ['Select the date that you would like to book your eSourcing tool training'];
         } else {
             $inputDate = is_null($buyerDate) ? $supplierDate : $buyerDate;
-            $inputDate = strtotime(explode("-", $inputDate)[0]);
+            $inputDate = strtotime(explode("-", (string) $inputDate)[0]);
 
             $returnArray['errors'] = strtotime(date("Y/m/d")) > $inputDate ? ['The date you have selected is in the past, select the date of an upcoming event'] : [];
         }
@@ -217,9 +217,9 @@ class FormValidation
             'link' => '#attachment',
         ];
 
-        $allowedFileType = array('jpeg', 'jpg', 'png', 'odt', 'doc', 'docx', 'odp', 'ods', 'odg', 'pdf', 'txt');
+        $allowedFileType = ['jpeg', 'jpg', 'png', 'odt', 'doc', 'docx', 'odp', 'ods', 'odg', 'pdf', 'txt'];
 
-        $filename = strtolower($file['name']);
+        $filename = strtolower((string) $file['name']);
 
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
 

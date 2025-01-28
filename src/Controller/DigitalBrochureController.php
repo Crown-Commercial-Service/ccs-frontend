@@ -87,7 +87,7 @@ class DigitalBrochureController extends AbstractController
 
         $data = [
           'digital_brochure'    => $digital_brochure,
-          'campaign_code' => preg_replace('/\s*/', '', $campaignCode),
+          'campaign_code' => preg_replace('/\s*/', '', (string) $campaignCode),
           'form_action'   => $request->getRequestUri(),
           'description'   => $description,
           'return_url'    => $returnURL,
@@ -117,6 +117,6 @@ class DigitalBrochureController extends AbstractController
 
     public function redirectToDownloadableResource($id, $slug, Request $request)
     {
-         return $this->redirect($this->generateUrl('downloadable_resource_request', array('id' => $id, 'slug' => $slug)));
+         return $this->redirect($this->generateUrl('downloadable_resource_request', ['id' => $id, 'slug' => $slug]));
     }
 }

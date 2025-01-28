@@ -43,7 +43,7 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     sudo yum install -y https://repo.ius.io/ius-release-el$(rpm -E '%{rhel}').rpm
 
     echo "> > Installing web packages..."
-    sudo amazon-linux-extras enable php7.4
+    sudo amazon-linux-extras enable php8.3
     sudo yum -y install \
         httpd \
         php \

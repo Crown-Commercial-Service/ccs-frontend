@@ -96,8 +96,7 @@ class PageController extends AbstractController
 
         // request to homepage components
         $homepageCompUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/homepage-components/0';
-        $messageBanner = ControllerHelper::getHomeMessageBanner($this->api);
-        // dd($messageBanner);
+        // $messageBanner = ControllerHelper::getHomeMessageBanner();
         $client = HttpClient::create();
         $response = $client->request(
             'GET',
@@ -113,7 +112,7 @@ class PageController extends AbstractController
             'news' => $news,
             'guided_match_flag' => $flag,
             'homepageContent' => $homepageContent,
-            'messageBanner' => $messageBanner,
+            // 'messageBanner' => $messageBanner,
 
         ]);
     }
@@ -172,7 +171,7 @@ class PageController extends AbstractController
         $optionCardsContent = null;
 
         if ($response->getStatusCode() == 200) {
-            $optionCardsContent = json_decode($response->getContent());
+            $optionCardsContent = json_decode((string) $response->getContent());
         }
 
         $formErrors = null;
@@ -180,16 +179,16 @@ class PageController extends AbstractController
         $formCampaignCode = null;
         $featureNewsProperties = null;
 
-        if (array_key_exists('contact_form_form_campaign_code', $page->getContent())) {
+        if (property_exists($page->getContent(), 'contact_form_form_campaign_code')) {
             $formCampaignCode = $page->getContent()['contact_form_form_campaign_code']->getValue();
         }
 
         if (array_key_exists('page_components_rows', (array) $page->getContent())) {
             foreach ($page->getContent()['page_components_rows']->getValue() as $acfFrield) {
                 if ($acfFrield->getName() == 'feature_news_feature_news') {
-                    $featureNewsProperties['newsType'] = array_key_exists('feature_news_feature_news_news_type', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_news_type']) : null;
-                    $featureNewsProperties['pAndSType'] = array_key_exists('feature_news_feature_news_products_and_services', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_products_and_services']) : null;
-                    $featureNewsProperties['sectorType'] = array_key_exists('feature_news_feature_news_sectors', $acfFrield->getContent()) ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_sectors']) : null;
+                    $featureNewsProperties['newsType'] = property_exists($acfFrield->getContent(), 'feature_news_feature_news_news_type') ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_news_type']) : null;
+                    $featureNewsProperties['pAndSType'] = property_exists( $acfFrield->getContent(), 'feature_news_feature_news_products_and_services') ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_products_and_services']) : null;
+                    $featureNewsProperties['sectorType'] = property_exists($acfFrield->getContent(), 'feature_news_feature_news_sectors') ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_sectors']) : null;
                     break;
                 }
             }
@@ -226,28 +225,30 @@ class PageController extends AbstractController
     {
         $resources = [];
         $index = 1;
-        if (array_key_exists('brochures_list_brochures_list', $content)) {
-            $resources['brochures_list_brochures_list'] = $index++ ;
+        if (property_exists($content, 'brochures_list_brochures_list')) {
+            $resources['brochures_list_brochures_list'] = $index++;
         }
-        if (array_key_exists('whitepapers_list_whitepapers', $content)) {
-            $resources['whitepapers_list_whitepapers'] = $index++ ;
+        if (property_exists($content, 'whitepapers_list_whitepapers')) {
+            $resources['whitepapers_list_whitepapers'] = $index++;
         }
-        if (array_key_exists('webinars_list_webinars', $content)) {
+        if (property_exists($content, 'webinars_list_webinars')) {
             $resources['webinars_list_webinars'] = $index++;
         }
-        if (array_key_exists('digital_brochures_list_digital_brochures', $content)) {
+        if (property_exists($content, 'digital_brochures_list_digital_brochures')) {
             $resources['digital_brochures_list_digital_brochures'] = $index++;
         }
-        if (array_key_exists('downloadable_list_downloadable_resource', $content)) {
+        if (property_exists($content, 'downloadable_list_downloadable_resource')) {
             $resources['downloadable_list_downloadable_resource'] = $index++;
         }
+
+        
 
         return $resources;
     }
 
     private function checkRedirect($slug)
     {
-        $slug = strtolower($slug);
+        $slug = strtolower((string) $slug);
 
         try {
             // @todo At present need to pass fake ID since API method is intended to return one item with an ID, review this
@@ -379,9 +380,9 @@ class PageController extends AbstractController
 
         // Check Composer has loaded required classes
         $required = [
-            'Symfony\Bundle\FrameworkBundle\Controller\AbstractController',
-            'Strata\Frontend\Cms\RestData',
-            'Strata\Frontend\Cms\Wordpress'
+            \Symfony\Bundle\FrameworkBundle\Controller\AbstractController::class,
+            \Strata\Frontend\Cms\RestData::class,
+            \Strata\Frontend\Cms\Wordpress::class
         ];
         foreach ($required as $class) {
             if (!class_exists($class)) {
@@ -413,7 +414,7 @@ class PageController extends AbstractController
             try {
                 $response = $client->request('GET', $url);
                 $results[$url] = $response->getstatuscode();
-            } catch (TransportExceptionInterface $e) {
+            } catch (TransportExceptionInterface) {
             }
         }
         return $this->render('pages/status_check.html.twig', [
@@ -434,7 +435,7 @@ class PageController extends AbstractController
             $CMSresponse = $client->request('GET', $apiUrl);
 
             if ($CMSresponse->getStatusCode() == 200) {
-                $jsonObjects = json_decode($CMSresponse->getContent())->items;
+                $jsonObjects = json_decode((string) $CMSresponse->getContent())->items;
 
                 foreach ($jsonObjects as $jsonObject) {
                     $url = $jsonObject->url;
@@ -467,7 +468,7 @@ class PageController extends AbstractController
     private function extractNewsPropertie($arrayFromEndpoint)
     {
 
-        $arrayOfID = array();
+        $arrayOfID = [];
 
         foreach ($arrayFromEndpoint as $eachID) {
             $arrayOfID[] = $eachID['term_taxonomy_id']->getValue();
@@ -518,7 +519,7 @@ class PageController extends AbstractController
         $glossaries = [];
 
         foreach ((array) $results as $glossary) {
-            $term = trim($glossary->get('term')->getValue());
+            $term = trim((string) $glossary->get('term')->getValue());
             $key = strtoupper($term[0]);
 
             if (str_contains(strtolower($term), strtolower($query))) {

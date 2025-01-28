@@ -116,7 +116,7 @@ class FrameworksController extends AbstractController
             $smField = html_entity_decode($smField);
             $smField = preg_replace('![^a-zA-Z0-9./\-:]!', '', $smField);
 
-            $elements = explode(':', $smField);
+            $elements = explode(':', (string) $smField);
             if (count($elements) === 1) {
                 return $this->redirectToRoute('frameworks_suppliers', ['rmNumber' => $elements[0]]);
             } else {
@@ -264,7 +264,7 @@ class FrameworksController extends AbstractController
 
     private function sanitizeSearchQuery($keyword)
     {
-        $originalSearch = str_replace('/', '', strip_tags(html_entity_decode($keyword)));
+        $originalSearch = str_replace('/', '', strip_tags(html_entity_decode((string) $keyword)));
         return preg_replace("/[^a-zA-Z0-9\s]/", "", $originalSearch);
     }
 
@@ -435,7 +435,7 @@ class FrameworksController extends AbstractController
         $this->api->setContentType('framework_lot_suppliers');
         $this->api->setCacheKey($request->getRequestUri());
 
-        $csvData = array(
+        $csvData = [
             0 => [
             'Supplier Name',
             'Contact Name',
@@ -444,7 +444,7 @@ class FrameworksController extends AbstractController
             'City',
             'Postcode',
             ]
-        );
+        ];
 
         // Iterate through suppliers and store necessary information into CSV array.
 
@@ -549,7 +549,7 @@ class FrameworksController extends AbstractController
 
     private function stringContainTableElement($input)
     {
-        if (strpos($input, '<td') !== false or strpos($input, '<tr') !== false or strpos($input, '<table') !== false or strpos($input, '<th') !== false) {
+        if (str_contains((string) $input, '<td') or str_contains((string) $input, '<tr') or str_contains((string) $input, '<table') or str_contains((string) $input, '<th')) {
             return (true);
         }
 
@@ -558,7 +558,7 @@ class FrameworksController extends AbstractController
 
     private function showCRP($rm_number)
     {
-        $CRP_EXCLUDED_FRAMEWORKS = array('RM6269', 'RM6263', 'RM6282', 'RM6186', 'RM6195', 'RM6232', 'RM6248', 'RM6257');
+        $CRP_EXCLUDED_FRAMEWORKS = ['RM6269', 'RM6263', 'RM6282', 'RM6186', 'RM6195', 'RM6232', 'RM6248', 'RM6257'];
         return !in_array($rm_number, $CRP_EXCLUDED_FRAMEWORKS);
     }
 
@@ -573,7 +573,7 @@ class FrameworksController extends AbstractController
     {
         $oldCategory    = $request->attributes->get('category', null);
 
-        $redirectToCat = array(
+        $redirectToCat = [
             "utilities-fuels"   => "Energy",
             "software-cyber"    => "Software and Hardware",
             "office-and-travel" => "Travel, Accommodation and Venues",
@@ -588,12 +588,12 @@ class FrameworksController extends AbstractController
             "psr-permanent-recruitment"                     => "HR and Workforce Services",
             "workforce-health-education"                    => "HR and Workforce Services",
             "people-services"                               => "HR and Workforce Services",
-        );
+        ];
 
-        $redirectToPillar = array(
+        $redirectToPillar = [
             "workplace"                     => "Estates",
             "technology-products-services"  => "Technology",
-        );
+        ];
 
         if (isset($oldCategory) && array_key_exists($oldCategory, $redirectToCat)) {
             return ['category' => [$redirectToCat[$oldCategory]]];

@@ -111,7 +111,7 @@ class EventsController extends AbstractController
 
         try {
             $event = $this->api->getPage((int) $id);
-        } catch (Error $e) {
+        } catch (Error) {
             return $this->render('events/error.html.twig');
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('Event not found', $e);
@@ -125,7 +125,7 @@ class EventsController extends AbstractController
         $data = [
             'event'         => $event,
             'schema'        => $this->createEventSchemaJSON($event),
-            'content_group' => isset($content_group) ? $content_group : null,
+            'content_group' => $content_group ?? null,
         ];
 
         return $this->render('events/show.html.twig', $data);
@@ -133,27 +133,27 @@ class EventsController extends AbstractController
 
     private function createEventSchemaJSON($event)
     {
-        $content = array($event->getContent());
+        $content = [$event->getContent()];
 
-        $online = array(
+        $online = [
             "@type" => "VirtualLocation",
             "url" => ($content[0]['cta_destination']->getValue())
-        );
+        ];
 
         $inPerson = [];
         if (array_key_exists('place_name', $content[0])) {
-            $inPerson = array(
+            $inPerson = [
                 "@type" => "Place",
                 "name" =>  $content[0]['place_name']->getValue(),
-                "address" => array(
+                "address" => [
                     "@type" => "PostalAddress",
                     "streetAddress" => $content[0]['street_address']->getValue(),
                     "addressLocality" => $content[0]['address_locality']->getValue(),
                     "postalCode" => $content[0]['postal_code']->getValue(),
                     "addressRegion" => $content[0]['address_region']->getValue(),
                     "addressCountry" => $content[0]['address_country']->getValue()
-                )
-            );
+                ]
+            ];
         }
 
         $location = [];
@@ -170,11 +170,11 @@ class EventsController extends AbstractController
                 break;
             case "Online and In Person":
                 $eventAttendanceMode = "https://schema.org/MixedEventAttendanceMode";
-                $location = array($online, $inPerson);
+                $location = [$online, $inPerson];
                 break;
         }
 
-        $schema = array(
+        $schema = [
             "@context" => "https://schema.org",
             "@type" => "Event",
             "name" => $event->getTitle(),
@@ -184,13 +184,13 @@ class EventsController extends AbstractController
             "eventStatus" => "https://schema.org/EventScheduled",
             "location" => $location,
             "image" => $event->getFeaturedImage(),
-            "description" => strip_tags($content[0]['description']->getValue()),
-            "organizer" => array(
+            "description" => strip_tags((string) $content[0]['description']->getValue()),
+            "organizer" => [
                 "@type" => "Organization",
                 "name" => "Crown Commercial Service",
                 "url" => "https://www.crowncommercial.gov.uk/"
-            )
-        );
+            ]
+        ];
 
         return json_encode($schema);
     }

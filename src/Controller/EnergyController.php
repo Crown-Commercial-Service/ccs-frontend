@@ -61,7 +61,7 @@ class EnergyController extends AbstractController
         $history = null;
 
         if (isset($_REQUEST["history"])) {
-            $history =  json_decode($_REQUEST["history"], true);
+            $history =  json_decode((string) $_REQUEST["history"], true);
             $this->setCurrentQuestionAndAnswers((int) $this->getCurrentQuesitonID($history));
         } else {
             $this->setCurrentQuestionAndAnswers(0);
@@ -140,7 +140,7 @@ class EnergyController extends AbstractController
 
     private function prepareHistoryArray($history)
     {
-        $historyArray = array();
+        $historyArray = [];
 
         foreach ($history as $index => $eachSelection) {
             $qAndA = EnergySolutionToolQuestions::getQuestionAndSingleAnswer((int) $eachSelection["questionID"], (int) $eachSelection["selectedAnswer"]);

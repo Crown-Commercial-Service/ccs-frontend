@@ -29,7 +29,7 @@ class ApiController extends AbstractController
             throw new ApiException('Cannot determine CMS API URL');
         }
 
-        $url = rtrim($url, '/');
+        $url = rtrim((string) $url, '/');
         return $url . $path;
     }
 
@@ -84,7 +84,7 @@ class ApiController extends AbstractController
             throw new ApiException(sprintf('Error with Search Suppliers API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent()));
         }
 
-        $responseFinal = json_decode($response->getContent());
+        $responseFinal = json_decode((string) $response->getContent());
         return new JsonResponse($responseFinal);
     }
 
@@ -206,7 +206,7 @@ class ApiController extends AbstractController
         }
         $responseFinal['meta']['X-WP-TotalPages'] = (int) $response->getHeaders()["x-wp-totalpages"][0];
         $responseFinal['meta']['X-WP-Total'] = (int) $response->getHeaders()["x-wp-total"][0];
-        $responseFinal['body'] = json_decode($response->getContent());
+        $responseFinal['body'] = json_decode((string) $response->getContent());
         return new JsonResponse($responseFinal);
     }
 
@@ -247,7 +247,7 @@ class ApiController extends AbstractController
         }
         $responseFinal['meta']['X-WP-TotalPages'] = (int) $response->getHeaders()["x-wp-totalpages"][0];
         $responseFinal['meta']['X-WP-Total'] = (int) $response->getHeaders()["x-wp-total"][0];
-        $responseFinal['body'] = json_decode($response->getContent());
+        $responseFinal['body'] = json_decode((string) $response->getContent());
         return new JsonResponse($responseFinal);
     }
 
@@ -322,7 +322,7 @@ class ApiController extends AbstractController
         // strip out all whitespace
         $subject = preg_replace('/\s*/', '', $subject);
         // convert the string to all lowercase
-        $subject = strtolower($subject);
+        $subject = strtolower((string) $subject);
 
         // campaign codes and form handler url
         $codes = [
@@ -358,7 +358,7 @@ class ApiController extends AbstractController
 
         foreach ($codes as $code => $url) {
             // check if campaign code is within subject
-            if (strpos($subject, $code) !== false) {
+            if (str_contains($subject, $code)) {
                 $pardotFormUrl = $url;
                 break;
             }

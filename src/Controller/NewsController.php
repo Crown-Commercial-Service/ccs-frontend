@@ -130,13 +130,13 @@ class NewsController extends AbstractController
             'url'           => sprintf('/news/%s', $slug),
             'page'          => $page,
             'authorText'    => $authorText,
-            'content_group' => isset($content_group) ? $content_group : null,
+            'content_group' => $content_group ?? null,
         ]);
     }
 
     private function formatIdFromObject($filtersOption)
     {
-        $returnArray = array();
+        $returnArray = [];
 
         foreach ($filtersOption as $each) {
             $returnArray[] = $each->getId();
@@ -154,7 +154,7 @@ class NewsController extends AbstractController
 
         $allEmpty = true;
 
-        $checkType = array(
+        $checkType = [
             'categories',
             'sectors',
             'PandS',
@@ -163,7 +163,7 @@ class NewsController extends AbstractController
             'webinar',
             'digitalBrochure',
             'digitalDownload'
-        );
+        ];
 
         foreach ($checkType as $each) {
             if (!empty($request->query->get($each))) {

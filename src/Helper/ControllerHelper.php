@@ -83,7 +83,7 @@ class ControllerHelper
 
     public static function toSlug(string $string): string
     {
-        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string)));
+        $slug = strtolower(trim((string) preg_replace('/[^A-Za-z0-9-]+/', '-', $string)));
         return $slug;
     }
 
@@ -94,7 +94,7 @@ class ControllerHelper
             fn($output, $each) => $output .= $prefix . ControllerHelper::toSlug($each) . "|"
         );
 
-        return rtrim($slugList, "|");
+        return rtrim((string) $slugList, "|");
     }
 
     public static function getFormData($params)
@@ -118,8 +118,8 @@ class ControllerHelper
 
     public static function extractRmNumberFromReferrer($referrer)
     {
-        if (!(empty(trim($referrer)) || is_null($referrer))) {
-            $referrerInArray = explode("agreements/RM", $referrer);
+        if (!(empty(trim((string) $referrer)) || is_null($referrer))) {
+            $referrerInArray = explode("agreements/RM", (string) $referrer);
 
             $regex = "/^\d{4}(\.[a-zA-Z0-9]{1,4})?$/";   //4 digits follow by 4 decimal places
 
@@ -148,26 +148,22 @@ class ControllerHelper
         }
 
         if (!is_array($request->query->get($paramName))) {
-            return $request->query->get($paramName) != null ? explode(",", $request->query->get($paramName)) : [];
+            return $request->query->get($paramName) != null ? explode(",", (string) $request->query->get($paramName)) : [];
         }
 
-        return array_map(function ($string) {
-            return str_replace('+', ' ', $string);
-        }, $request->query->get($paramName));
+        return array_map(fn($string) => str_replace('+', ' ', $string), $request->query->get($paramName));
     }
 
     public static function validateCategory($request, array $pillarArray, string $paramName)
     {
 
         if (!is_array($request->query->get($paramName))) {
-            return $request->query->get($paramName) != null ? [explode(",", $request->query->get($paramName)), $pillarArray] : [[], $pillarArray];
+            return $request->query->get($paramName) != null ? [explode(",", (string) $request->query->get($paramName)), $pillarArray] : [[], $pillarArray];
         }
 
         $pillarsAndCategories =  FrameworkCategories::getAllPillars()["pillars"];
 
-        $selected = array_map(function ($string) {
-            return str_replace('+', ' ', $string);
-        }, $request->query->get($paramName, []));
+        $selected = array_map(fn($string) => str_replace('+', ' ', $string), $request->query->get($paramName, []));
 
         foreach ($pillarsAndCategories as $eachPillar) {
             $allCat = array_column($eachPillar["categories"], "name");
