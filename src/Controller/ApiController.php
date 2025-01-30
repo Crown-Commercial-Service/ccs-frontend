@@ -107,8 +107,10 @@ class ApiController extends AbstractController
     {
         $apiUrl = $this->getCmsUrl('/search-api/frameworks');
 
-        // Build query and input filter params
-        $client = HttpClient::create();
+    // Build query and input filter params
+    $client = HttpClient::create();
+
+    try {
         $response = $client->request(
             'GET',
             $apiUrl,
@@ -121,8 +123,12 @@ class ApiController extends AbstractController
             throw new ApiException(sprintf('Error with Search Framework API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getMessage()));
         }
 
-        $responseFinal = json_decode($response->getContent());
+        $responseFinal = json_decode($response->getContent(), true); // decode as associative array
         return new JsonResponse($responseFinal);
+    } catch (\Exception $e) {
+        // Log the error or handle it as necessary
+        throw new ApiException('An error occurred while communicating with the API: ' . $e->getMessage());
+    }
     }
 
     /**
@@ -145,25 +151,24 @@ class ApiController extends AbstractController
                 case 'regulation_type':
                 case 'terms':
                     if (!is_array($param)) {
-                        $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                        $filtered[$name] = filter_var($param, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                     } else {
-                        $filtered[$name] = filter_var_array($param);
+                        // Specify the filter type for filter_var_array
+                        $filtered[$name] = filter_var_array($param, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                     }
                     break;
                 case 'keyword':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
                 case 'sort':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                     break;
                 case 'limit':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
-                    break;
                 case 'page':
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
                     break;
             }
         }
+
+
         return $filtered;
     }
 

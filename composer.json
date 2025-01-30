@@ -4,11 +4,11 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.4.0",
+        "php": "^8.2.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "aws/aws-sdk-php": "^3.272",
-        "ccs/strata-frontend": "^1.0.0",
+        "ccs/strata-frontend": "^1.0.1",
         "rollbar/rollbar-php-symfony-bundle": "4.0.0",
         "symfony/apache-pack": "^1.0",
         "symfony/browser-kit": "^5.4.0",
