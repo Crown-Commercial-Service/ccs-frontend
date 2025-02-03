@@ -8,15 +8,13 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-input = $(echo "$1" | tr '[:upper:]' '[:lower:]')
-
-if [ "$input" == "true" ]; then
+if [ "$1" == "true" ]; then
     brew services start postgresql@13
     apachectl start
     Mysql.server start
     brew services start opensearch
     exit 1
-elif [ "$input" == "false" ]; then
+elif [ "$1" == "false" ]; then
     brew services stop postgresql@13
     apachectl stop
     Mysql.server stop
