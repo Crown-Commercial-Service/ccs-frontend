@@ -91,33 +91,33 @@
 
                     <div v-if="responseAvailable" class="hideWithoutJS govuk-visually-hidden">
                         <ul class="govuk-list govuk-list--frameworks" v-show="javascriptVersion">
-                                <li v-show="javascriptVersion" v-for="result in results">
-                                    <h3 class="govuk-heading-m ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22">
-                                        <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
-                                        <span v-if="result.status == 'Expired - Data Still Received'" class="govuk-tag ccs-tag ccs-tag--error"> Expired: {[ result.end_date | toDateDMY ]} </span>
-                                    </h3>
+                            <li v-show="javascriptVersion" v-for="result in results">
+                                <h3 class="govuk-heading-m ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22">
+                                    <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
+                                    <span v-if="result.status == 'Expired - Data Still Received'" class="govuk-tag ccs-tag ccs-tag--error"> Expired: {[ result.end_date | toDateDMY ]} </span>
+                                </h3>
 
-                                    <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
-                                        <li> <strong>Agreement ID:</strong> {[ result.rm_number ]}   </li>
-                                        <li> <strong>Start Date:</strong>   {[ result.start_date | toDateDMY ]}  </li>
-                                        
-                                        <li v-if="result.status == 'Expired - Data Still Received'"> <strong>End Date:</strong> {[ result.end_date | toDateDMY ]} </li>
+                                <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                    <li> <strong>Agreement ID:</strong> {[ result.rm_number ]}   </li>
+                                    <li> <strong>Start Date:</strong>   {[ result.start_date | toDateDMY ]}  </li>
+                                    
+                                    <li v-if="result.status == 'Expired - Data Still Received'"> <strong>End Date:</strong> {[ result.end_date | toDateDMY ]} </li>
 
-                                        {% if tpp_feature_toggle == true %}
-                                                <li v-if="result.regulation != null"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
-                                                <li v-else> <strong>Regulation:</strong></li>
-                                        {% endif %}
-                                    </ul>
-                                    <p class="govuk-body-s" v-html="result.summary"></p> 
-                                </li>
-
-                            <results-pagination 
-                                :total-results="totalResults" 
-                                :number-of-pages="numberOfPages" 
-                                :current-page="currentPage" 
-                                v-on:update-page="updatePageValue($event)" 
-                            ></results-pagination>
+                                    {% if tpp_feature_toggle == true %}
+                                            <li v-if="result.regulation != null"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
+                                            <li v-else> <strong>Regulation:</strong></li>
+                                    {% endif %}
+                                </ul>
+                                <p class="govuk-body-s" v-html="result.summary"></p> 
+                            </li>
                         </ul>
+
+                        <results-pagination 
+                            :total-results="totalResults" 
+                            :number-of-pages="numberOfPages" 
+                            :current-page="currentPage" 
+                            v-on:update-page="updatePageValue($event)" 
+                        ></results-pagination>
                     </div>
 
                     <div v-else-if="!responseAvailable" class="hideWithoutJS govuk-visually-hidden">
