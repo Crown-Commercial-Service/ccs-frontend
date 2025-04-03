@@ -48,15 +48,15 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-         <link rel="preload" href="/assets/styles/styles.min.css?v=1.67" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.67"></noscript>
+         <link rel="preload" href="/assets/styles/styles.min.css?v=1.68" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.68"></noscript>
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
         {# <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.67"> #}
-        <link rel="preload" href="/assets/styles/styles.min.css?v=1.67" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.67"></noscript>
+        <link rel="preload" href="/assets/styles/styles.min.css?v=1.68" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.68"></noscript>
     {% endif %}
 
     {# Browser icon #}
