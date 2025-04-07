@@ -86,74 +86,69 @@
 
         </div>
 
-        {% if tpp_feature_toggle == true %}
-            <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
-                <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
-                    <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading">
-                            <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-2">
-                                Regulation
-                            </span>
-                        </h2>
-                        {# <span class="govuk-body-s">{[ checkedRegulation.length ]} selected</span> #}
-                    </div>
+        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
+            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading">
+                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-2">
+                            Regulation
+                        </span>
+                    </h2>
+                </div>
+                
+                <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2" role="region">
                     
-                    <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2" role="region">
-                        
+                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                        <input v-on:change=fetchAPIData(null,null) v-model="checkedRegulation" name="allRegulation" value="allRegulation" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allRegulation" type="checkbox" {{ filters.checkedRegulation is defined and filters.checkedRegulation is empty  ? 'checked' }}>
+                        <label class="govuk-label govuk-checkboxes__label" for="allRegulation">
+                            View All
+                        </label>
+                    </div>
+                
+                    {% for item in regulationsForTwig %}
                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                            <input v-on:change=fetchAPIData(null,null) v-model="checkedRegulation" name="allRegulation" value="allRegulation" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allRegulation" type="checkbox" {{ filters.checkedRegulation is defined and filters.checkedRegulation is empty  ? 'checked' }}>
-                            <label class="govuk-label govuk-checkboxes__label" for="allRegulation">
-                                View All
+                            <input v-on:change="fetchAPIData('{{item}}', null); removeTypeBasedOnReg()"  v-model="checkedRegulation" name="regulation[]" value="{{item}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}" type="checkbox" {{ item in filters.checkedRegulation ? 'checked' }}>
+                            <label class="govuk-label govuk-checkboxes__label" for="{{item}}">
+                                {{  item }}
                             </label>
                         </div>
-                    
-                        {% for item in regulationsForTwig %}
-                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input v-on:change="fetchAPIData('{{item}}', null); removeTypeBasedOnReg()"  v-model="checkedRegulation" name="regulation[]" value="{{item}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}" type="checkbox" {{ item in filters.checkedRegulation ? 'checked' }}>
-                                <label class="govuk-label govuk-checkboxes__label" for="{{item}}">
-                                    {{  item }}
-                                </label>
-                            </div>
-                        {% endfor %}
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
+        </div>
 
 
-            <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
-                <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
-                    <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading">
-                            <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-3">
-                                Agreement type
-                            </span>
-                        </h2>
-                        {# <span class="govuk-body-s">{[ checkedType.length ]} selected</span> #}
+        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
+            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
+                <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading">
+                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-with-summary-sections-heading-3">
+                            Agreement type
+                        </span>
+                    </h2>
+                </div>
+                
+                <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3" role="region">
 
+                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                        <input v-on:change=fetchAPIData(null,null) v-model="checkedType" name="allType" value="allType" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" type="checkbox" {{ filters.checkedType is defined and filters.checkedType is empty  ? 'checked' }}>
+                        <label class="govuk-label govuk-checkboxes__label" for="allType">
+                            View All
+                        </label>
                     </div>
-                    
-                    <div id="accordion-with-summary-sections-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3" role="region">
 
-                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                            <input v-on:change=fetchAPIData(null,null) v-model="checkedType" name="allType" value="allType" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" type="checkbox" {{ filters.checkedType is defined and filters.checkedType is empty  ? 'checked' }}>
-                            <label class="govuk-label govuk-checkboxes__label" for="allType">
-                                View All
+                    {% for item in typeStatusesForTwig %}
+                        <div v-if="shouldShowTypeCheckbox('{{ item | replace({'+': ' '}) }}')" class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                            <input v-on:change=fetchAPIData("{{item}}",null) v-model="checkedType" name="type[]" value="{{item}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}" type="checkbox" {{ item|replace({'+': ' '}) in filters.checkedType ? 'checked' }}>
+                            <label class="govuk-label govuk-checkboxes__label" for="{{item}}">
+                                {{  item |replace({'+': ' '}) }}
                             </label>
                         </div>
+                    {% endfor %}
 
-                        {% for item in typeStatusesForTwig %}
-                            <div v-if="shouldShowTypeCheckbox('{{ item | replace({'+': ' '}) }}')" class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input v-on:change=fetchAPIData("{{item}}",null) v-model="checkedType" name="type[]" value="{{item}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}" type="checkbox" {{ item|replace({'+': ' '}) in filters.checkedType ? 'checked' }}>
-                                <label class="govuk-label govuk-checkboxes__label" for="{{item}}">
-                                    {{  item |replace({'+': ' '}) }}
-                                </label>
-                            </div>
-                        {% endfor %}
-
-                    </div>
                 </div>
             </div>
-        {% endif %}
+        </div>
 
 
         <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
