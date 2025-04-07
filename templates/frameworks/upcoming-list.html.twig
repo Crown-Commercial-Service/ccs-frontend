@@ -12,20 +12,11 @@
 {% block body %}
 
 
-    {% if tpp_feature_toggle == true %}
-        {% set no_info = "TBC" %}
-    {% else %}
-        {% set no_info = "N/A" %}
-    {% endif %}
-    <!-- required wrapper 1 -->
     <div class="govuk-width-container">
-
-        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
         <div class="govuk-phase-banner">
             {% include '/includes/phase-banner-content.html.twig' %}
         </div>
-
 
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
@@ -46,11 +37,6 @@
             </ol>
         </div>
 
-
-
-
-
-        <!-- required wrapper 2 -->
         <main id="main-content" role="main"  class="govuk-main-wrapper">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
@@ -58,7 +44,6 @@
 
                         <h1 class="govuk-heading-xl page-title">{{upcoming_deals_content.upcomingDealsInfo.title}}</h1>
 
-                        {# raw html #}
                         {{upcoming_deals_content.upcomingDealsInfo.page_description | raw }}
 
                     {% else %}
@@ -143,75 +128,68 @@
                                         <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="recently-awarded" name="statuses[]" type="checkbox" value="awarded" {{ statuses is not defined or statuses is empty or 'awarded' in statuses ? "checked" : "" }}>
                                         <label class="govuk-label govuk-checkboxes__label" for="recently-awarded"> Recently awarded </label>
                                     </div>
-                                    {% if tpp_feature_toggle == false %}
-                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="dps" name="statuses[]" type="checkbox" value="dps" {{ statuses is not defined or statuses is empty or 'dps' in statuses ? "checked" : "" }}>
-                                            <label class="govuk-label govuk-checkboxes__label" for="dps"> Dynamic purchasing systems </label>
-                                        </div>
-                                    {% endif %}
 
                                 </div>
                             </div>
                         </div>
-                        {% if tpp_feature_toggle == true %}
-                            <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
-                                <div class="govuk-accordion__controls">
-                                    <button type="button" class="govuk-accordion__show-all" aria-expanded="true">
-                                        <span class="govuk-accordion-nav__chevron"></span>
-                                        <span class="govuk-accordion__show-all-text">Hide all sections</span>
-                                    </button>
+
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
+                            <div class="govuk-accordion__controls">
+                                <button type="button" class="govuk-accordion__show-all" aria-expanded="true">
+                                    <span class="govuk-accordion-nav__chevron"></span>
+                                    <span class="govuk-accordion__show-all-text">Hide all sections</span>
+                                </button>
+                            </div>
+
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <div type="button" aria-controls="accordion-with-summary-sections-content-2" class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" aria-expanded="true" aria-label="Filter by agreement status , Hide this section">
+                                        <span class="govuk-accordion__section-heading-text" id="accordion-with-summary-sections-heading-3">
+                                            <span class="govuk-accordion__section-heading-text-focus"> Agreement type </span>
+                                        </span>
+                                        <span class="govuk-visually-hidden govuk-accordion__section-heading-divider"> </span>
+                                        </div>
+                                    </h2>
+                                    
+                                    <span class="govuk-body-s">{{ type is not defined or type is empty ? 1 : type|length }} selected</span>
                                 </div>
 
-                                <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
-                                    <div class="govuk-accordion__section-header">
-                                        <h2 class="govuk-accordion__section-heading">
-                                            <div type="button" aria-controls="accordion-with-summary-sections-content-2" class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" aria-expanded="true" aria-label="Filter by agreement status , Hide this section">
-                                            <span class="govuk-accordion__section-heading-text" id="accordion-with-summary-sections-heading-3">
-                                                <span class="govuk-accordion__section-heading-text-focus"> Agreement type </span>
-                                            </span>
-                                            <span class="govuk-visually-hidden govuk-accordion__section-heading-divider"> </span>
-                                            </div>
-                                        </h2>
-                                        
-                                        <span class="govuk-body-s">{{ type is not defined or type is empty ? 1 : type|length }} selected</span>
+                                <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3" role="region">
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        {% if type is defined and 'allType' in type %}
+                                            {# checked #}
+                                            <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" name="allType" type="checkbox" value="true" checked >
+                                        {% else %}
+                                            {# unchecked #}
+                                            <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small view-all-up-type-checkbox" id="allType" name="type[]" type="checkbox" value="allType">
+                                        {% endif %}
+                                            <label class="govuk-label govuk-checkboxes__label" for="all"> View All </label>
+                                        </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-dps" name="type[]" type="checkbox" value="Dynamic+Purchasing+System" {{ type is not defined or type is empty or 'Dynamic+Purchasing+System' in type ? "checked" : "" }}>
+                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-dps">Dynamic Purchasing System</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-dynamic-market" name="type[]" type="checkbox" value="Dynamic+Market" {{ type is not defined or type is empty or 'Dynamic+Market' in type ? "checked" : "" }}>
+                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-dynamic-market">Dynamic Market</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-open-framework" name="type[]" type="checkbox" value="Open+Framework" {{ type is not defined or type is empty or 'Open+Framework' in type ? "checked" : "" }}>
+                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-open-framework">Open Framework</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-closed-framework" name="type[]" type="checkbox" value="Closed+Framework" {{ type is not defined or type is empty or 'Closed+Framework' in type ? "checked" : "" }}>
+                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-closed-framework">Closed Framework</label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-pcr15" name="type[]" type="checkbox" value="PCR15+Framework" {{ type is not defined or type is empty or 'PCR15+Framework' in type ? "checked" : "" }}>
+                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-pcr15">PCR15 Framework</label>
                                     </div>
 
-                                    <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3" role="region">
-                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            {% if type is defined and 'allType' in type %}
-                                                {# checked #}
-                                                <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" name="allType" type="checkbox" value="true" checked >
-                                            {% else %}
-                                                {# unchecked #}
-                                                <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small view-all-up-type-checkbox" id="allType" name="type[]" type="checkbox" value="allType">
-                                            {% endif %}
-                                                <label class="govuk-label govuk-checkboxes__label" for="all"> View All </label>
-                                            </div>
-                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-dps" name="type[]" type="checkbox" value="Dynamic+Purchasing+System" {{ type is not defined or type is empty or 'Dynamic+Purchasing+System' in type ? "checked" : "" }}>
-                                            <label class="govuk-label govuk-checkboxes__label" for="upcoming-dps">Dynamic Purchasing System</label>
-                                        </div>
-                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-dynamic-market" name="type[]" type="checkbox" value="Dynamic+Market" {{ type is not defined or type is empty or 'Dynamic+Market' in type ? "checked" : "" }}>
-                                            <label class="govuk-label govuk-checkboxes__label" for="upcoming-dynamic-market">Dynamic Market</label>
-                                        </div>
-                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-open-framework" name="type[]" type="checkbox" value="Open+Framework" {{ type is not defined or type is empty or 'Open+Framework' in type ? "checked" : "" }}>
-                                            <label class="govuk-label govuk-checkboxes__label" for="upcoming-open-framework">Open Framework</label>
-                                        </div>
-                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-closed-framework" name="type[]" type="checkbox" value="Closed+Framework" {{ type is not defined or type is empty or 'Closed+Framework' in type ? "checked" : "" }}>
-                                            <label class="govuk-label govuk-checkboxes__label" for="upcoming-closed-framework">Closed Framework</label>
-                                        </div>
-                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-pcr15" name="type[]" type="checkbox" value="PCR15+Framework" {{ type is not defined or type is empty or 'PCR15+Framework' in type ? "checked" : "" }}>
-                                            <label class="govuk-label govuk-checkboxes__label" for="upcoming-pcr15">PCR15 Framework</label>
-                                        </div>
-
-                                    </div>
                                 </div>
                             </div>
-                        {% endif %}
+                        </div>
 
                     </form>
 
@@ -304,26 +282,23 @@
                                                     {% if upcoming_deal.tenders_open_date is not null %}
                                                         <li> <strong>Tenders Open:</strong> {{ upcoming_deal.tenders_open_date.format('d/m/Y') }} </li>
                                                     {% else %}
-                                                        <li> <strong>Tenders Open:</strong> {{ no_info }} </li>
+                                                        <li> <strong>Tenders Open:</strong> TBC </li>
                                                     {% endif %}
 
                                                     {% if upcoming_deal.expected_live_date is not null %}
                                                        <li> <strong>Expected Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                     {% else %}
-                                                        <li> <strong>Expected Live:</strong> {{ no_info }} </li>
+                                                        <li> <strong>Expected Live:</strong> TBC </li>
                                                     {% endif %}
 
-                                                    {% if tpp_feature_toggle == true %}
-                                                        {% if upcoming_deal.regulation is not null %}
+                                                    {% if upcoming_deal.regulation is not null %}
                                                         <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
-                                                        {% else %}
-                                                            <li> <strong>Regulation:</strong></li>
-                                                        {% endif %}
-
-                                                         {% if upcoming_deal.regulation_type is not null %}
-                                                        <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
-                                                        {% endif %}
                                                     {% endif %}
+
+                                                    {% if upcoming_deal.regulation_type is not null %}
+                                                        <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
+                                                    {% endif %}
+
                                                 </ul>
                                                 <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
                                             </li>
@@ -368,26 +343,23 @@
                                                 {% if upcoming_deal.tenders_open_date is not null %}
                                                     <li> <strong>Tenders Open:</strong> {{ upcoming_deal.tenders_open_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Tenders Open:</strong> {{ no_info }} </li>
+                                                    <li> <strong>Tenders Open:</strong> TBC </li>
                                                 {% endif %}
 
                                                 {% if upcoming_deal.expected_live_date is not null %}
                                                     <li> <strong>Expected Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Expected Live:</strong> {{ no_info }} </li>
+                                                    <li> <strong>Expected Live:</strong> TBC </li>
                                                 {% endif %}
 
-                                                {% if tpp_feature_toggle == true %}
-                                                    {% if upcoming_deal.regulation is not null %}
+                                                {% if upcoming_deal.regulation is not null %}
                                                     <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
-                                                    {% else %}
-                                                        <li> <strong>Regulation:</strong></li>
-                                                    {% endif %}
-
-                                                    {% if upcoming_deal.regulation_type is not null %}
-                                                        <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
-                                                    {% endif %}
                                                 {% endif %}
+
+                                                {% if upcoming_deal.regulation_type is not null %}
+                                                    <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
+                                                {% endif %}
+
                                             </ul>
                                             <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
                                     </li>
@@ -436,26 +408,23 @@
                                             {% if upcoming_deal.tenders_close_date is not null %}
                                                 <li> <strong>Tenders Close:</strong> {{ upcoming_deal.tenders_close_date.format('d/m/Y') }} </li>
                                             {% else %}
-                                                <li> <strong>Tenders Close:</strong> {{ no_info }} </li>
+                                                <li> <strong>Tenders Close:</strong> TBC </li>
                                             {% endif %}
 
                                             {% if upcoming_deal.expected_award_date is not null %}
                                                 <li> <strong>Expected Award:</strong> {{ upcoming_deal.expected_award_date.format('d/m/Y') }} </li>
                                             {% else %}
-                                                <li> <strong>Expected Award:</strong> {{ no_info }} </li>
+                                                <li> <strong>Expected Award:</strong> TBC </li>
                                             {% endif %}
 
-                                            {% if tpp_feature_toggle == true %}
-                                                {% if upcoming_deal.regulation is not null %}
+                                            {% if upcoming_deal.regulation is not null %}
                                                 <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
-                                                {% else %}
-                                                    <li> <strong>Regulation:</strong></li>
-                                                {% endif %}
-
-                                                {% if upcoming_deal.regulation_type is not null %}
-                                                    <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
-                                                 {% endif %}
                                             {% endif %}
+
+                                            {% if upcoming_deal.regulation_type is not null %}
+                                                <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
+                                            {% endif %}
+
                                         </ul>
                                         <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
                                     </li>
@@ -496,26 +465,24 @@
                                                 {% if upcoming_deal.expected_award_date is not null %}
                                                     <li> <strong>Awarded Date:</strong> {{ upcoming_deal.expected_award_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Awarded Date:</strong> {{ no_info }} </li>
+                                                    <li> <strong>Awarded Date:</strong> TBC </li>
                                                 {% endif %}
 
                                                 {% if upcoming_deal.expected_live_date is not null %}
                                                     <li> <strong>Expected Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Expected Live:</strong> {{ no_info }} </li>
+                                                    <li> <strong>Expected Live:</strong> TBC </li>
                                                 {% endif %}
 
-                                                {% if tpp_feature_toggle == true %}
-                                                    {% if upcoming_deal.regulation is not null %}
+
+                                                {% if upcoming_deal.regulation is not null %}
                                                     <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
-                                                    {% else %}
-                                                        <li> <strong>Regulation:</strong></li>
-                                                    {% endif %}
-
-                                                    {% if upcoming_deal.regulation_type is not null %}
-                                                        <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
-                                                    {% endif %}
                                                 {% endif %}
+
+                                                {% if upcoming_deal.regulation_type is not null %}
+                                                    <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
+                                                {% endif %}
+
                                             </ul>
                                             <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
                                         </li>
@@ -558,26 +525,23 @@
                                                 {% if upcoming_deal.expected_live_date is not null %}
                                                     <li> <strong>Live Date:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Live Date:</strong> {{ no_info }} </li>
+                                                    <li> <strong>Live Date:</strong> TBC </li>
                                                 {% endif %}
 
                                                 {% if upcoming_deal.end_date is not null %}
                                                     <li> <strong>End Date:</strong> {{ upcoming_deal.end_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>End Date:</strong> {{ no_info }} </li>
+                                                    <li> <strong>End Date:</strong> TBC </li>
                                                 {% endif %}
 
-                                                {% if tpp_feature_toggle == true %}
-                                                    {% if upcoming_deal.regulation is not null %}
+                                                {% if upcoming_deal.regulation is not null %}
                                                     <li> <strong>Regulation:</strong>{{ upcoming_deal.regulation }}</li>
-                                                    {% else %}
-                                                        <li> <strong>Regulation:</strong></li>
-                                                    {% endif %}
-
-                                                    {% if upcoming_deal.regulation_type is not null %}
-                                                        <li class="upcoming_regulation_type" style="display: none"> {{ upcoming_deal.regulation_type }} </li>
-                                                    {% endif %}
                                                 {% endif %}
+
+                                                {% if upcoming_deal.regulation_type is not null %}
+                                                    <li class="upcoming_regulation_type" style="display: none"> {{ upcoming_deal.regulation_type }} </li>
+                                                {% endif %}
+
                                             </ul>
                                             <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
                                         </li>
