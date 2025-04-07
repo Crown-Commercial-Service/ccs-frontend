@@ -33,7 +33,7 @@
                         </dd>
                     {% endif %}
 
-                    {% framework.content.regulation is not null %}
+                    {% if framework.content.regulation is not null %}
                         <dt>Regulation</dt>
                         <dd class="apollo-list--definition__value">
                             {{ framework.content.regulation }}
