@@ -103,10 +103,7 @@
                                     
                                     <li v-if="result.status == 'Expired - Data Still Received'"> <strong>End Date:</strong> {[ result.end_date | toDateDMY ]} </li>
 
-                                    {% if tpp_feature_toggle == true %}
-                                            <li v-if="result.regulation != null"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
-                                            <li v-else> <strong>Regulation:</strong></li>
-                                    {% endif %}
+                                    <li v-if="result.regulation != null"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
                                 </ul>
                                 <p class="govuk-body-s" v-html="result.summary"></p> 
                             </li>

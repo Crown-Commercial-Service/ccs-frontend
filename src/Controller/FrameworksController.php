@@ -186,12 +186,10 @@ class FrameworksController extends AbstractController
         }
 
         $data = [
-            'api_base_url'          => getenv('SEARCH_API_BASE_URL'),
-            'app_base_url'          => getenv('APP_BASE_URL'),
-            'pageNumber'            => $page,
-            'filters'               => $options,
-
-            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
+            'api_base_url'      => getenv('SEARCH_API_BASE_URL'),
+            'app_base_url'      => getenv('APP_BASE_URL'),
+            'pageNumber'        => $page,
+            'filters'           => $options,
             'pagination'        => $results->getPagination(),
             'results'           => $results,
             'categories'        => FrameworkCategories::getAll(),
@@ -250,7 +248,6 @@ class FrameworksController extends AbstractController
         }
 
         $data = [
-            'tpp_feature_toggle'            => getenv('TPP_feature_toggle'),
             'statuses'                      => $statuses,
             'filters'                       => $options,
             'results'                       => $results,
@@ -332,7 +329,6 @@ class FrameworksController extends AbstractController
         $youtubeVideo = ControllerHelper::getYoutubeVideo();
 
         $data = [
-            'tpp_feature_toggle' => getenv('TPP_feature_toggle'),
             'framework'          => $results,
             'show_crp'           => $this->showCRP($content['rm_number']->getValue()),
             'cscMessage'         => $cscMessage,
