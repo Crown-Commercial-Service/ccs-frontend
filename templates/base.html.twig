@@ -49,14 +49,14 @@
 
     {% if app.environment == "prod" %}
          <link rel="preload" href="/assets/styles/styles.min.css?v=1.68" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.68"></noscript>
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.69"></noscript>
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
         {# <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.67"> #}
         <link rel="preload" href="/assets/styles/styles.min.css?v=1.68" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.68"></noscript>
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.69"></noscript>
     {% endif %}
 
     {# Browser icon #}
@@ -211,7 +211,7 @@
     </div>
 </div>
 
-<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.3"></script>
+<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.4"></script>
 
 <div id="skiplink-container">
     <div>
