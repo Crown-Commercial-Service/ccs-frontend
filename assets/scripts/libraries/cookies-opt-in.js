@@ -330,6 +330,10 @@ var docCookies = {
         var SettingsUpdatedArea = document.getElementsByClassName("js-live-area");
         SettingsUpdatedArea[0].innerHTML = "<p>Your cookie settings were saved.</p>";
 
+        var cookieNotificationBanner = document.querySelector(".cookie-settings__confirmation");
+        cookieNotificationBanner.style.display = "block";
+        window.scrollTo(0, 0);
+
     }
 
     function generateCookieSettingsPageContent(appendTo) {
@@ -337,7 +341,25 @@ var docCookies = {
         var CookieSettingsPageContent = document.createDocumentFragment();
         var cookie_preferences = JSON.parse(docCookies.getItem('cookie_preferences'));
 
-        // console.log({cookie_preferences});
+        // append banner here
+        var bannerMarkup = `
+        <div class="cookie-settings__confirmation" data-cookie-confirmation="true" style="display: none; margin-bottom:10px;">
+            <div data-module="initial-focus" aria-labelledby="govuk-notification-banner-title-168980d0" class="gem-c-success-alert govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-0" role="alert" tabindex="-1" data-initial-focus-module-started="true" style="border-color: #00eec4; background-color:#00eec4;">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title-168980d0">Success</h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <h3 class="govuk-notification-banner__heading">Your cookie settings were saved</h3>
+                </div>
+            </div>
+        </div>`;
+
+        var bannerContainer = document.createElement("div");
+
+        bannerContainer.innerHTML = bannerMarkup;
+
+        CookieSettingsPageContent.appendChild(bannerContainer);
+
 
         // loop through the data
         initial_cookie_preferences.forEach((datarecord, idx) => {
