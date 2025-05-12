@@ -311,8 +311,8 @@ class PageController extends AbstractController
 
         $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
-        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
         $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
+        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
 
         if (!($data['callback'] == "No" || $data['callback'] == null)) {
             $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
