@@ -6,6 +6,8 @@ type:
   type: text
 summary:
   type: richtext
+upcoming_deal_summary:
+  type: richtext
 description:
   type: richtext
 updates:
@@ -32,6 +34,10 @@ pillar:
 category:
   type: text
 status:
+  type: text
+regulation:
+  type: text
+regulation_type:
   type: text
 start_date:
   type: date

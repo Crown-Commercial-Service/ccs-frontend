@@ -6,7 +6,7 @@
     "css:mainsass:compressed": "node-sass --output-style=compressed --source-map=true assets/styles/styles.scss public/assets/styles/styles.min.css",
     "css:mainsass:uncompressed": "node-sass assets/styles/styles.scss public/assets/styles/styles.css",
     "css:sass": "npm-run-all --parallel css:mainsass:*",
-    "css:autoprefixer": "npx postcss public/assets/styles/*.css --use autoprefixer -d public/assets/styles",
+    "css:autoprefixer": "npx postcss --no-map public/assets/styles/*.css --use autoprefixer -d public/assets/styles",
     "css": "npm-run-all --sequential css:sass css:autoprefixer",
     "images:imagemin": "imagemin assets/images/* --out-dir=public/assets/images",
     "images:svg": "svgo --folder=assets/svg --output=public/assets/svg",
@@ -51,7 +51,7 @@
     "shx": "^0.3.4",
     "svgo": "2.8.0",
     "tunnel-agent": "^0.6.0",
-    "vue": "^2.7.14",
+    "vue": "^2.7.16",
     "watch": "^1.0.2",
     "whatwg-fetch": "^3.6.20",
     "yargs-parser": "^13.1.2"

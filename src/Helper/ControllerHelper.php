@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Helper;
 
+use App\Utils\FrameworkCategories;
 use Strata\Frontend\Cms\RestData;
 use Strata\Frontend\ContentModel\ContentModel;
 use Strata\Frontend\Api\Providers\RestApi;
@@ -102,7 +103,90 @@ class ControllerHelper
             'name' => $params->get('name', null),
             'email' => $params->get('email', null),
             'company' => $params->get('company', null),
-            'jobTitle' => $params->get('00Nb0000009IXEs', null),
+            'jobTitle' => $params->get('jobTitle', null),
         ];
+    }
+
+    public static function converArrayToStringForWordpress($selectedArray, $totalOption)
+    {
+        if ($selectedArray == null || count($selectedArray) == $totalOption) {
+            return null;
+        }
+
+        return implode(',', (array) $selectedArray);
+    }
+
+    public static function extractRmNumberFromReferrer($referrer)
+    {
+        if (!(empty(trim($referrer)) || is_null($referrer))) {
+            $referrerInArray = explode("agreements/RM", $referrer);
+
+            $regex = "/^\d{4}(\.[a-zA-Z0-9]{1,4})?$/";   //4 digits follow by 4 decimal places
+
+            if (isset($referrerInArray[1]) && preg_match($regex, $referrerInArray[1])) {
+                return "RM{$referrerInArray[1]}";
+            }
+        }
+        return null;
+    }
+
+    public static function removeFromArray(array $arrayToRemove, array $valuesToRemove)
+    {
+        foreach ($arrayToRemove as $key => $value) {
+            if (in_array($value, $valuesToRemove)) {
+                unset($arrayToRemove[$key]);
+            }
+        }
+        return $arrayToRemove;
+    }
+
+    public static function getArrayFromStringForParam($request, string $paramName, string $allSelected = "")
+    {
+
+        if ($request->query->get($allSelected, false)) {
+            return [];
+        }
+
+        if (!is_array($request->query->get($paramName))) {
+            return $request->query->get($paramName) != null ? explode(",", $request->query->get($paramName)) : [];
+        }
+
+        return array_map(function ($string) {
+            return str_replace('+', ' ', $string);
+        }, $request->query->get($paramName));
+    }
+
+    public static function validateCategory($request, array $pillarArray, string $paramName)
+    {
+
+        if (!is_array($request->query->get($paramName))) {
+            return $request->query->get($paramName) != null ? [explode(",", $request->query->get($paramName)), $pillarArray] : [[], $pillarArray];
+        }
+
+        $pillarsAndCategories =  FrameworkCategories::getAllPillars()["pillars"];
+
+        $selected = array_map(function ($string) {
+            return str_replace('+', ' ', $string);
+        }, $request->query->get($paramName, []));
+
+        foreach ($pillarsAndCategories as $eachPillar) {
+            $allCat = array_column($eachPillar["categories"], "name");
+
+            $isPillarIncluded = !empty(array_diff($allCat, $selected));
+            $pillarName = $eachPillar["name"];
+
+            if (!$isPillarIncluded) {
+                if (!in_array($pillarName, $pillarArray)) {
+                    $pillarArray[] = $pillarName;
+                }
+            } else {
+                $key = array_search($pillarName, $pillarArray);
+                if ($key !== false) {
+                    unset($pillarArray[$key]);
+                }
+            }
+        }
+
+        return [$selected, $pillarArray];
     }
 }

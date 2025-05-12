@@ -1,0 +1,58 @@
+{% if pagination.totalResults == 1 %}
+    <h2 class="govuk-heading-m">{{ pagination.totalResults }} event found</h2>
+{% else %}
+    <h2 class="govuk-heading-m">{{ pagination.totalResults }} event(s) found</h2>
+{% endif %}
+
+{% if events %}
+    <ol class="events-list">
+        {% for event in events %}
+            <li class="event-list__item">
+                {% if event.content.image %}
+                    <a class="event-list__image" aria-hidden="true"  href="/events/{{ event.id }}/{{ slugify(event.title) }}">
+                        <img src="{{ event.content.image.byName('news-size-s') }}" alt="{{ event.title|raw }}" />
+                    </a>
+                {% endif %}
+
+                <div class="event-list__details">
+                    <h3 class="event-list__title govuk-!-margin-bottom-2 ">
+                        <a href="/events/{{ event.id }}/{{ slugify(event.title) }}">{{ event.title|raw }}</a>
+                    </h3>
+
+
+                    <ul class="event-list__meta list--inline govuk-body-s govuk-!-margin-bottom-2">
+                        {% if event.content.start_datetime|date('j F Y') == event.content.end_datetime|date('j F Y') %}
+                            <li><strong>Date:</strong> {{ event.content.start_datetime|date('j F Y') }}</li>
+                        {% else %}
+                            <li><strong>Start Date:</strong> {{ event.content.start_datetime|date('j F Y') }}</li>
+                            <li><strong>End Date:</strong> {{ event.content.end_datetime|date('j F Y') }}</li>
+                        {% endif %}
+                        <li><strong>Type:</strong> {{ event.content.event_type }}</li>
+                    </ul>
+                </div>
+
+            </li>
+        {% endfor %}
+    </ol>
+{% endif %}
+
+{%  set pagination_data = {'pagination': pagination, 'route': 'events_list', 
+    'options': {
+                'allAudience': filters.audience_tag is not defined  ? 'allAudience' : null,
+                'allType': filters.event_type is not defined  ? 'allType' : null,
+                'allPS': filters.products_services is not defined  ? 'allPS' : null,
+                'allSectors': filters.sectors is not defined  ? 'allSectors' : null,
+
+
+                'audience_tag[]': filters.audience_tag is defined ? filters.audience_tag : null,
+                'event_type[]': filters.event_type is defined ? filters.event_type : null,
+                'product_service[]': filters.products_services is defined ? filters.products_services : null,
+                'sector[]': filters.sectors is defined ? filters.sectors : null, } } 
+%}
+
+{% if pagination.totalPages > 1 %}
+
+    <div class="events-pagination">
+        {{ include('includes/pagination.html.twig', pagination_data) }}
+    </div>
+{% endif %}
