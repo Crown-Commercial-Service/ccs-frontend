@@ -78,7 +78,7 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertResponseRedirects('/agreements/category/energy');
+        $this->assertResponseRedirects('/agreements?category%5B0%5D=Energy');
     }
 
     public function testRedirectFromTravelToTravelAccommodationAndVenuesCategory()
@@ -89,7 +89,7 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertResponseRedirects('/agreements/category/travel-accommodation-and-Venues');
+        $this->assertResponseRedirects('/agreements?category%5B0%5D=Travel,%20Accommodation%20and%20Venues');
     }
 
     public function testRedirectFromDigitalFuturesToDigitalCapabilityAndDelivery()
@@ -100,7 +100,7 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertResponseRedirects('/agreements/category/digital-capability-and-delivery');
+        $this->assertResponseRedirects('/agreements?category%5B0%5D=Digital%20Capability%20and%20Delivery');
     }
 
     public function testRedirectFromNetworkSolutionsToNetworkServices()
@@ -111,7 +111,7 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertResponseRedirects('/agreements/category/network-services');
+        $this->assertResponseRedirects('/agreements?category%5B0%5D=Network%20Services');
     }
 
     public function testRedirectFromWorkplaceToEstates()
@@ -122,7 +122,7 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertResponseRedirects('/agreements/pillar/estates');
+        $this->assertResponseRedirects('/agreements?pillar%5B0%5D=Estates');
     }
 
     public function testRedirectFromtechnologyProductsServicesToTechnology()
@@ -132,8 +132,7 @@ class FrameworkCategoriesTest extends WebTestCase
         $response = $client->getResponse();
 
         $this->assertEquals(302, $response->getStatusCode());
-
-        $this->assertResponseRedirects('/agreements/pillar/technology');
+        $this->assertResponseRedirects('/agreements?pillar%5B0%5D=Technology');
     }
     public function testRedirectFromWorkforceHealthEducationToHrAndWorkforceServices()
     {
@@ -143,6 +142,6 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertResponseRedirects('/agreements/category/hr-and-workforce-services');
+        $this->assertResponseRedirects('/agreements?category%5B0%5D=HR%20and%20Workforce%20Services');
     }
 }

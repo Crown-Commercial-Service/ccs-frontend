@@ -8,6 +8,7 @@
     {% endif%}
     
     {% if homepage_meta is defined %}
+        <meta name="description" content="We help the UK public sector get better value for money when buying products and services. Unlock the power of procurement with Crown Commercial Service.">
         <meta name="thumbnail" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
         <meta property="og:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
         <meta property="twitter:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
@@ -47,12 +48,15 @@
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
     {% if app.environment == "prod" %}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.32">
+         <link rel="preload" href="/assets/styles/styles.min.css?v=1.70" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.70"></noscript>
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.4.32">
+        {# <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.67"> #}
+        <link rel="preload" href="/assets/styles/styles.min.css?v=1.70" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.70"></noscript>
     {% endif %}
 
     {# Browser icon #}
@@ -180,7 +184,7 @@
  #
  # If `show-flourishes` isn't included, then certain colour flourishes won't show
 #}
-<body class="govuk-template__body {% block flourishClasses %}show-flourishes  {{ taxonomy }}--{{ flourish }}{% endblock %}">
+<body class="govuk-template__body {% block flourishClasses %}  {{ taxonomy }}--{{ flourish }}{% endblock %}">
 <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
 
 {# For data layer - outputs environment to be used in js file #}
@@ -193,6 +197,21 @@
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NQGRQN" height="0" width="0" style="display:none;visibility:hidden"></iframe>
 </noscript>
 {# End Google Tag Manager (noscript) #}
+
+<div class="cookie-message" id="cookie-consent-container" aria-label="Cookie Policy" aria-live="polite" style="display: none;">
+    <div class="cookie-message__inner govuk-width-container site-container">
+        <h2 class="govuk-heading-m">Cookies on crowncommercial.gov.uk</h2>
+        <div class="cookie-message__intro">
+            <p>We use cookies to collect information about how you use crowncommercial.gov.uk.<br><br> We use this information to make the website work as well as possible and improve government services.</p>
+        </div>
+        <div class="cookie-message__actions">
+            <button class="govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm--accept-cookies-in-banner">Accept all cookies</button>
+            <a class="govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button" href="/cookie-settings">Set cookie preferences</a>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.4"></script>
 
 <div id="skiplink-container">
     <div>
@@ -232,7 +251,6 @@
 <script src="/assets/scripts/libraries/jquery-3.6.0.min.js"></script>
 <script src="/assets/scripts/libraries/objectFitPolyfill.min.js"></script>
 <script src="/assets/scripts/app.js?v=2.3"></script>
-<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.2"></script>
 <script type="text/javascript">
   $('a[target^="_new-window"]').click(function() {
     var width = window.innerWidth * 0.9 ;
@@ -293,30 +311,84 @@ End Usersnap code #}
         }
     });
 
-    var btn = document.getElementById("BackToTopButton");
+    var backToTopBtn = document.getElementById("BackToTopButton");
+    var skipLink = document.querySelector(".govuk-skip-link");
 
-    btn.addEventListener('click', (e) => {
+    backToTopBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        $('html, body').animate({scrollTop:0}, '300');
+        animateScrollToTop();
     });
 
-    window.onload = function() {
-        dataLayerSetup();
-        window.addEventListener("scroll", function (event) {
-            if (window.scrollY + window.innerHeight > (document.querySelector('footer').getBoundingClientRect().top + window.pageYOffset)) {
-                btn.classList.add("fixed");
-                btn.classList.remove("flex");
-            } else {
-                btn.classList.add("flex");
-                btn.classList.remove("fixed");
-            }
+    backToTopBtn.addEventListener('keypress', function (e) {
+        e.preventDefault();
+        if (e.key === 'Enter') {
+        animateScrollToTop();
+        }       
+    });
 
-            if (window.scrollY > 200) {
-                btn.classList.add("show");
-            } else {
-                btn.classList.remove("show");
-            }
+    function animateScrollToTop() {
+        $('html, body').animate({scrollTop:0}, '300');
+        // reset focus on page
+        if(skipLink !== null) {
+            skipLink.focus();
+        }
+        
+    }
+
+    function showOrHideBackToTop() {
+        var contactForm = document.querySelector("form");
+        
+        if (window.scrollY + window.innerHeight > (document.querySelector('footer').getBoundingClientRect().top + window.pageYOffset)) {
+            backToTopBtn.classList.add("fixed");
+            backToTopBtn.classList.remove("flex");
+        } else {
+            backToTopBtn.classList.add("flex");
+            backToTopBtn.classList.remove("fixed");
+        }
+        
+        if (window.scrollY > 200) {
+            backToTopBtn.classList.add("show");
+        } else {
+            backToTopBtn.classList.remove("show");
+        }
+
+        if (contactForm !== null) {
+            if(contactForm.getAttribute("data-evt-type") == "contact_form") {
+                makeBackToTopFocusable();
+            }  
+        }
+         
+    }
+
+    // this is to fix an edge case where back to top is not focusable properly on contact page
+    function makeBackToTopFocusable() {
+            var links = document.querySelectorAll("main a");
+            var lastLink = links[links.length - 1];
+            var contactCard = document.querySelector("#submit");
+
+            lastLink.addEventListener("keydown", function (event) {
+                if(event.key === "Tab" && !event.shiftKey) {
+                    event.preventDefault();
+                    contactCard.scrollIntoView({ behaviour: "smooth", block: "start"});
+                    // set timeout in order for scrollIntoView to finish firing first
+                    setTimeout(function (){
+                        backToTopBtn.classList.add("show");
+                        backToTopBtn.style.position="absolute";
+                        backToTopBtn.focus();
+                    }, 200)
+                    
+                }
+            })
+    }
+
+    window.onload = function () {
+        dataLayerSetup();
+        showOrHideBackToTop()
+
+        window.addEventListener("scroll", function (event) {
+            showOrHideBackToTop()
         }, false);
+
     };
 
     // add download notification to links
@@ -373,7 +445,18 @@ End Usersnap code #}
             }
         })
     }
+    
+    // change colour of logo on focus for accessibility
+    var logo = document.querySelector(".logo");
+    var logoImg = document.querySelector(".navLogo");
 
+    logo.addEventListener("focus", function (event) {
+        logoImg.style.filter = "invert(100%)";
+    })
+
+     logo.addEventListener("focusout", function (event) {
+        logoImg.style.filter = "invert(0)";
+    })
   
 </script>
 

@@ -33,6 +33,24 @@ class ApiController extends AbstractController
         return $url . $path;
     }
 
+    private function filterParams(array $params, array $allowedFilters)
+    {
+        $filtered = [];
+        foreach ($params as $name => $param) {
+            if (array_key_exists($name, $allowedFilters)) {
+                $filtered[$name] = filter_var($param, $allowedFilters[$name]);
+            }
+        }
+
+        return $filtered;
+    }
+
+    private function getResponse($apiUrl, $request, $allowedFilters)
+    {
+        $client = HttpClient::create();
+        return $client->request('GET', $apiUrl, ['query' => $this->filterParams($request->query->all(), $allowedFilters)]);
+    }
+
     /**
      * API proxy for Suppliers search
      *
@@ -52,15 +70,15 @@ class ApiController extends AbstractController
     {
         $apiUrl = $this->getCmsUrl('/search-api/suppliers');
 
-        // Build query and input filter params
-        $client = HttpClient::create();
-        $response = $client->request(
-            'GET',
-            $apiUrl,
-            [
-                'query' => $this->filterSupplierParams($request->query->all())
-            ]
-        );
+        $allowedFilters = [
+            'keyword'   => FILTER_SANITIZE_STRING,
+            'framework' => FILTER_SANITIZE_STRING,
+            'lot'       => FILTER_SANITIZE_NUMBER_INT,
+            'limit'     => FILTER_SANITIZE_NUMBER_INT,
+            'page'      => FILTER_SANITIZE_NUMBER_INT,
+        ];
+
+        $response = $this->getResponse($apiUrl, $request, $allowedFilters);
 
         if ($response->getStatusCode() !== 200) {
             throw new ApiException(sprintf('Error with Search Suppliers API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent()));
@@ -68,39 +86,6 @@ class ApiController extends AbstractController
 
         $responseFinal = json_decode($response->getContent());
         return new JsonResponse($responseFinal);
-    }
-
-    /**
-     * Return a filtered array of search params for supplier API query
-     *
-     * Please note any GET params you want to allow to be passed onto the WP API must be added here
-     *
-     * @param array $params
-     * @return array
-     */
-    private function filterSupplierParams(array $params)
-    {
-        $filtered = [];
-        foreach ($params as $name => $param) {
-            switch ($name) {
-                case 'keyword':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
-                case 'framework':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
-                case 'lot':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
-                    break;
-                case 'limit':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
-                    break;
-                case 'page':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
-                    break;
-            }
-        }
-        return $filtered;
     }
 
     /**
@@ -153,15 +138,20 @@ class ApiController extends AbstractController
         $filtered = [];
         foreach ($params as $name => $param) {
             switch ($name) {
-                case 'keyword':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
                 case 'status':
+                case 'pillar':
+                case 'category':
+                case 'regulation':
+                case 'regulation_type':
+                case 'terms':
                     if (!is_array($param)) {
                         $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
                     } else {
                         $filtered[$name] = filter_var_array($param);
                     }
+                    break;
+                case 'keyword':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
                     break;
                 case 'sort':
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
@@ -171,12 +161,6 @@ class ApiController extends AbstractController
                     break;
                 case 'page':
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
-                    break;
-                case 'pillar':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
-                case 'category':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
                     break;
             }
         }
@@ -202,15 +186,20 @@ class ApiController extends AbstractController
     {
         $apiUrl = $this->getCmsUrl('/wp-json/wp/v2/posts');
 
-        // Build query and input filter params
-        $client = HttpClient::create();
-        $response = $client->request(
-            'GET',
-            $apiUrl,
-            [
-                'query' => $this->filterNewsParams($request->query->all())
-            ]
-        );
+        $allowedFilters = [
+            'categories'        => FILTER_SANITIZE_STRING,
+            'whitepaper'        => FILTER_SANITIZE_STRING,
+            'webinar'           => FILTER_SANITIZE_STRING,
+            'digitalBrochure'   => FILTER_SANITIZE_STRING,
+            'digitalDownload'   => FILTER_SANITIZE_STRING,
+            'noPost'            => FILTER_SANITIZE_STRING,
+            'sectors'           => FILTER_SANITIZE_STRING,
+            'products_services' => FILTER_SANITIZE_STRING,
+            'page'              => FILTER_SANITIZE_NUMBER_INT,
+            'per_page'          => FILTER_SANITIZE_NUMBER_INT,
+        ];
+
+        $response = $this->getResponse($apiUrl, $request, $allowedFilters);
 
         if ($response->getStatusCode() !== 200) {
             throw new ApiException(sprintf('Error with news filter API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent()));
@@ -222,51 +211,44 @@ class ApiController extends AbstractController
     }
 
     /**
-     * Return a filtered array of search params for news API query
+     * API proxy for events filter
      *
-     * Please note any GET params you want to allow to be passed onto the WP API must be added here
+     * Proxy requests from https://FRONTEND/api/events?audience_tag=149
+     * to: https://CMS/wp-json/wp/v2/event?audience_tag=149
      *
-     * @param array $params
-     * @return array
+     * @param Request $request
+     * @param CacheItemPoolInterface $cache
+     * @return JsonResponse
+     * @throws ApiException
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    private function filterNewsParams(array $params)
+    public function events(Request $request, CacheItemPoolInterface $cache)
     {
-        $filtered = [];
-        foreach ($params as $name => $param) {
-            switch ($name) {
-                case 'categories':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
-                case 'whitepaper':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
-                case 'webinar':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
-                case 'digitalBrochure':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
-                case 'digitalDownload':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
-                case 'noPost':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
-                case 'sectors':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
-                case 'products_services':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
-                case 'page':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
-                    break;
-                case 'per_page':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
-                    break;
-            }
+        $apiUrl = $this->getCmsUrl('/wp-json/wp/v2/event');
+
+        $allowedFilters = [
+            'sectors'            => FILTER_SANITIZE_STRING,
+             'products_services' => FILTER_SANITIZE_STRING,
+             'event_type'        => FILTER_SANITIZE_STRING,
+             'audience_tag'      => FILTER_SANITIZE_STRING,
+             'page'              => FILTER_SANITIZE_NUMBER_INT,
+             'per_page'          => FILTER_SANITIZE_NUMBER_INT,
+             'orderby'           => FILTER_SANITIZE_STRING,
+             'order'             => FILTER_SANITIZE_STRING,
+        ];
+
+        $response = $this->getResponse($apiUrl, $request, $allowedFilters);
+
+        if ($response->getStatusCode() !== 200) {
+            throw new ApiException(sprintf('Error with event filter API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent()));
         }
-        return $filtered;
+        $responseFinal['meta']['X-WP-TotalPages'] = (int) $response->getHeaders()["x-wp-totalpages"][0];
+        $responseFinal['meta']['X-WP-Total'] = (int) $response->getHeaders()["x-wp-total"][0];
+        $responseFinal['body'] = json_decode($response->getContent());
+        return new JsonResponse($responseFinal);
     }
 
     /**
