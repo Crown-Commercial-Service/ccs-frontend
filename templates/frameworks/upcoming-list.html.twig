@@ -12,15 +12,11 @@
 {% block body %}
 
 
-    <!-- required wrapper 1 -->
     <div class="govuk-width-container">
-
-        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
 
         <div class="govuk-phase-banner">
             {% include '/includes/phase-banner-content.html.twig' %}
         </div>
-
 
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
@@ -41,11 +37,6 @@
             </ol>
         </div>
 
-
-
-
-
-        <!-- required wrapper 2 -->
         <main id="main-content" role="main"  class="govuk-main-wrapper">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
@@ -53,7 +44,6 @@
 
                         <h1 class="govuk-heading-xl page-title">{{upcoming_deals_content.upcomingDealsInfo.title}}</h1>
 
-                        {# raw html #}
                         {{upcoming_deals_content.upcomingDealsInfo.page_description | raw }}
 
                     {% else %}
@@ -70,70 +60,79 @@
 
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-third">
-
-                    <div class="govuk-grid-row">
-                        <div class="govuk-grid-column-one-half">
-                            <h2 class="govuk-heading-m">Apply filters</h2>
+                    <form action="{{ path('frameworks_upcoming_deals') }}" method="GET">
+                        <div class="govuk-form-group govuk-form-group--enclosure">
+                            <div class="govuk-form-group sidebar__search-group">
+                                <label class="govuk-label" for="keyword"> Search upcoming agreements </label>
+                                <input class="govuk-input" id="keyword" name="keyword" value="{{ filters.keyword is defined and filters.keyword|trim is not empty ? filters.keyword : "" }}"/>
+                                <button type="submit" class="sidebar__search-button govuk-input">
+                                    <span class="visuallyhidden">Search upcoming agreements</span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="govuk-grid-column-one-half" style="text-align:right;">
-                            <a onclick="pushToDataLayer({'event': 'search_filter', 'interaction_type': 'clear'});" href="/agreements/upcoming" class="govuk-link" >Clear filters</a>
-                        </div>
-                    </div>
-
-                    <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
-                        <div class="govuk-accordion__controls">
-                            <button type="button" class="govuk-accordion__show-all" aria-expanded="true">
-                                <span class="govuk-accordion-nav__chevron"></span>
-                                <span class="govuk-accordion__show-all-text">Hide all sections</span>
-                            </button>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-one-half">
+                                <h2 class="govuk-heading-m">Apply filters</h2>
+                            </div>
+                            <div class="govuk-grid-column-one-half" style="text-align:right;">
+                                <a onclick="pushToDataLayer({'event': 'search_filter', 'interaction_type': 'clear'});" href="/agreements/upcoming" class="govuk-link" >Clear filters</a>
+                            </div>
                         </div>
 
-                        <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
-                            <div class="govuk-accordion__section-header">
-                                <h2 class="govuk-accordion__section-heading">
-                                    <div type="button" aria-controls="accordion-with-summary-sections-content-1" class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" aria-expanded="true" aria-label="Filter by agreement status , Hide this section">
-                                    <span class="govuk-accordion__section-heading-text" id="accordion-with-summary-sections-heading-2">
-                                        <span class="govuk-accordion__section-heading-text-focus"> Filter by agreement status </span>
-                                    </span>
-                                    <span class="govuk-visually-hidden govuk-accordion__section-heading-divider"> </span>
-                                    </div>
-                                </h2>
-                                
-                                <span class="govuk-body-s"><span class="upcoming-num-selected">1</span> selected</span>
+                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
+                            <div class="govuk-accordion__controls">
+                                <button type="button" class="govuk-accordion__show-all" aria-expanded="true">
+                                    <span class="govuk-accordion-nav__chevron"></span>
+                                    <span class="govuk-accordion__show-all-text">Hide all sections</span>
+                                </button>
                             </div>
 
-                            <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2" role="region">
-                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                    <input onchange="toggleAll()" class="govuk-checkboxes__input govuk-checkboxes__input--small view-all-checkbox" id="all" name="statuses[]" type="checkbox" value="all" checked>
-                                    <label class="govuk-label govuk-checkboxes__label" for="all"> View All </label>
+                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
+                                <div class="govuk-accordion__section-header">
+                                    <h2 class="govuk-accordion__section-heading">
+                                        <div type="button" aria-controls="accordion-with-summary-sections-content-1" class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" aria-expanded="true" aria-label="Filter by agreement status , Hide this section">
+                                        <span class="govuk-accordion__section-heading-text" id="accordion-with-summary-sections-heading-2">
+                                            <span class="govuk-accordion__section-heading-text-focus"> Filter by agreement status </span>
+                                        </span>
+                                        <span class="govuk-visually-hidden govuk-accordion__section-heading-divider"> </span>
+                                        </div>
+                                    </h2>
+                                    
+                                    <span class="govuk-body-s">{{ statuses is not defined or statuses is empty ? 1 : statuses|length }} selected</span>
                                 </div>
-                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                    <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="future-pipeline" name="statuses[]" type="checkbox" value="future">
-                                    <label class="govuk-label govuk-checkboxes__label" for="future-pipeline"> Future pipeline </label>
-                                </div>
-                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                    <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="planned-procurement" name="statuses[]" type="checkbox" value="planned">
-                                    <label class="govuk-label govuk-checkboxes__label" for="planned-procurement"> Planned procurements </label>
-                                </div>
-                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                    <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="procurement-progress" name="statuses[]" type="checkbox" value="proc">
-                                    <label class="govuk-label govuk-checkboxes__label" for="procurement-progress"> Procurements in progress </label>
-                                </div>
-                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                    <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="recently-awarded" name="statuses[]" type="checkbox" value="awarded">
-                                    <label class="govuk-label govuk-checkboxes__label" for="recently-awarded"> Recently awarded </label>
-                                </div>
-                                {% if tpp_feature_toggle == false %}
+
+                                <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2" role="region">
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onchange="toggleAgreements()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="dps" name="statuses[]" type="checkbox" value="dps">
-                                        <label class="govuk-label govuk-checkboxes__label" for="dps"> Dynamic purchasing systems </label>
+                                         {% if statuses is defined and 'all' in statuses %}
+                                            {# checked #}
+                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="all" name="all" type="checkbox" value="true" checked >
+                                            {% else %}
+                                            {# unchecked #}
+                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="all" name="statuses[]" type="checkbox" value="all" >
+                                         {% endif %}
+                                        <label class="govuk-label govuk-checkboxes__label" for="all"> View All </label>
                                     </div>
-                                {% endif %}
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="future-pipeline" name="statuses[]" type="checkbox" value="future" {{ statuses is not defined or statuses is empty or 'future' in statuses ? "checked" : "" }}>
+                                        <label class="govuk-label govuk-checkboxes__label" for="future-pipeline"> Future pipeline </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="planned-procurement" name="statuses[]" type="checkbox" value="planned" {{ statuses is not defined or statuses is empty or 'planned' in statuses ? "checked" : "" }}>
+                                        <label class="govuk-label govuk-checkboxes__label" for="planned-procurement"> Planned procurements </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="procurement-progress" name="statuses[]" type="checkbox" value="proc" {{ statuses is not defined or statuses is empty or 'proc' in statuses ? "checked" : "" }}>
+                                        <label class="govuk-label govuk-checkboxes__label" for="procurement-progress"> Procurements in progress </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="recently-awarded" name="statuses[]" type="checkbox" value="awarded" {{ statuses is not defined or statuses is empty or 'awarded' in statuses ? "checked" : "" }}>
+                                        <label class="govuk-label govuk-checkboxes__label" for="recently-awarded"> Recently awarded </label>
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    {% if tpp_feature_toggle == true %}
+
                         <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
                             <div class="govuk-accordion__controls">
                                 <button type="button" class="govuk-accordion__show-all" aria-expanded="true">
@@ -153,47 +152,107 @@
                                         </div>
                                     </h2>
                                     
-                                    <span class="govuk-body-s"><span class="upcoming-num-selected-type">1</span> selected</span>
+                                    <span class="govuk-body-s">{{ type is not defined or type is empty ? 1 : type|length }} selected</span>
                                 </div>
 
                                 <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3" role="region">
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                        {% if type is defined and 'allType' in type %}
+                                            {# checked #}
+                                            <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" name="allType" type="checkbox" value="true" checked >
+                                        {% else %}
+                                            {# unchecked #}
+                                            <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small view-all-up-type-checkbox" id="allType" name="type[]" type="checkbox" value="allType">
+                                        {% endif %}
+                                            <label class="govuk-label govuk-checkboxes__label" for="all"> View All </label>
+                                        </div>
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onchange="toggleAllType()" class="govuk-checkboxes__input govuk-checkboxes__input--small view-all-up-type-checkbox" id="all-up-agreement-type" name="statuses[]" type="checkbox" value="all" checked>
-                                        <label class="govuk-label govuk-checkboxes__label" for="all"> View All </label>
-                                    </div>
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onchange="toggleAgreementType()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-dps" name="statuses[]" type="checkbox" value="Dynamic Purchasing System">
+                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-dps" name="type[]" type="checkbox" value="Dynamic+Purchasing+System" {{ type is not defined or type is empty or 'Dynamic+Purchasing+System' in type ? "checked" : "" }}>
                                         <label class="govuk-label govuk-checkboxes__label" for="upcoming-dps">Dynamic Purchasing System</label>
                                     </div>
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onchange="toggleAgreementType()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-dynamic-market" name="statuses[]" type="checkbox" value="Dynamic Market">
+                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-dynamic-market" name="type[]" type="checkbox" value="Dynamic+Market" {{ type is not defined or type is empty or 'Dynamic+Market' in type ? "checked" : "" }}>
                                         <label class="govuk-label govuk-checkboxes__label" for="upcoming-dynamic-market">Dynamic Market</label>
                                     </div>
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onchange="toggleAgreementType()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-open-framework" name="statuses[]" type="checkbox" value="Open Framework">
+                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-open-framework" name="type[]" type="checkbox" value="Open+Framework" {{ type is not defined or type is empty or 'Open+Framework' in type ? "checked" : "" }}>
                                         <label class="govuk-label govuk-checkboxes__label" for="upcoming-open-framework">Open Framework</label>
                                     </div>
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onchange="toggleAgreementType()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-closed-framework" name="statuses[]" type="checkbox" value="Closed Framework">
+                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-closed-framework" name="type[]" type="checkbox" value="Closed+Framework" {{ type is not defined or type is empty or 'Closed+Framework' in type ? "checked" : "" }}>
                                         <label class="govuk-label govuk-checkboxes__label" for="upcoming-closed-framework">Closed Framework</label>
                                     </div>
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onchange="toggleAgreementType()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-pcr15" name="statuses[]" type="checkbox" value="PCR15 Framework">
+                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-pcr15" name="type[]" type="checkbox" value="PCR15+Framework" {{ type is not defined or type is empty or 'PCR15+Framework' in type ? "checked" : "" }}>
                                         <label class="govuk-label govuk-checkboxes__label" for="upcoming-pcr15">PCR15 Framework</label>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-                    {% endif %}
 
-                    {% include '/frameworks/_helpful_info.html.twig' with {'page': 'upcoming'} %}
+                    </form>
 
+                {% include '/frameworks/_helpful_info.html.twig' with {'page': 'upcoming'} %}
+                
                 </div>
                 
                 <div class="govuk-grid-column-two-thirds">
 
+                {% if results|length == 0 %}
+                    <h3>There are no matching results.</h3>
+                    <p class="govuk-!-margin-bottom-0">Improve your search results by:</p>
+                    <ul>
+                        <li><p class="govuk-!-margin-bottom-1">removing filters</p></li>
+                        {% if filters.keyword is defined and filters.keyword|trim is not empty %}
+                            <li><p class="govuk-!-margin-bottom-1">double-checking your spelling</p></li>
+                            <li><p class="govuk-!-margin-bottom-1">using fewer keywords</p></li>
+                        {% endif %}
+
+                    </ul>
+                    <br>
+                    <p>If you are still unable to find what you need, contact our customer service centre using our <a class="govuk-link" href="/contact">contact us form</a>.</p>
+                
+                {% endif %}
+
+                {% set future_pipeline = [] %}
+                {% set planned_pipeline = [] %}
+                {% set underway_pipeline = [] %}
+                {% set awarded_pipeline = [] %}
+                 {% set dynamic_purchasing_systems = [] %}
+
+                {% for item in results %}
+                    {% set status = item.content.status %}
+                    {% set terms = item.content.terms %}
+
+                    {% if status == "Future (Pipeline)" %}
+                        {% if "future" in statuses or "all" in statuses %}
+                            {% set future_pipeline = future_pipeline | merge([item.content]) %}
+                        {% endif %}
+                    {% elseif status == "Planned (Pipeline)"  %}
+                        {% if "planned" in statuses or "all" in statuses %}
+                            {% set planned_pipeline = planned_pipeline | merge([item.content]) %}
+                        {% endif %}
+                    {% elseif status == "Underway (Pipeline)" %}
+                        {% if "proc" in statuses or "all" in statuses %}
+                            {% set underway_pipeline = underway_pipeline | merge([item.content]) %}
+                        {% endif %}
+                    {% elseif status == "Awarded (Pipeline)" %}
+                        {% if "awarded" in statuses or "all" in statuses %}
+                            {% set awarded_pipeline = awarded_pipeline | merge([item.content]) %}
+                        {% endif %}
+                    {% elseif terms == "DPS" %}
+                        {% if "dps" in statuses or "all" in statuses %}
+                            {% set dynamic_purchasing_systems = dynamic_purchasing_systems | merge([item.content]) %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+
                      <div class="future upcoming-type-wrapper">
+
+                    {% if future_pipeline|length >= 1  or "future" in statuses %}
+
                         {% if upcoming_deals_content and upcoming_deals_content.table_4.title %}
 
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_4.title }}</h2>
@@ -203,8 +262,6 @@
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Future pipeline</h2>
 
                         {% endif %}
-
-                        {% if future_pipeline|length >= 1 %}
 
                                 {% if upcoming_deals_content and upcoming_deals_content.table_4.caption|length > 0 %}
 
@@ -225,40 +282,35 @@
                                                     {% if upcoming_deal.tenders_open_date is not null %}
                                                         <li> <strong>Tenders Open:</strong> {{ upcoming_deal.tenders_open_date.format('d/m/Y') }} </li>
                                                     {% else %}
-                                                        <li> <strong>Tenders Open:</strong> N/A </li>
+                                                        <li> <strong>Tenders Open:</strong> TBC </li>
                                                     {% endif %}
 
                                                     {% if upcoming_deal.expected_live_date is not null %}
                                                        <li> <strong>Expected Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                     {% else %}
-                                                        <li> <strong>Expected Live:</strong> N/A </li>
+                                                        <li> <strong>Expected Live:</strong> TBC </li>
                                                     {% endif %}
 
-                                                    {% if tpp_feature_toggle == true %}
-                                                        {% if upcoming_deal.regulation is not null %}
+                                                    {% if upcoming_deal.regulation is not null %}
                                                         <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
-                                                        {% else %}
-                                                            <li> <strong>Regulation:</strong></li>
-                                                        {% endif %}
-
-                                                         {% if upcoming_deal.regulation_type is not null %}
-                                                        <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
-                                                        {% endif %}
                                                     {% endif %}
+
+                                                    {% if upcoming_deal.regulation_type is not null %}
+                                                        <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
+                                                    {% endif %}
+
                                                 </ul>
                                                 <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
                                             </li>
                                     {% endfor %}
                                 </ul>
 
-                            {% else %}
-
-                                <p>No future pipelines at the moment.</p>
-
                         {% endif %}
                     </div>
 
                      <div class="planned-proc upcoming-type-wrapper">
+                     {% if planned_pipeline|length >= 1  or "planned" in statuses %}
+
                         {% if upcoming_deals_content and upcoming_deals_content.table_3.title %}
 
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_3.title }}</h2>
@@ -269,7 +321,7 @@
 
                         {% endif %}
 
-                        {% if planned_pipeline|length >= 1 %}
+                        
 
                                 {% if upcoming_deals_content and upcoming_deals_content.table_3.caption|length > 0 %}
 
@@ -291,26 +343,23 @@
                                                 {% if upcoming_deal.tenders_open_date is not null %}
                                                     <li> <strong>Tenders Open:</strong> {{ upcoming_deal.tenders_open_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Tenders Open:</strong> N/A </li>
+                                                    <li> <strong>Tenders Open:</strong> TBC </li>
                                                 {% endif %}
 
                                                 {% if upcoming_deal.expected_live_date is not null %}
                                                     <li> <strong>Expected Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Expected Live:</strong> N/A </li>
+                                                    <li> <strong>Expected Live:</strong> TBC </li>
                                                 {% endif %}
 
-                                                {% if tpp_feature_toggle == true %}
-                                                    {% if upcoming_deal.regulation is not null %}
+                                                {% if upcoming_deal.regulation is not null %}
                                                     <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
-                                                    {% else %}
-                                                        <li> <strong>Regulation:</strong></li>
-                                                    {% endif %}
-
-                                                    {% if upcoming_deal.regulation_type is not null %}
-                                                        <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
-                                                    {% endif %}
                                                 {% endif %}
+
+                                                {% if upcoming_deal.regulation_type is not null %}
+                                                    <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
+                                                {% endif %}
+
                                             </ul>
                                             <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
                                     </li>
@@ -318,14 +367,12 @@
                                     {% endfor %}
                                 </ul>
 
-                            {% else %}
-
-                                <p>No planned procurements at the moment.</p>
-
                         {% endif %}
                     </div>
 
                     <div class="proc-in-progress upcoming-type-wrapper">
+                    {% if underway_pipeline|length >= 1 or "proc" in statuses %}
+
                         {% if upcoming_deals_content and upcoming_deals_content.table_1.title %}
 
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_1.title }}</h2>
@@ -335,9 +382,6 @@
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements in progress</h2>
 
                         {% endif %}
-
-                        {% if underway_pipeline|length >= 1 %}
-
 
                                 {% if upcoming_deals_content and upcoming_deals_content.table_1.caption %}
 
@@ -364,40 +408,35 @@
                                             {% if upcoming_deal.tenders_close_date is not null %}
                                                 <li> <strong>Tenders Close:</strong> {{ upcoming_deal.tenders_close_date.format('d/m/Y') }} </li>
                                             {% else %}
-                                                <li> <strong>Tenders Close:</strong> N/A </li>
+                                                <li> <strong>Tenders Close:</strong> TBC </li>
                                             {% endif %}
 
                                             {% if upcoming_deal.expected_award_date is not null %}
                                                 <li> <strong>Expected Award:</strong> {{ upcoming_deal.expected_award_date.format('d/m/Y') }} </li>
                                             {% else %}
-                                                <li> <strong>Expected Award:</strong> N/A </li>
+                                                <li> <strong>Expected Award:</strong> TBC </li>
                                             {% endif %}
 
-                                            {% if tpp_feature_toggle == true %}
-                                                {% if upcoming_deal.regulation is not null %}
+                                            {% if upcoming_deal.regulation is not null %}
                                                 <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
-                                                {% else %}
-                                                    <li> <strong>Regulation:</strong></li>
-                                                {% endif %}
-
-                                                {% if upcoming_deal.regulation_type is not null %}
-                                                    <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
-                                                 {% endif %}
                                             {% endif %}
+
+                                            {% if upcoming_deal.regulation_type is not null %}
+                                                <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
+                                            {% endif %}
+
                                         </ul>
                                         <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
                                     </li>
 
                                 {% endfor %}
                             </ul>
-                        {% else %}
-
-                            <p>No procurements in progress at the moment.</p>
-
+                     
                         {% endif %}
                     </div>
 
                     <div class="proc-recent-awarded upcoming-type-wrapper">
+                    {% if awarded_pipeline|length >= 1  or "awarded" in statuses %}
                         {% if upcoming_deals_content and upcoming_deals_content.table_0.title %}
 
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_0.title }}</h2>
@@ -407,8 +446,6 @@
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements recently awarded</h2>
 
                         {% endif %}
-                        
-                        {% if awarded_pipeline|length >= 1 %}
 
                                 {% if upcoming_deals_content and upcoming_deals_content.table_0.caption|length > 0 %}
 
@@ -428,40 +465,36 @@
                                                 {% if upcoming_deal.expected_award_date is not null %}
                                                     <li> <strong>Awarded Date:</strong> {{ upcoming_deal.expected_award_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Awarded Date:</strong> N/A </li>
+                                                    <li> <strong>Awarded Date:</strong> TBC </li>
                                                 {% endif %}
 
                                                 {% if upcoming_deal.expected_live_date is not null %}
                                                     <li> <strong>Expected Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Expected Live:</strong> N/A </li>
+                                                    <li> <strong>Expected Live:</strong> TBC </li>
                                                 {% endif %}
 
-                                                {% if tpp_feature_toggle == true %}
-                                                    {% if upcoming_deal.regulation is not null %}
+
+                                                {% if upcoming_deal.regulation is not null %}
                                                     <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
-                                                    {% else %}
-                                                        <li> <strong>Regulation:</strong></li>
-                                                    {% endif %}
-
-                                                    {% if upcoming_deal.regulation_type is not null %}
-                                                        <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
-                                                    {% endif %}
                                                 {% endif %}
+
+                                                {% if upcoming_deal.regulation_type is not null %}
+                                                    <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
+                                                {% endif %}
+
                                             </ul>
                                             <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
                                         </li>
                                     {% endfor %}
                                 </ul>
 
-                        {% else %}
-
-                            <p>No procurements recently awarded at the moment.</p>
-
                         {% endif %}
                     </div>
 
                     <div class="dps upcoming-type-wrapper">
+                    {% if dynamic_purchasing_systems|length >= 1 or "dps" in statuses %}
+
                         {% if upcoming_deals_content and upcoming_deals_content.table_2.title %}
 
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_2.title }}</h2>
@@ -471,8 +504,6 @@
                             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Dynamic Purchasing Systems currently open</h2>
 
                         {% endif %}
-
-                        {% if dynamic_purchasing_systems|length >= 1 %}
 
                                 {% if upcoming_deals_content and upcoming_deals_content.table_2.caption|length > 0 %}
 
@@ -494,37 +525,29 @@
                                                 {% if upcoming_deal.expected_live_date is not null %}
                                                     <li> <strong>Live Date:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>Live Date:</strong> N/A </li>
+                                                    <li> <strong>Live Date:</strong> TBC </li>
                                                 {% endif %}
 
                                                 {% if upcoming_deal.end_date is not null %}
                                                     <li> <strong>End Date:</strong> {{ upcoming_deal.end_date.format('d/m/Y') }} </li>
                                                 {% else %}
-                                                    <li> <strong>End Date:</strong> N/A </li>
+                                                    <li> <strong>End Date:</strong> TBC </li>
                                                 {% endif %}
 
-                                                {% if tpp_feature_toggle == true %}
-                                                    {% if upcoming_deal.regulation is not null %}
+                                                {% if upcoming_deal.regulation is not null %}
                                                     <li> <strong>Regulation:</strong>{{ upcoming_deal.regulation }}</li>
-                                                    {% else %}
-                                                        <li> <strong>Regulation:</strong></li>
-                                                    {% endif %}
-
-                                                    {% if upcoming_deal.regulation_type is not null %}
-                                                        <li class="upcoming_regulation_type" style="display: none"> {{ upcoming_deal.regulation_type }} </li>
-                                                    {% endif %}
                                                 {% endif %}
+
+                                                {% if upcoming_deal.regulation_type is not null %}
+                                                    <li class="upcoming_regulation_type" style="display: none"> {{ upcoming_deal.regulation_type }} </li>
+                                                {% endif %}
+
                                             </ul>
                                             <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
                                         </li>
 
                                     {% endfor %}
                                 </ul>
-
-                        {% else %}
-
-                            <p>No Dynamic Purchasing Systems currently open at the moment.</p>
-
                         {% endif %}
                     </div>
 
@@ -537,156 +560,6 @@
 
 <script>
 pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
-
-// filter upcoming agreement
-    var numSelectedElem = document.querySelector(".upcoming-num-selected");
-    var numSelectedType = document.querySelector(".upcoming-num-selected-type");
-    var viewAll = document.querySelector(".view-all-checkbox");
-    var viewAllType = document.querySelector(".view-all-up-type-checkbox")
-    var filterCheckboxes = document.getElementsByClassName("upcoming-agreement-filter");
-    var filterAgreementTypeCheckboxes = document.getElementsByClassName("upcoming-agreement-type-filter");
-    var upcomingResults = document.getElementsByClassName("upcoming-result");
-    var upcomingResultsType = document.getElementsByClassName("upcoming_regulation_type");
-    
-    var upcomingAgreements = {
-        "future" :  document.querySelector(".future"),
-        "planned" : document.querySelector(".planned-proc"),
-        "proc" : document.querySelector(".proc-in-progress"),
-        "awarded": document.querySelector(".proc-recent-awarded"),
-        "dps" : document.querySelector(".dps")
-    }
-
-    
-    function toggleAgreements() {
-        var numSelected = 0;
-
-        for(var checkbox of filterCheckboxes) {
-            if (checkbox.checked) {
-                numSelected++;
-                viewAll.checked = false;
-                toggleAgreement(upcomingAgreements[checkbox.value], true);
-                
-            } else {
-                toggleAgreement(upcomingAgreements[checkbox.value], false);
-            }
-            
-        }
-
-        // turn this back on when doing deplying tpp
-        //toggleAgreement(upcomingAgreements["dps"], false);
-
-        // feature toggle
-         if (document.getElementById("dps") != null) {
-            if (numSelected == 5 || numSelected == 0) {
-            resetFilterUpcoming(filterCheckboxes);
-            viewAll.checked = true;
-            toggleAll();
-            numSelected = 1;
-            }   
-        }   else if (numSelected == 4 || numSelected == 0) {
-            resetFilterUpcoming(filterCheckboxes);
-            viewAll.checked = true;
-            toggleAll();
-            numSelected = 1;
-        }   
-
-   
-
-        numSelectedElem.innerHTML = numSelected;
-    }
-
-    function toggleAll() {
-        if (viewAll.checked) {
-             for(var checkbox of filterCheckboxes) {
-                checkbox.checked = false;
-             }
-
-            Object.keys(upcomingAgreements).forEach(function(agreement) {
-                upcomingAgreements[agreement].style.display = "block";
-            });
-
-            if (viewAllType.checked) {
-                toggleAllType();
-            }
-
-            numSelectedElem.innerHTML = 1;
-        } else {
-            Object.keys(upcomingAgreements).forEach(function(agreement) {
-                upcomingAgreements[agreement].style.display = "none";
-            });
-        }
-        
-    }
-
-    function toggleAgreement (agreement, agreementDisplay) {
-        if (agreementDisplay) {
-            agreement.style.display = "block";
-        } else {
-            agreement.style.display = "none";
-        }
-    }
-
-    function resetFilterUpcoming (filter) {
-         for(var checkbox of filter) {
-            if (checkbox.checked) {
-                checkbox.checked = false;
-            }  
-        }
-    }
-
-    function toggleAgreementType() {
-        var numSelected = 0;
-
-        for(var checkbox of filterAgreementTypeCheckboxes) {
-            if (checkbox.checked) {
-                numSelected++;
-                viewAllType.checked = false;
-                toggleAllType();
-                toggleAgreementResult(checkbox.value, true)
-            } else {
-                toggleAgreementResult(checkbox.value, false)
-            }  
-        }
-
-        if (upcomingAgreements["dps"] !== null) {
-            if (numSelected == 5 || numSelected == 0) {
-            resetFilterUpcoming(filterAgreementTypeCheckboxes);
-            viewAllType.checked = true;
-            toggleAllType();
-            numSelected = 1;
-            }   
-        }
-       
-
-        numSelectedType.innerHTML = numSelected;
-    }
-
-    function toggleAgreementResult(checkboxVal, show) {
-        for (var result of upcomingResults) {
-           var agreementType = result.querySelector(".upcoming_regulation_type");
-                if (agreementType != null) {
-                     if (agreementType.innerText.trim() == checkboxVal.trim()) {
-                        toggleAgreement(agreementType.closest(".upcoming-result"), show);
-                     }
-                } else {
-                    toggleAgreement(result, false);
-                }
-        }
-    }
-
-    function toggleAllType () {
-        if (viewAllType.checked) {
-            for(var checkbox of filterAgreementTypeCheckboxes) {
-                checkbox.checked = false;
-             }
-
-            for (var result of upcomingResults) {
-                toggleAgreement(result, true);
-            }
-
-            numSelectedType.innerHTML = 1;
-        } 
-    }
 
 </script>
 {% endblock %}

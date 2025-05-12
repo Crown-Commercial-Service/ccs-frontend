@@ -281,6 +281,7 @@ class PageController extends AbstractController
             $params->set('subject', $formCampaignCode);
             $params->set('00Nb0000009IXEW', $params->get('validateAggregationOption') ? $params->get('00Nb0000009IXEW') : $formCampaignCode);
             $params->set('recordType', '012b00000005NWC');
+            $params->set('00Nb0000009IXEs', $formData['jobTitle']);
             $params->set('priority', 'Green');
             $params->set('orgid', ControllerHelper::getOrgId());
 
@@ -310,8 +311,8 @@ class PageController extends AbstractController
 
         $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
-        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
         $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
+        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
 
         if (!($data['callback'] == "No" || $data['callback'] == null)) {
             $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
@@ -354,7 +355,7 @@ class PageController extends AbstractController
             'email' => $params->get('email', null),
             'phone' => $params->get('phone', null),
             'company' => $params->get('company', null),
-            'jobTitle' => $params->get('00Nb0000009IXEs', null),
+            'jobTitle' => $params->get('jobTitle', null),
             'aggregationOption' =>  $params->get('00Nb0000009IXEW', null),
             'callback' => $params->get('00Nb0000009IXEg', null),
             'callbackTimeslot' => $params->get('callbackTimeslot', null),

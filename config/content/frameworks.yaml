@@ -6,6 +6,8 @@ type:
   type: text
 summary:
   type: richtext
+upcoming_deal_summary:
+  type: richtext
 description:
   type: richtext
 updates:
