@@ -330,6 +330,10 @@ var docCookies = {
         var SettingsUpdatedArea = document.getElementsByClassName("js-live-area");
         SettingsUpdatedArea[0].innerHTML = "<p>Your cookie settings were saved.</p>";
 
+        var cookieNotificationBanner = document.querySelector(".cookie-settings__confirmation");
+        cookieNotificationBanner.style.display = "block";
+        window.scrollTo(0, 0);
+
     }
 
     function generateCookieSettingsPageContent(appendTo) {
@@ -337,7 +341,25 @@ var docCookies = {
         var CookieSettingsPageContent = document.createDocumentFragment();
         var cookie_preferences = JSON.parse(docCookies.getItem('cookie_preferences'));
 
-        // console.log({cookie_preferences});
+        // append banner here
+        var bannerMarkup = `
+        <div class="cookie-settings__confirmation" data-cookie-confirmation="true" style="display: none; margin-bottom:10px;">
+            <div data-module="initial-focus" aria-labelledby="govuk-notification-banner-title-168980d0" class="gem-c-success-alert govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-0" role="alert" tabindex="-1" data-initial-focus-module-started="true" style="border-color: #00eec4; background-color:#00eec4;">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title-168980d0">Success</h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <h3 class="govuk-notification-banner__heading">Your cookie settings were saved</h3>
+                </div>
+            </div>
+        </div>`;
+
+        var bannerContainer = document.createElement("div");
+
+        bannerContainer.innerHTML = bannerMarkup;
+
+        CookieSettingsPageContent.appendChild(bannerContainer);
+
 
         // loop through the data
         initial_cookie_preferences.forEach((datarecord, idx) => {
@@ -441,59 +463,19 @@ var docCookies = {
     /**
      * Programatically creates the cookie message notification
      */
-    function createCookieMessage() {
-        // create the cookie message container
-        var cookieMessageContainer = document.createElement('div');
-        cookieMessageContainer.classList.add('cookie-message');
-        cookieMessageContainer.setAttribute('id', 'cookie-consent-container');
-        cookieMessageContainer.setAttribute('aria-label', 'Cookie Policy');
-        cookieMessageContainer.setAttribute('aria-live', 'polite');
+    function showCookieMessage() {
+        var cookieMessage = document.getElementById("cookie-consent-container");
+        cookieMessage.style.display = "block";
 
-
-        // create the inner contents of the cookie message
-        var cookieMessageInner = document.createElement('div');
-        cookieMessageInner.classList.add('cookie-message__inner', 'govuk-width-container');
-        cookieMessageInner.classList.add('site-container');
-        cookieMessageInner.innerHTML = '<h2 class="govuk-heading-m">Cookies on crowncommercial.gov.uk</h2><div class="cookie-message__intro"><p>We use cookies to collect information about how you use crowncommercial.gov.uk.<br><br> We use this information to make the website work as well as possible and improve government services.</p></div>';
-
-        var optInButton = document.createElement('button');
-        optInButton.classList.add('govuk-!-font-size-18', 'govuk-!-font-weight-bold', 'govuk-button', 'gtm--accept-cookies-in-banner');
-        optInButton.innerHTML = "Accept all cookies";
-        optInButton.addEventListener('click', optUserIn);
-
-        var settingsButton = document.createElement('a');
-        settingsButton.classList.add('govuk-!-font-size-18', 'govuk-!-font-weight-bold', 'govuk-button');
-        settingsButton.setAttribute('href', "/cookie-settings");
-        settingsButton.innerHTML = "Set cookie preferences";
-        // optOutButton.classList.add('button');
-        // optOutButton.classList.add('button--tight');
-        // optOutButton.classList.add('button--deny');
-        // optOutButton.addEventListener('click', optUserOut);
-
-        var cookieMessageButtons = document.createElement('div');
-        cookieMessageButtons.classList.add('cookie-message__actions');
-        cookieMessageButtons.appendChild(optInButton);
-        cookieMessageButtons.appendChild(settingsButton);
-
-        cookieMessageInner.appendChild(cookieMessageButtons);
-
-
-        // append the inner contents to the cookie message container
-        cookieMessageContainer.appendChild(cookieMessageInner);
-
-
-        // add the cookie message to the start of the document body
-        //document.body.prepend(cookieMessageContainer);
-        var toContent = document.getElementById("skiplink-container");
-        document.body.insertBefore(cookieMessageContainer, toContent);
-        cookieMessageContainer.style.display = 'block';
+        var optUserInBtn = document.querySelector(".gtm--accept-cookies-in-banner");
+        optUserInBtn.addEventListener("click", optUserIn);
     }
 
     /**
      * Only show the cookie message if the user hasn't previously dismissed it (and we're NOT on the cookie-settings page, matches based on the slug)
      */
     if (!docCookies.hasItem('seen_cookie_message') && window.location.href.indexOf("cookie-settings") === -1) {
-        createCookieMessage();
+        showCookieMessage();
     }
 
 
@@ -512,7 +494,7 @@ var docCookies = {
     if (docCookies.hasItem('seen_cookie_message') && !docCookies.hasItem('cookies_reset_1')) {
         // If not on the cookie settings page, show the banner;
         if (window.location.href.indexOf("cookie-settings") === -1) {
-            createCookieMessage();
+            showCookieMessage();
         }
     }
 

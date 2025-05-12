@@ -3,7 +3,6 @@
 {% block htmlclass %}no-js is-home{% endblock %}
 
 {% block title %}Crown Commercial Service - CCS{% endblock %}
-{% block metadescription %}Crown Commercial Service (CCS) helps 17,000 public sector buyers and charities save £725m a year when buying common products and services.{% endblock %}
 {% set homepage_meta = true %}
 
 {% block header %}
@@ -20,32 +19,32 @@
         {% endblock %}
 
        {% block ppglogin %}
-            {% include '/includes/ppg-login.html.twig' %}
+            {% include '/includes/ppg-login.html.twig' %} 
        {% endblock %}
 
         {% block featuredcontent %}
                 <div class="homepage-hero govuk-homepage-hero-full-width">
                     <div class="govuk-hero-homepage-caption-container govuk-hero-margin">
                         <div class="govuk-hero-caption">
-                                <h1 class="govuk-caption-heading">Powering up public <br /> procurement</h1>
-                                <p class="govuk-caption-link" style="color:white; margin-bottom: 0"><a href="/information-for-buyers-and-suppliers">Learn how we help the UK public sector get better value when buying products and services.</a></p>
+                                <h1 class="govuk-caption-heading">Unlock the power of <br /> public procurement</h1>
+                                <p class="govuk-caption-link" style="color:white; margin-bottom: 0"><a href="https://www.crowncommercial.gov.uk/downloadable-resource/request/30384/commercial-agreements-digital-brochure">Find out how we help the UK public sector get better value in our digital brochure.</a></p>
                         </div>   
                     </div>
 
                     <div class="homepage-hero-capsule">
                         <div class="govuk-homepage-search-forms">
-                            <div class="govuk-grid-column-one-half">
+                            <div class="govuk-grid-column-one-half homepage-agreement-search">
 
-                                <form action="{{ path('frameworks_search') }}" method="GET">
+                                <form action="{{ path('frameworks_list') }}" method="GET">
 
                                     <div class="govuk-form-group govuk-form-group--enclosure govuk-form-group--enclosure--homepage govuk-bg-mobile-color">
                                         <div class="govuk-form-group homepage-hero__search-group">
                                             <label class="govuk-label" for="framework_q"><a href="/agreements">Search
                                                 agreements</a></label>
-                                            <input class="govuk-input" id="framework_q" name="q" type="text">
+                                            <input class="govuk-input" id="framework_q" name="keyword" type="text">
 
                                             <button class="homepage-hero__search-button">
-                                                <span class="visuallyhidden"><a href="/agreements">Search agreements</a></span>
+                                                <span class="visuallyhidden">Search agreements</span>
                                             </button>
                                         </div>
                                     </div>
@@ -89,14 +88,14 @@
 
 
         {# required wrapper 2 #}
-        <main id="main-content" class="govuk-main-wrapper govuk-home-main-wrapper">
+        <main id="main-content" class="govuk-main-wrapper govuk-home-main-wrapper ccs-width-container">
 
 
             <div class="apollo-island homepage-apollo-island">
                 {% if homepageContent %}
                     <div class="govuk-grid-column-full homepage-card-container">
 
-                        <div class="govuk-grid-row homepage-card-wrapper">
+                        <div class="homepage-card-wrapper">
                             <div class="govuk-grid-column-one-third card-list__item__wrapper homepage-card-component">
                                 <h2 class="govuk-heading-m">
                                     {{ homepageContent.how_to_buy.title is defined ? 
@@ -246,32 +245,23 @@
                 {% endif %}
             </div>
             
-
-
-            <div class="apollo-island apollo-island--emphasised">
-                <div class="govuk-width-container">
-                    <div class="govuk-grid-row">
-                        <div class="govuk-grid-column-one-half">
+                <div class="govuk-full-width-container">
+                    <div class="homepage-lower-components-container">
+                        <div class="govuk-grid-column-one-half homepage-news-list">
 
                             <h2 class="govuk-heading-m">Latest news</h2>
 
-                            <ul class="news-listing news-listing--compact">
-
-
-                                {# This is the world's smallest valid GIF, it's transparent, which means we can set the background colour of the container element #}
-                                {% set base64 = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" %}
-
-
+                            <ol class="featured-news news-listing homepage-news-listing">
                                 {% for news_item in news %}
-                                    {# Array is currently not limited #}
-                                    {% if loop.index <= 3 %}
-                                        <li class="news-listing__item">
-
+                                    {% if loop.index <= 2 %}
+                                        <li class="feature-news__item homepage-news-listing-item">
                                             {% if news_item.featuredImage %}
-                                            <picture>
+                                                <picture>
+                                                    <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link" tabindex="-1">
 
                                                         <!--[if IE 9]>
-                                                        <video style="display: none;><![endif]-->
+                                                        <video style="display: none;>
+                                                                                        <![endif]-->
                                                         {% if news_item.featuredImage.byName('news-size-s') %}
                                                             <source media="(max-width: 320px)" srcset="{{ news_item.featuredImage.byName('news-size-s') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-s') }}">
                                                         {% endif %}
@@ -285,74 +275,102 @@
                                                         {% endif %}
                                                         <!--[if IE 9]></video><![endif]-->
                                                         <!-- Fallback -->
-                                                        {% if news_item.featuredImage.byName('news-size-m') %}
-                                                            <img src="{{ news_item.featuredImage.byName('news-size-m') }}" alt="" role="presentation" aria-hidden="true" tabindex="-1">
+                                                        {% if news_item.featuredImage.byName('news-size-s') %}
+                                                            <img src="{{ news_item.featuredImage.byName('news-size-s') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1" width="640" height="427">
                                                         {% else %}
-                                                            <img src="{{ news_item.featuredImage.byName('full') }}" alt="" role="presentation" aria-hidden="true" tabindex="-1">
+                                                            <img src="{{ news_item.featuredImage.byName('full') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1" width="640" height="427">
                                                         {% endif %}
 
-                                            </picture>
-
-
+                                                    </a>
+                                                </picture>
                                             {% endif %}
 
-                                            <div class="news-listing__item__caption">
+                                            <div class="feature-news__item__details news-listing__item__caption home-news-item-truncate">
                                                 <div class="news-listing-meta">
-                                                    {% if news_item.taxonomies.categories %}
+                                                    {% if news_item.taxonomies.categories  %}
                                                         {% for category in news_item.taxonomies.categories %}
-                                                            {{ category.name }}{% if loop.index < news_item.taxonomies.categories|length %}, {% endif %}
+                                                            {{ category.name|raw }}{% if loop.index < news_item.taxonomies.categories |length %}, {% endif %}
                                                         {% endfor %}
                                                     {% endif %}
-                                                    | {{ news_item.dateModified.format('j F Y') }}
+                                                    | {{ news_item.dateModified.format('jS F Y') }}
                                                 </div>
-                                                <h3 class="news-listing-title">
+                                                <h2 class="news-listing-title homepage-news-title-truncate">
                                                     <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}">{{ news_item.title|raw }}</a>
-                                                </h3>
+                                                </h2>
+
+                                                {% if news_item.content.post_lead_text %}
+                                                    <p class="news-listing-summary homepage-truncate-overflow">
+                                                        {{ news_item.content.post_lead_text|raw }}
+                                                    </p>
+                                                {% endif %}
+
+                                                <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}">Read more <span class="visuallyhidden">about {{ news_item.content.title|raw }}</span></a>
+
                                             </div>
                                         </li>
                                     {% endif %}
                                 {% endfor %}
-                            </ul>
-
-                            <p><a href="/news">Browse all news articles</a></p>
-
-
+                            </ol>
                         </div>
-                        <div class="govuk-grid-column-one-half">
+                        <div class="govuk-grid-column-one-half homepage-campaign-box">
+                            {# <h2 class="govuk-heading-m">{{ homepageContent.video.title is defined ? homepageContent.video.title : "Learn about CCS" }}</h2> #}
+                            <div class= "homepage-campaign-box-content">
+                                <h2 class="govuk-heading-xl">{{ homepageContent.campaign.title is defined and homepageContent.campaign.title is not empty  ? homepageContent.campaign.title : "Digital brochure 2024-2025: Your buying decisions can make a difference" }}</h2>
 
-                            <h2 class="govuk-heading-m">{{ homepageContent.video.title is defined ? homepageContent.video.title : "Learn about CCS" }}</h2>
+                                <p>{{ homepageContent.campaign.description is defined and homepageContent.campaign.description is not empty ? homepageContent.campaign.description  : "Discover procurement guidance, customer case studies and how to access our agreements" }}</p>
 
-                            <p class="responsive-video widescreen">
-                                <iframe title="{{ homepageContent.video.video_caption is defined ? homepageContent.video.video_caption : 'An overview of CCS in 30 seconds' }}" width="560" height="315" src="{{homepageContent.video.video_link is defined ? homepageContent.video.video_link : 'https://www.youtube-nocookie.com/embed/_p61ZX4zQHU' }}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </p>
-                            <p>
-                                <a href=" {{ homepageContent.video.link_url is defined ? homepageContent.video.link_url : '/buy-and-supply/' }}">
-                                {{ homepageContent.video.link_text is defined ?
-                                 homepageContent.video.link_text : "Browse all help and support guides" }}
-                                </a>
-                            </p>
-
+                                <a class="govuk-button govuk-caption-button" href="{{ homepageContent.campaign.button_link is defined and homepageContent.campaign.button_link is not empty ? homepageContent.campaign.button_link : "downloadable-resource/request/30384/commercial-agreements-digital-brochure" }}">{{ homepageContent.campaign.button_text is defined and homepageContent.campaign.button_text is not empty ? homepageContent.campaign.button_text : "Download our digital brochure" }}</a>
+                            </div>
                         </div>
                     </div>
+
+                    <p class="homepage-browse-all"><a href="/news">Browse all news articles</a></p>
+
                 </div>
-            </div>
-
-
+                 <div class="glossary-box-container">
+                 <div class="glossary-box-background"></div>
+                    <div class="glossary-box">
+                            <h3 class="govuk-heading-m">Glossary</h3>
+                            <p>We understand procurement can be confusing. Use our glossary to learn about common public procurement terms and abbreviations.</p>
+                            <p><a href="/glossary">Read the glossary</a></p>
+                    </div>
+                </div>
         </main>
+       
     </div>
 
 <script>
 pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'homepage'});
 
-var searchSupFormX = document.querySelector('.search-supp').getBoundingClientRect().right;
-var captionTextX = document.querySelector('.govuk-hero-homepage-caption-container').getBoundingClientRect().left;
-var mainHomeWrapper = document.querySelector('.govuk-home-main-wrapper');
+var newsItems = document.querySelectorAll('.home-news-item-truncate');
 
-var mainContentWidth = searchSupFormX - captionTextX;
+newsItems.forEach(function (item) {
+    var heading = item.querySelector(".homepage-news-title-truncate a");
+    var summary = item.querySelector(".homepage-truncate-overflow");
 
-mainHomeWrapper.style.width = mainContentWidth + "px";
-mainHomeWrapper.style.margin = "auto";
-mainHomeWrapper.style.marginLeft = captionTextX + "px";
+    truncatedContent = truncate(heading.innerText, summary.innerText);
+
+    heading.innerText = truncatedContent["truncatedHeading"];
+    summary.innerText = truncatedContent["truncatedSummary"];
+})
+
+function truncate(heading, summary) {
+    var newsContent = {
+        "truncatedHeading": heading,
+        "truncatedSummary": summary
+    };
+
+   if (heading.length > 44 ) {
+        newsContent["truncatedHeading"] = heading.substring(0, 44) + '...';
+   } 
+
+   if (summary.length > 5) {
+      newsContent["truncatedSummary"] = summary.substring(0, 92) + '...';
+   }
+
+   return newsContent;
+    
+};
 
 
 </script>

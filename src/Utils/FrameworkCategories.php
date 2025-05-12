@@ -54,6 +54,35 @@ class FrameworkCategories
         return self::loadConfig();
     }
 
+    /**
+     * Return amounts of pillars
+     *
+     * @return int
+     */
+    public static function getAllPillarSize(): int
+    {
+        return count(self::loadConfig()["pillars"]);
+    }
+
+    /**
+     * Return amounts of categories
+     *
+     * @return int
+     */
+    public static function getAllCategorySize(): int
+    {
+        $amount = 0;
+        $config = self::loadConfig();
+
+        foreach ($config['pillars'] as $pillar) {
+            foreach ($pillar['categories'] as $category) {
+                $amount++;
+            }
+        }
+
+        return $amount;
+    }
+
 
     /**
      * Return array of categories for a pillar (category name => category URL slug)

@@ -57,6 +57,13 @@
 
     }
 
+    @include govuk-media-query($until: 769) {
+
+        display: none;
+        visibility: hidden;
+
+    }
+
 }
 
 .global-navigation[aria-hidden="false"] {
@@ -286,12 +293,6 @@
     // When link is focussed, hide the default underline since the
     // box shadow adds the "underline"
     outline: $govuk-focus-width solid transparent;
-}
-
-.nav-list__link.nav-list__link:active {
-
-    color: white;
-
 }
 
 .nav-list__link.nav-list__link + .nav-list__link.nav-list__link {

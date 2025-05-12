@@ -14,3 +14,16 @@
   border-bottom: 1px solid #b1b4b6;
   margin-bottom: 2rem;
 }
+
+.govuk-list-upcoming > li:first-of-type {
+      border-top: .0625rem solid #E1E1E1;
+      padding-top: 1.25rem;
+}
+
+.govuk-list-upcoming > li:last-child {
+    border-bottom: .0625rem solid #E1E1E1;
+}
+
+.upcoming-type-wrapper {
+  margin-bottom: 50px;
+}
