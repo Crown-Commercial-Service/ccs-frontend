@@ -1,6 +1,6 @@
 <div class="govuk-width-container">
-     <div class="govuk-grid-column-three-quarters">
-                        <ul class="how-to-buy-list">
+     <div class="govuk-grid-column-full-width">
+                        <ul class="how-to-buy-list {{component.apollos_apollos_apollos|length == 2 or component.apollos_apollos_apollos|length == 5 ? 'how-to-buy-no-justify' : ""}}">
                         {% if component.apollos_apollos_apollos|length > 0 %}
                         {% for apollo in component.apollos_apollos_apollos %}
                             <li class="apollo-card-old how-to-buy-list__item">

@@ -182,7 +182,7 @@
         </span>
                                                             </h2>
                                                         </div>
-                                                        <div id="accordion-default-content-{{ loop.index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ loop.index }}">
+                                                        <div id="accordion-default-content-{{ loop.index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ loop.index }}" role="region">
 
                                                             {# Start of WYSIWYG content #}
                                                             <div class="wysiwyg-content">
@@ -271,7 +271,7 @@
                                                         <ul class="govuk-list govuk-error-summary__list">
                                                         {% for errorType in formErrors %}
                                                             {% for error in errorType.errors %}
-                                                                <a href={{errorType.link}}><li>{{error}}</li></a>
+                                                                <li><a href={{errorType.link}}>{{error}}</li></a>
                                                             {% endfor %}
                                                         {% endfor %}
                                                         </ul>
@@ -329,7 +329,7 @@
                                                             {% endfor %}                            
                                                         {% endif %}   
 
-                                                        <input class="govuk-input pardot-field {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="jobTitle" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="organization-title"/>
+                                                        <input class="govuk-input pardot-field {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="jobTitle" maxlength="100" name="jobTitle" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="organization-title"/>
                                                     </div>
 
                                                     <div class="govuk-form-group {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
@@ -446,7 +446,7 @@
                                                                     Please give us as much detail as possible, including the agreement name and number
                                                                 {% endif %}
                                                             </div>
-                                                            <textarea class="govuk-textarea" id="form-more-detail" style="{{formErrors.descriptionErr is defined and formErrors.descriptionErr.errors|length > 0 ? 'border: 4px solid #b10e1e' : null }}" id="description" name="description" rows="5" aria-describedby="form-more-detail-hint">{{formErrors is defined ? formData.description}}</textarea>
+                                                            <textarea class="govuk-textarea" id="form-more-detail" id="description" name="description" rows="5" aria-describedby="form-more-detail-hint">{{formErrors is defined ? formData.description}}</textarea>
                                                         </div>
                                                     {% endif %}
 
@@ -458,7 +458,7 @@
                                                                 </legend>
                                                                 <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
                                                                     <div class="govuk-radios__item">
-                                                                        <input class="govuk-radios__input" id="callback-1" name="00Nb0000009IXEg" type="radio" value="Yes" aria-controls="conditional-callback-1" aria-expanded="true" {{formData.callback is defined and formData.callback == 'Yes' ? 'checked' }}>
+                                                                        <input class="govuk-radios__input" id="callback-1" name="00Nb0000009IXEg" type="radio" value="Yes" role="region" data-aria-controls="conditional-callback-1" aria-expanded="true" {{formData.callback is defined and formData.callback == 'Yes' ? 'checked' }}>
                                                                         <label class="govuk-label govuk-radios__label" for="callback-1">Yes</label>
                                                                     </div>
                                                                     <div class="govuk-radios__conditional" id="conditional-callback-1">
@@ -482,7 +482,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="govuk-radios__item">
-                                                                        <input class="govuk-radios__input" id="callback-2" name="00Nb0000009IXEg" type="radio" value="No" data-aria-controls="conditional-callback-2" {{formData.callback is defined and formData.callback == 'No' ? 'checked' }}>
+                                                                        <input class="govuk-radios__input" id="callback-2" name="00Nb0000009IXEg" type="radio" value="No"{{formData.callback is defined and formData.callback == 'No' ? 'checked' }}>
                                                                         <label class="govuk-label govuk-radios__label" for="callback-2">No</label>
                                                                     </div>
                                                                 </div>
@@ -558,7 +558,7 @@
                                                             <div class="apollo-call-to-action apollo-call-to-action--aggregation">
                                                                 <h3 class="govuk-heading-m">{{ option_cards.first_option_card.title }}</h3>
                                                                 <p>{{ option_cards.first_option_card.description }}</p>
-                                                                <p><a href="{{option_cards.first_option_card.link_url}}">{{ option_cards.first_option_card.link }}<span class="visuallyhidden">{{ option_cards.first_option_card.title }}</span></a>
+                                                                <p><a href="{{option_cards.first_option_card.link_url}}">{{ option_cards.first_option_card.link }}</a>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -567,7 +567,7 @@
                                                             <div class="apollo-call-to-action apollo-call-to-action--help">
                                                                 <h3 class="govuk-heading-m">{{ option_cards.second_option_card.title }}</h3>
                                                                 <p>{{ option_cards.second_option_card.description }}</p>
-                                                                <p><a href="{{option_cards.second_option_card.link_url}}">{{ option_cards.second_option_card.link }}<span class="visuallyhidden">{{ option_cards.second_option_card.title }}</span></a>
+                                                                <p><a href="{{option_cards.second_option_card.link_url}}">{{ option_cards.second_option_card.link }}</a>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -612,4 +612,5 @@
 {% block nonblocking_javascript %}
     {{ parent() }}
     <script src="/assets/scripts/pardot.js"></script>
+    <script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.3"></script>
 {% endblock %}

@@ -18,9 +18,15 @@
 
         display: flex;
         flex-flow: row wrap;
-
     }
 
+}
+
+.card-pillars {
+
+    @include govuk-media-query($from: desktop) {
+            justify-content: center;
+        }
 }
 
 
@@ -169,23 +175,11 @@
     background: white;
     border: 1px solid #979797;
     border-width: 0 1px 1px 1px;
+    border-top: 6px solid $ccs-colour;
+    border-top: 6px solid var(--sub-color);
     padding: govuk-px-to-rem(30) govuk-px-to-rem(25) govuk-px-to-rem(30) govuk-px-to-rem(25);
-
     position: relative;
-
-    &:before {
-        
-        content: " ";
-        display: block;
-        position: absolute;
-        top: -5px;
-        left: -1px;
-        right: -1px;
-        height: 5px;
-        background-color: $ccs-colour;
-        background-color: var(--sub-color);
-        
-    }
+    overflow: auto;
 
     > p {
         margin-bottom: 0;

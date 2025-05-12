@@ -3,22 +3,22 @@
 
         {% if notFromWordpress is not defined %}
             <picture class="hero__picture">
-                <source media="(max-width: 768px)" srcset="{{ image.byName('medium_large') }}">
                 <source media="(min-width: 1024px)" srcset="{{ image.byName('large') }}">
                 <source media="(min-width: 1920px)" srcset="{{ image.byName('full') }}">
                 {# Fallback for browsers that don't support the picture element #}
                 <img src="{{ image.byName('medium_large') }}"
+                    fetchpriority="high"
                     role="presentation"
                     class="hero__image"
-                    loading="lazy"
                     data-object-fit="cover"
                     data-object-position="right center"
-                    alt="{{image.alt}}">
+                    alt="{{image.alt}}"
+                    width="600" height="208">
         </picture>
         {% else %}
-            <picture class="hero__picture">
+            <picture class="hero__picture {{newsletter == true ? 'hero__picture_newsletter' : ''}}">
                 <img src="{{ image }}"
-                    role="presentation" class="hero__image" loading="lazy" data-object-fit="cover" data-object-position="right center" alt="">
+                    role="presentation" class="hero__image" data-object-fit="cover" data-object-position="right center" alt="" width="600" height="208">
             </picture>
         {% endif %}
 

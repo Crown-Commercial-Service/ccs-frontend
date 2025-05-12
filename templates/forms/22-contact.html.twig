@@ -41,7 +41,7 @@
                 <div class="govuk-grid-column-two-thirds">
 
                     <h1 class="govuk-heading-xl page-title">Contact CCS</h1>
-                    <p class="govuk-body-l">You can use the contact form below to ask a question, give us feedback or make a complaint.</p>
+                    <p class="govuk-body-l">You can use the contact form below to ask a question or give us feedback</p>
 
                     <form class="govuk-!-width-three-quarters pardot-submit" action="/contact/submit" method="POST" novalidate data-evt-type='contact_form' {{ formErrors is defined ? "data-evt-state='error'" }} enctype="multipart/form-data">
 
@@ -63,16 +63,12 @@
                                 <div id="how-contacted-conditional-hint" class="govuk-hint">Select one option.</div>
                                 <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="origin" type="radio" value="Website - Question" data-aria-controls="conditional-how-contacted-conditional-1" checked="">
+                                        <input class="govuk-radios__input" id="how-contacted-conditional-1" name="origin" type="radio" value="Website - Question" checked="">
                                         <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-1">Ask a question</label>
                                     </div>
                                     <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-2" name="origin" type="radio" value="Website - Feedback" data-aria-controls="conditional-how-contacted-conditional-2" {{formData.enquiryType is defined and formData.enquiryType == "Website - Feedback" ? 'checked' }}>
+                                        <input class="govuk-radios__input" id="how-contacted-conditional-2" name="origin" type="radio" value="Website - Feedback" {{formData.enquiryType is defined and formData.enquiryType == "Website - Feedback" ? 'checked' }}>
                                         <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">Feedback</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="how-contacted-conditional-3" name="origin" type="radio" value="Website - Complaint" aria-controls="conditional-how-contacted-conditional-3" aria-expanded="true" {{formData.enquiryType is defined and formData.enquiryType == "Website - Complaint" ? 'checked' }}>
-                                        <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-3">Complaint</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -110,7 +106,7 @@
                             </div>
 
                             <div class="govuk-form-group {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
-                                <label class="govuk-label" for="00Nb0000009IXEs">
+                                <label class="govuk-label" for="jobTitle">
                                     Job title </label>
 
                                 {% if formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 %}
@@ -121,7 +117,7 @@
                                     {% endfor %}                           
                                 {% endif %} 
 
-                                <input class="govuk-input {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="organization-title"/>
+                                <input class="govuk-input {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="jobTitle" maxlength="100" name="jobTitle" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="organization-title"/>
                             </div>
 
                             <div class="govuk-form-group {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
@@ -155,10 +151,6 @@
                                 <input class="govuk-input {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="phone" maxlength="20" name="phone" size="20" type="text" value="{{formErrors is defined ? formData.phone}}" autocomplete="tel" required/>
                             </div>
 
-                            <div class="govuk-visually-hidden" id="complaintOptions">
-                                {% include 'forms/_complaint_form_options.html.twig' %}
-                            </div>
-
                             <div class="govuk-form-group" id="callbackOptions">
                                 <fieldset class="govuk-fieldset" aria-describedby="callback">
                                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
@@ -166,7 +158,7 @@
                                     </legend>
                                     <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="callback-1" name="00Nb0000009IXEg" type="radio" value="Yes" aria-controls="conditional-callback-1" aria-expanded="true" {{formData.callback is defined and formData.callback == 'Yes' ? 'checked' }}>
+                                            <input class="govuk-radios__input" id="callback-1" name="00Nb0000009IXEg" type="radio" value="Yes" data-aria-controls="conditional-callback-1" aria-expanded="true" role="region" {{formData.callback is defined and formData.callback == 'Yes' ? 'checked' }}>
                                             <label class="govuk-label govuk-radios__label" for="callback-1">Yes</label>
                                         </div>
                                         <div class="govuk-radios__conditional" id="conditional-callback-1">
@@ -190,7 +182,7 @@
                                             </div>
                                         </div>
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="callback-2" name="00Nb0000009IXEg" type="radio" value="No" data-aria-controls="conditional-callback-2" {{formData.callback is defined and formData.callback == 'No' ? 'checked' }}>
+                                            <input class="govuk-radios__input" id="callback-2" name="00Nb0000009IXEg" type="radio" value="No" {{formData.callback is defined and formData.callback == 'No' ? 'checked' }}>
                                             <label class="govuk-label govuk-radios__label" for="callback-2">No</label>
                                         </div>
                                     </div>
@@ -199,7 +191,6 @@
 
                             <div class="govuk-form-group {{formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                                 <label id="more-detail-label" class="govuk-label" for="more-detail">Provide more details</label>
-                                <h2 class="govuk-heading-m govuk-visually-hidden" id="complaintTitle">Tell us about your complaint</h2>
 
                                 {% if formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 %}
                                     {% for error in formErrors.moreDetailErr.errors %}
@@ -211,12 +202,6 @@
 
                                 <div id="more-detail-hint" class="govuk-hint">Tell us more about your question or describe the problem you are having. Include specific details such as the agreement RM number (RMXXXX) or the name of the digital platform you are using. 
                                         <br /><br />Do not include personal or financial information, like your credit card details.</div>
-                                <div id="complaintHint" class="govuk-hint govuk-visually-hidden">Do not include: 
-                                    <ul>
-                                        <li>personal or financial details, like your credit card details</li>
-                                        <li>any data that could potentially identify a specific individual, such as names</li>
-                                    </ul>
-                                </div>
                                 <textarea maxlength="3000" class="govuk-textarea" style="margin-bottom: 0px; {{formErrors.moreDetailErr is defined and formErrors.moreDetailErr.errors|length > 0 ? 'border: 4px solid #b10e1e' : null }}" id="more-detail" name="more-detail" rows="10" aria-describedby="more-detail-hint" required>{{formErrors is defined ? formData.moreDetail}}</textarea>
                                 <p class="govuk-hint">You can enter up to 3000 characters</p>
                             </div>
@@ -252,7 +237,7 @@
                                     </legend>
                                     <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="contactedBefore-1" name="contactedBefore" type="radio" value="Yes" aria-controls="conditional-contactedBefore-1" aria-expanded="true" {{formData.contactedBefore is defined and formData.contactedBefore == "Yes" ? 'checked' }}>
+                                            <input class="govuk-radios__input" id="contactedBefore-1" name="contactedBefore" type="radio" value="Yes" role="region" data-aria-controls="conditional-contactedBefore-1" aria-expanded="true" {{formData.contactedBefore is defined and formData.contactedBefore == "Yes" ? 'checked' }}>
                                             <label class="govuk-label govuk-radios__label" for="contactedBefore-1">Yes</label>
                                         </div>
                                         <div class="govuk-radios__conditional" id="conditional-contactedBefore-1">
@@ -263,7 +248,7 @@
                                             </div>
                                         </div>
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="contactedBefore-2" name="contactedBefore" type="radio" value="No" data-aria-controls="conditional-contactedBefore-2" {{formData.contactedBefore is defined and formData.contactedBefore == "No" ? 'checked' }}>
+                                            <input class="govuk-radios__input" id="contactedBefore-2" name="contactedBefore" type="radio" value="No" {{formData.contactedBefore is defined and formData.contactedBefore == "No" ? 'checked' }}>
                                             <label class="govuk-label govuk-radios__label" for="contactedBefore-2">No</label>
                                         </div>
                                     </div>
@@ -291,6 +276,7 @@
                             <br>
                             Telephone: <a href="tel:03454102222">0345 410 2222</a>
                         </p>
+                        <p> When calling our customer service centre, be ready to give: your name, job title, organisation, email and any relevant framework numbers or departments.</p>
 
                         <p>{{cscMessage | raw}}</p>
                     </div>
@@ -303,9 +289,6 @@
                         const customerTypeCheckboxes        = document.getElementsByName("customerType");
                         const contactWayCheckboxes          = document.getElementsByName("contactWay");
                         const formSubmitButton              = document.getElementById("submit");
-
-                        const hideForComplaint = ["callbackOptions", "more-detail-label", "more-detail-hint"];
-                        const showForComplaint = ["complaintOptions", "complaintTitle", "complaintHint"];
 
                         dataCollectionFieldForSalesforce = document.getElementById("salesforce-textarea");
 
@@ -322,10 +305,6 @@
                         document.querySelectorAll('input[name="origin"]').forEach((option) => {
                             option.addEventListener("change", function(event) {
                                 switch(event.target.value) {
-                                    case 'Website - Complaint':
-                                        toggleComplaintForm(true);
-                                        document.getElementById("subject").value = "Website - Complaint";
-                                        break;
                                     case 'Website - Feedback':
                                         toggleComplaintForm(false);
                                         document.getElementById("subject").value = "Website - Feedback";
@@ -352,19 +331,6 @@
 
                         }, false);
 
-
-                        function toggleComplaintForm(option) {
-                            setPhoneTextOptional(!option);
-                            const elementsToHide = option ? hideForComplaint : showForComplaint;
-                            const elementsToShow = option ? showForComplaint : hideForComplaint;
-                            elementsToHide.forEach(id => {
-                                document.getElementById(id).classList.add('govuk-visually-hidden');
-                            });
-                            elementsToShow.forEach(id => {
-                                document.getElementById(id).classList.remove('govuk-visually-hidden');
-                            });
-                        }
-
                         function setPhoneTextOptional(toggle){
                             if(toggle){
                                 document.getElementById("phone-label").textContent = "Telephone number (optional)";
@@ -385,11 +351,6 @@
                             return "";
                         }
 
-                        if ('{{formType}}' == 'complaint'){
-                            document.getElementById("how-contacted-conditional-3").checked = true;
-                            toggleComplaintForm(true);
-                        }
-
                         window.onload = function() {
                             if (document.getElementById("how-contacted-conditional-3").checked) {
                                 toggleComplaintForm(true);
@@ -402,13 +363,13 @@
 
                 <div class="govuk-grid-column-one-third">
                     <aside class="aside">
+                    
+                        {% include '/libraries/_helpful_links.html.twig' %}
+
                         <div class="apollo-enclosure">
-                            <h2 class="aside__heading">Helpful Links</h2>
-                            <ul class="govuk-list">
-                                <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/help-for-new-buyers-and-suppliers/start-supplying/">Help for new buyers & suppliers</a></li>
-                                <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/glossary">Help to understand our terminology</a></li>
-                                <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/making-responsible-decisions/">Help with sustainability & social value</a></li>
-                            </ul>
+                            <h2 class="aside__heading">Make a complaint</h2>
+                            <p>We're sorry you are unhappy with the service you have received from us. Let us know what went wrong so we can try to fix the problem.</a></p>
+                            <p><a href="/complaint{{rmNumber is defined and rmNumber is not null ? "?agreement="~ rmNumber : " " }}">I want to make a complaint.</a></p>
                         </div>
 
                         <div class="apollo-enclosure">

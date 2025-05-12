@@ -58,11 +58,11 @@ class NewsController extends AbstractController
             'digitalDownload'   => $this->formatIdFromObject($this->api->getAllTerms('content_type')),
         ];
 
-        $categoriesOption       =   $this->converArrayToStringForWordpress($request->query->get('categories', null));
-        $downloadableOption     =   $this->converArrayToStringForWordpress($request->query->get('downloadable', null));
+        $categoriesOption       =   ControllerHelper::converArrayToStringForWordpress($request->query->get('categories', null), null);
+        $downloadableOption     =   ControllerHelper::converArrayToStringForWordpress($request->query->get('digitalDownload', null), null);
 
-        $sectorsOption          =   $this->converArrayToStringForWordpress($request->query->get('sectors', null));
-        $productsServicesOption =   $this->converArrayToStringForWordpress($request->query->get('products_services', null));
+        $sectorsOption          =   ControllerHelper::converArrayToStringForWordpress($request->query->get('sectors', null), null);
+        $productsServicesOption =   ControllerHelper::converArrayToStringForWordpress($request->query->get('products_services', null), null);
 
 
         $options = [
@@ -145,15 +145,6 @@ class NewsController extends AbstractController
         return implode(',', $returnArray);
     }
 
-    private function converArrayToStringForWordpress($selectedArray)
-    {
-        if ($selectedArray == null) {
-            return null;
-        }
-        $dada = (array) $selectedArray;
-        return implode(',', (array) $selectedArray);
-    }
-
     private function prepareOptionForWordpress(array $options, array $defaultOptions, $request)
     {
 
@@ -171,7 +162,7 @@ class NewsController extends AbstractController
             'whitepaper',
             'webinar',
             'digitalBrochure',
-            'downloadable'
+            'digitalDownload'
         );
 
         foreach ($checkType as $each) {

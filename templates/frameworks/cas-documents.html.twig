@@ -12,7 +12,7 @@
                     <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Buyer guides</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
                 <p>Before buying from this agreement you should read the buyer guide and how to use contractual documents.</p>
                 <p>The buyer guide will help you understand how the agreement works and what you can or can’t use the agreement for.</p>
                 <p>This section might also include further guides or lists you will need to look at and make selections from, as well as previous webinar slides and Q&A scripts from sessions with buyers and suppliers.</p>
@@ -28,7 +28,7 @@
                     <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Core terms and conditions</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
                 <p>The core terms form part of the framework and call-off contracts and must be used on every contract. They cannot be changed.</p>
                 <p>The core terms are CCS’s standard commercial terms. They govern the supplier’s relationship with CCS and every customer who has a call-off contract.</p>
                 <div class="wysiwyg-content">{{ framework.content.core_terms_conditions|raw }}</div>
@@ -43,7 +43,7 @@
                     <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Call-off order form</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
                 <p>When a customer decides to buy from a supplier, they’ll complete an order form with important information about the call-off contract.</p>
                 <p>Customers can change any of their chosen schedules by adding special terms in the call-off order form.</p>
 
@@ -75,7 +75,7 @@
                     <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Joint schedules</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
                 {% for jointSchedule in framework.content.joint_schedules %}
                     <p class="joint-schedule-title"><a onclick="fileDownload('{{ jointSchedule.joint_schedules_document }}', '{{ jointSchedule.joint_schedules_document_name }}', '{{ jointSchedule.joint_schedules_file_size }}');" href={{ jointSchedule.joint_schedule_document}}><strong>{{ jointSchedule.joint_schedule_document_name }}</strong></a></p>
                     <p class="joint-schedule-title">{{ jointSchedule.joint_schedule_document_type}}</p>
@@ -93,7 +93,7 @@
                     <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Call-off schedules</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
                 
                 <p>Call-off schedules are used when suppliers sell their goods or services to customers.</p>
                 <p>You can choose which schedules to include and whether to edit these template schedules when they form a call-off contract.</p>
@@ -115,7 +115,7 @@
                     <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Framework schedules</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
             
                 <p>Framework schedules are used by CCS to set up the agreement with suppliers.</p>
 
@@ -135,7 +135,7 @@
                     <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Templates</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
                 <div class="wysiwyg-content">{{ framework.content.templates|raw }}</div>
             </div>
         </div>

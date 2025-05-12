@@ -11,7 +11,7 @@
 
 {% block body %}
 
-    {% include '_components/hero.html.twig' with {'image': '/assets/images/Glossary-CCS.jpg', 'heading': 'Search our glossary for common procurement terms', 'notFromWordpress': 'true', 'cta_label': '', 'content': '', 'cta_label': '', 'cta_destination': ''} %}
+    {% include '_components/hero.html.twig' with {'image': '/assets/images/Glossary-CCS.jpg', 'heading': 'Search our glossary for common procurement terms', 'notFromWordpress': 'true', 'cta_label': '', 'content': '', 'cta_label': '', 'cta_destination': '', 'newsletter': false} %}
 
     <div class="govuk-width-container">
         <div class="govuk-phase-banner">
@@ -93,11 +93,11 @@
                                 <div class="govuk-accordion__section govuk-accordion__section--expanded">
                                     <div class="govuk-accordion__section-header">
                                         <h2 class="govuk-accordion__section-heading">
-                                            <span class="govuk-accordion__section-button" id="accordion-default-heading-1">{{ key }}</span>
+                                            <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ loop.index }}">{{ key }}</span>
                                         </h2>
                                     </div>
                                 
-                                    <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                                    <div id="accordion-default-content-{{ loop.index }}" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ loop.index }}">
                                         {% for glossary in value %}
                                             <h3 id='{{ glossary.term | lower |replace({' ': '_'}) }}'>{{ glossary.term }}</h3>
                                             <div class="wysiwyg-content" style="padding-left: 20px;">

@@ -1,8 +1,37 @@
 ---
 pillars:
-  - name: 'Buildings'
-    db_value: 'Buildings'
-    slug: 'buildings'
+  - name: 'Corporate'
+    db_value: 'Corporate'
+    slug: 'corporate'
+
+    categories:
+      - name: 'Financial Services'
+        db_value: 'Financial Services'
+        slug: 'financial-services'
+
+      - name: 'Fleet'
+        db_value: 'Fleet'
+        slug: 'fleet'
+
+      - name: 'HR and Workforce Services'
+        db_value: 'HR and Workforce Services'
+        slug: 'hr-and-workforce-services'
+
+      - name: 'Outsourced Services'
+        db_value: 'Outsourced Services'
+        slug: 'outsourced-services'
+
+      - name: 'Professional Services'
+        db_value: 'Professional Services'
+        slug: 'professional-services'
+
+      - name: 'Travel, Accommodation and Venues'
+        db_value: 'Travel, Accommodation and Venues'
+        slug: 'travel-accommodation-and-Venues'
+
+  - name: 'Estates'
+    db_value: 'Estates'
+    slug: 'estates'
 
     categories:
       - name: 'Construction'
@@ -13,66 +42,13 @@ pillars:
         db_value: 'Energy'
         slug: 'energy'
 
-      - name: 'Workplace'
-        db_value: 'Workplace'
-        slug: 'workplace'
+      - name: 'Estates Support Services'
+        db_value: 'Estates Support Services'
+        slug: 'estates-support-services'
 
-      - name: 'Estates Decarbonisation'
-        db_value: 'Estates Decarbonisation'
-        slug: 'estates-decarbonisation'
-
-
-  - name: 'Corporate Solutions'
-    db_value: 'Corporate Solutions'
-    slug: 'corporate-solutions'
-
-    categories:
-
-      - name: 'Document Management & Logistics'
-        db_value: 'Document Management & Logistics'
-        slug: 'document-management-logistics'
-
-      - name: 'Financial Services'
-        db_value: 'Financial Services'
-        slug: 'financial-services'
-
-      - name: 'Fleet'
-        db_value: 'Fleet'
-        slug: 'fleet'
-
-      - name: 'Marcomms & Research'
-        db_value: 'Marcomms & Research'
-        slug: 'marcomms-research'
-
-      - name: 'Travel, Transport, Accommodation and Venues'
-        db_value: 'Travel, Transport, Accommodation and Venues'
-        slug: 'travel-transport-accommodation-and-venues'
-
-  - name: 'People'
-    db_value: 'People'
-    slug: 'people'
-
-    categories:
-      - name: 'Contact Centres'
-        db_value: 'Contact Centres'
-        slug: 'contact-centres'
-
-      - name: 'People Services'
-        db_value: 'People Services'
-        slug: 'people-services'
-
-      - name: 'Professional Services'
-        db_value: 'Professional Services'
-        slug: 'professional-services'
-
-      - name: 'Workforce Health & Education'
-        db_value: 'Workforce Health & Education'
-        slug: 'workforce-health-education'
-
-      - name: 'PSR & Permanent Recruitment'
-        db_value: 'PSR & Permanent Recruitment'
-        slug: 'psr-permanent-recruitment'
-
+      - name: 'Facilities Management'
+        db_value: 'Facilities Management'
+        slug: 'facilities-management'
 
   - name: 'Technology'
     db_value: 'Technology'
@@ -82,28 +58,19 @@ pillars:
       - name: 'Cloud and Hosting'
         db_value: 'Cloud and Hosting'
         slug: 'cloud-and-hosting'
+
+      - name: 'Digital Capability and Delivery'
+        db_value: 'Digital Capability and Delivery'
+        slug: 'digital-capability-and-delivery'
         
-      - name: 'Digital Specialists'
-        db_value: 'Digital Specialists'
-        slug: 'digital-specialists'
+      - name: 'Network Services'
+        db_value: 'Network Services'
+        slug: 'network-services'
 
-      - name: 'Network Solutions'
-        db_value: 'Network Solutions'
-        slug: 'network-solutions'
+      - name: 'Software and Hardware'  
+        db_value: 'Software and Hardware'
+        slug: 'software-and-hardware'
 
-      - name: 'Technology Solutions & Outcomes'
-        db_value: 'Technology Solutions & Outcomes'
-        slug: 'technology-solutions-outcomes'
-
-      - name: 'Technology Products & Services'
-        db_value: 'Technology Products & Services'
-        slug: 'technology-products-services'
-
-  - name: 'General Common Goods and Services'
-    db_value: 'General Common Goods and Services'
-    slug: 'general-common-goods-and-services'
-
-    categories:
-      - name: 'Below Threshold'
-        db_value: 'Below Threshold'
-        slug: 'below-threshold'
+      - name: 'Technology Services'  
+        db_value: 'Technology Services'
+        slug: 'technology-services'

@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block body %}
-    {% include '_components/hero.html.twig' with {'image': '/assets/images/CCS-news.jpg', 'heading': 'Explore our latest news', 'notFromWordpress': 'true', 'H1title': 'true', 'content': '', 'cta_label': 'Subscribe to customer newsletter', 'cta_destination': '/newsletter', 'news_page_banner': 'true'} %}
+    {% include '_components/hero.html.twig' with {'image': '/assets/images/CCS-news_600.jpg', 'heading': 'Explore our latest news', 'notFromWordpress': 'true', 'H1title': 'true', 'content': '', 'cta_label': 'Subscribe to customer newsletter', 'cta_destination': '/newsletter', 'news_page_banner': 'true', 'newsletter': false} %}
 
     <div class="govuk-width-container">
 
@@ -39,7 +39,7 @@
         </div>
 
         <main id="main-content" role="main"  class="govuk-main-wrapper">
-            
+
             <div class="govuk-grid-row" >
                 <div class="govuk-grid-column-one-quarter">
 
@@ -52,139 +52,154 @@
                                 <a href={{ path('news_list') }} class="govuk-link"> Clear filters </a>
                             </div>
                         </div>
+
                         <button class="govuk-button" data-module="govuk-button" v-show="!javascriptVersion">
                             Filter
                         </button>
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_article">
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section">
-                                <div class="govuk-accordion__section-header">
-                                    <h2 class="govuk-accordion__section-heading">
-                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-categories">
-                                            Type of article
-                                        </span>
-                                    </h2>
-                                </div>
-                               
-                                <div id="audience-tag-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-for-categories">
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input v-on:change=fetchAPIData(null,null) v-model="checkedCategories" name="allCategories" value="allCategories" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allCategories" type="checkbox" {{ filters.categories is not defined ? 'checked' }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="allCategories">
-                                            View all
-                                        </label>
+
+                        <fieldset class="govuk-fieldset" aria-describedby="filter_article">
+                            <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_article">
+                                <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section">
+                                    <div class="govuk-accordion__section-header">
+                                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                            <h2 class="govuk-accordion__section-heading">
+                                                <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-categories">
+                                                    Type of article
+                                                </span>
+                                            </h2>
+                                        </legend>
                                     </div>
-                                    {% if categoriesFilters is not empty %}
-                                        {% for item in categoriesFilters|sort %}
-                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedCategories" name="categories[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in categoriesForTwig ? 'checked' }}>
-                                                <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
-                                                    {{ item.name }}
-                                                </label>
-                                            </div>
-                                        {% endfor %}
-                                    {% endif %}
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input v-on:change=fetchAPIData(whitepaper,null) v-model="whitepaper" name="whitepaper" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="whitepaper" type="checkbox" {{ filters.whitepaper is defined and filters.whitepaper is not null  ? 'checked' }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="whitepaper">
-                                            Whitepaper
-                                        </label>
-                                    </div>
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input v-on:change=fetchAPIData(webinar,null) v-model="webinar" name="webinar" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="webinar" type="checkbox" {{ filters.webinar is defined and filters.webinar is not null  ? 'checked' }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="webinar">
-                                            Webinar
-                                        </label>
-                                    </div>
-                                    {# <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input v-on:change=fetchAPIData(digitalBrochure,null) v-model="digitalBrochure" name="digitalBrochure" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="digitalBrochure" type="checkbox" {{ filters.digitalBrochure is defined and filters.digitalBrochure is not null  ? 'checked' }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="digitalBrochure">
-                                            Digital brochure
-                                        </label>
-                                    </div> #}
-
-                                    {% set tempDigitalDownload = [] %}
-
-                                    {% if contentTypeFilters is not empty %}
-                                        {% for item in contentTypeFilters|sort %}
-
-                                            {% set tempDigitalDownload = tempDigitalDownload|merge([item.id]) %}
-
-                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedDigitalDownload" name="downloadable[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in downloadableForTwig ? 'checked' }}>
-                                                <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
-                                                    {{ item.name }}
-                                                </label>
-                                            </div>
-                                        {% endfor %}
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_sector">
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section">
-                                <div class="govuk-accordion__section-header">
-                                    <h2 class="govuk-accordion__section-heading">
-                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-sectors">
-                                            Sectors
-                                        </span>
-                                    </h2>
-                                </div>
-                               
-                                <div id="audience-tag-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-for-sectors">
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input v-on:change=fetchAPIData(null,null) v-model="checkedSectors" name="allSectors" value="allSectors" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allSectors" type="checkbox" {{ filters.sectors is not defined or filters.sectors is null ? 'checked' }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="allSectors">
-                                            View all
-                                        </label>
-                                    </div>
-                                    {% if sectorsFilters is not empty %}
-                                        {% for item in sectorsFilters %}
-                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedSectors" name="sectors[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in sectorsForTwig ? 'checked' }}>
-                                                <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
-                                                    {{ item.name }}
-                                                </label>
-                                            </div>
-                                        {% endfor %}
-                                    {% endif %}
-                                </div>
-
                                 
-                            </div>
-                        </div>
+                                    <div id="filter_article-content-1" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-for-categories">
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            <input v-on:change=fetchAPIData(null,null) v-model="checkedCategories" name="allCategories" value="allCategories" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allCategories" type="checkbox" {{ filters.categories is not defined ? 'checked' }}>
+                                            <label class="govuk-label govuk-checkboxes__label" for="allCategories">
+                                                View all
+                                            </label>
+                                        </div>
+                                        {% if categoriesFilters is not empty %}
+                                            {% for item in categoriesFilters|sort %}
+                                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                    <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedCategories" name="categories[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in categoriesForTwig ? 'checked' }}>
+                                                    <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
+                                                        {{ item.name }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            <input v-on:change=fetchAPIData(whitepaper,null) v-model="whitepaper" name="whitepaper" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="whitepaper" type="checkbox" {{ filters.whitepaper is defined and filters.whitepaper is not null  ? 'checked' }}>
+                                            <label class="govuk-label govuk-checkboxes__label" for="whitepaper">
+                                                Whitepaper
+                                            </label>
+                                        </div>
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            <input v-on:change=fetchAPIData(webinar,null) v-model="webinar" name="webinar" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="webinar" type="checkbox" {{ filters.webinar is defined and filters.webinar is not null  ? 'checked' }}>
+                                            <label class="govuk-label govuk-checkboxes__label" for="webinar">
+                                                Webinar
+                                            </label>
+                                        </div>
+                                        {# <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            <input v-on:change=fetchAPIData(digitalBrochure,null) v-model="digitalBrochure" name="digitalBrochure" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="digitalBrochure" type="checkbox" {{ filters.digitalBrochure is defined and filters.digitalBrochure is not null  ? 'checked' }}>
+                                            <label class="govuk-label govuk-checkboxes__label" for="digitalBrochure">
+                                                Digital brochure
+                                            </label>
+                                        </div> #}
 
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_p_and_s">
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section">
-                                <div class="govuk-accordion__section-header">
-                                    <h2 class="govuk-accordion__section-heading">
-                                        <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-ps">
-                                            Products and services
-                                        </span>
-                                    </h2>
-                                </div>
-                               
-                                <div id="audience-tag-accordion-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-for-ps">
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input v-on:change=fetchAPIData(null,null) v-model="checkedProducts_services" name="allPS" value="allPS" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allPS" type="checkbox" {{ filters.products_services is not defined or filters.products_services is null ? 'checked' }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="allPS">
-                                            View all
-                                        </label>
+                                        {% set tempDigitalDownload = [] %}
+
+                                        {% if contentTypeFilters is not empty %}
+                                            {% for item in contentTypeFilters|sort %}
+
+                                                {% set tempDigitalDownload = tempDigitalDownload|merge([item.id]) %}
+
+                                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                    <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedDigitalDownload" name="digitalDownload[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in downloadableForTwig ? 'checked' }}>
+                                                    <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
+                                                        {{ item.name }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
-                                    {% if productsServicesFilters is not empty %}
-                                        {% for item in productsServicesFilters %}
-                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedProducts_services" name="PandS[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in products_servicesForTwig ? 'checked' }}>
-                                                <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
-                                                    {{ item.name }}
-                                                </label>
-                                            </div>
-                                        {% endfor %}
-                                    {% endif %}
                                 </div>
-
-                                
                             </div>
-                        </div>
+                        </fieldset>
+
+                        <fieldset class="govuk-fieldset" aria-describedby="filter_sector">
+                            <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_sector">
+                                <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section">
+                                    <div class="govuk-accordion__section-header">
+                                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                            <h2 class="govuk-accordion__section-heading">
+                                                <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-sectors">
+                                                    Sectors
+                                                </span>
+                                            </h2>
+                                        </legend>
+                                    </div>
+                                
+                                    <div id="filter_sector-content-1" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-for-sectors">
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            <input v-on:change=fetchAPIData(null,null) v-model="checkedSectors" name="allSectors" value="allSectors" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allSectors" type="checkbox" {{ filters.sectors is not defined or filters.sectors is null ? 'checked' }}>
+                                            <label class="govuk-label govuk-checkboxes__label" for="allSectors">
+                                                View all
+                                            </label>
+                                        </div>
+                                        {% if sectorsFilters is not empty %}
+                                            {% for item in sectorsFilters %}
+                                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                    <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedSectors" name="sectors[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in sectorsForTwig ? 'checked' }}>
+                                                    <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
+                                                        {{ item.name }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+
+                                    
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="govuk-fieldset" aria-describedby="filter_p_and_s">
+                            <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_p_and_s">
+                                <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section">
+                                    <div class="govuk-accordion__section-header">
+                                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                            <h2 class="govuk-accordion__section-heading">
+                                                <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-ps">
+                                                    Products and services
+                                                </span>
+                                            </h2>
+                                        </legend>
+                                    </div>
+                                
+                                    <div id="filter_p_and_s-content-1" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-for-ps">
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            <input v-on:change=fetchAPIData(null,null) v-model="checkedProducts_services" name="allPS" value="allPS" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allPS" type="checkbox" {{ filters.products_services is not defined or filters.products_services is null ? 'checked' }}>
+                                            <label class="govuk-label govuk-checkboxes__label" for="allPS">
+                                                View all
+                                            </label>
+                                        </div>
+                                        {% if productsServicesFilters is not empty %}
+                                            {% for item in productsServicesFilters %}
+                                                <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                    <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedProducts_services" name="PandS[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in products_servicesForTwig ? 'checked' }}>
+                                                    <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
+                                                        {{ item.name }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+
+                                    
+                                </div>
+                            </div>
+                        </fieldset>
+
                         <button class="govuk-button" data-module="govuk-button" v-show="!javascriptVersion">
                             Filter
                         </button>
@@ -435,7 +450,7 @@
                             </li>
 
                             <li class="pagination__item pagination__item--next" v-if="currentPage != numberOfPages">
-                                <a rel="next" v-on:click="updatePageNumber($event, nextPage)">
+                                <a href="#" rel="next" v-on:click="updatePageNumber($event, nextPage)">
                                     <span>Next</span> <span class="visuallyhidden">page</span>
                                     <span class="icon">
                                         <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"></path></svg>
@@ -736,7 +751,7 @@
                                         jsonResponse.body[i].postType = jsonResponse.body[i].acf.content_type_name;
                                         postLink = appBaseUrl+ "/downloadable-resource/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
                                         postDescription = jsonResponse.body[i].excerpt.rendered;
-                                        categoriesLink = appBaseUrl +"/news?contentType=" + jsonResponse.body[i].content_type_id;
+                                        categoriesLink = appBaseUrl +"/news/?digitalDownload=" + jsonResponse.body[i].acf.content_type_id;
                                         break;
                                     default:
                                         postLink = appBaseUrl+ "/news/" + jsonResponse.body[i].slug;
@@ -795,7 +810,7 @@
 
                             self.checkedCategories         = event.state.checkedCategories;
                             self.checkedSectors            = event.state.checkedSectors;
-                            self.checkedProducts_services  = event.checkedProducts_services.checkedLot;
+                            self.checkedProducts_services  = event.checkedProducts_services;
                             self.whitepaper                = event.state.whitepaper;
                             self.webinar                   = event.state.webinar;
                             self.digitalBrochure           = event.state.digitalBrochure;

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block title %} Crown Commercial Services - CCS {% endblock %}
+
+{% block body %}
+
+    <div class="govuk-width-container">
+        <div class="govuk-phase-banner">
+            {% include '/includes/phase-banner-content.html.twig' %}
+        </div>
+
+        <main id="main-content" role="main" class="govuk-main-wrapper">
+
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <h1 class="govuk-heading-xl page-title">Sorry, this event has already taken place</h1>
+
+                    <p class="govuk-body">Please visit our main
+                    <a href="{{ path('events_list') }}">events page</a> to find out what events we have coming up.</p>
+
+                    <p class="govuk-body">If you need further help please
+                        <a href="{{ path('form_contact') }}">contact CCS</a> who will be able to provide further support.</p>
+
+                    <p class="govuk-body">You can also return to the <a href="{{ path('home') }}">homepage</a>.</p>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+{% endblock %}
+

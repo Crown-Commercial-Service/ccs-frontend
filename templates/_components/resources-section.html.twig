@@ -27,7 +27,7 @@
                                         </span>
                             </h2>
                         </div>
-                        <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1">
+                        <div id="accordion-default-content-{{resourcesWithIndex['brochures_list_brochures_list'] is defined ? resourcesWithIndex['brochures_list_brochures_list'] : '1' }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{resourcesWithIndex['brochures_list_brochures_list'] is defined ? resourcesWithIndex['brochures_list_brochures_list'] : '1' }}" role="region">
 
                             <ol class="ccs-list-grid brochures-list">
                                 {% for brochure in page.content.brochures_list_brochures_list %}
@@ -63,15 +63,26 @@
                                         </span>
                             </h2>
                         </div>
-                        <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">
+                        <div id="accordion-default-content-{{resourcesWithIndex['whitepapers_list_whitepapers'] is defined ? resourcesWithIndex['whitepapers_list_whitepapers'] : '1' }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{resourcesWithIndex['whitepapers_list_whitepapers'] is defined ? resourcesWithIndex['whitepapers_list_whitepapers'] : '1' }}" role="region">
 
                             <ol class="ccs-list-grid">
                                 {% for whitepaper in page.content.whitepapers_list_whitepapers %}
                                     <li class="ccs-list-grid__item">
                                         {% if whitepaper.ccs_whitepaper_featured_image.url is defined %}
                                             <a href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
+
+                                            {% set whitepaperFeaturedImage = "" %}
+
+                                                {% if whitepaper.ccs_whitepaper_featured_image.byName('news-size-m') %}
+                                                    {% set whitepaperFeaturedImage = whitepaper.ccs_whitepaper_featured_image.byName('news-size-m') %}
+                                                {% elseif whitepaper.ccs_whitepaper_featured_image.byName('news-size-s') %}
+                                                    {% set whitepaperFeaturedImage = whitepaper.ccs_whitepaper_featured_image.byName('news-size-s') %}
+                                                {% else %}
+                                                    {% set whitepaperFeaturedImage = whitepaper.ccs_whitepaper_featured_image %}
+                                                {% endif %}
+
                                                 <img
-                                                        src="{{ whitepaper.ccs_whitepaper_featured_image.byName('news-size-m') }}"
+                                                        src="{{ whitepaperFeaturedImage }}"
 
                                                         {% if whitepaper.ccs_whitepaper_featured_image.alt is defined %}
                                                             alt="{{ whitepaper.ccs_whitepaper_featured_image.alt }}"
@@ -118,15 +129,26 @@
                                         </span>
                             </h2>
                         </div>
-                        <div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3">
+                        <div id="accordion-default-content-{{resourcesWithIndex['webinars_list_webinars'] is defined ? resourcesWithIndex['webinars_list_webinars'] : '1' }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{resourcesWithIndex['webinars_list_webinars'] is defined ? resourcesWithIndex['webinars_list_webinars'] : '1' }}" role="region">
 
                             <ol class="ccs-list-grid">
                                 {% for webinar in page.content.webinars_list_webinars %}
                                     <li class="ccs-list-grid__item">
                                         {% if webinar.ccs_webinar_featured_image.url is defined %}
                                             <a href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
+
+                                            {% set webinarFeaturedImage = "" %}
+
+                                                {% if webinar.ccs_webinar_featured_image.byName('news-size-m') %}
+                                                    {% set webinarFeaturedImage = webinar.ccs_webinar_featured_image.byName('news-size-m') %}
+                                                {% elseif webinar.ccs_webinar_featured_image.byName('news-size-s') %}
+                                                    {% set webinarFeaturedImage = webinar.ccs_webinar_featured_image.byName('news-size-s') %}
+                                                {% else %}
+                                                    {% set webinarFeaturedImage = webinar.ccs_webinar_featured_image %}
+                                                {% endif %}
+
                                                 <img
-                                                        src="{{ webinar.ccs_webinar_featured_image.byName('news-size-m') }}"
+                                                        src="{{ webinarFeaturedImage }}"
 
                                                         {% if webinar.ccs_webinar_featured_image.alt is defined %}
                                                             alt="{{ webinar.ccs_webinar_featured_image.alt }}"
@@ -173,15 +195,26 @@
                                         </span>
                             </h2>
                         </div>
-                        <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">
+                        <div id="accordion-default-content-{{resourcesWithIndex['digital_brochures_list_digital_brochures'] is defined ? resourcesWithIndex['digital_brochures_list_digital_brochures'] : '1' }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{resourcesWithIndex['digital_brochures_list_digital_brochures'] is defined ? resourcesWithIndex['digital_brochures_list_digital_brochures'] : '1' }}" role="region">
 
                             <ol class="ccs-list-grid">
                                 {% for digital_brochure in page.content.digital_brochures_list_digital_brochures %}
                                     <li class="ccs-list-grid__item">
                                         {% if digital_brochure.ccs_digital_brochure_featured_image.url is defined %}
                                             <a href="/digital_brochure/request/{{ digital_brochure.ID }}/{{ digital_brochure.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
+
+                                            {% set digitalBrochureFeaturedImage = "" %}
+
+                                                {% if digital_brochure.ccs_digital_brochure_featured_image.byName('news-size-m') %}
+                                                    {% set digitalBrochureFeaturedImage = digital_brochure.ccs_digital_brochure_featured_image.byName('news-size-m') %}
+                                                {% elseif digital_brochure.ccs_digital_brochure_featured_image.byName('news-size-s') %}
+                                                    {% set digitalBrochureFeaturedImage = digital_brochure.ccs_digital_brochure_featured_image.byName('news-size-s') %}
+                                                {% else %}
+                                                    {% set digitalBrochureFeaturedImage = digital_brochure.ccs_digital_brochure_featured_image %}
+                                                {% endif %}
+
                                                 <img
-                                                        src="{{ digital_brochure.ccs_digital_brochure_featured_image.byName('news-size-m') }}"
+                                                        src="{{ digitalBrochureFeaturedImage }}"
 
                                                         {% if digital_brochure.ccs_digital_brochure_featured_image.alt is defined %}
                                                             alt="{{ digital_brochure.ccs_digital_brochure_featured_image.alt }}"
@@ -226,15 +259,26 @@
                                         </span>
                             </h2>
                         </div>
-                        <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2">
+                        <div id="accordion-default-content-{{resourcesWithIndex['downloadable_list_downloadable_resource'] is defined ? resourcesWithIndex['downloadable_list_downloadable_resource'] : '1' }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{resourcesWithIndex['downloadable_list_downloadable_resource'] is defined ? resourcesWithIndex['downloadable_list_downloadable_resource'] : '1' }}" role="region">
 
                             <ol class="ccs-list-grid">
                                 {% for downloadable_resource in page.content.downloadable_list_downloadable_resource %}
                                     <li class="ccs-list-grid__item">
                                         {% if downloadable_resource.ccs_downloadable_featured_image.url is defined %}
                                             <a href="/downloadable-resource/request/{{ downloadable_resource.ID }}/{{ downloadable_resource.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
+
+                                            {% set downloadableFeaturedImage = "" %}
+
+                                                {% if downloadable_resource.ccs_downloadable_featured_image.byName('news-size-m') %}
+                                                    {% set downloadableFeaturedImage = downloadable_resource.ccs_downloadable_featured_image.byName('news-size-m') %}
+                                                {% elseif downloadable_resource.ccs_downloadable_featured_image.byName('news-size-s') %}
+                                                    {% set downloadableFeaturedImage = downloadable_resource.ccs_downloadable_featured_image.byName('news-size-s') %}
+                                                {% else %}
+                                                    {% set downloadableFeaturedImage = downloadable_resource.ccs_downloadable_featured_image %}
+                                                {% endif %}
+
                                                 <img
-                                                        src="{{ downloadable_resource.ccs_downloadable_featured_image.byName('news-size-m') }}"
+                                                        src="{{ downloadableFeaturedImage }}"
 
                                                         {% if downloadable_resource.ccs_downloadable_featured_image.alt is defined %}
                                                             alt="{{ downloadable_resource.ccs_downloadable_featured_image.alt }}"
