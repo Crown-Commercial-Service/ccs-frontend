@@ -186,7 +186,7 @@
                         </div>
 
                         <div class="govuk-form-group {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
-                            <label class="govuk-label" for="00Nb0000009IXEs">
+                            <label class="govuk-label" for="jobTitle">
                                 Job title </label>
 
                             {% if formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 %}
@@ -197,7 +197,7 @@
                                 {% endfor %}                           
                             {% endif %} 
 
-                            <input class="govuk-input {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="00Nb0000009IXEs" maxlength="100" name="00Nb0000009IXEs" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="organization-title"/>
+                            <input class="govuk-input {{formErrors.jobTitleErr is defined and formErrors.jobTitleErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="jobTitle" maxlength="100" name="jobTitle" size="20" type="text" value="{{formErrors is defined ? formData.jobTitle}}" autocomplete="organization-title"/>
                         </div>
 
                         <div class="govuk-form-group {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">

@@ -2,6 +2,15 @@
   #Print page
 \*------------------------------------*/
 
+
+.app-c-print-link {
+    border: 1px solid #505a5f;
+    margin: 0;
+    padding: 0px 9px;
+    width: fit-content;
+    margin-bottom: 5px;
+}
+
 .app-c-print-link__link {
 
     border: 0;
@@ -11,7 +20,7 @@
 
     &:hover,
     &:active {
-
+        cursor: pointer;
         color: $govuk-link-hover-colour;
         text-decoration: none;
 
@@ -42,7 +51,7 @@
 /*
  * If Javascript isn't available, the link won't work
  */
-.no-js .app-c-print-link__link {
+.no-js .app-c-print-link {
 
     display: none;
 

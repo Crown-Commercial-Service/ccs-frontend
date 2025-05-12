@@ -1,27 +1,21 @@
 {% extends 'base.html.twig' %}
+{% block title %} Crown Commercial Services - CCS {% endblock %}
 
 {% block body %}
 
-    <!-- required wrapper 1 -->
     <div class="govuk-width-container">
-
-        <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
-
         <div class="govuk-phase-banner">
             {% include '/includes/phase-banner-content.html.twig' %}
         </div>
 
-
-        <!-- required wrapper 2 -->
         <main id="main-content" role="main" class="govuk-main-wrapper">
-
 
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
+                    <h1 class="govuk-heading-xl page-title">Sorry, this event has already taken place</h1>
 
-                    <h1 class="govuk-heading-xl page-title">Sorry, there's been an error</h1>
-
-                    <p class="govuk-body">We have logged this issue and our team will review the problem.</p>
+                    <p class="govuk-body">Please visit our main
+                    <a href="{{ path('events_list') }}">events page</a> to find out what events we have coming up.</p>
 
                     <p class="govuk-body">If you need further help please
                         <a href="{{ path('form_contact') }}">contact CCS</a> who will be able to provide further support.</p>
@@ -31,8 +25,8 @@
                 </div>
             </div>
 
-
         </main>
     </div>
 
 {% endblock %}
+

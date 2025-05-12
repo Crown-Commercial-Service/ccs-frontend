@@ -1,63 +1,37 @@
 {% if page == "upcoming" %}
 
-<aside class="aside">
-    <div class="apollo-enclosure">
-        <h2 class="aside__heading">Contact</h2>
+    <aside class="aside">
+        <div class="apollo-enclosure">
+            <h2 class="aside__heading">Contact</h2>
 
-        <p> {{ cscMessage | raw}}</p>
+            <p> {{ cscMessage | raw}}</p>
 
-        <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Contact form</h3>
-        <p><a href="/contact">Complete contact form</a></p>
-        
-        <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Telephone:</h3>
-        <p><a href="tel:03454102222">0345 410 2222</a></p>
-    </div>
+            <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Contact form</h3>
+            <p><a href="/contact">Complete contact form</a></p>
+            
+            <h3 class="govuk-!-font-size-16 ccs-font-weight-semibold govuk-!-margin-0">Telephone:</h3>
+            <p><a href="tel:03454102222">0345 410 2222</a></p>
+        </div>
 
-    <div class="apollo-enclosure">
-        <h2 class="aside__heading">Download Pipeline report</h2>
-        <p>See our commercial agreement pipeline for a full list of agreements, including those <a href="https://assets.crowncommercial.gov.uk/wp-content/uploads/Cabinet-Office-Commercial-Agreement-Pipeline-15.07.2024.ods">due to go live in the next 3 years</a></p>
-    </div>
+        <div class="apollo-enclosure">
+            <h2 class="aside__heading">Download Pipeline report</h2>
+            <p>See our commercial agreement pipeline for a full list of agreements, including those <a href= {{upcoming_deals_content.upcomingDealsInfo.file}} >due to go live in the next 3 years</a></p>
+        </div>
 
-    <div class="apollo-enclosure">
-        <h2 class="aside__heading">Helpful Links</h2>
-        <ul class="govuk-list">
-            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/glossary">Glossary</a></li>
-            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/start-buying">How to buy</a></li>
-            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/start-supplying">How to supply</a></li>
-            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/transforming-public-procurement">Transforming Public Procurement</a></li>
-            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/news/?&categories=168&page=1">Procurement Essentials</a></li>
+        {% include '/libraries/_helpful_links.html.twig' %}
 
-        </ul>
-    </div>
-</aside>
+    </aside>
 
 {% else %}
-<aside class="aside">
-    <div class="apollo-enclosure">
-        <h2 class="aside__heading">Upcoming Agreements</h2>
 
-        <p><a href="/agreements/upcoming">View our upcoming agreement page</a> for agreements that are being developed and are not yet live.</p>
-        
-    </div>
+    <aside class="aside">
 
-    <div class="apollo-enclosure">
-        <h2 class="aside__heading">Helpful Links</h2>
-        <ul class="govuk-list">
-            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/glossary">Glossary</a></li>
-            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/start-buying">How to buy</a></li>
-            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/start-supplying">How to supply</a></li>
-            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/transforming-public-procurement">Transforming Public Procurement</a></li>
-            <li><a class="govuk-link" href="https://www.crowncommercial.gov.uk/news/?&categories=168&page=1">Procurement Essentials</a></li>
+        {% include '/libraries/_helpful_links.html.twig' %}
 
-        </ul>
-    </div>
-
-    <div class="apollo-enclosure">
-        <h2 class="aside__heading">Do you need help requesting agreement pricing?</h2>
-        <p>If pricing is available you will find instructions on how to access pricing in the 'how to buy' section of the agreement webpage. <a class="govuk-link" href="/agreements">Search for an agreement</a>.</p>
-        <p>You will need to specify the framework (RM number) and lot(s) in your request.</p>
-    </div>
-</aside>
-
+        <div class="apollo-enclosure">
+            <h2 class="aside__heading">Do you need help requesting agreement pricing?</h2>
+            <p>If pricing is available you will find instructions on how to access pricing in the 'how to buy' section on the individual agreement webpage.</p>
+        </div>
+    </aside>
 
 {% endif %}
