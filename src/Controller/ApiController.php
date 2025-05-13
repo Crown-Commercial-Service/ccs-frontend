@@ -138,15 +138,20 @@ class ApiController extends AbstractController
         $filtered = [];
         foreach ($params as $name => $param) {
             switch ($name) {
-                case 'keyword':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
                 case 'status':
+                case 'pillar':
+                case 'category':
+                case 'regulation':
+                case 'regulation_type':
+                case 'terms':
                     if (!is_array($param)) {
                         $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
                     } else {
                         $filtered[$name] = filter_var_array($param);
                     }
+                    break;
+                case 'keyword':
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
                     break;
                 case 'sort':
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
@@ -156,12 +161,6 @@ class ApiController extends AbstractController
                     break;
                 case 'page':
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
-                    break;
-                case 'pillar':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
-                    break;
-                case 'category':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
                     break;
             }
         }

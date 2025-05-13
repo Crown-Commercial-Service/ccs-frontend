@@ -11,7 +11,7 @@
                 <li class="feature-news__item news-listing__item">
                     {% if article.content.featuredImage %}
                         <picture>
-                            <a href="{{ path('news_page', {'slug': article.content.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link">
+                            <a href="{{ path('news_page', {'slug': article.content.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link" tabindex="-1">
 
                                 <!--[if IE 9]>
                                 <video style="display: none;>
@@ -30,9 +30,9 @@
                                 <!--[if IE 9]></video><![endif]-->
                                 <!-- Fallback -->
                                 {% if article.content.featuredImage.byName('news-size-m') %}
-                                    <img src="{{ article.content.featuredImage.byName('news-size-m') }}" alt="{{ article.content.featuredImage.alt }}" role="presentation" aria-hidden="true">
+                                    <img src="{{ article.content.featuredImage.byName('news-size-m') }}" alt="{{ article.content.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1">
                                 {% else %}
-                                    <img src="{{ article.content.featuredImage.byName('full') }}" alt="{{ article.content.featuredImage.alt }}" role="presentation" aria-hidden="true">
+                                    <img src="{{ article.content.featuredImage.byName('full') }}" alt="{{ article.content.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1">
                                 {% endif %}
 
                             </a>
