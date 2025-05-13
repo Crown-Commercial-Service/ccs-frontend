@@ -396,38 +396,6 @@
     {{ include('/includes/on-page-feedback.html.twig') }}
 
     <script> frameworkAndSupplierPage(); </script>
-    <script>
-        feedbackResponse = "";
-
-        function handleFeedback(response) {
-            document.getElementById('feedback-content').style.display = 'none';
-            if (response === 'yes') {
-                document.getElementById('feedback-thanks-new').style.display = 'block';
-                feedbackResponse = response;
-            } else {
-                document.getElementById('feedback-form').style.display = 'block';
-                feedbackResponse = response;
-            }
-        }
-
-        function handleCancel() {
-            window.location.href = window.location.pathname;
-        }
-
-        function handleFeedbackOld() {
-            document.getElementById('feedback-form').style.display = 'none';
-            document.getElementById('feedback-thanks-new').style.display = 'none';
-            document.getElementById('feedback-thanks-old').style.display = 'block';
-
-            // Add smooth scroll to the thanks message
-            document.getElementById('feedback-thanks-old').scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-
-            onPageFeedback(feedbackResponse);
-        }
-    </script>
     <script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'agreement', 'agreement':'{{framework.content.title}}', 'agreement_id':'{{framework.content.rm_number}}' });</script>
 {% endblock %}
 
