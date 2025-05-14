@@ -78,6 +78,40 @@ function searchFilterAgreement() {
     });
 }
 
+function onPageFeedback(feedbackResponse) {
+    let feedbackCheckboxes;
+    let feedbackChecked = [];
+
+    if (feedbackResponse === 'yes') {
+        feedbackCheckboxes = document.querySelectorAll("[name='useful']");
+        feedbackCheckboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                feedbackChecked.push(checkbox.value);
+            }
+        })
+
+        pushToDataLayer({
+            'event': 'feedback',
+            'feedback': feedbackChecked,
+            'feedback_type': 'useful'
+        });
+
+    } else {
+        feedbackCheckboxes = document.querySelectorAll("[name='not-useful']");
+        feedbackCheckboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                feedbackChecked.push(checkbox.value);
+            }
+        })
+
+        pushToDataLayer({
+            'event': 'feedback',
+            'feedback': feedbackChecked,
+            'feedback_type': 'not_useful'
+        });
+    }
+}
+
 function formStart(formType) {
     const firstField = document.querySelectorAll('input[type="text"], textarea')[0];
 
