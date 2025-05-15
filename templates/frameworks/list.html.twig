@@ -49,12 +49,13 @@
             <div class="govuk-grid-row">
                 {% include '/frameworks/_filter_options.html.twig' %}
 
-                <div class="govuk-grid-column-two-thirds hideWithoutJS govuk-visually-hidden">
-                    <h2 class="govuk-heading-m" v-if="totalResults == 1"> {[totalResults]} agreement found</h2>
-                    <h2 class="govuk-heading-m" v-else>                   {[totalResults]} agreements found</h2>
-                </div>
-                <div v-show="!javascriptVersion" class="govuk-grid-column-two-thirds">
-                    <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24">{{ pagination.totalResults }} agreement{{pagination.totalResults != 1 ? 's'}} found</h2>
+                <div class="govuk-grid-column-two-thirds">
+                    <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24" aria-live="assertive">
+                        <span v-if="searchResultsNumber == 1" v-show="javascriptVersion" style="display: none;"> {[ searchResultsNumber ]} agreement found</span>
+                        <span v-else                          v-show="javascriptVersion" style="display: none;"> {[ searchResultsNumber ]} agreements found</span>
+
+                        <span v-if="!javascriptVersion">{{ pagination.totalResults }} agreement{{pagination.totalResults != 1 ? 's'}} found</span>
+                    </h2>
                 </div>
 
                 <div v-if="displayKeyword" class="govuk-grid-column-two-thirds hideWithoutJS govuk-visually-hidden">
@@ -118,7 +119,7 @@
                     </div>
 
                     <div v-else-if="!responseAvailable" class="hideWithoutJS govuk-visually-hidden">
-                        <p>Loading...</p>
+                        <p>Loading results ...</p>
                     </div>
 
                     <div v-if="emptyResult" class="hideWithoutJS govuk-visually-hidden">
@@ -178,6 +179,7 @@
         var apiBaseUrl                  = '{{ api_base_url }}';
         var appBaseUrl                  = '{{ app_base_url }}';
         var pageNumber                  = {% if pageNumber is defined and pageNumber is not empty %}{{ pageNumber }}{% else %}1{% endif %};
+        var totalResults                = {{ pagination.totalResults }};
         var keyword                     = null;
         var checkedStatus               = [];
         var checkedRegulation           = [];
@@ -375,6 +377,7 @@
                 categorySize: categorySize,
                 numberOfPages: Number,
                 totalResults: Number,
+                searchResultsNumber: totalResults,
 
                 popstateLoad: false
             },
@@ -652,6 +655,7 @@
                     .then(function(jsonResponse) {
                         self.numberOfPages  = parseInt(Math.ceil(jsonResponse.meta.total_results / jsonResponse.meta.limit))
                         self.totalResults   = parseInt(jsonResponse.meta.total_results)
+                        self.searchResultsNumber = jsonResponse.meta.total_results;
                         this.results        = jsonResponse.results;
 
                         self.results = jsonResponse.results;
