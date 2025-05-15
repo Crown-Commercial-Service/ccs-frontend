@@ -71,7 +71,11 @@
 
             <div class="govuk-grid-row" id="search-app">
                 <div class="govuk-grid-column-one-third">
-
+                    <aside>
+                        {% include '/includes/_csat-survey.html.twig' %}
+                    </aside>
+                    <br />
+                    
                     <form action="{{ path('suppliers_search') }}" v-on:submit.prevent="updateResults">
 
                         <div class="govuk-form-group govuk-form-group--enclosure">
