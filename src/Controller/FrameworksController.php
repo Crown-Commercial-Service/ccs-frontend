@@ -322,18 +322,14 @@ class FrameworksController extends AbstractController
 
         $results = $this->setGovTableStyleForAllField($results);
 
-        $content = $results->getContent();
         $content_group = "agreement/" .  ControllerHelper::toSlug($results->getContent()["category"]->getValue());
         $cscMessage = ControllerHelper::getCSCMessage();
 
-        $youtubeVideo = ControllerHelper::getYoutubeVideo();
-
         $data = [
             'framework'          => $results,
-            'show_crp'           => $this->showCRP($content['rm_number']->getValue()),
             'cscMessage'         => $cscMessage,
             'content_group'      => $content_group,
-            'youtubeVideo'       => $youtubeVideo
+            'youtubeVideo'       => ControllerHelper::getYoutubeVideo()
         ];
         return $this->render('frameworks/show.html.twig', $data);
     }
@@ -550,12 +546,6 @@ class FrameworksController extends AbstractController
         }
 
         return(false);
-    }
-
-    private function showCRP($rm_number)
-    {
-        $CRP_EXCLUDED_FRAMEWORKS = array('RM6269', 'RM6263', 'RM6282', 'RM6186', 'RM6195', 'RM6232', 'RM6248', 'RM6257');
-        return !in_array($rm_number, $CRP_EXCLUDED_FRAMEWORKS);
     }
 
     private function blockBot(string $userAgent)
