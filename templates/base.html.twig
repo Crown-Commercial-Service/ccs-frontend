@@ -47,6 +47,16 @@
 
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
+    <style>
+    
+        :root {
+        --govuk-frontend-version: "5.4.0";
+        --govuk-frontend-breakpoint-mobile: 20rem;
+        --govuk-frontend-breakpoint-tablet: 40.0625rem;
+        --govuk-frontend-breakpoint-desktop: 48.0625rem; 
+        }
+    </style>
+
     {% if app.environment == "prod" %}
          <link rel="preload" href="/assets/styles/styles.min.css?v=1.71" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.71"></noscript>
