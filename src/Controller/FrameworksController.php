@@ -197,7 +197,6 @@ class FrameworksController extends AbstractController
             'statuses'          => ["live"],
             'regulation'        => ["allRegulation"],
             'regulationType'    => ["allType"],
-            'match_url'          => getenv('GUIDED_MATCH_URL')
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
