@@ -153,5 +153,5 @@ total_suppliers:
   type: number
 upcoming_deal_details:
   type: richtext
-crp_compliant:
-  type: boolean
+policy_compliance:
+  type: text
