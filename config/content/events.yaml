@@ -1,5 +1,7 @@
 image:
   type: image
+event_summary:
+  type: text
 description:
   type: richtext
 cta_label:
