@@ -47,16 +47,25 @@
 
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
+    <style>
+    
+        :root {
+        --govuk-frontend-version: "5.4.0";
+        --govuk-frontend-breakpoint-mobile: 20rem;
+        --govuk-frontend-breakpoint-tablet: 40.0625rem;
+        --govuk-frontend-breakpoint-desktop: 48.0625rem; 
+        }
+    </style>
+
     {% if app.environment == "prod" %}
-         <link rel="preload" href="/assets/styles/styles.min.css?v=1.70" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.70"></noscript>
+         <link rel="preload" href="/assets/styles/styles.min.css?v=1.72" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.72"></noscript>
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        {# <link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.67"> #}
-        <link rel="preload" href="/assets/styles/styles.min.css?v=1.70" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.70"></noscript>
+        <link rel="preload" href="/assets/styles/styles.min.css?v=1.72" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.72"></noscript>
     {% endif %}
 
     {# Browser icon #}
@@ -150,7 +159,7 @@
             }
         </script>
         {# End Google Tag Manager #}
-        <script src="/assets/scripts/dataLayer.js"></script>
+        <script src="/assets/scripts/dataLayer.js?v=1.0"></script>
 
     {% endblock %}
 </head>

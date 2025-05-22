@@ -20,6 +20,8 @@
 
         {% include '/libraries/_helpful_links.html.twig' %}
 
+        {% include '/includes/_csat-survey.html.twig' %}
+
     </aside>
 
 {% else %}
@@ -32,6 +34,8 @@
             <h2 class="aside__heading">Do you need help requesting agreement pricing?</h2>
             <p>If pricing is available you will find instructions on how to access pricing in the 'how to buy' section on the individual agreement webpage.</p>
         </div>
+
+        {% include '/includes/_csat-survey.html.twig' %}
     </aside>
 
 {% endif %}

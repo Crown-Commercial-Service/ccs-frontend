@@ -33,6 +33,12 @@
                     <h1 class="govuk-heading-xl page-title page-title--tight">Events</h1>
                     <p class="govuk-body-l">Take a look at our upcoming events. You can filter them by category or sector. Click on the event to see more details and how to register to attend.</p>
                 </div>
+                <div class="govuk-grid-column-one-third">
+                    <aside>
+                     {% include '/includes/_csat-survey.html.twig' %}
+                     </aside>
+                     <br />
+                </div>
             </div>
 
             <p class="visuallyhidden">This is a page with JS</p>
@@ -218,37 +224,44 @@
                     </form>
                 </div>
                 <div class="govuk-grid-column-three-quarters events-list-container">
-                    <div v-if="responseAvailable" class="hideWithoutJS govuk-visually-hidden">
-                        <h2 class="govuk-heading-m" v-if="totalResults == 1"> {[totalResults]} event found</h2>
-                        <h2 class="govuk-heading-m" v-else>                   {[totalResults]} event(s) found</h2>
-                        
-                        <ol class="events-list">
-                                <li class="event-list__item" v-show="javascriptVersion" v-for="result in results">
-                                    <picture>
-                                        <a v-if=result.imageSet class="event-list__image" aria-hidden="true">
-                                            <img :src="result.imageURL"
-                                                    :alt="result.altText"
-                                                    role="presentation"
-                                                    class=""
-                                                    loading="lazy"/>
-                                        </a>
-                                    </picture>
-                                    
-                                    <div class="event-list__details">
-                                        <h3 class="event-list__title govuk-!-margin-bottom-2 ">
-                                            <a :href="result.eventURL" v-html="result.title.rendered"></a>
-                                        </h3>
 
-                                        <ul class="event-list__meta list--inline govuk-body-s govuk-!-margin-bottom-2">
-                                            <li  v-if="result.startDate == result.endDate"><strong>Date:</strong> {[result.startDate]} </li>
-                                            <template v-else>
-                                                <li><strong>Start Date:</strong> {[result.startDate]} </li>
-                                                <li><strong>End Date:</strong> {[result.endDate]} </li>
-                                            </template>
-                                            <li><strong>Type:</strong> {[result.event_type]}</li>
-                                        </ul>
-                                    </div>
-                                </li>
+                    <div v-if="responseAvailable" class="hideWithoutJS govuk-visually-hidden">
+                        
+                        <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24" aria-live="assertive">
+                            <span v-if="searchResultsNumber == 1" v-show="javascriptVersion" style="display: none;"> {[ searchResultsNumber ]} event found</span>
+                            <span v-else                          v-show="javascriptVersion" style="display: none;"> {[ searchResultsNumber ]} events found</span>
+
+                            <span v-if="!javascriptVersion">{{ pagination.totalResults }} event{{pagination.totalResults != 1 ? 's'}} found</span>
+                        </h2>
+
+                        <ol class="events-list">
+                            <li class="event-list__item" v-show="javascriptVersion" v-for="result in results">
+                                <picture>
+                                    <a v-if=result.imageSet class="event-list__image" aria-hidden="true">
+                                        <img :src="result.imageURL"
+                                                :alt="result.altText"
+                                                role="presentation"
+                                                class=""
+                                                loading="lazy"/>
+                                    </a>
+                                </picture>
+                                
+                                <div class="event-list__details">
+                                    <h3 class="event-list__title govuk-!-margin-bottom-2 ">
+                                        <a :href="result.eventURL" v-html="result.title.rendered"></a>
+                                    </h3>
+
+                                    <ul class="event-list__meta list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                        <li  v-if="result.startDate == result.endDate"><strong>Date:</strong> {[result.startDate]} </li>
+                                        <template v-else>
+                                            <li><strong>Start Date:</strong> {[result.startDate]} </li>
+                                            <li><strong>End Date:</strong> {[result.endDate]} </li>
+                                        </template>
+                                        <li><strong>Type:</strong> {[result.event_type]}</li>
+                                    </ul>
+                                    <p class="govuk-body-s govuk-!-margin-0"> {[result.summary]} </p>
+                                </div>
+                            </li>
                         </ol>
 
                         <results-pagination 
@@ -261,7 +274,7 @@
 
                 </div>
                 <div v-else-if="responseAvailable === false" class="hideWithoutJS govuk-visually-hidden">
-                    <p>Loading...</p>
+                    <p>Loading results ...</p>
                 </div>
                 <div v-if="emptyResult" class="hideWithoutJS govuk-visually-hidden">
                     <p>There are no matching results.</p>
@@ -303,6 +316,7 @@
 
             var apiBaseUrl                  = '{{ api_base_url }}';
             var appBaseUrl                  = '{{ app_base_url }}';
+            var totalResults                = {{ pagination.totalResults }};
             var pageNumber                  = {% if pageNumber is defined and pageNumber is not empty %}{{ pageNumber }}{% else %}1{% endif %};
             var checkedEventType            = [];
             var checkedEventAudience        = [];
@@ -473,6 +487,7 @@
                     currentPage: pageNumber,
                     numberOfPages: Number,
                     totalResults: Number,
+                    searchResultsNumber: totalResults,
 
                     popstateLoad: false
                 },
@@ -643,12 +658,14 @@
                             self.numberOfPages = jsonResponse.meta['X-WP-TotalPages'];
                             self.totalResults = jsonResponse.meta['X-WP-Total'];
                             self.results = jsonResponse.body;
+                            self.searchResultsNumber = self.totalResults;
 
                             for(var i = 0; i < self.results.length; i++) {  
                                 self.results[i].eventURL = appBaseUrl + "/events/" + self.results[i].id + "/" + self.results[i].slug;
                                 self.results[i].startDate = self.formatDate(jsonResponse.body[i].acf.start_datetime.split(' ')[0]);
                                 self.results[i].endDate = self.formatDate(jsonResponse.body[i].acf.end_datetime.split(' ')[0]);
                                 self.results[i].event_type = self.results[i].acf.event_type;
+                                self.results[i].summary = self.results[i].acf.event_summary;
 
                                 self.results[i].imageSet = false;
                                 if (self.results[i].acf.featured_image_url != false) {

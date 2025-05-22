@@ -71,7 +71,11 @@
 
             <div class="govuk-grid-row" id="search-app">
                 <div class="govuk-grid-column-one-third">
-
+                    <aside>
+                        {% include '/includes/_csat-survey.html.twig' %}
+                    </aside>
+                    <br />
+                    
                     <form action="{{ path('suppliers_search') }}" v-on:submit.prevent="updateResults">
 
                         <div class="govuk-form-group govuk-form-group--enclosure">
@@ -272,8 +276,10 @@
 
 
                     <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24" aria-live="assertive">
-                        <span v-show="javascriptVersion" style="display: none;">{[ searchResultsNumber ]} supplier(s) found</span>
-                        <span v-if="!javascriptVersion">{{ pagination.totalResults }} supplier(s) found</span>
+                        <span v-if="searchResultsNumber == 1" v-show="javascriptVersion" style="display: none;"> {[ searchResultsNumber ]} supplier found</span>
+                        <span v-else                          v-show="javascriptVersion" style="display: none;"> {[ searchResultsNumber ]} suppliers found</span>
+
+                        <span v-if="!javascriptVersion">{{ pagination.totalResults }} supplier{{pagination.totalResults != 1 ? 's'}} found</span>
                     </h2>
 
                     <div class="ccs-filters-summary">
