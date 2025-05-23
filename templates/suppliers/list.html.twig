@@ -764,7 +764,6 @@
                 updateSearchQueryValue: function(event) {
                     event.preventDefault();
                     var searchTextInput = document.getElementById('q');
-                    pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'suppliers', 'search_term': searchTextInput.value});
                     this.searchQuery = searchTextInput.value;
                 },
                 /**
@@ -880,6 +879,10 @@
                             self.lotList = jsonResponse.meta.facets.lots;
 
                             self.loading = false;
+
+                            if (self.searchQuery) {
+                                pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'suppliers', 'search_term': self.searchQuery, 'interaction_detail': self.searchResultsNumber});
+                            }
                         })
                         .catch(function(error) {
                             // @TODO: handle errors
