@@ -145,7 +145,7 @@ function pushToDataLayer(array) {
     array = (typeof array === 'string') ? JSON.parse(array) : array;
     var env = document.getElementById('app-env').dataset.env;
 
-    if (env == "local" || env == "prod") {
+    if (env != "dev") {
         window.dataLayer.push(array);
     }
 }

@@ -198,7 +198,7 @@ var docCookies = {
     function setDataLayer(usage_consent, cs_consent, marketing_consent) {
         var env = document.getElementById('app-env').dataset.env;
         
-        if (env == "local" || env == "prod") {
+        if (env != "dev") {
             window.dataLayer.push({
                 event: 'gtm_consent_update',
                 usage_consent: usage_consent ? 'granted' : 'not granted',
