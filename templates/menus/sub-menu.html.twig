@@ -1,8 +1,29 @@
 {% for menu_item in menu_list %}
         <li class="{{inlineMenu ? "govuk-footer__inline-list-item" : ""}}">
-            <a class="govuk-footer__link" href="{{ menu_item.url }}" data-evt-placement="footer">{{ menu_item.label }}</a>
+
+            {% set trackingURLs = [
+                "https://www.gov.uk/contracts-finder",
+                "https://www.gov.uk/find-tender",
+                "https://www.applytosupply.digitalmarketplace.service.gov.uk",
+                "https://purchasingplatform.crowncommercial.gov.uk",
+                "https://fleetportal.crowncommercial.gov.uk",
+                "https://buyers.mpuk.basware.com",
+                "https://crowncommercialservice.bravosolution.co.uk",
+                "https://www.reportmi.crowncommercial.gov.uk",
+                "https://supplierregistration.cabinetoffice.gov.uk",
+                "https://www.crowncommercial.gov.uk/emarketplace-registration-form",
+                "https://www.crowncommercial.gov.uk/esourcing-register",
+                "https://www.crowncommercial.gov.uk/esourcing-training",
+                ] 
+            %}
+            
+            {% set action = 'onclick="pushToDataLayer({\'event\': \'portal_click\', \'link_text\': \'' ~ menu_item.url ~ '\', \'link_url\': \'' ~ menu_item.label ~ '\'});"' %}
+
+            <a class="govuk-footer__link" {{ menu_item.url in trackingURLs ? action|raw }} href="{{ menu_item.url }}" data-evt-placement="footer">{{ menu_item.label }}</a>
+
             {% if menu_item.children %}
                 {% include 'menus/sub-menu.html.twig' with {'menu_list': menu_item.children} %}
             {% endif %}
+
         </li>
 {% endfor %}
