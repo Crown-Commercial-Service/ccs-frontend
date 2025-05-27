@@ -1,6 +1,10 @@
 <div class="ppg-login">
     <ul class="ppg-login-links">
         <li class="ppg-login-link"><p class="ppg-login-text">Public Procurement Gateway: </p></li>
-        <li class="ppg-login-link"><p class="ppg-login-text"><a href="{{ppgCreateAccount}}">Create account</a> or <a href="{{ppgLogin}}">Sign in</a></p></li>
+        <li class="ppg-login-link"><p class="ppg-login-text">
+            <a href="{{ppgCreateAccount}}" onclick="pushToDataLayer({'event': 'sign_up', 'method': 'PPG'});" >Create account</a>
+            or
+            <a href="{{ppgLogin}}" onclick="pushToDataLayer({'event': 'login', 'method': 'PPG'});">Sign in</a>
+        </p></li>
     </ul>
 </div>
