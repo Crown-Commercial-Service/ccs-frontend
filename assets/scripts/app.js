@@ -142,7 +142,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
             if (cards.length > 1) {
                 cards.forEach(function (card) {
                     var cardHeight = card.querySelector(".card-list__item__wrapper").offsetHeight;
-                    console.log(cardHeight)
                     if (cardHeight > maxHeight) {
                         maxHeight = cardHeight;
                     }
