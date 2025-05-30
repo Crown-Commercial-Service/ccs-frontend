@@ -1,10 +1,23 @@
 <script>
         var formType = "{{formName}}";
+        var formID = document.querySelector('[name=subject]').value
+
+        // condition for contact ccs form
+        {% if formName == "Contact CCS" %}
+            const radios = document.querySelectorAll('input[name="origin"]');
+
+            radios.forEach((radio) => {
+                if (radio.checked) {
+                    formID = radio.value;
+                }
+            });
+        {% endif %}
+         // condition for contact ccs form
 
         {% if formErrors is defined and formErrors is not empty %}
             {% for errorType in formErrors %}
                 {% for error in errorType.errors %}
-                    pushToDataLayer({"event":'form_error', 'form_type':formType, 'interaction_detail':"{{ error }}" });
+                    pushToDataLayer({"event":'form_error', 'form_type':formType, 'form_id':formID, 'interaction_detail':"{{ error }}" });
                 {% endfor %}
             {% endfor %}
         {% else %}
