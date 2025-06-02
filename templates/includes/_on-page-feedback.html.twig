@@ -1,117 +1,119 @@
 <div id="feedback-container" class="govuk-!-padding-left-9 govuk-!-padding-right-9 govuk-!-padding-top-4 govuk-!-padding-bottom-4 govuk-!-margin-top-6" style="background-color: #f3f2f1; border-top: 1px solid #0b0c0c;">
-    <div id="feedback-content" style="display: flex; align-items: center; justify-content: space-between;">
-        <div style="display: flex; align-items: center; gap: 1rem;">
-            <h2 class="govuk-heading-s" style="margin-bottom: 0;">Is this page useful?</h2>
-            <button onclick="handleFeedback('yes')" class="govuk-button govuk-button--secondary"
-                style="margin-bottom: 0;">Yes</button>
-            <button onclick="handleFeedback('no')" class="govuk-button govuk-button--secondary"
-                style="margin-bottom: 0;">No</button>
+    <div class="govuk-width-container">
+        <div id="feedback-content" style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <h2 class="govuk-heading-s" style="margin-bottom: 0;">Is this page useful?</h2>
+                <button onclick="handleFeedback('yes')" class="govuk-button govuk-button--secondary"
+                    style="margin-bottom: 0;">Yes</button>
+                <button onclick="handleFeedback('no')" class="govuk-button govuk-button--secondary"
+                    style="margin-bottom: 0;">No</button>
+            </div>
         </div>
-    </div>
 
-    <div id="feedback-thanks-old" class="govuk-heading-m" style="display: none;">
-        Thank you for your feedback.
-    </div>
+        <div id="feedback-thanks-old" class="govuk-heading-m" style="display: none;">
+            Thank you for your feedback.
+        </div>
 
-    <div id="feedback-thanks-new" style="display: none;">
-        <h2 class="govuk-heading-m">
-            Thank you for letting us know
-        </h2>
+        <div id="feedback-thanks-new" style="display: none;">
+            <h2 class="govuk-heading-m">
+                Thank you for letting us know
+            </h2>
 
-        <div style="background-color: white; padding: 2rem;">
+            <div style="background-color: white; padding: 2rem;">
 
-            <h2 class="govuk-heading-s">Can you tell us why this page was useful?</h2>
+                <h2 class="govuk-heading-s">Can you tell us why this page was useful?</h2>
 
-            <div class="govuk-form-group">
-                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
-                        <input class="govuk-checkboxes__input" id="info-needed" name="useful" type="checkbox"
-                            value="I found the information I was looking for">
-                        <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;"
-                            for="info-needed">
-                            I found the information I was looking for
-                        </label>
-                    </div>
-                    <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
-                        <input class="govuk-checkboxes__input" id="easy-find" name="useful" type="checkbox"
-                            value="The information was clear and easy to understand">
-                        <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;" for="easy-find">
-                            The information was clear and easy to understand
-                        </label>
-                    </div>
-                    <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
-                        <input class="govuk-checkboxes__input" id="easy-understand" name="useful" type="checkbox"
-                            value="The page was easy to navigate">
-                        <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;"
-                            for="easy-understand">
-                            The page was easy to navigate
-                        </label>
-                    </div>
-                    <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
-                        <input class="govuk-checkboxes__input" id="use-again" name="useful" type="checkbox"
-                            value="The information helped me complete what I needed to do">
-                        <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;" for="use-again">
-                            The information helped me complete what I needed to do
-                        </label>
+                <div class="govuk-form-group">
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
+                            <input class="govuk-checkboxes__input" id="info-needed" name="useful" type="checkbox"
+                                value="I found the information I was looking for">
+                            <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;"
+                                for="info-needed">
+                                I found the information I was looking for
+                            </label>
+                        </div>
+                        <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
+                            <input class="govuk-checkboxes__input" id="easy-find" name="useful" type="checkbox"
+                                value="The information was clear and easy to understand">
+                            <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;" for="easy-find">
+                                The information was clear and easy to understand
+                            </label>
+                        </div>
+                        <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
+                            <input class="govuk-checkboxes__input" id="easy-understand" name="useful" type="checkbox"
+                                value="The page was easy to navigate">
+                            <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;"
+                                for="easy-understand">
+                                The page was easy to navigate
+                            </label>
+                        </div>
+                        <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
+                            <input class="govuk-checkboxes__input" id="use-again" name="useful" type="checkbox"
+                                value="The information helped me complete what I needed to do">
+                            <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;" for="use-again">
+                                The information helped me complete what I needed to do
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="govuk-button-group">
-                <button onclick="handleFeedbackOld()" class="govuk-button">Submit</button>
-                <button onclick="handleCancel()" class="govuk-button" style="background-color: #cbcbcb;">Cancel</button>
-            </div>
+                <div class="govuk-button-group">
+                    <button onclick="handleFeedbackOld()" class="govuk-button">Submit</button>
+                    <button onclick="handleCancel()" class="govuk-button" style="background-color: #cbcbcb;">Cancel</button>
+                </div>
 
+            </div>
         </div>
-    </div>
 
-    <div id="feedback-form" style="display: none;">
-        <h2 class="govuk-heading-m">
-            Thanks for letting us know
-        </h2>
+        <div id="feedback-form" style="display: none;">
+            <h2 class="govuk-heading-m">
+                Thanks for letting us know
+            </h2>
 
-        <div style="background-color: white; padding: 2rem;">
-            <h2 class="govuk-heading-s">Can you tell us why this page was not useful?</h2>
+            <div style="background-color: white; padding: 2rem;">
+                <h2 class="govuk-heading-s">Can you tell us why this page was not useful?</h2>
 
-            <div class="govuk-form-group">
-                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
-                        <input class="govuk-checkboxes__input" id="info-missing" name="not-useful" type="checkbox"
-                            value="I could not find the information I was looking for">
-                        <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;"
-                            for="info-missing">
-                            I could not find the information I was looking for
-                        </label>
-                    </div>
-                    <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
-                        <input class="govuk-checkboxes__input" id="hard-find" name="not-useful" type="checkbox"
-                            value="The information was out of date">
-                        <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;" for="hard-find">
-                            The information was out of date
-                        </label>
-                    </div>
-                    <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
-                        <input class="govuk-checkboxes__input" id="hard-understand" name="not-useful" type="checkbox"
-                            value="The information was difficult to understand">
-                        <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;"
-                            for="hard-understand">
-                            The information was difficult to understand
-                        </label>
-                    </div>
-                    <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
-                        <input class="govuk-checkboxes__input" id="looks-broken" name="not-useful" type="checkbox"
-                            value="The page had technical problems (such as broken links or did not load properly)">
-                        <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;"
-                            for="looks-broken">
-                            The page had technical problems (such as broken links or did not load properly)
-                        </label>
+                <div class="govuk-form-group">
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
+                            <input class="govuk-checkboxes__input" id="info-missing" name="not-useful" type="checkbox"
+                                value="I could not find the information I was looking for">
+                            <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;"
+                                for="info-missing">
+                                I could not find the information I was looking for
+                            </label>
+                        </div>
+                        <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
+                            <input class="govuk-checkboxes__input" id="hard-find" name="not-useful" type="checkbox"
+                                value="The information was out of date">
+                            <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;" for="hard-find">
+                                The information was out of date
+                            </label>
+                        </div>
+                        <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
+                            <input class="govuk-checkboxes__input" id="hard-understand" name="not-useful" type="checkbox"
+                                value="The information was difficult to understand">
+                            <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;"
+                                for="hard-understand">
+                                The information was difficult to understand
+                            </label>
+                        </div>
+                        <div class="govuk-checkboxes__item" style="padding: 0 0 10px 0;">
+                            <input class="govuk-checkboxes__input" id="looks-broken" name="not-useful" type="checkbox"
+                                value="The page had technical problems (such as broken links or did not load properly)">
+                            <label class="govuk-label govuk-checkboxes__label" style="padding-left: 50px;"
+                                for="looks-broken">
+                                The page had technical problems (such as broken links or did not load properly)
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="govuk-button-group">
-                <button onclick="handleFeedbackOld()" class="govuk-button">Submit</button>
-                <button onclick="handleCancel()" class="govuk-button" style="background-color: #cbcbcb;">Cancel</button>
+                <div class="govuk-button-group">
+                    <button onclick="handleFeedbackOld()" class="govuk-button">Submit</button>
+                    <button onclick="handleCancel()" class="govuk-button" style="background-color: #cbcbcb;">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
