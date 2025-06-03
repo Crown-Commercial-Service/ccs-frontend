@@ -1,7 +1,7 @@
 
 <div class="govuk-grid-column-one-third">
 
-    <form v-on:submit.prevent="fetchAPIData" action="{{ path('frameworks_list') }}" method="GET">
+    <form id="searchFilterForm" v-on:submit.prevent="fetchAPIData" action="{{ path('frameworks_list') }}" method="GET">
 
         <div class="govuk-form-group govuk-form-group--enclosure">
             <div class="govuk-form-group sidebar__search-group">
