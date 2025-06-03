@@ -66,18 +66,20 @@ function frameworkAndSupplierPage() {
 
 function searchFilterAgreement() {
     document.addEventListener('DOMContentLoaded', () => {
-        const statusCheckboxes = document.querySelectorAll('input[type="checkbox"]');
-
-        statusCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('click', () => {
-                pushToDataLayer({
-                    "event":                'search_filter',
-                    "interaction_type":     checkbox.checked ? "select" : "remove" ,
-                    "interaction_detail":   checkbox.value
-                });
+        const container = document.querySelector('#searchFilterForm');
+        if (container) {
+            container.addEventListener('click', (event) => {
+                const checkbox = event.target;
+                if (checkbox.matches('input[type="checkbox"]')) {
+                    pushToDataLayer({
+                        "event":                'search_filter',
+                        "interaction_type":     checkbox.checked ? "select" : "remove" ,
+                        "interaction_detail":   checkbox.value
+                    });
+                }
             });
-        });
-    })
+        }
+    });
 }
 
 function onPageFeedback(feedbackResponse) {
