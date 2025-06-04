@@ -22,7 +22,9 @@ for SERVICE in "${SERVICES[@]}"; do
 
     sudo systemctl list-unit-files "$SERVICE"|grep -q "^${SERVICE_REGEX}\\s"
     if [ $? -eq 0 ]; then
+
         sudo systemctl is-active --quiet "$SERVICE" \
+            && echo "continuing just before stop."
             && sudo systemctl stop "$SERVICE"
     fi
 
