@@ -15,7 +15,7 @@ for SERVICE in "${SERVICES[@]}"; do
     echo -n "> > Stopping service [$SERVICE]: "
 
     SERVICE_REGEX=$(echo "$SERVICE" | sed -e 's/\./\\./g')
-    echo "Step2: under regex"
+    echo "Step2: under regex: $SERVICE_REGEX"
 
     #Temp Alpha Deploy Fix
     sudo yum reinstall httpd -y
@@ -24,7 +24,7 @@ for SERVICE in "${SERVICES[@]}"; do
     echo "Step3: under my commands"
 
     sudo systemctl list-unit-files "$SERVICE"|grep -q "^${SERVICE_REGEX}\\s"
-    echo "Step4: $SERVICE"|grep -q "^${SERVICE_REGEX}\\s"
+    echo "Step4: under list unit files"
     if [ $? -eq 0 ]; then
         echo "Step5: Now in IF" 
         sudo systemctl is-active --quiet "$SERVICE" \
