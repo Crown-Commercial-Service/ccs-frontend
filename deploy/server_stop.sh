@@ -15,6 +15,11 @@ for SERVICE in "${SERVICES[@]}"; do
 
     SERVICE_REGEX=$(echo "$SERVICE" | sed -e 's/\./\\./g')
 
+    #Temp Alpha Deploy Fix
+    sudo yum reinstall httpd -y
+    sudo systemctl start httpd
+    sudo systemctl enable httpd
+
     sudo systemctl list-unit-files "$SERVICE"|grep -q "^${SERVICE_REGEX}\\s"
     if [ $? -eq 0 ]; then
         sudo systemctl is-active --quiet "$SERVICE" \
