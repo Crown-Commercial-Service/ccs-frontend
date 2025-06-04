@@ -16,7 +16,7 @@
                 <p>Before buying from this agreement you should read the buyer guide and how to use contractual documents.</p>
                 <p>The buyer guide will help you understand how the agreement works and what you can or can’t use the agreement for.</p>
                 <p>This section might also include further guides or lists you will need to look at and make selections from, as well as previous webinar slides and Q&A scripts from sessions with buyers and suppliers.</p>
-                <div class="wysiwyg-content">{{ framework.content.customer_guide|raw }}</div>
+                <div class="wysiwyg-content rawHTML">{{ framework.content.customer_guide|raw }}</div>
             </div>
         </div>
     {% endif %}
@@ -31,7 +31,7 @@
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
                 <p>The core terms form part of the framework and call-off contracts and must be used on every contract. They cannot be changed.</p>
                 <p>The core terms are CCS’s standard commercial terms. They govern the supplier’s relationship with CCS and every customer who has a call-off contract.</p>
-                <div class="wysiwyg-content">{{ framework.content.core_terms_conditions|raw }}</div>
+                <div class="wysiwyg-content rawHTML">{{ framework.content.core_terms_conditions|raw }}</div>
             </div>
         </div>
     {% endif %}
@@ -63,7 +63,7 @@
                     </ul>
                 </p>
     
-                <div class="wysiwyg-content">{{ framework.content.call_off_order_form|raw }}</div>
+                <div class="wysiwyg-content rawHTML">{{ framework.content.call_off_order_form|raw }}</div>
             </div>
         </div>
     {% endif %}
@@ -77,7 +77,9 @@
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
                 {% for jointSchedule in framework.content.joint_schedules %}
-                    <p class="joint-schedule-title"><a onclick="fileDownload('{{ jointSchedule.joint_schedules_document }}', '{{ jointSchedule.joint_schedules_document_name }}', '{{ jointSchedule.joint_schedules_file_size }}');" href={{ jointSchedule.joint_schedule_document}}><strong>{{ jointSchedule.joint_schedule_document_name }}</strong></a></p>
+                    <p class="joint-schedule-title">
+                        <a onclick="fileDownload('{{ jointSchedule.joint_schedule_document }}', '{{ jointSchedule.joint_schedule_document_name }}', '{{ jointSchedule.joint_schedule_file_size }}');" href={{ jointSchedule.joint_schedule_document}}><strong>{{ jointSchedule.joint_schedule_document_name }}</strong></a>
+                    </p>
                     <p class="joint-schedule-title">{{ jointSchedule.joint_schedule_document_type}}</p>
                     <p class="joint-schedule-title">{{ jointSchedule.joint_schedule_document_usage}}</p>
                     <div class="wysiwyg-content">{{ jointSchedule.joint_schedule_document_description|raw }}</div>
@@ -98,11 +100,11 @@
                 <p>Call-off schedules are used when suppliers sell their goods or services to customers.</p>
                 <p>You can choose which schedules to include and whether to edit these template schedules when they form a call-off contract.</p>
                 
-                {% for callOffSchedules in framework.content.call_off_schedules %}
-                    <p class="joint-schedule-title"><a onclick="fileDownload('{{ callOffSchedules.call_off_schedule_document }}', '{{ callOffSchedules.call_off_schedule_document_name }}', '{{ callOffSchedules.call_off_schedule_file_size }}');" href={{ callOffSchedules.call_off_schedule_document}}><strong>{{ callOffSchedules.call_off_schedule_document_name }}</strong></a></p>
-                    <p class="joint-schedule-title">{{ callOffSchedules.call_off_schedule_document_type}}</p>
-                    <p class="joint-schedule-title">{{ callOffSchedules.call_off_schedule_document_usage}}</p>
-                    <div class="wysiwyg-content">{{ callOffSchedules.call_off_schedule_document_description|raw }}</div>
+                {% for callOffSchedule in framework.content.call_off_schedules %}
+                    <p class="joint-schedule-title"><a onclick="fileDownload('{{ callOffSchedule.call_off_schedule_document }}', '{{ callOffSchedule.call_off_schedule_document_name }}', '{{ callOffSchedule.call_off_schedule_file_size }}');" href={{ callOffSchedule.call_off_schedule_document}}><strong>{{ callOffSchedule.call_off_schedule_document_name }}</strong></a></p>
+                    <p class="joint-schedule-title">{{ callOffSchedule.call_off_schedule_document_type}}</p>
+                    <p class="joint-schedule-title">{{ callOffSchedule.call_off_schedule_document_usage}}</p>
+                    <div class="wysiwyg-content">{{ callOffSchedule.call_off_schedule_document_description|raw }}</div>
                 {% endfor %}
             </div>
         </div>
@@ -119,10 +121,10 @@
             
                 <p>Framework schedules are used by CCS to set up the agreement with suppliers.</p>
 
-                {% for frameworkSchedules in framework.content.framework_schedules %}
-                    <p class="joint-schedule-title"><a onclick="fileDownload('{{ frameworkSchedules.framework_schedule_schedule_document }}', '{{ frameworkSchedules.framework_schedule_document_name }}', '{{ frameworkSchedules.framework_schedule_file_size }}');" href={{ frameworkSchedules.framework_schedule_document}}><strong>{{ frameworkSchedules.framework_schedule_document_name }}</strong></a></p>
-                    <p class="joint-schedule-title">{{ frameworkSchedules.framework_schedule_document_usage}}</p>
-                    <div class="wysiwyg-content">{{ frameworkSchedules.framework_schedule_document_description|raw }}</div>
+                {% for frameworkSchedule in framework.content.framework_schedules %}
+                    <p class="joint-schedule-title"><a onclick="fileDownload('{{ frameworkSchedule.framework_schedule_document }}', '{{ frameworkSchedule.framework_schedule_document_name }}', '{{ frameworkSchedule.framework_schedule_file_size }}');" href={{ frameworkSchedule.framework_schedule_document}}><strong>{{ frameworkSchedule.framework_schedule_document_name }}</strong></a></p>
+                    <p class="joint-schedule-title">{{ frameworkSchedule.framework_schedule_document_usage}}</p>
+                    <div class="wysiwyg-content">{{ frameworkSchedule.framework_schedule_document_description|raw }}</div>
                 {% endfor %}
             </div>
         </div>
@@ -136,7 +138,7 @@
                 </h2>
             </div>
             <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
-                <div class="wysiwyg-content">{{ framework.content.templates|raw }}</div>
+                <div class="wysiwyg-content rawHTML">{{ framework.content.templates|raw }}</div>
             </div>
         </div>
     {% endif %}
