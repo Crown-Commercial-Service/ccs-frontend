@@ -86,7 +86,7 @@
 
 
         {% if showAtAGlance is defined and showAtAGlance %}
-            {% include 'frameworks/cas-at-a-glance.html.twig' with {'framework': framework}%}
+            {% include 'frameworks/_cas-at-a-glance.html.twig' with {'framework': framework}%}
             
         {% endif %}
 
@@ -139,7 +139,7 @@
         {% endfor %}
 
          {% if showDocuments is defined and showDocuments %}
-            {% include 'frameworks/cas-documents.html.twig' with {'framework': framework}%}
+            {% include 'frameworks/_cas-documents.html.twig' with {'framework': framework}%}
         {% endif %}
 
 
@@ -169,4 +169,19 @@
             }
         });
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const links = document.querySelectorAll('.rawHTML a');
+
+        links.forEach(link => {
+            link.addEventListener('click', function (event) {
+                pushToDataLayer({
+                    "event":            'file_download',
+                    "link_text":        link.firstChild.textContent,
+                    "link_url":         link.getAttribute('href'),
+                    "file_extension":   formatFileType(link.getAttribute('href')),
+                });
+            })
+        })
+    });
 </script>
