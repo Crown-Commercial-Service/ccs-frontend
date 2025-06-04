@@ -130,20 +130,18 @@ function formStart(formType) {
 }
 
 function fileDownload( fileURL, fileName, fileSize) {
-
     const fileSizeString = formatFileSize(fileSize);
-    const fileType = fileURL.substring(fileURL.lastIndexOf('.')+1);
+    const fileType       = formatFileType(fileURL)
     const actualFileName = fileURL.substr(fileURL.lastIndexOf('/')+1,fileURL.lastIndexOf('.')-1 - fileURL.lastIndexOf('/'));
 
     pushToDataLayer({
-        "event":        'file_download',
-        "link_text": fileName,
-        "link_url": fileURL,
-        "file_extension": fileType,
-        "file_size": fileSizeString,
-        "file_name": actualFileName
+        "event":            'file_download',
+        "link_text":        fileName,
+        "link_url":         fileURL,
+        "file_extension":   fileType,
+        "file_size":        fileSizeString,
+        "file_name":        actualFileName
     });
-
 }
 
 function pushToDataLayer(array) {
@@ -165,4 +163,9 @@ function formatFileSize(bytes, decimals = 2) {
     const i = Math.floor(Math.log(bytes) / Math.log(k))
 
     return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+}
+
+function formatFileType(url) {
+    const match = url.match(/\/([^\/?#]+)\.([a-zA-Z0-9]+)(?:[?#]|$)/);
+    return match ? match[2] : ""
 }
