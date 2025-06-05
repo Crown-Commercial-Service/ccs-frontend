@@ -65,16 +65,20 @@ function frameworkAndSupplierPage() {
 }
 
 function searchFilterAgreement() {
-    const statusCheckboxes = document.querySelectorAll('input[type="checkbox"]');
-
-    statusCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('click', () => {
-            pushToDataLayer({
-                "event":                'search_filter',
-                "interaction_type":     checkbox.checked ? "checking" : "unchecking" ,
-                "interaction_detail":   checkbox.value
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.querySelector('#searchFilterForm');
+        if (container) {
+            container.addEventListener('click', (event) => {
+                const checkbox = event.target;
+                if (checkbox.matches('input[type="checkbox"]')) {
+                    pushToDataLayer({
+                        "event":                'search_filter',
+                        "interaction_type":     checkbox.checked ? "select" : "remove" ,
+                        "interaction_detail":   checkbox.value
+                    });
+                }
             });
-        });
+        }
     });
 }
 
@@ -119,33 +123,32 @@ function formStart(formType) {
         console.log("event is captured only once. ");
         pushToDataLayer({
             "event":        'form_start',
-            'form_type':    formType
+            'form_type':    formType,
+            'form_id':      document.querySelector('[name="subject"]').value
         })
       }, { once: true });
 }
 
 function fileDownload( fileURL, fileName, fileSize) {
-
     const fileSizeString = formatFileSize(fileSize);
-    const fileType = fileURL.substring(fileURL.lastIndexOf('.')+1);
+    const fileType       = formatFileType(fileURL)
     const actualFileName = fileURL.substr(fileURL.lastIndexOf('/')+1,fileURL.lastIndexOf('.')-1 - fileURL.lastIndexOf('/'));
 
     pushToDataLayer({
-        "event":        'file_download',
-        "link_text": fileName,
-        "link_url": fileURL,
-        "file_extension": fileType,
-        "file_size": fileSizeString,
-        "file_name": actualFileName
+        "event":            'file_download',
+        "link_text":        fileName,
+        "link_url":         fileURL,
+        "file_extension":   fileType,
+        "file_size":        fileSizeString,
+        "file_name":        actualFileName
     });
-
 }
 
 function pushToDataLayer(array) {
     array = (typeof array === 'string') ? JSON.parse(array) : array;
     var env = document.getElementById('app-env').dataset.env;
 
-    if (env == "local" || env == "prod") {
+    if (env != "dev") {
         window.dataLayer.push(array);
     }
 }
@@ -160,4 +163,9 @@ function formatFileSize(bytes, decimals = 2) {
     const i = Math.floor(Math.log(bytes) / Math.log(k))
 
     return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+}
+
+function formatFileType(url) {
+    const match = url.match(/\/([^\/?#]+)\.([a-zA-Z0-9]+)(?:[?#]|$)/);
+    return match ? match[2] : ""
 }

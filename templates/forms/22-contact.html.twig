@@ -262,7 +262,7 @@
                             Once you submit your details, you will receive a confirmation email to let you know your case reference number and next steps.</p>
 
                             <div class="govuk-form-group">
-                                <button data-prevent-double-click="true" data-module="govuk-button" type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit">
+                                <button data-prevent-double-click="true" data-module="govuk-button" type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit" onclick="pushToDataLayer({'event':'form_submit', 'form_type':'Contact CCS', 'form_id': document.querySelector('[name=subject]').value })">
                                     Submit
                                 </button>
                             </div>
@@ -306,11 +306,9 @@
                             option.addEventListener("change", function(event) {
                                 switch(event.target.value) {
                                     case 'Website - Feedback':
-                                        toggleComplaintForm(false);
                                         document.getElementById("subject").value = "Website - Feedback";
                                         break;
                                     default:
-                                        toggleComplaintForm(false);
                                         document.getElementById("subject").value = "Website - Question";
                                 }
                         });});
@@ -350,12 +348,6 @@
                             }
                             return "";
                         }
-
-                        window.onload = function() {
-                            if (document.getElementById("how-contacted-conditional-3").checked) {
-                                toggleComplaintForm(true);
-                            }
-                        };
 
                     </script>
 

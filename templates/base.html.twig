@@ -58,14 +58,14 @@
     </style>
 
     {% if app.environment == "prod" %}
-         <link rel="preload" href="/assets/styles/styles.min.css?v=1.72" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.72"></noscript>
+         <link rel="preload" href="/assets/styles/styles.min.css?v=1.73" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.73"></noscript>
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="preload" href="/assets/styles/styles.min.css?v=1.72" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.72"></noscript>
+        <link rel="preload" href="/assets/styles/styles.min.css?v=1.73" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.73"></noscript>
     {% endif %}
 
     {# Browser icon #}
@@ -141,7 +141,7 @@
             };
 
             var cookiePreferences = JSON.parse(decodeURIComponent(readCookie('cookie_preferences')));
-            if ('{{ app.environment }}' == "local" || '{{ app.environment }}' == "prod") {
+            if ('{{ app.environment }}' != "dev") {
                     (function (w, d, s, l, i) {
                         w[l] = w[l] || [];
                         w[l].push({
@@ -259,7 +259,7 @@
 
 <script src="/assets/scripts/libraries/jquery-3.6.0.min.js"></script>
 <script src="/assets/scripts/libraries/objectFitPolyfill.min.js"></script>
-<script src="/assets/scripts/app.js?v=2.3"></script>
+<script src="/assets/scripts/app.js?v=2.4"></script>
 <script type="text/javascript">
   $('a[target^="_new-window"]').click(function() {
     var width = window.innerWidth * 0.9 ;
@@ -426,34 +426,6 @@ End Usersnap code #}
 
             
     })
-
-    // make cards same height in list
-    var cardLists = document.querySelectorAll("ul.card-list");
-    var maxHeight = 0;
-    var windowWidth = window.innerWidth;
-
-    if (cardLists != null) {
-        cardLists.forEach(function(cardList) {
-            cards = cardList.querySelectorAll("li.card-list__item");
-
-            if (cards.length > 1) {
-                cards.forEach(function(card) {
-                    var cardHeight = card.querySelector(".card-list__item__wrapper").offsetHeight;
-                    if(cardHeight > maxHeight) {
-                        maxHeight = cardHeight;
-                    }
-                });
-
-                cards.forEach(function(card) {
-                    card.querySelector(".card-list__item__wrapper").style.height = maxHeight - 50 + "px"; 
-                    
-                    if (windowWidth < 600) {
-                        card.querySelector(".card-list__item__wrapper").style.height = "auto";
-                    }
-                })
-            }
-        })
-    }
     
     // change colour of logo on focus for accessibility
     var logo = document.querySelector(".logo");

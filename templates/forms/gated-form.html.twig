@@ -58,7 +58,7 @@
     <p>You will receive an email when you submit your details. You can unsubscribe using the link in the email.</p>
 
     <div class="govuk-form-group">
-        <button data-prevent-double-click="true" data-module="govuk-button" type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit">
+        <button data-prevent-double-click="true" data-module="govuk-button" type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit" onclick="pushToDataLayer({'event':'form_submit', 'form_type':'Gated Form', 'form_id': document.querySelector('[name=subject]').value })">
             Download
         </button>
     </div>

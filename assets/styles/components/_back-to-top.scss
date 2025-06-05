@@ -10,7 +10,7 @@
     text-align: center;
     position: fixed;
     bottom: auto;
-    right: 30px;
+    right: 72px;
     transition: background-color .3s,
         opacity .5s, visibility .5s;
     z-index: 1000;
@@ -44,11 +44,13 @@
 .back-to-top-button.show {
     opacity: 1;
     visibility: visible;
+    border: 1px solid #9B1A47;
 }
 
 .back-to-top-button.fixed {
     position: absolute;
-    top: -70px;
+    top: -62px;
+    border: 1px solid #9B1A47;
 }
 
 .back-to-top-button.flex {

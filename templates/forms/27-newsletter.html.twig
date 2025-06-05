@@ -125,7 +125,7 @@
                         <p>You will receive an email when you submit your details. You can unsubscribe using the link in the email.</p>
 
                         <div class="govuk-form-group">
-                            <button data-prevent-double-click="true" data-module="govuk-button" type="submit" id="submit" class="govuk-!-font-weight-bold govuk-button gtm-form-submit">Submit</button>
+                            <button data-prevent-double-click="true" data-module="govuk-button" type="submit" id="submit" class="govuk-!-font-weight-bold govuk-button gtm-form-submit" onclick="pushToDataLayer({'event':'form_submit', 'form_type':'Newsletter', 'form_id': document.querySelector('[name=subject]').value })">Submit</button>
                         </div>
                     </form>
                 </div>

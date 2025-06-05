@@ -151,7 +151,7 @@
                                 <p class="govuk-hint">You can enter up to 3000 characters</p>
                             </div>
                             <div class="govuk-form-group">
-                                <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit">
+                                <button type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit" onclick="pushToDataLayer({'event':'form_submit', 'form_type':'Events Form', 'form_id': document.querySelector('[name=subject]').value })">
                                     Submit
                                 </button>
                             </div>
