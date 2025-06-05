@@ -288,6 +288,12 @@ End Usersnap code #}
     piCId = '';
     piHostname = 'information.crowncommercial.gov.uk';
 
+    // data layer for 404 pages
+    const pageTitle = document.querySelector('.page-title');
+    if (pageTitle !== null && pageTitle.innerText === "Page not found") {
+        pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': '404'});
+    }
+
     var cookiePreferences = JSON.parse(decodeURIComponent(readCookie('cookie_preferences')));
     if (cookiePreferences !== null) {
         if (cookiePreferences.marketing === true) {
