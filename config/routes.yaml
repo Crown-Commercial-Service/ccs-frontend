@@ -232,14 +232,6 @@ event_show:
   requirements:
     id: '\d+'
 
-form_events:
-  path: /events-form
-  controller: App\Controller\FormController::events
-
-form_events_sends:
-  path: /events-form/submit
-  controller: App\Controller\FormController::eventsSubmit
-
 form_newsletter:
  path: /newsletter
  controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController

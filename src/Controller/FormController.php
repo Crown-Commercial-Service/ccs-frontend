@@ -387,53 +387,6 @@ class FormController extends AbstractController
             }
         }
     }
-
-    public function events(Request $request)
-    {
-        return $this->render('forms/34-events-form.html.twig');
-    }
-
-    public function eventsSubmit(Request $request)
-    {
-        $params = $request->request;
-
-        ControllerHelper::honeyPot($params->get('surname', null));
-
-        $formData = [
-            'name'          => $params->get('name', null),
-            'email'         => $params->get('email', null),
-            'jobTitle'      => $params->get('jobTitle'),
-            'phone'         => $params->get('phone', null),
-            'company'       => $params->get('company', null),
-            'moreDetail'    => $params->get('more-detail', null),
-        ];
-
-        $formErrors = $this->validateEventsForm($formData);
-
-        if ($formErrors) {
-            return $this->render('forms/34-events-form.html.twig', [
-                'formErrors'    => $formErrors,
-                'formData'      => $formData,
-            ]);
-        } else {
-            $params->set('subject', 'Events Form');
-            $params->set('origin', 'Website - Event');
-            $params->set('00Nb0000009IXEs', $formData['jobTitle']);
-            $params->set('priority', 'Green');
-            $params->set('description', 'Website - Event, more-detail: ' . $formData['moreDetail']);
-            $params->set('orgid', ControllerHelper::getOrgId());
-
-            $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
-                'query'         => $params->all(),
-            ]);
-
-            if (!is_null($params->get('debug'))) {
-                return new Response($response->getContent());
-            }
-        }
-        return  $this->redirectToRoute('form_contact_thanks');
-    }
-
     public static function sendToSalesforceForDownload($params, $utmParams, $data, $campaignCode, $description)
     {
         $formErrors = self::validateGatedForm($data);
