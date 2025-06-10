@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <p class="visuallyhidden">This is a page with JS</p>
+            <p class="visuallyhidden">This is a page with JS (VUE 3)</p>
 
             <div class="govuk-grid-row events-page-listing">
                 <div class="govuk-grid-column-one-quarter">
@@ -123,7 +123,7 @@
 
                                         <div id="filter_events-content-1" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-for-event-type">
                                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                <input v-on:change=fetchAPIData(null,null) v-model="checkedEventType" name="allType" value="allType" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" type="checkbox" {{ filters.event_type is defined and filters.event_type is empty  ? 'checked' }}>
+                                                <input v-model="allTypeModel" name="allType" value="allType" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" type="checkbox" {{ filters.event_type is defined and filters.event_type is empty  ? 'checked' }}>
                                                 <label class="govuk-label govuk-checkboxes__label" for="allType">
                                                     View all
                                                 </label>
@@ -131,7 +131,7 @@
 
                                             {% for item in event_type|sort %}
                                                 <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                    <input v-on:change=fetchAPIData("{{item.id}}+{{item.slug}}",null) v-model="checkedEventType" name="event_type[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.id}}+{{item.slug}}" type="checkbox" {{ item.id in TypeForTwig ? 'checked' }}>
+                                                    <input v-model="checkedEventType" name="event_type[]" value={{item.id}} class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.id}}+{{item.slug}}" type="checkbox" {{ item.id in TypeForTwig ? 'checked' }}>
                                                     <label class="govuk-label govuk-checkboxes__label" for="{{item.id}}+{{item.slug}}">
                                                         {{ item.name }}
                                                     </label>
@@ -232,7 +232,7 @@
                 <div class="govuk-grid-column-three-quarters events-list-container">
 
                     <div v-if="responseAvailable" class="hideWithoutJS govuk-visually-hidden">
-                        dada
+
                         <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24" aria-live="assertive">
                             <span v-if="searchResultsNumber == 1" v-show="javascriptVersion" style="display: none;"> {[ searchResultsNumber ]} event found</span>
                             <span v-else                          v-show="javascriptVersion" style="display: none;"> {[ searchResultsNumber ]} events found</span>
@@ -279,7 +279,7 @@
 
 
                 </div>
-                <div v-else-if="responseAvailable === false" class="hideWithoutJS govuk-visually-hidden">
+                <div v-else-if="responseAvailable === false">
                     <p>Loading results ...</p>
                 </div>
                 <div v-if="emptyResult" class="hideWithoutJS govuk-visually-hidden">
@@ -353,65 +353,63 @@
             Vue.createApp({
                 delimiters: ['{[', ']}'],
                 
-                setup() {
-                    var javascriptVersion = true
-                    var results = null
-                    var responseAvailable = null
-                    var emptyResult = false
-                    var apiURL = apiBaseUrl + "events?"
-                    var state = reactive({
-                        checkedEventType,
-                        checkedProductsServices,
-                        checkedEventAudience,
-                        checkedSectors,
-                    })
-                    var currentPage = pageNumber
-                    var numberOfPages = Number
-                    var totalResults = Number
-                    var searchResultsNumber = totalResults
-                    var popstateLoad = false
-                    var name = 'Ali'
-
+                data() {
                     return {
-                        javascriptVersion,
-                        results,
-                        responseAvailable,
-                        emptyResult,
-                        apiURL,
-                        state,
-                        currentPage,
-                        numberOfPages,
-                        totalResults,
-                        searchResultsNumber,
-                        popstateLoad,
-                        name
+                        javascriptVersion: true,
+                        results: null,
+                        responseAvailable: false,
+                        emptyResult: false,
+                        apiURL: apiBaseUrl + "events?",
+                        checkedEventType: checkedEventType,
+                        checkedProductsServices: checkedProductsServices,
+                        checkedEventAudience: checkedEventAudience,
+                        checkedSectors: checkedProductsServices,
+                        currentPage: pageNumber,
+                        numberOfPages: Number,
+                        totalResults: Number,
+                        searchResultsNumber: totalResults,
+                        popstateLoad: false,
+                        name: 'Ali',
                     }
                 },
                 mounted() {
                     this.fetchAPIData(null, this.currentPage);
-                    // this.filtering(null, "type");
-                    // this.filtering(null, "PS");
-                    // this.filtering(null, "audience");
-                    // this.filtering(null, "sectors");
-                },
-                created() {
-                    const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
 
-                    hideWithOutJS.forEach(card => {
-                    if (card.classList.contains('govuk-visually-hidden')) {
-                        card.classList.remove('govuk-visually-hidden');
-                    }});
-                    
-                    // unfortunately we have to update the results when we instantiate
-                    // the Vue app so it hooks in all the correct event handlers etc.
-                    //this.fetchAPIData(null, this.currentPage);
-
-                    // setup popstate event listener for History API
-                    //this.setupHistoryApi();       
+                    //this.setupHistoryApi();     
                 },
-                data() {
-                    return {
+                watch: {
+                    checkedEventType: function(checkedEventType) {
+                        console.log('type changed');
+                        if (checkedEventType.length === Number("{{event_type|length}}")) {
+                            this.checkedEventType = [];
+                        }
+
+                    },
+                    responseAvailable(responseAvailable) {
+                        if (responseAvailable) {
+                            this.$nextTick(() => {
+                                const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
+                                hideWithOutJS.forEach(section => {
+                                    if (section.classList.contains('govuk-visually-hidden')) {;
+                                        section.classList.remove('govuk-visually-hidden');
+                                    }
+                                });
+                            });
+                        }
                     }
+                },
+                computed: {
+                    allTypeModel: {
+                        get() {
+                            const arrayLen = (this.checkedEventType || []).length;
+                            return arrayLen === 0 || arrayLen === Number("{{event_type|length}}");
+                        },
+                        set(checked) {
+                            if (checked) {
+                                this.checkedEventType = [];
+                            }
+                        }
+                    },
                 },
                 methods: {
                     formatDate:function(dateString){
@@ -491,14 +489,13 @@
                         //        checkedSectors:         this.checkedSectors,
                         //    }, 'Events', this.frontendSearchUrl);
                         //}
-
+//
                         //// reset the popstateLoad property to false
                         //this.popstateLoad = false;
 
                         return fetchURL;
                     },
                     fetchAPIData: function(input, page) {
-                        var self = this;
                         this.responseAvailable = false;
                         this.emptyResult = false;
                         this.currentPage = page === null ? 1 : page;
@@ -513,69 +510,65 @@
                             }
                             return response.json();
                         })
-                        .then(function(jsonResponse) {
-                            self.numberOfPages = jsonResponse.meta['X-WP-TotalPages'];
-                            self.totalResults = jsonResponse.meta['X-WP-Total'];
-                            self.results = jsonResponse.body;
-                            self.searchResultsNumber = self.totalResults;
-                            for(var i = 0; i < self.results.length; i++) {  
-                                self.results[i].eventURL = appBaseUrl + "/events/" + self.results[i].id + "/" + self.results[i].slug;
-                                self.results[i].startDate = self.formatDate(jsonResponse.body[i].acf.start_datetime.split(' ')[0]);
-                                self.results[i].endDate = self.formatDate(jsonResponse.body[i].acf.end_datetime.split(' ')[0]);
-                                self.results[i].event_type = self.results[i].acf.event_type;
-                                self.results[i].summary = self.results[i].acf.event_summary;
+                        .then((jsonResponse) => {
+                            this.numberOfPages = jsonResponse.meta['X-WP-TotalPages'];
+                            this.totalResults = jsonResponse.meta['X-WP-Total'];
+                            this.results = jsonResponse.body;
+                            this.searchResultsNumber = this.totalResults;
+                            for(var i = 0; i < this.results.length; i++) {  
+                                this.results[i].eventURL = appBaseUrl + "/events/" + this.results[i].id + "/" + this.results[i].slug;
+                                this.results[i].startDate = this.formatDate(jsonResponse.body[i].acf.start_datetime.split(' ')[0]);
+                                this.results[i].endDate = this.formatDate(jsonResponse.body[i].acf.end_datetime.split(' ')[0]);
+                                this.results[i].event_type = this.results[i].acf.event_type;
+                                this.results[i].summary = this.results[i].acf.event_summary;
 
-                                self.results[i].imageSet = false;
-                                if (self.results[i].acf.featured_image_url != false) {
-                                    self.results[i].imageSet = true;
-                                    self.results[i].imageURL = self.results[i].acf.featured_image_url;
-                                    self.results[i].altText  = self.results[i].acf.alt_text;
+                                this.results[i].imageSet = false;
+                                if (this.results[i].acf.featured_image_url != false) {
+                                    this.results[i].imageSet = true;
+                                    this.results[i].imageURL = this.results[i].acf.featured_image_url;
+                                    this.results[i].altText  = this.results[i].acf.alt_text;
                                 }
                             }
 
                             if( Object.keys(jsonResponse.body).length === 0 ){
                                 emptyResult = true;
-                                self.responseAvailable = null;
+                                this.responseAvailable = null;
                             }else{
-                                self.responseAvailable = true;
+                                this.responseAvailable = true;
                             }
-                            console.log(self.responseAvailable)
-                            console.log(self.results)
-
                         })
-                        .catch(function(error) {
+                        .catch((error) => {
                             console.log('An error occurred while fetching the API data');
                             console.log(error);
-                            responseAvailable.value = false;
+                            this.responseAvailable = false;
                         });
                     },
                     updatePageValue: function(newPageValue) {
                         this.currentPage = newPageValue;
                     },
-                    setupHistoryApi: function() {
-                        var self = this;
-                        window.onpopstate = function(event) {
-                            // set the popstate variable to true so that we can
-                            // tell in other parts of the code that the state change
-                            // is being caused by the back/forward button
-                            self.popstateLoad = true;
-
-                            if(event.state == null) {
-                                self.checkedEventType       = [];
-                                self.checkedProductsServices = [];
-                                self.checkedEventAudience   = [];
-                                self.checkedSectors  = [];
-                                return
-                            }
-
-                            self.checkedEventType           = event.state.checkedEventType;
-                            self.checkedProductsServices    = event.state.checkedProductsServices;
-                            self.checkedEventAudience       = event.state.checkedEventAudience;
-                            self.checkedSectors             = event.state.checkedSectors;
-
-                            self.fetchAPIData(null, self.currentPage);
-                        }
-                    },
+                    //setupHistoryApi: function() {
+                    //    window.onpopstate = function(event) {
+                    //        // set the popstate variable to true so that we can
+                    //        // tell in other parts of the code that the state change
+                    //        // is being caused by the back/forward button
+                    //        this.popstateLoad = true;
+//
+                    //        if(event.state == null) {
+                    //            this.checkedEventType       = [];
+                    //            this.checkedProductsServices = [];
+                    //            this.checkedEventAudience   = [];
+                    //            this.checkedSectors  = [];
+                    //            return
+                    //        }
+//
+                    //        this.checkedEventType           = event.state.checkedEventType;
+                    //        this.checkedProductsServices    = event.state.checkedProductsServices;
+                    //        this.checkedEventAudience       = event.state.checkedEventAudience;
+                    //        this.checkedSectors             = event.state.checkedSectors;
+//
+                    //        this.fetchAPIData(null, this.currentPage);
+                    //    }
+                    //},
                 }
             }).mount('#main-content')
             
