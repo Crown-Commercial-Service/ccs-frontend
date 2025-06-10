@@ -28,6 +28,12 @@
 
         <main id="main-content" role="main" class="govuk-main-wrapper govuk-main-wrapper--tight">
 
+            {[ name ]}
+            <br>
+            {[ apiURL ]}
+            <br>
+            {[ state.checkedEventType ]}
+
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds page-introduction">
                     <h1 class="govuk-heading-xl page-title page-title--tight">Events</h1>
@@ -226,7 +232,7 @@
                 <div class="govuk-grid-column-three-quarters events-list-container">
 
                     <div v-if="responseAvailable" class="hideWithoutJS govuk-visually-hidden">
-                        
+                        dada
                         <h2 class="govuk-heading-m ccs-font-weight-semibold govuk-!-font-size-24" aria-live="assertive">
                             <span v-if="searchResultsNumber == 1" v-show="javascriptVersion" style="display: none;"> {[ searchResultsNumber ]} event found</span>
                             <span v-else                          v-show="javascriptVersion" style="display: none;"> {[ searchResultsNumber ]} events found</span>
@@ -280,22 +286,25 @@
                     <p>There are no matching results.</p>
                 </div>
 
-                <div v-show="!javascriptVersion">
+                {# <div v-show="!javascriptVersion">
                     {% include '/events/_resultWithoutJS.html.twig' %}
-                </div>
+                </div> #}
 
                 </div>
             </div>
 
         </main>
 
-        {% if app.environment == "prod" %}
+        {# {% if app.environment == "prod" %}
             <script src="/assets/scripts/libraries/vue.min.js?v=1"></script>
         {% else %}
             <script src="/assets/scripts/libraries/vue.js?v=1"></script>
-        {% endif %}
+        {% endif %} #}
 
-        <script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+
+        <script type="module">
             pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'event'});
             
             /**
@@ -339,227 +348,74 @@
                 var checkedSectors   = Array.from([{{filters.sectors}}]);
             {% endif %}
 
-            Vue.component('results-pagination', {
+            const { ref, reactive } = Vue
+
+            Vue.createApp({
                 delimiters: ['{[', ']}'],
-                props: {
-                    currentPage: Number,
-                    totalResults: Number,
-                    numberOfPages: Number,
-                },
-                computed: {
-                    nextPage: function() {
-                        if(this.currentPage == this.numberOfPages) {
-                            return this.currentPage;
-                        }
-                        return this.currentPage + 1;
-                    },
-                    previousPage: function() {
-                        if(this.currentPage == 1) {
-                            return this.currentPage;
-                        }
-                        return this.currentPage - 1;
-                    },
-                    paginationStartNumber: function() {
-                        // start page defaults to 2 (second page) because the
-                        // first page link is always output by default
-                        var linksStartPage = 1;
+                
+                setup() {
+                    var javascriptVersion = true
+                    var results = null
+                    var responseAvailable = null
+                    var emptyResult = false
+                    var apiURL = apiBaseUrl + "events?"
+                    var state = reactive({
+                        checkedEventType,
+                        checkedProductsServices,
+                        checkedEventAudience,
+                        checkedSectors,
+                    })
+                    var currentPage = pageNumber
+                    var numberOfPages = Number
+                    var totalResults = Number
+                    var searchResultsNumber = totalResults
+                    var popstateLoad = false
+                    var name = 'Ali'
 
-                        // if the start page is at the beginning of the pagination
-                        // then account for this
-                        if ((this.currentPage - 2) < 2 ) {
-                            linksStartPage = 2;
-                        } else {
-                            // otherwise the start page is equal to the current
-                            // page minus 2, this means that the pagination should
-                            // have a couple of links either side of the current
-                            // page, e.g.   2 3 [4] 5 6
-                            linksStartPage = this.currentPage - 2;
-                        }
-
-                        // if the start page is very close to the last page, then
-                        // account for this
-                        if((this.currentPage + 2) > this.numberOfPages) {
-                            linksStartPage = linksStartPage - 2;
-                        }
-
-                        if(linksStartPage <= 1 ) {
-                            linksStartPage = 2;
-                        }
-
-                        return linksStartPage;
-                    },
-                    paginationEndNumber: function() {
-                        var linksEndPage   = this.paginationStartNumber + 4;
-
-                        // if there aren't more pages than the number we
-                        // want to show by minimum, then the end page is just equal
-                        // to the final result page
-
-                        if ((linksEndPage >= this.numberOfPages)) {
-                            // minus 1 because the last page is always output
-                            linksEndPage = this.numberOfPages - 1;
-                        }
-
-                        if(this.numberOfPages == 1) {
-                            linksEndPage = 1;
-                        }
-
-                        return linksEndPage;
+                    return {
+                        javascriptVersion,
+                        results,
+                        responseAvailable,
+                        emptyResult,
+                        apiURL,
+                        state,
+                        currentPage,
+                        numberOfPages,
+                        totalResults,
+                        searchResultsNumber,
+                        popstateLoad,
+                        name
                     }
                 },
-                methods: {
-                    updatePageNumber: function(event, newPage) {
-                        event.preventDefault();
-                        this.$emit('update-page', newPage);
-                        search.fetchAPIData(null, newPage)
-                    },
-                    range : function (start, end) {
-                        return Array(end - start + 1).fill().map(function(_, idx) {
-                            return start + idx;
-                        });
-                    }
+                mounted() {
+                    this.fetchAPIData(null, this.currentPage);
+                    // this.filtering(null, "type");
+                    // this.filtering(null, "PS");
+                    // this.filtering(null, "audience");
+                    // this.filtering(null, "sectors");
                 },
-                template: 
-                    `
-                    <div class="events-pagination">
-                        <ul class="list--inline pagination govuk-body" role="list" aria-label="Pagination" v-if="numberOfPages > 0">
-                            <li class="pagination__item pagination__item--previous" v-if="currentPage != 1">
-                                <a href="#" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
-                                    <span class="icon">
-                                        <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M6.7 0l1.4 1.4-4.3 4.3h13v2H3.9l4.2 4-1.4 1.4L0 6.7z" fill="#007194" fill-rule="evenodd"></path></svg>
-                                    </span>
-                                    <span>Previous</span> <span class="visuallyhidden">page</span>
-                                </a>
-                            </li>
-
-                            <li class="pagination__item">
-                                <span v-if="currentPage == 1"><span class="visuallyhidden">Page </span>1</span>
-                                <a v-else href="#" v-on:click="updatePageNumber($event, 1)"><span class="visuallyhidden">Page </span>1</a>
-                            </li>
-
-                            <li class="pagination__item" v-if="paginationStartNumber > 2">…</li>
-
-                            <li class="pagination__item" v-for="page in range(paginationStartNumber, paginationEndNumber)" v-if="numberOfPages > 1">
-                                <span v-if="page == currentPage"><span class="visuallyhidden">Page </span>{[ page ]}</span>
-                                <a v-else href="#" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
-                            </li>
-
-                            <li class="pagination__item" v-if="(paginationEndNumber + 1) < numberOfPages">…</li>
-
-                            <li class="pagination__item" v-if="numberOfPages > 1">
-                                <span v-if="currentPage == numberOfPages"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</span>
-                                <a v-else href="#" v-on:click="updatePageNumber($event, numberOfPages)"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</a>
-                            </li>
-
-                            <li class="pagination__item pagination__item--next" v-if="currentPage != numberOfPages">
-                                <a href="#" rel="next" v-on:click="updatePageNumber($event, nextPage)">
-                                    <span>Next</span> <span class="visuallyhidden">page</span>
-                                    <span class="icon">
-                                        <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"></path></svg>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    `
-            });
-
-
-             var search = new Vue({
-                delimiters: ['{[', ']}'],
-                el: '#main-content',
-                mounted:function(){
-                    this.filtering(null, "type");
-                    this.filtering(null, "PS");
-                    this.filtering(null, "audience");
-                    this.filtering(null, "sectors");
-                },
-                data: {
-                    javascriptVersion: true,
-                    results: "",
-                    responseAvailable: null,
-                    emptyResult: false,
-                    apiURL:  apiBaseUrl + "events?",
-                    checkedEventType: checkedEventType,
-                    checkedProductsServices: checkedProductsServices,
-                    checkedEventAudience: checkedEventAudience,
-                    checkedSectors: checkedSectors,
-                    currentPage: pageNumber,
-                    numberOfPages: Number,
-                    totalResults: Number,
-                    searchResultsNumber: totalResults,
-
-                    popstateLoad: false
-                },
-                created: function() {
+                created() {
                     const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
 
                     hideWithOutJS.forEach(card => {
                     if (card.classList.contains('govuk-visually-hidden')) {
                         card.classList.remove('govuk-visually-hidden');
                     }});
-
+                    
                     // unfortunately we have to update the results when we instantiate
                     // the Vue app so it hooks in all the correct event handlers etc.
-                    this.fetchAPIData(null, this.currentPage);
+                    //this.fetchAPIData(null, this.currentPage);
 
                     // setup popstate event listener for History API
-                    this.setupHistoryApi();                   
+                    //this.setupHistoryApi();       
                 },
-                watch: {
-                    searchRequestUrl: function() {
-
-                        // if the searchRequestUrl hasn't been updated by a popstate
-                        // event (back/forward button) then we push a state item to the
-                        // JS History API
-                        if(this.popstateLoad === false) {
-                            history.pushState({
-                                checkedEventType:       this.checkedEventType,
-                                checkedProductsServices: this.checkedProductsServices,
-                                checkedEventAudience:   this.checkedEventAudience,
-                                checkedSectors:   this.checkedSectors,
-                            }, 'Events', this.frontendSearchUrl);
-                        }
-
-                        // reset the popstateLoad property to false
-                        this.popstateLoad = false;
-                    }
-                },
-                computed: {
-                    frontendQueryUrl: function() {
-                        var queryUrl = '/?';
-
-                        if(this.checkedEventType.length != 0) {
-                            queryUrl += '&event_type=' + this.checkedEventType.join();
-                        }
-
-                        if(this.checkedProductsServices.length != 0) {
-                            queryUrl += '&products_services=' + this.checkedProductsServices.join();
-                        }
-                        
-                        if(this.checkedEventAudience.length != 0) {
-                            queryUrl += '&audience_tag=' + this.checkedEventAudience.join();
-                        }
-
-                        if(this.checkedSectors.length != 0) {
-                            queryUrl += '&sectors=' + this.checkedSectors.join();
-                        }
-
-                         if(this.currentPage ){
-                            queryUrl += '&page=' + this.currentPage;
-                        }
-
-                        return queryUrl != '/?' ? queryUrl : "";
-                        
-                    },
-                    frontendSearchUrl: function() {
-                        var searchUrl = '/events' + this.frontendQueryUrl ;
-                        return searchUrl;
+                data() {
+                    return {
                     }
                 },
                 methods: {
                     formatDate:function(dateString){
-                        date = new Date();
+                        var date = new Date();
                         date.setDate(dateString.split('-')[0])
                         date.setMonth(dateString.split('-')[1]-1)
                         date.setFullYear(dateString.split('-')[2])
@@ -568,55 +424,58 @@
                         return date.getDate() + ' ' + month + ' ' + date.getFullYear();
                     },
                     filtering: function(selectedIdandSlug, filtertingOption){
-                        filterArray = null
-                        viewAllCheckboxID = null
-                        selectedFilterFromControllerLength = null
-                        paramaString = null
-                        returnFilter = ""
+                        var state = reactive({
+                            filterArray: [],
+                            viewAllCheckboxID: "",
+                            selectedFilterFromControllerLength: "",
+                            paramaString: "",
+                            returnFilter: "",
+
+                        });
 
                         switch(filtertingOption) {
                             case "type":
-                                filterArray                         = this.checkedEventType
-                                viewAllCheckboxID                   = "allType"
-                                selectedFilterFromControllerLength  = Number("{{event_type|length}}")
-                                paramaString                        = "&event_type="
+                                state.filterArray                         = checkedEventType
+                                state.viewAllCheckboxID                   = "allType"
+                                state.selectedFilterFromControllerLength  = Number("{{event_type|length}}")
+                                state.paramaString                        = "&event_type="
                                 break;
                             case "PS":
-                                filterArray                         = this.checkedProductsServices
-                                viewAllCheckboxID                   = "allPS"
-                                selectedFilterFromControllerLength  = Number("{{products_services|length}}")
-                                paramaString                        = "&products_services="
+                                state.filterArray                         = checkedProductsServices
+                                state.viewAllCheckboxID                   = "allPS"
+                                state.selectedFilterFromControllerLength  = Number("{{products_services|length}}")
+                                state.paramaString                        = "&products_services="
                                 break;
                             case "audience":
-                                filterArray                         = this.checkedEventAudience
-                                viewAllCheckboxID                   = "allAudience"
-                                selectedFilterFromControllerLength  = Number("{{audience_tag|length}}")
-                                paramaString                        = "&audience_tag="
+                                state.filterArray                         = checkedEventAudience
+                                state.viewAllCheckboxID                   = "allAudience"
+                                state.selectedFilterFromControllerLength  = Number("{{audience_tag|length}}")
+                                state.paramaString                        = "&audience_tag="
                                 break;
                             case "sectors":
-                                filterArray                         = this.checkedSectors
-                                viewAllCheckboxID                   = "allSectors"
-                                selectedFilterFromControllerLength  = Number("{{sectors|length}}")
-                                paramaString                        = "&sectors="
+                                state.filterArray                         = checkedSectors
+                                state.viewAllCheckboxID                   = "allSectors"
+                                state.selectedFilterFromControllerLength  = Number("{{sectors|length}}")
+                                state.paramaString                        = "&sectors="
                                 break;
                             default:
                                 console.log('An error occurred');
                                 return
                         }
 
-                        if (filterArray.includes(viewAllCheckboxID) || filterArray.length == 0 || filterArray.length == selectedFilterFromControllerLength){
-                            filterArray.splice(0);
-                            document.getElementById(viewAllCheckboxID).checked = true;
-                            document.getElementById(selectedIdandSlug) != null ? document.getElementById(selectedIdandSlug).checked = false : null
+                        if (state.filterArray.includes(state.viewAllCheckboxID) || state.filterArray.length == 0 || state.filterArray.length == state.selectedFilterFromControllerLength){
+                            state.filterArray.splice(0);
+                            document.getElementById(state.viewAllCheckboxID).checked = true;
+                            document.getElementById(state.selectedIdandSlug) != null ? document.getElementById(state.selectedIdandSlug).checked = false : null
                         }else{
-                            document.getElementById(viewAllCheckboxID).checked = false;
-                            returnFilter = paramaString + filterArray.join()
+                            document.getElementById(state.viewAllCheckboxID).checked = false;
+                            state.returnFilter = state.paramaString + state.filterArray.join()
                         }
-                        return returnFilter;
+                        return state.returnFilter;
                     },
                     searchRequestUrl: function(selectedIdandSlug, page) {
 
-                        fetchURL =    this.apiURL 
+                        var fetchURL =    this.apiURL 
                                     + this.filtering(selectedIdandSlug, "type")
                                     + this.filtering(selectedIdandSlug, "PS")
                                     + this.filtering(selectedIdandSlug, "audience")
@@ -624,17 +483,17 @@
                         
                         fetchURL = fetchURL + "&orderby=start_datetime&order=asc&per_page=10&page=" + this.currentPage;
 
-                        if(this.popstateLoad === false) {
-                            history.pushState({
-                                checkedEventType:       this.checkedEventType,
-                                checkedProductsServices: this.checkedProductsServices,
-                                checkedEventAudience:   this.checkedEventAudience,
-                                checkedSectors:         this.checkedSectors,
-                            }, 'Events', this.frontendSearchUrl);
-                        }
+                        //if(this.popstateLoad === false) {
+                        //    history.pushState({
+                        //        checkedEventType:       this.checkedEventType,
+                        //        checkedProductsServices: this.checkedProductsServices,
+                        //        checkedEventAudience:   this.checkedEventAudience,
+                        //        checkedSectors:         this.checkedSectors,
+                        //    }, 'Events', this.frontendSearchUrl);
+                        //}
 
-                        // reset the popstateLoad property to false
-                        this.popstateLoad = false;
+                        //// reset the popstateLoad property to false
+                        //this.popstateLoad = false;
 
                         return fetchURL;
                     },
@@ -659,7 +518,6 @@
                             self.totalResults = jsonResponse.meta['X-WP-Total'];
                             self.results = jsonResponse.body;
                             self.searchResultsNumber = self.totalResults;
-
                             for(var i = 0; i < self.results.length; i++) {  
                                 self.results[i].eventURL = appBaseUrl + "/events/" + self.results[i].id + "/" + self.results[i].slug;
                                 self.results[i].startDate = self.formatDate(jsonResponse.body[i].acf.start_datetime.split(' ')[0]);
@@ -676,16 +534,19 @@
                             }
 
                             if( Object.keys(jsonResponse.body).length === 0 ){
-                                self.emptyResult = true;
+                                emptyResult = true;
                                 self.responseAvailable = null;
                             }else{
                                 self.responseAvailable = true;
                             }
+                            console.log(self.responseAvailable)
+                            console.log(self.results)
+
                         })
                         .catch(function(error) {
-                            console.log('An error occurred');
+                            console.log('An error occurred while fetching the API data');
                             console.log(error);
-                            this.responseAvailable = false;
+                            responseAvailable.value = false;
                         });
                     },
                     updatePageValue: function(newPageValue) {
@@ -716,8 +577,9 @@
                         }
                     },
                 }
-            });
-
+            }).mount('#main-content')
+            
+            
         </script>
     </div>
 {% endblock %}
