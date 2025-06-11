@@ -42,10 +42,6 @@ pillars:
         db_value: 'Energy'
         slug: 'energy'
 
-      - name: 'Estates Support Services'
-        db_value: 'Estates Support Services'
-        slug: 'estates-support-services'
-
       - name: 'Facilities Management'
         db_value: 'Facilities Management'
         slug: 'facilities-management'
@@ -59,18 +55,18 @@ pillars:
         db_value: 'Cloud and Hosting'
         slug: 'cloud-and-hosting'
 
-      - name: 'Digital Capability and Delivery'
-        db_value: 'Digital Capability and Delivery'
-        slug: 'digital-capability-and-delivery'
+      - name: 'Digital and technology Services'
+        db_value: 'Digital and technology Services'
+        slug: 'digital-and-technology-services'
         
       - name: 'Network Services'
         db_value: 'Network Services'
         slug: 'network-services'
 
-      - name: 'Software and Hardware'  
-        db_value: 'Software and Hardware'
-        slug: 'software-and-hardware'
+      - name: 'Software'  
+        db_value: 'Software'
+        slug: 'software'
 
-      - name: 'Technology Services'  
-        db_value: 'Technology Services'
-        slug: 'technology-services'
+      - name: 'Hardware'  
+        db_value: 'Hardware'
+        slug: 'hardware'

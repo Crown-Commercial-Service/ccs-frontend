@@ -573,6 +573,10 @@ class FrameworksController extends AbstractController
             "psr-permanent-recruitment"                     => "HR and Workforce Services",
             "workforce-health-education"                    => "HR and Workforce Services",
             "people-services"                               => "HR and Workforce Services",
+            "estate-support-services"                       => "Facilities Management",
+            "technology-services"                           => "Digital and Technology Services",
+            "digital-capability-and-delivery"               => "Digital and Technology Services",
+            "software-and-hardware"                         => "Software",
         );
 
         $redirectToPillar = array(
