@@ -142,7 +142,7 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertResponseRedirects('/agreements?category%5B0%5D=HR%20and%20Workforce%20Services');
+        $this->assertResponseRedirects('/agreements?category%5B0%5D=Facilities%20Management');
     }
 
      public function testRedirectFromEstateSupportServicesToFacilitiesManagement()
@@ -164,7 +164,7 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertResponseRedirects('/agreements/?&status=Live&category=Digital+and+Technology+Services&page=1');
+        $this->assertResponseRedirects('/agreements?category%5B0%5D=Digital%20and%20Technology%20Services');
     }
 
      public function testRedirectFromDigitalCapabilityToDigitalTechnologyServices()
@@ -175,7 +175,7 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertResponseRedirects('/agreements/?&status=Live&category=Digital+and+Technology+Services&page=1');
+        $this->assertResponseRedirects('/agreements?category%5B0%5D=Digital%20and%20Technology%20Services');
     }
 
        public function testRedirectFromSoftwareAndHardwareToSoftware()
@@ -186,6 +186,6 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertEquals(302, $response->getStatusCode());
 
-        $this->assertResponseRedirects('/agreements/?&status=Live&category=Software&page=1');
+        $this->assertResponseRedirects('/agreements?category%5B0%5D=Software');
     }
 }
