@@ -144,4 +144,48 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertResponseRedirects('/agreements?category%5B0%5D=HR%20and%20Workforce%20Services');
     }
+
+     public function testRedirectFromEstateSupportServicesToFacilitiesManagement()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/agreements/category/estate-support-services');
+        $response = $client->getResponse();
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->assertResponseRedirects('/agreements/?&status=Live&category=Facilities+Management&page=1');
+    }
+
+    public function testRedirectFromTechnologyServicesToDigitalTechnologyServices()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/agreements/category/technology-services');
+        $response = $client->getResponse();
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->assertResponseRedirects('/agreements/?&status=Live&category=Digital+and+Technology+Services&page=1');
+    }
+
+     public function testRedirectFromDigitalCapabilityToDigitalTechnologyServices()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/agreements/category/digital-capability-and-delivery');
+        $response = $client->getResponse();
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->assertResponseRedirects('/agreements/?&status=Live&category=Digital+and+Technology+Services&page=1');
+    }
+
+       public function testRedirectFromSoftwareAndHardwareToSoftware()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/agreements/category/software-and-hardware');
+        $response = $client->getResponse();
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->assertResponseRedirects('/agreements/?&status=Live&category=Software&page=1');
+    }
 }
