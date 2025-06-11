@@ -27,15 +27,6 @@
         </div>
 
         <main id="main-content" role="main" class="govuk-main-wrapper govuk-main-wrapper--tight">
-
-            {[ name ]}
-            <br>
-            {[ apiURL ]}
-            <br>
-            {[ checkedEventType ]}
-            <br>
-            {[ currentPage ]}
-
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds page-introduction">
                     <h1 class="govuk-heading-xl page-title page-title--tight">Events</h1>
@@ -382,16 +373,14 @@
                 },
                 watch: {
                     responseAvailable(responseAvailable) {
-                        if (responseAvailable) {
-                            this.$nextTick(() => {
-                                const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
-                                hideWithOutJS.forEach(section => {
-                                    if (section.classList.contains('govuk-visually-hidden')) {;
-                                        section.classList.remove('govuk-visually-hidden');
-                                    }
-                                });
+                        this.$nextTick(() => {
+                            const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
+                            hideWithOutJS.forEach(section => {
+                                if (section.classList.contains('govuk-visually-hidden')) {;
+                                    section.classList.remove('govuk-visually-hidden');
+                                }
                             });
-                        }
+                        });
                     },
                     checkedEventType: function(checkedEventType) {
                         if (checkedEventType.length === Number("{{event_type|length}}")) {
@@ -409,7 +398,6 @@
                             + (this.checkedSectors.length !== 0 ? '&sectors=' + this.checkedSectors.join() : '')
                             + (this.currentPage ? '&page=' + this.currentPage : '');
 
-                        console.log( queryUrl);
                         return queryUrl == '/events/?' ? '' : queryUrl;
                     },
                     allTypeModel: {
