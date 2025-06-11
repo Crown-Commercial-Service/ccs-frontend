@@ -295,10 +295,6 @@
             <script src="/assets/scripts/libraries/vue.js?v=1"></script>
         {% endif %}
 
-        {# TO BE REMOVE #}
-        {# <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> #}
-
-
         <script type="module">
             pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'event'});
             
@@ -345,7 +341,7 @@
 
             const { ref, reactive } = Vue
 
-            Vue.createApp({
+            const app = Vue.createApp({
                 delimiters: ['{[', ']}'],
                 
                 data() {
@@ -368,7 +364,7 @@
                     }
                 },
                 mounted() {
-                    this.fetchAPIData(null, this.currentPage);
+                    this.fetchAPIData(this.currentPage);
                     this.setupHistoryApi();     
                 },
                 watch: {
@@ -386,7 +382,7 @@
                         if (checkedEventType.length === Number("{{event_type|length}}")) {
                             this.checkedEventType = [];
                         }
-                        this.fetchAPIData(null, this.currentPage)
+                        this.fetchAPIData(null)
                     },
                 },
                 computed: {
@@ -429,7 +425,7 @@
                         const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][date.getMonth()];
                         return date.getDate() + ' ' + month + ' ' + date.getFullYear();
                     },
-                    searchRequestUrl: function(selectedIdandSlug, page) {
+                    searchRequestUrl: function() {
                         var fetchURL =    this.apiURL 
                                     + (this.checkedEventType.length !== 0 ? '&event_type=' + this.checkedEventType.join() : '')
                                     //+ this.filtering(selectedIdandSlug, "PS")
@@ -452,12 +448,12 @@
 
                         return fetchURL;
                     },
-                    fetchAPIData: function(input, page) {
+                    fetchAPIData: function(pageNumber) {
                         this.responseAvailable = false;
                         this.emptyResult = false;
-                        this.currentPage = page === null ? 1 : page;
+                        this.currentPage = pageNumber != null ?  pageNumber : 1;
 
-                        var requestUrl = this.searchRequestUrl(input, this.currentPage);
+                        var requestUrl = this.searchRequestUrl();
                         console.log(requestUrl);
                         
                         fetch(requestUrl)
@@ -502,6 +498,7 @@
                     },
                     updatePageValue: function(newPageValue) {
                         this.currentPage = newPageValue;
+                        this.fetchAPIData(newPageValue);
                     },
                     setupHistoryApi: function() {
                         window.onpopstate = (event) => {
@@ -522,7 +519,101 @@
                         }
                     }
                 }
-            }).mount('#main-content')
+            })
+
+            app.component('results-pagination', {
+                delimiters: ['{[', ']}'],
+                props: {
+                    currentPage: Number,
+                    totalResults: Number,
+                    numberOfPages: Number,
+                },
+                computed: {
+                    nextPage() {
+                        return this.currentPage == this.numberOfPages ? this.currentPage : this.currentPage + 1;
+                    },
+                    previousPage() {
+                        return this.currentPage == 1 ? this.currentPage : this.currentPage - 1;
+                    },
+                    paginationStartNumber() {
+                        var linksStartPage = 1;
+                        if ((this.currentPage - 2) < 2 ) {
+                            linksStartPage = 2;
+                        } else {
+                            linksStartPage = this.currentPage - 2;
+                        }
+
+                        if((this.currentPage + 2) > this.numberOfPages) {
+                            linksStartPage = linksStartPage - 2;
+                        }
+
+                        if(linksStartPage <= 1 ) {
+                            linksStartPage = 2;
+                        }
+                        return linksStartPage;
+                    },
+                    paginationEndNumber() {
+                        var linksEndPage = this.paginationStartNumber + 4;
+                        
+                        if ((linksEndPage >= this.numberOfPages)) {
+                            linksEndPage = this.numberOfPages - 1;
+                        }
+                        
+                        if(this.numberOfPages == 1) {
+                            linksEndPage = 1;
+                        }
+
+                        return linksEndPage;
+                    }
+                },
+                methods: {
+                    updatePageNumber(event, newPage) {
+                        event.preventDefault();
+                        this.$emit('update-page', newPage);
+                    },
+                    range(start, end) {
+                        return Array(end - start + 1).fill().map((_, idx) => start + idx);
+                    }
+                },
+                template: `
+                    <div class="events-pagination">
+                    <ul class="list--inline pagination govuk-body" role="list" aria-label="Pagination" v-if="numberOfPages > 0">
+                        <li class="pagination__item pagination__item--previous" v-if="currentPage != 1">
+                        <a href="#" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
+                            <span class="icon">
+                            <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M6.7 0l1.4 1.4-4.3 4.3h13v2H3.9l4.2 4-1.4 1.4L0 6.7z" fill="#007194" fill-rule="evenodd"></path></svg>
+                            </span>
+                            <span>Previous</span> <span class="visuallyhidden">page</span>
+                        </a>
+                        </li>
+                        <li class="pagination__item">
+                        <span v-if="currentPage == 1"><span class="visuallyhidden">Page </span>1</span>
+                        <a v-else href="#" v-on:click="updatePageNumber($event, 1)"><span class="visuallyhidden">Page </span>1</a>
+                        </li>
+                        <li class="pagination__item" v-if="paginationStartNumber > 2">…</li>
+                        <li class="pagination__item" v-for="page in range(paginationStartNumber, paginationEndNumber)" v-if="numberOfPages > 1">
+                        <span v-if="page == currentPage"><span class="visuallyhidden">Page </span>{[ page ]}</span>
+                        <a v-else href="#" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
+                        </li>
+                        <li class="pagination__item" v-if="(paginationEndNumber + 1) < numberOfPages">…</li>
+                        <li class="pagination__item" v-if="numberOfPages > 1">
+                        <span v-if="currentPage == numberOfPages"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</span>
+                        <a v-else href="#" v-on:click="updatePageNumber($event, numberOfPages)"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</a>
+                        </li>
+                        <li class="pagination__item pagination__item--next" v-if="currentPage != numberOfPages">
+                        <a href="#" rel="next" v-on:click="updatePageNumber($event, nextPage)">
+                            <span>Next</span> <span class="visuallyhidden">page</span>
+                            <span class="icon">
+                            <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"></path></svg>
+                            </span>
+                        </a>
+                        </li>
+                    </ul>
+                    </div>
+                `
+            });
+
+            app.mount('#main-content');
             
             
         </script>
