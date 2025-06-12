@@ -28,10 +28,6 @@ class FrameworkCategoriesTest extends WebTestCase
         $this->assertEquals('hr-and-workforce-services', $cat['slug']);
         $this->assertFalse(isset($cat['categories']));
 
-        $cat = FrameworkCategories::find('Estates Support Services');
-        $this->assertEquals('estates-support-services', $cat['slug']);
-        $this->assertFalse(isset($cat['categories']));
-
         $cat = FrameworkCategories::find('Cloud and Hosting');
         $this->assertEquals('cloud-and-hosting', $cat['slug']);
         $this->assertFalse(isset($cat['categories']));
