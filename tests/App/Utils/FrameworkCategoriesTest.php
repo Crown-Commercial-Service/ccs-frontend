@@ -55,7 +55,6 @@ class FrameworkCategoriesTest extends WebTestCase
 
         $this->assertEquals('energy', FrameworkCategories::getSlug('Energy'));
         $this->assertEquals('professional-services', FrameworkCategories::getSlug('Professional Services'));
-        $this->assertEquals('digital-capability-and-delivery', FrameworkCategories::getSlug('Digital Capability and Delivery'));
         $this->assertEquals('Estates Support Services', FrameworkCategories::getNameBySlug('estates-support-services'));
         $this->assertEquals('Facilities Management', FrameworkCategories::getNameBySlug('facilities-management'));
         $this->assertEquals('Technology Services', FrameworkCategories::getNameBySlug('technology-services'));
@@ -145,7 +144,7 @@ class FrameworkCategoriesTest extends WebTestCase
         $this->assertResponseRedirects('/agreements?category%5B0%5D=HR%20and%20Workforce%20Services');
     }
 
-     public function testRedirectFromEstateSupportServicesToFacilitiesManagement()
+    public function testRedirectFromEstateSupportServicesToFacilitiesManagement()
     {
         $client = static::createClient();
         $client->request('GET', '/agreements/category/estate-support-services');
@@ -167,7 +166,7 @@ class FrameworkCategoriesTest extends WebTestCase
         $this->assertResponseRedirects('/agreements?category%5B0%5D=Digital%20and%20Technology%20Services');
     }
 
-     public function testRedirectFromDigitalCapabilityToDigitalTechnologyServices()
+    public function testRedirectFromDigitalCapabilityToDigitalTechnologyServices()
     {
         $client = static::createClient();
         $client->request('GET', '/agreements/category/digital-capability-and-delivery');
@@ -178,7 +177,7 @@ class FrameworkCategoriesTest extends WebTestCase
         $this->assertResponseRedirects('/agreements?category%5B0%5D=Digital%20and%20Technology%20Services');
     }
 
-       public function testRedirectFromSoftwareAndHardwareToSoftware()
+    public function testRedirectFromSoftwareAndHardwareToSoftware()
     {
         $client = static::createClient();
         $client->request('GET', '/agreements/category/software-and-hardware');
