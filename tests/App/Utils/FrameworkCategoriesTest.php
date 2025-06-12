@@ -56,7 +56,7 @@ class FrameworkCategoriesTest extends WebTestCase
         $this->assertEquals('energy', FrameworkCategories::getSlug('Energy'));
         $this->assertEquals('professional-services', FrameworkCategories::getSlug('Professional Services'));
         $this->assertEquals('Facilities Management', FrameworkCategories::getNameBySlug('facilities-management'));
-        $this->assertEquals('Technology Services', FrameworkCategories::getNameBySlug('technology-services'));
+        $this->assertEquals('Digital and technology Services', FrameworkCategories::getNameBySlug('digital-and-technology-services'));
         $this->assertEquals(4, count(FrameworkCategories::getAllByPillar('Estates')));
     }
 
