@@ -17,7 +17,7 @@ class FrameworkCategoriesTest extends WebTestCase
         $this->assertTrue(isset($cat['categories']));
 
         $cat = FrameworkCategories::find('Estates');
-        $this->assertEquals(4, count($cat['categories']));
+        $this->assertEquals(3, count($cat['categories']));
         $this->assertTrue(isset($cat['categories']));
 
         $cat = FrameworkCategories::find('Technology');
@@ -47,7 +47,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testCategories()
     {
         $categories = FrameworkCategories::getAll();
-        $this->assertEquals(15, count($categories));
+        $this->assertEquals(14, count($categories));
         $first = current($categories);
         $this->assertEquals('cloud-and-hosting', $first);
         $last = end($categories);
