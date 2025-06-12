@@ -40,7 +40,7 @@
     "braces": "^3.0.3",
     "decompress": "^4.2.1",
     "govuk-frontend": "^5.4.1",
-    "imagemin-cli": "^7.0.0",
+    "imagemin-cli": "^8.0.0",
     "js-yaml": "^3.14.1",
     "lodash": "^4.17.21",
     "lodash.template": "^4.5.0",
