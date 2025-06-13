@@ -111,7 +111,7 @@ class ControllerHelper
     {
         if (is_string($selectedArray)) {
             // no action
-        } else if ($selectedArray == null || count($selectedArray) == $totalOption) {
+        } elseif ($selectedArray == null || count($selectedArray) == $totalOption) {
             return null;
         }
 
