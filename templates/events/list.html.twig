@@ -51,7 +51,7 @@
                             </div>
                             <div class="govuk-grid-column-one-half" style="text-align:right;">
                                 <a v-show="!javascriptVersion" href={{ path('events_list') }} class="govuk-link"> Clear filters </a>
-                                <a @click="resetAll()" class="govuk-link"> Clear filters </a>
+                                <a @click="resetAll()" href="#" class="govuk-link hideWithoutJS govuk-visually-hidden"> Clear filters </a>
                             </div>
                          </div>
 
@@ -273,16 +273,16 @@
 
 
                 </div>
-                <div v-else-if="responseAvailable === false">
+                <div v-else-if="responseAvailable === false" class="hideWithoutJS govuk-visually-hidden">
                     <p>Loading results ...</p>
                 </div>
                 <div v-if="emptyResult" class="hideWithoutJS govuk-visually-hidden">
                     <p>There are no matching results.</p>
                 </div>
 
-                {# <div v-show="!javascriptVersion">
+                <div v-show="!javascriptVersion">
                     {% include '/events/_resultWithoutJS.html.twig' %}
-                </div> #}
+                </div>
 
                 </div>
             </div>
@@ -364,7 +364,19 @@
                     this.fetchAPIData(this.currentPage);
                     this.setupHistoryApi();     
                 },
+                created(){
+                    // making sure the sections that is hidden at start shows
+                    this.$nextTick(() => {
+                        const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
+                        hideWithOutJS.forEach(section => {
+                            if (section.classList.contains('govuk-visually-hidden')) {;
+                                section.classList.remove('govuk-visually-hidden');
+                            }
+                        });
+                    });
+                },
                 watch: {
+                    // making sure that the sections is refreshed 
                     responseAvailable(responseAvailable) {
                         this.$nextTick(() => {
                             const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
