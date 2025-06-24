@@ -195,8 +195,8 @@ class FrameworksController extends AbstractController
             'categories'        => FrameworkCategories::getAll(),
             'pillars'           => FrameworkCategories::getAllPillars(),
             'statuses'          => ["live"],
-            'regulation'        => ["allRegulation"],
-            'regulationType'    => ["allType"],
+            'regulation'        => ['PA2023', 'PCR2015', 'PCR2006'],
+            'regulationType'    => ["Dynamic+Purchasing+System", "Dynamic+Market", "Open+Framework", "Closed+Framework", "PCR15+Framework", "PCR06+Framework"],
         ];
 
         return $this->render('frameworks/list.html.twig', $data);

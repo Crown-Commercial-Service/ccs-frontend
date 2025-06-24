@@ -33,14 +33,14 @@
         <main id="main-content" role="main" class="govuk-main-wrapper">
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full hideWithoutJS govuk-visually-hidden">
-                    <h1 v-if="displayKeyword"class="govuk-heading-xl page-title">Search agreements for {[displayKeyword]}</h1>
+                    <h1 v-if="displayKeyword" class="govuk-heading-xl page-title">Search agreements for {[displayKeyword]}</h1>
                     <h1 v-else class="govuk-heading-xl page-title">Search agreements</h1>
                 </div>
                 <div v-show="!javascriptVersion" class="govuk-grid-column-full">
                     {% if filters.keyword is defined and filters.keyword|trim is not empty %}
                         <h1 class="govuk-heading-xl page-title">Search agreements for {{filters.keyword}}</h1>
                     {% else %}
-                        <h1 v-else class="govuk-heading-xl page-title">Search agreements</h1>
+                        <h1 class="govuk-heading-xl page-title">Search agreements</h1>
                     {% endif %}
                 </div>
             </div>
@@ -95,14 +95,14 @@
                             <li v-show="javascriptVersion" v-for="result in results">
                                 <h3 class="govuk-heading-m ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22">
                                     <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
-                                    <span v-if="result.status == 'Expired - Data Still Received'" class="govuk-tag ccs-tag ccs-tag--error"> Expired: {[ result.end_date | toDateDMY ]} </span>
+                                    <span v-if="result.status == 'Expired - Data Still Received'" class="govuk-tag ccs-tag ccs-tag--error"> Expired: {[ toDateDMY(result.end_date) ]} </span>
                                 </h3>
 
                                 <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
                                     <li> <strong>Agreement ID:</strong> {[ result.rm_number ]}   </li>
-                                    <li> <strong>Start Date:</strong>   {[ result.start_date | toDateDMY ]}  </li>
+                                    <li> <strong>Start Date:</strong>   {[ toDateDMY(result.start_date) ]}  </li>
                                     
-                                    <li v-if="result.status == 'Expired - Data Still Received'"> <strong>End Date:</strong> {[ result.end_date | toDateDMY ]} </li>
+                                    <li v-if="result.status == 'Expired - Data Still Received'"> <strong>End Date:</strong> {[ toDateDMY(result.end_date)  ]} </li>
 
                                     <li v-if="result.regulation != null"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
                                 </ul>
@@ -118,7 +118,7 @@
                         ></results-pagination>
                     </div>
 
-                    <div v-else-if="!responseAvailable" class="hideWithoutJS govuk-visually-hidden">
+                    <div v-else-if="responseAvailable === false" class="hideWithoutJS govuk-visually-hidden">
                         <p>Loading results ...</p>
                     </div>
 
@@ -223,7 +223,355 @@
             }
         {% endif %}
 
-        Vue.component('results-pagination', {
+        var app = Vue.createApp({
+            delimiters: ['{[', ']}'],
+            data() {
+                return {
+                    javascriptVersion: true,
+                    results: "",
+                    responseAvailable: null,
+                    emptyResult: false,
+                    apiURL:  apiBaseUrl + "frameworks?",
+                    keyword: keyword,
+                    displayKeyword: null,
+                    checkedStatus: checkedStatus,
+                    checkedRegulation: checkedRegulation,
+                    checkedType: checkedType,
+                    checkedPillar: checkedPillar,
+                    checkedCategory: checkedCategory,
+                    pillars: pillars,
+                    currentPage: pageNumber,
+                    pillarsSize: pillarsSize,   
+                    categorySize: categorySize,
+                    numberOfPages: Number,
+                    totalResults: Number,
+                    searchResultsNumber: totalResults,
+                    popstateLoad: false,
+                    isUpdatingCategories : false
+                }
+            },
+            mounted() {
+                this.fetchAPIData(this.currentPage);
+                this.setupHistoryApi();  
+            },
+            created(){
+                // making sure the sections that is hidden at start shows
+                this.$nextTick(() => {
+                    const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
+                    hideWithOutJS.forEach(section => {
+                        if (section.classList.contains('govuk-visually-hidden')) {
+                            section.classList.remove('govuk-visually-hidden');
+                        }
+                    });
+                });
+            },
+            watch: {
+                responseAvailable(responseAvailable) {
+                    this.$nextTick(() => {
+                        const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
+                        hideWithOutJS.forEach(section => {
+                            if (section.classList.contains('govuk-visually-hidden')) {
+                                section.classList.remove('govuk-visually-hidden');
+                            }
+                        });
+                    });
+                },
+                keyword(keyword){
+                    if(this.keyword.trim().length == 0 || /^[\-\(\)&]*$/.test(this.keyword)){
+                        this.keyword = "";
+                    }
+                    this.keyword = this.keyword
+                        .replace(/\//g, "")                   // Remove slashes
+                        .replace(/[^a-zA-Z0-9\s\-&()]/g, ""); // Allow letters, numbers, spaces, and the specified characters
+                },
+                searchRequestUrl: function() {
+
+                    // if the searchRequestUrl hasn't been updated by a popstate
+                    // event (back/forward button) then we push a state item to the
+                    // JS History API
+                    if(this.popstateLoad === false) {
+                        history.pushState({
+                            checkedStatus:      this.checkedStatus,
+                            checkedRegulation:  this.checkedRegulation,
+                            checkedType:        this.checkedType,
+                            checkedPillar:      this.checkedPillar,
+                            checkedCategory:    this.checkedCategory,
+                            keyword:            this.keyword,
+                        }, 'Agreements', this.frontendSearchUrl);
+                    }
+
+                    // reset the popstateLoad property to false
+                    this.popstateLoad = false;
+                },
+                checkedStatus: function(checkedStatus) {
+                    this.fetchAPIData(null)
+                },
+                checkedRegulation: function(checkedRegulation) {
+                    if (checkedRegulation.length === Number("{{regulation|length}}")) {
+                        
+                        this.checkedRegulation = [];
+                    }
+                    this.fetchAPIData(null)
+                },
+                checkedType: function(checkedType) {
+                    if (checkedType.length === Number("{{regulationType|length}}")) {
+                        this.checkedType = [];
+                    }
+                    this.fetchAPIData(null)
+                },
+                checkedPillar: function(checkedPillar) {
+                    if (checkedPillar.length == pillarsSize) {
+                        this.checkedPillar = [];
+                        this.checkedCategory = [];
+                    }
+                    this.fetchAPIData(null)
+                },
+                checkedCategory: function(checkedCategory) {
+                    if (checkedCategory.length == categorySize) {
+                        this.checkedCategory = [];
+                    }
+                    this.fetchAPIData(null);
+                }
+            },
+            computed: {
+                frontendQueryUrl: function() {
+                    var queryUrl = '/?' 
+                        + ((this.checkedStatus || []).length !== 0    ? '&status=' + this.checkedStatus.join() : '')
+                        + ((this.checkedRegulation || []).length !== 0   ? '&regulation=' + this.checkedRegulation.join() : '')
+                        + ((this.checkedType|| []).length !== 0   ? '&type=' + this.checkedType.map(str => str.replace(/ /g, '+')).join() : '')
+                        + ((this.checkedPillar|| []).length !== 0   ? '&pillar=' + this.checkedPillar.join() : '')
+                        + ((this.checkedCategory|| []).length !== 0 ? '&category=' + this.checkedCategory.map(str => str.replace(/ /g, '+')).join() : '')
+                        + (this.keyword                ? '&keyword=' + this.keyword : '')
+                        + (this.currentPage            ? '&page=' + this.currentPage : '');
+
+                        return queryUrl !== '/?' ? queryUrl : "";
+                },
+                frontendSearchUrl: function() {
+                    var searchUrl = '/agreements' + this.frontendQueryUrl ;
+                    return searchUrl;
+                },
+                allRegulationModel: {
+                    get() {
+                        return (this.checkedRegulation || []).length === 0;
+                    },
+                    set(checked) {
+                        if (checked) {
+                            this.checkedRegulation = [];
+                        }else{
+                            document.getElementById("allRegulation").checked = true
+                        }
+                    }
+                },
+                allTypeModel: {
+                    get() {
+                        return (this.checkedType || []).length === 0;
+                    },
+                    set(checked) {
+                        if (checked) {
+                            this.checkedType = [];
+                        }else{
+                            document.getElementById("allType").checked = true
+                        }
+                    }
+                },
+                allPillarModel: {
+                    get() {
+                        return (this.checkedPillar || []).length === 0;
+                    },
+                    set(checked) {
+                        if (checked) {
+                            this.checkedPillar = [];
+                            this.checkedCategory = [];
+                        }else{
+                            document.getElementById("allPillarAndCategory").checked = true
+                        }
+                    }
+                },
+            },
+            methods: {
+                searchRequestUrl: function() {
+                    fetchURL =    this.apiURL 
+                            +  (this.checkedStatus.length !== 0 ? '&status[]=' + this.checkedStatus.join() : '')
+                            +  (this.checkedRegulation.length !== 0 ? '&regulation[]=' + this.checkedRegulation.join() : '')
+                            +  (this.checkedType.length !== 0 ? '&regulation_type[]=' + this.checkedType.map(str => str.replace(/ /g, '+')).join() : '')
+                            +  (this.checkedPillar.length !== 0 ? '&pillar[]=' + this.checkedPillar.join() : '')
+                            +  (this.checkedCategory.length !== 0 ? '&category[]=' + this.checkedCategory.map(str => str.replace(/ /g, '+')).join() : '')
+                            +  (this.keyword ? '&keyword=' + this.keyword.replace(/&/g, '') : '')
+                    
+                    fetchURL = fetchURL + "&per_page=20&page=" + this.currentPage;
+
+                    if(this.popstateLoad === false) {
+                        history.pushState({
+                            checkedStatus          :[...this.checkedStatus],
+                            checkedRegulation      :[...this.checkedRegulation],
+                            checkedType            :[...this.checkedType],
+                            checkedPillar          :[...this.checkedPillar],
+                            checkedCategory        :[...this.checkedCategory],
+                            keyword                :this.keyword,
+                        }, 'Agreements', this.frontendSearchUrl);
+                    }
+
+                    // reset the popstateLoad property to false
+                    this.popstateLoad = false;
+
+                    return fetchURL;
+                },
+                toDateDMY: function (value) {
+                    if (!value) return ''
+                    date = new Date(value);
+                    return date.getDate().toString().padStart(2, '0') + '/'+ (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getFullYear();
+                },
+                searchKeyword: function() {
+
+                    if (this.keyword){
+                        
+                        if(this.popstateLoad === false) {
+                            history.pushState({
+                                checkedStatus          :this.checkedStatus,
+                                checkedRegulation      :this.checkedRegulation,
+                                checkedType            :this.checkedType,
+                                checkedPillar          :this.checkedPillar,
+                                checkedCategory        :this.checkedCategory,
+                                keyword                :this.keyword,
+                            }, 'Agreements', this.frontendSearchUrl);
+                        }
+
+                        // reset the popstateLoad property to false
+                        this.popstateLoad = false;
+
+                        this.displayKeyword = this.keyword
+                        
+                        return "&keyword=" + this.keyword.replace(/&/g, '');
+                    }
+                    this.displayKeyword = null
+                    return ""
+                },
+                clearSearchKeyword: function() {
+                    this.keyword = ""
+                    this.displayKeyword = null
+                    this.fetchAPIData(null,null)
+                },
+                resetAllFilter: function() {
+                    this.keyword = ""
+                    this.displayKeyword = null
+                    this.checkedStatus = []
+                    this.checkedRegulation = []
+                    this.checkedType = []
+                    this.checkedPillar = []
+                    this.checkedCategory = []
+                    this.pillars = []
+                    this.fetchAPIData(null,null)
+                },
+                fetchAPIData: function(pageNumber) {
+                    this.responseAvailable = false;
+                    this.emptyResult = false;
+                    this.currentPage = pageNumber != null ?  pageNumber : 1;
+
+                    var requestUrl = this.searchRequestUrl()
+                    
+                    console.log(requestUrl);
+
+                    fetch(requestUrl)
+                    .then(async function(response) {
+                        if (!response.ok) {
+                            throw new Error('HTTP error, status = ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(jsonResponse => {
+                        this.numberOfPages  = parseInt(Math.ceil(jsonResponse.meta.total_results / jsonResponse.meta.limit))
+                        this.totalResults   = parseInt(jsonResponse.meta.total_results)
+                        this.searchResultsNumber = jsonResponse.meta.total_results;
+
+                        this.results = jsonResponse.results;
+                        this.emptyResult = Object.keys(jsonResponse.results).length === 0 ? true : false
+                        this.responseAvailable = true;
+
+                        if (this.displayKeyword) {
+                            pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'agreements', 'search_term': self.displayKeyword, 'interaction_detail': self.searchResultsNumber});
+                        }
+                    })
+                    .catch(error => {
+                        console.log('An error occurred');
+                        console.log(error);
+                        this.responseAvailable = false;
+                    });
+                },
+                updatePageValue: function(newPageValue) {
+                    this.currentPage = newPageValue;
+                    this.fetchAPIData(newPageValue);
+                },
+                setupHistoryApi: function() {
+
+                    window.onpopstate = function(event) {
+                        // set the popstate variable to true so that we can
+                        // tell in other parts of the code that the state change
+                        // is being caused by the back/forward button
+                        this.popstateLoad = true;
+
+                        if(event.state == null) {
+                            this.checkedStatus               = [];
+                            this.checkedRegulation           = [];
+                            this.checkedType                 = [];
+                            this.checkedPillar               = [];
+                            this.checkedCategory             = [];
+                            this.keyword                     = null;
+                            return
+                        }
+
+                        this.checkedStatus          = event.state.checkedStatus;
+                        this.checkedRegulation      = event.state.checkedRegulation;
+                        this.checkedType            = event.state.checkedType;
+                        this.checkedPillar          = event.state.checkedPillar;
+                        this.checkedCategory        = event.state.checkedCategory;
+                        this.keyword                = event.state.keyword;
+
+                        this.fetchAPIData(null, this.currentPage);
+                    }
+                },
+                shouldShowTypeCheckbox: function (item) {
+                     if (this.checkedRegulation.length === 0) {
+                        return true;
+                     }
+
+                    const regulationMap = {
+                        "Closed Framework": "PA2023",
+                        "Dynamic Market": "PA2023",
+                        "Open Framework": "PA2023",
+                        "Dynamic Purchasing System": "PCR2015",
+                        "PCR15 Framework": "PCR2015",
+                        "PCR06 Framework": "PCR2006"
+                    };
+
+                    const requiredRegulation = regulationMap[item];
+                    return requiredRegulation ? this.checkedRegulation.includes(requiredRegulation) : false;
+                },
+                removeTypeBasedOnReg: function () {
+                    const checkboxMap = {
+                        "PA2023": ["Closed+Framework", "Dynamic+Market", "Open+Framework"],
+                        "PCR2015": ["Dynamic+Purchasing+System", "PCR15+Framework"],
+                        "PCR2006": ["PCR06+Framework"]
+                    };
+
+                    for (const [key, types] of Object.entries(checkboxMap)) {
+                        const currentCheckbox = document.getElementById(key);
+                        if (currentCheckbox && !currentCheckbox.checked) {
+                            types.forEach(type => {
+                                const index = this.checkedType.indexOf(type);
+                                if (index !== -1) {
+                                    this.checkedType.splice(index, 1);
+                                    this.fetchAPIData(type, this.currentPage);
+                                }
+                            });
+                        }
+                    }
+                    console.log(this.checkedType);
+                    
+                },
+            }
+        });
+
+        app.component('results-pagination', {
             delimiters: ['{[', ']}'],
             props: {
                 currentPage: Number,
@@ -348,400 +696,7 @@
                 `
         });
 
-        var search = new Vue({
-            delimiters: ['{[', ']}'],
-            el: '#main-content',
-            mounted:function(){
-                this.filtering(null, "status");
-                this.filtering(null, "regulation");
-                this.filtering(null, "type");
-                this.filtering(null, "pillar");
-                this.filtering(null, "category");
-            },
-            data: {
-                javascriptVersion: true,
-                results: "",
-                responseAvailable: null,
-                emptyResult: false,
-                apiURL:  apiBaseUrl + "frameworks?",
-                keyword: keyword,
-                displayKeyword: null,
-                checkedStatus: checkedStatus,
-                checkedRegulation: checkedRegulation,
-                checkedType: checkedType,
-                checkedPillar: checkedPillar,
-                checkedCategory: checkedCategory,
-                pillars: pillars,
-                currentPage: pageNumber,
-                pillarsSize: pillarsSize,   
-                categorySize: categorySize,
-                numberOfPages: Number,
-                totalResults: Number,
-                searchResultsNumber: totalResults,
-
-                popstateLoad: false
-            },
-            filters: {
-                toDateDMY: function (value) {
-                    if (!value) return ''
-                    date = new Date(value);
-                    return date.getDate().toString().padStart(2, '0') + '/'+ (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getFullYear();
-                }
-            },
-            created: function() {
-                const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
-
-                hideWithOutJS.forEach(component => {
-                if (component.classList.contains('govuk-visually-hidden')) {
-                    component.classList.remove('govuk-visually-hidden');
-                }});
-
-                // unfortunately we have to update the results when we instantiate
-                // the Vue app so it hooks in all the correct event handlers etc.
-                this.fetchAPIData(null, this.currentPage);
-
-                // setup popstate event listener for History API
-                this.setupHistoryApi();
-            },
-            watch: {
-                keyword(keyword){
-                    if(this.keyword.trim().length == 0 || /^[\-\(\)&]*$/.test(this.keyword)){
-                        this.keyword = "";
-                    }
-                    this.keyword = this.keyword
-                        .replace(/\//g, "")                   // Remove slashes
-                        .replace(/[^a-zA-Z0-9\s\-&()]/g, ""); // Allow letters, numbers, spaces, and the specified characters
-                },
-                searchRequestUrl: function() {
-
-                    // if the searchRequestUrl hasn't been updated by a popstate
-                    // event (back/forward button) then we push a state item to the
-                    // JS History API
-                    if(this.popstateLoad === false) {
-                        history.pushState({
-                            checkedStatus:      this.checkedStatus,
-                            checkedRegulation:  this.checkedRegulation,
-                            checkedType:        this.checkedType,
-                            checkedPillar:      this.checkedPillar,
-                            checkedCategory:    this.checkedCategory,
-                            keyword:            this.keyword,
-                        }, 'Agreements', this.frontendSearchUrl);
-                    }
-
-                    // reset the popstateLoad property to false
-                    this.popstateLoad = false;
-                }
-            },
-            computed: {
-                frontendQueryUrl: function() {
-                    var queryUrl = '/?';
-
-                    if(this.checkedStatus.length != 0) {
-                        queryUrl += '&status=' + this.checkedStatus.join();
-                    }
-
-                    if(this.checkedRegulation.length != 0 && !this.checkedRegulation.includes("allRegulation")) {
-                        queryUrl += '&regulation=' + this.checkedRegulation.join();
-                    }
-                    
-                    if(this.checkedType.length != 0 && !this.checkedType.includes("allType")) {
-                        this.checkedType = this.checkedType.map(str => str.replace(/ /g, '+'));
-                        queryUrl += '&type=' + this.checkedType.join();
-                    }
-
-                    if(this.checkedPillar.length != 0 && !this.checkedPillar.includes("allPillarAndCategory")) {
-                        queryUrl += '&pillar=' + this.checkedPillar.join();
-                    }
-
-                    if(this.checkedCategory.length != 0) {
-                        this.checkedCategory = this.checkedCategory.map(str => str.replace(/ /g, '+'));
-                        queryUrl += '&category=' + this.checkedCategory.join();
-                    }
-
-                    if(this.keyword) {
-                        queryUrl += '&keyword=' + this.keyword;
-                    }
-
-                    if(this.currentPage ){
-                        queryUrl += '&page=' + this.currentPage;
-                    }
-
-                    return queryUrl != '/?' ? queryUrl : "";
-                    
-                },
-                frontendSearchUrl: function() {
-                    var searchUrl = '/agreements' + this.frontendQueryUrl ;
-                    return searchUrl;
-                }
-            },
-            methods: {
-                filtering: function(selected, filtertingOption){
-                    filterArray = null
-                    viewAllCheckboxID = null
-                    paramaString = null
-                    returnFilter = ""
-                    maxFilter = 0
-
-                    switch(filtertingOption) {
-                        case "status":
-                            this.checkedStatus.forEach((currentElement) => {
-                                returnFilter += "&status[]=" + currentElement
-                            })
-                            if (this.checkedStatus.length == 0){
-                                document.getElementById("Live").checked = true;
-                                this.checkedStatus = ["Live"]
-                            }
-                            return returnFilter
-                            break
-                        case "regulation":
-                            filterArray         = this.checkedRegulation
-                            paramaString        = "&regulation[]="
-                            viewAllCheckboxID   = "allRegulation"
-                            maxFilter           = 3
-                            break
-                        case "type":
-                            filterArray         = this.checkedType
-                            paramaString        = "&regulation_type[]="
-                            viewAllCheckboxID   = "allType"
-                            maxFilter           = 6
-                            break
-                        case "pillar":
-                            filterArray         = this.checkedPillar
-                            paramaString        = "&pillar[]="
-                            viewAllCheckboxID   = "allPillarAndCategory"
-                            maxFilter           = this.pillarsSize
-                            break
-                        case "category":
-                            if (this.checkedCategory.length == this.categorySize || selected == "allPillarAndCategory"){
-                                document.getElementById("allPillarAndCategory").checked = true
-                                document.getElementById("corporate").checked = false
-                                document.getElementById("estates").checked = false  
-                                document.getElementById("technology").checked = false
-                                this.checkedCategory= [];
-                                this.checkedPillar= [];
-
-                                return ""
-                            }else if(this.checkedCategory.length != 0){
-                                document.getElementById("allPillarAndCategory").checked = false
-                            }
-
-                            seletedOptions = this.checkedCategory.map(str => str.replace(/,/g, '').replace(/[+]/g, '-').toLowerCase());
-
-                            for (let [key, value] of pillars) {
-                                if (value.every(value => seletedOptions.includes(value))) {
-                                        this.checkedPillar.includes(key) ? null : this.checkedPillar.push(key);
-                                        document.getElementById(key.toLowerCase()).checked = true ;
-                                    }else if (value.includes(selected)) {
-                                        document.getElementById(key.toLowerCase()).checked = false ;
-                                        this.checkedPillar = this.checkedPillar.filter(item => item !== key);
-                                    }
-                            }
-
-                            this.checkedCategory.forEach((currentElement) => {
-                                returnFilter += "&category[]=" + currentElement
-                            })
-                            return returnFilter
-                         default:
-                            console.log('An error occurred');
-                            return
-                    }
-
-                    if((selected == "Live" || selected == "Expired") && filtertingOption != "status"){
-                        selected = "dummy value"
-                    }
-
-                    //if nothing is check || everything is checked || View all is checked 
-                    if (filterArray.length == 0 || filterArray.length == maxFilter || filterArray.includes(viewAllCheckboxID) ){
-                    
-                        //edge case where there are some category checked but all the pullar has also been checked
-                        this.checkedCategory = filtertingOption == "pillar" && filterArray.length == maxFilter ? [] : this.checkedCategory; 
-
-                        filterArray.splice(0);
-                        document.getElementById(viewAllCheckboxID) != null ? document.getElementById(viewAllCheckboxID).checked = true : null
-                        document.getElementById(selected) != null ? document.getElementById(selected).checked = false : null
-                    }else{
-                        document.getElementById(viewAllCheckboxID) != null ? document.getElementById(viewAllCheckboxID).checked = false : null
-                        filterArray.forEach((currentElement) => {
-                            returnFilter += paramaString + currentElement
-                        })
-                    }
-                    return returnFilter;
-                },
-                searchRequestUrl: function(selected, page) {
-                    fetchURL =    this.apiURL 
-                        + this.filtering(selected, "status")
-                        + this.filtering(selected, "regulation")
-                        + this.filtering(selected, "type")
-                        + this.filtering(selected, "pillar")
-                        + this.filtering(selected, "category")
-                    
-                    fetchURL = fetchURL + "&per_page=20&page=" + this.currentPage;
-
-                    if(this.popstateLoad === false) {
-                        history.pushState({
-                            checkedStatus          :this.checkedStatus,
-                            checkedRegulation      :this.checkedRegulation,
-                            checkedType            :this.checkedType,
-                            checkedPillar          :this.checkedPillar,
-                            checkedCategory        :this.checkedCategory,
-                            keyword                :this.keyword,
-                        }, 'Agreements', this.frontendSearchUrl);
-                    }
-
-                    // reset the popstateLoad property to false
-                    this.popstateLoad = false;
-
-                    return fetchURL;
-                },
-                searchKeyword: function() {
-
-                    if (this.keyword){
-                        
-                        if(this.popstateLoad === false) {
-                            history.pushState({
-                                checkedStatus          :this.checkedStatus,
-                                checkedRegulation      :this.checkedRegulation,
-                                checkedType            :this.checkedType,
-                                checkedPillar          :this.checkedPillar,
-                                checkedCategory        :this.checkedCategory,
-                                keyword                :this.keyword,
-                            }, 'Agreements', this.frontendSearchUrl);
-                        }
-
-                        // reset the popstateLoad property to false
-                        this.popstateLoad = false;
-
-                        this.displayKeyword = this.keyword
-                        
-                        return "&keyword=" + this.keyword.replace(/&/g, '');
-                    }
-                    this.displayKeyword = null
-                    return ""
-                },
-                clearSearchKeyword: function() {
-                    this.keyword = ""
-                    this.displayKeyword = null
-                    this.fetchAPIData(null,null)
-                },
-                resetAllFilter: function() {
-                    this.keyword = ""
-                    this.displayKeyword = null
-                    this.checkedStatus = []
-                    this.checkedRegulation = []
-                    this.checkedType = []
-                    this.checkedPillar = []
-                    this.checkedCategory = []
-                    this.pillars = []
-                    this.fetchAPIData(null,null)
-                },
-                fetchAPIData: function(input, page) {
-                    var self = this;
-                    this.responseAvailable = false;
-                    this.emptyResult = false;
-                    this.currentPage = page === null || page === undefined ? 1 : page;
-
-                    var requestUrl = this.searchRequestUrl(input, this.currentPage) + this.searchKeyword();
-                    
-                    console.log(requestUrl);
-
-                    fetch(requestUrl)
-                    .then(async function(response) {
-                        if (!response.ok) {
-                            throw new Error('HTTP error, status = ' + response.status);
-                        }
-                        return response.json();
-                    })
-                    .then(function(jsonResponse) {
-                        self.numberOfPages  = parseInt(Math.ceil(jsonResponse.meta.total_results / jsonResponse.meta.limit))
-                        self.totalResults   = parseInt(jsonResponse.meta.total_results)
-                        self.searchResultsNumber = jsonResponse.meta.total_results;
-
-                        self.results = jsonResponse.results;
-                        self.emptyResult = Object.keys(jsonResponse.results).length === 0 ? true : false
-                        self.responseAvailable = true;
-
-                        if (self.displayKeyword) {
-                            pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'agreements', 'search_term': self.displayKeyword, 'interaction_detail': self.searchResultsNumber});
-                        }
-                    })
-                    .catch(function(error) {
-                        console.log('An error occurred');
-                        console.log(error);
-                        self.responseAvailable = false;
-                    });
-                },
-                updatePageValue: function(newPageValue) {
-                    this.currentPage = newPageValue;
-                },
-                setupHistoryApi: function() {
-
-                    window.onpopstate = function(event) {
-                        // set the popstate variable to true so that we can
-                        // tell in other parts of the code that the state change
-                        // is being caused by the back/forward button
-                        this.popstateLoad = true;
-
-                        if(event.state == null) {
-                            this.checkedStatus               = [];
-                            this.checkedRegulation           = [];
-                            this.checkedType                 = [];
-                            this.checkedPillar               = [];
-                            this.checkedCategory             = [];
-                            this.keyword                     = null;
-                            return
-                        }
-
-                        this.checkedStatus          = event.state.checkedStatus;
-                        this.checkedRegulation      = event.state.checkedRegulation;
-                        this.checkedType            = event.state.checkedType;
-                        this.checkedPillar          = event.state.checkedPillar;
-                        this.checkedCategory        = event.state.checkedCategory;
-                        this.keyword                = event.state.keyword;
-
-                        this.fetchAPIData(null, this.currentPage);
-                    }
-                },
-                shouldShowTypeCheckbox: function (item) {
-                     if (this.checkedRegulation.length === 0) {
-                        return true;
-                     }
-
-                    const regulationMap = {
-                        "Closed Framework": "PA2023",
-                        "Dynamic Market": "PA2023",
-                        "Open Framework": "PA2023",
-                        "Dynamic Purchasing System": "PCR2015",
-                        "PCR15 Framework": "PCR2015",
-                        "PCR06 Framework": "PCR2006"
-                    };
-
-                    const requiredRegulation = regulationMap[item];
-                    return requiredRegulation ? this.checkedRegulation.includes(requiredRegulation) : false;
-                },
-                removeTypeBasedOnReg: function () {
-                    const checkboxMap = {
-                        "PA2023": ["Closed+Framework", "Dynamic+Market", "Open+Framework"],
-                        "PCR2015": ["Dynamic+Purchasing+System", "PCR15+Framework"],
-                        "PCR2006": ["PCR06+Framework"]
-                    };
-
-                    for (const [key, types] of Object.entries(checkboxMap)) {
-                        const currentCheckbox = document.getElementById(key);
-                        if (currentCheckbox && !currentCheckbox.checked) {
-                            types.forEach(type => {
-                                const index = this.checkedType.indexOf(type);
-                                if (index !== -1) {
-                                    this.checkedType.splice(index, 1);
-                                    this.fetchAPIData(type, this.currentPage);
-                                }
-                            });
-                        }
-                    }
-                    console.log(this.checkedType);
-                    
-                },
-            }
-        });
+        app.mount('#main-content');
 
     </script>
 
