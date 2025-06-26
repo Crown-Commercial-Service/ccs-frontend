@@ -203,7 +203,7 @@ class FrameworksController extends AbstractController
         return $this->render('frameworks/list.html.twig', $data);
     }
 
-    private function getPillarsAndCategories() 
+    private function getPillarsAndCategories()
     {
         $pillarsAndCategories = [];
         $pillars = FrameworkCategories::getAllPillars();
