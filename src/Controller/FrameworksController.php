@@ -194,12 +194,24 @@ class FrameworksController extends AbstractController
             'results'           => $results,
             'categories'        => FrameworkCategories::getAll(),
             'pillars'           => FrameworkCategories::getAllPillars(),
+            'pillarsAndCategories' => $this->getPillarsAndCategories(),
             'statuses'          => ["live"],
             'regulation'        => ['PA2023', 'PCR2015', 'PCR2006'],
             'regulationType'    => ["Dynamic+Purchasing+System", "Dynamic+Market", "Open+Framework", "Closed+Framework", "PCR15+Framework", "PCR06+Framework"],
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
+    }
+
+    private function getPillarsAndCategories() 
+    {
+        $pillarsAndCategories = [];
+        $pillars = FrameworkCategories::getAllPillars();
+        foreach ($pillars['pillars'] as $pillar) {
+            $categories = FrameworkCategories::getAllByPillar($pillar['name']);
+            $pillarsAndCategories[$pillar['slug']] = $categories;
+        }
+        return $pillarsAndCategories;
     }
 
     public function upcomingDealsSearch(Request $request)

@@ -170,7 +170,7 @@
                               }%}
 
                             <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                <input v-model="checkedCategory" :change="'{{ category_item.name }}'" onclick="pushToDataLayer('{{categoryArray |json_encode}}');" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{category_item.slug}}" name="category[]" type="checkbox" value="{{ category_item.name |replace({' ': '+'}) }}" {{ category_item.name in filters.checkedCategory ? 'checked' }}>
+                                <input v-model="checkedCategory" :change="'{{ category_item.name |replace({' ': '+'})}}'" onclick="pushToDataLayer('{{categoryArray |json_encode}}');" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{category_item.slug}}" name="category[]" type="checkbox" value="{{ category_item.name |replace({' ': '+'}) }}" {{ category_item.name in filters.checkedCategory ? 'checked' }}>
                                 <label class="govuk-label govuk-checkboxes__label search-subcategory-label" for="{{ category_item.slug }}">
                                     {{ category_item.name }}
                                 </label>

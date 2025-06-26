@@ -330,6 +330,24 @@
                     if (checkedCategory.length == categorySize) {
                         this.checkedCategory = [];
                     }
+                    const pillarsAndCategories = {{ pillarsAndCategories|json_encode|raw }};
+
+                    for (const [pillarName, categories] of Object.entries(pillarsAndCategories)) {
+                        const pillarCategories = Object.keys(categories);
+                        const formattedPillarName = pillarName.charAt(0).toUpperCase() + pillarName.slice(1);
+                    
+                        const allCategoriesSelected = pillarCategories.every(category => 
+                            checkedCategory.includes(category.replace(/ /g, '+'))
+                        );
+
+                        const pillarIndex = this.checkedPillar.indexOf(formattedPillarName);
+                        if (allCategoriesSelected && pillarIndex === -1) {
+                            this.checkedPillar.push(formattedPillarName);
+                        } else if (!allCategoriesSelected && pillarIndex !== -1) {
+                            this.checkedPillar.splice(pillarIndex, 1);
+                        }
+                    }
+
                     this.fetchAPIData(null);
                 }
             },
@@ -376,7 +394,10 @@
                 },
                 allPillarModel: {
                     get() {
-                        return (this.checkedPillar || []).length === 0;
+                        if (this.checkedPillar.length === 0 && this.checkedCategory.length === 0) {
+                            return true;
+                        }
+                        return false;
                     },
                     set(checked) {
                         if (checked) {
@@ -392,10 +413,10 @@
                 searchRequestUrl: function() {
                     fetchURL =    this.apiURL 
                             +  (this.checkedStatus.length !== 0 ? '&status[]=' + this.checkedStatus.join() : '')
-                            +  (this.checkedRegulation.length !== 0 ? '&regulation[]=' + this.checkedRegulation.join() : '')
-                            +  (this.checkedType.length !== 0 ? '&regulation_type[]=' + this.checkedType.map(str => str.replace(/ /g, '+')).join() : '')
-                            +  (this.checkedPillar.length !== 0 ? '&pillar[]=' + this.checkedPillar.join() : '')
-                            +  (this.checkedCategory.length !== 0 ? '&category[]=' + this.checkedCategory.map(str => str.replace(/ /g, '+')).join() : '')
+                            +  (this.checkedRegulation.length !== 0 ? this.checkedRegulation.map(reg => '&regulation[]=' + reg.replace(/ /g, '+')).join('') : '')
+                            +  (this.checkedType.length !== 0 ? this.checkedType.map(type => '&regulation_type[]=' + type.replace(/ /g, '+')).join('') : '')
+                            +  (this.checkedPillar.length !== 0 ? this.checkedPillar.map(pillar => '&pillar[]=' + pillar).join(''): '')
+                            +  (this.checkedCategory.length !== 0 ? this.checkedCategory.map(cat => '&category[]=' + cat).join('') : '')
                             +  (this.keyword ? '&keyword=' + this.keyword.replace(/&/g, '') : '')
                     
                     fetchURL = fetchURL + "&per_page=20&page=" + this.currentPage;
@@ -454,7 +475,7 @@
                 resetAllFilter: function() {
                     this.keyword = ""
                     this.displayKeyword = null
-                    this.checkedStatus = []
+                    this.checkedStatus = ["Live"]
                     this.checkedRegulation = []
                     this.checkedType = []
                     this.checkedPillar = []
@@ -465,7 +486,7 @@
                 fetchAPIData: function(pageNumber) {
                     this.responseAvailable = false;
                     this.emptyResult = false;
-                    this.currentPage = pageNumber != null ?  pageNumber : 1;
+                    this.currentPage = typeof pageNumber == "number" ?  pageNumber : 1;
 
                     var requestUrl = this.searchRequestUrl()
                     
@@ -498,7 +519,7 @@
                     });
                 },
                 updatePageValue: function(newPageValue) {
-                    this.currentPage = newPageValue;
+                    this.currentPage = Number(newPageValue);
                     this.fetchAPIData(newPageValue);
                 },
                 setupHistoryApi: function() {
@@ -565,7 +586,6 @@
                             });
                         }
                     }
-                    console.log(this.checkedType);
                     
                 },
             }
