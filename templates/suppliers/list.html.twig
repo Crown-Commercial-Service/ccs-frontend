@@ -21,7 +21,6 @@
         <div class="govuk-phase-banner">
             {% include '/includes/phase-banner-content.html.twig' %}
         </div>
-        // fix gtm error
 
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
@@ -545,7 +544,7 @@
                     if(this.popstateLoad === false) {
                         history.pushState({
                             searchQuery: this.searchQuery,
-                            // we need to simplfy this data as browser can't clone object and we get an error
+                            // here we simplfy the data as browser can't clone object and we get an error otherwise
                             checkedFramework: this.checkedFramework ? {
                                 rm_number: this.checkedFramework.rm_number,
                                 title: this.checkedFramework.title
