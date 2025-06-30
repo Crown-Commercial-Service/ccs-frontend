@@ -21,7 +21,7 @@
         <div class="govuk-phase-banner">
             {% include '/includes/phase-banner-content.html.twig' %}
         </div>
-
+        // fix gtm error
 
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
@@ -497,170 +497,30 @@
         var pageNumber          = {% if page_number is not empty %}{{ page_number }}{% else %}1{% endif %};
 
 
-
-        // Define a new component for the results pagination
-        Vue.component('results-pagination', {
-            delimiters: ['{[', ']}'],
-            props: {
-                currentPage: Number,
-                totalResults: Number,
-                resultsPerPage: Number,
-                // How many result links to display before we shorten the list
-                resultPagesLinkNumber: Number,
-                queryUrl: String
-            },
-            computed: {
-                numberOfPages: function() {
-                    return Math.ceil(this.totalResults/this.resultsPerPage);
-                },
-                nextPage: function() {
-                    if(this.currentPage == this.numberOfPages) {
-                        return this.currentPage;
-                    }
-
-                    return this.currentPage + 1;
-                },
-                previousPage: function() {
-                    if(this.currentPage == 1) {
-                        return this.currentPage;
-                    }
-
-                    return this.currentPage - 1;
-                },
-                paginationStartNumber: function() {
-                    // start page defaults to 2 (second page) because the
-                    // first page link is always output by default
-                    var linksStartPage = 1;
-
-                    // if the start page is at the beginning of the pagination
-                    // then account for this
-                    if ((this.currentPage - 2) < 2 ) {
-                        linksStartPage = 2;
-                    } else {
-                        // otherwise the start page is equal to the current
-                        // page minus 2, this means that the pagination should
-                        // have a couple of links either side of the current
-                        // page, e.g.   2 3 [4] 5 6
-                        linksStartPage = this.currentPage - 2;
-                    }
-
-                    // if the start page is very close to the last page, then
-                    // account for this
-                    if((this.currentPage + 2) > this.numberOfPages) {
-                        linksStartPage = linksStartPage - 2;
-                    }
-
-                    if(this.numberOfPages < this.resultPagesLinkNumber) {
-                        linksStartPage = 1;
-                    }
-
-                    if(linksStartPage <= 0) {
-                        linksStartPage = 1;
-                    }
-
-                    return linksStartPage;
-                },
-                paginationEndNumber: function() {
-                    var linksEndPage   = this.paginationStartNumber + 4;
-
-                    // if there aren't more pages than the number we
-                    // want to show by minimum, then the end page is just equal
-                    // to the final result page
-                    if (this.numberOfPages < this.resultPagesLinkNumber) {
-                        linksEndPage = this.totalResults;
-                    }
-
-                    if ((linksEndPage >= this.numberOfPages)) {
-                        // minus 1 because the last page is always output
-                        linksEndPage = this.numberOfPages - 1;
-                    }
-
-                    if(this.numberOfPages == 1) {
-                        linksEndPage = 1;
-                    }
-
-                    return linksEndPage;
-                }
-            },
-            methods: {
-                updatePageNumber: function(event, newPage) {
-                    event.preventDefault();
-                    this.$emit('update-page', newPage);
-                },
-                range : function (start, end) {
-                    return Array(end - start + 1).fill().map(function(_, idx) {
-                        return start + idx;
-                    });
-                }
-            },
-            template: `
-                <ul class="list--inline pagination govuk-body" role="list" aria-label="Pagination" v-if="numberOfPages > 0">
-                    <li class="pagination__item pagination__item--previous" v-if="currentPage != 1">
-                        <a :href="'/suppliers/search' + previousPage + queryUrl" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
-                            <span class="icon">
-                                <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M6.7 0l1.4 1.4-4.3 4.3h13v2H3.9l4.2 4-1.4 1.4L0 6.7z" fill="#007194" fill-rule="evenodd"></path></svg>
-                            </span>
-                            <span>Previous</span> <span class="visuallyhidden">page</span>
-                        </a>
-                    </li>
-
-                    <li class="pagination__item" v-if="numberOfPages > 6">
-                        <span v-if="currentPage == 1"><span class="visuallyhidden">Page </span>1</span>
-                        <a v-else :href="'/suppliers/search/1' + queryUrl" v-on:click="updatePageNumber($event, 1)"><span class="visuallyhidden">Page </span>1</a>
-                    </li>
-
-                    <li class="pagination__item" v-if="paginationStartNumber > 2">…</li>
-
-                    <li class="pagination__item" v-for="page in range(paginationStartNumber, paginationEndNumber)" v-if="numberOfPages > 1">
-                        <span v-if="page == currentPage"><span class="visuallyhidden">Page </span>{[ page ]}</span>
-                        <a v-else :href="'/suppliers/search/' + page + queryUrl" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
-                    </li>
-
-                    <li class="pagination__item" v-if="(paginationEndNumber + 1) < numberOfPages">…</li>
-
-                    <li class="pagination__item" v-if="numberOfPages > 1">
-                        <span v-if="currentPage == numberOfPages"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</span>
-                        <a v-else :href="'/suppliers/search/' + numberOfPages + queryUrl" v-on:click="updatePageNumber($event, numberOfPages)"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</a>
-                    </li>
-
-                    <li class="pagination__item pagination__item--next" v-if="currentPage != numberOfPages">
-                        <a :href="'/suppliers/search/' + nextPage + queryUrl" rel="next" v-on:click="updatePageNumber($event, nextPage)">
-                            <span>Next</span> <span class="visuallyhidden">page</span>
-                            <span class="icon">
-                                <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"></path></svg>
-                            </span>
-                        </a>
-                    </li>
-                </ul>`
-        });
-
-
-
-        new Vue({
+       var app = Vue.createApp({
             // we have to change the delimeted used as the default is reserved by Twig
             delimiters: ['{[', ']}'],
-            el: '#search-app',
-            data: {
-                // an almost arbitrary variable, we use this to hide the non-js
-                // version of the search components if the Vue search is instantiated
-                javascriptVersion: true,
-                searchApiBaseUrl: apiBaseUrl,
-                searchQuery: searchQuery,
-                checkedFramework: selectedFramework,
-                checkedLot: selectedLot,
-                frameworkFilter: '',
-                frameworkList: null,
-                frameworkListFiltered: null,
-                lotList: null,
-                displayLotFilter: false,
-                searchResults: null,
-                searchResultsNumber: totalResults,
-                resultsLimit: resultsLimitInitial,
-                currentPage: pageNumber,
-                // used to display/hide the loading text as appropriate (if the
-                // search results are loading, this property is set to true)
-                loading: false,
-                popstateLoad: false
+            data() {
+                return {
+                    javascriptVersion: true,
+                    searchApiBaseUrl: apiBaseUrl,
+                    searchQuery: searchQuery,
+                    checkedFramework: selectedFramework,
+                    checkedLot: selectedLot,
+                    frameworkFilter: '',
+                    frameworkList: null,
+                    frameworkListFiltered: null,
+                    lotList: null,
+                    displayLotFilter: false,
+                    searchResults: null,
+                    searchResultsNumber: totalResults,
+                    resultsLimit: resultsLimitInitial,
+                    currentPage: pageNumber,
+                    // used to display/hide the loading text as appropriate (if the
+                    // search results are loading, this property is set to true)
+                    loading: false,
+                    popstateLoad: false
+                }  
             },
             created: function() {
                 // unfortunately we have to update the results when we instantiate
@@ -685,8 +545,16 @@
                     if(this.popstateLoad === false) {
                         history.pushState({
                             searchQuery: this.searchQuery,
-                            checkedFramework: this.checkedFramework,
-                            checkedLot: this.checkedLot,
+                            // we need to simplfy this data as browser can't clone object and we get an error
+                            checkedFramework: this.checkedFramework ? {
+                                rm_number: this.checkedFramework.rm_number,
+                                title: this.checkedFramework.title
+                            } : null,
+                            checkedLot: this.checkedLot.id ? {
+                                id: this.checkedLot.id,
+                                lot_number: this.checkedLot.lot_number,
+                                title: this.checkedLot.title
+                            } : '',
                             resultsLimit: this.resultsLimit
                         }, 'Search suppliers - CCS', this.frontendSearchUrl);
                     }
@@ -825,46 +693,42 @@
                     document.getElementById('q').value = '';
                 },
                 setupHistoryApi: function() {
-                    var self = this;
 
-                    window.onpopstate = function(event) {
+                    window.onpopstate = event => {
                         // set the popstate variable to true so that we can
                         // tell in other parts of the code that the state change
                         // is being caused by the back/forward button
-                        self.popstateLoad = true;
+                        this.popstateLoad = true;
 
                         if(event.state == null) {
-                            self.resetFilters(null);
+                            this.resetFilters(null);
                             return;
                         }
 
-                        self.searchQuery      = event.state.searchQuery;
-                        self.checkedFramework = event.state.checkedFramework;
-                        self.checkedLot       = event.state.checkedLot;
-                        self.resultsLimit     = event.state.resultsLimit;
+                        this.searchQuery      = event.state.searchQuery;
+                        this.checkedFramework = event.state.checkedFramework;
+                        this.checkedLot       = event.state.checkedLot;
+                        this.resultsLimit     = event.state.resultsLimit;
                     }
                 },
                 updatePageValue: function(newPageValue) {
                     this.currentPage = newPageValue;
                 },
                 updateResults: function() {
-                    // we have to define this variable as arrow functions are
-                    // ES6, and the `this` variable changes in the fetch promises
-                    var self = this;
-                    self.loading = true;
+                    this.loading = true;
 
                     var requestUrl = this.searchRequestUrl;
 
                     console.log(requestUrl);
 
                     fetch(requestUrl)
-                        .then(function(response) {
+                        .then(response => {
                             if (!response.ok) {
                                 throw new Error('HTTP error, status = ' + response.status);
                             }
                             return response.json();
                         })
-                        .then(function(jsonResponse) {
+                        .then(jsonResponse => {
                             // update the results property
                             var tempResults = jsonResponse.results;
                             for(var i = 0; i < tempResults.length; i++) {
@@ -872,27 +736,167 @@
                                 tempResults[i].url = '/suppliers/' + tempResults[i].id + '/' + tempResults[i].encoded_name;
                             }
 
-                            self.searchResults = tempResults;
-                            self.searchResultsNumber = jsonResponse.meta.total_results;
-                            self.frameworkList = jsonResponse.meta.facets.frameworks;
-                            self.frameworkFilterExecute(null);
-                            self.lotList = jsonResponse.meta.facets.lots;
+                            this.searchResults = tempResults;
+                            this.searchResultsNumber = jsonResponse.meta.total_results;
+                            this.frameworkList = jsonResponse.meta.facets.frameworks;
+                            this.frameworkFilterExecute(null);
+                            this.lotList = jsonResponse.meta.facets.lots;
 
-                            self.loading = false;
+                            this.loading = false;
 
-                            if (self.searchQuery) {
-                                pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'suppliers', 'search_term': self.searchQuery, 'interaction_detail': self.searchResultsNumber});
+                            if (this.searchQuery) {
+                                pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'suppliers', 'search_term': this.searchQuery, 'interaction_detail': this.searchResultsNumber});
                             }
                         })
                         .catch(function(error) {
                             // @TODO: handle errors
                             console.log('An error occurred');
                             console.log(error);
-                            self.loading = false;
+                            this.loading = false;
                         });
                 }
             }
         })
+
+
+         // Define a new component for the results pagination
+        app.component('results-pagination', {
+            delimiters: ['{[', ']}'],
+            props: {
+                currentPage: Number,
+                totalResults: Number,
+                resultsPerPage: Number,
+                // How many result links to display before we shorten the list
+                resultPagesLinkNumber: Number,
+                queryUrl: String
+            },
+            computed: {
+                numberOfPages: function() {
+                    return Math.ceil(this.totalResults/this.resultsPerPage);
+                },
+                nextPage: function() {
+                    if(this.currentPage == this.numberOfPages) {
+                        return this.currentPage;
+                    }
+
+                    return this.currentPage + 1;
+                },
+                previousPage: function() {
+                    if(this.currentPage == 1) {
+                        return this.currentPage;
+                    }
+
+                    return this.currentPage - 1;
+                },
+                paginationStartNumber: function() {
+                    // start page defaults to 2 (second page) because the
+                    // first page link is always output by default
+                    var linksStartPage = 1;
+
+                    // if the start page is at the beginning of the pagination
+                    // then account for this
+                    if ((this.currentPage - 2) < 2 ) {
+                        linksStartPage = 2;
+                    } else {
+                        // otherwise the start page is equal to the current
+                        // page minus 2, this means that the pagination should
+                        // have a couple of links either side of the current
+                        // page, e.g.   2 3 [4] 5 6
+                        linksStartPage = this.currentPage - 2;
+                    }
+
+                    // if the start page is very close to the last page, then
+                    // account for this
+                    if((this.currentPage + 2) > this.numberOfPages) {
+                        linksStartPage = linksStartPage - 2;
+                    }
+
+                    if(this.numberOfPages < this.resultPagesLinkNumber) {
+                        linksStartPage = 1;
+                    }
+
+                    if(linksStartPage <= 0) {
+                        linksStartPage = 1;
+                    }
+
+                    return linksStartPage;
+                },
+                paginationEndNumber: function() {
+                    var linksEndPage   = this.paginationStartNumber + 4;
+
+                    // if there aren't more pages than the number we
+                    // want to show by minimum, then the end page is just equal
+                    // to the final result page
+                    if (this.numberOfPages < this.resultPagesLinkNumber) {
+                        linksEndPage = this.totalResults;
+                    }
+
+                    if ((linksEndPage >= this.numberOfPages)) {
+                        // minus 1 because the last page is always output
+                        linksEndPage = this.numberOfPages - 1;
+                    }
+
+                    if(this.numberOfPages == 1) {
+                        linksEndPage = 1;
+                    }
+
+                    return linksEndPage;
+                }
+            },
+            methods: {
+                updatePageNumber: function(event, newPage) {
+                    event.preventDefault();
+                    this.$emit('update-page', newPage);
+                },
+                range : function (start, end) {
+                    return Array(end - start + 1).fill().map(function(_, idx) {
+                        return start + idx;
+                    });
+                }
+            },
+            template: `
+                <ul class="list--inline pagination govuk-body" role="list" aria-label="Pagination" v-if="numberOfPages > 0">
+                    <li class="pagination__item pagination__item--previous" v-if="currentPage != 1">
+                        <a :href="'/suppliers/search' + previousPage + queryUrl" rel="previous" v-on:click="updatePageNumber($event, previousPage)">
+                            <span class="icon">
+                                <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M6.7 0l1.4 1.4-4.3 4.3h13v2H3.9l4.2 4-1.4 1.4L0 6.7z" fill="#007194" fill-rule="evenodd"></path></svg>
+                            </span>
+                            <span>Previous</span> <span class="visuallyhidden">page</span>
+                        </a>
+                    </li>
+
+                    <li class="pagination__item" v-if="numberOfPages > 6">
+                        <span v-if="currentPage == 1"><span class="visuallyhidden">Page </span>1</span>
+                        <a v-else :href="'/suppliers/search/1' + queryUrl" v-on:click="updatePageNumber($event, 1)"><span class="visuallyhidden">Page </span>1</a>
+                    </li>
+
+                    <li class="pagination__item" v-if="paginationStartNumber > 2">…</li>
+
+                    <li class="pagination__item" v-for="page in range(paginationStartNumber, paginationEndNumber)" v-if="numberOfPages > 1">
+                        <span v-if="page == currentPage"><span class="visuallyhidden">Page </span>{[ page ]}</span>
+                        <a v-else :href="'/suppliers/search/' + page + queryUrl" v-on:click="updatePageNumber($event, page)"><span class="visuallyhidden">Page </span>{[ page ]}</a>
+                    </li>
+
+                    <li class="pagination__item" v-if="(paginationEndNumber + 1) < numberOfPages">…</li>
+
+                    <li class="pagination__item" v-if="numberOfPages > 1">
+                        <span v-if="currentPage == numberOfPages"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</span>
+                        <a v-else :href="'/suppliers/search/' + numberOfPages + queryUrl" v-on:click="updatePageNumber($event, numberOfPages)"><span class="visuallyhidden">Page </span>{[ numberOfPages ]}</a>
+                    </li>
+
+                    <li class="pagination__item pagination__item--next" v-if="currentPage != numberOfPages">
+                        <a :href="'/suppliers/search/' + nextPage + queryUrl" rel="next" v-on:click="updatePageNumber($event, nextPage)">
+                            <span>Next</span> <span class="visuallyhidden">page</span>
+                            <span class="icon">
+                                <svg width="17" height="14" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 0L8.7 1.4 13 5.7H0v2h12.9l-4.2 4 1.4 1.4 6.7-6.4z" fill="#007194" fill-rule="evenodd"></path></svg>
+                            </span>
+                        </a>
+                    </li>
+                </ul>`
+        });
+
+        app.mount('#search-app');
+
     </script>
 
 
