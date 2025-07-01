@@ -573,7 +573,11 @@
 
                     // go back to page 1
                     this.currentPage = 1;
-                }
+                },
+                resultsLimit: function() {
+                    this.currentPage = 1;
+                    this.updateResults();
+                },
             },
             computed: {
                 filtersSelected: function() {
