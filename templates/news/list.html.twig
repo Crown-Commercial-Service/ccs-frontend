@@ -30,6 +30,8 @@
 
         {% set sectorsForTwig = filters.sectors is defined and filters.sectors is not empty ? filters.sectors|split(',') : [] %}
         {% set products_servicesForTwig = filters.products_services is defined and filters.products_services is not empty ? filters.products_services|split(',') : [] %}
+        
+        {% set allDownloadable = [] %}
 
         <div class="govuk-breadcrumbs">
             <ol class="govuk-breadcrumbs__list">
@@ -49,7 +51,8 @@
                             <h2 class="govuk-heading-m">Apply filters</h2>
                         </div>
                             <div class="govuk-grid-column-one-half" style="text-align:right;">
-                                <a href={{ path('news_list') }} class="govuk-link"> Clear filters </a>
+                                <a v-show="!javascriptVersion" href={{ path('news_list') }} class="govuk-link"> Clear filters </a>
+                                <a @click="resetAll()" href="#" class="govuk-link hideWithoutJS govuk-visually-hidden"> Clear filters </a>
                             </div>
                         </div>
 
@@ -72,15 +75,16 @@
                                 
                                     <div id="filter_article-content-1" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-for-categories">
                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input v-on:change=fetchAPIData(null,null) v-model="checkedCategories" name="allCategories" value="allCategories" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allCategories" type="checkbox" {{ filters.categories is not defined ? 'checked' }}>
+                                            <input v-model="allCategoriesModel" name="allCategories" value="allCategories" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allCategories" type="checkbox" {{ filters.categories is not defined ? 'checked' }}>
                                             <label class="govuk-label govuk-checkboxes__label" for="allCategories">
                                                 View all
                                             </label>
                                         </div>
+
                                         {% if categoriesFilters is not empty %}
                                             {% for item in categoriesFilters|sort %}
                                                 <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                    <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedCategories" name="categories[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in categoriesForTwig ? 'checked' }}>
+                                                    <input v-model="checkedCategories" :value="{{ item.id }}" name="categories[]" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in categoriesForTwig ? 'checked' }}>
                                                     <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
                                                         {{ item.name }}
                                                     </label>
@@ -88,33 +92,25 @@
                                             {% endfor %}
                                         {% endif %}
                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input v-on:change=fetchAPIData(whitepaper,null) v-model="whitepaper" name="whitepaper" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="whitepaper" type="checkbox" {{ filters.whitepaper is defined and filters.whitepaper is not null  ? 'checked' }}>
+                                            <input v-model="whitepaper" name="whitepaper" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="whitepaper" type="checkbox" {{ filters.whitepaper is defined and filters.whitepaper is not null  ? 'checked' }}>
                                             <label class="govuk-label govuk-checkboxes__label" for="whitepaper">
                                                 Whitepaper
                                             </label>
                                         </div>
                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input v-on:change=fetchAPIData(webinar,null) v-model="webinar" name="webinar" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="webinar" type="checkbox" {{ filters.webinar is defined and filters.webinar is not null  ? 'checked' }}>
+                                            <input v-model="webinar" name="webinar" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="webinar" type="checkbox" {{ filters.webinar is defined and filters.webinar is not null  ? 'checked' }}>
                                             <label class="govuk-label govuk-checkboxes__label" for="webinar">
                                                 Webinar
                                             </label>
                                         </div>
-                                        {# <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input v-on:change=fetchAPIData(digitalBrochure,null) v-model="digitalBrochure" name="digitalBrochure" value=1 class="govuk-checkboxes__input govuk-checkboxes__input--small" id="digitalBrochure" type="checkbox" {{ filters.digitalBrochure is defined and filters.digitalBrochure is not null  ? 'checked' }}>
-                                            <label class="govuk-label govuk-checkboxes__label" for="digitalBrochure">
-                                                Digital brochure
-                                            </label>
-                                        </div> #}
-
-                                        {% set tempDigitalDownload = [] %}
 
                                         {% if contentTypeFilters is not empty %}
                                             {% for item in contentTypeFilters|sort %}
 
-                                                {% set tempDigitalDownload = tempDigitalDownload|merge([item.id]) %}
+                                                {% set allDownloadable = allDownloadable|merge([item.id]) %}
 
                                                 <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                    <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedDigitalDownload" name="digitalDownload[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in downloadableForTwig ? 'checked' }}>
+                                                    <input v-model="checkedDownloadable" :value="{{ item.id }}" name="digitalDownload[]" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in downloadableForTwig ? 'checked' }}>
                                                     <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
                                                         {{ item.name }}
                                                     </label>
@@ -141,7 +137,7 @@
                                 
                                     <div id="filter_sector-content-1" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-for-sectors">
                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input v-on:change=fetchAPIData(null,null) v-model="checkedSectors" name="allSectors" value="allSectors" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allSectors" type="checkbox" {{ filters.sectors is not defined or filters.sectors is null ? 'checked' }}>
+                                            <input v-model="allSectorsModel" name="allSectors" value="allSectors" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allSectors" type="checkbox" {{ filters.sectors is not defined or filters.sectors is null ? 'checked' }}>
                                             <label class="govuk-label govuk-checkboxes__label" for="allSectors">
                                                 View all
                                             </label>
@@ -149,7 +145,7 @@
                                         {% if sectorsFilters is not empty %}
                                             {% for item in sectorsFilters %}
                                                 <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                    <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedSectors" name="sectors[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in sectorsForTwig ? 'checked' }}>
+                                                    <input v-model="checkedSectors" :value="{{ item.id }}" name="sectors[]" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in sectorsForTwig ? 'checked' }}>
                                                     <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
                                                         {{ item.name }}
                                                     </label>
@@ -178,7 +174,7 @@
                                 
                                     <div id="filter_p_and_s-content-1" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-for-ps">
                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                            <input v-on:change=fetchAPIData(null,null) v-model="checkedProducts_services" name="allPS" value="allPS" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allPS" type="checkbox" {{ filters.products_services is not defined or filters.products_services is null ? 'checked' }}>
+                                            <input v-model="allPSModel" name="allPS" value="allPS" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allPS" type="checkbox" {{ filters.products_services is not defined or filters.products_services is null ? 'checked' }}>
                                             <label class="govuk-label govuk-checkboxes__label" for="allPS">
                                                 View all
                                             </label>
@@ -186,7 +182,7 @@
                                         {% if productsServicesFilters is not empty %}
                                             {% for item in productsServicesFilters %}
                                                 <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                                    <input v-on:change=fetchAPIData("{{item.slug}}",null) v-model="checkedProducts_services" name="PandS[]" value="{{item.id}}" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in products_servicesForTwig ? 'checked' }}>
+                                                    <input v-model="checkedProductsServices" :value="{{ item.id }}" name="PandS[]" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item.slug}}" type="checkbox" {{ item.id in products_servicesForTwig ? 'checked' }}>
                                                     <label class="govuk-label govuk-checkboxes__label" for="{{item.slug}}">
                                                         {{ item.name }}
                                                     </label>
@@ -297,23 +293,13 @@
             var pageNumber                  = {% if pageNumber is defined and pageNumber is not empty %}{{ pageNumber }}{% else %}1{% endif %};
             var checkedCategories           = [];
             var checkedSectors              = [];
-            var checkedProducts_services    = [];
+            var checkedProductsServices     = [];
             var whitepaper                  = false;
             var webinar                     = false;
-            var digitalBrochure             = false;
-            var checkedDigitalDownload      = [];
-            var allDigitalDownload          = [];
+            var checkedDownloadable         = [];
 
             {% if filters.categories is defined and filters.categories is not empty %}
-                var checkedCategories   = Array.from([{{filters.categories}}]);
-            {% endif %}
-
-            {% if filters.sectors is defined and filters.sectors is not empty %}
-                var checkedSectors   = Array.from([{{filters.sectors}}]);
-            {% endif %}
-
-            {% if filters.products_services is defined and filters.products_services is not empty %}
-                var checkedProducts_services   = Array.from([{{filters.products_services}}]);
+                checkedCategories   = Array.from([{{filters.categories}}]);
             {% endif %}
 
             {% if filters.whitepaper is defined and filters.whitepaper == "1" %}
@@ -324,20 +310,333 @@
                 webinar = true;
             {% endif %}
 
-            {% if filters.digitalBrochure is defined and filters.digitalBrochure == "1" %}
-                digitalBrochure = true;
-            {% endif %}
-
-            
             {% if filters.digitalDownload is defined and filters.digitalDownload is not empty %}
-                var checkedDigitalDownload   = Array.from([{{filters.digitalDownload}}]);
-            {% endif %}
-            
-            {% if contentTypeFilters is defined and contentTypeFilters is not empty%}
-               var allDigitalDownload = Array.from([{{tempDigitalDownload|join(', ')}}]);
+                checkedDownloadable = Array.from([{{filters.digitalDownload}}]);
             {% endif %} 
 
-            Vue.component('results-pagination', {
+
+
+            {% if filters.sectors is defined and filters.sectors is not empty %}
+                checkedSectors   = Array.from([{{filters.sectors}}]);
+            {% endif %}
+
+            {% if filters.products_services is defined and filters.products_services is not empty %}
+                checkedProductsServices   = Array.from([{{filters.products_services}}]);
+            {% endif %}
+
+            const app = Vue.createApp({
+                delimiters: ['{[', ']}'],
+                
+                data() {
+                    return {
+                        javascriptVersion: true,
+                        results: null,
+                        responseAvailable: false,
+                        emptyResult: false,
+                        apiURL: apiBaseUrl + "news?",
+                        checkedCategories: checkedCategories,
+                        whitepaper: whitepaper,
+                        webinar: webinar,
+                        checkedDownloadable: checkedDownloadable,
+                        checkedSectors: checkedSectors,
+                        checkedProductsServices: checkedProductsServices,
+                        currentPage: pageNumber,
+                        numberOfPages: Number,
+                        totalResults: Number,
+                        popstateLoad: false,
+                    }
+                },
+                mounted() {
+                    this.fetchAPIData(this.currentPage);
+                    this.setupHistoryApi();     
+                },
+                created(){
+                    // making sure the sections that is hidden at start shows
+                    this.$nextTick(() => {
+                        const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
+                        hideWithOutJS.forEach(section => {
+                            if (section.classList.contains('govuk-visually-hidden')) {;
+                                section.classList.remove('govuk-visually-hidden');
+                            }
+                        });
+                    });
+                },
+                watch: {
+                    // making sure that the sections is refreshed 
+                    responseAvailable(responseAvailable) {
+                        this.$nextTick(() => {
+                            const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
+                            hideWithOutJS.forEach(section => {
+                                if (section.classList.contains('govuk-visually-hidden')) {;
+                                    section.classList.remove('govuk-visually-hidden');
+                                }
+                            });
+                        });
+                    },
+                    checkedCategories: function(checkedCategories) {
+                        this.handleCategoriesReset()
+                        this.fetchAPIData(null)
+                    },
+                    whitepaper: function(whitepaper) {
+                        this.handleCategoriesReset()
+                        this.fetchAPIData(null)
+                    },
+                    webinar: function(webinar) {
+                        this.handleCategoriesReset()
+                        this.fetchAPIData(null)
+                    },
+                    checkedDownloadable: function(checkedDownloadable) {
+                        this.handleCategoriesReset()
+                        this.fetchAPIData(null)
+                    },
+                    checkedProductsServices: function(checkedProductsServices) {
+                        if (checkedProductsServices.length === Number("{{productsServicesFilters|length}}")) {
+                            this.checkedProductsServices = [];
+                        }
+                        this.fetchAPIData(null)
+                    },
+                    checkedSectors: function(checkedSectors) {
+                        if (checkedSectors.length === Number("{{sectorsFilters|length}}")) {
+                            this.checkedSectors = [];
+                        }
+                        this.fetchAPIData(null)
+                    },
+                },
+                computed: {
+                    frontendSearchUrl: function() {
+                        var queryUrl = '/news/?'
+                            + ((this.checkedCategories || []).length !== 0 ? '&categories=' + this.checkedCategories.join() : '')
+                            + (this.whitepaper && !this.allCategoriesModel ? '&whitepaper=1' : '')
+                            + (this.webinar && !this.allCategoriesModel ? '&webinar=1' : '')
+                            + ((this.checkedDownloadable || []).length !== 0 ? '&digitalDownload=' + this.checkedDownloadable.join() : '')
+                            + ((this.checkedProductsServices || []).length !== 0    ? '&products_services=' + this.checkedProductsServices.join() : '')
+                            + ((this.checkedSectors || []).length !== 0             ? '&sectors=' + this.checkedSectors.join() : '')
+                            + (this.currentPage ? '&page=' + this.currentPage : '')
+                            + this.utmTagsRemain();
+
+                        return queryUrl == '/news/?' ? '' : queryUrl;
+                    },
+                    allCategoriesModel: {
+                        get() {
+                            var status = (this.checkedCategories || []).length === 0 &&
+                                this.whitepaper == false &&
+                                this.webinar == false &&
+                                (this.checkedDownloadable || []).length === 0
+
+                            return status;
+                        },
+                        set(checked) {
+                            if (checked) {
+                                this.checkedCategories = [];
+                                this.whitepaper = false;
+                                this.webinar = false;
+                                this.checkedDownloadable = [];
+                            } else {
+                                document.getElementById("allCategories").checked = true
+                            }
+                        }
+                    },
+                    allPSModel: {
+                        get() {
+                            return (this.checkedProductsServices || []).length === 0;
+                        },
+                        set(checked) {
+                            if (checked) {
+                                this.checkedProductsServices = [];
+                            } else {
+                                document.getElementById("allPS").checked = true
+                            }
+                        }
+                    },
+                    allSectorsModel: {
+                        get() {
+                            return (this.checkedSectors || []).length === 0;
+                        },
+                        set(checked) {
+                            if (checked) {
+                                this.checkedSectors = [];
+                            } else {
+                                document.getElementById("allSectors").checked = true
+                            }
+                        }
+                    },
+                },
+                methods: {
+                    handleCategoriesReset() {
+                        if (
+                            this.checkedCategories.length === Number("{{categoriesFilters|length}}") &&
+                            this.whitepaper === true &&
+                            this.webinar === true &&
+                            this.checkedDownloadable.length === Number("{{contentTypeFilters|length}}")
+                        ) {
+                            this.checkedCategories = [];
+                            this.whitepaper = false;
+                            this.webinar = false;
+                            this.checkedDownloadable = [];
+                        }
+                    },
+                    resetAll:function(){
+                        this.checkedCategories = [];
+                        this.whitepaper = false;
+                        this.webinar = false;
+                        this.checkedDownloadable = [];
+                        this.checkedProductsServices = [];
+                        this.checkedSectors = [];
+                        this.currentPage = 1;
+                    },
+                    formatDate:function(dateString){
+                        date = new Date(Date.parse(dateString));
+                        const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][date.getMonth()];
+                        return date.getDate() + ' ' + month + ' ' + date.getFullYear();
+                    },
+                    utmTagsRemain:function(){
+                        urlParams = new URLSearchParams(window.location.href);
+                        utmParams = '';
+
+                        for (var param of urlParams) {
+                            [key, value] = param;
+                            utmParams += key.startsWith("utm") ? `&${key}=${value}` : '';
+                        }
+                        return utmParams != '' ? utmParams : '';
+                    },
+                    searchRequestUrl: function() {
+                        var fetchURL =    this.apiURL 
+                                    + (this.checkedCategories.length !== 0 ? '&categories=' + this.checkedCategories.join() : 'noPost=1')
+                                    + ((this.whitepaper && !this.allCategoriesModel) || this.allCategoriesModel ? '&whitepaper=1' : '')
+                                    + ((this.webinar && !this.allCategoriesModel) || this.allCategoriesModel ? '&webinar=1' : '')
+                                    + ((this.checkedDownloadable.length !== 0) ? '&digitalDownload=' + this.checkedDownloadable.join() : '&digitalDownload=' + "{{allDownloadable|join(',')}}")
+                                    + (this.checkedProductsServices.length !== 0 ? '&products_services=' + this.checkedProductsServices.join() : '')
+                                    + (this.checkedSectors.length !== 0 ? '&sectors=' + this.checkedSectors.join() : '');
+
+                        if (this.allCategoriesModel) {
+                            fetchURL = fetchURL.replace('noPost=1', '');
+                        }else{
+                            fetchURL = fetchURL.replace('&digitalDownload=' + "{{allDownloadable|join(',')}}", '');
+                        }
+
+                        fetchURL = fetchURL + "&per_page=5&page=" + this.currentPage;
+
+                        if(this.popstateLoad === false) {
+                            history.pushState({
+                                checkedCategories:          [...this.checkedCategories],
+                                whitepaper:                 this.whitepaper,
+                                webinar:                    this.webinar,
+                                checkedDownloadable:        [...this.checkedDownloadable],
+                                checkedProductsServices:    [...this.checkedProductsServices],
+                                checkedSectors:             [...this.checkedSectors],
+                            }, 'News', this.frontendSearchUrl);
+                        }
+
+                        this.popstateLoad = false;
+
+                        return fetchURL;
+                    },
+                    fetchAPIData: function(pageNumber) {
+                        this.responseAvailable = false;
+                        this.emptyResult = false;
+                        this.currentPage = pageNumber != null ?  pageNumber : 1;
+                        const utmTags = '?' + this.utmTagsRemain().substring(1);
+
+                        var requestUrl = this.searchRequestUrl();
+                        console.log(requestUrl);
+                        
+                        fetch(requestUrl)
+                        .then(async function(response) {
+                            if (!response.ok) {
+                                throw new Error('HTTP error, status = ' + response.status);
+                            }
+                            return response.json();
+                        })
+                        .then((jsonResponse) => {
+                            this.numberOfPages  = jsonResponse.meta['X-WP-TotalPages'];
+                            this.totalResults   = jsonResponse.meta['X-WP-Total'];
+                            this.results = jsonResponse.body;
+
+                            for(var i = 0; i < jsonResponse.body.length; i++) {
+                                jsonResponse.body[i].modifiedDate = this.formatDate(jsonResponse.body[i].modified);
+                                jsonResponse.body[i].postType = jsonResponse.body[i].acf.category_type;
+                                jsonResponse.body[i].index = i;
+                                switch(jsonResponse.body[i].postType) {
+                                    case 'Whitepaper':
+                                        postLink = appBaseUrl+ "/whitepaper/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
+                                        postDescription = jsonResponse.body[i].excerpt.rendered;
+                                        categoriesLink = appBaseUrl + "/news/?&whitepaper=1";
+                                        break;
+                                    case 'Webinar':
+                                        postLink = appBaseUrl+ "/webinar/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
+                                        postDescription = jsonResponse.body[i].excerpt.rendered;
+                                        categoriesLink = appBaseUrl + "/news/?&webinar=1";
+                                        break;
+                                    case 'Downloadable':
+                                        jsonResponse.body[i].postType = jsonResponse.body[i].acf.content_type_name;
+                                        postLink = appBaseUrl+ "/downloadable-resource/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
+                                        postDescription = jsonResponse.body[i].excerpt.rendered;
+                                        categoriesLink = appBaseUrl +"/news/?digitalDownload=" + jsonResponse.body[i].acf.content_type_id;
+                                        break;
+                                    default:
+                                        postLink = appBaseUrl+ "/news/" + jsonResponse.body[i].slug;
+                                        postDescription = jsonResponse.body[i].acf.post_lead_text
+                                        categoriesLink = appBaseUrl +"/news?categories=" + jsonResponse.body[i].categories[0];
+                                        break;
+                                }
+
+                                jsonResponse.body[i].postLink = postLink;
+                                jsonResponse.body[i].postDescription = postDescription;
+                                jsonResponse.body[i].CategoriesLink = categoriesLink
+
+                                jsonResponse.body[i].imageSet = false;
+
+                                if (jsonResponse.body[i].acf.featured_image_url != false) {
+                                    jsonResponse.body[i].imageSet = true;
+                                    jsonResponse.body[i].imageURL = jsonResponse.body[i].acf.featured_image_url;
+                                    jsonResponse.body[i].altText  = jsonResponse.body[i].acf.alt_text;
+                                }
+                            }
+
+                            if( Object.keys(jsonResponse.body).length === 0 ){
+                                this.emptyResult = true;
+                                this.responseAvailable = null;
+                            }else{
+                                this.responseAvailable = true;
+                            }
+                        })
+                        .catch((error) => {
+                            console.log('An error occurred while fetching the API data');
+                            console.log(error);
+                            this.responseAvailable = false;
+                        });
+                    },
+                    updatePageValue: function(newPageValue) {
+                        this.currentPage = newPageValue;
+                        this.fetchAPIData(newPageValue);
+                    },
+                    setupHistoryApi: function() {
+                        window.onpopstate = (event) => {
+                            this.popstateLoad = true;
+
+                            if(event.state == null) {
+                                this.checkedCategories          = [];
+                                this.whitepaper                 = false;
+                                this.webinar                    = false;
+                                this.checkedDownloadable        = [];
+                                this.checkedProductsServices    = [];
+                                this.checkedSectors             = [];
+                                return;
+                            }
+
+                            this.checkedCategories          = event.state.checkedCategories;
+                            this.whitepaper                 = event.state.whitepaper;
+                            this.webinar                    = event.state.webinar;
+                            this.checkedDownloadable        = event.state.checkedDownloadable;
+                            this.checkedProductsServices    = event.state.checkedProductsServices;
+                            this.checkedSectors             = event.state.checkedSectors;
+                        }
+                    }
+                }
+            })
+
+
+            app.component('results-pagination', {
                 delimiters: ['{[', ']}'],
                 props: {
                     currentPage: Number,
@@ -345,37 +644,20 @@
                     numberOfPages: Number,
                 },
                 computed: {
-                    nextPage: function() {
-                        if(this.currentPage == this.numberOfPages) {
-                            return this.currentPage;
-                        }
-                        return this.currentPage + 1;
+                    nextPage() {
+                        return this.currentPage == this.numberOfPages ? this.currentPage : this.currentPage + 1;
                     },
-                    previousPage: function() {
-                        if(this.currentPage == 1) {
-                            return this.currentPage;
-                        }
-                        return this.currentPage - 1;
+                    previousPage() {
+                        return this.currentPage == 1 ? this.currentPage : this.currentPage - 1;
                     },
-                    paginationStartNumber: function() {
-                        // start page defaults to 2 (second page) because the
-                        // first page link is always output by default
+                    paginationStartNumber() {
                         var linksStartPage = 1;
-
-                        // if the start page is at the beginning of the pagination
-                        // then account for this
                         if ((this.currentPage - 2) < 2 ) {
                             linksStartPage = 2;
                         } else {
-                            // otherwise the start page is equal to the current
-                            // page minus 2, this means that the pagination should
-                            // have a couple of links either side of the current
-                            // page, e.g.   2 3 [4] 5 6
                             linksStartPage = this.currentPage - 2;
                         }
 
-                        // if the start page is very close to the last page, then
-                        // account for this
                         if((this.currentPage + 2) > this.numberOfPages) {
                             linksStartPage = linksStartPage - 2;
                         }
@@ -383,21 +665,15 @@
                         if(linksStartPage <= 1 ) {
                             linksStartPage = 2;
                         }
-
                         return linksStartPage;
                     },
-                    paginationEndNumber: function() {
-                        var linksEndPage   = this.paginationStartNumber + 4;
-
-                        // if there aren't more pages than the number we
-                        // want to show by minimum, then the end page is just equal
-                        // to the final result page
-
+                    paginationEndNumber() {
+                        var linksEndPage = this.paginationStartNumber + 4;
+                        
                         if ((linksEndPage >= this.numberOfPages)) {
-                            // minus 1 because the last page is always output
                             linksEndPage = this.numberOfPages - 1;
                         }
-
+                        
                         if(this.numberOfPages == 1) {
                             linksEndPage = 1;
                         }
@@ -406,15 +682,12 @@
                     }
                 },
                 methods: {
-                    updatePageNumber: function(event, newPage) {
+                    updatePageNumber(event, newPage) {
                         event.preventDefault();
                         this.$emit('update-page', newPage);
-                        search.fetchAPIData(null, newPage)
                     },
-                    range : function (start, end) {
-                        return Array(end - start + 1).fill().map(function(_, idx) {
-                            return start + idx;
-                        });
+                    range(start, end) {
+                        return Array(end - start + 1).fill().map((_, idx) => start + idx);
                     }
                 },
                 template: 
@@ -462,363 +735,7 @@
                     `
             });
 
-
-            var search = new Vue({
-                delimiters: ['{[', ']}'],
-                el: '#main-content',
-                mounted:function(){
-                    this.categoriesFilter();
-                    this.sectorsFilter();
-                    this.productsServicesFilter();
-                    this.otherPostType();
-                },
-                data: {
-                    javascriptVersion: true,
-                    results: "",
-                    responseAvailable: null,
-                    emptyResult: false,
-                    apiURL:  apiBaseUrl + "news?",
-                    checkedCategories: checkedCategories,
-                    checkedSectors: checkedSectors,
-                    checkedProducts_services: checkedProducts_services,
-                    whitepaper: whitepaper,
-                    webinar: webinar,
-                    digitalBrochure: digitalBrochure,
-                    checkedDigitalDownload: checkedDigitalDownload,
-                    allDigitalDownload: allDigitalDownload,
-                    currentPage: pageNumber,
-                    numberOfPages: Number,
-                    totalResults: Number,
-
-                    popstateLoad: false
-                },
-                created: function() {
-                    const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
-
-                    hideWithOutJS.forEach(card => {
-                    if (card.classList.contains('govuk-visually-hidden')) {
-                        card.classList.remove('govuk-visually-hidden');
-                    }});
-
-                    // unfortunately we have to update the results when we instantiate
-                    // the Vue app so it hooks in all the correct event handlers etc.
-                    this.fetchAPIData(null, this.currentPage);
-
-                    // setup popstate event listener for History API
-                    this.setupHistoryApi();                   
-                },
-                watch: {
-                    searchRequestUrl: function() {
-                        // if the searchRequestUrl hasn't been updated by a popstate
-                        // event (back/forward button) then we push a state item to the
-                        // JS History API
-                        if(this.popstateLoad === false) {
-                            history.pushState({
-                                checkedCategories: this.checkedCategories,
-                                checkedSectors: this.checkedSectors,
-                                checkedProducts_services: this.checkedProducts_services,
-                                whitepaper: this.whitepaper,
-                                webinar: this.webinar,
-                                digitalBrochure: this.digitalBrochure,
-                                checkedDigitalDownload: checkedDigitalDownload,
-                            }, 'News', this.frontendSearchUrl);
-                        }
-
-                        // reset the popstateLoad property to false
-                        this.popstateLoad = false;
-                    }
-                },
-                computed: {
-                    frontendQueryUrl: function() {
-                        var queryUrl = '/?';
-
-                        if(this.checkedCategories.length != 0) {
-                            queryUrl += '&categories=' + this.checkedCategories.join();
-                        }
-
-                        if(this.whitepaper == true) {
-                            queryUrl += '&whitepaper=1';
-                        }
-
-                        if(this.webinar == true) {
-                            queryUrl += '&webinar=1';
-                        }
-
-                        if(this.digitalBrochure == true) {
-                            queryUrl += '&digitalBrochure=1';
-                        }
-
-                        if(this.checkedSectors.length != 0) {
-                            queryUrl += '&sectors=' + this.checkedSectors.join();
-                        }
-
-                        if(this.checkedProducts_services.length != 0) {
-                            queryUrl += '&products_services=' + this.checkedProducts_services.join();
-                        }
-
-                        if(this.checkedDigitalDownload.length != 0) {
-                            queryUrl += '&digitalDownload=' + this.checkedDigitalDownload.join();
-                        }
-
-                        if(this.currentPage ){
-                            queryUrl += '&page=' + this.currentPage;
-                        }
-
-                        queryUrl += this.utmTagsRemain();
-
-                        return queryUrl != '/?' ? queryUrl : "";
-                        
-                    },
-                    frontendSearchUrl: function() {
-                        var searchUrl = '/news' + this.frontendQueryUrl ;
-                        return searchUrl;
-                    }
-                },   
-                methods: {
-                    utmTagsRemain:function(){
-                        urlParams = new URLSearchParams(window.location.href);
-
-                        utmParams = '';
-
-                        for ( var param of urlParams) {
-                            [key, value] = param;
-                                                    
-                            if (key.startsWith("utm")) {
-                                utmParams += `&${key}=${value}`;
-                            }
-                        }
-
-                        if (utmParams != ''){
-                            return utmParams;
-                        }
-                        return "";
-                    },
-                    formatDate:function(date){
-                        var self = this;
-                        date = new Date(Date.parse(date));
-                        const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][date.getMonth()];
-                        return date.getDate() + ' ' + month + ' ' + date.getFullYear();
-
-                    },
-                    categoriesFilter:function(categoriesSlug){
-                        var self = this;
-                        var categoriesFilter = "";
-
-                        if (self.checkedCategories.includes("allCategories")){
-                            self.setOtherPostTypeToFalse();
-                            self.checkedCategories = [];
-                        } else if (self.checkedCategories.length != 0){
-                            document.getElementById("allCategories").checked = false;
-                            categoriesFilter = "&categories=" + self.checkedCategories.join();
-
-                            self.whitepaper         = self.whitepaper       === false ? false : self.whitepaper;
-                            self.webinar            = self.webinar          === false ? false : self.webinar;
-                            self.digitalBrochure    = self.digitalBrochure  === false ? false : self.digitalBrochure;
-                        }
-
-                        return categoriesFilter;
-                    },
-                    sectorsFilter:function(sectorSlug){
-                        var self = this;
-                        var sectorsFilter = "";
-
-                        if (self.checkedSectors.includes("allSectors") || self.checkedSectors.length == 0 || self.checkedSectors.length == "{{sectorsFilters|length}}"){
-                            self.checkedSectors = [];
-                            document.getElementById("allSectors").checked = true;
-                            document.getElementById(sectorSlug) != null ? document.getElementById(sectorSlug).checked = false : null
-                        }else{
-                            document.getElementById("allSectors").checked = false;
-                            sectorsFilter = "&sectors=" + self.checkedSectors.join()
-                        }
-
-                        return sectorsFilter;
-                    },
-                    productsServicesFilter:function(psSlug){
-                        var self = this;
-                        var products_servicesFilter = "";
-
-                        if (self.checkedProducts_services.includes("allPS") || self.checkedProducts_services.length == 0 || self.checkedProducts_services.length == "{{productsServicesFilters|length}}"){
-                            self.checkedProducts_services = [];
-                            document.getElementById("allPS").checked = true;
-                            document.getElementById(psSlug) != null ? document.getElementById(psSlug).checked = false : null
-                        }else{
-                            document.getElementById("allPS").checked = false;
-                            products_servicesFilter = "&products_services=" + self.checkedProducts_services.join()
-                        }
-
-                        return products_servicesFilter;
-                    },
-                    otherPostType:function(categoriesSlug){
-                        var self = this;
-                        var otherPostType = "";
-                        var allCategoriesClear = this.whitepaper === false && this.webinar === false && this.digitalBrochure === false && this.checkedCategories.length == 0 && this.checkedDigitalDownload.length == 0;
-
-                        if ( allCategoriesClear ){
-                            document.getElementById("allCategories").checked = true;
-                            return "&whitepaper=1&webinar=1&digitalBrochure=1&digitalDownload=" + self.allDigitalDownload
-                        }else if( this.checkedCategories.length == "{{categoriesFilters|length}}" && this.whitepaper && this.webinar && this.digitalBrochure && this.checkedDigitalDownload.length == this.allDigitalDownload.length ){
-                            this.checkedCategories = [];
-                            this.checkedDigitalDownload = [];
-                            self.setOtherPostTypeToFalse();
-                            document.getElementById(categoriesSlug) != null ? document.getElementById(categoriesSlug).checked = false : null
-                            document.getElementById("allCategories").checked = true;
-                            document.getElementById("whitepaper").checked = false;
-                            document.getElementById("webinar").checked = false;
-                            document.getElementById("digitalBrochure").checked = false;
-                            return "&whitepaper=1&webinar=1&digitalBrochure=1&digitalDownload=" + self.allDigitalDownload
-                        } else {
-                            otherPostType = this.whitepaper                         ? otherPostType + "&whitepaper=1"       : otherPostType;
-                            otherPostType = this.webinar                            ? otherPostType + "&webinar=1"          : otherPostType;
-                            otherPostType = this.digitalBrochure                    ? otherPostType + "&digitalBrochure=1"  : otherPostType;
-                            otherPostType = this.checkedCategories.length == 0      ? otherPostType + "&noPost=1"           : otherPostType;
-                            otherPostType = this.checkedDigitalDownload.length != 0 ? otherPostType + "&digitalDownload=" + self.checkedDigitalDownload.join()   : otherPostType;
-                            document.getElementById("allCategories").checked = false;
-                        }
-
-                        return otherPostType;
-                    },
-                    setOtherPostTypeToFalse:function(){
-                        var self = this;
-                        self.whitepaper = false;
-                        self.webinar = false;
-                        self.digitalBrochure = false;
-                        self.checkedDigitalDownload = [];
-                    },
-                    searchRequestUrl: function(categoriesSlug, page) {
-
-                        fetchURL = this.apiURL + this.categoriesFilter(categoriesSlug) + this.sectorsFilter(categoriesSlug) + this.productsServicesFilter(categoriesSlug) + this.otherPostType(categoriesSlug);
-                        
-                        fetchURL = fetchURL + "&per_page=5&page=" + this.currentPage;
-
-                        if(this.popstateLoad === false) {
-                            history.pushState({
-                                checkedCategories: this.checkedCategories,
-                                checkedSectors: this.checkedSectors,
-                                checkedProducts_services: this.checkedProducts_services,
-                                whitepaper: this.whitepaper,
-                                webinar: this.webinar,
-                                digitalBrochure: this.digitalBrochure,
-                                checkedDigitalDownload: checkedDigitalDownload
-                            }, 'Search suppliers - CCS', this.frontendSearchUrl);
-                        }
-
-                        // reset the popstateLoad property to false
-                        this.popstateLoad = false;
-
-                        return fetchURL;
-                    },
-                    fetchAPIData: function(categoriesSlug, page) {
-                        var self = this;
-                        this.responseAvailable = false;
-                        this.emptyResult = false;
-                        const utmTags = '?' + this.utmTagsRemain().substring(1);
-
-                        this.currentPage = page === null ? 1 : page;
-                        var requestUrl = this.searchRequestUrl(categoriesSlug, this.currentPage);
-                        console.log(requestUrl);
-                        fetch(requestUrl)
-                        .then(async function(response) {
-                            if (!response.ok) {
-                                throw new Error('HTTP error, status = ' + response.status);
-                            }
-                            return response.json();
-                        })
-                        .then(function(jsonResponse) {
-                            self.numberOfPages = jsonResponse.meta['X-WP-TotalPages'];
-                            self.totalResults = jsonResponse.meta['X-WP-Total'];
-                            for(var i = 0; i < jsonResponse.body.length; i++) {                         
-                                jsonResponse.body[i].modifiedDate = self.formatDate(jsonResponse.body[i].modified);
-                                jsonResponse.body[i].postType = jsonResponse.body[i].acf.category_type;
-                                jsonResponse.body[i].index = i;
-                                
-                                switch(jsonResponse.body[i].postType) {
-                                    case 'Whitepaper':
-                                        postLink = appBaseUrl+ "/whitepaper/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
-                                        postDescription = jsonResponse.body[i].excerpt.rendered;
-                                        categoriesLink = appBaseUrl + "/news/?&whitepaper=1";
-                                        break;
-                                    case 'Webinar':
-                                        postLink = appBaseUrl+ "/webinar/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
-                                        postDescription = jsonResponse.body[i].excerpt.rendered;
-                                        categoriesLink = appBaseUrl + "/news/?&webinar=1";
-                                        break;
-                                    case 'Digital Brochure':
-                                        postLink = appBaseUrl+ "/digital_brochure/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
-                                        postDescription = jsonResponse.body[i].excerpt.rendered;
-                                        categoriesLink = appBaseUrl + "/news/?&digitalBrochure=1";
-                                        break;
-                                    case 'Downloadable':
-                                        jsonResponse.body[i].postType = jsonResponse.body[i].acf.content_type_name;
-                                        postLink = appBaseUrl+ "/downloadable-resource/request/" + jsonResponse.body[i].id +"/" + jsonResponse.body[i].slug + utmTags;
-                                        postDescription = jsonResponse.body[i].excerpt.rendered;
-                                        categoriesLink = appBaseUrl +"/news/?digitalDownload=" + jsonResponse.body[i].acf.content_type_id;
-                                        break;
-                                    default:
-                                        postLink = appBaseUrl+ "/news/" + jsonResponse.body[i].slug;
-                                        postDescription = jsonResponse.body[i].acf.post_lead_text
-                                        categoriesLink = appBaseUrl +"/news?categories=" + jsonResponse.body[i].categories[0];
-                                        break;
-                                }
-
-                                jsonResponse.body[i].postLink = postLink;
-                                jsonResponse.body[i].postDescription = postDescription;
-                                jsonResponse.body[i].CategoriesLink = categoriesLink
-
-
-                                jsonResponse.body[i].imageSet = false;
-                                if (jsonResponse.body[i].acf.featured_image_url != false) {
-                                    jsonResponse.body[i].imageSet = true;
-                                    jsonResponse.body[i].imageURL = jsonResponse.body[i].acf.featured_image_url;
-                                    jsonResponse.body[i].altText  = jsonResponse.body[i].acf.alt_text;
-                                }
-                            }
-                            self.results = jsonResponse.body;
-                            if( Object.keys(jsonResponse.body).length === 0 ){
-                                self.emptyResult = true;
-                                self.responseAvailable = null;
-                            }else{
-                                self.responseAvailable = true;
-                            }
-                        })
-                        .catch(function(error) {
-                            console.log('An error occurred');
-                            console.log(error);
-                            this.responseAvailable = false;
-                        });
-                    },
-                    updatePageValue: function(newPageValue) {
-                        this.currentPage = newPageValue;
-                    },
-                    setupHistoryApi: function() {
-                        var self = this;
-                        window.onpopstate = function(event) {
-                            // set the popstate variable to true so that we can
-                            // tell in other parts of the code that the state change
-                            // is being caused by the back/forward button
-                            self.popstateLoad = true;
-
-                            if(event.state == null) {
-                                self.checkedCategories = [];
-                                self.checkedSectors = [];
-                                self.checkedProducts_services =[]
-                                self.whitepaper =null
-                                self.webinar =null
-                                self.digitalBrochure =null
-                                self.checkedDigitalDownload = []
-                                return;
-                            }
-
-                            self.checkedCategories         = event.state.checkedCategories;
-                            self.checkedSectors            = event.state.checkedSectors;
-                            self.checkedProducts_services  = event.checkedProducts_services;
-                            self.whitepaper                = event.state.whitepaper;
-                            self.webinar                   = event.state.webinar;
-                            self.digitalBrochure           = event.state.digitalBrochure;
-                            self.checkedDigitalDownload    = event.state.checkedDigitalDownload;
-                        }
-                    },
-                }
-            });
+            app.mount('#main-content');
 
         </script> 
     </div>
