@@ -510,7 +510,9 @@
 
                         if (this.allCategoriesModel) {
                             fetchURL = fetchURL.replace('noPost=1', '');
-                        }else{
+                        }
+
+                        if (!this.allCategoriesModel && this.checkedDownloadable.length == 0){
                             fetchURL = fetchURL.replace('&digitalDownload=' + "{{allDownloadable|join(',')}}", '');
                         }
 
