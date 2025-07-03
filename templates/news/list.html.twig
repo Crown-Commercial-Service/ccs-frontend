@@ -512,7 +512,7 @@
                             fetchURL = fetchURL.replace('noPost=1', '');
                         }
 
-                        if (!this.allCategoriesMode && this.checkedDownloadable.length == 0){
+                        if (!this.allCategoriesModel && this.checkedDownloadable.length == 0){
                             fetchURL = fetchURL.replace('&digitalDownload=' + "{{allDownloadable|join(',')}}", '');
                         }
 
