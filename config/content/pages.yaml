@@ -98,6 +98,8 @@ downloadable_list_downloadable_resource:
       type: text
 contact_form_show_contact_form:
   type: boolean
+contact_form_hide_callback_form:
+  type: boolean
 contact_form_show_newsletter_form:
   type: boolean
 contact_form_form_heading:
