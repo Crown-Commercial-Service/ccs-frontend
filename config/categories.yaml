@@ -57,7 +57,6 @@ pillars:
         
       - name: 'Digital and Technology Services'
         db_value: 'Digital and Technology Services'
-
         slug: 'digital-and-technology-services'
         
       - name: 'Network Services'
