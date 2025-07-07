@@ -54,9 +54,10 @@ pillars:
       - name: 'Cloud and Hosting'
         db_value: 'Cloud and Hosting'
         slug: 'cloud-and-hosting'
+        
+      - name: 'Digital and Technology Services'
+        db_value: 'Digital and Technology Services'
 
-      - name: 'Digital and technology Services'
-        db_value: 'Digital and technology Services'
         slug: 'digital-and-technology-services'
         
       - name: 'Network Services'
