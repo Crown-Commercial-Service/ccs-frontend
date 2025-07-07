@@ -109,7 +109,9 @@ class ControllerHelper
 
     public static function converArrayToStringForWordpress($selectedArray, $totalOption)
     {
-        if ($selectedArray == null || count($selectedArray) == $totalOption) {
+        if (is_string($selectedArray)) {
+            // no action
+        } elseif ($selectedArray == null || count($selectedArray) == $totalOption) {
             return null;
         }
 
