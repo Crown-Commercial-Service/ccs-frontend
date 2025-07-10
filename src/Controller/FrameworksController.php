@@ -194,12 +194,24 @@ class FrameworksController extends AbstractController
             'results'           => $results,
             'categories'        => FrameworkCategories::getAll(),
             'pillars'           => FrameworkCategories::getAllPillars(),
+            'pillarsAndCategories' => $this->getPillarsAndCategories(),
             'statuses'          => ["live"],
-            'regulation'        => ["allRegulation"],
-            'regulationType'    => ["allType"],
+            'regulation'        => ['PA2023', 'PCR2015', 'PCR2006'],
+            'regulationType'    => ["Dynamic+Purchasing+System", "Dynamic+Market", "Open+Framework", "Closed+Framework", "PCR15+Framework", "PCR06+Framework"],
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
+    }
+
+    private function getPillarsAndCategories()
+    {
+        $pillarsAndCategories = [];
+        $pillars = FrameworkCategories::getAllPillars();
+        foreach ($pillars['pillars'] as $pillar) {
+            $categories = FrameworkCategories::getAllByPillar($pillar['name']);
+            $pillarsAndCategories[$pillar['slug']] = $categories;
+        }
+        return $pillarsAndCategories;
     }
 
     public function upcomingDealsSearch(Request $request)
@@ -573,6 +585,10 @@ class FrameworksController extends AbstractController
             "psr-permanent-recruitment"                     => "HR and Workforce Services",
             "workforce-health-education"                    => "HR and Workforce Services",
             "people-services"                               => "HR and Workforce Services",
+            "estate-support-services"                       => "Facilities Management",
+            "technology-services"                           => "Digital and Technology Services",
+            "digital-capability-and-delivery"               => "Digital and Technology Services",
+            "software-and-hardware"                         => "Software",
         );
 
         $redirectToPillar = array(
