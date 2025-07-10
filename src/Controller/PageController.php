@@ -187,16 +187,16 @@ class PageController extends AbstractController
         if (array_key_exists('page_components_rows', (array) $page->getContent())) {
             foreach ($page->getContent()['page_components_rows']->getValue() as $acfFrield) {
                 if ($acfFrield->getName() == 'feature_news_feature_news') {
-                    $featureNewsProperties['newsType'] = property_exists($acfFrield->getContent(), 'feature_news_feature_news_news_type') 
-                        ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_news_type']) 
+                    $featureNewsProperties['newsType'] = property_exists($acfFrield->getContent(), 'feature_news_feature_news_news_type')
+                        ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_news_type'])
                         : null;
 
-                    $featureNewsProperties['pAndSType'] = property_exists($acfFrield->getContent(), 'feature_news_feature_news_products_and_services') 
-                        ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_products_and_services']) 
+                    $featureNewsProperties['pAndSType'] = property_exists($acfFrield->getContent(), 'feature_news_feature_news_products_and_services')
+                        ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_products_and_services'])
                         : null;
 
-                    $featureNewsProperties['sectorType'] = property_exists($acfFrield->getContent(), 'feature_news_feature_news_sectors') 
-                        ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_sectors']) 
+                    $featureNewsProperties['sectorType'] = property_exists($acfFrield->getContent(), 'feature_news_feature_news_sectors')
+                        ? $this->extractNewsPropertie($acfFrield->getContent()['feature_news_feature_news_sectors'])
                         : null;
                     break;
                 }
@@ -236,7 +236,7 @@ class PageController extends AbstractController
         $index = 1;
         if (property_exists($content, 'brochures_list_brochures_list')) {
                 $resources['brochures_list_brochures_list'] = $index++;
-            }
+        }
         if (property_exists($content, 'whitepapers_list_whitepapers')) {
             $resources['whitepapers_list_whitepapers'] = $index++;
         }
@@ -378,8 +378,7 @@ class PageController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function 
-    check()
+    public function check()
     {
         $required = '8.2.0';
         if (version_compare(PHP_VERSION, $required) < 0) {
