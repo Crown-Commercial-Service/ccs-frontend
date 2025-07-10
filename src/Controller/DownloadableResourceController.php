@@ -41,7 +41,7 @@ class DownloadableResourceController extends AbstractController
 
     public function request($id, $slug, Request $request)
     {
-        $sanitisedSlug = filter_var($slug, FILTER_SANITIZE_STRING);
+        $sanitisedSlug = filter_var($slug, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $this->api->setCacheKey($request->getRequestUri());
 
@@ -56,7 +56,7 @@ class DownloadableResourceController extends AbstractController
         $formData = ControllerHelper::getFormData($params);
         $utmParams = $request->query->all();
 
-        $returnURL = getenv('APP_BASE_URL') . '/downloadable-resource/confirmation/' . $downloadable_resource->getId() . '/' . $downloadable_resource->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING);
+        $returnURL = getenv('APP_BASE_URL') . '/downloadable-resource/confirmation/' . $downloadable_resource->getId() . '/' . $downloadable_resource->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $campaignCode = $downloadable_resource->getContent()->get('campaign_code') ? $downloadable_resource->getContent()->get('campaign_code')->getValue() : '';
         $description   = $downloadable_resource->getContent()->get('description') ? $downloadable_resource->getContent()->get('description')->getValue() : '';
 
@@ -89,7 +89,7 @@ class DownloadableResourceController extends AbstractController
 
     public function show($id, $slug, Request $request)
     {
-        $slug = filter_var($slug, FILTER_SANITIZE_STRING);
+        $slug = filter_var($slug, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $this->api->setCacheKey($request->getRequestUri());
 

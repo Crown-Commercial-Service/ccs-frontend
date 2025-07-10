@@ -42,8 +42,12 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     sudo yum install -y https://repo.ius.io/ius-release-el$(rpm -E '%{rhel}').rpm
 
+    echo "> > Removing PHP 7.4..."
+    sudo yum remove -y php*
+    sudo amazon-linux-extras disable php7.4
+
     echo "> > Installing web packages..."
-    sudo amazon-linux-extras enable php7.4
+    sudo amazon-linux-extras enable php8.2
     sudo yum -y install \
         httpd \
         php \

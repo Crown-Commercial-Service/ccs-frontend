@@ -85,7 +85,7 @@ class SuppliersController extends AbstractController
         ) : 20;
         $framework = $request->query->has('framework') ? filter_var(
             $request->query->get('framework'),
-            FILTER_SANITIZE_STRING
+            FILTER_SANITIZE_FULL_SPECIAL_CHARS
         ) : null;
 
         $results->getPagination()->setResultsPerPage($limit);
@@ -131,11 +131,11 @@ class SuppliersController extends AbstractController
     public function search(Request $request, int $page = 1)
     {
         // Get search query
-        $query = filter_var($request->query->get('q'), FILTER_SANITIZE_STRING);
+        $query = filter_var($request->query->get('q'), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         // Type param
-        $type = filter_var($request->query->get('t'), FILTER_SANITIZE_STRING);
+        $type = filter_var($request->query->get('t'), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if (!empty($type) && $type == 'old') {
             /**
              * Replace dash separated with spaces (+)
@@ -151,8 +151,8 @@ class SuppliersController extends AbstractController
         $this->searchApi->getContentType()->setApiEndpoint('suppliers');
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
-        $frameworkId = $request->query->has('framework') ? filter_var($request->query->get('framework'), FILTER_SANITIZE_STRING) : null;
-        $lotId = $request->query->has('lot-filter-nested') ? filter_var($request->query->get('lot-filter-nested'), FILTER_SANITIZE_STRING) : null;
+        $frameworkId = $request->query->has('framework') ? filter_var($request->query->get('framework'), FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
+        $lotId = $request->query->has('lot-filter-nested') ? filter_var($request->query->get('lot-filter-nested'), FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null;
         if ($lotId == 'all' || $lotId == 'filterLot') {
             $lotId = null;
         }
@@ -209,7 +209,7 @@ class SuppliersController extends AbstractController
     {
         $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
-        $slug = filter_var($slug, FILTER_SANITIZE_STRING);
+        $slug = filter_var($slug, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $this->api->setCacheKey($request->getRequestUri());
 

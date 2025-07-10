@@ -40,7 +40,7 @@ class WebinarController extends AbstractController
 
     public function request($id, $slug, Request $request)
     {
-        $sanitisedSlug = filter_var($slug, FILTER_SANITIZE_STRING);
+        $sanitisedSlug = filter_var($slug, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $this->api->setCacheKey($request->getRequestUri());
 
@@ -55,7 +55,7 @@ class WebinarController extends AbstractController
         $formData = ControllerHelper::getFormData($params);
         $utmParams = $request->query->all();
 
-        $returnURL = getenv('APP_BASE_URL') . '/webinar/confirmation/' . $webinar->getId() . '/' . $webinar->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING);
+        $returnURL = getenv('APP_BASE_URL') . '/webinar/confirmation/' . $webinar->getId() . '/' . $webinar->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $campaignCode = $webinar->getContent()->get('campaign_code') ? $webinar->getContent()->get('campaign_code')->getValue() : '';
         $description   = $webinar->getContent()->get('description') ? $webinar->getContent()->get('description')->getValue() : '';
 
@@ -89,7 +89,7 @@ class WebinarController extends AbstractController
 
     public function show($slug, Request $request)
     {
-        $sanitisedSlug = filter_var($slug, FILTER_SANITIZE_STRING);
+        $sanitisedSlug = filter_var($slug, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $this->api->setCacheKey($request->getRequestUri());
 
