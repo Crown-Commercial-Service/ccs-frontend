@@ -40,7 +40,7 @@ class WhitepaperController extends AbstractController
 
     public function request($id, $slug, Request $request)
     {
-        $sanitisedSlug = filter_var($slug, FILTER_SANITIZE_STRING);
+        $sanitisedSlug = filter_var($slug, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $this->api->setCacheKey($request->getRequestUri());
 
@@ -55,7 +55,7 @@ class WhitepaperController extends AbstractController
         $formData = ControllerHelper::getFormData($params);
         $utmParams = $request->query->all();
 
-        $returnURL = getenv('APP_BASE_URL') . '/whitepaper/confirmation/' . $whitepaper->getId() . '/' . $whitepaper->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING);
+        $returnURL = getenv('APP_BASE_URL') . '/whitepaper/confirmation/' . $whitepaper->getId() . '/' . $whitepaper->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $campaignCode = $whitepaper->getContent()->get('campaign_code') ? $whitepaper->getContent()->get('campaign_code')->getValue() : '';
         $description = $whitepaper->getContent()->get('description') ? $whitepaper->getContent()->get('description')->getValue() : '';
 
@@ -88,7 +88,7 @@ class WhitepaperController extends AbstractController
 
     public function show($id, $slug, Request $request)
     {
-        $slug = filter_var($slug, FILTER_SANITIZE_STRING);
+        $slug = filter_var($slug, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $this->api->setCacheKey($request->getRequestUri());
 
