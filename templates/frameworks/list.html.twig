@@ -304,6 +304,9 @@
                     this.popstateLoad = false;
                 },
                 checkedStatus: function(checkedStatus) {
+                    if (checkedStatus.length === 0 ) {
+                        this.checkedStatus = ["Live"];
+                    }
                     this.fetchAPIData(null)
                 },
                 checkedRegulation: function(checkedRegulation) {
