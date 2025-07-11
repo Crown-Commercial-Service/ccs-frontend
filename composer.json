@@ -4,13 +4,12 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.4.0",
+        "php": "^8.2.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "aws/aws-sdk-php": "^3.272",
-        "ccs/strata-frontend": "^0.7",
+        "ccs/strata-frontend": "2.0.x-dev",
         "rollbar/rollbar-php-symfony-bundle": "4.0.0",
-        "studio24/http-cache-clear": "^0.2",
         "symfony/apache-pack": "^1.0",
         "symfony/browser-kit": "^5.4.0",
         "symfony/config": "^5.4.0",
@@ -22,7 +21,8 @@
         "symfony/http-kernel": "^5.4.0",
         "symfony/mime": "^5.4",
         "symfony/twig-bundle": "^5.4.0",
-        "symfony/yaml": "^5.4.0"
+        "symfony/yaml": "^5.4.0",
+        "toflar/psr6-symfony-http-cache-store": "^3.0"
     },
     "config": {
         "preferred-install": {
@@ -76,12 +76,13 @@
         "behat/mink": "^1.10",
         "behat/mink-zombie-driver": "^1.6",
         "friends-of-behat/mink-extension": "^2.7",
-        "overtrue/phplint": "3.2.0",
+        "overtrue/phplint": "5.4.0",
+        "rector/rector": "^2.1",
         "roave/security-advisories": "dev-master",
         "squizlabs/php_codesniffer": "3.*",
         "symfony/debug-bundle": "^4.4",
         "symfony/monolog-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^4.4",
+        "symfony/phpunit-bridge": "7.3",
         "symfony/stopwatch": "^4.4",
         "symfony/web-profiler-bundle": "^5.4.0"
     }

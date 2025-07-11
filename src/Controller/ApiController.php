@@ -29,7 +29,7 @@ class ApiController extends AbstractController
             throw new ApiException('Cannot determine CMS API URL');
         }
 
-        $url = rtrim($url, '/');
+        $url = rtrim((string) $url, '/');
         return $url . $path;
     }
 
@@ -71,8 +71,8 @@ class ApiController extends AbstractController
         $apiUrl = $this->getCmsUrl('/search-api/suppliers');
 
         $allowedFilters = [
-            'keyword'   => FILTER_SANITIZE_STRING,
-            'framework' => FILTER_SANITIZE_STRING,
+            'keyword'   => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'framework' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'lot'       => FILTER_SANITIZE_NUMBER_INT,
             'limit'     => FILTER_SANITIZE_NUMBER_INT,
             'page'      => FILTER_SANITIZE_NUMBER_INT,
@@ -84,7 +84,7 @@ class ApiController extends AbstractController
             throw new ApiException(sprintf('Error with Search Suppliers API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent()));
         }
 
-        $responseFinal = json_decode($response->getContent());
+        $responseFinal = json_decode((string) $response->getContent());
         return new JsonResponse($responseFinal);
     }
 
@@ -145,16 +145,16 @@ class ApiController extends AbstractController
                 case 'regulation_type':
                 case 'terms':
                     if (!is_array($param)) {
-                        $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                        $filtered[$name] = filter_var($param, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                     } else {
                         $filtered[$name] = filter_var_array($param);
                     }
                     break;
                 case 'keyword':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                     break;
                 case 'sort':
-                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_STRING);
+                    $filtered[$name] = filter_var($param, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
                     break;
                 case 'limit':
                     $filtered[$name] = filter_var($param, FILTER_SANITIZE_NUMBER_INT);
@@ -187,14 +187,14 @@ class ApiController extends AbstractController
         $apiUrl = $this->getCmsUrl('/wp-json/wp/v2/posts');
 
         $allowedFilters = [
-            'categories'        => FILTER_SANITIZE_STRING,
-            'whitepaper'        => FILTER_SANITIZE_STRING,
-            'webinar'           => FILTER_SANITIZE_STRING,
-            'digitalBrochure'   => FILTER_SANITIZE_STRING,
-            'digitalDownload'   => FILTER_SANITIZE_STRING,
-            'noPost'            => FILTER_SANITIZE_STRING,
-            'sectors'           => FILTER_SANITIZE_STRING,
-            'products_services' => FILTER_SANITIZE_STRING,
+            'categories'        => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'whitepaper'        => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'webinar'           => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'digitalBrochure'   => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'digitalDownload'   => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'noPost'            => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'sectors'           => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+            'products_services' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'page'              => FILTER_SANITIZE_NUMBER_INT,
             'per_page'          => FILTER_SANITIZE_NUMBER_INT,
         ];
@@ -206,7 +206,7 @@ class ApiController extends AbstractController
         }
         $responseFinal['meta']['X-WP-TotalPages'] = (int) $response->getHeaders()["x-wp-totalpages"][0];
         $responseFinal['meta']['X-WP-Total'] = (int) $response->getHeaders()["x-wp-total"][0];
-        $responseFinal['body'] = json_decode($response->getContent());
+        $responseFinal['body'] = json_decode((string) $response->getContent());
         return new JsonResponse($responseFinal);
     }
 
@@ -230,14 +230,14 @@ class ApiController extends AbstractController
         $apiUrl = $this->getCmsUrl('/wp-json/wp/v2/event');
 
         $allowedFilters = [
-            'sectors'            => FILTER_SANITIZE_STRING,
-             'products_services' => FILTER_SANITIZE_STRING,
-             'event_type'        => FILTER_SANITIZE_STRING,
-             'audience_tag'      => FILTER_SANITIZE_STRING,
+            'sectors'            => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+             'products_services' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+             'event_type'        => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+             'audience_tag'      => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
              'page'              => FILTER_SANITIZE_NUMBER_INT,
              'per_page'          => FILTER_SANITIZE_NUMBER_INT,
-             'orderby'           => FILTER_SANITIZE_STRING,
-             'order'             => FILTER_SANITIZE_STRING,
+             'orderby'           => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+             'order'             => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
         ];
 
         $response = $this->getResponse($apiUrl, $request, $allowedFilters);
@@ -247,7 +247,7 @@ class ApiController extends AbstractController
         }
         $responseFinal['meta']['X-WP-TotalPages'] = (int) $response->getHeaders()["x-wp-totalpages"][0];
         $responseFinal['meta']['X-WP-Total'] = (int) $response->getHeaders()["x-wp-total"][0];
-        $responseFinal['body'] = json_decode($response->getContent());
+        $responseFinal['body'] = json_decode((string) $response->getContent());
         return new JsonResponse($responseFinal);
     }
 
@@ -322,7 +322,7 @@ class ApiController extends AbstractController
         // strip out all whitespace
         $subject = preg_replace('/\s*/', '', $subject);
         // convert the string to all lowercase
-        $subject = strtolower($subject);
+        $subject = strtolower((string) $subject);
 
         // campaign codes and form handler url
         $codes = [
@@ -358,7 +358,7 @@ class ApiController extends AbstractController
 
         foreach ($codes as $code => $url) {
             // check if campaign code is within subject
-            if (strpos($subject, $code) !== false) {
+            if (str_contains($subject, $code)) {
                 $pardotFormUrl = $url;
                 break;
             }
