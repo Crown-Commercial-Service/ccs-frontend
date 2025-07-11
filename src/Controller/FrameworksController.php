@@ -76,7 +76,7 @@ class FrameworksController extends AbstractController
          * Detect incoming old links from ccs-agreements domain
          * E.g. f[0]=im_field_category:7
          */
-        $f = filter_var($request->query->get('f'), FILTER_SANITIZE_STRING);
+        $f = filter_var($request->query->get('f'), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if (!empty($f) && is_array($f) && !empty($f[0])) {
             switch ($f[0]) {
                 case 'im_field_category:7':
@@ -110,13 +110,13 @@ class FrameworksController extends AbstractController
          * E.g. ?sm_field_contract_id=RM3823*
          * ?sm_field_contract_id="RM3823:10a"
          */
-        $smField = filter_var($request->query->get('sm_field_contract_id'), FILTER_SANITIZE_STRING);
+        $smField = filter_var($request->query->get('sm_field_contract_id'), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         if (!empty($smField)) {
-            $smField = filter_var($smField, FILTER_SANITIZE_STRING);
+            $smField = filter_var($smField, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $smField = html_entity_decode($smField);
             $smField = preg_replace('![^a-zA-Z0-9./\-:]!', '', $smField);
 
-            $elements = explode(':', $smField);
+            $elements = explode(':', (string) $smField);
             if (count($elements) === 1) {
                 return $this->redirectToRoute('frameworks_suppliers', ['rmNumber' => $elements[0]]);
             } else {
@@ -194,12 +194,24 @@ class FrameworksController extends AbstractController
             'results'           => $results,
             'categories'        => FrameworkCategories::getAll(),
             'pillars'           => FrameworkCategories::getAllPillars(),
+            'pillarsAndCategories' => $this->getPillarsAndCategories(),
             'statuses'          => ["live"],
-            'regulation'        => ["allRegulation"],
-            'regulationType'    => ["allType"],
+            'regulation'        => ['PA2023', 'PCR2015', 'PCR2006'],
+            'regulationType'    => ["Dynamic+Purchasing+System", "Dynamic+Market", "Open+Framework", "Closed+Framework", "PCR15+Framework", "PCR06+Framework"],
         ];
 
         return $this->render('frameworks/list.html.twig', $data);
+    }
+
+    private function getPillarsAndCategories()
+    {
+        $pillarsAndCategories = [];
+        $pillars = FrameworkCategories::getAllPillars();
+        foreach ($pillars['pillars'] as $pillar) {
+            $categories = FrameworkCategories::getAllByPillar($pillar['name']);
+            $pillarsAndCategories[$pillar['slug']] = $categories;
+        }
+        return $pillarsAndCategories;
     }
 
     public function upcomingDealsSearch(Request $request)
@@ -260,7 +272,7 @@ class FrameworksController extends AbstractController
 
     private function sanitizeSearchQuery($keyword)
     {
-        $originalSearch = str_replace('/', '', strip_tags(html_entity_decode($keyword)));
+        $originalSearch = str_replace('/', '', strip_tags(html_entity_decode((string) $keyword)));
         return preg_replace("/[^a-zA-Z0-9\s]/", "", $originalSearch);
     }
 
@@ -305,7 +317,7 @@ class FrameworksController extends AbstractController
      */
     public function show(string $rmNumber, Request $request)
     {
-        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
+        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         if ($rmNumber == "RM6187_cas") {
             return $this->redirectToRoute('frameworks_show', ["rmNumber" => "RM6187"]);
@@ -349,7 +361,7 @@ class FrameworksController extends AbstractController
      */
     public function suppliersOnFramework(Request $request, string $rmNumber, int $page = 1)
     {
-        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
+        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         // Set custom API endpoint
@@ -391,8 +403,8 @@ class FrameworksController extends AbstractController
      */
     public function suppliersOnLot(Request $request, string $rmNumber, string $lotNumber, int $page = 1)
     {
-        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
-        $lotNumber = filter_var($lotNumber, FILTER_SANITIZE_STRING);
+        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $lotNumber = filter_var($lotNumber, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 
         $this->api->getContentModel()->getContentType('framework_lot_suppliers')->setApiEndpoint(sprintf('ccs/v1/lot-suppliers/%s/lot/%s', $rmNumber, $lotNumber));
@@ -418,15 +430,15 @@ class FrameworksController extends AbstractController
     public function suppliersOnLotCsv(Request $request, string $rmNumber, string $lotNumber)
     {
 
-        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_STRING);
-        $lotNumber = filter_var($lotNumber, FILTER_SANITIZE_STRING);
+        $rmNumber = filter_var($rmNumber, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $lotNumber = filter_var($lotNumber, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
 
         $this->api->getContentModel()->getContentType('framework_lot_suppliers')->setApiEndpoint(sprintf('ccs/v1/lot-suppliers/%s/lot/%s', $rmNumber, $lotNumber));
         $this->api->setContentType('framework_lot_suppliers');
         $this->api->setCacheKey($request->getRequestUri());
 
-        $csvData = array(
+        $csvData = [
             0 => [
             'Supplier Name',
             'Contact Name',
@@ -435,7 +447,7 @@ class FrameworksController extends AbstractController
             'City',
             'Postcode',
             ]
-        );
+        ];
 
         // Iterate through suppliers and store necessary information into CSV array.
 
@@ -540,7 +552,7 @@ class FrameworksController extends AbstractController
 
     private function stringContainTableElement($input)
     {
-        if (strpos($input, '<td') !== false or strpos($input, '<tr') !== false or strpos($input, '<table') !== false or strpos($input, '<th') !== false) {
+        if (str_contains((string) $input, '<td') or str_contains((string) $input, '<tr') or str_contains((string) $input, '<table') or str_contains((string) $input, '<th')) {
             return (true);
         }
 
@@ -558,7 +570,7 @@ class FrameworksController extends AbstractController
     {
         $oldCategory    = $request->attributes->get('category', null);
 
-        $redirectToCat = array(
+        $redirectToCat = [
             "utilities-fuels"   => "Energy",
             "software-cyber"    => "Software and Hardware",
             "office-and-travel" => "Travel, Accommodation and Venues",
@@ -573,12 +585,16 @@ class FrameworksController extends AbstractController
             "psr-permanent-recruitment"                     => "HR and Workforce Services",
             "workforce-health-education"                    => "HR and Workforce Services",
             "people-services"                               => "HR and Workforce Services",
-        );
+            "estate-support-services"                       => "Facilities Management",
+            "technology-services"                           => "Digital and Technology Services",
+            "digital-capability-and-delivery"               => "Digital and Technology Services",
+            "software-and-hardware"                         => "Software",
+        ];
 
-        $redirectToPillar = array(
+        $redirectToPillar = [
             "workplace"                     => "Estates",
             "technology-products-services"  => "Technology",
-        );
+        ];
 
         if (isset($oldCategory) && array_key_exists($oldCategory, $redirectToCat)) {
             return ['category' => [$redirectToCat[$oldCategory]]];

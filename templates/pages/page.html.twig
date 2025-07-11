@@ -451,43 +451,48 @@
                                                     {% endif %}
 
                                                     {% if page.content.contact_form_show_newsletter_form is not empty and page.content.contact_form_show_newsletter_form.value == false %}
-                                                        <div class="govuk-form-group" id="callbackOptions">
-                                                            <fieldset class="govuk-fieldset" aria-describedby="callback">
-                                                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                                                                    <h2 class="govuk-fieldset__heading" id="callback">Do you need a callback? (optional)</h2>
-                                                                </legend>
-                                                                <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
-                                                                    <div class="govuk-radios__item">
-                                                                        <input class="govuk-radios__input" id="callback-1" name="00Nb0000009IXEg" type="radio" value="Yes" role="region" data-aria-controls="conditional-callback-1" aria-expanded="true" {{formData.callback is defined and formData.callback == 'Yes' ? 'checked' }}>
-                                                                        <label class="govuk-label govuk-radios__label" for="callback-1">Yes</label>
-                                                                    </div>
-                                                                    <div class="govuk-radios__conditional" id="conditional-callback-1">
-                                                                        <div class="govuk-form-group">
-                                                                            <fieldset class="govuk-fieldset">
-                                                                                <div class="govuk-radios" data-module="govuk-radios">
-                                                                                    <div class="govuk-radios__item">
-                                                                                        <input class="govuk-radios__input" id="callbackTimeslot-1" name="callbackTimeslot" type="radio" value="Between 9am to 12pm" {{formData.callbackTimeslot is defined and formData.callbackTimeslot == "Between 9am to 12pm" ? 'checked' }}>
-                                                                                        <label class="govuk-label govuk-radios__label" for="callbackTimeslot-1">Between 9am to 12pm</label>
+
+                                                        {% if page.content.contact_form_hide_callback_form is null or 
+                                                            (page.content.contact_form_hide_callback_form.value is not null and page.content.contact_form_hide_callback_form.value == false) 
+                                                        %}
+                                                            <div class="govuk-form-group" id="callbackOptions">
+                                                                <fieldset class="govuk-fieldset" aria-describedby="callback">
+                                                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                                                        <h2 class="govuk-fieldset__heading" id="callback">Do you need a callback? (optional)</h2>
+                                                                    </legend>
+                                                                    <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
+                                                                        <div class="govuk-radios__item">
+                                                                            <input class="govuk-radios__input" id="callback-1" name="00Nb0000009IXEg" type="radio" value="Yes" role="region" data-aria-controls="conditional-callback-1" aria-expanded="true" {{formData.callback is defined and formData.callback == 'Yes' ? 'checked' }}>
+                                                                            <label class="govuk-label govuk-radios__label" for="callback-1">Yes</label>
+                                                                        </div>
+                                                                        <div class="govuk-radios__conditional" id="conditional-callback-1">
+                                                                            <div class="govuk-form-group">
+                                                                                <fieldset class="govuk-fieldset">
+                                                                                    <div class="govuk-radios" data-module="govuk-radios">
+                                                                                        <div class="govuk-radios__item">
+                                                                                            <input class="govuk-radios__input" id="callbackTimeslot-1" name="callbackTimeslot" type="radio" value="Between 9am to 12pm" {{formData.callbackTimeslot is defined and formData.callbackTimeslot == "Between 9am to 12pm" ? 'checked' }}>
+                                                                                            <label class="govuk-label govuk-radios__label" for="callbackTimeslot-1">Between 9am to 12pm</label>
+                                                                                        </div>
+                                                                                        <div class="govuk-radios__item">
+                                                                                            <input class="govuk-radios__input" id="callbackTimeslot-2" name="callbackTimeslot" type="radio" value="Between 2pm to 5pm" {{formData.callbackTimeslot is defined and formData.callbackTimeslot == "Between 2pm to 5pm" ? 'checked' }}>
+                                                                                            <label class="govuk-label govuk-radios__label" for="callbackTimeslot-2">Between 2pm to 5pm</label>
+                                                                                        </div>
+                                                                                        <div class="govuk-radios__item">
+                                                                                            <input class="govuk-radios__input" id="callbackTimeslot-3" name="callbackTimeslot" type="radio" value="No preference" {{formData.callbackTimeslot is defined and formData.callbackTimeslot == "No preference" ? 'checked' }}>
+                                                                                            <label class="govuk-label govuk-radios__label" for="callbackTimeslot-3">No preference</label>
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div class="govuk-radios__item">
-                                                                                        <input class="govuk-radios__input" id="callbackTimeslot-2" name="callbackTimeslot" type="radio" value="Between 2pm to 5pm" {{formData.callbackTimeslot is defined and formData.callbackTimeslot == "Between 2pm to 5pm" ? 'checked' }}>
-                                                                                        <label class="govuk-label govuk-radios__label" for="callbackTimeslot-2">Between 2pm to 5pm</label>
-                                                                                    </div>
-                                                                                    <div class="govuk-radios__item">
-                                                                                        <input class="govuk-radios__input" id="callbackTimeslot-3" name="callbackTimeslot" type="radio" value="No preference" {{formData.callbackTimeslot is defined and formData.callbackTimeslot == "No preference" ? 'checked' }}>
-                                                                                        <label class="govuk-label govuk-radios__label" for="callbackTimeslot-3">No preference</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </fieldset>
+                                                                                </fieldset>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="govuk-radios__item">
+                                                                            <input class="govuk-radios__input" id="callback-2" name="00Nb0000009IXEg" type="radio" value="No"{{formData.callback is defined and formData.callback == 'No' ? 'checked' }}>
+                                                                            <label class="govuk-label govuk-radios__label" for="callback-2">No</label>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="govuk-radios__item">
-                                                                        <input class="govuk-radios__input" id="callback-2" name="00Nb0000009IXEg" type="radio" value="No"{{formData.callback is defined and formData.callback == 'No' ? 'checked' }}>
-                                                                        <label class="govuk-label govuk-radios__label" for="callback-2">No</label>
-                                                                    </div>
-                                                                </div>
-                                                            </fieldset>
-                                                        </div>
+                                                                </fieldset>
+                                                            </div>
+                                                        {% endif %}
                                                     {% endif %}
 
                                                     {% include 'forms/dataLayer_component/_form_start_form_error.html.twig' with {'formName': "Page form" } %}
@@ -580,6 +585,9 @@
                             {% endif %}
 
     </main>
+
+    {{ include('/includes/_on-page-feedback.html.twig') }}
+    
     <script>
 
 

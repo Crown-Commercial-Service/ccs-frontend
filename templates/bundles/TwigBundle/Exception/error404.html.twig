@@ -38,4 +38,8 @@
         </main>
     </div>
 
+    <script>
+        pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': '404'});
+    </script>
+
 {% endblock %}

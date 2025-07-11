@@ -23,7 +23,7 @@ class EnergySolutionToolQuestions
     {
         $config = self::loadConfig();
 
-        return isset($config[$id]) ? $config[$id] : [];
+        return $config[$id] ?? [];
     }
 
     public static function getQuestionAndSingleAnswer(int $questionID, int $answerID): array
@@ -35,6 +35,6 @@ class EnergySolutionToolQuestions
         $question = $questionData["question"];
         $answer = array_keys($questionData["answer"])[$answerID];
 
-        return array('question' => $question, 'answer' => $answer);
+        return ['question' => $question, 'answer' => $answer];
     }
 }

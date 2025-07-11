@@ -165,7 +165,7 @@ class FormController extends AbstractController
 
     public function contactCCS(Request $request)
     {
-        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+        $referrer = $_SERVER['HTTP_REFERER'] ?? null;
         $formType = $request->query->get('type', null);
 
 
@@ -254,7 +254,7 @@ class FormController extends AbstractController
 
     public function complaintForm(Request $request)
     {
-        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+        $referrer = $_SERVER['HTTP_REFERER'] ?? null;
         $formType = $request->query->get('type', null);
         $rmNumber = $request->query->get('agreement', null);
 
@@ -387,53 +387,6 @@ class FormController extends AbstractController
             }
         }
     }
-
-    public function events(Request $request)
-    {
-        return $this->render('forms/34-events-form.html.twig');
-    }
-
-    public function eventsSubmit(Request $request)
-    {
-        $params = $request->request;
-
-        ControllerHelper::honeyPot($params->get('surname', null));
-
-        $formData = [
-            'name'          => $params->get('name', null),
-            'email'         => $params->get('email', null),
-            'jobTitle'      => $params->get('jobTitle'),
-            'phone'         => $params->get('phone', null),
-            'company'       => $params->get('company', null),
-            'moreDetail'    => $params->get('more-detail', null),
-        ];
-
-        $formErrors = $this->validateEventsForm($formData);
-
-        if ($formErrors) {
-            return $this->render('forms/34-events-form.html.twig', [
-                'formErrors'    => $formErrors,
-                'formData'      => $formData,
-            ]);
-        } else {
-            $params->set('subject', 'Events Form');
-            $params->set('origin', 'Website - Event');
-            $params->set('00Nb0000009IXEs', $formData['jobTitle']);
-            $params->set('priority', 'Green');
-            $params->set('description', 'Website - Event, more-detail: ' . $formData['moreDetail']);
-            $params->set('orgid', ControllerHelper::getOrgId());
-
-            $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
-                'query'         => $params->all(),
-            ]);
-
-            if (!is_null($params->get('debug'))) {
-                return new Response($response->getContent());
-            }
-        }
-        return  $this->redirectToRoute('form_contact_thanks');
-    }
-
     public static function sendToSalesforceForDownload($params, $utmParams, $data, $campaignCode, $description)
     {
         $formErrors = self::validateGatedForm($data);
@@ -574,12 +527,12 @@ class FormController extends AbstractController
     }
     private function setUTM($params, $utmKey, $utmValue)
     {
-        $utmMap = array(
+        $utmMap = [
             "utm_campaign" => "Case_Marketing_Campaign__c",
             "utm_content" => "Case_Marketing_Content__c",
             "utm_medium" => "Case_Marketing_Medium__c",
             "utm_source" => "Case_Marketing_Source__c"
-        );
+        ];
 
         if (array_key_exists($utmKey, $utmMap)) {
             $params->set($utmMap[$utmKey], $utmValue);
@@ -597,7 +550,7 @@ class FormController extends AbstractController
     {
         if ((!empty($_FILES["attachment"])) && ($_FILES['attachment']['error'] == 0)) {
             try {
-                $uploadedFilePath = substr($_FILES["attachment"]["tmp_name"], 0, strripos($_FILES["attachment"]["tmp_name"], '/') + 1);
+                $uploadedFilePath = substr((string) $_FILES["attachment"]["tmp_name"], 0, strripos((string) $_FILES["attachment"]["tmp_name"], '/') + 1);
                 $newFilePath = $uploadedFilePath . $_FILES["attachment"]["name"];
                 copy($_FILES["attachment"]["tmp_name"], $newFilePath);
 

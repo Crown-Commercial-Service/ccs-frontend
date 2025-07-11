@@ -41,7 +41,7 @@ class DigitalBrochureController extends AbstractController
 
     public function request($id, $slug, Request $request)
     {
-        $sanitisedSlug = filter_var($slug, FILTER_SANITIZE_STRING);
+        $sanitisedSlug = filter_var($slug, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         switch ($sanitisedSlug) {
             case "commercial-agreements-spring-2021-digital-brochure":
@@ -67,7 +67,7 @@ class DigitalBrochureController extends AbstractController
         $formData = ControllerHelper::getFormData($params);
         $utmParams = $request->query->all();
 
-        $returnURL = getenv('APP_BASE_URL') . '/digital_brochure/confirmation/' . $digital_brochure->getId() . '/' . $digital_brochure->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_STRING);
+        $returnURL = getenv('APP_BASE_URL') . '/digital_brochure/confirmation/' . $digital_brochure->getId() . '/' . $digital_brochure->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $campaignCode = $digital_brochure->getContent()->get('campaign_code') ? $digital_brochure->getContent()->get('campaign_code')->getValue() : '';
         $description   = $digital_brochure->getContent()->get('description') ? $digital_brochure->getContent()->get('description')->getValue() : '';
 
@@ -87,7 +87,7 @@ class DigitalBrochureController extends AbstractController
 
         $data = [
           'digital_brochure'    => $digital_brochure,
-          'campaign_code' => preg_replace('/\s*/', '', $campaignCode),
+          'campaign_code' => preg_replace('/\s*/', '', (string) $campaignCode),
           'form_action'   => $request->getRequestUri(),
           'description'   => $description,
           'return_url'    => $returnURL,
@@ -100,7 +100,7 @@ class DigitalBrochureController extends AbstractController
 
     public function show($id, $slug, Request $request)
     {
-        $slug = filter_var($slug, FILTER_SANITIZE_STRING);
+        $slug = filter_var($slug, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $this->api->setCacheKey($request->getRequestUri());
 
@@ -117,6 +117,6 @@ class DigitalBrochureController extends AbstractController
 
     public function redirectToDownloadableResource($id, $slug, Request $request)
     {
-         return $this->redirect($this->generateUrl('downloadable_resource_request', array('id' => $id, 'slug' => $slug)));
+         return $this->redirect($this->generateUrl('downloadable_resource_request', ['id' => $id, 'slug' => $slug]));
     }
 }

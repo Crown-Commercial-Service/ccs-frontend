@@ -60,7 +60,7 @@
 
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-third">
-                    <form action="{{ path('frameworks_upcoming_deals') }}" method="GET">
+                    <form id="searchFilterForm" action="{{ path('frameworks_upcoming_deals') }}" method="GET">
                         <div class="govuk-form-group govuk-form-group--enclosure">
                             <div class="govuk-form-group sidebar__search-group">
                                 <label class="govuk-label" for="keyword"> Search upcoming agreements </label>
@@ -219,7 +219,7 @@
                 {% set planned_pipeline = [] %}
                 {% set underway_pipeline = [] %}
                 {% set awarded_pipeline = [] %}
-                 {% set dynamic_purchasing_systems = [] %}
+                {% set dynamic_purchasing_systems = [] %}
 
                 {% for item in results %}
                     {% set status = item.content.status %}
@@ -247,9 +247,14 @@
                         {% endif %}
                     {% endif %}
                 {% endfor %}
+                
+                {% set total_count = future_pipeline|length
+                + planned_pipeline|length
+                + underway_pipeline|length
+                + awarded_pipeline|length
+                + dynamic_purchasing_systems|length %}
 
-
-                     <div class="future upcoming-type-wrapper">
+                <div class="future upcoming-type-wrapper">
 
                     {% if future_pipeline|length >= 1  or "future" in statuses %}
 
@@ -559,7 +564,10 @@
     </div>
 
 <script>
-pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
-
+    if ("{{ filters.keyword|trim is not empty }}") {
+        pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'upcomingAgreement', 'search_term': "{{filters.keyword}}", 'interaction_detail': "{{ total_count }}"});   
+    }
+    pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
+    searchFilterAgreement();
 </script>
 {% endblock %}
