@@ -38,7 +38,7 @@ script:
   - if [[ "$SNIFF" == "1" ]]; then vendor/bin/phpcs; fi
   # Run PHP Unit
   - vendor/bin/phpunit
-  - bin/phpunit vendor/ccs/strata-frontend/tests
+  - vendor/bin/phpunit vendor/ccs/strata-frontend/tests
 
 notifications:
   on_success: never
