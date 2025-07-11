@@ -23,6 +23,6 @@ class EnergySolutionToolDecision
     {
         $config = self::loadConfig();
 
-        return isset($config[$id]) ? $config[$id] : [];
+        return $config[$id] ?? [];
     }
 }
