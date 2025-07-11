@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "59af13a930bb6a66a1cb54a90a95c07b",
+    "content-hash": "d17e585a58bde2efca0031f015e58ddf",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -6838,28 +6838,27 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v7.3.1",
+            "version": "8.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "71624984d8bcad6acf7a790d4e3ceafe04bc2485"
+                "reference": "760837b123791d17ca8068c16a8bdf1f6f8249fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/71624984d8bcad6acf7a790d4e3ceafe04bc2485",
-                "reference": "71624984d8bcad6acf7a790d4e3ceafe04bc2485",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/760837b123791d17ca8068c16a8bdf1f6f8249fd",
+                "reference": "760837b123791d17ca8068c16a8bdf1f6f8249fd",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5"
+                "php": ">=8.1.0"
             },
             "conflict": {
                 "phpunit/phpunit": "<7.5|9.1.2"
             },
             "require-dev": {
                 "symfony/deprecation-contracts": "^2.5|^3.0",
-                "symfony/error-handler": "^5.4|^6.4|^7.0",
-                "symfony/polyfill-php81": "^1.27"
+                "symfony/error-handler": "^6.4.3|^7.0.3|^8.0"
             },
             "bin": [
                 "bin/simple-phpunit"
@@ -6903,7 +6902,7 @@
                 "testing"
             ],
             "support": {
-                "source": "https://github.com/symfony/phpunit-bridge/tree/v7.3.1"
+                "source": "https://github.com/symfony/phpunit-bridge/tree/8.0"
             },
             "funding": [
                 {
@@ -6919,7 +6918,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-06-04T10:09:06+00:00"
+            "time": "2025-06-05T17:06:56+00:00"
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
@@ -7394,7 +7393,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "ccs/strata-frontend": 20,
-        "roave/security-advisories": 20
+        "roave/security-advisories": 20,
+        "symfony/phpunit-bridge": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
