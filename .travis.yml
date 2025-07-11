@@ -37,7 +37,7 @@ script:
   # Run PHPCS
   - if [[ "$SNIFF" == "1" ]]; then vendor/bin/phpcs; fi
   # Run PHP Unit
-  - bin/phpunit
+  - vendor/bin/phpunit
   - bin/phpunit vendor/ccs/strata-frontend/tests
 
 notifications:
