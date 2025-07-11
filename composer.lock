@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72f106508049fd93a1a0d0e490fdd2ea",
+    "content-hash": "df635b44f1307dfe8c28081708a50400",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -159,16 +159,16 @@
         },
         {
             "name": "ccs/strata-frontend",
-            "version": "dev-upgrade-php8",
+            "version": "2.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Crown-Commercial-Service/CCS-Website-Strata-Frontend.git",
-                "reference": "2438608705f74224e1360260206602799c7e8072"
+                "reference": "27aec69f21573d1f102474f207f7f919d3444bab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Crown-Commercial-Service/CCS-Website-Strata-Frontend/zipball/2438608705f74224e1360260206602799c7e8072",
-                "reference": "2438608705f74224e1360260206602799c7e8072",
+                "url": "https://api.github.com/repos/Crown-Commercial-Service/CCS-Website-Strata-Frontend/zipball/27aec69f21573d1f102474f207f7f919d3444bab",
+                "reference": "27aec69f21573d1f102474f207f7f919d3444bab",
                 "shasum": ""
             },
             "require": {
@@ -219,9 +219,9 @@
             ],
             "description": "Deliver fast, accessible user experiences on the modern web.",
             "support": {
-                "source": "https://github.com/Crown-Commercial-Service/CCS-Website-Strata-Frontend/tree/v1.0.1"
+                "source": "https://github.com/Crown-Commercial-Service/CCS-Website-Strata-Frontend/tree/upgrade-php8"
             },
-            "time": "2025-01-28T14:04:39+00:00"
+            "time": "2025-07-11T11:10:41+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
