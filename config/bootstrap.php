@@ -1,8 +1,11 @@
 <?php
 
 use Symfony\Component\Dotenv\Dotenv;
+use Symfony\Component\ErrorHandler\ErrorHandler;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
+
+set_exception_handler([new ErrorHandler(), 'handleException']);
 
 // Load cached env vars if the .env.local.php file exists
 // Run "composer dump-env prod" to create it (requires symfony/flex >=1.2)
