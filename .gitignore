@@ -31,3 +31,8 @@ node_modules
 
 .vscode
 .vscode/*“.env”
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
