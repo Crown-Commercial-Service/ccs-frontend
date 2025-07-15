@@ -50,7 +50,7 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     # sudo amazon-linux-extras enable php8.2
     sudo yum -y install \
         httpd \
-        php \
+        php8.2 \
         php-mysqlnd.x86_64 \
         php-opcache.x86_64 \
         php-xml.x86_64 \
