@@ -20,7 +20,9 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     echo "> Running once-only deployment tasks..."
 
     echo "> > Installing awslogs service..."
-    sudo yum install -y awslogs
+    #sudo yum install -y awslogs
+    sudo yum install -y amazon-cloudwatch-agent
+    sudo systemctl enable amazon-cloudwatch-agent
 
     echo "> > chown'ing awslogs config files..."
     sudo chown root:root \
