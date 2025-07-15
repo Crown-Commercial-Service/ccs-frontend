@@ -1,7 +1,7 @@
 # System routes
 healthcheck:
   path: /healthcheck_r53
-  controller: App\Controller\PageController::healthcheck
+  controller: App\Controller\PageController::check
 
 statuscheck:
   path: /statuscheck
