@@ -47,9 +47,9 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     # echo "> > Removing PHP 7.4..."
     # sudo yum remove -y php*
     # sudo amazon-linux-extras disable php7.4
-
-    # echo "> > Installing web packages..."
     # sudo amazon-linux-extras enable php8.2
+
+    echo "> > Installing web packages..."
     sudo yum -y install \
         httpd \
         php8.2 \
