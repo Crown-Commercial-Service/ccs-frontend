@@ -79,7 +79,7 @@ class FeatureContext extends MinkContext implements Context
     public function iNavigateToPage($pageNumber)
     {
 
-        $pageNumber = $pageNumber -1;
+        $pageNumber -= 1;
 
         $js = <<<JS
             const collection = document.getElementsByClassName("pagination__item");
@@ -126,8 +126,8 @@ class FeatureContext extends MinkContext implements Context
     {
         $currentURL = $this->getSession()->getCurrentUrl();
 
-        if (strpos((string) $currentURL, $url) === FALSE){
-            throw new Exception("URL (${currentURL}) does not contain {$url}");
+        if (!str_contains((string) $currentURL, (string) $url)){
+            throw new Exception("URL ({$currentURL}) does not contain {$url}");
         }
     }
 

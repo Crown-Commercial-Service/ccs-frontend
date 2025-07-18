@@ -20,7 +20,9 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     echo "> Running once-only deployment tasks..."
 
     echo "> > Installing awslogs service..."
-    sudo yum install -y awslogs
+    #sudo yum install -y awslogs
+    sudo yum install -y amazon-cloudwatch-agent
+    sudo systemctl enable amazon-cloudwatch-agent
 
     echo "> > chown'ing awslogs config files..."
     sudo chown root:root \
@@ -38,15 +40,19 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
         "$SCRIPTDIR/files/awslogs.conf" \
         /etc/awslogs/
 
-    echo "> > Adding additional package repos..."
-    sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-    sudo yum install -y https://repo.ius.io/ius-release-el$(rpm -E '%{rhel}').rpm
+    # echo "> > Adding additional package repos..."
+    # sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    # sudo yum install -y https://repo.ius.io/ius-release-el$(rpm -E '%{rhel}').rpm
+
+    # echo "> > Removing PHP 7.4..."
+    # sudo yum remove -y php*
+    # sudo amazon-linux-extras disable php7.4
+    # sudo amazon-linux-extras enable php8.2
 
     echo "> > Installing web packages..."
-    sudo amazon-linux-extras enable php7.4
     sudo yum -y install \
         httpd \
-        php \
+        php8.2 \
         php-mysqlnd.x86_64 \
         php-opcache.x86_64 \
         php-xml.x86_64 \
