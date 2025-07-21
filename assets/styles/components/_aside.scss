@@ -48,3 +48,13 @@
     }
 
 }
+
+@include govuk-media-query($until: 640) {
+    #helpful-info-search-agreement-desktop {
+        display: none;
+    }
+
+    #helpful-info-search-agreement-mobile {
+        display: block !important;
+    }   
+}         
