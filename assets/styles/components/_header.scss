@@ -5,7 +5,7 @@
 .header-global {
 
     background: $ccs-colour;
-    color: govuk-colour("white");
+    color: #000000;
 
     @media only print {
         padding-bottom: 20px; // print with graphics: fix bottom header light red line
@@ -22,7 +22,7 @@
 
 .header-global a {
 
-    color: white;
+    color: #000000;
 
     &:hover,
     &:active {
@@ -36,7 +36,7 @@
 
     }
     @media only print {
-        color: black;
+        color: #000000;
     }
 
 }

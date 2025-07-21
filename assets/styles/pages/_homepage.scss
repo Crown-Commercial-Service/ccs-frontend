@@ -12,6 +12,7 @@ overflow: hidden;
     border-radius: govuk-px-to-rem(3);
     color: white;
     padding-bottom: 2.5rem;
+    border: 2px solid #BBC946;
 
     .govuk-label {
 
@@ -37,7 +38,7 @@ overflow: hidden;
 
 .govuk-hero-homepage-caption-container {
     font-family: "Source Sans Pro","HelveticaNeue","Helvetica Neue","Arial","Helvetica",sans-serif;
-    color: white;
+    color: #000000;
 }
 
 .govuk-hero-caption {
@@ -52,7 +53,7 @@ overflow: hidden;
 
     .govuk-caption-heading {       
         font-size: govuk-px-to-rem(32);
-        color: white;
+        color: #000000;
         @media only print {
             font-size: 2rem;
         }
@@ -396,7 +397,7 @@ overflow: hidden;
 
     // change to default bg color on desktop
     .govuk-bg-mobile-color {
-        background-color: #9B1A47;
+        background-color: #B4CDFE;
         padding: 10px 10px 20px 10px;
     }
 
@@ -407,13 +408,13 @@ overflow: hidden;
         .govuk-caption-heading {
 
             font-size: 1.9rem;
-            color: white !important;
+            color: #000000;
 
         }
 
         .govuk-caption-link {
             font-size: 0.9rem;
-            color: white;
+            color: #000000;
             text-underline-offset: 3px;
         }
 
@@ -457,7 +458,7 @@ overflow: hidden;
         margin: 2em auto;
         border-top-left-radius: 500px;
         border-bottom-left-radius: 500px;
-        background-color: #6D0227;
+        background-color: #6A99FF;
         margin-left: 269px;
         margin-bottom: 1em;
     }
