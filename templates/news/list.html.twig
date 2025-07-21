@@ -554,6 +554,11 @@
                             this.totalResults   = jsonResponse.meta['X-WP-Total'];
                             this.results = jsonResponse.body;
 
+                            var env = document.getElementById('app-env').dataset.env;
+                            if (env == "dev" || env == "local") {
+                                console.log("page: " + this.numberOfPages + " | total Result: " + this.totalResults )
+                            }
+
                             for(var i = 0; i < jsonResponse.body.length; i++) {
                                 jsonResponse.body[i].modifiedDate = this.formatDate(jsonResponse.body[i].modified);
                                 jsonResponse.body[i].postType = jsonResponse.body[i].acf.category_type;
