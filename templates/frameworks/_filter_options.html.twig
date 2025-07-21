@@ -182,8 +182,9 @@
             </div>
         </div> 
         <button class="govuk-button" data-module="govuk-button" v-show="!javascriptVersion"> Filter </button>
-
-        {% include '/frameworks/_helpful_info.html.twig' with {'page' : 'search'} %}
+        <div id="helpful-info-search-agreement-desktop">
+            {% include '/frameworks/_helpful_info.html.twig' with {'page' : 'search'} %}
+        </div>
 
     </form>
 

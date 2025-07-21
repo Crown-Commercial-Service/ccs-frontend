@@ -147,7 +147,10 @@
 
                 </div>
             </div>
-
+            {# appear only on mobile #}
+            <div id="helpful-info-search-agreement-mobile" style="display: none;">
+                {% include '/frameworks/_helpful_info.html.twig' with {'page' : 'search'} %}
+            </div>
 
         </main>
     </div>
@@ -161,6 +164,17 @@
 
     <script type="application/javascript"> 
         searchFilterAgreement();
+        openFiltersOnMobile();
+
+        function openFiltersOnMobile () {
+            var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            var filterAccordion = document.querySelectorAll('.govuk-accordion__section--expanded');
+            if (windowWidth < 641 && filterAccordion.length > 0) {
+                filterAccordion.forEach(function(section) {
+                    section.classList.remove('govuk-accordion__section--expanded');
+                });
+            }
+        }
 
         function supportsLiterals() {
             try{
