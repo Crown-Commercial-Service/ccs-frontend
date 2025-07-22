@@ -192,10 +192,7 @@ class PageController extends AbstractController
                     $featureNewsProperties['sectorType'] = $acfField->getContent()->get('feature_news_feature_news_sectors') !== null? $this->extractNewsPropertie($acfField->getContent()['feature_news_feature_news_sectors']) : null;
                     break;
                 }
-            }
-
-            
-            
+            }  
         }
 
         if ($request->isMethod('POST')) {
