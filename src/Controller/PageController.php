@@ -189,10 +189,10 @@ class PageController extends AbstractController
                 if ($acfField->getName() == 'feature_news_feature_news') {
                     $featureNewsProperties['newsType'] = $acfField->getContent()->get('feature_news_feature_news_news_type') !== null ? $this->extractNewsPropertie($acfField->getContent()['feature_news_feature_news_news_type']) : null;
                     $featureNewsProperties['pAndSType'] = $acfField->getContent()->get('feature_news_feature_news_products_and_services') !== null ? $this->extractNewsPropertie($acfField->getContent()['feature_news_feature_news_products_and_services']) : null;
-                    $featureNewsProperties['sectorType'] = $acfField->getContent()->get('feature_news_feature_news_sectors') !== null? $this->extractNewsPropertie($acfField->getContent()['feature_news_feature_news_sectors']) : null;
+                    $featureNewsProperties['sectorType'] = $acfField->getContent()->get('feature_news_feature_news_sectors') !== null ? $this->extractNewsPropertie($acfField->getContent()['feature_news_feature_news_sectors']) : null;
                     break;
                 }
-            }  
+            }
         }
 
         if ($request->isMethod('POST')) {
