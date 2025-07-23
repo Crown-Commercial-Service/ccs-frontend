@@ -192,9 +192,9 @@
                         </div>
 
                     </form>
-
-                {% include '/frameworks/_helpful_info.html.twig' with {'page': 'upcoming'} %}
-                
+                    <div class="helpful-info-search-agreement-desktop">
+                        {% include '/frameworks/_helpful_info.html.twig' with {'page': 'upcoming'} %}
+                    </div>
                 </div>
                 
                 <div class="govuk-grid-column-two-thirds">
@@ -558,6 +558,10 @@
 
                 </div>
 
+            </div>
+
+            <div class="helpful-info-search-agreement-mobile" style="display: none;">
+                {% include '/frameworks/_helpful_info.html.twig' with {'page' : 'upcoming'} %}
             </div>
 
         </main>
