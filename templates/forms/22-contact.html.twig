@@ -216,9 +216,8 @@
                             {% endif %}
 
                             <div class="govuk-form-group {{formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
+                                <label class="govuk-label" for="file-upload-1">Upload a file (optional)</label>   
                                 <div class="govuk-hint">You can upload a file to support your query. If you wish to do this, the file must be smaller than 10MB</div>
-                                <label class="govuk-label" for="attachment">Upload a file (optional)</label>
-
                                 {% if formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 %}
                                     {% for error in formErrors.fileErr.errors %}
                                         <span id="file-error" class="govuk-error-message">
@@ -227,7 +226,12 @@
                                     {% endfor %}                            
                                 {% endif %}
 
-                                <input class="govuk-file-upload {{formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="attachment" name="attachment" type="file">
+                                <div
+                                    class="govuk-drop-zone" 
+                                    data-module="govuk-file-upload"
+                                    data-i18n.drop-instruction="or drag and drop file here">
+                                    <input class="govuk-file-upload {{formErrors.fileErr is defined and formErrors.fileErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="file-upload-1" name="attachment" type="file">
+                                </div>
                             </div>
 
                             <div class="govuk-form-group" id="contactedBeforeOptions">
