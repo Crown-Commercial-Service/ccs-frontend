@@ -17,7 +17,7 @@ class FormValidation
             'link' => '#name',
         ];
 
-        if (preg_match('~[0-9]~', $name)) {
+        if (preg_match('~[0-9]~', (string) $name)) {
             $returnArray['errors'] = ['Enter your name'];
         }
 
@@ -94,7 +94,7 @@ class FormValidation
             'link' => '#jobTitle',
         ];
 
-        $returnArray['errors'] = empty(trim($jobTitle)) ? ['Enter your job title'] : [] ;
+        $returnArray['errors'] = empty(trim((string) $jobTitle)) ? ['Enter your job title'] : [] ;
 
         return $returnArray;
     }
@@ -178,7 +178,7 @@ class FormValidation
             $returnArray['errors'] = ['Select the date that you would like to book your eSourcing tool training'];
         } else {
             $inputDate = is_null($buyerDate) ? $supplierDate : $buyerDate;
-            $inputDate = strtotime(explode("-", $inputDate)[0]);
+            $inputDate = strtotime(explode("-", (string) $inputDate)[0]);
 
             $returnArray['errors'] = strtotime(date("Y/m/d")) > $inputDate ? ['The date you have selected is in the past, select the date of an upcoming event'] : [];
         }
@@ -217,9 +217,9 @@ class FormValidation
             'link' => '#attachment',
         ];
 
-        $allowedFileType = array('jpeg', 'jpg', 'png', 'odt', 'doc', 'docx', 'odp', 'ods', 'odg', 'pdf', 'txt');
+        $allowedFileType = ['jpeg', 'jpg', 'png', 'odt', 'doc', 'docx', 'odp', 'ods', 'odg', 'pdf', 'txt'];
 
-        $filename = strtolower($file['name']);
+        $filename = strtolower((string) $file['name']);
 
         $ext = pathinfo($filename, PATHINFO_EXTENSION);
 

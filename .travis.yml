@@ -18,9 +18,14 @@ language: php
 matrix:
   fast_finish: true
   include:
-    - php: '7.4'
+    - php: '8.2'
       env: SNIFF=1
-    - php: '7.4'
+    - php: '8.2'
+
+addons:
+  apt:
+    packages:
+      - libonig-dev
 
 before_install:
   - composer self-update;
@@ -32,8 +37,8 @@ script:
   # Run PHPCS
   - if [[ "$SNIFF" == "1" ]]; then vendor/bin/phpcs; fi
   # Run PHP Unit
-  - bin/phpunit
-  - bin/phpunit vendor/ccs/strata-frontend/tests
+  - vendor/bin/phpunit
+  - vendor/bin/phpunit vendor/ccs/strata-frontend/tests
 
 notifications:
   on_success: never

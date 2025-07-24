@@ -4,7 +4,7 @@
 echo "Starting codedeploy server_start.sh ..."
 
 SERVICES=(
-    "awslogsd.service"
+    "amazon-cloudwatch-agent" #"awslogsd.service"
     "httpd.service"
 )
 

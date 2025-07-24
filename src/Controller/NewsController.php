@@ -104,7 +104,7 @@ class NewsController extends AbstractController
 
     public function show($slug, Request $request)
     {
-        $slug = filter_var($slug, FILTER_SANITIZE_STRING);
+        $slug = filter_var($slug, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $this->api->setCacheKey($request->getRequestUri());
 
@@ -128,13 +128,13 @@ class NewsController extends AbstractController
             'url'           => sprintf('/news/%s', $slug),
             'page'          => $page,
             'authorText'    => $authorText,
-            'content_group' => isset($content_group) ? $content_group : null,
+            'content_group' => $content_group ?? null,
         ]);
     }
 
     private function formatIdFromObject($filtersOption)
     {
-        $returnArray = array();
+        $returnArray = [];
 
         foreach ($filtersOption as $each) {
             $returnArray[] = $each->getId();
@@ -152,7 +152,7 @@ class NewsController extends AbstractController
 
         $allEmpty = true;
 
-        $checkType = array(
+        $checkType = [
             'categories',
             'sectors',
             'PandS',
@@ -160,7 +160,7 @@ class NewsController extends AbstractController
             'whitepaper',
             'webinar',
             'digitalDownload'
-        );
+        ];
 
         foreach ($checkType as $each) {
             if (!empty($request->query->get($each))) {

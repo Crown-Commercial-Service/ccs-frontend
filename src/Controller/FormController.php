@@ -165,7 +165,7 @@ class FormController extends AbstractController
 
     public function contactCCS(Request $request)
     {
-        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+        $referrer = $_SERVER['HTTP_REFERER'] ?? null;
         $formType = $request->query->get('type', null);
 
 
@@ -254,7 +254,7 @@ class FormController extends AbstractController
 
     public function complaintForm(Request $request)
     {
-        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+        $referrer = $_SERVER['HTTP_REFERER'] ?? null;
         $formType = $request->query->get('type', null);
         $rmNumber = $request->query->get('agreement', null);
 
@@ -387,9 +387,9 @@ class FormController extends AbstractController
             }
         }
     }
-    public static function sendToSalesforceForDownload($params, $utmParams, $data, $campaignCode, $description)
+    public function sendToSalesforceForDownload($params, $utmParams, $data, $campaignCode, $description)
     {
-        $formErrors = self::validateGatedForm($data);
+        $formErrors = $this->validateGatedForm($data);
 
         if (!$formErrors) {
             $client = HttpClient::create();
@@ -527,12 +527,12 @@ class FormController extends AbstractController
     }
     private function setUTM($params, $utmKey, $utmValue)
     {
-        $utmMap = array(
+        $utmMap = [
             "utm_campaign" => "Case_Marketing_Campaign__c",
             "utm_content" => "Case_Marketing_Content__c",
             "utm_medium" => "Case_Marketing_Medium__c",
             "utm_source" => "Case_Marketing_Source__c"
-        );
+        ];
 
         if (array_key_exists($utmKey, $utmMap)) {
             $params->set($utmMap[$utmKey], $utmValue);
@@ -550,7 +550,7 @@ class FormController extends AbstractController
     {
         if ((!empty($_FILES["attachment"])) && ($_FILES['attachment']['error'] == 0)) {
             try {
-                $uploadedFilePath = substr($_FILES["attachment"]["tmp_name"], 0, strripos($_FILES["attachment"]["tmp_name"], '/') + 1);
+                $uploadedFilePath = substr((string) $_FILES["attachment"]["tmp_name"], 0, strripos((string) $_FILES["attachment"]["tmp_name"], '/') + 1);
                 $newFilePath = $uploadedFilePath . $_FILES["attachment"]["name"];
                 copy($_FILES["attachment"]["tmp_name"], $newFilePath);
 
