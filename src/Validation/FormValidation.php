@@ -214,7 +214,7 @@ class FormValidation
     {
         $returnArray  = [
             'errors' => [],
-            'link' => '#attachment',
+            'link' => '#file-upload-1',
         ];
 
         $allowedFileType = ['jpeg', 'jpg', 'png', 'odt', 'doc', 'docx', 'odp', 'ods', 'odg', 'pdf', 'txt'];
