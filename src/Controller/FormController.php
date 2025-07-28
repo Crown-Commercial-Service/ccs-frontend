@@ -534,7 +534,7 @@ class FormController extends AbstractController
             "utm_source" => "Case_Marketing_Source__c"
         ];
 
-        if (array_key_exists($utmKey, $utmMap)) {
+        if (array_key_exists($utmKey, (array)$utmMap)) {
             $params->set($utmMap[$utmKey], $utmValue);
         }
 
