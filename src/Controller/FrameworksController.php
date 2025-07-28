@@ -596,9 +596,9 @@ class FrameworksController extends AbstractController
             "technology-products-services"  => "Technology",
         ];
 
-        if (isset($oldCategory) && array_key_exists($oldCategory, $redirectToCat)) {
+        if (isset($oldCategory) && array_key_exists($oldCategory, (array)$redirectToCat)) {
             return ['category' => [$redirectToCat[$oldCategory]]];
-        } elseif (isset($oldCategory) && array_key_exists($oldCategory, $redirectToPillar)) {
+        } elseif (isset($oldCategory) && array_key_exists($oldCategory, (array)$redirectToPillar)) {
             return ['pillar' => [$redirectToPillar[$oldCategory]]];
         }
         return null;

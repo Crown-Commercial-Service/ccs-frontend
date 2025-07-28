@@ -37,7 +37,7 @@ class ApiController extends AbstractController
     {
         $filtered = [];
         foreach ($params as $name => $param) {
-            if (array_key_exists($name, $allowedFilters)) {
+            if (array_key_exists($name, (array)$allowedFilters)) {
                 $filtered[$name] = filter_var($param, $allowedFilters[$name]);
             }
         }
