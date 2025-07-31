@@ -206,6 +206,8 @@ class PageController extends AbstractController
         $cscMessage = ControllerHelper::getCSCMessage();
         $resourcesWithIndex = $this->extractResourcesFromContent($page->getContent());
 
+        dd($page);
+
         return $this->render('pages/page.html.twig', [
             'page'                       => $page,
             'breadcrumb_parents'         => $breadcrumb,

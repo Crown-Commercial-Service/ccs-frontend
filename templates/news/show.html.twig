@@ -119,6 +119,17 @@
 
                 </div>
 
+                <div class="govuk-grid-column-one-third">
+                    {% if authorText is defined and authorText is not empty %}
+                        <p>By {{authorText}}</p>
+                    {% endif %}
+
+                    {% if page.content.author_image is defined and page.content.author_image is not empty %}
+                        <div class="news-author-image">
+                            <img src="{{ page.content.author_image }}" alt="Author Image" class="news-author-image__img" width="150" height="150">
+                        </div>
+                    {% endif %}
+
 
             </div>
         </main>
