@@ -259,6 +259,8 @@ class FrameworksController extends AbstractController
         }
 
         $data = [
+            'api_base_url'                  => getenv('SEARCH_API_BASE_URL'),
+            'app_base_url'                  => getenv('APP_BASE_URL'),
             'statuses'                      => $statuses,
             'filters'                       => $options,
             'results'                       => $results,
