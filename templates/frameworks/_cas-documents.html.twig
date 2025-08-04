@@ -25,10 +25,10 @@
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Core terms and conditions</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-2">Core terms and conditions</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
+            <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2" role="region">
                 <p>The core terms form part of the framework and call-off contracts and must be used on every contract. They cannot be changed.</p>
                 <p>The core terms are CCS’s standard commercial terms. They govern the supplier’s relationship with CCS and every customer who has a call-off contract.</p>
                 <div class="wysiwyg-content rawHTML">{{ framework.content.core_terms_conditions|raw }}</div>
@@ -40,10 +40,10 @@
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Call-off order form</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-3">Call-off order form</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
+            <div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3" role="region">
                 <p>When a customer decides to buy from a supplier, they’ll complete an order form with important information about the call-off contract.</p>
                 <p>Customers can change any of their chosen schedules by adding special terms in the call-off order form.</p>
 
@@ -72,10 +72,10 @@
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Joint schedules</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-4">Joint schedules</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
+            <div id="accordion-default-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4" role="region">
                 {% for jointSchedule in framework.content.joint_schedules %}
                     <p class="joint-schedule-title">
                         <a onclick="fileDownload('{{ jointSchedule.joint_schedule_document }}', '{{ jointSchedule.joint_schedule_document_name }}', '{{ jointSchedule.joint_schedule_file_size }}');" href={{ jointSchedule.joint_schedule_document}}><strong>{{ jointSchedule.joint_schedule_document_name }}</strong></a>
@@ -92,10 +92,10 @@
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Call-off schedules</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-5">Call-off schedules</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
+            <div id="accordion-default-content-5" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-5" role="region">
                 
                 <p>Call-off schedules are used when suppliers sell their goods or services to customers.</p>
                 <p>You can choose which schedules to include and whether to edit these template schedules when they form a call-off contract.</p>
@@ -114,10 +114,10 @@
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Framework schedules</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-6">Framework schedules</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
+            <div id="accordion-default-content-6" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-6" role="region">
             
                 <p>Framework schedules are used by CCS to set up the agreement with suppliers.</p>
 
@@ -134,10 +134,10 @@
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Templates</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-7">Templates</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
+            <div id="accordion-default-content-7" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-7" role="region">
                 <div class="wysiwyg-content rawHTML">{{ framework.content.templates|raw }}</div>
             </div>
         </div>
