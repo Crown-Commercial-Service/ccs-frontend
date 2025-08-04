@@ -58,14 +58,14 @@
     </style>
 
     {% if app.environment == "prod" %}
-         <link rel="preload" href="/assets/styles/styles.min.css?v=1.73" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.73"></noscript>
+         <link rel="preload" href="/assets/styles/styles.min.css?v=1.77" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.77"></noscript>
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="preload" href="/assets/styles/styles.min.css?v=1.73" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.73"></noscript>
+        <link rel="preload" href="/assets/styles/styles.min.css?v=1.77" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.77"></noscript>
     {% endif %}
 
     {# Browser icon #}
@@ -288,6 +288,8 @@ End Usersnap code #}
     piCId = '';
     piHostname = 'information.crowncommercial.gov.uk';
 
+    closeFiltersOnMobile ()
+
     var cookiePreferences = JSON.parse(decodeURIComponent(readCookie('cookie_preferences')));
     if (cookiePreferences !== null) {
         if (cookiePreferences.marketing === true) {
@@ -438,7 +440,18 @@ End Usersnap code #}
      logo.addEventListener("focusout", function (event) {
         logoImg.style.filter = "invert(0)";
     })
-  
+
+    // close accordion filters on mobile
+    function closeFiltersOnMobile () {
+        var windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        var filterAccordion = document.querySelectorAll('.govuk-accordion__section--expanded');
+        if (windowWidth < 641 && filterAccordion.length > 0) {
+            filterAccordion.forEach(function(section) {
+                section.classList.remove('govuk-accordion__section--expanded');
+            });
+        }
+    }
+
 </script>
 
 <script type="module" src="/assets/scripts/all.js?v=2.3"></script>

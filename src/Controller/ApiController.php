@@ -184,13 +184,12 @@ class ApiController extends AbstractController
      */
     public function news(Request $request, CacheItemPoolInterface $cache)
     {
-        $apiUrl = $this->getCmsUrl('/wp-json/wp/v2/posts');
+        $apiUrl = $this->getCmsUrl('/wp-json/ccs/v1/news');
 
         $allowedFilters = [
             'categories'        => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'whitepaper'        => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'webinar'           => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-            'digitalBrochure'   => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'digitalDownload'   => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'noPost'            => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
             'sectors'           => FILTER_SANITIZE_FULL_SPECIAL_CHARS,

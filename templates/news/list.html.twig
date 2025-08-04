@@ -15,14 +15,7 @@
     <div class="govuk-width-container">
 
         <div class="govuk-phase-banner">
-            <p class="govuk-phase-banner__content">
-                <strong class="govuk-tag govuk-phase-banner__content__tag ">
-                    beta 
-                </strong> 
-                <span class="govuk-phase-banner__text">This is a new service - your
-                <a class="govuk-link" href={{ survey_link }}>feedback</a> will help us to improve it.
-                </span>
-            </p>
+            {% include '/includes/phase-banner-content.html.twig' %}
         </div>
 
         {% set categoriesForTwig = filters.categories is defined and filters.categories is not empty ? filters.categories|split(',') : [] %}
@@ -553,6 +546,11 @@
                             this.numberOfPages  = jsonResponse.meta['X-WP-TotalPages'];
                             this.totalResults   = jsonResponse.meta['X-WP-Total'];
                             this.results = jsonResponse.body;
+
+                            var env = document.getElementById('app-env').dataset.env;
+                            if (env == "dev" || env == "local") {
+                                console.log("page: " + this.numberOfPages + " | total Result: " + this.totalResults )
+                            }
 
                             for(var i = 0; i < jsonResponse.body.length; i++) {
                                 jsonResponse.body[i].modifiedDate = this.formatDate(jsonResponse.body[i].modified);

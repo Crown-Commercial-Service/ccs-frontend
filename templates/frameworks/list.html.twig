@@ -147,7 +147,10 @@
 
                 </div>
             </div>
-
+            {# appear only on mobile #}
+            <div class="helpful-info-search-agreement-mobile" style="display: none;">
+                {% include '/frameworks/_helpful_info.html.twig' with {'page' : 'search'} %}
+            </div>
 
         </main>
     </div>
@@ -160,7 +163,7 @@
     {% endif %}
 
     <script type="application/javascript"> 
-        searchFilterAgreement();
+        searchFilterAgreement()
 
         function supportsLiterals() {
             try{
