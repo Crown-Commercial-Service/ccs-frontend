@@ -187,4 +187,44 @@ class ControllerHelper
 
         return [$selected, $pillarArray];
     }
+
+    public static function extractFeatureNewsProperties($typeOfRows, $pageContent): ?array
+    {
+        $featureNewsProperties = null;
+
+        if (!array_key_exists($typeOfRows, (array) $pageContent)) {
+            return $featureNewsProperties;
+        }
+
+        foreach ($pageContent[$typeOfRows]->getValue() as $acfField) {
+            if ($acfField->getName() == 'feature_news_feature_news') {
+                $featureNewsProperties = [
+                'newsType' => $acfField->getContent()->get('feature_news_feature_news_news_type') !== null
+                    ? self::extractNewsProperties($acfField->getContent()['feature_news_feature_news_news_type'])
+                    : null,
+                'pAndSType' => $acfField->getContent()->get('feature_news_feature_news_products_and_services') !== null
+                    ? self::extractNewsProperties($acfField->getContent()['feature_news_feature_news_products_and_services'])
+                    : null,
+                'sectorType' => $acfField->getContent()->get('feature_news_feature_news_sectors') !== null
+                    ? self::extractNewsProperties($acfField->getContent()['feature_news_feature_news_sectors'])
+                    : null
+                ];
+                break;
+            }
+        }
+
+        return $featureNewsProperties;
+    }
+
+    public static function extractNewsProperties($arrayFromEndpoint)
+    {
+
+        $arrayOfID = [];
+
+        foreach ($arrayFromEndpoint as $eachID) {
+            $arrayOfID[] = $eachID['term_taxonomy_id']->getValue();
+        }
+
+        return $arrayOfID;
+    }
 }
