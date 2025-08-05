@@ -8,11 +8,10 @@
                 {# Fallback for browsers that don't support the picture element #}
                 <img src="{{ image.byName('medium_large') }}"
                     fetchpriority="high"
-                    role="presentation"
+                    {{ image.alt is defined and image.alt is not empty ? "alt=" ~ image.alt : "alt='' role='presentation'" }}
                     class="hero__image"
                     data-object-fit="cover"
                     data-object-position="right center"
-                    alt="{{image.alt}}"
                     width="600" height="208">
         </picture>
         {% else %}

@@ -222,15 +222,13 @@
 
 <script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.4"></script>
 
-<div id="skiplink-container">
-    <div>
-        <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
-    </div>
-</div>
-
-{#<a href="#main-content" class="govuk-skip-link">Skip to main content</a>#}
-
 {% block header %}
+    <div id="skiplink-container">
+        <div>
+            <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+        </div>
+    </div>
+
     {% embed '/includes/header.html.twig' %}
     {% endembed %}
 {% endblock %}
