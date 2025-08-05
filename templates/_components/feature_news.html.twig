@@ -83,7 +83,11 @@
             {% if component.feature_news_feature_news_view_more_text is defined and component.feature_news_feature_news_view_more_text is not empty %}
                 <p><a href={{path}}>{{(component.feature_news_feature_news_view_more_text)}}</a></p>
             {% else %}
-                <p><a href={{path}}>Browse all {{page.title | lower}} news articles</a></p>
+                {% if page.contentType.name == 'news' %}
+                    <p><a href={{path}}>Browse all news articles</a></p>
+                {% else %}
+                    <p><a href={{path}}>Browse all {{page.title | lower}} news articles</a></p>
+                {% endif %}
             {% endif %}
 
         {% endif %}

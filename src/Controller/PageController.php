@@ -178,22 +178,12 @@ class PageController extends AbstractController
         $formErrors = null;
         $formData = $this->getFromData($request->request);
         $formCampaignCode = null;
-        $featureNewsProperties = null;
 
         if ($page->getContent()->get('contact_form_form_campaign_code') !== null) {
             $formCampaignCode = $page->getContent()['contact_form_form_campaign_code']->getValue();
         }
 
-        if (array_key_exists('page_components_rows', (array) $page->getContent())) {
-            foreach ($page->getContent()['page_components_rows']->getValue() as $acfField) {
-                if ($acfField->getName() == 'feature_news_feature_news') {
-                    $featureNewsProperties['newsType'] = $acfField->getContent()->get('feature_news_feature_news_news_type') !== null ? $this->extractNewsPropertie($acfField->getContent()['feature_news_feature_news_news_type']) : null;
-                    $featureNewsProperties['pAndSType'] = $acfField->getContent()->get('feature_news_feature_news_products_and_services') !== null ? $this->extractNewsPropertie($acfField->getContent()['feature_news_feature_news_products_and_services']) : null;
-                    $featureNewsProperties['sectorType'] = $acfField->getContent()->get('feature_news_feature_news_sectors') !== null ? $this->extractNewsPropertie($acfField->getContent()['feature_news_feature_news_sectors']) : null;
-                    break;
-                }
-            }
-        }
+        $featureNewsProperties = ControllerHelper::extractFeatureNewsProperties('page_components_rows', $page->getContent());
 
         if ($request->isMethod('POST')) {
             $formErrors = $this->sendToSalesforceForPageEnquiry($request->request, $formData, $formCampaignCode);
@@ -462,18 +452,6 @@ class PageController extends AbstractController
         // $this->render('pages/digits_ctm.html.twig');
 
         return $this->redirect('https://travel.crowncommercial.gov.uk/');
-    }
-
-    private function extractNewsPropertie($arrayFromEndpoint)
-    {
-
-        $arrayOfID = [];
-
-        foreach ($arrayFromEndpoint as $eachID) {
-            $arrayOfID[] = $eachID['term_taxonomy_id']->getValue();
-        }
-
-        return $arrayOfID;
     }
 
     public function ppgTraining()
