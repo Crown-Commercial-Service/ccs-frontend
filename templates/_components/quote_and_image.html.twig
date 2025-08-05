@@ -20,10 +20,9 @@
                         <source media="(max-width: 768px)" srcset="{{ component.quote_and_image_quote_and_image_image.byName('medium_large') }}">
                         {# Fallback for browsers that don't support the picture element #}
                         <img src="{{ component.quote_and_image_quote_and_image_image }}"
-                                role="presentation"
                                 class="quote_img"
-                                loading="lazy"
-                                alt="{{component.quote_and_image_quote_and_image_image.alt}}"/>
+                                {{ component.quote_and_image_quote_and_image_image.alt is defined and component.quote_and_image_quote_and_image_image.alt is not empty ? "alt=" ~ component.quote_and_image_quote_and_image_image.alt : "alt='' role='presentation'" }}
+                                loading="lazy"/>
                     </picture>
                 </figure>
                 <div class="circle_flourish"></div>

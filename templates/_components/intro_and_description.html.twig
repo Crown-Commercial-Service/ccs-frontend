@@ -34,10 +34,9 @@
                             <source media="(min-width: 1920px)" srcset="{{ media.image_image_image.byName('full') }}">
                             {# Fallback for browsers that don't support the picture element #}
                             <img src="{{ media.image_image_image }}"
-                                 role="presentation"
                                  class=""
-                                 loading="lazy"
-                                 alt="{{media.image_image_image.alt}}">
+                                 {{ media.image_image_image.alt is defined and media.image_image_image.alt is not empty ? "alt=" ~ media.image_image_image.alt : "alt='' role='presentation'" }}
+                                 loading="lazy">
                         </picture>
                         {% if media.image_image_caption %}
                             <figcaption class="intro__caption govuk-!-font-size-16 ccs-secondary-text-color">
@@ -146,10 +145,9 @@
                                 <source media="(min-width: 1920px)" srcset="{{ media.image_image_image.byName('full') }}">
                                 {# Fallback for browsers that don't support the picture element #}
                                 <img src="{{ media.image_image_image }}"
-                                    role="presentation"
                                     class=""
-                                    loading="lazy"
-                                    alt="{{media.image_image_image.alt}}">
+                                    {{ media.image_image_image.alt is defined and media.image_image_image.alt is not empty ? "alt=" ~ media.image_image_image.alt : "alt='' role='presentation'" }}
+                                    loading="lazy">
                             </picture>
                             {% if media.image_image_caption %}
                                 <figcaption class="intro__caption govuk-!-font-size-16 ccs-secondary-text-color">

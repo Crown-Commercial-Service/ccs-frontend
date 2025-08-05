@@ -30,9 +30,9 @@
                                 <!--[if IE 9]></video><![endif]-->
                                 <!-- Fallback -->
                                 {% if article.content.featuredImage.byName('news-size-m') %}
-                                    <img src="{{ article.content.featuredImage.byName('news-size-m') }}" alt="{{ article.content.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1">
+                                    <img src="{{ article.content.featuredImage.byName('news-size-m') }}" {{ article.content.featuredImage.alt is defined and article.content.featuredImage.alt is not empty ? "alt=" ~ article.content.featuredImage.alt : "alt='' role='presentation'" }} aria-hidden="true" tabindex="-1">
                                 {% else %}
-                                    <img src="{{ article.content.featuredImage.byName('full') }}" alt="{{ article.content.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1">
+                                    <img src="{{ article.content.featuredImage.byName('full') }}" {{ article.content.featuredImage.alt is defined and article.content.featuredImage.alt is not empty ? "alt=" ~ article.content.featuredImage.alt : "alt='' role='presentation'" }} aria-hidden="true" tabindex="-1">
                                 {% endif %}
 
                             </a>

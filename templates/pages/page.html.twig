@@ -25,7 +25,7 @@
 
     {# Component: Hero #}
     {# Pass all the variables along #}
-    {% include '_components/hero.html.twig' with {'image': page.content.hero_image, 'heading': page.content.hero_heading, 'content': page.content.hero_content, 'cta_label': page.content.hero_cta_label, 'cta_destination': page.content.hero_cta_destination} %}
+    {% include '_components/hero.html.twig' with {'image': page.content.hero_image, 'heading': page.content.hero_heading, 'content': page.content.hero_content, 'cta_label': page.content.hero_cta_label, 'cta_destination': page.content.hero_cta_destination, 'H1title': 'true'} %}
 
 
     <!-- If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. -->
@@ -279,7 +279,7 @@
                                                         <input type="hidden" name="debugEmail" value="{{ web_to_case_debug_email }}">
                                                     {% endif %}
                                                     
-                                                    <p class="js-contact-form-sub-heading">Your details</p>
+                                                    <h3 class="js-contact-form-sub-heading">Your details</h3>
 
                                                     <div class="govuk-form-group {{formErrors.nameErr is defined and formErrors.nameErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                                                         <label class="govuk-label" for="name">Name</label>
