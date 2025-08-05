@@ -92,6 +92,7 @@
 
                     </div>
                     {# End of wysiwyg content #}
+                    
 
 
                     <div class="news-listing-meta--featured">
@@ -107,6 +108,10 @@
                         {% if authorText != null and isBlog %}
                             | Written by {{authorText}}
                         {% endif %}
+                    </div>
+
+                    <div class="page-components">
+                        {% include '_components/components.html.twig' with {'components': page.content.post_components_rows } %}
                     </div>
 
 
