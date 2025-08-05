@@ -17,17 +17,16 @@
             <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
                 {% if page.content.brochures_list_brochures_list is not empty %}
                     {# Start brochure section #}
-
+                    {{ set resourceIndex = resourcesWithIndex['brochures_list_brochures_list'] is defined ? resourcesWithIndex['brochures_list_brochures_list'] : '1' }}
                     <div class="govuk-accordion__section ">
                         <div class="govuk-accordion__section-header">
                             <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">
-                                            Brochures ({{ page.content.brochures_list_brochures_list|length }}
-                                            )
-                                        </span>
+                                <span class="govuk-accordion__section-button" id="accordion-default-heading-{{resourceIndex}}">
+                                    Brochures ({{ page.content.brochures_list_brochures_list|length }})
+                                </span>
                             </h2>
                         </div>
-                        <div id="accordion-default-content-{{resourcesWithIndex['brochures_list_brochures_list'] is defined ? resourcesWithIndex['brochures_list_brochures_list'] : '1' }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{resourcesWithIndex['brochures_list_brochures_list'] is defined ? resourcesWithIndex['brochures_list_brochures_list'] : '1' }}" role="region">
+                        <div id="accordion-default-content-{{ resourceIndex }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ resourceIndex }}" role="region">
 
                             <ol class="ccs-list-grid brochures-list">
                                 {% for brochure in page.content.brochures_list_brochures_list %}

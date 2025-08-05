@@ -164,7 +164,7 @@
                                             {# unchecked #}
                                             <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small view-all-up-type-checkbox" id="allType" name="type[]" type="checkbox" value="allType">
                                         {% endif %}
-                                            <label class="govuk-label govuk-checkboxes__label" for="all"> View All </label>
+                                            <label class="govuk-label govuk-checkboxes__label" for="allType"> View All </label>
                                         </div>
                                     <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
                                         <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-dps" name="type[]" type="checkbox" value="Dynamic+Purchasing+System" {{ type is not defined or type is empty or 'Dynamic+Purchasing+System' in type ? "checked" : "" }}>
