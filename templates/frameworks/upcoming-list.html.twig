@@ -139,8 +139,6 @@
                         </div>
 
 
-
-
                         {% set agreementTypeArrayForTwig = ["Dynamic%20Purchasing%20System", "Dynamic%20Market", "Open%20Framework", "Closed%20Framework", "PCR15%20Framework"] %}
                         <fieldset class="govuk-fieldset" aria-describedby="filter_type">
                             <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_type">
@@ -200,20 +198,157 @@
                     </div>
                 
 
-                    <div v-if="responseAvailable" class="hideWithoutJS govuk-visually-hidden">
-                        <ul class="govuk-list govuk-list--frameworks" v-show="javascriptVersion">
-                            <li v-show="javascriptVersion" v-for="result in results">
-                                <h3 class="govuk-heading-m ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold govuk-!-font-size-22">
-                                    <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
-                                </h3>
-                                <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
-                                    <li> <strong>Agreement ID:</strong> {[ result.rm_number ]}   </li>
-                                    <li> <strong>Start Date:</strong>   {[ toDateDMY(result.start_date) ]}  </li>
-                                    <li v-if="result.regulation != null"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
-                                </ul>
-                                <p class="govuk-body-s" v-html="result.summary"></p> 
-                            </li>
-                        </ul>
+                    <div v-if="responseAvailable" class="hideWithoutJS govuk-visually-hidden" v-show="javascriptVersion">
+                        <div class="future upcoming-type-wrapper" v-if="results['future_pipeline'].length > 0">
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content and upcoming_deals_content.table_4.title ? upcoming_deals_content.table_4.title : 'Future pipeline' }}</h2>
+                            
+                            {% if upcoming_deals_content and upcoming_deals_content.table_4.caption|length > 0 %}
+                                <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_4.caption }}</p>
+                            {% endif %} 
+
+                            <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
+
+                                <li class="upcoming-result" v-for="result in results['future_pipeline']">
+                                    <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
+                                        <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
+                                    </p>
+                                    
+                                    <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                        <li> <strong>Agreement ID:</strong> {[ result.rm_number ]} </li>
+
+                                        <li v-if="result.tenders_open_date"> <strong>Tenders Open:</strong> {[ new Date(result.tenders_open_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Tenders Open:</strong> TBC </li>
+
+                                        <li v-if="result.expected_live_date"> <strong>Expected Live:</strong> {[ new Date(result.expected_live_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Expected Live:</strong> TBC </li>
+
+                                        <li v-if="result.regulation"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
+                                    </ul>
+
+                                    <p class="govuk-body-s">{[ extractHTML(result.upcoming_deal_summary) ]}</p>
+                            </ul>                            
+                        </div>
+
+                        <div class="planned-proc upcoming-type-wrapper" v-if="results['planned_pipeline'].length > 0">
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content and upcoming_deals_content.table_3.title ? upcoming_deals_content.table_3.title : 'Planned procurements' }}</h2>
+                            
+                            {% if upcoming_deals_content and upcoming_deals_content.table_3.caption|length > 0 %}
+                                <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_3.caption }}</p>
+                            {% endif %} 
+
+                            <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
+
+                                <li class="upcoming-result" v-for="result in results['planned_pipeline']">
+                                    <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
+                                        <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
+                                    </p>
+                                    
+                                    <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                        <li> <strong>Agreement ID:</strong> {[ result.rm_number ]} </li>
+
+                                        <li v-if="result.tenders_open_date"> <strong>Tenders Open:</strong> {[ new Date(result.tenders_open_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Tenders Open:</strong> TBC </li>
+
+                                        <li v-if="result.expected_live_date"> <strong>Expected Live:</strong> {[ new Date(result.expected_live_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Expected Live:</strong> TBC </li>
+
+                                        <li v-if="result.regulation"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
+                                    </ul>
+
+                                    <p class="govuk-body-s">{[ extractHTML(result.upcoming_deal_summary) ]}</p>
+                            </ul>                            
+                        </div>
+
+                        <div class="proc-in-progress upcoming-type-wrapper" v-if="results['underway_pipeline'].length > 0">
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content and upcoming_deals_content.table_1.title ? upcoming_deals_content.table_1.title : 'Procurements in progress' }}</h2>
+                            
+                            {% if upcoming_deals_content and upcoming_deals_content.table_1.caption|length > 0 %}
+                                <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_1.caption }}</p>
+                            {% endif %} 
+
+                            <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
+
+                                <li class="upcoming-result" v-for="result in results['underway_pipeline']">
+                                    <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
+                                        <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
+                                    </p>
+                                    
+                                    <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                        <li> <strong>Agreement ID:</strong> {[ result.rm_number ]} </li>
+
+                                        <li v-if="result.tenders_close_date"> <strong>Tenders Close:</strong> {[ new Date(result.tenders_close_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Tenders Close:</strong> TBC </li>
+
+                                        <li v-if="result.expected_award_date"> <strong>Expected Award:</strong> {[ new Date(result.expected_award_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Expected Award:</strong> TBC </li>
+
+                                        <li v-if="result.regulation"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
+                                    </ul>
+
+                                    <p class="govuk-body-s">{[ extractHTML(result.upcoming_deal_summary) ]}</p>
+                            </ul>                            
+                        </div>
+
+                        <div class="proc-recent-awarded upcoming-type-wrapper" v-if="results['awarded_pipeline'].length > 0">
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content and upcoming_deals_content.table_0.title ? upcoming_deals_content.table_0.title : 'Procurements recently awarded' }}</h2>
+                            
+                            {% if upcoming_deals_content and upcoming_deals_content.table_0.caption|length > 0 %}
+                                <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_0.caption }}</p>
+                            {% endif %} 
+
+                            <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
+
+                                <li class="upcoming-result" v-for="result in results['awarded_pipeline']">
+                                    <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
+                                        <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
+                                    </p>
+                                    
+                                    <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                        <li> <strong>Agreement ID:</strong> {[ result.rm_number ]} </li>
+
+                                        <li v-if="result.expected_award_date"> <strong>Awarded Date:</strong> {[ new Date(result.expected_award_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Awarded Date:</strong> TBC </li>
+
+                                        <li v-if="result.expected_live_date"> <strong>Expected Live:</strong> {[ new Date(result.expected_live_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Expected Live:</strong> TBC </li>
+
+                                        <li v-if="result.regulation"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
+                                    </ul>
+
+                                    <p class="govuk-body-s">{[ extractHTML(result.upcoming_deal_summary) ]}</p>
+                            </ul>                            
+                        </div>
+
+                        <div class="dps upcoming-type-wrapper" v-if="results['liveDPS'].length > 0">
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content and upcoming_deals_content.table_2.title ? upcoming_deals_content.table_2.title : 'Dynamic Purchasing Systems currently open' }}</h2>
+                            
+                            {% if upcoming_deals_content and upcoming_deals_content.table_2.caption|length > 0 %}
+                                <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_2.caption }}</p>
+                            {% endif %} 
+
+                            <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
+
+                                <li class="upcoming-result" v-for="result in results['liveDPS']">
+                                    <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
+                                        <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
+                                    </p>
+                                    
+                                    <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                        <li> <strong>Agreement ID:</strong> {[ result.rm_number ]} </li>
+
+                                        <li v-if="result.expected_live_date"> <strong>Live Date:</strong> {[ new Date(result.expected_live_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Live Date:</strong> TBC </li>
+
+                                        <li v-if="result.end_date"> <strong>End Date:</strong> {[ new Date(result.end_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>End Date:</strong> TBC </li>
+
+                                        <li v-if="result.regulation"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
+                                    </ul>
+
+                                    <p class="govuk-body-s">{[ extractHTML(result.upcoming_deal_summary) ]}</p>
+                            </ul>                            
+                        </div>
+
                     </div>
 
                 <div v-show="!javascriptVersion">
@@ -367,10 +502,10 @@
                     this.checkedAgreementType = [];
                     this.keyword = '';
                 },
-                toDateDMY: function (value) {
-                    if (!value) return ''
-                    date = new Date(value);
-                    return date.getDate().toString().padStart(2, '0') + '/'+ (date.getMonth() + 1).toString().padStart(2, '0') + '/' + date.getFullYear();
+                extractHTML(htmlString) {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = htmlString;
+                    return tempDiv.textContent || tempDiv.innerText || '';
                 },
                 searchRequestUrl: function() {
 
@@ -429,23 +564,47 @@
                         this.emptyResult = Object.keys(jsonResponse.results).length === 0 ? true : false
                         this.responseAvailable = true;
                         
-                        for(var i = 0; i < this.results.length; i++) {
-                            switch(this.results[i].status) {
-                                case 'Future (Pipeline)':
-                                    break;  
-                                case 'Planned (Pipeline)':
-                                    break;  
-                                case 'Underway (Pipeline)':
-                                    break;  
-                                case 'Awarded (Pipeline)':
-                                    break;  
-                                case 'Live':
-                                    break;  
-                            }
-                        }
+                        const categories = {
+                            future_pipeline: [],
+                            planned_pipeline: [],
+                            underway_pipeline: [],
+                            awarded_pipeline: [],
+                            liveDPS: [],
+                            liveDynamicMarket: []
+                        };
 
-                        if (this.displayKeyword) {
-                            pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'upcomingAgreement', 'search_term':this.displayKeyword, 'interaction_detail': jsonResponse.meta.total_results});
+                        jsonResponse.results.forEach(item => {
+                            switch(item.status) {
+                                case 'Future (Pipeline)':
+                                    categories.future_pipeline.push(item);
+                                    break;
+                                case 'Planned (Pipeline)':
+                                    categories.planned_pipeline.push(item);
+                                    break;
+                                case 'Underway (Pipeline)':
+                                    categories.underway_pipeline.push(item);
+                                    break;
+                                case 'Awarded (Pipeline)':
+                                    categories.awarded_pipeline.push(item);
+                                    break;
+                                case 'Live':
+                                    if (item.regulation_type === 'Dynamic Purchasing System') {
+                                        categories.liveDPS.push(item);
+                                    } else if (item.regulation_type === 'Dynamic Market') {
+                                        categories.liveDynamicMarket.push(item);
+                                    }
+                                    break;
+                            }
+                        });
+
+                        Object.keys(categories).forEach(key => {
+                            this.results[key] = categories[key];
+                        });
+
+                        console.log(this.results['future_pipeline']);
+
+                        if (this.keyword) {
+                            pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'upcomingAgreement', 'search_term':this.keyword, 'interaction_detail': jsonResponse.meta.total_results});
                         }
                     })
                     .catch(error => {

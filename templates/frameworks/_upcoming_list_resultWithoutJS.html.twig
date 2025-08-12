@@ -98,10 +98,6 @@
                                 <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
                             {% endif %}
 
-                            {% if upcoming_deal.regulation_type is not null %}
-                                <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
-                            {% endif %}
-
                         </ul>
                         <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
                     </li>
@@ -157,10 +153,6 @@
 
                         {% if upcoming_deal.regulation is not null %}
                             <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
-                        {% endif %}
-
-                        {% if upcoming_deal.regulation_type is not null %}
-                            <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
                         {% endif %}
 
                     </ul>
@@ -224,10 +216,6 @@
                                 <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
                             {% endif %}
 
-                            {% if upcoming_deal.regulation_type is not null %}
-                                <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
-                            {% endif %}
-
                         </ul>
                         <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
                     </li>
@@ -280,10 +268,6 @@
 
                                 {% if upcoming_deal.regulation is not null %}
                                     <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
-                                {% endif %}
-
-                                {% if upcoming_deal.regulation_type is not null %}
-                                    <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
                                 {% endif %}
 
                             </ul>
@@ -339,10 +323,6 @@
 
                             {% if upcoming_deal.regulation is not null %}
                                 <li> <strong>Regulation:</strong>{{ upcoming_deal.regulation }}</li>
-                            {% endif %}
-
-                            {% if upcoming_deal.regulation_type is not null %}
-                                <li class="upcoming_regulation_type" style="display: none"> {{ upcoming_deal.regulation_type }} </li>
                             {% endif %}
 
                         </ul>
