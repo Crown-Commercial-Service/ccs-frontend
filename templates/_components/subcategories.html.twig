@@ -12,7 +12,9 @@
                     </div>
                 {% endif %}
 
-                <h2 class="govuk-heading-m intro__heading">{{ component.subcategories_subcategories_heading }}</h2>
+                {% if component.subcategories_subcategories_heading is defined and component.subcategories_subcategories_heading|length > 0 %}
+                    <h2 class="govuk-heading-m intro__heading">{{ component.subcategories_subcategories_heading }}</h2>
+                {% endif %}
 
                 <div class="wysiwyg-content subcategories__intro">
                     {{ component.subcategories_subcategories_content  | raw }}

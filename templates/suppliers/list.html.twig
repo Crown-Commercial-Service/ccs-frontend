@@ -485,7 +485,6 @@
         var selectedLot         = {
             title: '{{ selected.lot.title }}',
             id: '{{ selected.lot.id }}',
-            description: {% if selected.lot.description is not empty %}'{{ selected.lot.description }}'{% else %}null{% endif %},
             lot_number: '{{ selected.lot.lot_number }}'
         };
         {% else %}

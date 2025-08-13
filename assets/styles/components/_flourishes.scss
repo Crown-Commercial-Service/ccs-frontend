@@ -66,6 +66,13 @@ html {
 
 }
 
+@include govuk-media-query($until: 900) {
+    .hero__flourish {
+        display: none;
+    }
+}
+
+
 .footer-global {
 
     &:before,
