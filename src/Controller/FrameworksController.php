@@ -247,21 +247,13 @@ class FrameworksController extends AbstractController
 
         $cscMessage = ControllerHelper::getCSCMessage();
 
-        $statuses = (array) $request->query->get('statuses', ['all']);
-        $checkedTypes = (array) $request->query->get('type', ['allType']);
-
-        if (count($statuses) === 5 || in_array('all', $statuses)) {
-            $statuses = ['all'];
-        }
-
-        if (!$checkedTypes || count($checkedTypes) === 5 || in_array('allType', $checkedTypes)) {
-            $checkedTypes = ["allType"];
-        }
+        $checkedStatuses = ControllerHelper::getArrayFromStringForParam($request, "statuses", "allAgreementStatus");
+        $checkedTypes = ControllerHelper::getArrayFromStringForParam($request, "type", "allAgreementType");
 
         $data = [
             'api_base_url'                  => getenv('SEARCH_API_BASE_URL'),
             'app_base_url'                  => getenv('APP_BASE_URL'),
-            'statuses'                      => $statuses,
+            'statuses'                      => $checkedStatuses,
             'filters'                       => $options,
             'results'                       => $results,
             'type'                          => $checkedTypes,

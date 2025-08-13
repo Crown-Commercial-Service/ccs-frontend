@@ -24,23 +24,23 @@
     {% set terms = item.content.terms %}
 
     {% if status == "Future (Pipeline)" %}
-        {% if "future" in statuses or "all" in statuses %}
+        {% if "Future pipeline" in statuses or statuses is empty %}
             {% set future_pipeline = future_pipeline | merge([item.content]) %}
         {% endif %}
     {% elseif status == "Planned (Pipeline)"  %}
-        {% if "planned" in statuses or "all" in statuses %}
+        {% if "Planned procurements" in statuses or statuses is empty %}
             {% set planned_pipeline = planned_pipeline | merge([item.content]) %}
         {% endif %}
     {% elseif status == "Underway (Pipeline)" %}
-        {% if "proc" in statuses or "all" in statuses %}
+        {% if "Procurements in progress" in statuses or statuses is empty %}
             {% set underway_pipeline = underway_pipeline | merge([item.content]) %}
         {% endif %}
     {% elseif status == "Awarded (Pipeline)" %}
-        {% if "awarded" in statuses or "all" in statuses %}
+        {% if "Recently awarded" in statuses or statuses is empty %}
             {% set awarded_pipeline = awarded_pipeline | merge([item.content]) %}
         {% endif %}
     {% elseif terms == "DPS" %}
-        {% if "dps" in statuses or "all" in statuses %}
+        {% if statuses is empty %}
             {% set dynamic_purchasing_systems = dynamic_purchasing_systems | merge([item.content]) %}
         {% endif %}
     {% endif %}
@@ -54,7 +54,7 @@
 
 <div class="future upcoming-type-wrapper">
 
-    {% if future_pipeline|length >= 1  or "future" in statuses %}
+    {% if future_pipeline|length >= 1  and ("Future pipeline" in statuses or statuses is empty) %}
 
         {% if upcoming_deals_content and upcoming_deals_content.table_4.title %}
 
@@ -108,7 +108,7 @@
 </div>
 
 <div class="planned-proc upcoming-type-wrapper">
-    {% if planned_pipeline|length >= 1  or "planned" in statuses %}
+    {% if planned_pipeline|length >= 1  and ("Planned procurements" in statuses or statuses is empty) %}
 
         {% if upcoming_deals_content and upcoming_deals_content.table_3.title %}
 
@@ -166,7 +166,7 @@
 </div>
 
 <div class="proc-in-progress upcoming-type-wrapper">
-    {% if underway_pipeline|length >= 1 or "proc" in statuses %}
+    {% if underway_pipeline|length >= 1 and ("Procurements in progress" in statuses or statuses is empty) %}
 
         {% if upcoming_deals_content and upcoming_deals_content.table_1.title %}
 
@@ -227,7 +227,7 @@
 </div>
 
 <div class="proc-recent-awarded upcoming-type-wrapper">
-    {% if awarded_pipeline|length >= 1  or "awarded" in statuses %}
+    {% if awarded_pipeline|length >= 1 and ("Recently awarded" in statuses or statuses is empty) %}
         {% if upcoming_deals_content and upcoming_deals_content.table_0.title %}
 
             <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_0.title }}</h2>
@@ -280,7 +280,7 @@
 </div>
 
 <div class="dps upcoming-type-wrapper">
-    {% if dynamic_purchasing_systems|length >= 1 or "dps" in statuses %}
+    {% if dynamic_purchasing_systems|length >= 1 and ("dps" in statuses or statuses is empty) %}
 
         {% if upcoming_deals_content and upcoming_deals_content.table_2.title %}
 
