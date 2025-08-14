@@ -320,6 +320,36 @@
                             </ul>                            
                         </div>
 
+                        <div class="dynamicMarket upcoming-type-wrapper" v-if="results['liveDynamicMarket'].length > 0 && checkedAgreementStatus.length == 0">
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content and upcoming_deals_content.table_5.title ? upcoming_deals_content.table_5.title : 'Dynamic Market currently open' }}</h2>
+                            
+                            {% if upcoming_deals_content and upcoming_deals_content.table_5.caption|length > 0 %}
+                                <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_5.caption }}</p>
+                            {% endif %} 
+
+                            <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
+
+                                <li class="upcoming-result" v-for="result in results['liveDynamicMarket']">
+                                    <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
+                                        <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
+                                    </p>
+                                    
+                                    <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                        <li> <strong>Agreement ID:</strong> {[ result.rm_number ]} </li>
+
+                                        <li v-if="result.expected_live_date"> <strong>Live Date:</strong> {[ new Date(result.expected_live_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Live Date:</strong> TBC </li>
+
+                                        <li v-if="result.end_date"> <strong>End Date:</strong> {[ new Date(result.end_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>End Date:</strong> TBC </li>
+
+                                        <li v-if="result.regulation"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
+                                    </ul>
+
+                                    <p class="govuk-body-s">{[ extractHTML(result.upcoming_deal_summary) ]}</p>
+                            </ul>                            
+                        </div>
+
                     </div>
                     
                     <div v-else-if="responseAvailable === false" class="hideWithoutJS govuk-visually-hidden">
@@ -643,7 +673,7 @@
                                 case 'Live':
                                     if (item.terms === 'DPS') {
                                         categories.liveDPS.push(item);
-                                    } else if (item.terms === 'Dynamic Market') {
+                                    } else if (item.regulation_type === 'Dynamic Market') {
                                         categories.liveDynamicMarket.push(item);
                                     }
                                     break;
