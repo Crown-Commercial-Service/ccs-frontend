@@ -14,3 +14,5 @@ content_type_name:
   type: text
 alt_text:
   type: text
+post_components_rows:
+  config: flexible-components.yaml

@@ -79,7 +79,7 @@
                 <div class="govuk-grid-column-two-thirds">
 
                     {% if page.content.post_lead_text and page.content.post_lead_text is not empty %}
-                        <p class="govuk-body-l">{{ page.content.post_lead_text }}</p>
+                        <h2 class="govuk-body-l">{{ page.content.post_lead_text }}</h2>
                     {% endif %}
 
                     <p class="govuk-body-s govuk-!-margin-0">Published {{ page.datePublished|date('j F Y') }}</p>
@@ -92,6 +92,7 @@
 
                     </div>
                     {# End of wysiwyg content #}
+                    
 
 
                     <div class="news-listing-meta--featured">
@@ -107,6 +108,10 @@
                         {% if authorText != null and isBlog %}
                             | Written by {{authorText}}
                         {% endif %}
+                    </div>
+
+                    <div class="page-components">
+                        {% include '_components/components.html.twig' with {'components': page.content.post_components_rows } %}
                     </div>
 
 

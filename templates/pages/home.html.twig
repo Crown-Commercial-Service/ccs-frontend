@@ -26,8 +26,8 @@
                 <div class="homepage-hero govuk-homepage-hero-full-width">
                     <div class="govuk-hero-homepage-caption-container govuk-hero-margin">
                         <div class="govuk-hero-caption">
-                                <h1 class="govuk-caption-heading">Unlock the power of <br /> public procurement</h1>
-                                <p class="govuk-caption-link" style="color:white; margin-bottom: 0"><a href="https://www.crowncommercial.gov.uk/downloadable-resource/request/30384/commercial-agreements-digital-brochure">Find out how we help the UK public sector get better value in our digital brochure.</a></p>
+                                <h1 class="govuk-caption-heading">Supporting better public <br/> procurement</h1>
+                                <p class="govuk-caption-link" style="color:white; margin-bottom: 0"><a href="https://www.crowncommercial.gov.uk/downloadable-resource/request/30384/commercial-agreements-digital-brochure">Find out how we help the UK public sector achieve value for the nation in our digital brochure.</a></p>
                         </div>   
                     </div>
 
@@ -276,9 +276,9 @@
                                                         <!--[if IE 9]></video><![endif]-->
                                                         <!-- Fallback -->
                                                         {% if news_item.featuredImage.byName('news-size-s') %}
-                                                            <img src="{{ news_item.featuredImage.byName('news-size-s') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1" width="640" height="427">
+                                                            <img src="{{ news_item.featuredImage.byName('news-size-s') }}" {{ news_item.featuredImage.alt is defined and news_item.featuredImage.alt is not empty ? "alt=" ~ news_item.featuredImage.alt : "alt='' role='presentation'" }} aria-hidden="true" tabindex="-1" width="640" height="427">
                                                         {% else %}
-                                                            <img src="{{ news_item.featuredImage.byName('full') }}" alt="{{ news_item.featuredImage.alt }}" role="presentation" aria-hidden="true" tabindex="-1" width="640" height="427">
+                                                            <img src="{{ news_item.featuredImage.byName('full') }}" {{ news_item.featuredImage.alt is defined and news_item.featuredImage.alt is not empty ? "alt=" ~ news_item.featuredImage.alt : "alt='' role='presentation'" }} aria-hidden="true" tabindex="-1" width="640" height="427">
                                                         {% endif %}
 
                                                     </a>

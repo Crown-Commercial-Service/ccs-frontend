@@ -58,138 +58,108 @@
             </div>
             <br />
 
+            <p class="visuallyhidden">This is a page with JS (VUE 3)</p>
+
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-third">
-                    <form id="searchFilterForm" action="{{ path('frameworks_upcoming_deals') }}" method="GET">
+                    <form id="searchFilterForm" @submit.prevent="fetchAPIData" action="{{ path('frameworks_upcoming_deals') }}" method="GET">
                         <div class="govuk-form-group govuk-form-group--enclosure">
                             <div class="govuk-form-group sidebar__search-group">
                                 <label class="govuk-label" for="keyword"> Search upcoming agreements </label>
-                                <input class="govuk-input" id="keyword" name="keyword" value="{{ filters.keyword is defined and filters.keyword|trim is not empty ? filters.keyword : "" }}"/>
+                                <input v-model="keyword" class="govuk-input" id="keyword" name="keyword" value="{{ filters.keyword is defined and filters.keyword|trim is not empty ? filters.keyword : "" }}"/>
                                 <button type="submit" class="sidebar__search-button govuk-input">
                                     <span class="visuallyhidden">Search upcoming agreements</span>
                                 </button>
                             </div>
                         </div>
+
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-one-half">
                                 <h2 class="govuk-heading-m">Apply filters</h2>
                             </div>
                             <div class="govuk-grid-column-one-half" style="text-align:right;">
-                                <a onclick="pushToDataLayer({'event': 'search_filter', 'interaction_type': 'clear'});" href="/agreements/upcoming" class="govuk-link" >Clear filters</a>
+                                <a v-show="!javascriptVersion" href={{ path('frameworks_upcoming_deals') }} class="govuk-link"> Clear filters </a>
+                                <a @click="resetAll()" href="#" class="govuk-link hideWithoutJS govuk-visually-hidden"> Clear filters </a>
                             </div>
                         </div>
 
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
-                            <div class="govuk-accordion__controls">
-                                <button type="button" class="govuk-accordion__show-all" aria-expanded="true">
-                                    <span class="govuk-accordion-nav__chevron"></span>
-                                    <span class="govuk-accordion__show-all-text">Hide all sections</span>
-                                </button>
-                            </div>
+                        <button class="govuk-button" data-module="govuk-button" v-show="!javascriptVersion"> Filter </button>
 
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
-                                <div class="govuk-accordion__section-header">
-                                    <h2 class="govuk-accordion__section-heading">
-                                        <div type="button" aria-controls="accordion-with-summary-sections-content-1" class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" aria-expanded="true" aria-label="Filter by agreement status , Hide this section">
-                                        <span class="govuk-accordion__section-heading-text" id="accordion-with-summary-sections-heading-2">
-                                            <span class="govuk-accordion__section-heading-text-focus"> Filter by agreement status </span>
-                                        </span>
-                                        <span class="govuk-visually-hidden govuk-accordion__section-heading-divider"> </span>
-                                        </div>
-                                    </h2>
-                                    
-                                    <span class="govuk-body-s">{{ statuses is not defined or statuses is empty ? 1 : statuses|length }} selected</span>
-                                </div>
+                        {% set agreementStatusArrayForTwig = ["Future%20pipeline", "Planned%20procurements", "Procurements%20in%20progress", "Recently%20awarded"] %}
+                        <fieldset class="govuk-fieldset" aria-describedby="filter_status">
+                            <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_status">
 
-                                <div id="accordion-with-summary-sections-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-2" role="region">
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                         {% if statuses is defined and 'all' in statuses %}
-                                            {# checked #}
-                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="all" name="all" type="checkbox" value="true" checked >
-                                            {% else %}
-                                            {# unchecked #}
-                                                <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="all" name="statuses[]" type="checkbox" value="all" >
-                                         {% endif %}
-                                        <label class="govuk-label govuk-checkboxes__label" for="all"> View All </label>
-                                    </div>
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="future-pipeline" name="statuses[]" type="checkbox" value="future" {{ statuses is not defined or statuses is empty or 'future' in statuses ? "checked" : "" }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="future-pipeline"> Future pipeline </label>
-                                    </div>
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="planned-procurement" name="statuses[]" type="checkbox" value="planned" {{ statuses is not defined or statuses is empty or 'planned' in statuses ? "checked" : "" }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="planned-procurement"> Planned procurements </label>
-                                    </div>
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="procurement-progress" name="statuses[]" type="checkbox" value="proc" {{ statuses is not defined or statuses is empty or 'proc' in statuses ? "checked" : "" }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="procurement-progress"> Procurements in progress </label>
-                                    </div>
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onChange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-filter" id="recently-awarded" name="statuses[]" type="checkbox" value="awarded" {{ statuses is not defined or statuses is empty or 'awarded' in statuses ? "checked" : "" }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="recently-awarded"> Recently awarded </label>
+                                <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                                    <div class="govuk-accordion__section-header">
+                                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                            <h2 class="govuk-accordion__section-heading">
+                                                <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-agreement-status">
+                                                    Filter by agreement status
+                                                </span>
+                                            </h2>
+                                        </legend>
                                     </div>
 
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="accordion-with-summary-sections">
-                            <div class="govuk-accordion__controls">
-                                <button type="button" class="govuk-accordion__show-all" aria-expanded="true">
-                                    <span class="govuk-accordion-nav__chevron"></span>
-                                    <span class="govuk-accordion__show-all-text">Hide all sections</span>
-                                </button>
-                            </div>
-
-                            <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight govuk-accordion__section--expanded">
-                                <div class="govuk-accordion__section-header">
-                                    <h2 class="govuk-accordion__section-heading">
-                                        <div type="button" aria-controls="accordion-with-summary-sections-content-2" class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" aria-expanded="true" aria-label="Filter by agreement status , Hide this section">
-                                        <span class="govuk-accordion__section-heading-text" id="accordion-with-summary-sections-heading-3">
-                                            <span class="govuk-accordion__section-heading-text-focus"> Agreement type </span>
-                                        </span>
-                                        <span class="govuk-visually-hidden govuk-accordion__section-heading-divider"> </span>
-                                        </div>
-                                    </h2>
-                                    
-                                    <span class="govuk-body-s">{{ type is not defined or type is empty ? 1 : type|length }} selected</span>
-                                </div>
-
-                                <div id="accordion-with-summary-sections-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-with-summary-sections-heading-3" role="region">
+                                    <div id="filter_status-content-1" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-for-agreement-status">
                                         <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        {% if type is defined and 'allType' in type %}
-                                            {# checked #}
-                                            <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allType" name="allType" type="checkbox" value="true" checked >
-                                        {% else %}
-                                            {# unchecked #}
-                                            <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small view-all-up-type-checkbox" id="allType" name="type[]" type="checkbox" value="allType">
-                                        {% endif %}
-                                            <label class="govuk-label govuk-checkboxes__label" for="all"> View All </label>
+                                            <input v-model="allAgreementStatusModel" name="allAgreementStatus" value="allAgreementStatus" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allAgreementStatus" type="checkbox" {{ statuses is defined and statuses is empty  ? 'checked' }}>
+                                            <label class="govuk-label govuk-checkboxes__label" for="allAgreementStatus">
+                                                View all
+                                            </label>
                                         </div>
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-dps" name="type[]" type="checkbox" value="Dynamic+Purchasing+System" {{ type is not defined or type is empty or 'Dynamic+Purchasing+System' in type ? "checked" : "" }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-dps">Dynamic Purchasing System</label>
+
+                                        {% for item in agreementStatusArrayForTwig %}
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                <input v-model="checkedAgreementStatus" :value="'{{ item }}'" value="{{ item|replace({'%20': ' '}) }}" name="statuses[]" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}+{{slugify(item)}}" type="checkbox" {{ item|replace({'%20': ' '}) in statuses ? 'checked' }}>
+                                                <label class="govuk-label govuk-checkboxes__label" for="{{item}}+{{slugify(item)}}">
+                                                {{ item|replace({'%20': ' '}) }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
                                     </div>
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-dynamic-market" name="type[]" type="checkbox" value="Dynamic+Market" {{ type is not defined or type is empty or 'Dynamic+Market' in type ? "checked" : "" }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-dynamic-market">Dynamic Market</label>
-                                    </div>
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-open-framework" name="type[]" type="checkbox" value="Open+Framework" {{ type is not defined or type is empty or 'Open+Framework' in type ? "checked" : "" }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-open-framework">Open Framework</label>
-                                    </div>
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-closed-framework" name="type[]" type="checkbox" value="Closed+Framework" {{ type is not defined or type is empty or 'Closed+Framework' in type ? "checked" : "" }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-closed-framework">Closed Framework</label>
-                                    </div>
-                                    <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
-                                        <input onchange="this.form.submit()" class="govuk-checkboxes__input govuk-checkboxes__input--small upcoming-agreement-type-filter" id="upcoming-pcr15" name="type[]" type="checkbox" value="PCR15+Framework" {{ type is not defined or type is empty or 'PCR15+Framework' in type ? "checked" : "" }}>
-                                        <label class="govuk-label govuk-checkboxes__label" for="upcoming-pcr15">PCR15 Framework</label>
+                                </div>
+
+                            </div>
+                        </fieldset>
+
+                        {% set agreementTypeArrayForTwig = ["Dynamic%20Purchasing%20System", "Dynamic%20Market", "Open%20Framework", "Closed%20Framework", "PCR15%20Framework"] %}
+                        <fieldset class="govuk-fieldset" aria-describedby="filter_type">
+                            <div class="govuk-accordion ccs-accordion ccs-accordion--clean" data-module="govuk-accordion" id="filter_type">
+
+                                <div class="govuk-accordion__section ccs-accordion__section--clean govuk-form-group govuk-form-group--enclosure ccs-form-group--enclosure--tight">
+                                    <div class="govuk-accordion__section-header">
+                                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                            <h2 class="govuk-accordion__section-heading">
+                                                <span class="no-top-line govuk-accordion__section-button ccs-accordion__section-button" id="accordion-for-agreement-type">
+                                                    Agreeement type
+                                                </span>
+                                            </h2>
+                                        </legend>
                                     </div>
 
+                                    <div id="filter_type-content-1" role="region" class="govuk-accordion__section-content" aria-labelledby="accordion-for-agreement-type">
+                                        <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                            <input v-model="allAgreementTypeModel" name="allAgreementType" value="allAgreementType" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="allAgreementType" type="checkbox" {{ filters.checkedType is defined and filters.checkedType is empty  ? 'checked' }}>
+                                            <label class="govuk-label govuk-checkboxes__label" for="allAgreementType">
+                                                View all
+                                            </label>
+                                        </div>
+
+                                        {% for item in agreementTypeArrayForTwig %}
+                                            <div class="govuk-checkboxes__item govuk-checkboxes__item--small">
+                                                <input v-model="checkedAgreementType" :value="'{{ item }}'" value="{{ item|replace({'%20': ' '}) }}" name="type[]" class="govuk-checkboxes__input govuk-checkboxes__input--small" id="{{item}}+{{slugify(item)}}" type="checkbox" {{ item|replace({'%20': ' '}) in filters.checkedType ? 'checked' }}>
+                                                <label class="govuk-label govuk-checkboxes__label" for="{{item}}+{{slugify(item)}}">
+                                                   {{ item|replace({'%20': ' '}) }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                 </div>
+
                             </div>
-                        </div>
+                        </fieldset>
+
+
 
                     </form>
                     <div class="helpful-info-search-agreement-desktop">
@@ -197,381 +167,524 @@
                     </div>
                 </div>
                 
-                <div class="govuk-grid-column-two-thirds">
+                <div class="govuk-grid-column-two-thirds">                
 
-                {% if results|length == 0 %}
-                    <h3>There are no matching results.</h3>
-                    <p class="govuk-!-margin-bottom-0">Improve your search results by:</p>
-                    <ul>
-                        <li><p class="govuk-!-margin-bottom-1">removing filters</p></li>
-                        {% if filters.keyword is defined and filters.keyword|trim is not empty %}
-                            <li><p class="govuk-!-margin-bottom-1">double-checking your spelling</p></li>
-                            <li><p class="govuk-!-margin-bottom-1">using fewer keywords</p></li>
-                        {% endif %}
-
-                    </ul>
-                    <br>
-                    <p>If you are still unable to find what you need, contact our customer service centre using our <a class="govuk-link" href="/contact">contact us form</a>.</p>
-                
-                {% endif %}
-
-                {% set future_pipeline = [] %}
-                {% set planned_pipeline = [] %}
-                {% set underway_pipeline = [] %}
-                {% set awarded_pipeline = [] %}
-                {% set dynamic_purchasing_systems = [] %}
-
-                {% for item in results %}
-                    {% set status = item.content.status %}
-                    {% set terms = item.content.terms %}
-
-                    {% if status == "Future (Pipeline)" %}
-                        {% if "future" in statuses or "all" in statuses %}
-                            {% set future_pipeline = future_pipeline | merge([item.content]) %}
-                        {% endif %}
-                    {% elseif status == "Planned (Pipeline)"  %}
-                        {% if "planned" in statuses or "all" in statuses %}
-                            {% set planned_pipeline = planned_pipeline | merge([item.content]) %}
-                        {% endif %}
-                    {% elseif status == "Underway (Pipeline)" %}
-                        {% if "proc" in statuses or "all" in statuses %}
-                            {% set underway_pipeline = underway_pipeline | merge([item.content]) %}
-                        {% endif %}
-                    {% elseif status == "Awarded (Pipeline)" %}
-                        {% if "awarded" in statuses or "all" in statuses %}
-                            {% set awarded_pipeline = awarded_pipeline | merge([item.content]) %}
-                        {% endif %}
-                    {% elseif terms == "DPS" %}
-                        {% if "dps" in statuses or "all" in statuses %}
-                            {% set dynamic_purchasing_systems = dynamic_purchasing_systems | merge([item.content]) %}
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
-                
-                {% set total_count = future_pipeline|length
-                + planned_pipeline|length
-                + underway_pipeline|length
-                + awarded_pipeline|length
-                + dynamic_purchasing_systems|length %}
-
-                <div class="future upcoming-type-wrapper">
-
-                    {% if future_pipeline|length >= 1  or "future" in statuses %}
-
-                        {% if upcoming_deals_content and upcoming_deals_content.table_4.title %}
-
-                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_4.title }}</h2>
-
-                        {% else %}
-
-                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Future pipeline</h2>
-
-                        {% endif %}
-
-                                {% if upcoming_deals_content and upcoming_deals_content.table_4.caption|length > 0 %}
-
-                                    <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_4.caption }}</p>
-
-                                {% endif %}
-                                <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
-
-                                    {% for upcoming_deal in future_pipeline %}                             
-                                            <li class="upcoming-result">
-                                                <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
-                                                    <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
-                                                </p>
-                                                
-                                                <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
-                                                    <li> <strong>Agreement ID:</strong> {{ upcoming_deal.rm_number }} </li>
-
-                                                    {% if upcoming_deal.tenders_open_date is not null %}
-                                                        <li> <strong>Tenders Open:</strong> {{ upcoming_deal.tenders_open_date.format('d/m/Y') }} </li>
-                                                    {% else %}
-                                                        <li> <strong>Tenders Open:</strong> TBC </li>
-                                                    {% endif %}
-
-                                                    {% if upcoming_deal.expected_live_date is not null %}
-                                                       <li> <strong>Expected Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
-                                                    {% else %}
-                                                        <li> <strong>Expected Live:</strong> TBC </li>
-                                                    {% endif %}
-
-                                                    {% if upcoming_deal.regulation is not null %}
-                                                        <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
-                                                    {% endif %}
-
-                                                    {% if upcoming_deal.regulation_type is not null %}
-                                                        <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
-                                                    {% endif %}
-
-                                                </ul>
-                                                <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
-                                            </li>
-                                    {% endfor %}
-                                </ul>
-
-                        {% endif %}
-                    </div>
-
-                     <div class="planned-proc upcoming-type-wrapper">
-                     {% if planned_pipeline|length >= 1  or "planned" in statuses %}
-
-                        {% if upcoming_deals_content and upcoming_deals_content.table_3.title %}
-
-                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_3.title }}</h2>
-
-                        {% else %}
-
-                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Planned procurements</h2>
-
-                        {% endif %}
-
-                        
-
-                                {% if upcoming_deals_content and upcoming_deals_content.table_3.caption|length > 0 %}
-
-                                    <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_3.caption }}</p>
-
-                                {% endif %}
-                                <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
-
-                                    {% for upcoming_deal in planned_pipeline %}
-
-                                    <li class="upcoming-result">
-                                            <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
-                                                <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
-                                            </p>
-                                            
-                                            <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
-                                                <li> <strong>Agreement ID:</strong> {{ upcoming_deal.rm_number }} </li>
-
-                                                {% if upcoming_deal.tenders_open_date is not null %}
-                                                    <li> <strong>Tenders Open:</strong> {{ upcoming_deal.tenders_open_date.format('d/m/Y') }} </li>
-                                                {% else %}
-                                                    <li> <strong>Tenders Open:</strong> TBC </li>
-                                                {% endif %}
-
-                                                {% if upcoming_deal.expected_live_date is not null %}
-                                                    <li> <strong>Expected Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
-                                                {% else %}
-                                                    <li> <strong>Expected Live:</strong> TBC </li>
-                                                {% endif %}
-
-                                                {% if upcoming_deal.regulation is not null %}
-                                                    <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
-                                                {% endif %}
-
-                                                {% if upcoming_deal.regulation_type is not null %}
-                                                    <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
-                                                {% endif %}
-
-                                            </ul>
-                                            <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
-                                    </li>
-
-                                    {% endfor %}
-                                </ul>
-
-                        {% endif %}
-                    </div>
-
-                    <div class="proc-in-progress upcoming-type-wrapper">
-                    {% if underway_pipeline|length >= 1 or "proc" in statuses %}
-
-                        {% if upcoming_deals_content and upcoming_deals_content.table_1.title %}
-
-                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_1.title }}</h2>
-
-                        {% else %}
-
-                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements in progress</h2>
-
-                        {% endif %}
-
-                                {% if upcoming_deals_content and upcoming_deals_content.table_1.caption %}
-
-                                    <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_1.caption }}</p>
-
-                                {% else %}
-
-                                    <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">The links provided in the agreement section below give further information about the procurement, including the OJEU notice and details on how to tender for interested suppliers.
-                                    </p>
-
-                                {% endif %}
+                    <div v-if="responseAvailable" class="hideWithoutJS govuk-visually-hidden" v-show="javascriptVersion">
+                        <div class="future upcoming-type-wrapper" v-if="results['future_pipeline'].length > 0 && (checkedAgreementStatus.length == 0 || checkedAgreementStatus.includes('Future%20pipeline'))">
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content and upcoming_deals_content.table_4.title ? upcoming_deals_content.table_4.title : 'Future pipeline' }}</h2>
+                            
+                            {% if upcoming_deals_content and upcoming_deals_content.table_4.caption|length > 0 %}
+                                <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_4.caption }}</p>
+                            {% endif %} 
 
                             <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
-                                {% for upcoming_deal in underway_pipeline %}
 
-                                    <li class="upcoming-result">
-                                        <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
-                                            <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
-                                        </p>
-                                        
-                                        <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
-                                            <li> <strong>Agreement ID:</strong> {{ upcoming_deal.rm_number }} </li>
+                                <li class="upcoming-result" v-for="result in results['future_pipeline']">
+                                    <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
+                                        <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
+                                    </p>
+                                    
+                                    <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                        <li> <strong>Agreement ID:</strong> {[ result.rm_number ]} </li>
 
-                                            {% if upcoming_deal.tenders_close_date is not null %}
-                                                <li> <strong>Tenders Close:</strong> {{ upcoming_deal.tenders_close_date.format('d/m/Y') }} </li>
-                                            {% else %}
-                                                <li> <strong>Tenders Close:</strong> TBC </li>
-                                            {% endif %}
+                                        <li v-if="result.tenders_open_date"> <strong>Tenders Open:</strong> {[ new Date(result.tenders_open_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Tenders Open:</strong> TBC </li>
 
-                                            {% if upcoming_deal.expected_award_date is not null %}
-                                                <li> <strong>Expected Award:</strong> {{ upcoming_deal.expected_award_date.format('d/m/Y') }} </li>
-                                            {% else %}
-                                                <li> <strong>Expected Award:</strong> TBC </li>
-                                            {% endif %}
+                                        <li v-if="result.expected_live_date"> <strong>Expected Live:</strong> {[ new Date(result.expected_live_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Expected Live:</strong> TBC </li>
 
-                                            {% if upcoming_deal.regulation is not null %}
-                                                <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
-                                            {% endif %}
+                                        <li v-if="result.regulation"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
+                                    </ul>
 
-                                            {% if upcoming_deal.regulation_type is not null %}
-                                                <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
-                                            {% endif %}
+                                    <p class="govuk-body-s">{[ extractHTML(result.upcoming_deal_summary) ]}</p>
+                            </ul>                            
+                        </div>
 
-                                        </ul>
-                                        <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
-                                    </li>
+                        <div class="planned-proc upcoming-type-wrapper" v-if="results['planned_pipeline'].length > 0 && (checkedAgreementStatus.length == 0 || checkedAgreementStatus.includes('Planned%20procurements'))">
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content and upcoming_deals_content.table_3.title ? upcoming_deals_content.table_3.title : 'Planned procurements' }}</h2>
+                            
+                            {% if upcoming_deals_content and upcoming_deals_content.table_3.caption|length > 0 %}
+                                <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_3.caption }}</p>
+                            {% endif %} 
 
-                                {% endfor %}
-                            </ul>
-                     
-                        {% endif %}
+                            <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
+
+                                <li class="upcoming-result" v-for="result in results['planned_pipeline']">
+                                    <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
+                                        <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
+                                    </p>
+                                    
+                                    <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                        <li> <strong>Agreement ID:</strong> {[ result.rm_number ]} </li>
+
+                                        <li v-if="result.tenders_open_date"> <strong>Tenders Open:</strong> {[ new Date(result.tenders_open_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Tenders Open:</strong> TBC </li>
+
+                                        <li v-if="result.expected_live_date"> <strong>Expected Live:</strong> {[ new Date(result.expected_live_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Expected Live:</strong> TBC </li>
+
+                                        <li v-if="result.regulation"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
+                                    </ul>
+
+                                    <p class="govuk-body-s">{[ extractHTML(result.upcoming_deal_summary) ]}</p>
+                            </ul>                            
+                        </div>
+
+                        <div class="proc-in-progress upcoming-type-wrapper" v-if="results['underway_pipeline'].length > 0 && (checkedAgreementStatus.length == 0 || checkedAgreementStatus.includes('Procurements%20in%20progress'))">
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content and upcoming_deals_content.table_1.title ? upcoming_deals_content.table_1.title : 'Procurements in progress' }}</h2>
+                            
+                            {% if upcoming_deals_content and upcoming_deals_content.table_1.caption|length > 0 %}
+                                <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_1.caption }}</p>
+                            {% endif %} 
+
+                            <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
+
+                                <li class="upcoming-result" v-for="result in results['underway_pipeline']">
+                                    <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
+                                        <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
+                                    </p>
+                                    
+                                    <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                        <li> <strong>Agreement ID:</strong> {[ result.rm_number ]} </li>
+
+                                        <li v-if="result.tenders_close_date"> <strong>Tenders Close:</strong> {[ new Date(result.tenders_close_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Tenders Close:</strong> TBC </li>
+
+                                        <li v-if="result.expected_award_date"> <strong>Expected Award:</strong> {[ new Date(result.expected_award_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Expected Award:</strong> TBC </li>
+
+                                        <li v-if="result.regulation"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
+                                    </ul>
+
+                                    <p class="govuk-body-s">{[ extractHTML(result.upcoming_deal_summary) ]}</p>
+                            </ul>                            
+                        </div>
+
+                        <div class="proc-recent-awarded upcoming-type-wrapper" v-if="results['awarded_pipeline'].length > 0 && (checkedAgreementStatus.length == 0 || checkedAgreementStatus.includes('Recently%20awarded'))">
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content and upcoming_deals_content.table_0.title ? upcoming_deals_content.table_0.title : 'Procurements recently awarded' }}</h2>
+                            
+                            {% if upcoming_deals_content and upcoming_deals_content.table_0.caption|length > 0 %}
+                                <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_0.caption }}</p>
+                            {% endif %} 
+
+                            <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
+
+                                <li class="upcoming-result" v-for="result in results['awarded_pipeline']">
+                                    <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
+                                        <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
+                                    </p>
+                                    
+                                    <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                        <li> <strong>Agreement ID:</strong> {[ result.rm_number ]} </li>
+
+                                        <li v-if="result.expected_award_date"> <strong>Awarded Date:</strong> {[ new Date(result.expected_award_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Awarded Date:</strong> TBC </li>
+
+                                        <li v-if="result.expected_live_date"> <strong>Expected Live:</strong> {[ new Date(result.expected_live_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Expected Live:</strong> TBC </li>
+
+                                        <li v-if="result.regulation"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
+                                    </ul>
+
+                                    <p class="govuk-body-s">{[ extractHTML(result.upcoming_deal_summary) ]}</p>
+                            </ul>                            
+                        </div>
+
+                        <div class="dps upcoming-type-wrapper" v-if="results['liveDPS'].length > 0 && checkedAgreementStatus.length == 0">
+                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content and upcoming_deals_content.table_2.title ? upcoming_deals_content.table_2.title : 'Dynamic Purchasing Systems currently open' }}</h2>
+                            
+                            {% if upcoming_deals_content and upcoming_deals_content.table_2.caption|length > 0 %}
+                                <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_2.caption }}</p>
+                            {% endif %} 
+
+                            <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
+
+                                <li class="upcoming-result" v-for="result in results['liveDPS']">
+                                    <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
+                                        <a  v-bind:href="'/agreements/'+ result.rm_number" >{[ result.title ]}</a> 
+                                    </p>
+                                    
+                                    <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
+                                        <li> <strong>Agreement ID:</strong> {[ result.rm_number ]} </li>
+
+                                        <li v-if="result.expected_live_date"> <strong>Live Date:</strong> {[ new Date(result.expected_live_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>Live Date:</strong> TBC </li>
+
+                                        <li v-if="result.end_date"> <strong>End Date:</strong> {[ new Date(result.end_date).toLocaleDateString() ]} </li>
+                                        <li v-else> <strong>End Date:</strong> TBC </li>
+
+                                        <li v-if="result.regulation"> <strong>Regulation:</strong> {[ result.regulation ]} </li>
+                                    </ul>
+
+                                    <p class="govuk-body-s">{[ extractHTML(result.upcoming_deal_summary) ]}</p>
+                            </ul>                            
+                        </div>
+
+                    </div>
+                    
+                    <div v-else-if="responseAvailable === false" class="hideWithoutJS govuk-visually-hidden">
+                        <p>Loading results ...</p>
                     </div>
 
-                    <div class="proc-recent-awarded upcoming-type-wrapper">
-                    {% if awarded_pipeline|length >= 1  or "awarded" in statuses %}
-                        {% if upcoming_deals_content and upcoming_deals_content.table_0.title %}
-
-                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_0.title }}</h2>
-
-                        {% else %}
-
-                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Procurements recently awarded</h2>
-
-                        {% endif %}
-
-                                {% if upcoming_deals_content and upcoming_deals_content.table_0.caption|length > 0 %}
-
-                                    <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_0.caption }}</p>
-
-                                {% endif %}
-                                <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
-                                    {% for upcoming_deal in awarded_pipeline %}
-                                        <li class="upcoming-result">
-                                            <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
-                                                <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
-                                            </p>
-                                            
-                                            <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
-                                                <li> <strong>Agreement ID:</strong> {{ upcoming_deal.rm_number }} </li>
-
-                                                {% if upcoming_deal.expected_award_date is not null %}
-                                                    <li> <strong>Awarded Date:</strong> {{ upcoming_deal.expected_award_date.format('d/m/Y') }} </li>
-                                                {% else %}
-                                                    <li> <strong>Awarded Date:</strong> TBC </li>
-                                                {% endif %}
-
-                                                {% if upcoming_deal.expected_live_date is not null %}
-                                                    <li> <strong>Expected Live:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
-                                                {% else %}
-                                                    <li> <strong>Expected Live:</strong> TBC </li>
-                                                {% endif %}
-
-
-                                                {% if upcoming_deal.regulation is not null %}
-                                                    <li> <strong>Regulation:</strong> {{ upcoming_deal.regulation }} </li>
-                                                {% endif %}
-
-                                                {% if upcoming_deal.regulation_type is not null %}
-                                                    <li class="upcoming_regulation_type" style="display: none">{{ upcoming_deal.regulation_type }}</li>
-                                                {% endif %}
-
-                                            </ul>
-                                            <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-
-                        {% endif %}
+                    <div v-if="emptyResult" class="hideWithoutJS govuk-visually-hidden">
+                        <h3>There are no matching results.</h3>
+                        <p class="govuk-!-margin-bottom-0">Improve your search results by:</p>
+                        <ul>
+                            <li><p class="govuk-!-margin-bottom-1">removing filters</p></li>
+                            <li v-if="keyword"><p class="govuk-!-margin-bottom-1">double-checking your spelling</p></li>
+                            <li v-if="keyword"><p class="govuk-!-margin-bottom-1">using fewer keywords</p></li>
+                        </ul>
+                        <br>
+                        <p>If you are still unable to find what you need, contact our customer service centre using our <a class="govuk-link" href="/contact">contact us form</a>.</p>
                     </div>
 
-                    <div class="dps upcoming-type-wrapper">
-                    {% if dynamic_purchasing_systems|length >= 1 or "dps" in statuses %}
-
-                        {% if upcoming_deals_content and upcoming_deals_content.table_2.title %}
-
-                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">{{ upcoming_deals_content.table_2.title }}</h2>
-
-                        {% else %}
-
-                            <h2 class="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-font-size-24 govuk-!-font-weight-bold">Dynamic Purchasing Systems currently open</h2>
-
-                        {% endif %}
-
-                                {% if upcoming_deals_content and upcoming_deals_content.table_2.caption|length > 0 %}
-
-                                    <p class="govuk-!-font-size-19 govuk-!-font-weight-regular">{{ upcoming_deals_content.table_2.caption }}</p>
-
-                                {% endif %}
-
-                                <ul class="govuk-list govuk-list--frameworks govuk-list-upcoming">
-                                    {% for upcoming_deal in dynamic_purchasing_systems %}
-
-                                         <li class="upcoming-result">
-                                            <p class="govuk-body ccs-heading-link ccs-heading-link--inline govuk-!-margin-bottom-2 ccs-font-weight-semibold">
-                                                <a href="{{ path('frameworks_show', {'rmNumber':  upcoming_deal.rm_number }) }}">{{ upcoming_deal.title }}</a>
-                                            </p>
-                                            
-                                            <ul class="list--inline govuk-body-s govuk-!-margin-bottom-2">
-                                                <li> <strong>Agreement ID:</strong> {{ upcoming_deal.rm_number }} </li>
-
-                                                {% if upcoming_deal.expected_live_date is not null %}
-                                                    <li> <strong>Live Date:</strong> {{ upcoming_deal.expected_live_date.format('d/m/Y') }} </li>
-                                                {% else %}
-                                                    <li> <strong>Live Date:</strong> TBC </li>
-                                                {% endif %}
-
-                                                {% if upcoming_deal.end_date is not null %}
-                                                    <li> <strong>End Date:</strong> {{ upcoming_deal.end_date.format('d/m/Y') }} </li>
-                                                {% else %}
-                                                    <li> <strong>End Date:</strong> TBC </li>
-                                                {% endif %}
-
-                                                {% if upcoming_deal.regulation is not null %}
-                                                    <li> <strong>Regulation:</strong>{{ upcoming_deal.regulation }}</li>
-                                                {% endif %}
-
-                                                {% if upcoming_deal.regulation_type is not null %}
-                                                    <li class="upcoming_regulation_type" style="display: none"> {{ upcoming_deal.regulation_type }} </li>
-                                                {% endif %}
-
-                                            </ul>
-                                            <p class="govuk-body-s">{{ upcoming_deal.upcoming_deal_summary | striptags | raw }}</p>
-                                        </li>
-
-                                    {% endfor %}
-                                </ul>
-                        {% endif %}
+                    <div v-show="!javascriptVersion">
+                        {% include '/frameworks/_upcoming_list_resultWithoutJS.html.twig' %}
                     </div>
 
                 </div>
 
-            </div>
-
-            <div class="helpful-info-search-agreement-mobile" style="display: none;">
-                {% include '/frameworks/_helpful_info.html.twig' with {'page' : 'upcoming'} %}
-            </div>
+                <div class="helpful-info-search-agreement-mobile" style="display: none;">
+                    {% include '/frameworks/_helpful_info.html.twig' with {'page' : 'upcoming'} %}
+                </div>
 
         </main>
     </div>
 
-<script>
-    if ("{{ filters.keyword|trim is not empty }}") {
-        pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'upcomingAgreement', 'search_term': "{{filters.keyword}}", 'interaction_detail': "{{ total_count }}"});   
-    }
-    pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
-    searchFilterAgreement();
-</script>
+    {% if app.environment == "prod" %}
+        <script src="/assets/scripts/libraries/vue.min.js?v=1"></script>
+    {% else %}
+        <script src="/assets/scripts/libraries/vue.js?v=1"></script>
+    {% endif %}
+    
+    <script>
+        pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
+        searchFilterAgreement();
+
+
+        function supportsLiterals() {
+            try{
+                return eval("''===``");
+            }
+            catch(e){
+                return false;
+            }
+        }
+
+        if(!('Promise' in window) || !supportsLiterals() || !window.fetch) {
+            throw new Error("Your browser doesn't support the necessary JavaScript functions to use the enhanced search and has been served a non-JavaScript version");
+        }
+        
+        var apiBaseUrl                  = '{{ api_base_url }}';
+        var appBaseUrl                  = '{{ app_base_url }}';
+        var keyword                     = null;
+        var checkedAgreementStatus      = [];
+        var checkedAgreementType        = [];
+
+        {% if filters.keyword is defined and filters.keyword is not null and filters.keyword is not empty %}
+            var keyword = '{{ filters.keyword }}';
+        {% endif %}
+
+        {% if statuses is defined and statuses is not empty %}
+            checkedAgreementStatus = {{ statuses|json_encode|raw }};
+            checkedAgreementStatus = checkedAgreementStatus.map(str => str.replace(/ /g, "%20"));
+        {% endif %}
+
+        {% if filters.checkedType is defined and filters.checkedType is not empty %}
+            checkedAgreementType = {{ filters.checkedType|json_encode|raw }};
+            checkedAgreementType = checkedAgreementType.map(str => str.replace(/ /g, "%20"));
+        {% endif %}
+
+        const app = Vue.createApp({
+            delimiters: ['{[', ']}'],
+            
+            data() {
+                return {
+                    javascriptVersion: true,
+                    results: null,
+                    responseAvailable: false,
+                    emptyResult: false,
+                    apiURL: apiBaseUrl + "frameworks?",
+                    keyword: keyword,
+                    checkedAgreementStatus: checkedAgreementStatus,
+                    checkedAgreementType: checkedAgreementType,
+                    popstateLoad: false,
+                }
+            },
+            mounted() {
+                this.fetchAPIData();
+                this.setupHistoryApi();     
+            },
+            created(){
+                // making sure the sections that is hidden at start shows
+                this.$nextTick(() => {
+                    const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
+                    hideWithOutJS.forEach(section => {
+                        if (section.classList.contains('govuk-visually-hidden')) {;
+                            section.classList.remove('govuk-visually-hidden');
+                        }
+                    });
+                });
+            },
+            watch: {
+                // making sure that the sections is refreshed 
+                responseAvailable(responseAvailable) {
+                    this.$nextTick(() => {
+                        const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
+                        hideWithOutJS.forEach(section => {
+                            if (section.classList.contains('govuk-visually-hidden')) {;
+                                section.classList.remove('govuk-visually-hidden');
+                            }
+                        });
+                    });
+                },
+                keyword(keyword){
+                    if(this.keyword.trim().length == 0 || /^[\-\(\)&]*$/.test(this.keyword)){
+                        this.keyword = "";
+                    }
+                    this.keyword = this.keyword
+                        .replace(/\//g, "")                   // Remove slashes
+                        .replace(/[^a-zA-Z0-9\s\-&()]/g, ""); // Allow letters, numbers, spaces, and the specified characters
+                },
+                searchRequestUrl: function() {
+
+                    // if the searchRequestUrl hasn't been updated by a popstate
+                    // event (back/forward button) then we push a state item to the
+                    // JS History API
+                    if(this.popstateLoad === false) {
+                        history.pushState({
+                            checkedAgreementStatus: this.checkedAgreementStatus,
+                            checkedAgreementType:   this.checkedAgreementType,
+                            keyword:                this.keyword,
+                        }, 'Upcoming agreements', this.frontendSearchUrl);
+                    }
+
+                    // reset the popstateLoad property to false
+                    this.popstateLoad = false;
+                },
+                checkedAgreementStatus: function(checkedAgreementStatus) {
+                    if (checkedAgreementStatus.length === {{agreementStatusArrayForTwig|length}} ) {
+                        this.checkedAgreementStatus = [];
+                    }
+                    this.fetchAPIData(null)
+                },
+                checkedAgreementType: function(checkedAgreementType) {
+                    if (checkedAgreementType.length === {{agreementTypeArrayForTwig|length}} ) {
+                        this.checkedAgreementType = [];
+                    }
+                    this.fetchAPIData(null)
+                },
+            },
+            computed: {
+                frontendSearchUrl: function() {
+                    var agreementTypeParam = this.checkedAgreementType.map(str => "&type[]=" + str);
+                    var agreementStatusParam = this.checkedAgreementStatus.map(str => "&statuses[]=" + str);
+                    var queryUrl = '/agreements/upcoming/?'
+                         + (agreementStatusParam.length !== 0 ? agreementStatusParam.join('') : '')
+                         + (agreementTypeParam.length !== 0 ? agreementTypeParam.join('') : '')
+                         + (this.keyword                ? '&keyword=' + this.keyword : '')
+
+                    return queryUrl == '/agreements/upcoming/?' ? '/agreements/upcoming' : queryUrl;
+                },
+                allAgreementStatusModel: {
+                    get() {
+                        return (this.checkedAgreementStatus || []).length === 0;
+                    },
+                    set(checked) {
+                        if (checked) {
+                            this.checkedAgreementStatus = [];
+                        }else{
+                            document.getElementById("allAgreementStatus").checked = true
+                        }
+                    }
+                },
+                allAgreementTypeModel: {
+                    get() {
+                        return (this.checkedAgreementType || []).length === 0;
+                    },
+                    set(checked) {
+                        if (checked) {
+                            this.checkedAgreementType = [];
+                        }else{
+                            document.getElementById("allAgreementType").checked = true
+                        }
+                    }
+                },
+            },
+            methods: {
+                resetAll:function(){
+                    pushToDataLayer({'event': 'search_filter', 'interaction_type': 'clear'});
+                    this.checkedAgreementType = [];
+                    this.keyword = '';
+                },
+                extractHTML(htmlString) {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = htmlString;
+                    return tempDiv.textContent || tempDiv.innerText || '';
+                },
+                checkIfEmpty(array) {
+                    return Array.isArray(array) && (array.length == 0 || array.every(this.checkIfEmpty));
+                },
+                isEmptyResult(){
+                    if(this.checkIfEmpty(this.results)) {
+                        return true;
+                    } else if(this.checkedAgreementStatus.length === 0){
+                        return false;
+                    }
+
+                    for (const element of this.checkedAgreementStatus) {
+                        switch (element) {
+                            case 'Future%20pipeline':
+                                if (this.results['future_pipeline'].length > 0) {
+                                    return false;
+                                }
+                                break;
+                            case 'Planned%20procurements':
+                                if (this.results['planned_pipeline'].length > 0) {
+                                    return false;
+                                }
+                                break;
+                            case 'Procurements%20in%20progress':
+                                if (this.results['underway_pipeline'].length > 0) {
+                                    return false;
+                                }
+                                break;
+                            case 'Recently%20awarded':
+                                if (this.results['awarded_pipeline'].length > 0) {
+                                    return false;
+                                }
+                                break;
+                        }
+                    }
+                    return true;
+                },
+                searchRequestUrl: function() {
+
+                    agreementTypeParam = this.checkedAgreementType.map(str => "&regulation_type[]=" + str);
+
+                    var fetchURL = this.apiURL 
+                                + (agreementTypeParam.length !== 0 ? agreementTypeParam.join('') : '')
+                                + (this.keyword                ? '&keyword=' + this.keyword : '')
+                    fetchURL = fetchURL + "&status[]=Upcoming&status[]=Live&limit=100"
+
+                    if(this.popstateLoad === false) {
+
+                        history.pushState({
+                            checkedAgreementType:   [...this.checkedAgreementType],
+                            checkedAgreementStatus: [...this.checkedAgreementStatus],
+                            keyword:                this.keyword,
+                        }, 'Upcoming agreements',       this.frontendSearchUrl);
+                    }
+
+                    this.popstateLoad = false;
+
+                    return fetchURL;
+                },
+                searchKeyword: function() {
+                    if (this.keyword){
+                        
+                        if(this.popstateLoad === false) {
+                            history.pushState({
+                                checkedAgreementType   :this.checkedAgreementType,
+                                checkedAgreementStatus :this.checkedAgreementStatus,
+                                keyword                :this.keyword,
+                            }, 'Upcoming agreements',       this.frontendSearchUrl);
+                        }
+
+                        // reset the popstateLoad property to false
+                        this.popstateLoad = false;
+   
+                        return "&keyword=" + this.keyword.replace(/&/g, '');
+                    }
+                    return ""
+                },
+                fetchAPIData: function() {
+                    this.responseAvailable = false;
+                    this.emptyResult = false;
+
+                    var requestUrl = this.searchRequestUrl();
+                    console.log(requestUrl);
+                    
+                    fetch(requestUrl)
+                    .then(async function(response) {
+                        if (!response.ok) {
+                            throw new Error('HTTP error, status = ' + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(jsonResponse => {
+                        this.emptyResult = false
+                        this.results = jsonResponse.results;
+                        this.responseAvailable = true;
+                        
+                        const categories = {
+                            future_pipeline: [],
+                            planned_pipeline: [],
+                            underway_pipeline: [],
+                            awarded_pipeline: [],
+                            liveDPS: [],
+                            liveDynamicMarket: []
+                        };
+
+                        jsonResponse.results.forEach(item => {
+                            switch(item.status) {
+                                case 'Future (Pipeline)':
+                                    categories.future_pipeline.push(item);
+                                    break;
+                                case 'Planned (Pipeline)':
+                                    categories.planned_pipeline.push(item);
+                                    break;
+                                case 'Underway (Pipeline)':
+                                    categories.underway_pipeline.push(item);
+                                    break;
+                                case 'Awarded (Pipeline)':
+                                    categories.awarded_pipeline.push(item);
+                                    break;
+                                case 'Live':
+                                    if (item.terms === 'DPS') {
+                                        categories.liveDPS.push(item);
+                                    } else if (item.terms === 'Dynamic Market') {
+                                        categories.liveDynamicMarket.push(item);
+                                    }
+                                    break;
+                            }
+                        });
+
+                        Object.keys(categories).forEach(key => {
+                            this.results[key] = categories[key];
+                        });
+
+                        this.emptyResult = this.isEmptyResult();
+
+                        if (this.keyword) {
+                            pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'upcomingAgreement', 'search_term':this.keyword, 'interaction_detail': jsonResponse.meta.total_results});
+                        }
+                    })
+                    .catch(error => {
+                        console.log('An error occurred');
+                        console.log(error);
+                        this.responseAvailable = false;
+                    });
+                },
+                setupHistoryApi: function() {
+                    window.onpopstate = (event) => {
+                        this.popstateLoad = true;
+
+                        if(event.state == null) {
+                            this.checkedAgreementStatus     = [];
+                            this.checkedAgreementType       = [];
+                            this.keyword                    = null;
+                            return;
+                        }
+
+                        this.checkedAgreementStatus     = event.state.checkedAgreementStatus;
+                        this.checkedAgreementType       = event.state.checkedAgreementType;
+                        this.keyword                    = event.state.keyword;
+                    }
+                }
+            }
+        })
+
+    app.mount('#main-content');
+    </script>
 {% endblock %}

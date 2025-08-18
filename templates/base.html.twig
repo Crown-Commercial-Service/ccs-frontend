@@ -58,14 +58,14 @@
     </style>
 
     {% if app.environment == "prod" %}
-         <link rel="preload" href="/assets/styles/styles.min.css?v=1.77" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.77"></noscript>
+         <link rel="preload" href="/assets/styles/styles.min.css?v=1.78" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.78"></noscript>
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="preload" href="/assets/styles/styles.min.css?v=1.77" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.77"></noscript>
+        <link rel="preload" href="/assets/styles/styles.min.css?v=1.78" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.78"></noscript>
     {% endif %}
 
     {# Browser icon #}
@@ -222,15 +222,13 @@
 
 <script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.4"></script>
 
-<div id="skiplink-container">
-    <div>
-        <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
-    </div>
-</div>
-
-{#<a href="#main-content" class="govuk-skip-link">Skip to main content</a>#}
-
 {% block header %}
+    <div id="skiplink-container">
+        <div>
+            <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
+        </div>
+    </div>
+
     {% embed '/includes/header.html.twig' %}
     {% endembed %}
 {% endblock %}

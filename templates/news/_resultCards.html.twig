@@ -56,9 +56,8 @@
                             <picture class="">
                                 <source  srcset="{{ page.content.featured_image_url }}">
                                 <img src="{{ page.content.featured_image_url }}"
-                                        role="presentation"
-                                        alt= "{{ page.content.alt_text }}"
                                         class=""
+                                        {{ page.content.alt is defined and page.content.alt is not empty ? "alt=" ~ page.content.alt : "alt='' role='presentation'" }}
                                         loading="lazy"/>
                             </picture>
                         </figure>
