@@ -69,7 +69,7 @@ overflow: hidden;
 
 .homepage-hero__search-button {
 
-    background: $ccs-button-colour url("../images/icon-search.png") center center no-repeat;
+    background: $ccs-colour url("../images/icon-search.png") center center no-repeat;
     background-size: 19px 19px;
     border: 0;
     // 40px to match the input height (this is fickle)
@@ -215,7 +215,7 @@ overflow: hidden;
     width: 100%;
     margin-top: 42px !important;
     margin: 0 auto;
-    border-color: #9B1A47;
+    border-color: $ccs-button-colour;
     padding-bottom: 10px;
 
     p {
@@ -257,7 +257,7 @@ overflow: hidden;
 }
 
 .homepage-campaign-box {
-    background-color: #41424D;
+    background-color: $ccs-colour;
     padding: 47px 45px;
     width: 103vw;
     margin-bottom: 40px;
@@ -271,12 +271,12 @@ overflow: hidden;
     width: 300px;
 
     h2 {
-        color: #FFFFFF;
+        color: #000000;
         font-weight: 700;
     }
 
     p {
-        color: #FFFFFF;
+        color: #000000;
         font-size: 1.125rem;
     }
 
@@ -302,7 +302,7 @@ overflow: hidden;
 
 .glossary-box-background {
     position: absolute;
-    background-color: #f1f1f1;
+    background-color: $ccs-button-colour;
     width: 200vw;
     height: 100%;
     top: 0;
@@ -750,9 +750,9 @@ overflow: hidden;
             width: 1416px;
             height: 584px;
             background-color: rgba(255, 255, 255, 0.202);
-            border-radius: 292px 0px 0px 292px;
-            top: -97px;
-            left: 467px;
+            border-radius: 489px;
+            top: -87px;
+            right: -44px
         }
     }
 

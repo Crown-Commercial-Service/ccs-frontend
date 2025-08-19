@@ -5,7 +5,7 @@
 .footer-global {
 
     background-color: $ccs-footer-colour;
-    color: govuk-colour("white");
+    color: #000000;
     padding-top: govuk-px-to-rem(50);
 
     // to allow the flourish to positon itself according to the footer
@@ -24,11 +24,12 @@
 
 .govuk-footer__link.govuk-footer__link {
 
-    color: white;
+    color: #000000;
     text-decoration: underline;
+    cursor: pointer;
 
     &:visited {
-        color: white;
+        color: #000000;
     }
     &:hover {
         color: govuk-colour("light-grey");
