@@ -7,6 +7,7 @@
     background-color: $ccs-footer-colour;
     color: #000000;
     padding-top: govuk-px-to-rem(50);
+    border-top-width: 0px;
 
     // to allow the flourish to positon itself according to the footer
     position: relative;
@@ -133,6 +134,10 @@
 
 .govuk-footer__copyright-display-block {
     display: block;
+
+    &:before {
+        background-image: url(/assets/images/govuk-crest.svg) !important;
+    }
 }
 
 .govuk-footer-remove-flex-grow {

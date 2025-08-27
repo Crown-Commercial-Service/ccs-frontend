@@ -8,10 +8,11 @@ overflow: hidden;
 
 .govuk-form-group--enclosure--homepage {
 
-    background-color: rgba(#6D0227, 0.41);
+    background-color: #6A99FF;
     border-radius: govuk-px-to-rem(3);
     color: white;
     padding-bottom: 2.5rem;
+    border: 1px solid $ccs-button-colour;
 
     .govuk-label {
 
@@ -109,8 +110,8 @@ overflow: hidden;
 
 .apollo-island--emphasised {
 
-    background-color: #FCFAF7;
-    border-top: 1px solid #E7E4DF;
+    background-color: $ccs-colour;
+    border-top: 1px solid $ccs-colour;
 
 }
 
@@ -214,7 +215,7 @@ overflow: hidden;
     width: 100%;
     margin-top: 42px !important;
     margin: 0 auto;
-    border-color: #9B1A47;
+    border-color: $ccs-button-colour;
     padding-bottom: 10px;
 
     p {
@@ -256,7 +257,7 @@ overflow: hidden;
 }
 
 .homepage-campaign-box {
-    background-color: #41424D;
+    background-color: #6A99FF;
     padding: 47px 45px;
     width: 103vw;
     margin-bottom: 40px;
@@ -270,12 +271,12 @@ overflow: hidden;
     width: 300px;
 
     h2 {
-        color: #FFFFFF;
+        color: #000000;
         font-weight: 700;
     }
 
     p {
-        color: #FFFFFF;
+        color: #000000;
         font-size: 1.125rem;
     }
 
@@ -293,7 +294,7 @@ overflow: hidden;
 }
 
 .glossary-box-container {
-    background-color: #f1f1f1;
+    background-color: $ccs-button-colour;
     padding: 54px 0 66px 0;
     margin-top: 42px;
     position: relative;
@@ -301,7 +302,7 @@ overflow: hidden;
 
 .glossary-box-background {
     position: absolute;
-    background-color: #f1f1f1;
+    background-color: $ccs-button-colour;
     width: 200vw;
     height: 100%;
     top: 0;
@@ -328,6 +329,7 @@ overflow: hidden;
         top: -51px;
         pointer-events: none;
         border-radius: 100%;
+        background-color: #FFFFFF;
     }
 
 }
@@ -398,8 +400,9 @@ overflow: hidden;
 
     // change to default bg color on desktop
     .govuk-bg-mobile-color {
-        background-color: #9B1A47;
+        background-color: $ccs-colour;
         padding: 10px 10px 20px 10px;
+        border: 1px solid $ccs-button-colour;
     }
 
     .govuk-hero-homepage-caption-container {
@@ -459,7 +462,7 @@ overflow: hidden;
         margin: 2em auto;
         border-top-left-radius: 500px;
         border-bottom-left-radius: 500px;
-        background-color: #6D0227;
+        background-color: #6A99FF;
         margin-left: 269px;
         margin-bottom: 1em;
     }
@@ -722,6 +725,7 @@ overflow: hidden;
         height: 492px;
         margin-left: 0;
         margin-right: 0;
+        z-index: 1;
     }
 
     .homepage-campaign-box-content {
@@ -748,12 +752,13 @@ overflow: hidden;
         &:after {
             content: "";
             position: absolute;
-            width: 1416px;
+            width: 117%;
             height: 584px;
-            background-color: rgba(255, 255, 255, 0.202);
-            border-radius: 292px 0px 0px 292px;
+            background-color: #8FB3FF;
+            border-radius: 0px 292px 292px 0px;
             top: -97px;
-            left: 467px;
+            left: -43px;
+            z-index:-99
         }
     }
 
