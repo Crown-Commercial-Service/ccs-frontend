@@ -61,15 +61,6 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
 
     echo "> > Setting journalctl to max 500mb..."
     sudo journalctl --vacuum-size=500M
-    
-    # echo "> > Adding additional package repos..."
-    # sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-    # sudo yum install -y https://repo.ius.io/ius-release-el$(rpm -E '%{rhel}').rpm
-
-    # echo "> > Removing PHP 7.4..."
-    # sudo yum remove -y php*
-    # sudo amazon-linux-extras disable php7.4
-    # sudo amazon-linux-extras enable php8.2
 
     echo "> > Installing web packages..."
     sudo yum -y install \
