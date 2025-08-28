@@ -27,13 +27,15 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     sudo chown root:root \
         "$SCRIPTDIR/files/awscli.conf" \
         "$SCRIPTDIR/files/awslogs.conf" \
-        "$SCRIPTDIR/files/logrotate.conf"
+        "$SCRIPTDIR/files/logrotate.conf" \
+        "$SCRIPTDIR/files/cloudwatch.json"
 
     echo "> > chmod'ing awslogs config files..."
     sudo chmod 640 \
         "$SCRIPTDIR/files/awscli.conf" \
         "$SCRIPTDIR/files/awslogs.conf" \
-        "$SCRIPTDIR/files/logrotate.conf"
+        "$SCRIPTDIR/files/logrotate.conf" \
+        "$SCRIPTDIR/files/cloudwatch.json"
 
     echo "> > Moving awslogs config files..."
     sudo mv -f \
@@ -45,6 +47,15 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     sudo mv -f \
         "$SCRIPTDIR/files/logrotate.conf" \
         /etc/logrotate.conf
+
+    echo "> > Moving cloudwatch rotate config file..."
+    sudo mv -f \
+        "$SCRIPTDIR/files/cloudwatch.json" \
+        /opt/aws/amazon-cloudwatch-agent/etc/config.json
+
+    echo "> > Starting cloudwatch..."
+    sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/etc/config.json
+    sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -m ec2 -a status
 
     # echo "> > Adding additional package repos..."
     # sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -85,7 +96,7 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     sudo mv -f \
         "$SCRIPTDIR/files/99-custom.ini" \
         /etc/php.d/
-        
+  
     echo "> > chown'ing logrotate config files..."
     sudo chown root:root \
         "$SCRIPTDIR/files/applogs"
