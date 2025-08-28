@@ -28,6 +28,7 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
         "$SCRIPTDIR/files/awscli.conf" \
         "$SCRIPTDIR/files/awslogs.conf" \
         "$SCRIPTDIR/files/logrotate.conf" \
+        "$SCRIPTDIR/files/applogs" \
         "$SCRIPTDIR/files/cloudwatch.json"
 
     echo "> > chmod'ing awslogs config files..."
@@ -35,6 +36,7 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
         "$SCRIPTDIR/files/awscli.conf" \
         "$SCRIPTDIR/files/awslogs.conf" \
         "$SCRIPTDIR/files/logrotate.conf" \
+        "$SCRIPTDIR/files/applogs" \
         "$SCRIPTDIR/files/cloudwatch.json"
 
     echo "> > Moving awslogs config files..."
@@ -43,10 +45,10 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
         "$SCRIPTDIR/files/awslogs.conf" \
         /etc/awslogs/
 
-    echo "> > Moving log rotate config file..."
+    echo "> > Moving log rotate config files..."
     sudo mv -f \
-        "$SCRIPTDIR/files/logrotate.conf" \
-        /etc/logrotate.conf
+        "$SCRIPTDIR/files/logrotate.conf" /etc/logrotate.conf
+        "$SCRIPTDIR/files/applogs" /etc/logrotate.d/
 
     echo "> > Moving cloudwatch rotate config file..."
     sudo mv -f \
@@ -96,19 +98,6 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     sudo mv -f \
         "$SCRIPTDIR/files/99-custom.ini" \
         /etc/php.d/
-  
-    echo "> > chown'ing logrotate config files..."
-    sudo chown root:root \
-        "$SCRIPTDIR/files/applogs"
-
-    echo "> > chmod'ing logrotate config files..."
-    sudo chmod 644 \
-        "$SCRIPTDIR/files/applogs"
-
-    echo "> > Moving logrotate config files..."
-    sudo mv -f \
-        "$SCRIPTDIR/files/applogs" \
-        /etc/logrotate.d/
 
     echo "> > chown'ing cache_clear..."
     sudo chown root:root "$SCRIPTDIR/files/cache_clear"
