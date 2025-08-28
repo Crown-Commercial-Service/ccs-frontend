@@ -59,6 +59,9 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/etc/config.json
     sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -m ec2 -a status
 
+    echo "> > Setting journalctl to max 500mb..."
+    sudo journalctl --vacuum-size=500M
+    
     # echo "> > Adding additional package repos..."
     # sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     # sudo yum install -y https://repo.ius.io/ius-release-el$(rpm -E '%{rhel}').rpm
