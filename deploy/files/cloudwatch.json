@@ -1,0 +1,130 @@
+{
+  "agent": {
+    "metrics_collection_interval": 60,
+    "run_as_user": "root",
+    "omit_hostname": true
+  },
+  "metrics": {
+    "namespace": "CWAgent",
+    "metrics_collected": {
+      "procstat": [
+      {
+        "pattern": "amazon-cloudwatch-agent",
+        "measurement": [
+            "pid_count",
+            "cpu_usage"
+        ]
+      }
+      ],
+      "cpu": {
+        "measurement": [
+          "cpu_usage_idle",
+          "cpu_usage_iowait",
+          "cpu_usage_user",
+          "cpu_usage_system"
+        ],
+        "totalcpu": true
+      },
+      "mem": {
+        "measurement": ["mem_used_percent"]
+      },
+      "swap": {
+        "measurement": ["swap_used_percent"]
+      },
+      "disk": {
+        "measurement": ["used_percent"],
+        "resources": ["*"],
+        "ignore_file_system_types": [
+          "devtmpfs",
+          "nfs",
+          "nfs2",
+          "nfs3",
+          "nfs4",
+          "overlay",
+          "squashfs",
+          "tmpfs"
+        ]
+      }
+    }
+  },
+  "logs": {
+    "logs_collected": {
+      "files": {
+        "collect_list": [
+            {
+                "file_path": "/var/log/messages",
+                "log_group_name": "/ec2/web/var/log/messages",
+                "log_stream_name": "{instance_id}",
+                "timestamp_format": "%Y-%m-%d %H:%M:%S"
+            },
+            {
+                "file_path": "/var/log/secure",
+                "log_group_name": "/ec2/web/var/log/secure",
+                "log_stream_name": "{instance_id}",
+                "timestamp_format": "%Y-%m-%d %H:%M:%S"
+            },
+            {
+                "file_path": "/var/log/cron",
+                "log_group_name": "/ec2/web/var/log/cron",
+                "log_stream_name": "{instance_id}",
+                "timestamp_format": "%Y-%m-%d %H:%M:%S"
+            },
+            {
+                "file_path": "/var/log/cloud-init.log",
+                "log_group_name": "/ec2/web/var/log/cloud-init.log",
+                "log_stream_name": "{instance_id}",
+                "timestamp_format": "%Y-%m-%d %H:%M:%S"
+            },
+            {
+                "file_path": "/var/log/cloud-init-output.log",
+                "log_group_name": "/ec2/web/var/log/cloud-init-output.log",
+                "log_stream_name": "{instance_id}",
+                "timestamp_format": "%Y-%m-%d %H:%M:%S"
+            },
+            {
+                "file_path": "/var/log/dmesg",
+                "log_group_name": "/ec2/web/var/log/dmesg",
+                "log_stream_name": "{instance_id}",
+                "timestamp_format": "%Y-%m-%d %H:%M:%S"
+            },
+            {
+                "file_path": "/var/log/dracut.log",
+                "log_group_name": "/ec2/web/var/log/dracut.log",
+                "log_stream_name": "{instance_id}",
+                "timestamp_format": "%Y-%m-%d %H:%M:%S"
+            },
+            {
+                "file_path": "/var/log/yum.log",
+                "log_group_name": "/ec2/web/var/log/yum.log",
+                "log_stream_name": "{instance_id}",
+                "timestamp_format": "%Y-%m-%d %H:%M:%S"
+            },
+            {
+                "file_path": "/var/log/audit/audit.log",
+                "log_group_name": "/ec2/web/var/log/audit/audit.log",
+                "log_stream_name": "{instance_id}",
+                "timestamp_format": "%Y-%m-%d %H:%M:%S"
+            },
+            {
+                "file_path": "/var/log/httpd/access_log",
+                "log_group_name": "/ec2/web/var/log/httpd/access_log",
+                "log_stream_name": "{instance_id}",
+                "timestamp_format": "%Y-%m-%d %H:%M:%S"
+            },
+            {
+                "file_path": "/var/log/httpd/error_log",
+                "log_group_name": "/ec2/web/var/log/httpd/error_log",
+                "log_stream_name": "{instance_id}",
+                "timestamp_format": "%Y-%m-%d %H:%M:%S"
+            },
+            {
+                "file_path": "/var/www/var/log/symfony.log",
+                "log_group_name": "/ec2/web/var/www/var/log/symfony.log",
+                "log_stream_name": "{instance_id}",
+                "timestamp_format": "%Y-%m-%d %H:%M:%S"
+            }
+        ]
+      }
+    }
+  }
+}

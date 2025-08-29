@@ -4,6 +4,6 @@
     size 10M
     delaycompress
     compress
-    rotate 4
+    rotate 7
     su apache apache
 }

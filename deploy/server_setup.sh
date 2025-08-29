@@ -20,34 +20,37 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     echo "> Running once-only deployment tasks..."
 
     echo "> > Installing awslogs service..."
-    #sudo yum install -y awslogs
     sudo yum install -y amazon-cloudwatch-agent
     sudo systemctl enable amazon-cloudwatch-agent
 
     echo "> > chown'ing awslogs config files..."
     sudo chown root:root \
-        "$SCRIPTDIR/files/awscli.conf" \
-        "$SCRIPTDIR/files/awslogs.conf"
+        "$SCRIPTDIR/files/logrotate.conf" \
+        "$SCRIPTDIR/files/applogs" \
+        "$SCRIPTDIR/files/cloudwatch.json"
 
     echo "> > chmod'ing awslogs config files..."
     sudo chmod 640 \
-        "$SCRIPTDIR/files/awscli.conf" \
-        "$SCRIPTDIR/files/awslogs.conf"
+        "$SCRIPTDIR/files/logrotate.conf" \
+        "$SCRIPTDIR/files/applogs" \
+        "$SCRIPTDIR/files/cloudwatch.json"
 
-    echo "> > Moving awslogs config files..."
+    echo "> > Moving log rotate config files..."
     sudo mv -f \
-        "$SCRIPTDIR/files/awscli.conf" \
-        "$SCRIPTDIR/files/awslogs.conf" \
-        /etc/awslogs/
+        "$SCRIPTDIR/files/logrotate.conf" /etc/logrotate.conf
+        "$SCRIPTDIR/files/applogs" /etc/logrotate.d/
 
-    # echo "> > Adding additional package repos..."
-    # sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-    # sudo yum install -y https://repo.ius.io/ius-release-el$(rpm -E '%{rhel}').rpm
+    echo "> > Moving cloudwatch rotate config file..."
+    sudo mv -f \
+        "$SCRIPTDIR/files/cloudwatch.json" \
+        /opt/aws/amazon-cloudwatch-agent/etc/config.json
 
-    # echo "> > Removing PHP 7.4..."
-    # sudo yum remove -y php*
-    # sudo amazon-linux-extras disable php7.4
-    # sudo amazon-linux-extras enable php8.2
+    echo "> > Starting cloudwatch..."
+    sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/etc/config.json
+    sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -m ec2 -a status
+
+    echo "> > Setting journalctl to max 500mb..."
+    sudo journalctl --vacuum-size=500M
 
     echo "> > Installing web packages..."
     sudo yum -y install \
@@ -79,19 +82,11 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     sudo mv -f \
         "$SCRIPTDIR/files/99-custom.ini" \
         /etc/php.d/
-        
-    echo "> > chown'ing logrotate config files..."
-    sudo chown root:root \
-        "$SCRIPTDIR/files/applogs"
 
-    echo "> > chmod'ing logrotate config files..."
-    sudo chmod 644 \
-        "$SCRIPTDIR/files/applogs"
-
-    echo "> > Moving logrotate config files..."
-    sudo mv -f \
-        "$SCRIPTDIR/files/applogs" \
-        /etc/logrotate.d/
+    echo "> Installing cronie..."
+    sudo yum install cronie -y
+    sudo systemctl enable crond.service
+    sudo systemctl start crond.service
 
     echo "> > chown'ing cache_clear..."
     sudo chown root:root "$SCRIPTDIR/files/cache_clear"
