@@ -25,25 +25,15 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
 
     echo "> > chown'ing awslogs config files..."
     sudo chown root:root \
-        "$SCRIPTDIR/files/awscli.conf" \
-        "$SCRIPTDIR/files/awslogs.conf" \
         "$SCRIPTDIR/files/logrotate.conf" \
         "$SCRIPTDIR/files/applogs" \
         "$SCRIPTDIR/files/cloudwatch.json"
 
     echo "> > chmod'ing awslogs config files..."
     sudo chmod 640 \
-        "$SCRIPTDIR/files/awscli.conf" \
-        "$SCRIPTDIR/files/awslogs.conf" \
         "$SCRIPTDIR/files/logrotate.conf" \
         "$SCRIPTDIR/files/applogs" \
         "$SCRIPTDIR/files/cloudwatch.json"
-
-    echo "> > Moving awslogs config files..."
-    sudo mv -f \
-        "$SCRIPTDIR/files/awscli.conf" \
-        "$SCRIPTDIR/files/awslogs.conf" \
-        /etc/awslogs/
 
     echo "> > Moving log rotate config files..."
     sudo mv -f \
@@ -92,6 +82,11 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
     sudo mv -f \
         "$SCRIPTDIR/files/99-custom.ini" \
         /etc/php.d/
+
+    echo "> Installing cronie..."
+    sudo yum install cronie -y
+    sudo systemctl enable crond.service
+    sudo systemctl start crond.service
 
     echo "> > chown'ing cache_clear..."
     sudo chown root:root "$SCRIPTDIR/files/cache_clear"
