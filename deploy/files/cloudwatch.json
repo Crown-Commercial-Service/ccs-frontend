@@ -64,7 +64,7 @@
                 "timestamp_format": "%Y-%m-%d %H:%M:%S"
             },
             {
-                "file_path": "/var/log/cron",
+                "file_path": "/var/log/crony",
                 "log_group_name": "/ec2/web/var/log/cron",
                 "log_stream_name": "{instance_id}",
                 "timestamp_format": "%Y-%m-%d %H:%M:%S"
