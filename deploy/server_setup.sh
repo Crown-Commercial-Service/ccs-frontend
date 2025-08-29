@@ -36,14 +36,11 @@ if [ ! -e "$FIRST_RUN_PATH" ]; then
         "$SCRIPTDIR/files/cloudwatch.json"
 
     echo "> > Moving log rotate config files..."
-    sudo mv -f \
-        "$SCRIPTDIR/files/logrotate.conf" /etc/logrotate.conf
-        "$SCRIPTDIR/files/applogs" /etc/logrotate.d/
+    sudo mv -f "$SCRIPTDIR/files/logrotate.conf" /etc/logrotate.conf
+    sudo mv -f "$SCRIPTDIR/files/applogs" /etc/logrotate.d/
 
     echo "> > Moving cloudwatch rotate config file..."
-    sudo mv -f \
-        "$SCRIPTDIR/files/cloudwatch.json" \
-        /opt/aws/amazon-cloudwatch-agent/etc/config.json
+    sudo mv -f "$SCRIPTDIR/files/cloudwatch.json" /opt/aws/amazon-cloudwatch-agent/etc/config.json
 
     echo "> > Starting cloudwatch..."
     sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/etc/config.json
