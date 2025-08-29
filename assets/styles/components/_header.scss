@@ -5,7 +5,7 @@
 .header-global {
 
     background: $ccs-colour;
-    color: govuk-colour("white");
+    color: #000000;
 
     @media only print {
         padding-bottom: 20px; // print with graphics: fix bottom header light red line
@@ -13,16 +13,9 @@
 
 }
 
-.header-global--news-details {
-
-    background: #404040;
-    color: govuk-colour("white");
-
-}
-
 .header-global a {
 
-    color: white;
+    color: #000000;
 
     &:hover,
     &:active {
@@ -36,7 +29,22 @@
 
     }
     @media only print {
-        color: black;
+        color: #000000;
+    }
+
+}
+
+.header-global--news-details {
+
+    background: #404040;
+    color: govuk-colour("white");
+
+    a {
+        color: govuk-colour("white");
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 
 }
@@ -85,6 +93,10 @@
 .logo img {
     // IE9 Fix
     border: 0 none;
+}
+
+.header-global--news-details > .ccs-width-container > .nav-wrapper > .logo > img {
+    filter: invert(100%)
 }
 
 
