@@ -13,13 +13,6 @@
 
 }
 
-.header-global--news-details {
-
-    background: #404040;
-    color: govuk-colour("white");
-
-}
-
 .header-global a {
 
     color: #000000;
@@ -37,6 +30,21 @@
     }
     @media only print {
         color: #000000;
+    }
+
+}
+
+.header-global--news-details {
+
+    background: #404040;
+    color: govuk-colour("white");
+
+    a {
+        color: govuk-colour("white");
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 
 }
@@ -85,6 +93,10 @@
 .logo img {
     // IE9 Fix
     border: 0 none;
+}
+
+.header-global--news-details > .ccs-width-container > .nav-wrapper > .logo > img {
+    filter: invert(100%)
 }
 
 
