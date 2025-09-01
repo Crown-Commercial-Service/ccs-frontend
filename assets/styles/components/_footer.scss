@@ -138,6 +138,10 @@
     &:before {
         background-image: url(/assets/images/govuk-crest.svg) !important;
     }
+
+    &:hover {
+        color: grey !important;
+    }
 }
 
 .govuk-footer-remove-flex-grow {
