@@ -38,14 +38,14 @@ $sub-color-people: #0057B8;
 $sub-color-technology: #57BAB7;
 
 // Sectors
-$sub-color-local-government: #9B1A47;
-$sub-color-health: #9B1A47;
-$sub-color-universities-and-colleges: #9B1A47;
-$sub-color-schools-and-academies: #9B1A47;
-$sub-color-devolved: #9B1A47;
-$sub-color-police-and-emergency-services: #9B1A47;
-$sub-color-charities: #9B1A47;
-$sub-color-local-housing-associations: #9B1A47;
+$sub-color-local-government: $ccs-green;
+$sub-color-health: $ccs-green;
+$sub-color-universities-and-colleges: $ccs-green;
+$sub-color-schools-and-academies: $ccs-green;
+$sub-color-devolved: $ccs-green;
+$sub-color-police-and-emergency-services: $ccs-green;
+$sub-color-charities: $ccs-green;
+$sub-color-local-housing-associations: $ccs-green;
 
 // change default 700 to 600 (semibold)
 $govuk-font-weight-bold: 600;
