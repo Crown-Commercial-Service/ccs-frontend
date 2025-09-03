@@ -7,7 +7,8 @@
   "metrics": {
     "namespace": "CWAgent",
     "append_dimensions": {
-        "InstanceId": "${aws:InstanceId}"
+        "InstanceId": "${aws:InstanceId}",
+        "AutoScalingGroupName": "${aws:AutoScalingGroupName}"
     },
     "metrics_collected": {
       "procstat": [
