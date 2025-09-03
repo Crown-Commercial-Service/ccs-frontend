@@ -496,10 +496,15 @@ class PageController extends AbstractController
         $glossaries = [];
 
         foreach ((array) $results as $glossary) {
+            $keywords = [];
             $term = trim((string) $glossary->get('term')->getValue());
             $key = strtoupper($term[0]);
 
-            if (str_contains(strtolower($term), strtolower($query))) {
+            foreach ($glossary->get('keyword') ?? [] as $keyword) {
+                $keywords[] = $keyword->get('searchable_keyword')->getValue();
+            }
+
+            if (str_contains(strtolower($term), strtolower($query)) || in_array(strtolower($query), array_map('strtolower', $keywords))) {
                 $glossaries[$key][] = ['term' => $term, 'meaning' => $glossary->get('meaning')->getValue()];
             }
         }
