@@ -496,7 +496,7 @@ class PageController extends AbstractController
         $glossaries = [];
 
         foreach ((array) $results as $glossary) {
-            $keywords =[];
+            $keywords = [];
             $term = trim((string) $glossary->get('term')->getValue());
             $key = strtoupper($term[0]);
 
