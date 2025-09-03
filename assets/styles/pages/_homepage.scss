@@ -8,7 +8,7 @@ overflow: hidden;
 
 .govuk-form-group--enclosure--homepage {
 
-    background-color: #6A99FF;
+    background-color: #B4CDFE;
     border-radius: govuk-px-to-rem(3);
     color: white;
     padding-bottom: 2.5rem;
@@ -38,7 +38,7 @@ overflow: hidden;
 
 .govuk-hero-homepage-caption-container {
     font-family: "Source Sans Pro","HelveticaNeue","Helvetica Neue","Arial","Helvetica",sans-serif;
-    color: white;
+    color: #000000;
 }
 
 .govuk-hero-caption {
@@ -53,7 +53,7 @@ overflow: hidden;
 
     .govuk-caption-heading {       
         font-size: govuk-px-to-rem(32);
-        color: white;
+        color: #000000;
         @media only print {
             font-size: 2rem;
         }
