@@ -481,7 +481,7 @@ class PageController extends AbstractController
 
     public function glossary(Request $request)
     {
-        $query = $request->query->get('termSearch');
+        $query = $request->query->get('termSearch') ?? '';
 
         try {
             $results = $this->glossaryApi->getOne(0);
