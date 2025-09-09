@@ -481,7 +481,7 @@ class PageController extends AbstractController
 
     public function glossary(Request $request)
     {
-        $query = filter_var($request->query->get('termSearch'), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $query = $request->query->get('termSearch');
 
         try {
             $results = $this->glossaryApi->getOne(0);
