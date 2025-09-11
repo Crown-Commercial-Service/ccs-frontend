@@ -12,3 +12,8 @@ glossaries:
       type: text
     meaning:
       type: text
+    keyword:
+      type: array
+      content_fields:
+        searchable_keyword:
+          type: text
