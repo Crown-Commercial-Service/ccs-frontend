@@ -58,7 +58,7 @@ class ControllerHelper
             throw new NotFoundHttpException('MessageBanner API broken, please check WordPress', $e);
         }
 
-        return $messageBanner->getContent()->get('message_banner')->getValue()[0];
+        return $messageBanner->getContent()->get('message_banner')->getValue()[0] ?? null;
     }
 
     public static function getYoutubeVideo()
