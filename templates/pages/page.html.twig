@@ -235,7 +235,8 @@
                             {% if page.content.contact_form_show_contact_form is not empty %}
                                 <div class="govuk-width-container">
 
-                                    {% if page.template == "page-templates/landing.php" and page.content.contact_form_show_contact_form.value == true %}
+                                    {# Contact form only shown on Landing and Default templates #}
+                                    {% if (page.template == "page-templates/landing.php" or page.template == null) and page.content.contact_form_show_contact_form.value == true %}
                                         <div class="govuk-grid-row ccs-inline-contact-form">
                                             {% if formErrors is not null %}
                                                 <script>
@@ -257,6 +258,7 @@
                                                     </div>
                                                 </div>
                                             {% endif %}
+
                                             {% if page.content.contact_form_form_heading %}
                                                 <h2 class="govuk-grid-column-two-thirds govuk-heading-l page-title">{{ page.content.contact_form_form_heading }}</h2>
                                             {% endif %}
@@ -325,6 +327,7 @@
 
                                                         <input class="govuk-input pardot-field {{formErrors.companyErr is defined and formErrors.companyErr.errors|length > 0 ? 'govuk-input--error' : null }}" id="company" maxlength="80" name="company" size="20" type="text" value="{{formErrors is defined ? formData.company}}" autocomplete="organization"/>
                                                     </div>
+
                                                     {% if page.content.contact_form_show_newsletter_form is not empty and page.content.contact_form_show_newsletter_form.value == false %}
                                                         <div class="govuk-form-group {{formErrors.phoneErr is defined and formErrors.phoneErr.errors|length > 0 ? 'govuk-form-group--error' : null }}">
                                                             <label class="govuk-label" for="phone" id="phone-label"> 
@@ -487,41 +490,26 @@
                                                     </div>
                                                 </form>
 
-                                                <div class="contact_card">
-                                                    <h2 class="govuk-heading-m">Talk to us</h2>
-                                                    <p>You can also contact us by email or phone</p>
-                                                    <p>
-                                                        Email: <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a>
-                                                        <br>
-                                                        Telephone: <a href="tel:03454102222">0345 410 2222</a>
-                                                    </p>
+                                                {% if
+                                                    page.template == "page-templates/landing.php" or
+                                                    page.template == "page-templates/products-and-services.php" or
+                                                    page.template == "page-templates/sectors.php" %}                                            
+                                                    <div class="contact_card">
+                                                        <h2 class="govuk-heading-m">Talk to us</h2>
+                                                        <p>You can also contact us by email or phone</p>
+                                                        <p>
+                                                            Email: <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a>
+                                                            <br>
+                                                            Telephone: <a href="tel:03454102222">0345 410 2222</a>
+                                                        </p>
 
-                                                    <p>{{cscMessage | raw}}</p>
-                                                </div> 
-
-
-                                                <div id="js-contact-form-success-container" style="display: none;">
-                                                    <h4>Message sent</h4>
-                                                    <p>A dedicated team member
-                                                        will respond to you
-                                                        within 24-48 hours</p>
-                                                    <a id="js-reset-form-b" href="">Send
-                                                        another message</a>
-                                                </div>
-
-                                                <div id="js-contact-form-error-container" style="display: none;">
-                                                    <h4>Sorry, an error
-                                                        occured</h4>
-                                                    <p>Please try sending your
-                                                        message again</p>
-                                                    <a id="js-reset-form-a" href="">Try
-                                                        again</a>
-                                                </div>
+                                                        <p>{{cscMessage | raw}}</p>
+                                                    </div> 
+                                                {% endif %}
 
                                             </div>
-                                                
-                                        </div>
 
+                                        </div>
                                     {% endif %}
 
                                 </div>
