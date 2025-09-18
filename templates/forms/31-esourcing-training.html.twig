@@ -85,7 +85,7 @@
                                     
                                     <div class="govuk-radios govuk-radios--conditional" data-module="govuk-radios">
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="how-contacted-conditional-1" name="customer-type" type="radio" value="Buyer" data-aria-controls="conditional-how-contacted-conditional-1" {{ formData is defined and formData.customerType is same as('Buyer') ? 'checked' : null }}>
+                                            <input class="govuk-radios__input" id="how-contacted-conditional-1" name="customer-type" type="radio" value="Buyer" data-aria-controls="conditional-how-contacted-conditional-1" aria-expanded="true" role="region" {{ formData is defined and formData.customerType is same as('Buyer') ? 'checked' : null }}>
                                             <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-1">
                                                 Buyer
                                             </label>
@@ -125,7 +125,7 @@
 
                                         </div>
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" id="how-contacted-conditional-2" name="customer-type" type="radio" value="Supplier" data-aria-controls="conditional-how-contacted-conditional-2" {{ formData is defined and formData.customerType is same as('Supplier') ? 'checked' : null }}>
+                                            <input class="govuk-radios__input" id="how-contacted-conditional-2" name="customer-type" type="radio" value="Supplier" data-aria-controls="conditional-how-contacted-conditional-2" aria-expanded="true" role="region" {{ formData is defined and formData.customerType is same as('Supplier') ? 'checked' : null }}>
                                             <label class="govuk-label govuk-radios__label" for="how-contacted-conditional-2">
                                                 Supplier
                                             </label>
