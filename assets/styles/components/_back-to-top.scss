@@ -29,12 +29,12 @@
 
 .back-to-top-button:hover {
     cursor: pointer;
-    color: #fff;
-    background-color: #6a99ff;
+    color: #000000;
+    background-color: $ccs-button-colour;
 }
 
 .back-to-top-button:hover .svg-icon {
-    fill: white !important;
+    fill: #000000 !important;
   }
 
 .back-to-top-button:active {
@@ -44,13 +44,13 @@
 .back-to-top-button.show {
     opacity: 1;
     visibility: visible;
-    border: 1px solid #6a99ff;
+    border: 1px solid $ccs-button-colour;
 }
 
 .back-to-top-button.fixed {
     position: absolute;
     top: -62px;
-    border: 1px solid #6a99ff;
+    border: 1px solid $ccs-button-colour;
 }
 
 .back-to-top-button.flex {
