@@ -251,7 +251,7 @@
                                                         <ul class="govuk-list govuk-error-summary__list">
                                                         {% for errorType in formErrors %}
                                                             {% for error in errorType.errors %}
-                                                                <li><a href={{errorType.link}}>{{error}}</li></a>
+                                                                <li><a href={{errorType.link}}>{{error}}</a></li>
                                                             {% endfor %}
                                                         {% endfor %}
                                                         </ul>
