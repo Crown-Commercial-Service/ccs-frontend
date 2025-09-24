@@ -81,11 +81,10 @@
     a {
         color: #007194;
         text-decoration: none;
+        box-shadow: none;
     }
 
-    &:hover,
-    &:focus,
-    &:active {
+    &:hover{
         text-decoration: underline;
     }
 }
