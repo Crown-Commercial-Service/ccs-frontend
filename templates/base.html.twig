@@ -438,6 +438,16 @@ End Usersnap code #}
         }
     }
 
+    // close message banner 
+    var messageBanner = document.querySelector('.message-banner');
+    var messageCloseBtn = document.querySelector('.message-banner-close-button');
+
+    if (messageCloseBtn !== null) {
+        messageCloseBtn.addEventListener("click", () => {
+            messageBanner.style.display = "none";
+        })
+    }
+
 </script>
 
 <script type="module" src="/assets/scripts/all.js?v=2.3"></script>

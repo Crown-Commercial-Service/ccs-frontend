@@ -11,6 +11,12 @@
                     {% if link_url is defined and link_url is not empty and link is defined and link is not empty %}
                         <a href="{{link_url}}" class="message-banner-link govuk-link">{{link}}</a>
                     {% endif%}
+
+                     <div class="govuk-button-group">
+                        <button type="button" class="govuk-button message-banner-close-button" data-module="govuk-button">
+                            Hide message
+                        </button>
+                     </div>
                 </div>
             </div>
         </div>
