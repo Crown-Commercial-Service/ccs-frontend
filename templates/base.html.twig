@@ -9,9 +9,9 @@
     
     {% if homepage_meta is defined %}
         <meta name="description" content="We help the UK public sector get better value for money when buying products and services. Unlock the power of procurement with Crown Commercial Service.">
-        <meta name="thumbnail" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
-        <meta property="og:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
-        <meta property="twitter:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail.png' />
+        <meta name="thumbnail-preview" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail-preview.png' />
+        <meta property="og:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail-preview.png' />
+        <meta property="twitter:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail-prevew.png' />
     {% endif %}
 
     {% if canonical is defined and canonical is not empty %}
@@ -58,14 +58,14 @@
     </style>
 
     {% if app.environment == "prod" %}
-         <link rel="preload" href="/assets/styles/styles.min.css?v=1.83" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.83"></noscript>
+         <link rel="preload" href="/assets/styles/styles.min.css?v=1.86" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.86"></noscript>
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="preload" href="/assets/styles/styles.min.css?v=1.83" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.83"></noscript>
+        <link rel="preload" href="/assets/styles/styles.min.css?v=1.86" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.86"></noscript>
     {% endif %}
 
     {# Browser icon #}

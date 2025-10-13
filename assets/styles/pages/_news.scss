@@ -258,3 +258,19 @@
     margin: 5px 0 0 0;
 
 }
+
+.news-author-image {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+
+}
+
+@include govuk-media-query($from: 900px) {
+
+    .news-author-image {
+        width: 150px !important;
+        height: 150px !important;
+    }
+}
+

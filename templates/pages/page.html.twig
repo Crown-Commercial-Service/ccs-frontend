@@ -40,7 +40,7 @@
 
     <div class="govuk-width-container">
 
-        <div class="govuk-breadcrumbs">
+        <div class="govuk-breadcrumbs" role="navigation" aria-label="Breadcrumb">
             <ol class="govuk-breadcrumbs__list">
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="/">Home</a>
@@ -251,7 +251,7 @@
                                                         <ul class="govuk-list govuk-error-summary__list">
                                                         {% for errorType in formErrors %}
                                                             {% for error in errorType.errors %}
-                                                                <li><a href={{errorType.link}}>{{error}}</li></a>
+                                                                <li><a href={{errorType.link}}>{{error}}</a></li>
                                                             {% endfor %}
                                                         {% endfor %}
                                                         </ul>

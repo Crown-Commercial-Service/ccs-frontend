@@ -372,6 +372,17 @@ function truncate(heading, summary) {
     
 };
 
+// close message banner 
+var messageBanner = document.querySelector('.message-banner');
+var messageCloseBtn = document.querySelector('.message-banner-close-button');
+
+if (messageCloseBtn !== null) {
+    messageCloseBtn.addEventListener("click", () => {
+        messageBanner.style.display = "none";
+    })
+}
+
+
 
 </script>
 {% endblock %}

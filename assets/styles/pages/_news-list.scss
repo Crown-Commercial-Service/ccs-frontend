@@ -80,6 +80,12 @@
         width:33.3333%;
     
     }
+
+    a {
+        &:active, &:focus {
+            text-decoration: none !important;
+        }
+    }
 }
 
 .govuk-grid-column-full.featured-news-text-container {
