@@ -114,6 +114,7 @@ class NewsController extends AbstractController
             if ($response->getStatusCode() == 200) {
                 $acfContent = (array) json_decode($response->getContent())->acf;
                 $authorText = array_key_exists('author_name_text', (array)$acfContent) ? $acfContent['author_name_text'] : null;
+                $authorImage = array_key_exists('author_image', (array)$acfContent) ? $acfContent['author_image'] : null;
             }
         } catch (NotFoundException $e) {
             throw new NotFoundHttpException('News page not found', $e);
@@ -130,6 +131,7 @@ class NewsController extends AbstractController
             'url'           => sprintf('/news/%s', $slug),
             'page'          => $page,
             'authorText'    => $authorText,
+            'authorImage'   => $authorImage,
             'site_base_url' => getenv('APP_BASE_URL'),
             'content_group' => $content_group ?? null,
             'featureNewsProperties' => $featureNewsProperties,

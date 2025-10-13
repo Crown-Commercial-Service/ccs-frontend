@@ -3,8 +3,20 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
                     <h2 class="message-banner-heading">{{title}}</h2>
-                    <p class="message-banner-description">{{description}}</p>
-                    <a href="{{link_url}}" class="message-banner-link govuk-link">{{link}}</a>
+
+                    {% if description is defined and description is not empty %}
+                        <p class="message-banner-description">{{description}}</p>
+                    {% endif%}
+
+                    {% if link_url is defined and link_url is not empty and link is defined and link is not empty %}
+                        <a href="{{link_url}}" class="message-banner-link govuk-link">{{link}}</a>
+                    {% endif%}
+
+                     <div class="govuk-button-group">
+                        <button type="button" class="govuk-button message-banner-close-button" data-module="govuk-button">
+                            Hide message
+                        </button>
+                     </div>
                 </div>
             </div>
         </div>

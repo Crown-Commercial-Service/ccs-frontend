@@ -33,7 +33,7 @@
                         <ul class="govuk-list govuk-error-summary__list">
                         {% for errorType in formErrors %}
                             {% for error in errorType.errors %}
-                                <a href={{errorType.link}}><li>{{error}}</li></a>
+                                <li><a href={{errorType.link}}>{{error}}</a></li>
                             {% endfor %}
                         {% endfor %}
                         </ul>

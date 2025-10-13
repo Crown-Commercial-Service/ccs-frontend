@@ -7,14 +7,9 @@
     {% embed '/includes/header.html.twig' %}
     {% block bannerarea %}
     {% endblock %}
-        {% block headerclasses %}
-            {% if page.featuredImage %}
-                header-global header-global--news-details
-            {% else %}
-                {# This make sure the background is grey even is there isn't a featured image #}
-                header-global header-global--news-details
-            {% endif %}
-        {% endblock %}
+       {% block headerclasses %}
+         header-global header-global--news-details
+       {% endblock %}
 
         {% block headerstyles %}
             {% if page.featuredImage %}
@@ -124,6 +119,18 @@
 
                 </div>
 
+                <div class="govuk-grid-column-one-third">
+                    {% if page.content.author_image is defined and page.content.author_image is not empty %}
+                        <div class="news-author-image">
+                            <img src="{{ page.content.author_image }}" alt="Author Image" class="news-author-image__img" width="150" height="150">
+                        </div>
+                    {% endif %}
+
+                    {% if authorText is defined and authorText is not empty %}
+                        <p>By {{authorText}}</p>
+                    {% endif %}
+
+                </div>
 
             </div>
         </main>

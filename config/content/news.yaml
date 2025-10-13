@@ -16,3 +16,5 @@ alt_text:
   type: text
 post_components_rows:
   config: flexible-components.yaml
+author_image:
+  type: image

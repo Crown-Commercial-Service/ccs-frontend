@@ -86,7 +86,7 @@
                 {% if page.contentType.name == 'news' %}
                     <p><a href={{path}}>Browse all news articles</a></p>
                 {% else %}
-                    <p><a href={{path}}>Browse all {{page.title | lower}} news articles</a></p>
+                    <p><a href={{path}}>Browse all {{page.title | lower | raw}} news articles</a></p>
                 {% endif %}
             {% endif %}
 

@@ -26,11 +26,11 @@
                         <ul class="govuk-list govuk-error-summary__list">
                         {% for errorType in formErrors %}
                             {% for error in errorType.errors %}
-                                <a href={{errorType.link}}><li>{{error}}</li></a>
+                                <li><a href={{errorType.link}}>{{error}}</a></li>
                             {% endfor %}
                         {% endfor %}
                         {% if fileAttachedBefore is defined and fileAttachedBefore == true %}
-                            <a href="#fileAttachedBefore"><li>You must to re-upload your document</li></a>
+                            <li><a href="#fileAttachedBefore">You must to re-upload your document</a></li>
                         {% endif %}
                         </ul>
                     </div>
