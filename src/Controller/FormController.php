@@ -83,7 +83,7 @@ class FormController extends AbstractController
             ]);
 
             if (!is_null($params->get('debug'))) {
-                return new Response($response->getContent());
+                return new Response(htmlspecialchars($response->getContent()));
             }
         }
 
@@ -156,7 +156,7 @@ class FormController extends AbstractController
             ]);
 
             if (!is_null($params->get('debug'))) {
-                return new Response($response->getContent());
+                return new Response(htmlspecialchars($response->getContent()));
             }
         }
 
@@ -243,7 +243,7 @@ class FormController extends AbstractController
 
                 if (!is_null($params->get('debug'))) {
                     return new Response(
-                        $response->getContent()
+                        htmlspecialchars($response->getContent())
                     );
                 } else {
                     return $this->redirectToRoute('form_contact_thanks');
@@ -334,7 +334,7 @@ class FormController extends AbstractController
 
                 if (!is_null($params->get('debug'))) {
                     return new Response(
-                        $response->getContent()
+                        htmlspecialchars($response->getContent())
                     );
                 } else {
                     return $this->redirectToRoute('form_contact_thanks_complaint');
@@ -379,7 +379,7 @@ class FormController extends AbstractController
 
                 if (!is_null($params->get('debug'))) {
                     return new Response(
-                        $response->getContent()
+                        htmlspecialchars($response->getContent())
                     );
                 } else {
                     return $this->redirectToRoute('form_newsletter_thanks');
@@ -551,8 +551,8 @@ class FormController extends AbstractController
         if ((!empty($_FILES["attachment"])) && ($_FILES['attachment']['error'] == 0)) {
             try {
                 $uploadedFilePath = substr((string) $_FILES["attachment"]["tmp_name"], 0, strripos((string) $_FILES["attachment"]["tmp_name"], '/') + 1);
-                $newFilePath = $uploadedFilePath . $_FILES["attachment"]["name"];
-                copy($_FILES["attachment"]["tmp_name"], $newFilePath);
+                $newFilePath = $uploadedFilePath . basename($_FILES["attachment"]["name"]);
+                move_uploaded_file($_FILES["attachment"]["tmp_name"], $newFilePath);
 
                 $dataPartFile = DataPart::fromPath($newFilePath);
                 $debugStringFromDataPart = $dataPartFile->asDebugString();
