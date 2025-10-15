@@ -1676,7 +1676,7 @@ TinCan client library
         getSHA1String: function (str) {
             /*global CryptoJS*/
 
-            return CryptoJS.SHA1(str).toString(CryptoJS.enc.Hex);
+            return CryptoJS.SHA256(str).toString(CryptoJS.enc.Hex);
         },
 
         /**
