@@ -418,7 +418,7 @@
             methods: {
                 searchRequestUrl: function() {
                     fetchURL =    this.apiURL 
-                            +  (this.checkedStatus.length !== 0 ? '&status[]=' + this.checkedStatus.join() : '')
+                            +  ((this.checkedStatus || []).length !== 0    ? this.checkedStatus.map(status => '&status[]=' + encodeURIComponent(status)).join('') : '')
                             +  (this.checkedRegulation.length !== 0 ? this.checkedRegulation.map(reg => '&regulation[]=' + reg.replace(/ /g, '+')).join('') : '')
                             +  (this.checkedType.length !== 0 ? this.checkedType.map(type => '&regulation_type[]=' + type.replace(/ /g, '+')).join('') : '')
                             +  (this.checkedPillar.length !== 0 ? this.checkedPillar.map(pillar => '&pillar[]=' + pillar).join(''): '')
@@ -500,17 +500,21 @@
 
                     fetch(requestUrl)
                     .then(async function(response) {
+                        
                         if (!response.ok) {
                             throw new Error('HTTP error, status = ' + response.status);
                         }
                         return response.json();
                     })
                     .then(jsonResponse => {
+                        console.log(jsonResponse)
                         this.numberOfPages  = parseInt(Math.ceil(jsonResponse.meta.total_results / jsonResponse.meta.limit))
                         this.totalResults   = parseInt(jsonResponse.meta.total_results)
                         this.searchResultsNumber = jsonResponse.meta.total_results;
 
                         this.results = jsonResponse.results;
+                        console.log(jsonResponse)
+                       
                         this.emptyResult = Object.keys(jsonResponse.results).length === 0 ? true : false
                         this.responseAvailable = true;
 
