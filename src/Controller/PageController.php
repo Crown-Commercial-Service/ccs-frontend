@@ -286,7 +286,7 @@ class PageController extends AbstractController
 
             if (!is_null($params->get('debug'))) {
                 return new Response(
-                    $response->getContent()
+                    htmlspecialchars($response->getContent())
                 );
             }
             return $this->redirectToRoute($formCampaignCode == 'alwayson_newsletter' ? 'form_newsletter_thanks' : 'form_contact_thanks');
