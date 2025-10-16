@@ -500,21 +500,17 @@
 
                     fetch(requestUrl)
                     .then(async function(response) {
-                        
                         if (!response.ok) {
                             throw new Error('HTTP error, status = ' + response.status);
                         }
                         return response.json();
                     })
                     .then(jsonResponse => {
-                        console.log(jsonResponse)
                         this.numberOfPages  = parseInt(Math.ceil(jsonResponse.meta.total_results / jsonResponse.meta.limit))
                         this.totalResults   = parseInt(jsonResponse.meta.total_results)
                         this.searchResultsNumber = jsonResponse.meta.total_results;
 
                         this.results = jsonResponse.results;
-                        console.log(jsonResponse)
-                       
                         this.emptyResult = Object.keys(jsonResponse.results).length === 0 ? true : false
                         this.responseAvailable = true;
 
