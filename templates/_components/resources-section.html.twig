@@ -67,7 +67,7 @@
                             <ol class="ccs-list-grid">
                                 {% for whitepaper in page.content.whitepapers_list_whitepapers %}
                                     <li class="ccs-list-grid__item">
-                                        {% if whitepaper.ccs_whitepaper_featured_image.url is defined %}
+                                        {% if whitepaper.ccs_whitepaper_featured_image.url is defined and webinar.ccs_whitepaper_featured_image.url is not empty %}
                                             <a href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
 
                                             {% set whitepaperFeaturedImage = "" %}
@@ -133,7 +133,7 @@
                             <ol class="ccs-list-grid">
                                 {% for webinar in page.content.webinars_list_webinars %}
                                     <li class="ccs-list-grid__item">
-                                        {% if webinar.ccs_webinar_featured_image.url is defined %}
+                                        {% if webinar.ccs_webinar_featured_image.url is defined and webinar.ccs_webinar_featured_image.url is not empty %}
                                             <a href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
 
                                             {% set webinarFeaturedImage = "" %}
@@ -199,7 +199,7 @@
                             <ol class="ccs-list-grid">
                                 {% for digital_brochure in page.content.digital_brochures_list_digital_brochures %}
                                     <li class="ccs-list-grid__item">
-                                        {% if digital_brochure.ccs_digital_brochure_featured_image.url is defined %}
+                                        {% if digital_brochure.ccs_digital_brochure_featured_image.url is defined and webinar.ccs_whitepaper_featured_image.url is not empty %}
                                             <a href="/digital_brochure/request/{{ digital_brochure.ID }}/{{ digital_brochure.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
 
                                             {% set digitalBrochureFeaturedImage = "" %}
@@ -263,7 +263,7 @@
                             <ol class="ccs-list-grid">
                                 {% for downloadable_resource in page.content.downloadable_list_downloadable_resource %}
                                     <li class="ccs-list-grid__item">
-                                        {% if downloadable_resource.ccs_downloadable_featured_image.url is defined %}
+                                        {% if downloadable_resource.ccs_downloadable_featured_image.url is defined and webinar.ccs_downloadable_featured_image.url is not empty %}
                                             <a href="/downloadable-resource/request/{{ downloadable_resource.ID }}/{{ downloadable_resource.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
 
                                             {% set downloadableFeaturedImage = "" %}
