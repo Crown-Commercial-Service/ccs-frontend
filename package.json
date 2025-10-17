@@ -51,7 +51,7 @@
     "shx": "^0.4.0",
     "svgo": "2.8.0",
     "tunnel-agent": "^0.6.0",
-    "vue": "3.5.18",
+    "vue": "3.5.22",
     "whatwg-fetch": "^3.6.20",
     "yargs-parser": "^13.1.2"
   },
