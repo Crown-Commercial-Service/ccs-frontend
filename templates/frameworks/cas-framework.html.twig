@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-        <h1 class="govuk-heading-xl page-title cat-agrement-page-title">{{ framework.content.title }}</h1>
+        <h1 class="govuk-heading-xl govuk-!-padding-bottom-2 page-title cat-agrement-page-title">{{ framework.content.title }}</h1>
         {% if framework.content.summary and framework.content.summary != "" %}
             <p class="agreement-subtitle">{{ framework.content.summary | striptags | raw }}</p>
         {% endif %}
@@ -92,29 +92,24 @@
 
         <h2 class="govuk-heading-m" id="products">Products and suppliers</h2>
 
-        {% if framework.content.rm_number ==  "RM1557.13" %}
-            <p>The functionality that enables you to view the details of all service lines presented on G-Cloud 13, has now been restored. CCS apologises for any inconvenience.</p>
-    
-            <p>If you are a G-Cloud 13 Lot 1, 2 or 3 supplier, you do not need to register with the Public Procurement Gateway (PPG) in order to gain access to your G-Cloud 13 entries or to use the functionality referenced above.</p>
+        {% if framework.content.rm_number == "RM1043.8" or framework.content.rm_number == "RM1557.14" %}
+            <div class="govuk-inset-text">
+                <p ><strong>You can now buy online with CCS.</strong> <br>Please select a lot to start.</p>
+            </div>
+            <div class="grey-margin-bottom" id="agreement-lots"></div>
         {% endif %}
 
-        <div class="govuk-inset-text">
-            <p ><strong>You can now buy online with CCS.</strong> <br>Please select a lot to start.</p>
-        </div>
-
-        <div class="grey-margin-bottom" id="agreement-lots"></div>
 
         {% for lot in framework.content.lots %}
             <dl class="apollo-list apollo-list--definition grey-margin-bottom">
                 <dt class="apollo-list--definition__key">
-                    {% if framework.content.rm_number ==  "RM1557.13L4" %}
-                        <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id=RM1557.13&lotNum=4">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
-                    {% elseif framework.content.rm_number ==  "RM1557.14L4" %}
-                        <span class="apollo-list--definition__key__inner"><a href="{{ path("form_esourcing_register") }}">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
-                    {% elseif framework.content.rm_number ==  "RM1557.13" or framework.content.rm_number ==  "RM1557.14"  %}
+
+                    {% if framework.content.rm_number ==  "RM1043.8" %}
+                        <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id={{ framework.content.rm_number }}&lotNum={{ lot.lot_number }}">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
+                    {% elseif framework.content.rm_number ==  "RM1557.14" %}
                         <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/{{ framework.content.rm_number }}/lot/All">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
                     {% else %}
-                        <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id={{ framework.content.rm_number }}&lotNum={{ lot.lot_number }}">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
+                        <span class="apollo-list--definition__key__inner">Lot {{ lot.lot_number }} {{ lot.title|raw }}</span>
                     {% endif %}
                 </dt>
                 <dd class="apollo-list--definition__value">
