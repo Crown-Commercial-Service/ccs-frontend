@@ -21,12 +21,12 @@
                     <div class="govuk-accordion__section ">
                         <div class="govuk-accordion__section-header">
                             <h2 class="govuk-accordion__section-heading">
-                                <span class="govuk-accordion__section-button" id="accordion-default-heading-{{resourceIndex}}">
+                                <span class="govuk-accordion__section-button" id="accordion-resource-heading-{{resourceIndex}}">
                                     Brochures ({{ page.content.brochures_list_brochures_list|length }})
                                 </span>
                             </h2>
                         </div>
-                        <div id="accordion-default-content-{{ resourceIndex }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ resourceIndex }}" role="region">
+                        <div id="accordion-resource-content-{{ resourceIndex }}" class="govuk-accordion__section-content" aria-labelledby="accordion-resource-heading-{{ resourceIndex }}" role="region">
 
                             <ol class="ccs-list-grid brochures-list">
                                 {% for brochure in page.content.brochures_list_brochures_list %}
@@ -56,21 +56,21 @@
 
                         <div class="govuk-accordion__section-header">
                             <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
+                                        <span class="govuk-accordion__section-button" id="accordion-resource-heading-2">
                                           Whitepapers ({{ page.content.whitepapers_list_whitepapers|length }}
                                             )
                                         </span>
                             </h2>
                         </div>
-                        <div id="accordion-default-content-{{resourcesWithIndex['whitepapers_list_whitepapers'] is defined ? resourcesWithIndex['whitepapers_list_whitepapers'] : '1' }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{resourcesWithIndex['whitepapers_list_whitepapers'] is defined ? resourcesWithIndex['whitepapers_list_whitepapers'] : '1' }}" role="region">
+                        <div id="accordion-resource-content-{{resourcesWithIndex['whitepapers_list_whitepapers'] is defined ? resourcesWithIndex['whitepapers_list_whitepapers'] : '1' }}" class="govuk-accordion__section-content" aria-labelledby="accordion-resource-heading-{{resourcesWithIndex['whitepapers_list_whitepapers'] is defined ? resourcesWithIndex['whitepapers_list_whitepapers'] : '1' }}" role="region">
 
                             <ol class="ccs-list-grid">
                                 {% for whitepaper in page.content.whitepapers_list_whitepapers %}
                                     <li class="ccs-list-grid__item">
-                                        {% if whitepaper.ccs_whitepaper_featured_image.url is defined %}
+                                        {% if whitepaper.ccs_whitepaper_featured_image.url is defined and whitepaper.ccs_whitepaper_featured_image.url is not empty %}
                                             <a href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
 
-                                            {% set whitepaperFeaturedImage = "" %}
+                                                {% set whitepaperFeaturedImage = "" %}
 
                                                 {% if whitepaper.ccs_whitepaper_featured_image.byName('news-size-m') %}
                                                     {% set whitepaperFeaturedImage = whitepaper.ccs_whitepaper_featured_image.byName('news-size-m') %}
@@ -89,7 +89,10 @@
                                                             alt=""
                                                             role="presentation"
                                                         {% endif %}
-                                                /> </a>
+                                                /> 
+                                                <span class="govuk-visually-hidden">View resource: {{ whitepaper.post_title }}</span>
+
+                                            </a>
                                         {% endif %}
                                         <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
                                             <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ whitepaper.post_title }}</h3>
@@ -122,21 +125,21 @@
 
                         <div class="govuk-accordion__section-header">
                             <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-3">
+                                        <span class="govuk-accordion__section-button" id="accordion-resource-heading-3">
                                           Webinars ({{ page.content.webinars_list_webinars|length }}
                                             )
                                         </span>
                             </h2>
                         </div>
-                        <div id="accordion-default-content-{{resourcesWithIndex['webinars_list_webinars'] is defined ? resourcesWithIndex['webinars_list_webinars'] : '1' }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{resourcesWithIndex['webinars_list_webinars'] is defined ? resourcesWithIndex['webinars_list_webinars'] : '1' }}" role="region">
+                        <div id="accordion-resource-content-{{resourcesWithIndex['webinars_list_webinars'] is defined ? resourcesWithIndex['webinars_list_webinars'] : '1' }}" class="govuk-accordion__section-content" aria-labelledby="accordion-resource-heading-{{resourcesWithIndex['webinars_list_webinars'] is defined ? resourcesWithIndex['webinars_list_webinars'] : '1' }}" role="region">
 
                             <ol class="ccs-list-grid">
                                 {% for webinar in page.content.webinars_list_webinars %}
                                     <li class="ccs-list-grid__item">
-                                        {% if webinar.ccs_webinar_featured_image.url is defined %}
+                                        {% if webinar.ccs_webinar_featured_image.url is defined and webinar.ccs_webinar_featured_image.url is not empty %}
                                             <a href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
 
-                                            {% set webinarFeaturedImage = "" %}
+                                                {% set webinarFeaturedImage = "" %}
 
                                                 {% if webinar.ccs_webinar_featured_image.byName('news-size-m') %}
                                                     {% set webinarFeaturedImage = webinar.ccs_webinar_featured_image.byName('news-size-m') %}
@@ -155,7 +158,9 @@
                                                             alt=""
                                                             role="presentation"
                                                         {% endif %}
-                                                /> </a>
+                                                /> 
+                                                <span class="govuk-visually-hidden">View resource: {{ webinar.post_title }}</span>
+                                            </a>
                                         {% endif %}
                                         <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
                                             <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ webinar.post_title }}</h3>
@@ -188,21 +193,21 @@
 
                         <div class="govuk-accordion__section-header">
                             <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
+                                        <span class="govuk-accordion__section-button" id="accordion-resource-heading-2">
                                           Digital Brochures ({{ page.content.digital_brochures_list_digital_brochures|length }}
                                             )
                                         </span>
                             </h2>
                         </div>
-                        <div id="accordion-default-content-{{resourcesWithIndex['digital_brochures_list_digital_brochures'] is defined ? resourcesWithIndex['digital_brochures_list_digital_brochures'] : '1' }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{resourcesWithIndex['digital_brochures_list_digital_brochures'] is defined ? resourcesWithIndex['digital_brochures_list_digital_brochures'] : '1' }}" role="region">
+                        <div id="accordion-resource-content-{{resourcesWithIndex['digital_brochures_list_digital_brochures'] is defined ? resourcesWithIndex['digital_brochures_list_digital_brochures'] : '1' }}" class="govuk-accordion__section-content" aria-labelledby="accordion-resource-heading-{{resourcesWithIndex['digital_brochures_list_digital_brochures'] is defined ? resourcesWithIndex['digital_brochures_list_digital_brochures'] : '1' }}" role="region">
 
                             <ol class="ccs-list-grid">
                                 {% for digital_brochure in page.content.digital_brochures_list_digital_brochures %}
                                     <li class="ccs-list-grid__item">
-                                        {% if digital_brochure.ccs_digital_brochure_featured_image.url is defined %}
+                                        {% if digital_brochure.ccs_digital_brochure_featured_image.url is defined and digital_brochure.ccs_digital_brochure_featured_image.url is not empty %}
                                             <a href="/digital_brochure/request/{{ digital_brochure.ID }}/{{ digital_brochure.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
 
-                                            {% set digitalBrochureFeaturedImage = "" %}
+                                                {% set digitalBrochureFeaturedImage = "" %}
 
                                                 {% if digital_brochure.ccs_digital_brochure_featured_image.byName('news-size-m') %}
                                                     {% set digitalBrochureFeaturedImage = digital_brochure.ccs_digital_brochure_featured_image.byName('news-size-m') %}
@@ -221,7 +226,9 @@
                                                             alt=""
                                                             role="presentation"
                                                         {% endif %}
-                                                /> </a>
+                                                /> 
+                                                <span class="govuk-visually-hidden">View resource: {{ digital_brochure.post_title }}</span>
+                                            </a>
                                         {% endif %}
                                         <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
                                             <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ digital_brochure.post_title }}</h3>
@@ -252,21 +259,21 @@
 
                         <div class="govuk-accordion__section-header">
                             <h2 class="govuk-accordion__section-heading">
-                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-2">
+                                        <span class="govuk-accordion__section-button" id="accordion-resource-heading-2">
                                           Downloadable Resources ({{ page.content.downloadable_list_downloadable_resource|length }}
                                             )
                                         </span>
                             </h2>
                         </div>
-                        <div id="accordion-default-content-{{resourcesWithIndex['downloadable_list_downloadable_resource'] is defined ? resourcesWithIndex['downloadable_list_downloadable_resource'] : '1' }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{resourcesWithIndex['downloadable_list_downloadable_resource'] is defined ? resourcesWithIndex['downloadable_list_downloadable_resource'] : '1' }}" role="region">
+                        <div id="accordion-resource-content-{{resourcesWithIndex['downloadable_list_downloadable_resource'] is defined ? resourcesWithIndex['downloadable_list_downloadable_resource'] : '1' }}" class="govuk-accordion__section-content" aria-labelledby="accordion-resource-heading-{{resourcesWithIndex['downloadable_list_downloadable_resource'] is defined ? resourcesWithIndex['downloadable_list_downloadable_resource'] : '1' }}" role="region">
 
                             <ol class="ccs-list-grid">
                                 {% for downloadable_resource in page.content.downloadable_list_downloadable_resource %}
                                     <li class="ccs-list-grid__item">
-                                        {% if downloadable_resource.ccs_downloadable_featured_image.url is defined %}
+                                        {% if downloadable_resource.ccs_downloadable_featured_image.url is defined and downloadable_resource.ccs_downloadable_featured_image.url is not empty %}
                                             <a href="/downloadable-resource/request/{{ downloadable_resource.ID }}/{{ downloadable_resource.post_name }}/" class="ccs-list-grid__item__img ccs-list-grid__item__img--wide">
 
-                                            {% set downloadableFeaturedImage = "" %}
+                                                {% set downloadableFeaturedImage = "" %}
 
                                                 {% if downloadable_resource.ccs_downloadable_featured_image.byName('news-size-m') %}
                                                     {% set downloadableFeaturedImage = downloadable_resource.ccs_downloadable_featured_image.byName('news-size-m') %}
@@ -285,7 +292,9 @@
                                                             alt=""
                                                             role="presentation"
                                                         {% endif %}
-                                                /> </a>
+                                                /> 
+                                                <span class="govuk-visually-hidden">View resource: {{ downloadable_resource.post_title }}</span>
+                                                </a>
                                         {% endif %}
                                         <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
                                             <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ downloadable_resource.post_title }}</h3>
