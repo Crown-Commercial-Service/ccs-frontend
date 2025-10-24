@@ -79,8 +79,6 @@
                 {% if showDocuments is defined and showDocuments %}
                     <li> <a class="govuk-link" href="#documents">documents</a></li>
                 {% endif %}
-
-                <li> <a class="govuk-link" href="#benefitsofccs">the benefits of using CCS</a></li>
             </ul>
         </div>
 
@@ -136,12 +134,6 @@
          {% if showDocuments is defined and showDocuments %}
             {% include 'frameworks/_cas-documents.html.twig' with {'framework': framework}%}
         {% endif %}
-
-
-        <div>
-            <h2 class="govuk-heading-m" id="benefitsofccs">The benefits of using CCS</h2>
-            <iframe src="{{youtubeVideo.video_link is defined ? youtubeVideo.video_link : 'https://www.youtube-nocookie.com/embed/_p61ZX4zQHU' }}" allowfullscreen="" width="560" height="315" title="{{youtubeVideo.video_caption is defined ? youtubeVideo.video_caption : 'CCS - Power to your procurement' }}"></iframe>
-        </div>
 
         <div class="app-c-print-link">
             <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">Print this page</button>
