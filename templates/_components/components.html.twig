@@ -6,7 +6,7 @@
     {# Check what component it is via its `name` field #}
     
     {% if component.name == "text_text" %}
-        <div class="component text">
+        <div class="component govuk-!-margin-top-2">
         {% include '_components/text.html.twig' with {'component': component.content } %}
         </div>
     {% endif %}
