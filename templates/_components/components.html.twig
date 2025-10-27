@@ -4,6 +4,13 @@
     {#{{ dump(component) }}#}
 
     {# Check what component it is via its `name` field #}
+    
+    {% if component.name == "text_text" %}
+        <div class="component text">
+        {% include '_components/text.html.twig' with {'component': component.content } %}
+        </div>
+    {% endif %}
+
     {% if component.name == "intro_intro" %}
         <div class="component intro_and_description">
         {% include '_components/intro_and_description.html.twig' with {'component': component.content } %}
