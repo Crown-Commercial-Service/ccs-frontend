@@ -1,4 +1,19 @@
+{% set expiredAgreement = framework.content.status == 'Expired - Data Still Received' %}
+
 <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+        {% if expiredAgreement %}
+            <div class="govuk-warning-text">
+                <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                <strong class="govuk-warning-text__text">
+                    <span class="govuk-warning-text__assistive">Important</span>
+                    Expired agreement - This information is for reference only
+                </strong>
+            </div>
+        {% endif %}
+
+    </div>
     <div class="govuk-grid-column-two-thirds">
 
         <h1 class="govuk-heading-xl govuk-!-padding-bottom-2 page-title cat-agrement-page-title">{{ framework.content.title }}</h1>
@@ -7,7 +22,7 @@
         {% endif %}
 
                                 
-        <div class="govuk-body">
+        <div class="govuk-body govuk-!-padding-bottom-2">
             <p class="agreement-overview"> <strong> Agreement number: </strong> {{ framework.content.rm_number }} </p>
             <p class="agreement-overview"> <strong> Start date: </strong> {{ framework.content.start_date.format('d/m/Y') }} </p>
             <p class="agreement-overview"> <strong> End date: </strong> {{ framework.content.end_date.format('d/m/Y') }} </p>
@@ -18,7 +33,7 @@
             {% endif %}
         </div>
 
-        {% if framework.content.availability and framework.content.availability != "" %}
+        {% if not expiredAgreement and framework.content.availability and framework.content.availability != "" %}
             <p ><strong>Available for:</strong> {{ framework.content.availability| striptags | raw }} </p> 
         {% endif %}
 
@@ -66,7 +81,8 @@
 			{% set showDocuments = true %}
 		{% endif %}
 
-        <div>
+
+        {% if not expiredAgreement %}
             <h2 class="govuk-heading-m" id="contents">Contents</h2>
 
             <ul class="govuk-list govuk-list--bullet">
@@ -80,58 +96,61 @@
                     <li> <a class="govuk-link" href="#documents">documents</a></li>
                 {% endif %}
             </ul>
-        </div>
 
 
-        {% if showAtAGlance is defined and showAtAGlance %}
-            {% include 'frameworks/_cas-at-a-glance.html.twig' with {'framework': framework}%}
-            
-        {% endif %}
 
-        <h2 class="govuk-heading-m" id="products">Products and suppliers</h2>
+            {% if showAtAGlance is defined and showAtAGlance %}
+                {% include 'frameworks/_cas-at-a-glance.html.twig' with {'framework': framework}%}
+            {% endif %}
+        
+       
+            <h2 class="govuk-heading-m" id="products">Products and suppliers</h2>
+    
+    
+            {% if framework.content.rm_number == "RM1043.8" or framework.content.rm_number == "RM1557.14" %}
+                <div class="govuk-inset-text">
+                    <p ><strong>You can now buy online with CCS.</strong> <br>Please select a lot to start.</p>
+                </div>
+                <div class="grey-margin-bottom" id="agreement-lots"></div>
+            {% endif %}
 
-        {% if framework.content.rm_number == "RM1043.8" or framework.content.rm_number == "RM1557.14" %}
-            <div class="govuk-inset-text">
-                <p ><strong>You can now buy online with CCS.</strong> <br>Please select a lot to start.</p>
-            </div>
-            <div class="grey-margin-bottom" id="agreement-lots"></div>
-        {% endif %}
 
+            {% for lot in framework.content.lots %}
+                <dl class="apollo-list apollo-list--definition grey-margin-bottom">
+                    <dt class="apollo-list--definition__key">
 
-        {% for lot in framework.content.lots %}
-            <dl class="apollo-list apollo-list--definition grey-margin-bottom">
-                <dt class="apollo-list--definition__key">
-
-                    {% if framework.content.rm_number ==  "RM1043.8" %}
-                        <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id={{ framework.content.rm_number }}&lotNum={{ lot.lot_number }}">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
-                    {% elseif framework.content.rm_number ==  "RM1557.14" %}
-                        <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/{{ framework.content.rm_number }}/lot/All">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
-                    {% else %}
-                        <span class="apollo-list--definition__key__inner">Lot {{ lot.lot_number }} {{ lot.title|raw }}</span>
-                    {% endif %}
-                </dt>
-                <dd class="apollo-list--definition__value">
-                    {% if lot.description %}
-                        <div class="govuk-!-margin-bottom-2">{{ lot.description | raw }}</div>
-                    {% endif %}
-
-                    {% if lot.expiry_date is defined and lot.expiry_date is not null and lot.expiry_date >= framework.content.end_date %}
-                        <p>Expires: {{ lot.expiry_date.format('d/m/Y') }}</p>
-                    {% endif %}
-
-                    {% if framework.content.terms == "Standard" %}
-                        {% if lot.suppliers|length == 0 %}
-                            <p>No suppliers</p>
+                        {% if framework.content.rm_number ==  "RM1043.8" %}
+                            <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id={{ framework.content.rm_number }}&lotNum={{ lot.lot_number }}">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
+                        {% elseif framework.content.rm_number ==  "RM1557.14" %}
+                            <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/{{ framework.content.rm_number }}/lot/All">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
                         {% else %}
-                            <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }} suppliers</a> </p>
+                            <span class="apollo-list--definition__key__inner">Lot {{ lot.lot_number }} {{ lot.title|raw }}</span>
                         {% endif %}
-                    {% endif %}
+                    </dt>
+                    <dd class="apollo-list--definition__value">
+                        {% if lot.description %}
+                            <div class="govuk-!-margin-bottom-2">{{ lot.description | raw }}</div>
+                        {% endif %}
 
-                </dd>
-            </dl>
-        {% endfor %}
+                        {% if lot.expiry_date is defined and lot.expiry_date is not null and lot.expiry_date >= framework.content.end_date %}
+                            <p>Expires: {{ lot.expiry_date.format('d/m/Y') }}</p>
+                        {% endif %}
 
-         {% if showDocuments is defined and showDocuments %}
+                        {% if framework.content.terms == "Standard" %}
+                            {% if lot.suppliers|length == 0 %}
+                                <p>No suppliers</p>
+                            {% else %}
+                                <p><a href="{{ path('frameworks_lot_suppliers', {'rmNumber': framework.content.rm_number, 'lotNumber': lot.lot_number }) }}">{{ lot.suppliers|length }} suppliers</a> </p>
+                            {% endif %}
+                        {% endif %}
+
+                    </dd>
+                </dl>
+            {% endfor %}
+
+        {% endif %}
+
+        {% if showDocuments is defined and showDocuments %}
             {% include 'frameworks/_cas-documents.html.twig' with {'framework': framework}%}
         {% endif %}
 
