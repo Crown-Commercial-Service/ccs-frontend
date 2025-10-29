@@ -39,6 +39,20 @@
 				</div>
 			</div>
 		{% endif %}
+
+		{% if framework.content.benefits and framework.content.benefits != "" %}
+			<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="benefits" role="tabpanel" aria-labelledby="tab_benefits">
+				<div class="wysiwyg-content">
+					<h2 class="govuk-heading-l">Benefits</h2>
+					{{ framework.content.benefits | raw }}
+
+					{% if framework.content.policy_compliance is defined and framework.content.policy_compliance|upper == "CRP POLICY COMPLIANT" %}
+						{% include 'frameworks/_policy_compliance_message.html.twig'%}
+					{% endif %}
+
+				</div>
+			</div>
+		{% endif %}
 		
 		{% if framework.content.cannot_use and framework.content.cannot_use != "" %}
 			<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="nottousefor" role="tabpanel" aria-labelledby="tab_nottousefor">
@@ -57,19 +71,6 @@
 				</div>
 			</div>
 		{% endif %}
-		
-		{% if framework.content.benefits and framework.content.benefits != "" %}
-			<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="benefits" role="tabpanel" aria-labelledby="tab_benefits">
-				<div class="wysiwyg-content">
-					<h2 class="govuk-heading-l">Benefits</h2>
-					{{ framework.content.benefits | raw }}
 
-					{% if framework.content.policy_compliance is defined and framework.content.policy_compliance|upper == "CRP POLICY COMPLIANT" %}
-						{% include 'frameworks/_policy_compliance_message.html.twig'%}
-					{% endif %}
-
-				</div>
-			</div>
-		{% endif %}
 	</div>
 </div>
