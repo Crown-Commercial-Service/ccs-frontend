@@ -15,10 +15,14 @@
 
 
         <div class="nav-wrapper">
-
-            <a href="/" class="logo">
-                <img class="navLogo" src="/assets/images/CCS_BLACK_STACKED.svg" alt="Go to CCS Homepage" width="140" height="117" />
-            </a>
+            <div class="nav-wrapper-logo">
+                <a href="/" class="logo mobile-nav-logo">
+                    <img class="navLogo" src="/assets/images/CCS_BLACK_STACKED.svg" alt="Go to CCS Homepage" width="140" height="117" />
+                </a>
+                <a href="/" class="logo desktop-nav-logo">
+                    <img class="navLogo" src="/assets/images/CCS_BLACK_LINEAR.png" alt="Go to CCS Homepage" width="140" height="117" />
+                </a>
+            </div>
 
             
 
@@ -36,12 +40,7 @@
 
                 {{ render(controller(
                     'App\\Controller\\MenuController::menu',
-                    { 'id': 22, 'currentPath': app.request.pathinfo, 'templatePath': 'menus/secondary-menu.html.twig' }
-                )) }}
-
-                {{ render(controller(
-                    'App\\Controller\\MenuController::menu',
-                    { 'id': 21, 'currentPath': app.request.pathinfo, 'templatePath': 'menus/primary-menu.html.twig' }
+                    { 'id': 195, 'currentPath': app.request.pathinfo, 'templatePath': 'menus/primary-menu.html.twig' }
                 )) }}
 
                 {% include 'menus/ppg-menu.html.twig' %}
