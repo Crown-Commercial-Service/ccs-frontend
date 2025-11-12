@@ -1,11 +1,17 @@
 <ul class="nav-list nav-list--primary">
     {% for menu_item in menu.children %}
         <li class="nav-list__item dropdown">
-            <a class="nav-list__link dropbtn {% if menu_item.active %} item-current {% endif %} " data-evt-placement="header">{{ menu_item.label }} <i class="arrow down"></i></a>
+            <button class="nav-list__link dropbtn {% if menu_item.active %} item-current {% endif %} " 
+                data-evt-placement="header">
+                {{ menu_item.label }}
+                <i class="arrow down"></i>
+            </button>
             <div class="dropdown-content">
-                {% for sub_menu_item in menu_item.children %}
-                    <a href="{{sub_menu_item.url}}">{{sub_menu_item.label}}</a>
-                {% endfor %}
+                <ul class="nav-list">
+                    {% for sub_menu_item in menu_item.children %}
+                       <li><a href="{{sub_menu_item.url}}">{{sub_menu_item.label}}</a></li>
+                    {% endfor %}
+                </ul>
             </div>
         </li>
         
