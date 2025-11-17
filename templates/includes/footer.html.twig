@@ -25,6 +25,24 @@
                 )) }}
 
             </div>
+
+            <div class="govuk-footer__section">
+
+                {{ render(controller(
+                    'App\\Controller\\MenuController::menu',
+                    { 'id': 199, 'currentPath': app.request.pathinfo, 'templatePath': 'menus/footer-menu.html.twig' }
+                )) }}
+
+            </div>
+
+            <div class="govuk-footer__section">
+
+                {{ render(controller(
+                    'App\\Controller\\MenuController::menu',
+                    { 'id': 200, 'currentPath': app.request.pathinfo, 'templatePath': 'menus/footer-menu.html.twig' }
+                )) }}
+
+            </div>
         </div>
         <hr class="govuk-footer__section-break govuk-footer__heading ">
         <div class="govuk-footer__meta">
