@@ -396,6 +396,18 @@
 }
 
 
+.dropbtn {
+
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+
+    @include govuk-media-query($from: desktop) {
+       display: block;
+       width: auto;
+    }
+}
 
 .dropdown {
   position: relative;
@@ -449,7 +461,7 @@
 
 .dropdown {
 
-    &:hover {
+    &:hover{
         .arrow { 
             transform: rotate(225deg) !important;
             margin-bottom: auto;
