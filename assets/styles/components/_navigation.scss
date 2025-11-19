@@ -455,9 +455,13 @@
     
 } 
 
-.dropdown:hover .dropdown-content {
-    display: block;
-} 
+
+// only apply hover styles for devices that support hover
+@media (hover: hover) and (pointer: fine) {
+    .dropdown:hover .dropdown-content {
+        display: block; 
+    }   
+}
 
 .dropdown {
 
@@ -469,7 +473,7 @@
         }
     }   
 
-    &:focus-within {
+    &:focus-within, &:active {
 
             .dropdown-content {
                 display: block;
@@ -478,7 +482,7 @@
             .arrow { 
             transform: rotate(225deg) !important;
             margin-bottom: auto;
-            margin-top: 3px;
+            margin-top: 3px; 
         }
     }
     
