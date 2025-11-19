@@ -1,7 +1,7 @@
 <ul class="nav-list nav-list--primary">
     {% for menu_item in menu.children %}
         <li class="nav-list__item dropdown">
-            <button class="nav-list__link dropbtn {% if menu_item.active %} item-current {% endif %} " 
+            <button class="nav-list__link dropbtn{% if menu_item.active %} item-current {% endif %}" 
                 data-evt-placement="header">
                 {{ menu_item.label }}
                 <i class="arrow down"></i>

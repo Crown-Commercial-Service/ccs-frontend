@@ -461,29 +461,25 @@
     .dropdown:hover .dropdown-content {
         display: block; 
     }   
+
+    .dropdown:hover .arrow { 
+        transform: rotate(225deg) !important;
+        margin-bottom: auto;
+        margin-top: 3px;
+    }
 }
 
-.dropdown {
+.dropdown:focus-within {
 
-    &:hover{
-        .arrow { 
-            transform: rotate(225deg) !important;
-            margin-bottom: auto;
-            margin-top: 3px;
-        }
-    }   
-
-    &:focus-within, &:active {
-
-            .dropdown-content {
-                display: block;
-            }
-
-            .arrow { 
-            transform: rotate(225deg) !important;
-            margin-bottom: auto;
-            margin-top: 3px; 
-        }
+    .dropdown-content {
+        display: block;
     }
+
+    .arrow { 
+        transform: rotate(225deg) !important;
+        margin-bottom: auto;
+        margin-top: 3px; 
+    }
+
     
 }
