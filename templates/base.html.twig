@@ -58,14 +58,14 @@
     </style>
 
     {% if app.environment == "prod" %}
-         <link rel="preload" href="/assets/styles/styles.min.css?v=1.89" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.89"></noscript>
+         <link rel="preload" href="/assets/styles/styles.min.css?v=1.90" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.90"></noscript>
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="preload" href="/assets/styles/styles.min.css?v=1.89" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.89"></noscript>
+        <link rel="preload" href="/assets/styles/styles.min.css?v=1.90" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.90"></noscript>
     {% endif %}
 
     {# Browser icon #}
@@ -438,6 +438,7 @@ End Usersnap code #}
         }
     }
 
+var navLinks = document.querySelectorAll('.')
 
    
 
