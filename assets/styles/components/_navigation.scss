@@ -455,31 +455,31 @@
     
 } 
 
-.dropdown:hover .dropdown-content {
-    display: block;
-} 
 
-.dropdown {
-
-    &:hover{
-        .arrow { 
-            transform: rotate(225deg) !important;
-            margin-bottom: auto;
-            margin-top: 3px;
-        }
+// only apply hover styles for devices that support hover
+@media (hover: hover) and (pointer: fine) {
+    .dropdown:hover .dropdown-content {
+        display: block; 
     }   
 
-    &:focus-within {
-
-            .dropdown-content {
-                display: block;
-            }
-
-            .arrow { 
-            transform: rotate(225deg) !important;
-            margin-bottom: auto;
-            margin-top: 3px;
-        }
+    .dropdown:hover .arrow { 
+        transform: rotate(225deg) !important;
+        margin-bottom: auto;
+        margin-top: 3px;
     }
+}
+
+.dropdown:focus-within {
+
+    .dropdown-content {
+        display: block;
+    }
+
+    .arrow { 
+        transform: rotate(225deg) !important;
+        margin-bottom: auto;
+        margin-top: 3px; 
+    }
+
     
 }
