@@ -58,14 +58,14 @@
     </style>
 
     {% if app.environment == "prod" %}
-         <link rel="preload" href="/assets/styles/styles.min.css?v=1.86" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.86"></noscript>
+         <link rel="preload" href="/assets/styles/styles.min.css?v=1.91" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.91"></noscript>
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="preload" href="/assets/styles/styles.min.css?v=1.86" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.86"></noscript>
+        <link rel="preload" href="/assets/styles/styles.min.css?v=1.91" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.91"></noscript>
     {% endif %}
 
     {# Browser icon #}
@@ -437,6 +437,55 @@ End Usersnap code #}
             });
         }
     }
+
+// for nav menu on mobile
+
+var mobileMaxWidth = 768;
+var dropdownSelector = '.nav-list__item.dropdown';
+var dropdownContentSelector = '.dropdown-content';
+var dropbtnSelector = 'button.dropbtn';
+var openClass = 'open-dropdown';
+var arrowSelector = 'i.arrow';
+var arrowClass = 'up';
+
+var isMobile = function () {
+  // window.matchMedia returns a MediaQueryList object
+  return window.matchMedia('(max-width: ' + mobileMaxWidth + 'px)').matches;
+};
+
+var items = document.querySelectorAll(dropdownSelector);
+
+items.forEach(function (li) {
+    var dropdownContent = li.querySelector(dropdownContentSelector);
+    var arrow = li.querySelector(arrowSelector);
+
+  li.addEventListener('click', function (e) {
+    if (!isMobile()) {
+      return;
+    }
+
+    if (e.target.closest(dropdownContentSelector)) {
+      return;
+    }
+    var isOpen = dropdownContent.classList.toggle(openClass);
+    if (isOpen) {
+      arrow.classList.add(arrowClass);
+      arrow.classList.remove('down');
+    } else {
+      arrow.classList.remove(arrowClass);
+      arrow.classList.add('down');
+    }
+
+    var btn = li.querySelector(dropbtnSelector);
+    if (btn) {
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
+  });
+});
+
+   
+
 
 </script>
 
