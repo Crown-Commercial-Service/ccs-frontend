@@ -62,6 +62,7 @@
     @include govuk-media-query($from: desktop) {
 
         margin-right: auto;
+        margin-top: govuk-px-to-rem(32);
     }
 }
 
