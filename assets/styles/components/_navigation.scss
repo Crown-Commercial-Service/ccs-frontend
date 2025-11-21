@@ -32,7 +32,6 @@
 
         display: flex;
         flex-flow: row nowrap;
-        align-items: flex-end;
         padding: govuk-px-to-rem(22) 0 govuk-px-to-rem(26) 0;
         text-align: right;
 
@@ -256,14 +255,18 @@
     // GDS uses an 8-key font scale which predefines which sizes are available.
     // This allows fonts to scale with breakpoints
     @include govuk-font(20, $weight: bold);
-    font-size: 1.45rem!important;
+    font-size: 1.45rem;
 
-    @include govuk-media-query($from: desktop) {
+    @include govuk-media-query($from: tablet) {
+            font-size: 0.9rem!important;
+    }
+
+    @include govuk-media-query($from: 1300) {
     
             @include govuk-font(20, $weight: bold);
             font-size: 1.1rem!important;
     
-        }
+    }
 
 }
 
@@ -402,7 +405,10 @@
     align-items: center;
     width: 100%;
     justify-content: space-between;
-    color: #000 !important;
+
+    @include govuk-media-query($until: tablet) {
+       color: #000 !important;
+    }
 
     @include govuk-media-query($from: desktop) {
        display: block;
