@@ -34,6 +34,7 @@
         flex-flow: row nowrap;
         padding: govuk-px-to-rem(22) 0 govuk-px-to-rem(26) 0;
         text-align: right;
+        gap: 15px;
 
     }
 
@@ -204,6 +205,13 @@
 .nav-list__item {
 
     @include govuk-media-query($from: desktop) {
+
+        display: inline-block;
+        margin-right: 1.2em;
+
+    }
+
+     @include govuk-media-query($from: 1500) {
 
         display: inline-block;
         margin-right: 1.5em;
