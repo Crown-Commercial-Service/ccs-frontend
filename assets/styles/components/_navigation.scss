@@ -402,7 +402,10 @@
     align-items: center;
     width: 100%;
     justify-content: space-between;
-    color: #000 !important;
+
+    @include govuk-media-query($until: tablet) {
+       color: #000 !important;
+    }
 
     @include govuk-media-query($from: desktop) {
        display: block;

@@ -39,13 +39,20 @@
     background: #404040;
     color: govuk-colour("white");
 
-    a {
+    @include govuk-media-query($from: tablet) {
+        button {
         color: govuk-colour("white");
 
         &:hover {
-            text-decoration: underline;
             border: none;
         }
+
+         .arrow {
+            border-color: white;
+        }
+
+    }
+       
     }
 
 }
@@ -117,7 +124,7 @@
     border: 0 none;
 }
 
-.header-global--news-details > .ccs-width-container > .nav-wrapper > .logo > img {
+.header-global--news-details > .ccs-width-container > .nav-wrapper > .nav-wrapper-logo > .logo > img {
     filter: invert(100%)
 }
 
