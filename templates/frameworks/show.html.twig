@@ -74,7 +74,7 @@
 
             {% if framework.content.type == "CAS framework" and frameworkStatus == "live" %}
 
-                {% include 'frameworks/cas-framework.html.twig' with {'framework': framework} %}
+                {% include 'frameworks/_cas-framework.html.twig' with {'framework': framework} %}
             
             {% else %}
                 {% if frameworkStatus == "live" %}

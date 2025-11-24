@@ -50,11 +50,11 @@
 
 .govuk-footer__heading {
 
-    border-color: #636363;
     color: inherit;
     margin-bottom: govuk-px-to-rem(18);
     margin-top: 0;
     padding-bottom: govuk-px-to-rem(16);
+    border: none !important;
 
 }
 
@@ -86,7 +86,11 @@
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    width: 70%;
+    width: 100%;
+
+    > *:last-child {
+        flex: 2 1 0; /* grow twice as much as others */
+    }
 }
 
 .govuk-footer__section {
@@ -121,6 +125,10 @@
         margin-left: 55px;
         margin-right: 0px;
         margin-top:30px;
+
+        img {
+            width: govuk-px-to-rem(140);
+        }
 }
 
 .govuk-footer-mobile-logo-view {

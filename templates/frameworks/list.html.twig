@@ -514,8 +514,8 @@
                         this.emptyResult = Object.keys(jsonResponse.results).length === 0 ? true : false
                         this.responseAvailable = true;
 
-                        if (this.displayKeyword) {
-                            pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'agreements', 'search_term': self.displayKeyword, 'interaction_detail': self.searchResultsNumber});
+                        if (this.keyword) {
+                            pushToDataLayer({'event': 'view_search_results', 'interaction_type': 'agreements', 'search_term': this.keyword, 'interaction_detail': this.searchResultsNumber});
                         }
                     })
                     .catch(error => {

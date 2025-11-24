@@ -3,69 +3,74 @@
     <h2 class="govuk-heading-m" id="ataglance">At a glance</h2>
     <div class="govuk-tabs" data-module="govuk-tabs">
 
-    <ul class="govuk-tabs__list" role="tablist">
+		<ul class="govuk-tabs__list" role="tablist">
 
+			{% if framework.content.description and framework.content.description != "" %}
+				<li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
+					<a class="govuk-tabs__tab" href="#desc" id="tab_desc" role="tab" aria-controls="desc" aria-selected="true" tabindex="0" onclick="pushToDataLayer({'event': 'tab_navigation', 'link_text': 'Description'});">Description</a>
+				</li>
+			{% endif %}
+
+			{% if framework.content.benefits and framework.content.benefits != "" %}
+				<li class="govuk-tabs__list-item" role="presentation">
+					<a class="govuk-tabs__tab" href="#benefits" id="tab_benefits" role="tab" aria-controls="benefits" aria-selected="false" tabindex="-1" onclick="pushToDataLayer({'event': 'tab_navigation', 'link_text': 'Benefits'});">Benefits</a>
+				</li>
+			{% endif %}
+
+			{% if framework.content.cannot_use and framework.content.cannot_use != "" %}
+				<li class="govuk-tabs__list-item" role="presentation">
+					<a class="govuk-tabs__tab" href="#nottousefor" id="tab_nottousefor" role="tab" aria-controls="nottousefor" aria-selected="false" tabindex="-1" onclick="pushToDataLayer({'event': 'tab_navigation', 'link_text': 'When you can\'t use this agreement'});">When you can't use this agreement</a>
+				</li>
+			{% endif %}
+
+			{% if framework.content.how_to_buy and framework.content.how_to_buy != "" %}
+				<li class="govuk-tabs__list-item" role="presentation">
+					<a class="govuk-tabs__tab" href="#key-facts" id="tab_key-facts" role="tab" aria-controls="key-facts" aria-selected="false" tabindex="-1" onclick="pushToDataLayer({'event': 'tab_navigation', 'link_text': 'How to buy'});">How to buy</a>
+				</li>
+			{% endif %}
+
+		</ul>
+	
 		{% if framework.content.description and framework.content.description != "" %}
-			<li class="govuk-tabs__list-item govuk-tabs__list-item--selected" role="presentation">
-				<a class="govuk-tabs__tab" href="#desc" id="tab_desc" role="tab" aria-controls="desc" aria-selected="true" tabindex="0" onclick="pushToDataLayer({'event': 'tab_navigation', 'link_text': 'Description'});">Description</a>
-			</li>
+			<div class="govuk-tabs__panel" id="desc" role="tabpanel" aria-labelledby="tab_desc">
+				<div class="wysiwyg-content">
+					<h2 class="govuk-heading-l">Description</h2>
+					{{ framework.content.description | raw }}
+				</div>
+			</div>
 		{% endif %}
 
 		{% if framework.content.benefits and framework.content.benefits != "" %}
-			<li class="govuk-tabs__list-item" role="presentation">
-				<a class="govuk-tabs__tab" href="#benefits" id="tab_benefits" role="tab" aria-controls="benefits" aria-selected="false" tabindex="-1" onclick="pushToDataLayer({'event': 'tab_navigation', 'link_text': 'Benefits'});">Benefits</a>
-			</li>
-		{% endif %}
+			<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="benefits" role="tabpanel" aria-labelledby="tab_benefits">
+				<div class="wysiwyg-content">
+					<h2 class="govuk-heading-l">Benefits</h2>
+					{{ framework.content.benefits | raw }}
 
+					{% if framework.content.policy_compliance is defined and framework.content.policy_compliance|upper == "CRP POLICY COMPLIANT" %}
+						{% include 'frameworks/_policy_compliance_message.html.twig'%}
+					{% endif %}
+
+				</div>
+			</div>
+		{% endif %}
+		
 		{% if framework.content.cannot_use and framework.content.cannot_use != "" %}
-			<li class="govuk-tabs__list-item" role="presentation">
-				<a class="govuk-tabs__tab" href="#nottousefor" id="tab_nottousefor" role="tab" aria-controls="nottousefor" aria-selected="false" tabindex="-1" onclick="pushToDataLayer({'event': 'tab_navigation', 'link_text': 'When you can\'t use this agreement'});">When you can't use this agreement</a>
-			</li>
+			<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="nottousefor" role="tabpanel" aria-labelledby="tab_nottousefor">
+				<div class="wysiwyg-content">
+					<h2 class="govuk-heading-l">When you can't use this agreement</h2>
+					{{ framework.content.cannot_use | raw }}
+				</div>
+			</div>
+		{% endif %}
+		
+		{% if framework.content.how_to_buy and framework.content.how_to_buy != "" %}
+			<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="key-facts" role="tabpanel" aria-labelledby="tab_key-facts">
+				<div class="wysiwyg-content">
+				<h2 class="govuk-heading-l">How to buy</h2>
+					{{ framework.content.how_to_buy | raw }}
+				</div>
+			</div>
 		{% endif %}
 
-        {% if framework.content.how_to_buy and framework.content.how_to_buy != "" %}
-            <li class="govuk-tabs__list-item" role="presentation">
-                <a class="govuk-tabs__tab" href="#key-facts" id="tab_key-facts" role="tab" aria-controls="key-facts" aria-selected="false" tabindex="-1" onclick="pushToDataLayer({'event': 'tab_navigation', 'link_text': 'How to buy'});">How to buy</a>
-            </li>
-        {% endif %}
-
-    </ul>
-	
-	{% if framework.content.description and framework.content.description != "" %}
-		<div class="govuk-tabs__panel" id="desc" role="tabpanel" aria-labelledby="tab_desc">
-			<div class="wysiwyg-content">
-				{{ framework.content.description | raw }}
-			</div>
-		</div>
-    {% endif %}
-    
-	{% if framework.content.cannot_use and framework.content.cannot_use != "" %}
-		<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="nottousefor" role="tabpanel" aria-labelledby="tab_nottousefor">
-			<div class="wysiwyg-content">
-				{{ framework.content.cannot_use | raw }}
-			</div>
-		</div>
-    {% endif %}
-    
-    {% if framework.content.how_to_buy and framework.content.how_to_buy != "" %}
-		<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="key-facts" role="tabpanel" aria-labelledby="tab_key-facts">
-			<div class="wysiwyg-content">
-				{{ framework.content.how_to_buy | raw }}
-			</div>
-		</div>
-    {% endif %}
-    
-	{% if framework.content.benefits and framework.content.benefits != "" %}
-		<div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="benefits" role="tabpanel" aria-labelledby="tab_benefits">
-			<div class="wysiwyg-content">
-				{{ framework.content.benefits | raw }}
-
-				{% if framework.content.policy_compliance is defined and framework.content.policy_compliance|upper == "CRP POLICY COMPLIANT" %}
-					{% include 'frameworks/_policy_compliance_message.html.twig'%}
-				{% endif %}
-
-			</div>
-		</div>
-    {% endif %}
-</div>
+	</div>
 </div>
