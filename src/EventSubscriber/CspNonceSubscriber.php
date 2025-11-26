@@ -1,19 +1,21 @@
-<?php namespace App\EventSubscriber;
+<?php
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface; 
-use Symfony\Component\HttpKernel\Event\RequestEvent; 
+namespace App\EventSubscriber;
+
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class CspNonceSubscriber implements EventSubscriberInterface 
-{ 
-    public static function getSubscribedEvents(): array 
-    { 
-        return [ 
-            KernelEvents::REQUEST  => ['onKernelRequest', 256], 
-            KernelEvents::RESPONSE => ['onKernelResponse', -256], 
-        ]; 
-    } 
+class CspNonceSubscriber implements EventSubscriberInterface
+{
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            KernelEvents::REQUEST  => ['onKernelRequest', 256],
+            KernelEvents::RESPONSE => ['onKernelResponse', -256],
+        ];
+    }
 
     public function onKernelRequest(RequestEvent $event)
     {
@@ -27,8 +29,8 @@ class CspNonceSubscriber implements EventSubscriberInterface
         $request->attributes->set('_csp_nonce', $nonce);
     }
 
-    public function onKernelResponse(ResponseEvent $event) 
-    { 
+    public function onKernelResponse(ResponseEvent $event)
+    {
         $request  = $event->getRequest();
         $response = $event->getResponse();
 
@@ -53,7 +55,7 @@ class CspNonceSubscriber implements EventSubscriberInterface
 
         // Start in Report-Only for testing
         if (getenv('APP_ENV') == 'test') {
-         $response->headers->set('Content-Security-Policy-Report-Only', $policy);
+            $response->headers->set('Content-Security-Policy-Report-Only', $policy);
         }
-    } 
+    }
 }
