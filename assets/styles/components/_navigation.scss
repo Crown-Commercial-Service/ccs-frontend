@@ -32,7 +32,7 @@
 
         display: flex;
         flex-flow: row nowrap;
-        padding: govuk-px-to-rem(22) 0 govuk-px-to-rem(26) 0;
+        padding: 0 0 govuk-px-to-rem(16) 0;
         text-align: right;
         gap: 15px;
 
@@ -55,7 +55,7 @@
         background-color: transparent;
         margin-top: 0;
         margin-bottom: govuk-px-to-rem(2) ;
-        margin-top: govuk-px-to-rem(20);
+        margin-top: govuk-px-to-rem(10);
 
     }
 
