@@ -17,12 +17,6 @@
 
     color: #000000;
 
-    &:hover,
-    &:active {
-
-        color: govuk-colour("light-grey");
-
-    }
     &:focus {
 
         color: $govuk-focus-text-colour;
