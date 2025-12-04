@@ -179,7 +179,6 @@
 
     p {
         margin-bottom: 0px;
-        color: white;
         font-weight: 600 !important;
     }
 
@@ -328,7 +327,7 @@
     background-color: white;
     border: 0;
     border-radius: govuk-px-to-rem(3);
-    color: #6a99ff;
+    color: $ccs-text-colour;
     padding: govuk-px-to-rem(7) govuk-px-to-rem(14);
     position: absolute;
     right: govuk-px-to-rem(15);
