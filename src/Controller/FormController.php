@@ -418,8 +418,9 @@ class FormController extends AbstractController
         $errorMessages = [];
 
         $errorMessages['nameErr'] =         FormValidation::validationName($data['name']);
-        $errorMessages['jobTitleErr'] =     FormValidation::validationJobTitleForContactCCS($data['jobTitle']);
         $errorMessages['emailErr'] =        FormValidation::validationEmail($data['email']);
+        $errorMessages['jobTitleErr'] =     FormValidation::validationJobTitleForContactCCS($data['jobTitle']);
+        $errorMessages['companyErr'] =      FormValidation::validationCompany($data['company']);
 
         if ($data['enquiryType'] == "Website - Complaint") {
             $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
@@ -429,7 +430,6 @@ class FormController extends AbstractController
             $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
         }
 
-        $errorMessages['companyErr'] =      FormValidation::validationCompany($data['company']);
         $errorMessages['moreDetailErr'] =   FormValidation::validationMoreDetail($data['moreDetail']);
 
         if ($this->fileAttached()) {
@@ -445,8 +445,8 @@ class FormController extends AbstractController
 
         $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['jobTitleErr'] = FormValidation::validationJobTitleForContactCCS($data['jobTitle']);
-        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
         $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
+        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
 
         return $this->formatErrorMessages($errorMessages);
     }
@@ -468,8 +468,8 @@ class FormController extends AbstractController
         $errorMessages['customerTypeErr'] =     FormValidation::validatioCustomerType($data['customerType']);
         $errorMessages['dateErr'] =             FormValidation::validationDate($data['customerType'], $data['buyerDate'], $data['supplierDate']);
         $errorMessages['nameErr'] =             FormValidation::validationNameForEsourcingTraining($data['name']);
-        $errorMessages['emailErr'] =            FormValidation::validationEmail($data['email']);
         $errorMessages['phoneErr'] =            FormValidation::validationPhone($data['phone']);
+        $errorMessages['emailErr'] =            FormValidation::validationEmail($data['email']);
 
         return $this->formatErrorMessages($errorMessages);
     }
@@ -480,8 +480,8 @@ class FormController extends AbstractController
 
         $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
-        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
         $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
+        $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
 
 
         return self::formatErrorMessages($errorMessages);
