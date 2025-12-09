@@ -125,8 +125,6 @@ class NewsController extends AbstractController
             $content_group = ControllerHelper::toSlugList($listOfSector, "news/");
         }
 
-        $featureNewsProperties = ControllerHelper::extractFeatureNewsProperties('post_components_rows', $page->getContent());
-
         return $this->render('news/show.html.twig', [
             'url'           => sprintf('/news/%s', $slug),
             'page'          => $page,
@@ -134,7 +132,6 @@ class NewsController extends AbstractController
             'authorImage'   => $authorImage,
             'site_base_url' => getenv('APP_BASE_URL'),
             'content_group' => $content_group ?? null,
-            'featureNewsProperties' => $featureNewsProperties,
         ]);
     }
 
