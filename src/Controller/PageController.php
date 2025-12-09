@@ -183,8 +183,6 @@ class PageController extends AbstractController
             $formCampaignCode = $page->getContent()['contact_form_form_campaign_code']->getValue();
         }
 
-        $featureNewsProperties = ControllerHelper::extractFeatureNewsProperties('page_components_rows', $page->getContent());
-
         if ($request->isMethod('POST')) {
             $formErrors = $this->sendToSalesforceForPageEnquiry($request->request, $formData, $formCampaignCode);
 
@@ -206,7 +204,6 @@ class PageController extends AbstractController
             'slug'                       => $slug,
             'formErrors'                 => $formErrors,
             'formData'                   => $formData,
-            'featureNewsProperties'      => $featureNewsProperties,
             'cscMessage'                 => $cscMessage,
             'resourcesWithIndex'         => $resourcesWithIndex
          ]);
