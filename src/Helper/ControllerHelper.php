@@ -187,5 +187,4 @@ class ControllerHelper
 
         return [$selected, $pillarArray];
     }
-
 }
