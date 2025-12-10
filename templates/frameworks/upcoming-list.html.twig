@@ -469,12 +469,14 @@
                     });
                 },
                 keyword(keyword){
-                    if(this.keyword.trim().length == 0 || /^[\-\(\)&]*$/.test(this.keyword)){
+                    if(this.keyword && (this.keyword.trim().length == 0 || /^[\-\(\)&]*$/.test(this.keyword))){ 
                         this.keyword = "";
                     }
-                    this.keyword = this.keyword
-                        .replace(/\//g, "")                   // Remove slashes
-                        .replace(/[^a-zA-Z0-9\s\-&()]/g, ""); // Allow letters, numbers, spaces, and the specified characters
+                    if(this.keyword) {
+                        this.keyword = this.keyword
+                            .replace(/\//g, "")                   // Remove slashes
+                            .replace(/[^a-zA-Z0-9\s\-&()]/g, ""); // Allow letters, numbers, spaces, and the specified characters
+                    }
                 },
                 searchRequestUrl: function() {
 
@@ -707,9 +709,9 @@
                             return;
                         }
 
-                        this.checkedAgreementStatus     = event.state.checkedAgreementStatus;
-                        this.checkedAgreementType       = event.state.checkedAgreementType;
-                        this.keyword                    = event.state.keyword;
+                        this.checkedAgreementStatus     = event.state.checkedAgreementStatus || [];
+                        this.checkedAgreementType       = event.state.checkedAgreementType || [];
+                        this.keyword                    = event.state.keyword || null;
                     }
                 }
             }
