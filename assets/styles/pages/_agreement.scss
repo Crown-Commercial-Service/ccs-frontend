@@ -8,10 +8,12 @@
 
 .joint-schedule-title {
   margin-bottom: 0px !important;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 
 .cas-document-tag {
-  margin-left: 5px;
   color:  $govuk-text-colour;
 }
 
