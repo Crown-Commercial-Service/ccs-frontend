@@ -49,7 +49,7 @@ class CspNonceSubscriber implements EventSubscriberInterface
                 "connect-src https://www.google-analytics.com https://www.google.co.uk region1.analytics.google.com region2.analytics.google.com " .
                     "cdn.linkedin stats.g.doubleclick.net cdn2.gbqofs.com report.crown-comm.gbqofs.io; " .
                 "font-src https://fonts.gstatic.com; " .
-                "frame-src 'self' https://www.googletagmanager.com; " .
+                "frame-src 'self' https://www.googletagmanager.com https://www.youtube.com https://www.youtube-nocookie.com; " .
                 "object-src 'none'; " .
                 "report-to https://neypx8roc8.execute-api.eu-west-2.amazonaws.com/prod/report";
 
