@@ -1,6 +1,96 @@
   <div class="apollo-enclosure csat-survey-box" style="background-color: #FEC901; color: #0E0E0E;">
             <h2 class="aside__heading">Help us make this service better for you</h2>
-            <p>
-                <a class="govuk-link" style="color: #0E0E0E; font-weight: 600;" href="https://crowncommercial.qualtrics.com/jfe/form/SV_b2hqVz3TYDCxN2u">Give feedback on how we can improve this service.</a>
+            <input type="checkbox" id="feedback-toggle" style="display: none;" aria-label="Toggle feedback form">
+            <p id="feedback-trigger-section">
+                <label for="feedback-toggle" class="govuk-link feedback-trigger" style="color: #0e0e0e; font-weight: 800; background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                    Give feedback on how we can improve this service.
+                    <span class="chevron" aria-hidden="true" style="font-size: 16px; transition: transform 0.2s ease;">▼</span>
+                </label>
             </p>
+            <div id="feedback-form" class="feedback-form" role="region" aria-labelledby="feedback-heading">
+              <h3 id="feedback-heading" class="govuk-heading-s" style="margin-top: 0;">Rate this
+                  service</h3>
+
+              <div class="govuk-form-group">
+                  <fieldset class="govuk-fieldset" aria-describedby="rating-hint">
+                      <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                          How would you rate your experience on our website today? (1 is very poor, 10
+                          is excellent)
+                      </legend>
+                      <div id="rating-hint" class="govuk-hint">
+                          Select one option
+                      </div>
+                      <div id="rating-required-hint" class="govuk-visually-hidden">
+                          A rating is required to submit feedback
+                      </div>
+                      <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                          <div class="govuk-radios__item">
+                              <input class="govuk-radios__input" id="rating-1" name="rating" type="radio" value="1" aria-label="1 - Very poor">
+                              <label class="govuk-label govuk-radios__label" for="rating-1">1</label>
+                          </div>
+                          <div class="govuk-radios__item">
+                              <input class="govuk-radios__input" id="rating-2" name="rating" type="radio" value="2" aria-label="2">
+                              <label class="govuk-label govuk-radios__label" for="rating-2">2</label>
+                          </div>
+                          <div class="govuk-radios__item">
+                              <input class="govuk-radios__input" id="rating-3" name="rating" type="radio" value="3" aria-label="3">
+                              <label class="govuk-label govuk-radios__label" for="rating-3">3</label>
+                          </div>
+                          <div class="govuk-radios__item">
+                              <input class="govuk-radios__input" id="rating-4" name="rating" type="radio" value="4" aria-label="4">
+                              <label class="govuk-label govuk-radios__label" for="rating-4">4</label>
+                          </div>
+                          <div class="govuk-radios__item">
+                              <input class="govuk-radios__input" id="rating-5" name="rating" type="radio" value="5" aria-label="5">
+                              <label class="govuk-label govuk-radios__label" for="rating-5">5</label>
+                          </div>
+                          <div class="govuk-radios__item">
+                              <input class="govuk-radios__input" id="rating-6" name="rating" type="radio" value="6" aria-label="6">
+                              <label class="govuk-label govuk-radios__label" for="rating-6">6</label>
+                          </div>
+                          <div class="govuk-radios__item">
+                              <input class="govuk-radios__input" id="rating-7" name="rating" type="radio" value="7" aria-label="7">
+                              <label class="govuk-label govuk-radios__label" for="rating-7">7</label>
+                          </div>
+                          <div class="govuk-radios__item">
+                              <input class="govuk-radios__input" id="rating-8" name="rating" type="radio" value="8" aria-label="8">
+                              <label class="govuk-label govuk-radios__label" for="rating-8">8</label>
+                          </div>
+                          <div class="govuk-radios__item">
+                              <input class="govuk-radios__input" id="rating-9" name="rating" type="radio" value="9" aria-label="9">
+                              <label class="govuk-label govuk-radios__label" for="rating-9">9</label>
+                          </div>
+                          <div class="govuk-radios__item">
+                              <input class="govuk-radios__input" id="rating-10" name="rating" type="radio" value="10" aria-label="10 - Excellent">
+                              <label class="govuk-label govuk-radios__label" for="rating-10">10</label>
+                          </div>
+                      </div>
+                  </fieldset>
+              </div>
+
+              <div class="govuk-form-group">
+                  <label class="govuk-label" for="feedback-comments">
+                      Provide more details (optional)
+                  </label>
+                  <div id="feedback-comments-hint" class="govuk-hint">
+                      Do not include personal or financial information.
+                  </div>
+                  <textarea class="govuk-textarea" id="feedback-comments" name="feedback-comments" rows="3" aria-describedby="feedback-comments-hint" aria-required="false">                                    </textarea>
+              </div>
+
+              <div class="feedback-form-actions">
+                  <div class="govuk-button-group">
+                      <button id="submit-feedback-btn" class="govuk-button govuk-button--secondary" type="button" onclick="submitFeedback()" aria-describedby="rating-required-hint">
+                          Submit feedback
+                      </button>
+                      <a class="govuk-link govuk-link--no-visited-state" href="#" onclick="cancelFeedback()">
+                          Cancel
+                      </a>
+                  </div>
+              </div>
+          </div>
+          <div id="feedback-thank-you" class="feedback-thank-you" role="region" aria-live="polite" style="display: none;">
+              <h3 class="govuk-heading-s" style="margin-top: 0;">Thank you for your feedback</h3>
+              <p>Your feedback helps us improve this service.</p>
+          </div>
   </div>
