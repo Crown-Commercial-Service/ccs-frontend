@@ -1,17 +1,16 @@
 // --- VARIABLES ---
-// Define common colors and breakpoints to avoid repetition
-$color-white: #fff;
 $color-text: #0e0e0e;
 $color-hint: #666;
 $color-border: #ccc;
 $color-button-bg: #E1E1E1;
-$breakpoint-mobile-max: 480px;
-$breakpoint-tablet-max: 768px;
-$breakpoint-tablet-min: 769px;
-$breakpoint-desktop-max: 1024px;
+
+// Breakpoints for the radio grid
+$bp-mobile-max: 718px;
+$bp-tablet-max-small: 868px;
+$bp-tablet-min-large: 869px;
+$bp-desktop-max: 1024px;
 
 // --- MIXINS ---
-// Define a mixin for managing responsive radio grid columns
 @mixin feedback-radio-grid($columns) {
     display: grid;
     grid-template-columns: repeat($columns, 1fr);
@@ -19,55 +18,48 @@ $breakpoint-desktop-max: 1024px;
     margin-top: 10px;
 }
 
-// --- CORE STYLES ---
+// --- CORE FORM STYLES ---
 .feedback-form,
+.feedback-form-mobile,
 .feedback-thank-you {
     margin-top: 15px;
     padding: 15px;
-    background-color: $color-white;
+    background-color: white;
     border-radius: 4px;
     border: 1px solid $color-border;
-
-    // Nesting for common GOV.UK component overrides
+    
     .govuk-fieldset__legend {
         color: $color-text;
         font-weight: 600;
     }
-
     .govuk-hint {
         color: $color-hint;
     }
-
     .govuk-label {
         color: $color-text;
     }
-
     .govuk-textarea {
         border-color: $color-border;
-
         &:focus {
             border-color: $color-text;
             box-shadow: 0 0 0 2px $color-text;
         }
     }
-    
     .govuk-button {
         background-color: $color-button-bg;
     }
     
-    // Grid setup for the radio buttons
+    // Default radio grid (large desktop)
     .govuk-radios--small {
-        @include feedback-radio-grid(5); // Default (Desktop)
+        @include feedback-radio-grid(5);
 
         .govuk-radios__item {
             margin-bottom: 0;
             margin-right: 0;
         }
-
         .govuk-radios__input {
             margin-right: 5px;
         }
-
         .govuk-radios__label {
             font-size: 14px;
             padding-left: 5px;
@@ -75,22 +67,23 @@ $breakpoint-desktop-max: 1024px;
     }
 }
 
-// --- ACTIONS & TRIGGER ---
-.feedback-form-actions {
-    margin-top: 20px;
+// --- TRIGGER & CHEVRON ---
+.feedback-trigger {
+    color: $color-text; 
+    font-weight: 800;
+    background: none; 
+    border: none; 
+    cursor: pointer; 
     display: flex;
     align-items: center;
-}
-
-.feedback-trigger {
+    gap: 5px;
     text-align: left;
     justify-content: flex-start;
-    align-items: center;
-
+    
     &:hover {
         text-decoration: underline !important;
         
-        .chevron { // Hover effect for the nested chevron
+        .chevron { 
             transform: scale(1.1);
         }
     }
@@ -101,9 +94,8 @@ $breakpoint-desktop-max: 1024px;
     }
 }
 
-// --- CHEVRON STYLING ---
 .chevron {
-    font-size: 36px;
+    font-size: 16px; 
     transition: transform 0.2s ease;
     display: inline-block;
     margin-left: 5px;
@@ -111,81 +103,69 @@ $breakpoint-desktop-max: 1024px;
     text-decoration: none;
 }
 
-// --- EXPAND/COLLAPSE LOGIC (Desktop/Tablet) ---
-// Using the toggle checkbox and the sibling selector
-#feedback-toggle {
-    display: none;
-    
-    // Show form when checked
-    &:checked ~ #feedback-form {
+.feedback-form-actions {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+// --- CSS TOGGLE LOGIC (CONSOLIDATED) ---
+
+// Hide both checkboxes by default
+#feedback-toggle,
+#feedback-toggle-mobile {
+    display: none; 
+
+    // When EITHER checkbox is checked, show its corresponding form
+    &:checked ~ #feedback-form,
+    &:checked ~ #feedback-form-mobile {
         display: block;
     }
-    
-    // Rotate chevron when checked
+
+    // When EITHER checkbox is checked, rotate the chevron
     &:checked ~ #feedback-trigger-section .chevron {
         transform: rotate(180deg);
     }
 }
 
-#feedback-form {
-    display: none;
-}
-
-// --- EXPAND/COLLAPSE LOGIC (Mobile) ---
-#feedback-toggle-mobile {
-    display: none;
-    
-    // Show form when checked (selector is different for mobile due to template structure)
-    &:checked ~ #feedback-trigger-section-mobile ~ #feedback-form-mobile {
-        display: block;
-    }
-    
-    // Rotate chevron when checked
-    &:checked ~ #feedback-trigger-section-mobile .chevron {
-        transform: rotate(180deg);
-    }
-}
-
+// Hide both forms by default
+#feedback-form,
 #feedback-form-mobile {
-    display: none;
+    display: none; 
 }
 
-// --- RESPONSIVE BEHAVIOR ---
 
-// Hide desktop version by default, show mobile version only up to $breakpoint-tablet-max
-.feedback-mobile {
-    display: none;
-}
+// --- RESPONSIVE RADIO GRID ---
 
-@media (max-width: $breakpoint-tablet-max) {
-    .feedback-desktop {
-        display: none;
-    }
-
-    .feedback-mobile {
-        display: block;
-    }
-}
-
-// Radio grid responsive overrides (nested within .feedback-form implicitly)
-
-// Tablet (868px - 1024px)
-@media (min-width: $breakpoint-tablet-min) and (max-width: $breakpoint-desktop-max) {
-    .feedback-form .govuk-radios--small {
+// Tablet (Larger) - 4 Columns
+@media (min-width: $bp-tablet-min-large) and (max-width: $bp-desktop-max) {
+    .feedback-form .govuk-radios--small,
+    .feedback-form-mobile .govuk-radios--small {
         @include feedback-radio-grid(4);
     }
 }
 
-// Smaller Tablet/Large Mobile (481px - 867px)
-@media (max-width: 867px) {
-    .feedback-form .govuk-radios--small {
+// Tablet (Smaller) - 3 Columns
+@media (max-width: $bp-tablet-max-small) {
+    .feedback-form .govuk-radios--small,
+    .feedback-form-mobile .govuk-radios--small {
         @include feedback-radio-grid(3);
     }
 }
 
-// Smallest Mobile (<= 480px)
-@media (max-width: $breakpoint-mobile-max) {
-    .feedback-form .govuk-radios--small {
+// Mobile - 2 Columns
+@media (max-width: $bp-mobile-max) {
+    .feedback-form .govuk-radios--small,
+    .feedback-form-mobile .govuk-radios--small {
         @include feedback-radio-grid(2);
+    }
+}
+
+// --- CRITICAL MOBILE VISIBILITY FIX ---
+// This is essential to override the inline style="display: none;" on the mobile container
+// so that the entire component appears on small screens.
+@media (max-width: 768px) {
+    .helpful-info-search-agreement-mobile {
+        display: block !important;
     }
 }
