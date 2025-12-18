@@ -58,7 +58,7 @@
     </style>
 
     {# To bust cache, you bump the version up #}
-    {% set cssVersion = '1.98' %}
+    {% set cssVersion = '1.99' %}
 
     {% if app.environment == "prod" %}
          <link rel="preload" href={{"/assets/styles/styles.min.css?v=#{cssVersion}"}} as="style" onload="this.onload=null;this.rel='stylesheet'">
