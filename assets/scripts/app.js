@@ -158,6 +158,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
         })
     }
 
-
-
+    /**
+     * Globally enable showing of blocks if js is enabled.
+     * Apply class ".hideWithoutJS govuk-visually-hidden" to your parent block 
+     * to enable toggling when js is on/off.
+    **/
+    const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
+    hideWithOutJS.forEach(section => {
+        if (section.classList.contains('govuk-visually-hidden')) {;
+            section.classList.remove('govuk-visually-hidden');
+        }
+    });
 });
