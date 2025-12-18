@@ -257,17 +257,6 @@
                 this.fetchAPIData(this.currentPage);
                 this.setupHistoryApi();  
             },
-            created(){
-                // making sure the sections that is hidden at start shows
-                this.$nextTick(() => {
-                    const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
-                    hideWithOutJS.forEach(section => {
-                        if (section.classList.contains('govuk-visually-hidden')) {
-                            section.classList.remove('govuk-visually-hidden');
-                        }
-                    });
-                });
-            },
             watch: {
                 responseAvailable(responseAvailable) {
                     this.$nextTick(() => {
