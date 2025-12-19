@@ -4,15 +4,17 @@
     <p>You might not need all the contractual documents to buy the products or services from this agreement.</p>
 </div>
 
+{% set index = 0 %}
 <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
     {% if framework.content.customer_guide and framework.content.customer_guide != "" %}
+        {% set index = index + 1 %}
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Buyer guides</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ index }}">Buyer guides</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-1" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-1" role="region">
+            <div id="accordion-default-content-{{ index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ index }}" role="region">
                 <p>Before buying from this agreement you should read the buyer guide and how to use contractual documents.</p>
                 <p>The buyer guide will help you understand how the agreement works and what you can or can’t use the agreement for.</p>
                 <p>This section might also include further guides or lists you will need to look at and make selections from, as well as previous webinar slides and Q&A scripts from sessions with buyers and suppliers.</p>
@@ -22,13 +24,14 @@
     {% endif %}
 
     {% if framework.content.core_terms_conditions and framework.content.core_terms_conditions != "" %}
+        {% set index = index + 1 %}
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-2">Core terms and conditions</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ index }}">Core terms and conditions</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-2" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-2" role="region">
+            <div id="accordion-default-content-{{ index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ index }}" role="region">
                 <p>The core terms form part of the framework and call-off contracts and must be used on every contract. They cannot be changed.</p>
                 <p>The core terms are CCS’s standard commercial terms. They govern the supplier’s relationship with CCS and every customer who has a call-off contract.</p>
                 <div class="wysiwyg-content rawHTML">{{ framework.content.core_terms_conditions|raw }}</div>
@@ -37,13 +40,14 @@
     {% endif %}
 
     {% if framework.content.call_off_order_form and framework.content.call_off_order_form != "" %}
+        {% set index = index + 1 %}
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-3">Call-off order form</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ index }}">Call-off order form</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-3" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-3" role="region">
+            <div id="accordion-default-content-{{ index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ index }}" role="region">
                 <p>When a customer decides to buy from a supplier, they’ll complete an order form with important information about the call-off contract.</p>
                 <p>Customers can change any of their chosen schedules by adding special terms in the call-off order form.</p>
 
@@ -69,13 +73,14 @@
     {% endif %}
 
     {% if framework.content.joint_schedules and framework.content.joint_schedules != "" %}
+        {% set index = index + 1 %}
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-4">Joint schedules</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ index }}">Joint schedules</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-4" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-4" role="region">
+            <div id="accordion-default-content-{{ index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ index }}" role="region">
                 {% for jointSchedule in framework.content.joint_schedules %}
                     <p class="joint-schedule-title">
                         <a onclick="fileDownload('{{ jointSchedule.joint_schedule_document }}', '{{ jointSchedule.joint_schedule_document_name }}', '{{ jointSchedule.joint_schedule_file_size }}');" href={{ jointSchedule.joint_schedule_document}}><strong>{{ jointSchedule.joint_schedule_document_name }}</strong></a>
@@ -91,13 +96,14 @@
     {% endif %}
 
     {% if framework.content.call_off_schedules and framework.content.call_off_schedules != "" %}
+        {% set index = index + 1 %}
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-5">Call-off schedules</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ index }}">Call-off schedules</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-5" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-5" role="region">
+            <div id="accordion-default-content-{{ index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ index }}" role="region">
                 
                 <p>Call-off schedules are used when suppliers sell their goods or services to customers.</p>
                 <p>You can choose which schedules to include and whether to edit these template schedules when they form a call-off contract.</p>
@@ -117,13 +123,14 @@
     {% endif %}
 
     {% if framework.content.framework_schedules and framework.content.framework_schedules != "" %}
+        {% set index = index + 1 %}
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-6">Framework schedules</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ index }}">Framework schedules</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-6" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-6" role="region">
+            <div id="accordion-default-content-{{ index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ index }}" role="region">
             
                 <p>Framework schedules are used by CCS to set up the agreement with suppliers.</p>
 
@@ -137,13 +144,14 @@
     {% endif %}
 
     {% if framework.content.templates and framework.content.templates != "" %}
+        {% set index = index + 1 %}
         <div class="govuk-accordion__section ">
             <div class="govuk-accordion__section-header">
                 <h2 class="govuk-accordion__section-heading">
-                    <span class="govuk-accordion__section-button" id="accordion-default-heading-7">Templates</span>
+                    <span class="govuk-accordion__section-button" id="accordion-default-heading-{{ index }}">Templates</span>
                 </h2>
             </div>
-            <div id="accordion-default-content-7" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-7" role="region">
+            <div id="accordion-default-content-{{ index }}" class="govuk-accordion__section-content" aria-labelledby="accordion-default-heading-{{ index }}" role="region">
                 <div class="wysiwyg-content rawHTML">{{ framework.content.templates|raw }}</div>
             </div>
         </div>
