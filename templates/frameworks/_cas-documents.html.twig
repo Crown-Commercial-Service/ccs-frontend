@@ -84,9 +84,7 @@
                 {% for jointSchedule in framework.content.joint_schedules %}
                     <p class="joint-schedule-title">
                         <a onclick="fileDownload('{{ jointSchedule.joint_schedule_document }}', '{{ jointSchedule.joint_schedule_document_name }}', '{{ jointSchedule.joint_schedule_file_size }}');" href={{ jointSchedule.joint_schedule_document}}><strong>{{ jointSchedule.joint_schedule_document_name }}</strong></a>
-
-                        {% set type = jointSchedule.joint_schedule_document_type|trim('document')|spaceless %}
-                        <strong class="govuk-tag govuk-tag--{{ type == 'Essential' ? 'blue' : 'grey' }} joint-schedule-title govuk-!-font-weight-regular cas-document-tag">{{ type }}</strong>
+                        <strong class="govuk-tag govuk-tag--{{ jointSchedule.joint_schedule_document_type == 'Essential' ? 'blue' : 'grey' }} joint-schedule-title govuk-!-font-weight-regular cas-document-tag">{{ jointSchedule.joint_schedule_document_type }}</strong>
                     </p>
                     <p class="cas-document-usage"><strong>{{ jointSchedule.joint_schedule_document_usage}}</strong></p>
                     <div class="wysiwyg-content">{{ jointSchedule.joint_schedule_document_description|raw }}</div>
@@ -111,9 +109,7 @@
                 {% for callOffSchedule in framework.content.call_off_schedules %}
                     <p class="joint-schedule-title">
                         <a onclick="fileDownload('{{ callOffSchedule.call_off_schedule_document }}', '{{ callOffSchedule.call_off_schedule_document_name }}', '{{ callOffSchedule.call_off_schedule_file_size }}');" href={{ callOffSchedule.call_off_schedule_document}}><strong>{{ callOffSchedule.call_off_schedule_document_name }}</strong></a>
-
-                        {% set type = callOffSchedule.call_off_schedule_document_type|trim('document')|spaceless %}
-                        <strong class="govuk-tag govuk-tag--{{ type == 'Essential' ? 'blue' : 'grey' }} joint-schedule-title govuk-!-font-weight-regular cas-document-tag"> {{ type }} </strong>
+                        <strong class="govuk-tag govuk-tag--{{ callOffSchedule.call_off_schedule_document_type == 'Essential' ? 'blue' : 'grey' }} joint-schedule-title govuk-!-font-weight-regular cas-document-tag"> {{ callOffSchedule.call_off_schedule_document_type }} </strong>
                     </p>
                     <p class="cas-document-usage"><strong>{{ callOffSchedule.call_off_schedule_document_usage }}</strong></p>
                     <div class="wysiwyg-content">{{ callOffSchedule.call_off_schedule_document_description|raw }}</div>
@@ -135,7 +131,10 @@
                 <p>Framework schedules are used by CCS to set up the agreement with suppliers.</p>
 
                 {% for frameworkSchedule in framework.content.framework_schedules %}
-                    <p class="joint-schedule-title"><a onclick="fileDownload('{{ frameworkSchedule.framework_schedule_document }}', '{{ frameworkSchedule.framework_schedule_document_name }}', '{{ frameworkSchedule.framework_schedule_file_size }}');" href={{ frameworkSchedule.framework_schedule_document}}><strong>{{ frameworkSchedule.framework_schedule_document_name }}</strong></a></p>
+                    <p class="joint-schedule-title">
+                        <a onclick="fileDownload('{{ frameworkSchedule.framework_schedule_document }}', '{{ frameworkSchedule.framework_schedule_document_name }}', '{{ frameworkSchedule.framework_schedule_file_size }}');" href={{ frameworkSchedule.framework_schedule_document}}><strong>{{ frameworkSchedule.framework_schedule_document_name }}</strong></a>
+                        <strong class="govuk-tag govuk-tag--{{ frameworkSchedule.framework_schedule_document_type == 'Essential' ? 'blue' : 'grey' }} joint-schedule-title govuk-!-font-weight-regular cas-document-tag">{{ frameworkSchedule.framework_schedule_document_type }}</strong>
+                    </p>
                     <p class="cas-document-usage"><strong>{{ frameworkSchedule.framework_schedule_document_usage }}</strong></p>
                     <div class="wysiwyg-content">{{ frameworkSchedule.framework_schedule_document_description|raw }}</div>
                 {% endfor %}
