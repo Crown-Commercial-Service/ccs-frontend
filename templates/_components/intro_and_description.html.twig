@@ -11,7 +11,7 @@
 
 
                 {% if media.video_video_video %}
-                    <div class="responsive-video widescreen">
+                    <div class="responsive-video widescreen" data-lpignore="true">
                         {# Replace the URL with the nocookie alternative (this should really be a custom Twig extension/filter) #}
                         {{ media.video_video_video|replace({'youtube': 'youtube-nocookie'})|raw }}
                         {#{{ media.video_video_video | raw }}#}
