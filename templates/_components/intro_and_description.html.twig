@@ -1,5 +1,5 @@
 <div class="govuk-width-container">
-    <div class="govuk-grid-row ccs-grid-row--loose">
+    <div class="govuk-grid-row ccs-grid-row--loose" data-lpignore="true">
         {# flip image to left and text to right #}
         {% if component.intro_intro_flip_media_text is defined and component.intro_intro_flip_media_text.value == 'image_left' %}
 
@@ -11,7 +11,7 @@
 
 
                 {% if media.video_video_video %}
-                    <div class="responsive-video widescreen" data-lpignore="true">
+                    <div class="responsive-video widescreen">
                         {# Replace the URL with the nocookie alternative (this should really be a custom Twig extension/filter) #}
                         {{ media.video_video_video|replace({'youtube': 'youtube-nocookie'})|raw }}
                         {#{{ media.video_video_video | raw }}#}
@@ -122,7 +122,7 @@
 
 
                     {% if media.video_video_video %}
-                        <div class="responsive-video widescreen" data-lpignore="true">
+                        <div class="responsive-video widescreen">
                             {# Replace the URL with the nocookie alternative (this should really be a custom Twig extension/filter) #}
                             {{ media.video_video_video|replace({'youtube': 'youtube-nocookie'})|raw }}
                             {#{{ media.video_video_video | raw }}#}
