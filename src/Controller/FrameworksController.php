@@ -435,7 +435,7 @@ class FrameworksController extends AbstractController
         $csvData = [
             0 => [
             'Supplier Name',
-            'Trading Under',
+            'Trading Name',
             'Contact Name',
             'Contact Email',
             'Street',
@@ -452,7 +452,7 @@ class FrameworksController extends AbstractController
             $i = 1;
             foreach ($results as $item) {
                 $supplier_name = ($item->getContent()->get('supplier_name')) ? $item->getContent()->get('supplier_name')->getValue() : '';
-                $trading_under = ($item->getContent()->get('supplier_trading_name')) ? $item->getContent()->get('supplier_trading_name')->getValue() : '';
+                $trading_name = ($item->getContent()->get('supplier_trading_name')) ? $item->getContent()->get('supplier_trading_name')->getValue() : '';
                 $contact_name = ($item->getContent()->get('supplier_contact_name')) ? $item->getContent()->get('supplier_contact_name')->getValue() : '';
                 $contact_email = ($item->getContent()->get('supplier_contact_email')) ? $item->getContent()->get('supplier_contact_email')->getValue() : '';
                 $street = ($item->getContent()->get('supplier_street')) ? $item->getContent()->get('supplier_street')->getValue() : '';
@@ -460,7 +460,7 @@ class FrameworksController extends AbstractController
                 $postcode = ($item->getContent()->get('supplier_postcode')) ? $item->getContent()->get('supplier_postcode')->getValue() : '';
 
                 $csvData[$i][] = $supplier_name;
-                $csvData[$i][] = $trading_under;
+                $csvData[$i][] = $trading_name;
                 $csvData[$i][] = $contact_name;
                 $csvData[$i][] = $contact_email;
                 $csvData[$i][] = $street;
