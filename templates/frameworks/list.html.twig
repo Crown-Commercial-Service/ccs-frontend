@@ -250,7 +250,8 @@
                     totalResults: Number,
                     searchResultsNumber: totalResults,
                     popstateLoad: false,
-                    isUpdatingCategories : false
+                    isUpdatingCategories : false,
+                    initialLoad: true,
                 }
             },
             mounted() {
@@ -281,7 +282,7 @@
                     // if the searchRequestUrl hasn't been updated by a popstate
                     // event (back/forward button) then we push a state item to the
                     // JS History API
-                    if(this.popstateLoad === false) {
+                    if(!this.initialLoad && this.popstateLoad === false) {
                         history.pushState({
                             checkedStatus:      this.checkedStatus,
                             checkedRegulation:  this.checkedRegulation,
@@ -416,7 +417,7 @@
                     
                     fetchURL = fetchURL + "&per_page=20&page=" + this.currentPage;
 
-                    if(this.popstateLoad === false) {
+                    if(!this.initialLoad && this.popstateLoad === false) {
                         history.pushState({
                             checkedStatus          :[...this.checkedStatus],
                             checkedRegulation      :[...this.checkedRegulation],
@@ -441,7 +442,7 @@
 
                     if (this.keyword){
                         
-                        if(this.popstateLoad === false) {
+                        if(!this.initialLoad && this.popstateLoad === false) {
                             history.pushState({
                                 checkedStatus          :this.checkedStatus,
                                 checkedRegulation      :this.checkedRegulation,
