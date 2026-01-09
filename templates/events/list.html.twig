@@ -358,6 +358,7 @@
                         totalResults: Number,
                         searchResultsNumber: totalResults,
                         popstateLoad: false,
+                        initialLoad: true,
                     }
                 },
                 mounted() {
@@ -487,7 +488,7 @@
 
                         fetchURL = fetchURL + "&orderby=start_datetime&order=asc&per_page=10&page=" + this.currentPage;
 
-                        if(this.popstateLoad === false) {
+                        if(!this.initialLoad && this.popstateLoad === false) {
                             history.pushState({
                                 checkedEventAudience:       [...this.checkedEventAudience],
                                 checkedEventType:           [...this.checkedEventType],
