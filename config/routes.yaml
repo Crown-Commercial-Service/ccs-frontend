@@ -1,4 +1,17 @@
 # System routes
+
+cnz_journey:
+    path: /carbon-net-zero/journey/{questionUUID}
+    controller: App\Controller\GuideMatch\CarbonNetZeroController::show
+
+cnz_landing:
+  path: /carbon-net-zero/find-a-carbon-net-zero-solution
+  controller: App\Controller\GuideMatch\CarbonNetZeroController::landingPage
+
+cnz_result:
+  path: /carbon-net-zero/result
+  controller: App\Controller\GuideMatch\CarbonNetZeroController::resultPage
+
 healthcheck:
   path: /healthcheck_r53
   controller: App\Controller\PageController::check

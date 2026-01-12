@@ -1,0 +1,110 @@
+// 1. Variables for reuse
+$ccs-blue: #005ea5;
+$ccs-blue-dark: #003a69;
+$ccs-yellow: #ffdd00;
+
+// 2. Grid & Layout
+.ccnz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+// 3. Custom Card Component
+.ccnz-card {
+    background-color: $ccs-blue;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+    border-bottom: 5px solid $ccs-blue-dark;
+    transition: background-color 0.2s, transform 0.2s;
+
+    &:hover {
+        background-color: $ccs-blue-dark;
+        transform: translateY(-5px);
+    }
+
+    &:focus {
+        background-color: $ccs-yellow;
+        color: #0b0c0c;
+        outline: 3px solid #0b0c0c;
+        
+        // Ensure text changes color on yellow background
+        .ccnz-card__title, .ccnz-card__hint {
+            color: #0b0c0c;
+        }
+    }
+
+    &__title {
+        @include govuk-font(24, $weight: bold);
+        margin-top: 0;
+        color: inherit; // Inherit from parent for focus states
+    }
+
+    &__hint {
+        @include govuk-font(16);
+        line-height: 1.5;
+        margin-bottom: 0;
+        color: inherit;
+    }
+}
+
+// 4. Overrides and Cleanups
+.govuk-main-wrapper {
+    padding-top: 0;
+}
+
+.apiErrorsMsg {
+    display: none;
+}
+
+// Secondary Button Overrides
+.govuk-button--secondary {
+    background-color: #f3f2f1;
+    box-shadow: 0 2px 0 #929191;
+    color: #0b0c0c;
+
+    &:hover, &:focus {
+        background-color: #dbdad9;
+    }
+}
+
+// Print Link with Icon
+.print-link {
+    background: url(../images/icon-print.png) no-repeat 10px 50%;
+    margin-left: -10px;
+    padding: .5em .5em .5em 38px;
+    cursor: pointer;
+}
+
+// 5. Print Styles
+@media print {
+    .no-print,
+    .govuk-header,
+    .govuk-footer,
+    .govuk-back-link,
+    .govuk-button,
+    .govuk-summary-list__actions {
+        display: none !important;
+    }
+
+    a[href]:after {
+        content: none !important;
+    }
+
+    .agreement-result-panel {
+        background-color: #f3f2f1;
+        padding: 20px;
+        border: 1px solid #b1b4b6;
+
+        .govuk-link {
+            color: #0b0c0c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    }
+}

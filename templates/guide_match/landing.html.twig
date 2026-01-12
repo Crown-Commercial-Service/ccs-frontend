@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Questions R&D - CCS{% endblock %}
+
+{% block header %}
+    {% embed '/includes/header.html.twig' %}
+        {% block bannerarea %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block pageMetaTags %}{% endblock %}
+
+{% block body %}
+<div class="govuk-width-container govuk-!-margin-top-9">
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
+                            <h2 class="govuk-error-summary__title" id="error-summary-title">
+                                There is a problem
+                            </h2>
+                            <div class="govuk-error-summary__body">
+                                <ul class="govuk-list govuk-error-summary__list">
+                                    <li>{{ message }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                <h1 class="govuk-heading-xl">{{ title|raw }}</h1>
+                
+                <p class="govuk-body-l">
+                    {{ description|raw }}
+                </p>
+
+                <h2 class="govuk-heading-m">Before you start</h2>
+                
+                <p class="govuk-body">It may be helpful to know the following information (but this is not essential):</p>
+                
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>the product or service you need</li>
+                    <li>the sector or organisation you are buying for</li>
+                </ul>
+
+                <p class="govuk-body">We will then match you to the right solution or agreement to meet your needs.</p>
+                
+                <p class="govuk-body">This service takes less than 1 minute to complete.</p>
+
+                {# Replace the href with your actual first node route #}
+                <a href="{{ start_url }}" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8" data-module="govuk-button">
+                    Start now
+                    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}
