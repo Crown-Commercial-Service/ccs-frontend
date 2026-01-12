@@ -50,11 +50,11 @@ abstract class BaseJourneyController extends AbstractController
     /**
      * Displays a question node or redirects based on the journey state.
      *
-     * @param string|null $questionUUID The UUID of the current question node, or null for the start node.
      * @param Request     $request      The current HTTP request.
+     * @param string|null $questionUUID The UUID of the current question node, or null for the start node.
      * @return Response
      */
-   public function show(?string $questionUUID = null, Request $request): Response
+   public function show(Request $request, ?string $questionUUID = null): Response
     {
         $data = $this->journeyService->getJourneyData($this->journeyName);
         $uuid = $questionUUID ?? $data['start_uuid'];

@@ -137,7 +137,7 @@ class BaseJourneyControllerTest extends TestCase
         $this->router->method('generate')->willReturn('/form-url');
 
         // Pass the SAME request object we configured in setUp
-        $response = $this->controller->show('node-1', $this->request);
+        $response = $this->controller->show($this->request, 'node-1');
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals('question_page', $response->getContent());
@@ -164,7 +164,7 @@ class BaseJourneyControllerTest extends TestCase
         // FIX: Ensure router returns the URL we expect in the assertion
         $this->router->method('generate')->willReturn('/redirect-url');
 
-        $response = $this->controller->show('node-1', $this->request);
+        $response = $this->controller->show($this->request, 'node-1');
 
         $this->assertTrue($response->isRedirect('/redirect-url'));
     }
@@ -186,7 +186,7 @@ class BaseJourneyControllerTest extends TestCase
         // FIX: Ensure router returns the URL we expect
         $this->router->method('generate')->willReturn('/next-node-url');
 
-        $response = $this->controller->show('node-1', $this->request);
+        $response = $this->controller->show($this->request, 'node-1');
 
         $this->assertTrue($response->isRedirect('/next-node-url'));
         // Check session storage
@@ -341,9 +341,88 @@ class ConcreteJourneyController extends BaseJourneyController
 
         // 5. Run the controller action
         // We use 'start_uuid' from the data as the "current" node we are submitting from
-        $response = $this->controller->show($journeyData['start_uuid'], $this->request);
+        $response = $this->controller->show( $this->request, $journeyData['start_uuid']);
 
         // 6. Assert
         $this->assertTrue($response->isRedirect($expectedRedirect));
+    }
+
+    public function testBackLinkPointsToPreviousNodeInHistory()
+    {
+        // 1. Setup a history with 3 steps: Start -> Node 1 -> Node 2
+        $this->sessionData['journey_history'] = ['start-node', 'node-1', 'node-2'];
+        
+        // 2. We are currently looking at 'node-2'
+        $journeyData = [
+            'start_uuid' => 'start-node',
+            'nodes' => [
+                'node-2' => ['text' => 'Question 2', 'answers' => []]
+            ]
+        ];
+        
+        $this->journeyService->method('getJourneyData')->willReturn($journeyData);
+        $this->journeyService->method('findNodeOrOutcome')->willReturn([
+            'type' => 'node', 
+            'data' => $journeyData['nodes']['node-2']
+        ]);
+
+        // 3. We expect the 'back_url' passed to Twig to point to 'node-1' (the previous item)
+        $this->router->method('generate')
+            ->willReturnCallback(function($route, $params) {
+                if ($route === 'test_journey_journey' && $params['questionUUID'] === 'node-1') {
+                    return '/journey/node-1';
+                }
+                return '/mock-url';
+            });
+
+        // 4. Capture what is passed to Twig
+        $this->twig->expects($this->once())
+            ->method('render')
+            ->with(
+                $this->anything(),
+                $this->callback(function($context) {
+                    // Assert that back_url is set correctly in the view context
+                    return isset($context['back_url']) && $context['back_url'] === '/journey/node-1';
+                })
+            );
+
+        $this->controller->show($this->request, 'node-2');
+    }
+
+    public function testResultPageThrows404IfAgreementNotFound()
+    {
+        // 1. Setup valid session, reaching an outcome
+        $this->sessionData['journey_answers'] = ['q1' => 'a1'];
+        $this->sessionData['journey_history'] = ['outcome-bad'];
+
+        $journeyData = ['start_uuid' => 'start'];
+        $this->journeyService->method('getJourneyData')->willReturn($journeyData);
+
+        // 2. The service finds an outcome node that asks for agreement 'RM_MISSING'
+        $this->journeyService->method('findNodeOrOutcome')->willReturn([
+            'type' => 'outcome',
+            'data' => [['agreement_id' => 'RM_MISSING']]
+        ]);
+
+        // 3. We expect a 404 exception to stop execution
+        $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
+        $this->expectExceptionMessage('Agreement not found');
+
+        // 4. We use a modified controller for this test that simulates an API failure
+        $controllerWithFailure = new class($this->journeyService, $this->cache) extends \App\Controller\GuideMatch\BaseJourneyController {
+            protected string $journeyName = 'test_journey';
+            protected function getLandingPageData(): array { return []; }
+            
+            // Override to simulate the Strata API throwing a 404
+            protected function getAgreement(string $rmNumber): array {
+                throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('Agreement not found');
+            }
+        };
+        
+        // Inject dependencies into this temporary anonymous controller
+        $controllerWithFailure->setContainer($this->container);
+
+        // 5. Run it
+        $controllerWithFailure->resultPage($this->request);
     }
 }
