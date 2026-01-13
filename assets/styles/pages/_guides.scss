@@ -125,3 +125,7 @@ $ccs-yellow: #ffdd00;
    border-left: none;
    margin-top: govuk-px-to-rem(20);
 }
+
+.govuk-grid-row {
+    margin-left: -5px;
+}
