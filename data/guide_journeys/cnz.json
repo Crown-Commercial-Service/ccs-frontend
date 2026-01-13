@@ -584,17 +584,17 @@
                 {
                     "label": "Leasing and loans",
                     "hint": "Specialist advice on leasing options, asset classes and savings initiatives",
-                    "outcome_id": ""
+                    "outcome_id": "7c694c02-efd3-4d3f-ade1-3d3a87a57cb5"
                 },
                 {
-                    "label": "Procuring help of experts",
+                    "label": "Procuring the help of experts",
                     "hint": "Access expert knowledge and consultancy. Includes business, strategy and policy, finance, HR, procurement, health and community, infrastructure, environment, and technology",
                     "outcome_id": "0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d"
                 },
                 {
                     "label": "Fund administration and disbursement services",
                     "hint": "Access a range of services for designing and administering schemes that disburse funds",
-                    "outcome_id": ""
+                    "outcome_id": "ee22dbda-dccf-4e6a-8127-f8f3338222e1"
                 }
             ]
         }
@@ -767,6 +767,9 @@
         ],
         "0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d": [
             {
+                "agreement_id": "RM1043.8"
+            },
+            {
                 "agreement_id": "RM6187"
             }
         ],
@@ -874,6 +877,24 @@
         "6f472868-2ab7-4bf3-9c8b-e899719784dc": [
             {
                 "agreement_id": "RM6308"
+            }
+        ],
+        "254a9387-6c64-4069-aa19-86bfa287dc57": [
+            {
+                "is_external_link": true,
+                "url": "https://www.crowncommercial.gov.uk/social-value/carbon-net-zero/funding-and-grants",
+                "title": "Carbon Net Zero Funding and Grants",
+                "summary": "Take a look at CNZ grants and funding opportunities from across the government"
+            }
+        ],
+        "7c694c02-efd3-4d3f-ade1-3d3a87a57cb5": [
+           {
+                "agreement_id": "RM6120"
+            }
+        ],
+        "ee22dbda-dccf-4e6a-8127-f8f3338222e1": [
+           {
+                "agreement_id": "RM6322"
             }
         ]
     }
