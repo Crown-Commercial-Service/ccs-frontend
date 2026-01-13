@@ -337,11 +337,13 @@
                         numberOfPages: Number,
                         totalResults: Number,
                         popstateLoad: false,
+                        initialLoad: true,
                     }
                 },
                 mounted() {
                     this.fetchAPIData(this.currentPage);
-                    this.setupHistoryApi();     
+                    this.setupHistoryApi();  
+                    this.initialLoad = false;   
                 },
                 watch: {
                     // making sure that the sections is refreshed 
@@ -500,7 +502,7 @@
 
                         fetchURL = fetchURL + "&per_page=5&page=" + this.currentPage;
 
-                        if(this.popstateLoad === false) {
+                        if(!this.initialLoad && this.popstateLoad === false) {
                             history.pushState({
                                 checkedCategories:          [...this.checkedCategories],
                                 whitepaper:                 this.whitepaper,
