@@ -8,18 +8,22 @@ $ccs-yellow: #ffdd00;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
-    margin-top: 40px;
+    margin-top: govuk-px-to-rem(40);
 }
+
+.restrict-width {
+    max-width: govuk-px-to-rem(700);
+} 
 
 // 3. Custom Card Component
 .ccnz-card {
     background-color: $ccs-blue;
     color: #ffffff;
     text-decoration: none;
-    padding: 30px;
+    padding: govuk-px-to-rem(30);
     display: flex;
     flex-direction: column;
-    min-height: 200px;
+    min-height: govuk-px-to-rem(200);
     border-bottom: 5px solid $ccs-blue-dark;
     transition: background-color 0.2s, transform 0.2s;
 
@@ -54,9 +58,6 @@ $ccs-yellow: #ffdd00;
 }
 
 // 4. Overrides and Cleanups
-.govuk-main-wrapper {
-    padding-top: 0;
-}
 
 .apiErrorsMsg {
     display: none;
@@ -81,6 +82,14 @@ $ccs-yellow: #ffdd00;
     cursor: pointer;
 }
 
+.landing-cnz-wrapper {
+    padding-top: govuk-px-to-rem(40);
+}
+
+.cnz-main-wrapper .govuk-fieldset__legend--l, .govuk-label--s {
+    font-weight: 700;
+}
+
 // 5. Print Styles
 @media print {
     .no-print,
@@ -98,7 +107,7 @@ $ccs-yellow: #ffdd00;
 
     .agreement-result-panel {
         background-color: #f3f2f1;
-        padding: 20px;
+        padding: govuk-px-to-rem(20);
         border: 1px solid #b1b4b6;
 
         .govuk-link {
