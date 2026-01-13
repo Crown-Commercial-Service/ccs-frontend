@@ -203,6 +203,7 @@ abstract class BaseJourneyController extends AbstractController
             'page'    => ['title' => 'Your Results'],
             'start_url'  => $this->generateUrl($this->journeyName . '_journey', ['questionUUID' => $data['start_uuid']]),
             'agreements' => $agreements,
+            'back_url'     => $this->getBackUrl($request),
         ]);
     }
 
