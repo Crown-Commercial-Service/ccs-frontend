@@ -76,7 +76,7 @@ $ccs-yellow: #ffdd00;
 
 // Print Link with Icon
 .print-link {
-    background: url(../images/icon-print.png) no-repeat 10px 50%;
+    background: url(/assets/images/icon-print.png) no-repeat 10px 50%;
     margin-left: -10px;
     padding: .5em .5em .5em 38px;
     cursor: pointer;
@@ -116,4 +116,12 @@ $ccs-yellow: #ffdd00;
             font-weight: bold;
         }
     }
+}
+
+// 6. Outcome page
+.agreement-outcomes {
+   background-color: #f3f2f1;
+   padding: govuk-px-to-rem(20); 
+   border-left: none;
+   margin-top: govuk-px-to-rem(20);
 }

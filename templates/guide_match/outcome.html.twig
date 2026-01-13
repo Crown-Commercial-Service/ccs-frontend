@@ -18,66 +18,76 @@
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
-                <h1 class="govuk-heading-xl page-title govuk-!-margin-bottom-4">Carbon net zero agreement results</h1>
-                <p class="page-title-prepend">Based on your answers, we suggest using the following solution(s):</p>
+                    <h1 class="govuk-heading-xl page-title govuk-!-margin-bottom-4">Carbon net zero agreement results</h1>
+                    <p class="page-title-prepend">Based on your answers, we suggest using the following solution(s):</p>
 
-                {% if agreements is defined and agreements is not empty %}
-                    {% for agreement in agreements %}
-                        <div class="govuk-inset-text" style="background-color: #f3f2f1; padding: 20px; border-left: none; margin-top: 0;">
-                            <h2 class="govuk-heading-m">
-                                <a href="{{ path('frameworks_show', {rmNumber: agreement['rm_number']}) }}" class="govuk-link" style="text-decoration: underline;">
-                                    {{ agreement['title'] }}
+                    {% if agreements is defined and agreements is not empty %}
+                        {% for agreement in agreements %}
+                            <div class="govuk-inset-text agreement-outcomes">
+                                <h2 class="govuk-heading-m">
+                                    <a href="{{ path('frameworks_show', {rmNumber: agreement['rm_number']}) }}" class="govuk-link" style="text-decoration: underline;">
+                                        {{ agreement['title'] }}
+                                    </a>
+                                </h2>
+                                <p class="govuk-body-s">
+                                    <strong>Agreement ID:</strong> {{ agreement['rm_number'] }} &nbsp;&nbsp; 
+                                    <strong>End Date:</strong> {{ agreement['end_date']|date('d/m/y') }} <br>
+                                    {% if agreement.regulation_type is defined %}
+                                        <strong>Agreement Type:</strong> {{ agreement['regulation_type'] }}
+                                    {% endif %}
+                                </p>
+                                <p class="govuk-body">{{ agreement['summary']|raw }}</p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="govuk-warning-text">
+                        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                        <strong class="govuk-warning-text__text">
+                            <span class="govuk-warning-text__assistive">Warning</span>
+                            Outcome data is missing for this selection.
+                        </strong>
+                        </div>
+                    {% endif %}
+
+                    <h2 class="govuk-heading-m">Your answers</h2>
+
+                <dl class="govuk-summary-list">
+                    {% for item in summary %}
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                {{ item.question }}
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                {{ item.answer }}
+                            </dd>
+                            <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link no-print" href="{{ item.url }}">
+                                    Change<span class="govuk-visually-hidden"> answer for {{ item.question }}</span>
                                 </a>
-                            </h2>
-                            <p class="govuk-body-s">
-                                <strong>Agreement ID:</strong> {{ agreement['rm_number'] }} &nbsp;&nbsp; 
-                                <strong>End Date:</strong> {{ agreement['end_date']|date('d/m/y') }} <br>
-                                {% if agreement.regulation_type is defined %}
-                                    <strong>Agreement Type:</strong> {{ agreement['regulation_type'] }}
-                                {% endif %}
-                            </p>
-                            <p class="govuk-body">{{ agreement['summary']|raw }}</p>
+                            </dd>
                         </div>
                     {% endfor %}
-                {% else %}
-                    <div class="govuk-warning-text">
-                    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                    <strong class="govuk-warning-text__text">
-                        <span class="govuk-warning-text__assistive">Warning</span>
-                        Outcome data is missing for this selection.
-                    </strong>
-                    </div>
-                {% endif %}
+                </dl>
 
-                <h2 class="govuk-heading-m">Your answers</h2>
+                <div style="margin-bottom: 2em; margin-top: 2em" class="no-print">
+                    <a class="print-link govuk-link" href="#" rel="alternate" onclick="window.print(); return false;">Print this page</a>
+                </div>
 
-            <dl class="govuk-summary-list">
-                {% for item in summary %}
-                    <div class="govuk-summary-list__row">
-                        <dt class="govuk-summary-list__key">
-                            {{ item.question }}
-                        </dt>
-                        <dd class="govuk-summary-list__value">
-                            {{ item.answer }}
-                        </dd>
-                        <dd class="govuk-summary-list__actions">
-                            <a class="govuk-link no-print" href="{{ item.url }}">
-                                Change<span class="govuk-visually-hidden"> answer for {{ item.question }}</span>
-                            </a>
-                        </dd>
-                    </div>
-                {% endfor %}
-            </dl>
-
-            <script>
-                document.write('<a class="print-link govuk-link no-print" href="#" rel="alternate" onclick="window.print(); return false;">Print this page</a>');
-            </script>
-
-            <p class="govuk-body">Need help with this service? 
-                <a aria-describedby="contact-ccs-intermediar-page" href="/contact/" onclick="contact();">Contact CCS</a>
-            </p>
-
-            <a class="govuk-button govuk-button--secondary no-print" data-module="govuk-button" href="{{ start_url }}">Start again to change your answers</a>
+                <p class="govuk-body">Need help with this service? 
+                    <a aria-describedby="contact-ccs-intermediar-page" href="/contact/" onclick="contact();">Contact CCS</a>
+                </p>
+                
+                <a class="govuk-button govuk-button--secondary no-print" data-module="govuk-button" href="{{ start_url }}">Start again to change your answers</a>
+                <div style="background-color: #f3f2f1; padding: 0.5em">
+                    <h3 class="govuk-heading-s">Tell us what you think</h3>
+                    <span class='govuk-visually-hidden' id="result-feedback"> Provide feedback survey in a new tab</span>
+                    <p class="govuk-body">
+                        We would like your feedback to help us improve this service. The survey takes 3 minutes to complete.
+                        <a href="https://crowncommercial.qualtrics.com/jfe/form/SV_b2hqVz3TYDCxN2u"  target="_blank" aria-describedby="result-feedback">
+                            Start survey.
+                        </a>
+                    </p>
+                </div>
             </div>
         </div>
     </main>
