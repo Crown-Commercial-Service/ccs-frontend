@@ -23,21 +23,33 @@
 
                     {% if agreements is defined and agreements is not empty %}
                         {% for agreement in agreements %}
-                            <div class="govuk-inset-text agreement-outcomes">
-                                <h2 class="govuk-heading-m">
-                                    <a href="{{ path('frameworks_show', {rmNumber: agreement['rm_number']}) }}" class="govuk-link" style="text-decoration: underline;">
-                                        {{ agreement['title'] }}
-                                    </a>
-                                </h2>
-                                <p class="govuk-body-s">
-                                    <strong>Agreement ID:</strong> {{ agreement['rm_number'] }} &nbsp;&nbsp; 
-                                    <strong>End Date:</strong> {{ agreement['end_date']|date('d/m/y') }} <br>
-                                    {% if agreement.regulation_type is defined %}
-                                        <strong>Agreement Type:</strong> {{ agreement['regulation_type'] }}
-                                    {% endif %}
-                                </p>
-                                <p class="govuk-body">{{ agreement['summary']|raw }}</p>
-                            </div>
+                            {% if agreement.is_external_link|default(false) %}
+                                <div class="govuk-inset-text agreement-outcomes">
+                                    <h2 class="govuk-heading-m">
+                                        <a href="{{ agreement['url'] }}" class="govuk-link" style="text-decoration: underline;">
+                                            {{ agreement['title'] }}
+                                        </a>
+                                    </h2>
+                                    <p class="govuk-body">{{ agreement['summary']|raw }}</p>
+                                    <a class="govuk-button no-print govuk-!-margin-bottom-0" data-module="govuk-button" href="{{ agreement['url'] }}">Read more</a>
+                                </div>
+                            {% else %}
+                                <div class="govuk-inset-text agreement-outcomes">
+                                    <h2 class="govuk-heading-m">
+                                        <a href="{{ path('frameworks_show', {rmNumber: agreement['rm_number']}) }}" class="govuk-link" style="text-decoration: underline;">
+                                            {{ agreement['title'] }}
+                                        </a>
+                                    </h2>
+                                    <p class="govuk-body-s">
+                                        <strong>Agreement ID:</strong> {{ agreement['rm_number'] }} &nbsp;&nbsp; 
+                                        <strong>End Date:</strong> {{ agreement['end_date']|date('d/m/y') }} <br>
+                                        {% if agreement.regulation_type is defined %}
+                                            <strong>Agreement Type:</strong> {{ agreement['regulation_type'] }}
+                                        {% endif %}
+                                    </p>
+                                    <p class="govuk-body">{{ agreement['summary']|raw }}</p>
+                                </div>
+                            {% endif %}
                         {% endfor %}
                     {% else %}
                         <div class="govuk-warning-text">

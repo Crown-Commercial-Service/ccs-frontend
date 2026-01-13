@@ -189,6 +189,11 @@ abstract class BaseJourneyController extends AbstractController
 
         $agreements = [];
         foreach ($content['data'] as $agreementData) {
+            if ($agreementData['is_external_link'] ?? false) {
+                $agreements[] = $agreementData;
+                continue;
+            }
+
             $agreements[] = $this->getAgreement($agreementData['agreement_id']);
         }
 
