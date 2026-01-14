@@ -256,7 +256,8 @@
             },
             mounted() {
                 this.fetchAPIData(this.currentPage);
-                this.setupHistoryApi();  
+                this.setupHistoryApi(); 
+                this.initialLoad = false; 
             },
             watch: {
                 responseAvailable(responseAvailable) {
