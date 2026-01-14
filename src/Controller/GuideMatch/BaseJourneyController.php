@@ -194,7 +194,11 @@ abstract class BaseJourneyController extends AbstractController
                 continue;
             }
 
-            $agreements[] = $this->getAgreement($agreementData['agreement_id']);
+            try {
+                $agreements[] = $this->getAgreement($agreementData['agreement_id']);
+            } catch (\Exception $e) {
+                $this->addFlash('error', $e->getMessage() . 'for ' . $agreementData['agreement_id']);
+            }
         }
 
         return $this->render('guide_match/outcome.html.twig', [

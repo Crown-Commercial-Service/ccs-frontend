@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 
+{# 1. Capture the flashes into a variable so they don't disappear #}
+{% set errors = app.flashes('error') %}
+
 {% block title %}Questions R&D - CCS{% endblock %}
 
 {% block header %}
@@ -17,6 +20,22 @@
     <a href="{{ back_url }}" class="govuk-back-link">Back</a>
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-grid-row">
+            {% if errors|length > 0 %}
+                <div class="govuk-error-summary" data-module="govuk-error-summary">
+                    <div role="alert">
+                        <h2 class="govuk-error-summary__title">There is a problem</h2>
+                        <div class="govuk-error-summary__body">
+                            <ul class="govuk-list govuk-error-summary__list">
+                                {% for message in errors %}
+                                    <li>
+                                        <a href="#answer-1">{{ message }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
             <div class="govuk-grid-column-two-thirds">
                     <h1 class="govuk-heading-xl page-title govuk-!-margin-bottom-4">Carbon net zero agreement results</h1>
                     <p class="page-title-prepend">Based on your answers, we suggest using the following solution(s):</p>
