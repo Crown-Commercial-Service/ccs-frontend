@@ -363,7 +363,8 @@
                 },
                 mounted() {
                     this.fetchAPIData(this.currentPage);
-                    this.setupHistoryApi();     
+                    this.setupHistoryApi(); 
+                    this.initialLoad = false;    
                 },
                 watch: {
                     // making sure that the sections is refreshed 
