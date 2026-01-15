@@ -149,7 +149,7 @@
             </div>
             {# appear only on mobile #}
             <div class="helpful-info-search-agreement-mobile" style="display: none;">
-                {% include '/frameworks/_helpful_info.html.twig' with {'page' : 'search'} %}
+                {% include '/frameworks/_helpful_info.html.twig' with {'page' : 'search', 'mobile' : true} %}
             </div>
 
         </main>
@@ -250,23 +250,14 @@
                     totalResults: Number,
                     searchResultsNumber: totalResults,
                     popstateLoad: false,
-                    isUpdatingCategories : false
+                    isUpdatingCategories : false,
+                    initialLoad: true,
                 }
             },
             mounted() {
                 this.fetchAPIData(this.currentPage);
-                this.setupHistoryApi();  
-            },
-            created(){
-                // making sure the sections that is hidden at start shows
-                this.$nextTick(() => {
-                    const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
-                    hideWithOutJS.forEach(section => {
-                        if (section.classList.contains('govuk-visually-hidden')) {
-                            section.classList.remove('govuk-visually-hidden');
-                        }
-                    });
-                });
+                this.setupHistoryApi(); 
+                this.initialLoad = false; 
             },
             watch: {
                 responseAvailable(responseAvailable) {
@@ -292,7 +283,7 @@
                     // if the searchRequestUrl hasn't been updated by a popstate
                     // event (back/forward button) then we push a state item to the
                     // JS History API
-                    if(this.popstateLoad === false) {
+                    if(!this.initialLoad && this.popstateLoad === false) {
                         history.pushState({
                             checkedStatus:      this.checkedStatus,
                             checkedRegulation:  this.checkedRegulation,
@@ -427,7 +418,7 @@
                     
                     fetchURL = fetchURL + "&per_page=20&page=" + this.currentPage;
 
-                    if(this.popstateLoad === false) {
+                    if(!this.initialLoad && this.popstateLoad === false) {
                         history.pushState({
                             checkedStatus          :[...this.checkedStatus],
                             checkedRegulation      :[...this.checkedRegulation],
@@ -452,7 +443,7 @@
 
                     if (this.keyword){
                         
-                        if(this.popstateLoad === false) {
+                        if(!this.initialLoad && this.popstateLoad === false) {
                             history.pushState({
                                 checkedStatus          :this.checkedStatus,
                                 checkedRegulation      :this.checkedRegulation,
