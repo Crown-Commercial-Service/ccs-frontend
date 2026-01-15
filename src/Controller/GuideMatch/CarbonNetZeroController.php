@@ -14,7 +14,8 @@ class CarbonNetZeroController extends BaseJourneyController
     /** @var string The name of the journey. */
     protected string $journeyName = 'cnz';
 
-    protected function getLandingPageData(): array {
+    protected function getLandingPageData(): array
+    {
         return [
             'title' => 'Find a carbon net zero solution',
             'description' => 'Use this service to help you find a solution that can help you meet your carbon net zero goals.',

@@ -43,8 +43,8 @@ class BaseJourneyControllerTest extends TestCase
 
         // 2. Setup Container
         $this->container->method('has')->willReturn(true);
-        $this->container->method('get')->willReturnCallback(function($id) {
-            return match($id) {
+        $this->container->method('get')->willReturnCallback(function ($id) {
+            return match ($id) {
                 'router' => $this->router,
                 'twig' => $this->twig,
                 'request_stack' => $this->requestStack,
@@ -64,20 +64,20 @@ class BaseJourneyControllerTest extends TestCase
         $this->requestStack->method('getSession')->willReturn($this->session);
         $this->requestStack->method('getCurrentRequest')->willReturn($this->request);
         $this->requestStack->method('getMainRequest')->willReturn($this->request);
-        
+
         // 5. FIX: Configure FlashBag to prevent TypeError
         $this->session->method('getFlashBag')->willReturn($this->flashBag);
         $this->flashBag->method('has')->willReturn(false); // Default: no errors
 
         // 6. Mock Session Storage Logic
         $this->sessionData = [];
-        $this->session->method('get')->willReturnCallback(function($key, $default = null) {
+        $this->session->method('get')->willReturnCallback(function ($key, $default = null) {
             return array_key_exists($key, $this->sessionData) ? $this->sessionData[$key] : $default;
         });
-        $this->session->method('set')->willReturnCallback(function($key, $value) {
+        $this->session->method('set')->willReturnCallback(function ($key, $value) {
             $this->sessionData[$key] = $value;
         });
-        $this->session->method('remove')->willReturnCallback(function($key) {
+        $this->session->method('remove')->willReturnCallback(function ($key) {
             unset($this->sessionData[$key]);
         });
     }
@@ -87,9 +87,12 @@ class BaseJourneyControllerTest extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('$journeyName must be defined');
 
-        new class($this->journeyService, $this->cache) extends BaseJourneyController {
+        new class ($this->journeyService, $this->cache) extends BaseJourneyController {
             protected string $journeyName = '';
-            protected function getLandingPageData(): array { return []; }
+            protected function getLandingPageData(): array
+            {
+                return [];
+            }
         };
     }
 
@@ -99,7 +102,7 @@ class BaseJourneyControllerTest extends TestCase
         $this->sessionData = ['journey_history' => ['old'], 'journey_answers' => ['old']];
 
         $this->journeyService->method('getJourneyData')->willReturn(['start_uuid' => 'start-node']);
-        
+
         // Expect render to be called
         $this->twig->expects($this->once())->method('render')->willReturn('rendered_content');
         // Expect router to generate start URL
@@ -109,7 +112,7 @@ class BaseJourneyControllerTest extends TestCase
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals('rendered_content', $response->getContent());
-        
+
         // Assert session was cleared
         $this->assertArrayNotHasKey('journey_history', $this->sessionData);
         $this->assertArrayNotHasKey('journey_answers', $this->sessionData);
@@ -119,7 +122,7 @@ class BaseJourneyControllerTest extends TestCase
     {
         // We need to inject the URL parameter into our request object manually for this test
         // But since the controller just uses the method arg $questionUUID, strict request path isn't critical.
-        
+
         $journeyData = [
             'start_uuid' => 'start-node',
             'nodes' => [
@@ -177,7 +180,7 @@ class BaseJourneyControllerTest extends TestCase
 
         $journeyData = ['nodes' => ['node-1' => []]];
         $this->journeyService->method('getJourneyData')->willReturn($journeyData);
-        
+
         $this->journeyService->method('findNodeOrOutcome')->willReturn([
             'type' => 'node',
             'data' => []
@@ -196,7 +199,7 @@ class BaseJourneyControllerTest extends TestCase
     public function testResultPageRedirectsIfNoAnswers()
     {
         // Session is empty by default in setUp
-        
+
         $this->flashBag->expects($this->once())
              ->method('add')
              ->with('warning', self::anything());
@@ -322,12 +325,12 @@ class ConcreteJourneyController extends BaseJourneyController
     {
         // 1. Mock the Service to return the specific "scenario" data
         $this->journeyService->method('getJourneyData')->willReturn($journeyData);
-        
+
         // 2. Mock finding the "next" node (simulating a valid move)
         // We assume for this test that the 'id' sent in POST exists in the nodes
         $this->journeyService->method('findNodeOrOutcome')->willReturn([
             'type' => 'node',
-            'data' => [] 
+            'data' => []
         ]);
 
         // 3. Setup the POST request with the scenario data
@@ -341,7 +344,7 @@ class ConcreteJourneyController extends BaseJourneyController
 
         // 5. Run the controller action
         // We use 'start_uuid' from the data as the "current" node we are submitting from
-        $response = $this->controller->show( $this->request, $journeyData['start_uuid']);
+        $response = $this->controller->show($this->request, $journeyData['start_uuid']);
 
         // 6. Assert
         $this->assertTrue($response->isRedirect($expectedRedirect));
@@ -351,7 +354,7 @@ class ConcreteJourneyController extends BaseJourneyController
     {
         // 1. Setup a history with 3 steps: Start -> Node 1 -> Node 2
         $this->sessionData['journey_history'] = ['start-node', 'node-1', 'node-2'];
-        
+
         // 2. We are currently looking at 'node-2'
         $journeyData = [
             'start_uuid' => 'start-node',
@@ -359,16 +362,16 @@ class ConcreteJourneyController extends BaseJourneyController
                 'node-2' => ['text' => 'Question 2', 'answers' => []]
             ]
         ];
-        
+
         $this->journeyService->method('getJourneyData')->willReturn($journeyData);
         $this->journeyService->method('findNodeOrOutcome')->willReturn([
-            'type' => 'node', 
+            'type' => 'node',
             'data' => $journeyData['nodes']['node-2']
         ]);
 
         // 3. We expect the 'back_url' passed to Twig to point to 'node-1' (the previous item)
         $this->router->method('generate')
-            ->willReturnCallback(function($route, $params) {
+            ->willReturnCallback(function ($route, $params) {
                 if ($route === 'test_journey_journey' && $params['questionUUID'] === 'node-1') {
                     return '/journey/node-1';
                 }
@@ -380,7 +383,7 @@ class ConcreteJourneyController extends BaseJourneyController
             ->method('render')
             ->with(
                 $this->anything(),
-                $this->callback(function($context) {
+                $this->callback(function ($context) {
                     // Assert that back_url is set correctly in the view context
                     return isset($context['back_url']) && $context['back_url'] === '/journey/node-1';
                 })
@@ -409,16 +412,20 @@ class ConcreteJourneyController extends BaseJourneyController
         $this->expectExceptionMessage('Agreement not found');
 
         // 4. We use a modified controller for this test that simulates an API failure
-        $controllerWithFailure = new class($this->journeyService, $this->cache) extends \App\Controller\GuideMatch\BaseJourneyController {
+        $controllerWithFailure = new class ($this->journeyService, $this->cache) extends \App\Controller\GuideMatch\BaseJourneyController {
             protected string $journeyName = 'test_journey';
-            protected function getLandingPageData(): array { return []; }
-            
+            protected function getLandingPageData(): array
+            {
+                return [];
+            }
+
             // Override to simulate the Strata API throwing a 404
-            protected function getAgreement(string $rmNumber): array {
+            protected function getAgreement(string $rmNumber): array
+            {
                 throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('Agreement not found');
             }
         };
-        
+
         // Inject dependencies into this temporary anonymous controller
         $controllerWithFailure->setContainer($this->container);
 

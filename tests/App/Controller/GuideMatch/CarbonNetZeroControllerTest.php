@@ -43,7 +43,7 @@ class CarbonNetZeroControllerTest extends TestCase
         $this->assertIsArray($data);
         $this->assertArrayHasKey('title', $data);
         $this->assertArrayHasKey('description', $data);
-        
+
         // specific text assertions
         $this->assertEquals('Find a carbon net zero solution', $data['title']);
         $this->assertStringContainsString('meet your carbon net zero goals', $data['description']);
@@ -54,12 +54,12 @@ class CarbonNetZeroControllerTest extends TestCase
         // 1. Instantiate the controller with mocks
         $journeyService = $this->createMock(GuideJourneyService::class);
         $cache = $this->createMock(CacheItemPoolInterface::class);
-        
+
         $controller = new CarbonNetZeroController($journeyService, $cache);
 
         // 2. Check strict properties using Reflection (since they are protected)
         $reflection = new ReflectionClass($controller);
-        
+
         // Verify Journey Name
         $journeyNameProp = $reflection->getProperty('journeyName');
         $journeyNameProp->setAccessible(true);

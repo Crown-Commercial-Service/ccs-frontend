@@ -33,10 +33,12 @@ class GuideJourneyService
      * @param string $journey
      * @return array|null
      */
-    public function getJourneyData(string $journey): ?array 
+    public function getJourneyData(string $journey): ?array
     {
         $path = $this->projectDir . '/data/guide_journeys/' . $journey . '.json';
-        if (!file_exists($path)) return null;
+        if (!file_exists($path)) {
+            return null;
+        }
 
         return json_decode(file_get_contents($path), true);
     }
@@ -56,7 +58,7 @@ class GuideJourneyService
         if (isset($data['outcomes'][$id])) {
             return ['type' => 'outcome', 'data' => $data['outcomes'][$id]];
         }
-        
+
         return null;
     }
 
@@ -72,7 +74,7 @@ class GuideJourneyService
         if (isset($data['nodes'][$uuid])) {
             return ['type' => 'node', 'data' => $data['nodes'][$uuid]];
         }
-        
+
         if (isset($data['outcomes'][$uuid])) {
             return ['type' => 'outcome', 'data' => $data['outcomes'][$uuid]];
         }

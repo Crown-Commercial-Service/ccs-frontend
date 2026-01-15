@@ -54,7 +54,7 @@ abstract class BaseJourneyController extends AbstractController
      * @param string|null $questionUUID The UUID of the current question node, or null for the start node.
      * @return Response
      */
-   public function show(Request $request, ?string $questionUUID = null): Response
+    public function show(Request $request, ?string $questionUUID = null): Response
     {
         $data = $this->journeyService->getJourneyData($this->journeyName);
         $uuid = $questionUUID ?? $data['start_uuid'];
@@ -66,7 +66,7 @@ abstract class BaseJourneyController extends AbstractController
 
         // 2. Locate the content (Node or Outcome)
         $content = $this->journeyService->findNodeOrOutcome($uuid, $data);
-        
+
         if (!$content) {
             return $this->redirectToRoute($this->journeyName . '_landing');
         }
@@ -110,7 +110,7 @@ abstract class BaseJourneyController extends AbstractController
         if (!$selectedAnswerId) {
             // Get the specific message for this node, or a generic fallback and store the message in the session flash bag
             $this->addFlash('error', $data['nodes'][$currentUuid]['validation_message'] ?? $data['default_validation_message']);
-            
+
             return $this->redirectToRoute($this->journeyName . '_journey', ['questionUUID' => $currentUuid]);
         }
 
@@ -122,13 +122,13 @@ abstract class BaseJourneyController extends AbstractController
 
         // Check if the selected answer is an OUTCOME
         $content = $this->journeyService->findNodeOrOutcome($selectedAnswerId, $data);
-        
+
         if ($content && $content['type'] === 'outcome') {
             // MANUALLY push the outcome to history so the result page can find it
             $history = $session->get('journey_history', []);
             $history[] = $selectedAnswerId;
             $session->set('journey_history', $history);
-            
+
             return $this->redirectToRoute($this->journeyName . '_result');
         }
 
@@ -145,14 +145,14 @@ abstract class BaseJourneyController extends AbstractController
     {
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $session = $request->getSession();
-        
+
         // Clear both history and answers
         $session->remove('journey_history');
         $session->remove('journey_answers');
 
         $data = $this->journeyService->getJourneyData($this->journeyName);
         $startNodeId = $data['start_uuid'];
-        
+
         return $this->render('guide_match/landing.html.twig', array_merge([
             'start_url'  => $this->generateUrl($this->journeyName . '_journey', ['questionUUID' => $startNodeId]),
         ], $this->getLandingPageData()));
@@ -169,16 +169,16 @@ abstract class BaseJourneyController extends AbstractController
         $data = $this->journeyService->getJourneyData($this->journeyName);
         $session = $request->getSession();
         $history = $session->get('journey_history', []);
-        
+
         $answers = $session->get('journey_answers');
 
         // If session is empty, redirect to start
         if (!$answers) {
             $this->addFlash('warning', 'Your session has expired. Please start the journey again.');
-            
+
             return $this->redirectToRoute($this->journeyName . '_landing');
         }
-        
+
         // The last thing in our history is the outcome UUID
         $outcomeUuid = end($history);
         $content = $this->journeyService->findNodeOrOutcome($outcomeUuid, $data);
@@ -236,7 +236,7 @@ abstract class BaseJourneyController extends AbstractController
                 $history[] = $uuid;
             }
         }
-        
+
         $session->set('journey_history', $history);
     }
 
@@ -247,18 +247,18 @@ abstract class BaseJourneyController extends AbstractController
      * @param array   $data    The complete journey data.
      * @return array A list of questions, selected answers, and URLs to revisit questions.
      */
-    private function getOutcomeAnswers(Request $request, array $data): array 
+    private function getOutcomeAnswers(Request $request, array $data): array
     {
         $session = $request->getSession();
         $savedAnswers = $session->get('journey_answers', []);
         $history = $session->get('journey_history', []);
-        
+
         $summary = [];
         foreach ($history as $questionUuid) {
             if (isset($data['nodes'][$questionUuid]) && isset($savedAnswers[$questionUuid])) {
                 $node = $data['nodes'][$questionUuid];
                 $selectedId = $savedAnswers[$questionUuid];
-                
+
                 $label = 'Unknown';
                 foreach ($node['answers'] as $answer) {
                     $val = $answer['next'] ?? $answer['outcome_id'];
@@ -318,7 +318,8 @@ abstract class BaseJourneyController extends AbstractController
      * @return array The agreement data.
      * @throws NotFoundHttpException If the framework agreement is not found.
      */
-    protected function getAgreement(string $rmNumber): array {
+    protected function getAgreement(string $rmNumber): array
+    {
         $api = new RestData(
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../../config/content/content-model.yaml')

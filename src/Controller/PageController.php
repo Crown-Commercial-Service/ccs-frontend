@@ -50,7 +50,7 @@ class PageController extends AbstractController
     protected $client;
 
     public function __construct(
-        CacheItemPoolInterface $cache, 
+        CacheItemPoolInterface $cache,
         RestData $redirectionApi,
         Wordpress $api
     ) {
@@ -181,7 +181,7 @@ class PageController extends AbstractController
         if (!$page) {
             throw $this->createNotFoundException('Page not found');
         }
-        
+
         if ($page->getContent()->get('contact_form_form_campaign_code') !== null) {
             $formCampaignCode = $page->getContent()['contact_form_form_campaign_code']->getValue();
         }
@@ -242,7 +242,7 @@ class PageController extends AbstractController
         try {
             // @todo At present need to pass fake ID since API method is intended to return one item with an ID, review this
             $results = $this->redirectionApi->getOne(0);
-        } catch (\Throwable $e) { 
+        } catch (\Throwable $e) {
             // FIX: Catch \Throwable to handle cURL errors, API timeouts, and 404s.
             // If the API is broken (or we are running a test with a fake URL),
             // we catch the error, ignore it, and return '' so the page loads normally.

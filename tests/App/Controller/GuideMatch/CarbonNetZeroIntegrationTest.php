@@ -16,8 +16,8 @@ class CarbonNetZeroIntegrationTest extends WebTestCase
         putenv('APP_API_BASE_URL=https://example.com/');
         putenv('WORDPRESS_API_URL=https://example.com');
         // Ensure REDIRECT_API_URL is set so the service container can build the object
-        putenv('REDIRECT_API_URL=https://example.com/redirects'); 
-        
+        putenv('REDIRECT_API_URL=https://example.com/redirects');
+
         parent::setUpBeforeClass();
     }
 
@@ -58,7 +58,7 @@ class CarbonNetZeroIntegrationTest extends WebTestCase
 
         // 3. FIX: Mock the Journey Service (Stub)
         // This prevents the "example.comccs" error entirely because the real code never runs.
-        $mockJourneyService = $this->createMock(GuideJourneyService::class);  
+        $mockJourneyService = $this->createMock(GuideJourneyService::class);
         // Tell it to return an array instead of null
         $mockJourneyService->method('getJourneyData')->willReturn([
             'start_uuid' => 'test-start-node-uuid'
