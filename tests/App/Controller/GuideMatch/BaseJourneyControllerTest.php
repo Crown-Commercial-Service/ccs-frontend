@@ -54,7 +54,7 @@ class BaseJourneyControllerTest extends TestCase
 
         // 3. Initialize Controller
         // 3. Initialize Controller (Using an Anonymous Class to fix PSR-1 error)
-        $this->controller = new class($this->journeyService, $this->cache) extends BaseJourneyController {
+        $this->controller = new class ($this->journeyService, $this->cache) extends BaseJourneyController {
             protected string $journeyName = 'test_journey';
 
             protected function getLandingPageData(): array
@@ -77,7 +77,7 @@ class BaseJourneyControllerTest extends TestCase
                 ];
             }
         };
-        
+
         $this->controller->setContainer($this->container);
 
         // 4. FIX: Setup Request and bind Session
