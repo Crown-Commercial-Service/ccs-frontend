@@ -37,16 +37,16 @@
 
             {% block mainnavigation %}
             <nav class="global-navigation" data-toggle="nav" data-app-uri="{{ app.request.uri }}" data-app-pathinfo="{{ app.request.pathinfo }}">
+                {% if app.environment == 'test' %}
+                {% else %}
+                    {{ render(controller(
+                        'App\\Controller\\MenuController::menu',
+                        { 'id': 195, 'currentPath': app.request.pathinfo, 'templatePath': 'menus/primary-menu.html.twig' }
+                    )) }}
 
-                {{ render(controller(
-                    'App\\Controller\\MenuController::menu',
-                    { 'id': 195, 'currentPath': app.request.pathinfo, 'templatePath': 'menus/primary-menu.html.twig' }
-                )) }}
-
-                {% include 'menus/ppg-menu.html.twig' %}
-
+                    {% include 'menus/ppg-menu.html.twig' %}
+                {% endif %}
             </nav>
-
             {% endblock %}
         </div>
 

@@ -36,3 +36,39 @@ services:
     App\EventListener\ResponseListener:
         tags:
             - { name: kernel.event_listener, event: kernel.response }
+
+     # Define the Wordpress API Service
+    Strata\Frontend\Cms\Wordpress:
+        public: true # Important for testing!
+        lazy: true
+        arguments:
+            $baseUrl: '%env(APP_API_BASE_URL)%'
+            $contentModel: '@Strata\Frontend\ContentModel\ContentModel'
+        calls:
+            - [setContentType, ['page']]
+
+    # Update PageController to receive it
+    App\Controller\PageController:
+        bind:
+            $redirectionApi: '@app.api.redirection'
+            $api: '@Strata\Frontend\Cms\Wordpress' # Injects the service above
+
+    # Define a shared ContentModel service (used by multiple APIs)
+    Strata\Frontend\ContentModel\ContentModel:
+        arguments: ['%kernel.project_dir%/config/content/content-model.yaml']
+
+    # Define the Redirection API specifically
+    app.api.redirection:
+        class: Strata\Frontend\Cms\RestData
+        public: true
+        arguments:
+            $baseUrl: '%env(APP_API_BASE_URL)%'
+            $contentModel: '@Strata\Frontend\ContentModel\ContentModel'
+        calls:
+            - [setContentType, ['redirections']]
+
+    # Allow tests to mock this service
+    App\Service\GuideJourneyService:
+        public: true
+        # Autowiring is enabled by default at the top of the file,
+        # so you don't need to define arguments here unless they are special.
