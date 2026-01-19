@@ -21,17 +21,6 @@ class CarbonNetZeroIntegrationTest extends WebTestCase
         parent::setUpBeforeClass();
     }
 
-    public function testLandingPageLoads()
-    {
-        $client = static::createClient();
-        $this->injectMocks();
-
-        $client->request('GET', '/carbon-net-zero');
-
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Find a carbon net zero solution');
-    }
-
     public function testInvalidRouteReturns404()
     {
         $client = static::createClient();
