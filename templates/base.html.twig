@@ -57,15 +57,18 @@
         }
     </style>
 
+    {# To bust cache, you bump the version up #}
+    {% set cssVersion = '2.01' %}
+
     {% if app.environment == "prod" %}
-         <link rel="preload" href="/assets/styles/styles.min.css?v=1.94" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.94"></noscript>
+         <link rel="preload" href={{"/assets/styles/styles.min.css?v=#{cssVersion}"}} as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href={{"/assets/styles/styles.min.css?v=#{cssVersion}"}}></noscript>
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="preload" href="/assets/styles/styles.min.css?v=1.94" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.94"></noscript>
+        <link rel="preload" href={{"/assets/styles/styles.min.css?v=#{cssVersion}"}} as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href={{"/assets/styles/styles.min.css?v=#{cssVersion}"}}></noscript>
     {% endif %}
 
     {# Browser icon #}
@@ -257,7 +260,7 @@
 
 <script src="/assets/scripts/libraries/jquery-3.6.0.min.js"></script>
 <script src="/assets/scripts/libraries/objectFitPolyfill.min.js"></script>
-<script src="/assets/scripts/app.js?v=2.4"></script>
+<script src="/assets/scripts/app.js?v=2.5"></script>
 <script type="text/javascript" nonce="{{ app.request.attributes.get('_csp_nonce') }}">
   $('a[target^="_new-window"]').click(function() {
     var width = window.innerWidth * 0.9 ;

@@ -1,5 +1,7 @@
 supplier_name:
   type: text
+supplier_trading_name:
+  type: text
 supplier_id:
   type: number
 supplier_phone:
