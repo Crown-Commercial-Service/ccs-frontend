@@ -37,7 +37,7 @@
 
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <script>(function (H) {
+    <script nonce="{{ app.request.attributes.get('_csp_nonce') }}">(function (H) {
             H.className = H.className.replace(/\bno-js\b/, 'js')
         })(document.documentElement)</script>
     {% block head %}
@@ -47,7 +47,7 @@
 
     {% block pageMetaTags %}{{ (page is defined)? page.head.getAllMetaHtml()|raw : '' }}{% endblock %}
 
-    <style>
+    <style nonce="{{ app.request.attributes.get('_csp_nonce') }}">
     
         :root {
         --govuk-frontend-version: "5.4.0";
@@ -57,15 +57,18 @@
         }
     </style>
 
+    {# To bust cache, you bump the version up #}
+    {% set cssVersion = '2.01' %}
+
     {% if app.environment == "prod" %}
-         <link rel="preload" href="/assets/styles/styles.min.css?v=1.93" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.93"></noscript>
+         <link rel="preload" href={{"/assets/styles/styles.min.css?v=#{cssVersion}"}} as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href={{"/assets/styles/styles.min.css?v=#{cssVersion}"}}></noscript>
     {% else %}
         {# To debug CSS in other environments (not live), change the below to
          # styles.css instead of styles.min.css
          #}
-        <link rel="preload" href="/assets/styles/styles.min.css?v=1.93" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/styles/styles.min.css?v=1.93"></noscript>
+        <link rel="preload" href={{"/assets/styles/styles.min.css?v=#{cssVersion}"}} as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href={{"/assets/styles/styles.min.css?v=#{cssVersion}"}}></noscript>
     {% endif %}
 
     {# Browser icon #}
@@ -74,7 +77,7 @@
     {% block blocking_javascript %}
 
         {# Google Tag Manager #}
-        <script>
+        <script nonce="{{ app.request.attributes.get('_csp_nonce') }}">
 
         var emailRegex = /(([^<>()\[\]\\.,;:\s@"%]+(\.[^<>()\[\]\\.,;:\s@"%]+)*)|(".+"))(@|%40)((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/
 
@@ -194,7 +197,7 @@
  # If `show-flourishes` isn't included, then certain colour flourishes won't show
 #}
 <body class="govuk-template__body {% block flourishClasses %}  {{ taxonomy }}--{{ flourish }}{% endblock %}">
-<script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+<script nonce="{{ app.request.attributes.get('_csp_nonce') }}">document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
 
 {# For data layer - outputs environment to be used in js file #}
 <div id="app-env" style="display: none" data-env="{{app.environment}}"></div>
@@ -240,7 +243,7 @@
 {% block nonblocking_javascript %}
 
     {% if app.environment == "THIS WILL NEVER BE TRUE" %}
-        <script type="text/javascript">
+        <script type="text/javascript" nonce="{{ app.request.attributes.get('_csp_nonce') }}">
             (function () {
                 var s = document.createElement("script");
                 s.type = "text/javascript";
@@ -257,8 +260,8 @@
 
 <script src="/assets/scripts/libraries/jquery-3.6.0.min.js"></script>
 <script src="/assets/scripts/libraries/objectFitPolyfill.min.js"></script>
-<script src="/assets/scripts/app.js?v=2.4"></script>
-<script type="text/javascript">
+<script src="/assets/scripts/app.js?v=2.5"></script>
+<script type="text/javascript" nonce="{{ app.request.attributes.get('_csp_nonce') }}">
   $('a[target^="_new-window"]').click(function() {
     var width = window.innerWidth * 0.9 ;
     var height = width * window.innerHeight / window.innerWidth ;
@@ -281,7 +284,7 @@ End Usersnap code #}
 
 <!-- Pardot -->
 <!-- @todo Wrap around Cookie Manager JS to ensure we have user consent before this is run -->
-<script type="text/javascript">
+<script type="text/javascript" nonce="{{ app.request.attributes.get('_csp_nonce') }}">
     piAId = '812463';
     piCId = '';
     piHostname = 'information.crowncommercial.gov.uk';
@@ -490,7 +493,7 @@ items.forEach(function (li) {
 </script>
 
 <script type="module" src="/assets/scripts/all.js?v=2.3"></script>
-<script type="module">
+<script type="module" nonce="{{ app.request.attributes.get('_csp_nonce') }}">
     import { initAll } from '/assets/scripts/all.js'
     window.addEventListener("DOMContentLoaded", function() {
          initAll()

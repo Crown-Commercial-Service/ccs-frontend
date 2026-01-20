@@ -66,31 +66,19 @@
         </ol>
 
         {% if(component.articles| length == 3) %}
-            {% set path = site_base_url ~ '/news/?' %}
-
-            {% if featureNewsProperties.newsType != null %}
-                {% set path = path ~ '&categories=' ~ featureNewsProperties.newsType | join(',') %}
-            {% endif %}
-
-            {% if featureNewsProperties.pAndSType != null %}
-                {% set path = path ~ '&products_services=' ~ featureNewsProperties.pAndSType | join(',') %}
-            {% endif %}
-
-             {% if featureNewsProperties.sectorType != null %}
-                {% set path = path ~ '&sectors=' ~ featureNewsProperties.sectorType | join(',') %}
-            {% endif %}
 
             {% if component.feature_news_feature_news_view_more_text is defined and component.feature_news_feature_news_view_more_text is not empty %}
-                <p><a href={{path}}>{{(component.feature_news_feature_news_view_more_text)}}</a></p>
+                <p> <a href={{component.feature_news_link}}> {{(component.feature_news_feature_news_view_more_text)}} </a> </p>
+            {% elseif page.contentType.name == 'news' %}
+                <p> <a href={{component.feature_news_link}}> Browse all news articles</a> </p>
             {% else %}
-                {% if page.contentType.name == 'news' %}
-                    <p><a href={{path}}>Browse all news articles</a></p>
-                {% else %}
-                    <p><a href={{path}}>Browse all {{page.title | lower | raw}} news articles</a></p>
-                {% endif %}
+                <p> <a href={{component.feature_news_link}}> Browse all {{page.title | lower | raw}} news articles</a> </p>
             {% endif %}
 
         {% endif %}
     </div>
 
 {% endif %}
+
+
+

@@ -439,22 +439,13 @@
                     checkedAgreementStatus: checkedAgreementStatus,
                     checkedAgreementType: checkedAgreementType,
                     popstateLoad: false,
+                    initialLoad: true,
                 }
             },
             mounted() {
                 this.fetchAPIData();
-                this.setupHistoryApi();     
-            },
-            created(){
-                // making sure the sections that is hidden at start shows
-                this.$nextTick(() => {
-                    const hideWithOutJS = document.querySelectorAll('.hideWithoutJS');
-                    hideWithOutJS.forEach(section => {
-                        if (section.classList.contains('govuk-visually-hidden')) {;
-                            section.classList.remove('govuk-visually-hidden');
-                        }
-                    });
-                });
+                this.setupHistoryApi();  
+                this.initialLoad = false;
             },
             watch: {
                 // making sure that the sections is refreshed 
@@ -481,7 +472,7 @@
                     // if the searchRequestUrl hasn't been updated by a popstate
                     // event (back/forward button) then we push a state item to the
                     // JS History API
-                    if(this.popstateLoad === false) {
+                    if(!this.initialLoad && this.popstateLoad === false) {
                         history.pushState({
                             checkedAgreementStatus: this.checkedAgreementStatus,
                             checkedAgreementType:   this.checkedAgreementType,
@@ -597,8 +588,7 @@
                                 + (this.keyword                ? '&keyword=' + this.keyword : '')
                     fetchURL = fetchURL + "&status[]=Upcoming&status[]=Live&limit=100"
 
-                    if(this.popstateLoad === false) {
-
+                    if(!this.initialLoad && this.popstateLoad === false) {
                         history.pushState({
                             checkedAgreementType:   [...this.checkedAgreementType],
                             checkedAgreementStatus: [...this.checkedAgreementStatus],
@@ -613,7 +603,7 @@
                 searchKeyword: function() {
                     if (this.keyword){
                         
-                        if(this.popstateLoad === false) {
+                        if(!this.initialLoad && this.popstateLoad === false) {
                             history.pushState({
                                 checkedAgreementType   :this.checkedAgreementType,
                                 checkedAgreementStatus :this.checkedAgreementStatus,

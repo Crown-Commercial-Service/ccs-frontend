@@ -14,3 +14,6 @@ twig:
         cat_domain: 'https://dev.redirect.contractawardservice.crowncommercial.gov.uk'
         ppgLogin: 'https://dev.identify.crowncommercial.gov.uk/'
         ppgCreateAccount: 'https://dev.identify.crowncommercial.gov.uk/manage-org/register'
+        csat_design_enabled: "%env(bool:default:csat_design_enabled_default:CSAT_DESIGN_ENABLED)%"
+parameters:
+    csat_design_enabled_default: true

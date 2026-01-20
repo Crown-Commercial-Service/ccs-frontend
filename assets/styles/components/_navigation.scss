@@ -32,7 +32,7 @@
 
         display: flex;
         flex-flow: row nowrap;
-        padding: govuk-px-to-rem(22) 0 govuk-px-to-rem(26) 0;
+        padding: 0 0 govuk-px-to-rem(16) 0;
         text-align: right;
         gap: 15px;
 
@@ -55,7 +55,7 @@
         background-color: transparent;
         margin-top: 0;
         margin-bottom: govuk-px-to-rem(2) ;
-        margin-top: govuk-px-to-rem(20);
+        margin-top: govuk-px-to-rem(10);
 
     }
 
@@ -179,7 +179,6 @@
 
     p {
         margin-bottom: 0px;
-        color: white;
         font-weight: 600 !important;
     }
 
@@ -328,7 +327,7 @@
     background-color: white;
     border: 0;
     border-radius: govuk-px-to-rem(3);
-    color: #6a99ff;
+    color: $ccs-text-colour;
     padding: govuk-px-to-rem(7) govuk-px-to-rem(14);
     position: absolute;
     right: govuk-px-to-rem(15);

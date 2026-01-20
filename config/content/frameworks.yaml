@@ -98,6 +98,8 @@ framework_schedules:
       type: text
     framework_schedule_document:
       type: text
+    framework_schedule_document_type:
+      type: text
     framework_schedule_document_usage:
       type: text
     framework_schedule_document_description:
