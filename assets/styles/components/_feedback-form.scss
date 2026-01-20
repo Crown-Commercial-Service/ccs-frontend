@@ -1,0 +1,171 @@
+// --- VARIABLES ---
+$color-text: #0e0e0e;
+$color-hint: #666;
+$color-border: #ccc;
+$color-button-bg: #E1E1E1;
+
+// Breakpoints for the radio grid
+$bp-mobile-max: 718px;
+$bp-tablet-max-small: 868px;
+$bp-tablet-min-large: 869px;
+$bp-desktop-max: 1024px;
+
+// --- MIXINS ---
+@mixin feedback-radio-grid($columns) {
+    display: grid;
+    grid-template-columns: repeat($columns, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+// --- CORE FORM STYLES ---
+.feedback-form,
+.feedback-form-mobile,
+.feedback-thank-you {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid $color-border;
+    
+    .govuk-fieldset__legend {
+        color: $color-text;
+        font-weight: 600;
+    }
+    .govuk-hint {
+        color: $color-hint;
+    }
+    .govuk-label {
+        color: $color-text;
+    }
+    .govuk-textarea {
+        border-color: $color-border;
+        &:focus {
+            border-color: $color-text;
+            box-shadow: 0 0 0 2px $color-text;
+        }
+    }
+    .govuk-button {
+        background-color: $color-button-bg;
+    }
+    
+    // Default radio grid (large desktop)
+    .govuk-radios--small {
+        @include feedback-radio-grid(5);
+
+        .govuk-radios__item {
+            margin-bottom: 0;
+            margin-right: 0;
+        }
+        .govuk-radios__input {
+            margin-right: 5px;
+        }
+        .govuk-radios__label {
+            font-size: 14px;
+            padding-left: 5px;
+        }
+    }
+}
+
+// --- TRIGGER & CHEVRON ---
+.feedback-trigger {
+    color: $color-text; 
+    font-weight: 800;
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-align: left;
+    justify-content: flex-start;
+    
+    &:hover {
+        text-decoration: underline !important;
+        
+        .chevron { 
+            transform: scale(1.1);
+        }
+    }
+
+    &:focus {
+        outline: 2px solid $color-text;
+        outline-offset: 2px;
+    }
+}
+
+.chevron {
+    font-size: 16px; 
+    transition: transform 0.2s ease;
+    display: inline-block;
+    margin-left: 5px;
+    vertical-align: middle;
+    text-decoration: none;
+}
+
+.feedback-form-actions {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+// --- CSS TOGGLE LOGIC (CONSOLIDATED) ---
+
+// Hide both checkboxes by default
+#feedback-toggle,
+#feedback-toggle-mobile {
+    display: none; 
+
+    // When EITHER checkbox is checked, show its corresponding form
+    &:checked ~ #feedback-form,
+    &:checked ~ #feedback-form-mobile {
+        display: block;
+    }
+
+    // When EITHER checkbox is checked, rotate the chevron
+    &:checked ~ #feedback-trigger-section .chevron {
+        transform: rotate(180deg);
+    }
+}
+
+// Hide both forms by default
+#feedback-form,
+#feedback-form-mobile {
+    display: none; 
+}
+
+
+// --- RESPONSIVE RADIO GRID ---
+
+// Tablet (Larger) - 4 Columns
+@media (min-width: $bp-tablet-min-large) and (max-width: $bp-desktop-max) {
+    .feedback-form .govuk-radios--small,
+    .feedback-form-mobile .govuk-radios--small {
+        @include feedback-radio-grid(4);
+    }
+}
+
+// Tablet (Smaller) - 3 Columns
+@media (max-width: $bp-tablet-max-small) {
+    .feedback-form .govuk-radios--small,
+    .feedback-form-mobile .govuk-radios--small {
+        @include feedback-radio-grid(3);
+    }
+}
+
+// Mobile - 2 Columns
+@media (max-width: $bp-mobile-max) {
+    .feedback-form .govuk-radios--small,
+    .feedback-form-mobile .govuk-radios--small {
+        @include feedback-radio-grid(2);
+    }
+}
+
+// --- CRITICAL MOBILE VISIBILITY FIX ---
+// This is essential to override the inline style="display: none;" on the mobile container
+// so that the entire component appears on small screens.
+@media (max-width: 768px) {
+    .helpful-info-search-agreement-mobile {
+        display: block !important;
+    }
+}
