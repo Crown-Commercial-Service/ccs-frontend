@@ -80,6 +80,15 @@
                         </div>
                     {% endif %}
 
+                    <script> 
+                        pushDataLayer(
+                            'complete', 
+                            null, 
+                            null, 
+                            'Recommended {{ agreements|map(a => a.rm_number)|join(" ") }}'
+                        ); 
+                    </script>
+
                     <h2 class="govuk-heading-m">Your answers</h2>
 
                 <dl class="govuk-summary-list">
@@ -108,7 +117,8 @@
                     <a aria-describedby="contact-ccs-intermediar-page" href="/contact/" onclick="contact();">Contact CCS</a>
                 </p>
                 
-                <a class="govuk-button govuk-button-gm--secondary no-print" data-module="govuk-button" href="{{ start_url }}">Start again to change your answers</a>
+                <a class="govuk-button govuk-button-gm--secondary no-print" data-module="govuk-button" href="{{ start_url }}" onclick="pushDataLayer('start again', 'Start again to change your answers', null, null);">Start again to change your answers</a>
+                
                 <div style="background-color: #f3f2f1; padding: 0.5em">
                     <h3 class="govuk-heading-s">Tell us what you think</h3>
                     <span class='govuk-visually-hidden' id="result-feedback"> Provide feedback survey in a new tab</span>
