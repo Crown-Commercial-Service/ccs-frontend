@@ -37,7 +37,7 @@
         </div>
 
         <a href="{{ back_url }}" class="govuk-back-link">Back</a>
-        
+
         <main class="govuk-main-wrapper cnz-main-wrapper" id="main-content" role="main">
             <div class="govuk-grid-row restrict-width">
                     {% if errors|length > 0 %}
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     {% endif %}
-                    <form action="{{ form_url }}" method="POST">
+                    <form action="{{ form_url }}" method="POST" onsubmit="return questionType('list')">
                         <div class="govuk-form-group {{ errors|length > 0 ? 'govuk-form-group--error' : '' }}">
                             <fieldset class="govuk-fieldset" aria-describedby="question-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -85,15 +85,15 @@
                                         {% set current_value = answer.next ?? answer.outcome_id %}
 
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" 
-                                                id="{{ answer_id }}" 
-                                                name="id" 
-                                                type="radio" 
+                                            <input class="govuk-radios__input"
+                                                id="{{ answer_id }}"
+                                                name="id"
+                                                type="radio"
                                                 value="{{ current_value }}"
                                                 {# Check if this was the previously selected option #}
                                                 {% if saved_answer == current_value %}checked{% endif %}
                                                 {% if answer.hint is defined %}aria-describedby="{{ answer_id }}-hint"{% endif %}>
-                                            
+
                                             <label class="govuk-label govuk-radios__label govuk-label--s" for="{{ answer_id }}">
                                                 {{ answer.label }}
                                             </label>
@@ -113,10 +113,74 @@
                             Continue
                         </button>
                     </form>
-                    <p class="govuk-body">Need help with this service? 
+                    <p class="govuk-body">Need help with this service?
                         <a aria-describedby="contact-ccs-intermediar-page" href="/contact/" onclick="contact();">Contact CCS</a>
                     </p>
             </div>
         </main>
 </div>
+<script>
+    /**
+     * FALLBACK: Manually define the missing GTM functions
+     * This prevents "Uncaught ReferenceError" when dataLayer.js fails to load.
+     */
+
+    // 1. Define the main pusher function
+    window.pushDataLayer = function(interactionType, linkText, interactionDetail, step) {
+        // Check environment (optional, matching your original logic)
+        var envDiv = document.getElementById("app-env");
+        var env = envDiv ? envDiv.dataset.env : 'local';
+
+        // Only block if strictly dev/staging (allow local/prod)
+        if (env === 'local' || env === 'prod') {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'gm_journey',
+                'interaction_type': interactionType || null,
+                'link_text': linkText || null,
+                'interaction_detail': interactionDetail || null,
+                'step': step || null
+            });
+            console.log("✅ gm_journey pushed:", interactionDetail);
+        }
+    };
+
+    // 2. Define the Form Handler (so the Continue button works)
+    window.questionType = function(type) {
+        var labelText = null;
+
+        if (type === 'list') {
+            // Find the selected radio button text
+            var selected = document.querySelector('.govuk-radios__input:checked');
+            if (selected) {
+                // Find the label corresponding to the ID
+                var label = document.querySelector('label[for="' + selected.id + '"]');
+                if (label) labelText = label.innerText.trim();
+            }
+        }
+
+        // If we found a selection, track it
+        if (labelText) {
+            pushDataLayer("continue", "continue", null, labelText);
+        }
+
+        // Return true to allow the form to submit to the next page
+        return true;
+    };
+
+    // Ensure the function exists before calling it to prevent errors
+    if (typeof dataLayerPageView === 'function') {
+        dataLayerPageView({
+            'event': 'page_view',
+            'page_referrer': window.location.href
+        });
+    } else {
+        // Fallback if the helper function isn't loaded yet
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            'event': 'page_view',
+            'page_referrer': window.location.href
+        });
+    }
+</script>
 {% endblock %}

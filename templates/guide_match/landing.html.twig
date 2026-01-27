@@ -18,7 +18,7 @@
     <div class="govuk-phase-banner">
             {% include '/includes/phase-banner-content.html.twig' %}
     </div>
-    
+
     <main class="govuk-main-wrapper landing-cnz-wrapper" id="main-content" role="main">
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full restrict-width">
@@ -37,22 +37,22 @@
                     {% endfor %}
                 {% endfor %}
                 <h1 class="govuk-heading-xl page-title">{{ title|raw }}</h1>
-                
+
                 <p class="govuk-body page-intro">
                     {{ description|raw }}
                 </p>
 
                 <h2 class="govuk-heading-m">Before you start</h2>
-                
+
                 <p class="govuk-body">It may be helpful to know the following information (but this is not essential):</p>
-                
+
                 <ul class="govuk-list govuk-list--bullet">
                     <li>the product or service you need</li>
                     <li>the sector or organisation you are buying for</li>
                 </ul>
 
                 <p class="govuk-body">We will then match you to the right solution or agreement to meet your needs.</p>
-                
+
                 <p class="govuk-body">This service takes less than 1 minute to complete.</p>
 
                 {# Replace the href with your actual first node route #}
@@ -63,4 +63,46 @@
         </div>
     </main>
 </div>
+
+<script>
+    /**
+     * FALLBACK SCRIPT for Landing Page
+     * 1. Defines pushDataLayer so the "Start" button doesn't crash.
+     * 2. Fires the missing page_view event.
+     */
+
+    // --- 1. Define the Helper Function (Fixes the Click Error) ---
+    if (typeof window.pushDataLayer === 'undefined') {
+        window.pushDataLayer = function(interactionType, linkText, interactionDetail, step) {
+            var envDiv = document.getElementById("app-env");
+            var env = envDiv ? envDiv.dataset.env : 'local';
+
+            // Allow local and prod to fire
+            if (env === 'local' || env === 'prod') {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    'event': 'gm_journey',
+                    'interaction_type': interactionType || null,
+                    'link_text': linkText || null,
+                    'interaction_detail': interactionDetail || null,
+                    'step': step || null
+                });
+                console.log("✅ gm_journey pushed:", interactionType);
+            }
+        };
+    }
+
+    // --- 2. Fire Page View (Fixes the missing log) ---
+    if (typeof dataLayerPageView === 'function') {
+        dataLayerPageView({'event': 'page_view', 'page_referrer': window.location.href});
+    } else {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            'event': 'page_view',
+            'page_referrer': window.location.href
+        });
+    }
+
+    console.log("✅ Landing Page Scripts Loaded");
+</script>
 {% endblock %}
