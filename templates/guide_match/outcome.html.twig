@@ -16,177 +16,130 @@
 
 
 {% block body %}
-    <div class="govuk-width-container">
-        <a href="{{ back_url }}" class="govuk-back-link">Back</a>
-        <main class="govuk-main-wrapper" id="main-content" role="main">
-            <div class="govuk-grid-row">
-                {% if errors|length > 0 %}
-                    <div class="govuk-error-summary" data-module="govuk-error-summary">
-                        <div role="alert">
-                            <h2 class="govuk-error-summary__title">There is a problem</h2>
-                            <div class="govuk-error-summary__body">
-                                <ul class="govuk-list govuk-error-summary__list">
-                                    {% for message in errors %}
-                                        <li>
-                                            <a href="#answer-1">{{ message }}</a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
+<div class="govuk-width-container">
+    <a href="{{ back_url }}" class="govuk-back-link">Back</a>
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+        <div class="govuk-grid-row">
+            {% if errors|length > 0 %}
+                <div class="govuk-error-summary" data-module="govuk-error-summary">
+                    <div role="alert">
+                        <h2 class="govuk-error-summary__title">There is a problem</h2>
+                        <div class="govuk-error-summary__body">
+                            <ul class="govuk-list govuk-error-summary__list">
+                                {% for message in errors %}
+                                    <li>
+                                        <a href="#answer-1">{{ message }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
-                {% endif %}
-                <div class="govuk-grid-column-two-thirds">
-                        <h1 class="govuk-heading-xl page-title govuk-!-margin-bottom-4">Carbon net zero agreement results</h1>
-                        <p class="page-title-prepend">Based on your answers, we suggest using the following solution(s):</p>
+                </div>
+            {% endif %}
+            <div class="govuk-grid-column-two-thirds">
+                    <h1 class="govuk-heading-xl page-title govuk-!-margin-bottom-4">Carbon net zero agreement results</h1>
+                    <p class="page-title-prepend">Based on your answers, we suggest using the following solution(s):</p>
 
-                        {% if agreements is defined and agreements is not empty %}
-                            {% for agreement in agreements %}
-                                {% if agreement.is_external_link|default(false) %}
-                                    <div class="govuk-inset-text agreement-outcomes">
-                                        <h2 class="govuk-heading-m">
-                                            <a href="{{ agreement['url'] }}" class="govuk-link" style="text-decoration: underline;">
-                                                {{ agreement['title'] }}
-                                            </a>
-                                        </h2>
-                                        <p class="govuk-body">{{ agreement['summary']|raw }}</p>
-                                        <a class="govuk-button no-print govuk-!-margin-bottom-0" data-module="govuk-button" href="{{ agreement['url'] }}">Read more</a>
-                                    </div>
-                                {% else %}
-                                    <div class="govuk-inset-text agreement-outcomes">
-                                        <h2 class="govuk-heading-m">
-                                            <a href="{{ path('frameworks_show', {rmNumber: agreement['rm_number']}) }}" class="govuk-link" style="text-decoration: underline;">
-                                                {{ agreement['title'] }}
-                                            </a>
-                                        </h2>
-                                        <p class="govuk-body-s">
-                                            <strong>Agreement ID:</strong> {{ agreement['rm_number'] }} &nbsp;&nbsp;
-                                            <strong>End Date:</strong> {{ agreement['end_date']|date('d/m/y') }} <br>
-                                            {% if agreement.regulation_type is defined %}
-                                                <strong>Agreement Type:</strong> {{ agreement['regulation_type'] }}
-                                            {% endif %}
-                                        </p>
-                                        <p class="govuk-body">{{ agreement['summary']|raw }}</p>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% else %}
-                            <div class="govuk-warning-text">
-                            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                            <strong class="govuk-warning-text__text">
-                                <span class="govuk-warning-text__assistive">Warning</span>
-                                Outcome data is missing for this selection.
-                            </strong>
-                            </div>
-                        {% endif %}
-
-                        {# I REMOVED THE CRASHING SCRIPT FROM HERE #}
-
-                        <h2 class="govuk-heading-m">Your answers</h2>
-
-                    <dl class="govuk-summary-list">
-                        {% for item in summary %}
-                            <div class="govuk-summary-list__row">
-                                <dt class="govuk-summary-list__key">
-                                    {{ item.question }}
-                                </dt>
-                                <dd class="govuk-summary-list__value">
-                                    {{ item.answer }}
-                                </dd>
-                                <dd class="govuk-summary-list__actions">
-                                    <a class="govuk-link no-print" href="{{ item.url }}">
-                                        Change<span class="govuk-visually-hidden"> answer for {{ item.question }}</span>
-                                    </a>
-                                </dd>
-                            </div>
+                    {% if agreements is defined and agreements is not empty %}
+                        {% for agreement in agreements %}
+                            {% if agreement.is_external_link|default(false) %}
+                                <div class="govuk-inset-text agreement-outcomes">
+                                    <h2 class="govuk-heading-m">
+                                        <a href="{{ agreement['url'] }}" class="govuk-link" style="text-decoration: underline;">
+                                            {{ agreement['title'] }}
+                                        </a>
+                                    </h2>
+                                    <p class="govuk-body">{{ agreement['summary']|raw }}</p>
+                                    <a class="govuk-button no-print govuk-!-margin-bottom-0" data-module="govuk-button" href="{{ agreement['url'] }}">Read more</a>
+                                </div>
+                            {% else %}
+                                <div class="govuk-inset-text agreement-outcomes">
+                                    <h2 class="govuk-heading-m">
+                                        <a href="{{ path('frameworks_show', {rmNumber: agreement['rm_number']}) }}" class="govuk-link" style="text-decoration: underline;">
+                                            {{ agreement['title'] }}
+                                        </a>
+                                    </h2>
+                                    <p class="govuk-body-s">
+                                        <strong>Agreement ID:</strong> {{ agreement['rm_number'] }} &nbsp;&nbsp; 
+                                        <strong>End Date:</strong> {{ agreement['end_date']|date('d/m/y') }} <br>
+                                        {% if agreement.regulation_type is defined %}
+                                            <strong>Agreement Type:</strong> {{ agreement['regulation_type'] }}
+                                        {% endif %}
+                                    </p>
+                                    <p class="govuk-body">{{ agreement['summary']|raw }}</p>
+                                </div>
+                            {% endif %}
                         {% endfor %}
-                    </dl>
+                    {% else %}
+                        <div class="govuk-warning-text">
+                        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                        <strong class="govuk-warning-text__text">
+                            <span class="govuk-warning-text__assistive">Warning</span>
+                            Outcome data is missing for this selection.
+                        </strong>
+                        </div>
+                    {% endif %}
 
-                    <div style="margin-bottom: 2em; margin-top: 2em" class="no-print">
-                        <a class="print-link govuk-link" href="#" rel="alternate" onclick="window.print(); return false;">Print this page</a>
-                    </div>
+                    <script> 
+                        pushDataLayer(
+                            'complete', 
+                            null, 
+                            null, 
+                            'Recommended {{ agreements|map(a => a.rm_number)|join(" ") }}'
+                        ); 
+                    </script>
 
-                    <p class="govuk-body">Need help with this service?
-                        <a aria-describedby="contact-ccs-intermediar-page" href="/contact/" onclick="contact();">Contact CCS</a>
+                    <h2 class="govuk-heading-m">Your answers</h2>
+
+                <dl class="govuk-summary-list">
+                    {% for item in summary %}
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                {{ item.question }}
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                {{ item.answer }}
+                            </dd>
+                            <dd class="govuk-summary-list__actions">
+                                <a class="govuk-link no-print" href="{{ item.url }}">
+                                    Change<span class="govuk-visually-hidden"> answer for {{ item.question }}</span>
+                                </a>
+                            </dd>
+                        </div>
+                    {% endfor %}
+                </dl>
+
+                <div style="margin-bottom: 2em; margin-top: 2em" class="no-print">
+                    <a class="print-link govuk-link" href="#" rel="alternate" onclick="window.print(); return false;">Print this page</a>
+                </div>
+
+                <p class="govuk-body">Need help with this service? 
+                    <a aria-describedby="contact-ccs-intermediar-page" href="/contact/" onclick="contact();">Contact CCS</a>
+                </p>
+                
+                <a class="govuk-button govuk-button-gm--secondary no-print" data-module="govuk-button" href="{{ start_url }}" onclick="pushDataLayer('start again', 'Start again to change your answers', null, null);">Start again to change your answers</a>
+                
+                <div style="background-color: #f3f2f1; padding: 0.5em">
+                    <h3 class="govuk-heading-s">Tell us what you think</h3>
+                    <span class='govuk-visually-hidden' id="result-feedback"> Provide feedback survey in a new tab</span>
+                    <p class="govuk-body">
+                        We would like your feedback to help us improve this service. The survey takes 3 minutes to complete.
+                        <a href="https://crowncommercial.qualtrics.com/jfe/form/SV_b2hqVz3TYDCxN2u"  target="_blank" aria-describedby="result-feedback">
+                            Start survey.
+                        </a>
                     </p>
-
-                    <a class="govuk-button govuk-button-gm--secondary no-print" data-module="govuk-button" href="{{ start_url }}" onclick="pushDataLayer('start again', 'Start again to change your answers', null, null);">Start again to change your answers</a>
-
-                    <div style="background-color: #f3f2f1; padding: 0.5em">
-                        <h3 class="govuk-heading-s">Tell us what you think</h3>
-                        <span class='govuk-visually-hidden' id="result-feedback"> Provide feedback survey in a new tab</span>
-                        <p class="govuk-body">
-                            We would like your feedback to help us improve this service. The survey takes 3 minutes to complete.
-                            <a href="https://crowncommercial.qualtrics.com/jfe/form/SV_b2hqVz3TYDCxN2u"  target="_blank" aria-describedby="result-feedback">
-                                Start survey.
-                            </a>
-                        </p>
-                    </div>
                 </div>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
+</div>
+<script>
+    pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
 
-    <script>
-        /**
-         * FALLBACK SCRIPT for Result Page
-         * 1. Defines the missing pushDataLayer function.
-         * 2. Fires the 'complete' event immediately.
-         */
-
-        // --- 1. Define the Helper Function ---
-        if (typeof window.pushDataLayer === 'undefined') {
-            window.pushDataLayer = function(interactionType, linkText, interactionDetail, step) {
-                var envDiv = document.getElementById("app-env");
-                var env = envDiv ? envDiv.dataset.env : 'local';
-
-                if (env === 'local' || env === 'prod') {
-                    window.dataLayer = window.dataLayer || [];
-                    window.dataLayer.push({
-                        'event': 'gm_journey',
-                        'interaction_type': interactionType || null,
-                        'link_text': linkText || null,
-                        'interaction_detail': interactionDetail || null,
-                        'step': step || null
-                    });
-                }
-            };
-        }
-
-        // --- 2. Fire the "Complete" Event ---
-        // I moved your logic from the middle of the page to here.
-        // It uses Twig to inject the agreement numbers, just like your original code.
-
-        var agreementStep = 'Recommended {{ agreements|map(a => a.rm_number)|join(" ") }}';
-
-        // Fallback: If no agreements found, grab the current URL (safeguard)
-        if (agreementStep.trim() === 'Recommended') {
-            agreementStep += window.location.href;
-        }
-
-        pushDataLayer(
-            'complete',
-            null,
-            null,
-            agreementStep
-        );
-        console.log("✅ gm_journey 'complete' fired:", agreementStep);
-
-        // --- 3. Fire Page View ---
-        if (typeof dataLayerPageView === 'function') {
-            dataLayerPageView({'event': 'page_view', 'page_referrer': window.location.href});
-        } else {
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({'event': 'page_view', 'page_referrer': window.location.href});
-        }
-
-        // --- 4. Define other helpers for buttons ---
-        window.printResultPage = function() {
-            pushDataLayer("print", "Print this page", null, null);
-            window.print();
-        };
-        window.contact = function() {
-            pushDataLayer("contact", "Contact CCS", null, null);
-        };
-    </script>
+    function printResultPage() {
+        window.print();
+        return false; // Prevents the '#' link from jumping to the top of the page
+    }
+</script>
 {% endblock %}
+

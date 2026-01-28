@@ -144,6 +144,19 @@ function fileDownload( fileURL, fileName, fileSize) {
     });
 }
 
+function pushDataLayer(interaction_type, link_text, interaction_detail, step){
+    var env = document.getElementById('app-env').dataset.env;
+    if (env == "local" || env == "prod") {
+        window.dataLayer.push({
+            "event": 'gm_journey',
+            "interaction_type":     interaction_type !== null ? interaction_type : null,
+            "link_text":            link_text !== null ? link_text : null,
+            "interaction_detail":   interaction_detail !== null ? interaction_detail : null,
+            "step":                 step !== null ? step : null
+        });
+    }
+}
+
 function pushToDataLayer(array) {
     array = (typeof array === 'string') ? JSON.parse(array) : array;
     var env = document.getElementById('app-env').dataset.env;

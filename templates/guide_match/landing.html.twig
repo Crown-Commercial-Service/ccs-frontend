@@ -63,46 +63,5 @@
         </div>
     </main>
 </div>
-
-<script>
-    /**
-     * FALLBACK SCRIPT for Landing Page
-     * 1. Defines pushDataLayer so the "Start" button doesn't crash.
-     * 2. Fires the missing page_view event.
-     */
-
-    // --- 1. Define the Helper Function (Fixes the Click Error) ---
-    if (typeof window.pushDataLayer === 'undefined') {
-        window.pushDataLayer = function(interactionType, linkText, interactionDetail, step) {
-            var envDiv = document.getElementById("app-env");
-            var env = envDiv ? envDiv.dataset.env : 'local';
-
-            // Allow local and prod to fire
-            if (env === 'local' || env === 'prod') {
-                window.dataLayer = window.dataLayer || [];
-                window.dataLayer.push({
-                    'event': 'gm_journey',
-                    'interaction_type': interactionType || null,
-                    'link_text': linkText || null,
-                    'interaction_detail': interactionDetail || null,
-                    'step': step || null
-                });
-                console.log("✅ gm_journey pushed:", interactionType);
-            }
-        };
-    }
-
-    // --- 2. Fire Page View (Fixes the missing log) ---
-    if (typeof dataLayerPageView === 'function') {
-        dataLayerPageView({'event': 'page_view', 'page_referrer': window.location.href});
-    } else {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-            'event': 'page_view',
-            'page_referrer': window.location.href
-        });
-    }
-
-    console.log("✅ Landing Page Scripts Loaded");
-</script>
+<script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});</script>
 {% endblock %}
