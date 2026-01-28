@@ -1,7 +1,7 @@
 # System routes
 # 1. The Landing Page
 cnz_landing:
-    path: /carbon-net-zero
+    path: /carbon-net-zero/find-a-carbon-net-zero-solution
     controller: App\Controller\GuideMatch\CarbonNetZeroController::landingPage
     methods: [GET]
 

@@ -37,7 +37,7 @@
         </div>
 
         <a href="{{ back_url }}" class="govuk-back-link">Back</a>
-        
+
         <main class="govuk-main-wrapper cnz-main-wrapper" id="main-content" role="main">
             <div class="govuk-grid-row restrict-width">
                     {% if errors|length > 0 %}
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     {% endif %}
-                    <form action="{{ form_url }}" method="POST">
+                    <form action="{{ form_url }}" method="POST" onsubmit="return questionType('list')">
                         <div class="govuk-form-group {{ errors|length > 0 ? 'govuk-form-group--error' : '' }}">
                             <fieldset class="govuk-fieldset" aria-describedby="question-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -85,15 +85,15 @@
                                         {% set current_value = answer.next ?? answer.outcome_id %}
 
                                         <div class="govuk-radios__item">
-                                            <input class="govuk-radios__input" 
-                                                id="{{ answer_id }}" 
-                                                name="id" 
-                                                type="radio" 
+                                            <input class="govuk-radios__input"
+                                                id="{{ answer_id }}"
+                                                name="id"
+                                                type="radio"
                                                 value="{{ current_value }}"
                                                 {# Check if this was the previously selected option #}
                                                 {% if saved_answer == current_value %}checked{% endif %}
                                                 {% if answer.hint is defined %}aria-describedby="{{ answer_id }}-hint"{% endif %}>
-                                            
+
                                             <label class="govuk-label govuk-radios__label govuk-label--s" for="{{ answer_id }}">
                                                 {{ answer.label }}
                                             </label>
@@ -113,10 +113,11 @@
                             Continue
                         </button>
                     </form>
-                    <p class="govuk-body">Need help with this service? 
+                    <p class="govuk-body">Need help with this service?
                         <a aria-describedby="contact-ccs-intermediar-page" href="/contact/" onclick="contact();">Contact CCS</a>
                     </p>
             </div>
         </main>
 </div>
+<script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});</script>
 {% endblock %}

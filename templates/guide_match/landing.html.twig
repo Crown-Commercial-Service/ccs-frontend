@@ -18,7 +18,7 @@
     <div class="govuk-phase-banner">
             {% include '/includes/phase-banner-content.html.twig' %}
     </div>
-    
+
     <main class="govuk-main-wrapper landing-cnz-wrapper" id="main-content" role="main">
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full restrict-width">
@@ -37,30 +37,31 @@
                     {% endfor %}
                 {% endfor %}
                 <h1 class="govuk-heading-xl page-title">{{ title|raw }}</h1>
-                
+
                 <p class="govuk-body page-intro">
                     {{ description|raw }}
                 </p>
 
                 <h2 class="govuk-heading-m">Before you start</h2>
-                
+
                 <p class="govuk-body">It may be helpful to know the following information (but this is not essential):</p>
-                
+
                 <ul class="govuk-list govuk-list--bullet">
                     <li>the product or service you need</li>
                     <li>the sector or organisation you are buying for</li>
                 </ul>
 
                 <p class="govuk-body">We will then match you to the right solution or agreement to meet your needs.</p>
-                
+
                 <p class="govuk-body">This service takes less than 1 minute to complete.</p>
 
                 {# Replace the href with your actual first node route #}
-                <a href="{{ start_url }}" role="button" class="govuk-button govuk-button--start govuk-!-margin-top-6 govuk-!-margin-bottom-9" data-module="govuk-button" onclick="pushDataLayer('start', 'Start now', null, null);">
+                <a href="{{ start_url }}" role="button" class="govuk-button govuk-button--start govuk-!-margin-top-6 govuk-!-margin-bottom-9" data-module="govuk-button" onclick="CnzPushDataLayer('start', 'Start now', null, null);">
                     Start now
                 </a>
             </div>
         </div>
     </main>
 </div>
+<script>pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});</script>
 {% endblock %}

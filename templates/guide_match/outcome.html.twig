@@ -17,7 +17,7 @@
 
 {% block body %}
 <div class="govuk-width-container">
-    <a href="{{ back_url }}" class="govuk-back-link">Back</a>
+    <a href="{{ back_url }}" class="govuk-back-link" onclick="back();">Back</a>
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-grid-row">
             {% if errors|length > 0 %}
@@ -81,7 +81,7 @@
                     {% endif %}
 
                     <script> 
-                        pushDataLayer(
+                        CnzPushDataLayer(
                             'complete', 
                             null, 
                             null, 
@@ -110,14 +110,14 @@
                 </dl>
 
                 <div style="margin-bottom: 2em; margin-top: 2em" class="no-print">
-                    <a class="print-link govuk-link" href="#" rel="alternate" onclick="window.print(); return false;">Print this page</a>
+                    <a class="print-link govuk-link" href="#" rel="alternate" onclick="printResultPage()">Print this page</a>
                 </div>
 
                 <p class="govuk-body">Need help with this service? 
                     <a aria-describedby="contact-ccs-intermediar-page" href="/contact/" onclick="contact();">Contact CCS</a>
                 </p>
                 
-                <a class="govuk-button govuk-button-gm--secondary no-print" data-module="govuk-button" href="{{ start_url }}" onclick="pushDataLayer('start again', 'Start again to change your answers', null, null);">Start again to change your answers</a>
+                <a class="govuk-button govuk-button-gm--secondary no-print" data-module="govuk-button" href="{{ start_url }}" onclick="CnzPushDataLayer('start again', 'Start again to change your answers', null, null);">Start again to change your answers</a>
                 
                 <div style="background-color: #f3f2f1; padding: 0.5em">
                     <h3 class="govuk-heading-s">Tell us what you think</h3>
@@ -134,10 +134,7 @@
     </main>
 </div>
 <script>
-    function printResultPage() {
-        window.print();
-        return false; // Prevents the '#' link from jumping to the top of the page
-    }
+    pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
 </script>
 {% endblock %}
 
