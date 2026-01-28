@@ -172,7 +172,8 @@ function formatFileType(url) {
 
 function CnzPushDataLayer(interaction_type, link_text, interaction_detail, step){
     var env = document.getElementById('app-env').dataset.env;
-    if (env == "local" || env == "prod") {
+
+    if (env != "dev") {
         window.dataLayer.push({
             "event": 'gm_journey',
             "interaction_type":     interaction_type !== null ? interaction_type : null,
