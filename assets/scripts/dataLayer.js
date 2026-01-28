@@ -170,7 +170,7 @@ function formatFileType(url) {
     return match ? match[2] : ""
 }
 
-function pushDataLayer(interaction_type, link_text, interaction_detail, step){
+function CnzPushDataLayer(interaction_type, link_text, interaction_detail, step){
     var env = document.getElementById('app-env').dataset.env;
     if (env == "local" || env == "prod") {
         window.dataLayer.push({
@@ -199,7 +199,7 @@ function questionType(type){
     }
 
     if(answer !== null){
-        pushDataLayer('continue','continue',null,answer);
+        CnzPushDataLayer('continue','continue',null,answer);
     }
 }
 
@@ -226,14 +226,14 @@ function multiSelect(){
 }
 
 function printResultPage(){
-    pushDataLayer('print','Print this page', null, null);
+    CnzPushDataLayer('print','Print this page', null, null);
     window.print()
 }
 
 function contact(){
-    pushDataLayer('contact', 'Contact CCS', null, null);
+    CnzPushDataLayer('contact', 'Contact CCS', null, null);
 }
 
 function back(){
-    pushDataLayer('back', 'Back', null, null);
+    CnzPushDataLayer('back', 'Back', null, null);
 }

@@ -81,7 +81,7 @@
                     {% endif %}
 
                     <script> 
-                        pushDataLayer(
+                        CnzPushDataLayer(
                             'complete', 
                             null, 
                             null, 
@@ -117,7 +117,7 @@
                     <a aria-describedby="contact-ccs-intermediar-page" href="/contact/" onclick="contact();">Contact CCS</a>
                 </p>
                 
-                <a class="govuk-button govuk-button-gm--secondary no-print" data-module="govuk-button" href="{{ start_url }}" onclick="pushDataLayer('start again', 'Start again to change your answers', null, null);">Start again to change your answers</a>
+                <a class="govuk-button govuk-button-gm--secondary no-print" data-module="govuk-button" href="{{ start_url }}" onclick="CnzPushDataLayer('start again', 'Start again to change your answers', null, null);">Start again to change your answers</a>
                 
                 <div style="background-color: #f3f2f1; padding: 0.5em">
                     <h3 class="govuk-heading-s">Tell us what you think</h3>
