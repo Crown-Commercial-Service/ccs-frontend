@@ -17,7 +17,7 @@
 
 {% block body %}
 <div class="govuk-width-container">
-    <a href="{{ back_url }}" class="govuk-back-link">Back</a>
+    <a href="{{ back_url }}" class="govuk-back-link" onclick="back();">Back</a>
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-grid-row">
             {% if errors|length > 0 %}
@@ -110,7 +110,7 @@
                 </dl>
 
                 <div style="margin-bottom: 2em; margin-top: 2em" class="no-print">
-                    <a class="print-link govuk-link" href="#" rel="alternate" onclick="window.print(); return false;">Print this page</a>
+                    <a class="print-link govuk-link" href="#" rel="alternate" onclick="printResultPage()">Print this page</a>
                 </div>
 
                 <p class="govuk-body">Need help with this service? 
@@ -135,11 +135,6 @@
 </div>
 <script>
     pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href});
-
-    function printResultPage() {
-        window.print();
-        return false; // Prevents the '#' link from jumping to the top of the page
-    }
 </script>
 {% endblock %}
 
