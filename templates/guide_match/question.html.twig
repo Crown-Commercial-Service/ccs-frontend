@@ -42,7 +42,7 @@
             <div class="govuk-grid-row restrict-width">
                     {% if errors|length > 0 %}
                         <script>
-                            pushDataLayer('error','Continue', "{{ errors|join(", ") }}", null );
+                            CnzPushDataLayer('error','Continue', "{{ errors|join(", ") }}", null );
                         </script>
                         <div class="govuk-error-summary" data-module="govuk-error-summary">
                             <div role="alert">
