@@ -41,8 +41,10 @@
                     <p class="page-title-prepend">Based on your answers, we suggest using the following solution(s):</p>
 
                     {% if agreements is defined and agreements is not empty %}
+                        {% set recommended_items = [] %}
                         {% for agreement in agreements %}
                             {% if agreement.is_external_link|default(false) %}
+                                {% set recommended_items = recommended_items|merge([agreement['url']]) %}
                                 <div class="govuk-inset-text agreement-outcomes">
                                     <h2 class="govuk-heading-m">
                                         <a href="{{ agreement['url'] }}" class="govuk-link" style="text-decoration: underline;">
@@ -53,6 +55,7 @@
                                     <a class="govuk-button no-print govuk-!-margin-bottom-0" data-module="govuk-button" href="{{ agreement['url'] }}">Read more</a>
                                 </div>
                             {% else %}
+                                {% set recommended_items = recommended_items|merge([agreement['rm_number']]) %}
                                 <div class="govuk-inset-text agreement-outcomes">
                                     <h2 class="govuk-heading-m">
                                         <a href="{{ path('frameworks_show', {rmNumber: agreement['rm_number']}) }}" class="govuk-link" style="text-decoration: underline;">
@@ -60,7 +63,7 @@
                                         </a>
                                     </h2>
                                     <p class="govuk-body-s">
-                                        <strong>Agreement ID:</strong> {{ agreement['rm_number'] }} &nbsp;&nbsp; 
+                                        <strong>Agreement ID:</strong> {{ agreement['rm_number'] }} &nbsp;&nbsp;
                                         <strong>End Date:</strong> {{ agreement['end_date']|date('d/m/y') }} <br>
                                         {% if agreement.regulation_type is defined %}
                                             <strong>Agreement Type:</strong> {{ agreement['regulation_type'] }}
@@ -70,6 +73,15 @@
                                 </div>
                             {% endif %}
                         {% endfor %}
+
+                        <script>
+                            CnzPushDataLayer(
+                                'complete',
+                                null,
+                                null,
+                                'Recommended {{ recommended_items|join(" ") }}'
+                            );
+                        </script>
                     {% else %}
                         <div class="govuk-warning-text">
                         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
@@ -79,15 +91,6 @@
                         </strong>
                         </div>
                     {% endif %}
-
-                    <script> 
-                        CnzPushDataLayer(
-                            'complete', 
-                            null, 
-                            null, 
-                            'Recommended {{ agreements|map(a => a.rm_number)|join(" ") }}'
-                        ); 
-                    </script>
 
                     <h2 class="govuk-heading-m">Your answers</h2>
 
@@ -113,12 +116,12 @@
                     <a class="print-link govuk-link" href="#" rel="alternate" onclick="printResultPage()">Print this page</a>
                 </div>
 
-                <p class="govuk-body">Need help with this service? 
+                <p class="govuk-body">Need help with this service?
                     <a aria-describedby="contact-ccs-intermediar-page" href="/contact/" onclick="contact();">Contact CCS</a>
                 </p>
-                
+
                 <a class="govuk-button govuk-button-gm--secondary no-print" data-module="govuk-button" href="{{ start_url }}" onclick="CnzPushDataLayer('start again', 'Start again to change your answers', null, null);">Start again to change your answers</a>
-                
+
                 <div style="background-color: #f3f2f1; padding: 0.5em">
                     <h3 class="govuk-heading-s">Tell us what you think</h3>
                     <span class='govuk-visually-hidden' id="result-feedback"> Provide feedback survey in a new tab</span>

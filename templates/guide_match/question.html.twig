@@ -41,6 +41,9 @@
         <main class="govuk-main-wrapper cnz-main-wrapper" id="main-content" role="main">
             <div class="govuk-grid-row restrict-width">
                     {% if errors|length > 0 %}
+                        <script>
+                            pushDataLayer('error','Continue', "{{ errors|join(", ") }}", null );
+                        </script>
                         <div class="govuk-error-summary" data-module="govuk-error-summary">
                             <div role="alert">
                                 <h2 class="govuk-error-summary__title">There is a problem</h2>
@@ -56,6 +59,7 @@
                             </div>
                         </div>
                     {% endif %}
+
                     <form action="{{ form_url }}" method="POST" onsubmit="return questionType('list')">
                         <div class="govuk-form-group {{ errors|length > 0 ? 'govuk-form-group--error' : '' }}">
                             <fieldset class="govuk-fieldset" aria-describedby="question-hint">
