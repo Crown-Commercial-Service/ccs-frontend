@@ -97,7 +97,7 @@ var docCookies = {
             description: `<p>We use Google Analytics to measure how you use the website so we can improve it based on user needs. Google Analytics sets cookies that store anonymised information about:</p>
                           <ul>
                             <li>how you got to the site</li>
-                            <li>the pages you visit on Crown Commercial Service (CCS), and how long you spend on each page</li>
+                            <li>the pages you visit on Crown Commercial Service (GCA), and how long you spend on each page</li>
                             <li>what you click on while you're visiting the site</li>
                           </ul>`,
             cookie_type: "usage",
@@ -114,7 +114,7 @@ var docCookies = {
 
         {
             title: "Measuring website usage (Content Square)",
-            description: `<p>We use Content Square software to collect information about how you use CCS. We do this to help make sure the site is meeting the needs of its users and to help us make improvements.</p>
+            description: `<p>We use Content Square software to collect information about how you use GCA. We do this to help make sure the site is meeting the needs of its users and to help us make improvements.</p>
                           <p>Content Square stores information about:</p>
                           <ul>
                             <li>Browsing activity</li>
@@ -132,7 +132,7 @@ var docCookies = {
 
         {
             title: "Cookies that help with our communications and marketing",
-            description: "These cookies may be set by third party websites and do things like measure how you view YouTube videos that are on Crown Commercial Service (CCS).",
+            description: "These cookies may be set by third party websites and do things like measure how you view YouTube videos that are on Crown Commercial Service (GCA).",
             cookie_type: "marketing",
             enabled: null,
             adjustable: true,

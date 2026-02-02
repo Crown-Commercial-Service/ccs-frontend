@@ -217,7 +217,7 @@ class FormController extends AbstractController
                     'fileAttachedBefore'    => !(empty($formErrors["fileErr"]["errors"])) ? false : $this->fileAttached(),
                 ]);
             } else {
-                $params->set('subject', 'Contact CCS');
+                $params->set('subject', 'Contact GCA');
                 $params->set('00Nb0000009IXEW', 'General-Enquiry');
                 $params->set(getenv('SF_RM_CASE_ID'), ControllerHelper::extractRmNumberFromReferrer($params->get('00N4L000009OPAj', null)));
                 $params->set('recordType', '012b00000005NWC');
@@ -308,7 +308,7 @@ class FormController extends AbstractController
                     'fileAttachedBefore'    => !(empty($formErrors["fileErr"]["errors"])) ? false : $this->fileAttached(),
                 ]);
             } else {
-                $params->set('subject', 'Contact CCS');
+                $params->set('subject', 'Contact GCA');
                 $params->set('00Nb0000009IXEW', 'General-Enquiry');
                 $params->set(getenv('SF_RM_CASE_ID'), $params->get('00NS90000025xmH', null));
                 $params->set('recordType', '012b00000005NWC');
