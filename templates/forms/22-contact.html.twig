@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Contact Crown Commercial Services - CCS {% endblock %}
+{% block title %} Goverment Commercial Agency - GCA {% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -40,7 +40,7 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
 
-                    <h1 class="govuk-heading-xl page-title">Contact CCS</h1>
+                    <h1 class="govuk-heading-xl page-title">Contact GCA</h1>
                     <p class="govuk-body-l">You can use the contact form below to ask a question or give us feedback</p>
 
                     <form class="govuk-!-width-three-quarters pardot-submit" action="/contact/submit" method="POST" novalidate data-evt-type='contact_form' {{ formErrors is defined ? "data-evt-state='error'" }} enctype="multipart/form-data">

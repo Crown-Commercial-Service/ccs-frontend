@@ -3,7 +3,7 @@
 {# 1. Capture the flashes into a variable so they don't disappear #}
 {% set errors = app.flashes('error') %}
 
-{% block title %}Questions R&D - CCS{% endblock %}
+{% block title %}Questions R&D - GCA{% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -105,7 +105,7 @@
                 </div>
 
                 <p class="govuk-body">Need help with this service? 
-                    <a aria-describedby="contact-ccs-intermediar-page" href="/contact/" onclick="contact();">Contact CCS</a>
+                    <a aria-describedby="contact-ccs-intermediar-page" href="/contact/" onclick="contact();">Contact GCA</a>
                 </p>
                 
                 <a class="govuk-button govuk-button-gm--secondary no-print" data-module="govuk-button" href="{{ start_url }}">Start again to change your answers</a>

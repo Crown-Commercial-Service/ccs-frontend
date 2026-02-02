@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Subscribe to our buyer newsletter - CCS {% endblock %}
+{% block title %} Subscribe to our buyer newsletter - GCA {% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -43,9 +43,9 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-three-quarters">
 
-                    <h2 class="govuk-heading-l page-title">Keep up to date with the latest news from CCS</h2>
+                    <h2 class="govuk-heading-l page-title">Keep up to date with the latest news from GCA</h2>
                     
-                    <p>Complete the form below to subscribe to the CCS customer newsletter. Find out how our procurement expertise can help you achieve better outcomes and realise value for the nation. Each month we share agreement updates, guidance, insights from our industry experts, events, webinars and much more.</p>
+                    <p>Complete the form below to subscribe to the GCA customer newsletter. Find out how our procurement expertise can help you achieve better outcomes and realise value for the nation. Each month we share agreement updates, guidance, insights from our industry experts, events, webinars and much more.</p>
                     <!-- form -->
                     {# For Twig global variables see config/packages/<environment>/twig.yaml #}
                     <form class="govuk-!-width-three-quarters" action="/newsletters/submit" method="POST" data-evt-type='newsletter' {{ formErrors is defined ? "data-evt-state='error'" }} >
