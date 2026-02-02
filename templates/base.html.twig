@@ -58,7 +58,7 @@
     </style>
 
     {# To bust cache, you bump the version up #}
-    {% set cssVersion = '2.00' %}
+    {% set cssVersion = '2.01' %}
 
     {% if app.environment == "prod" %}
          <link rel="preload" href={{"/assets/styles/styles.min.css?v=#{cssVersion}"}} as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -162,7 +162,7 @@
             }
         </script>
         {# End Google Tag Manager #}
-        <script src="/assets/scripts/dataLayer.js?v=1.0"></script>
+        <script src="/assets/scripts/dataLayer.js?v=2.1"></script>
 
     {% endblock %}
 </head>

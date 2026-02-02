@@ -1,0 +1,131 @@
+// 1. Variables for reuse
+$ccs-blue: #005ea5;
+$ccs-blue-dark: #003a69;
+$ccs-yellow: #ffdd00;
+
+// 2. Grid & Layout
+.ccnz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: govuk-px-to-rem(40);
+}
+
+.restrict-width {
+    max-width: govuk-px-to-rem(700);
+} 
+
+// 3. Custom Card Component
+.ccnz-card {
+    background-color: $ccs-blue;
+    color: #ffffff;
+    text-decoration: none;
+    padding: govuk-px-to-rem(30);
+    display: flex;
+    flex-direction: column;
+    min-height: govuk-px-to-rem(200);
+    border-bottom: 5px solid $ccs-blue-dark;
+    transition: background-color 0.2s, transform 0.2s;
+
+    &:hover {
+        background-color: $ccs-blue-dark;
+        transform: translateY(-5px);
+    }
+
+    &:focus {
+        background-color: $ccs-yellow;
+        color: #0b0c0c;
+        outline: 3px solid #0b0c0c;
+        
+        // Ensure text changes color on yellow background
+        .ccnz-card__title, .ccnz-card__hint {
+            color: #0b0c0c;
+        }
+    }
+
+    &__title {
+        @include govuk-font(24, $weight: bold);
+        margin-top: 0;
+        color: inherit; // Inherit from parent for focus states
+    }
+
+    &__hint {
+        @include govuk-font(16);
+        line-height: 1.5;
+        margin-bottom: 0;
+        color: inherit;
+    }
+}
+
+// 4. Overrides and Cleanups
+
+.apiErrorsMsg {
+    display: none;
+}
+
+// Secondary Button Overrides
+.govuk-button-gm--secondary {
+    background-color: #f3f2f1;
+    box-shadow: 0 2px 0 #929191;
+    color: #0b0c0c;
+
+    &:hover, &:focus {
+        background-color: #dbdad9;
+    }
+}
+
+// Print Link with Icon
+.print-link {
+    background: url(/assets/images/icon-print.png) no-repeat 10px 50%;
+    margin-left: -10px;
+    padding: .5em .5em .5em 38px;
+    cursor: pointer;
+}
+
+.landing-cnz-wrapper {
+    padding-top: govuk-px-to-rem(40);
+}
+
+.cnz-main-wrapper .govuk-fieldset__legend--l, .govuk-label--s {
+    font-weight: 700;
+}
+
+// 5. Print Styles
+@media print {
+    .no-print,
+    .govuk-header,
+    .govuk-footer,
+    .govuk-back-link,
+    .govuk-button,
+    .govuk-summary-list__actions {
+        display: none !important;
+    }
+
+    a[href]:after {
+        content: none !important;
+    }
+
+    .agreement-result-panel {
+        background-color: #f3f2f1;
+        padding: govuk-px-to-rem(20);
+        border: 1px solid #b1b4b6;
+
+        .govuk-link {
+            color: #0b0c0c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    }
+}
+
+// 6. Outcome page
+.agreement-outcomes {
+   background-color: #f3f2f1;
+   padding: govuk-px-to-rem(20); 
+   border-left: none;
+   margin-top: govuk-px-to-rem(20);
+}
+
+.govuk-grid-row {
+    margin-left: -5px;
+}

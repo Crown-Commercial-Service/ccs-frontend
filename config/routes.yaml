@@ -1,4 +1,24 @@
 # System routes
+# 1. The Landing Page
+cnz_landing:
+    path: /carbon-net-zero/find-a-carbon-net-zero-solution
+    controller: App\Controller\GuideMatch\CarbonNetZeroController::landingPage
+    methods: [GET]
+
+# 2. The Journey (Questions)
+cnz_journey:
+    path: /carbon-net-zero/question/{questionUUID}
+    controller: App\Controller\GuideMatch\CarbonNetZeroController::show
+    # Optional: allow the UUID to be empty for the start node if your logic supports it
+    defaults: { questionUUID: null } 
+    methods: [GET, POST]
+
+# 3. The Result Page
+cnz_result:
+    path: /carbon-net-zero/result
+    controller: App\Controller\GuideMatch\CarbonNetZeroController::resultPage
+    methods: [GET]
+
 healthcheck:
   path: /healthcheck_r53
   controller: App\Controller\PageController::check
