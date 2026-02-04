@@ -232,7 +232,7 @@ function printResultPage(){
 }
 
 function contact(){
-    CnzPushDataLayer('contact', 'Contact CCS', null, null);
+    CnzPushDataLayer('contact', 'Contact GCA', null, null);
 }
 
 function back(){
