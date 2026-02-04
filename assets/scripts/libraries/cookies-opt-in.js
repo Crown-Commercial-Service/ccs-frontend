@@ -97,7 +97,7 @@ var docCookies = {
             description: `<p>We use Google Analytics to measure how you use the website so we can improve it based on user needs. Google Analytics sets cookies that store anonymised information about:</p>
                           <ul>
                             <li>how you got to the site</li>
-                            <li>the pages you visit on Crown Commercial Service (GCA), and how long you spend on each page</li>
+                            <li>the pages you visit on Government Commercial Agency (GCA), and how long you spend on each page</li>
                             <li>what you click on while you're visiting the site</li>
                           </ul>`,
             cookie_type: "usage",
@@ -132,7 +132,7 @@ var docCookies = {
 
         {
             title: "Cookies that help with our communications and marketing",
-            description: "These cookies may be set by third party websites and do things like measure how you view YouTube videos that are on Crown Commercial Service (GCA).",
+            description: "These cookies may be set by third party websites and do things like measure how you view YouTube videos that are on Goverment Commercial Agency (GCA).",
             cookie_type: "marketing",
             enabled: null,
             adjustable: true,
@@ -214,8 +214,8 @@ var docCookies = {
                 : oneyear;
            
             docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), cookie_timer, '/', '.crowncommercial.gov.uk');
-            // Set the 'cookies_reset_1' to prevent showing the banner again next time the user visits
-            docCookies.setItem('cookies_reset_1', JSON.stringify(true), cookie_timer, '/', '.crowncommercial.gov.uk');
+            // Set the 'cookies_reset_{current num + 1}' to prevent showing the banner again next time the user visits
+            docCookies.setItem('cookies_reset_2', JSON.stringify(true), cookie_timer, '/', '.crowncommercial.gov.uk');
             docCookies.setItem('seen_cookie_message', true, cookie_timer, '/', '.crowncommercial.gov.uk');
         
     }
@@ -236,8 +236,8 @@ var docCookies = {
         docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences_accepted), oneyear, '/', '.crowncommercial.gov.uk');
         // createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
 
-        // Set the 'cookies_reset_1' to prevent showing the banner again next time the user visits
-        docCookies.setItem('cookies_reset_1', JSON.stringify(true), oneyear, '/', '.crowncommercial.gov.uk');
+        // Set the 'cookies_reset_{current num + 1}' to prevent showing the banner again next time the user visits
+        docCookies.setItem('cookies_reset_2', JSON.stringify(true), oneyear, '/', '.crowncommercial.gov.uk');
 
         docCookies.setItem('seen_cookie_message', true, oneyear, '/', '.crowncommercial.gov.uk');
     }
@@ -487,11 +487,12 @@ var docCookies = {
 
     /** ---------- RESET COOKIE TIMERS ----------
      * 'seen_cookie_message' determines if the current user has previously seen the banner and accepted cookies
-     * 'cookies_reset_1' determines if user has an old version of cookie timers
+     * 'cookies_reset_{number}' determines if user has an old version of cookie timers
      * If the user has previously accepted cookies but has an old version of the timers, show the banner again
-     * To reset cookies for all users change all instance of cookies_reset_1 to cookies_reset_2 and delete cookies_reset_1
+     * To reset cookies for all users change all instance of cookies_reset_2 to cookies_reset_3 and delete cookies_reset_2
+     * Then update above comment for next time
      */
-    if (docCookies.hasItem('seen_cookie_message') && !docCookies.hasItem('cookies_reset_1')) {
+    if (docCookies.hasItem('seen_cookie_message') && !docCookies.hasItem('cookies_reset_2')) {
         // If not on the cookie settings page, show the banner;
         if (window.location.href.indexOf("cookie-settings") === -1) {
             showCookieMessage();
@@ -499,8 +500,8 @@ var docCookies = {
     }
 
     // delete previous cookie reset
-    if (docCookies.hasItem('cookies_reset')) {
-        docCookies.removeItem('cookies_reset', '/', '.crowncommercial.gov.uk');
+    if (docCookies.hasItem('cookies_reset_1')) {
+        docCookies.removeItem('cookies_reset_1', '/', '.crowncommercial.gov.uk');
     }
 
     /**
