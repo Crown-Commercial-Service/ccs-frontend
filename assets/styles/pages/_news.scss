@@ -179,7 +179,7 @@
 
     @include govuk-media-query($from: tablet) {
 
-        padding: 30px 25px 30px 25px;
+        padding: 30px 25px 0 25px;
 
     }
 
@@ -190,13 +190,6 @@
 
     @include govuk-font(22, $weight: bold);
     margin: 10px 0;
-
-    a {
-
-        text-decoration: none;
-
-    }
-
 }
 
 .news-listing-summary {

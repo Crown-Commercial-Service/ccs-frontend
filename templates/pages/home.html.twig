@@ -295,7 +295,7 @@
                                                     | {{ news_item.dateModified.format('jS F Y') }}
                                                 </div>
                                                 <h2 class="news-listing-title homepage-news-title-truncate">
-                                                    <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}">{{ news_item.title|raw }}</a>
+                                                    <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" title="{{ news_item.title|raw }}">{{ news_item.title|raw }}</a>
                                                 </h2>
 
                                                 {% if news_item.content.post_lead_text %}
@@ -303,9 +303,6 @@
                                                         {{ news_item.content.post_lead_text|raw }}
                                                     </p>
                                                 {% endif %}
-
-                                                <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}">Read more <span class="visuallyhidden">about {{ news_item.content.title|raw }}</span></a>
-
                                             </div>
                                         </li>
                                     {% endif %}
