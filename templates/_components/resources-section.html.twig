@@ -163,18 +163,14 @@
                                             </a>
                                         {% endif %}
                                         <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
-                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ webinar.post_title }}</h3>
+                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">
+                                                <a class="" href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/" title="{{ webinar.post_title }}">
+                                                    {{ webinar.post_title }}
+                                                </a>
+                                            </h3>
                                             {% if webinar.post_excerpt is defined and webinar.post_excerpt is not empty %}
                                                 <p>{{ webinar.post_excerpt }}</p>
                                             {% endif %}
-
-                                            <a class="ccs-list-grid__item__cta" href="/webinar/request/{{ webinar.ID }}/{{ webinar.post_name }}/">
-                                                {% if webinar.link_text is not empty %}
-                                                    {{ webinar.link_text }}
-                                                {% else %}
-                                                    Learn more
-                                                {% endif %}
-                                            </a>
                                         </div>
                                     </li>
                                 {% endfor %}

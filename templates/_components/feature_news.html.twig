@@ -49,7 +49,7 @@
                             | {{ article.content.dateModified.format('jS F Y') }}
                         </div>
                         <h2 class="news-listing-title">
-                            <a href="{{ path('news_page', {'slug': article.content.urlSlug}) }}">{{ article.content.title|raw }}</a>
+                            <a href="{{ path('news_page', {'slug': article.content.urlSlug}) }}" title="{{ article.content.title|raw }}">{{ article.content.title|raw }}</a>
                         </h2>
 
                         {% if article.content.content.post_lead_text %}
@@ -57,9 +57,6 @@
                                 {{ article.content.content.post_lead_text|raw }}
                             </p>
                         {% endif %}
-
-                        <a href="{{ path('news_page', {'slug': article.content.urlSlug}) }}">Read more <span class="visuallyhidden">about {{ article.content.title|raw }}</span></a>
-
                     </div>
                 </li>
             {% endfor %}
