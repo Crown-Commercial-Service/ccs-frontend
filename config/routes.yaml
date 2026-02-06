@@ -40,6 +40,10 @@ digits-ctm:
   path: /digits-ctm.html
   controller: App\Controller\PageController::digitsCTM
 
+sitemap:
+  path: /sitemap.xml
+  controller: App\Controller\PageController::sitemap
+
 ppg_training:
   path: /ppg-guides
   controller: App\Controller\PageController::ppgTraining
