@@ -429,9 +429,9 @@ class PageController extends AbstractController
         }
 
         $data = $response->toArray();
-        
+
         return new Response(
-            $data['raw_xml'], 
+            $data['raw_xml'],
             Response::HTTP_OK,
             ['Content-Type' => 'text/xml']
         );
