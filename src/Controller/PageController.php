@@ -420,6 +420,23 @@ class PageController extends AbstractController
          ]);
     }
 
+    public function sitemap()
+    {
+        $response = $this->client->request('GET', getenv('APP_CMS_BASE_URL') . '/wp-json/ccs/v1/sitemap');
+
+        if ($response->getStatusCode() !== 200) {
+            throw $this->createNotFoundException('Sitemap not available.');
+        }
+
+        $data = $response->toArray();
+
+        return new Response(
+            $data['raw_xml'],
+            Response::HTTP_OK,
+            ['Content-Type' => 'text/xml']
+        );
+        return $this->render('pages/sitemap.xml.twig', [], new Response('', 200, ['Content-Type' => 'application/xml']));
+    }
 
     public function getHeaderAndFooterListFromCMS($client, $APP_CMS_BASE_URL)
     {
