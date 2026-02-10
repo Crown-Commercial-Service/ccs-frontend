@@ -330,13 +330,14 @@
                 checkedStatus: function(checkedStatus) {
                     if (checkedStatus.length === 0 ) {
                         this.checkedStatus = ["Live"];
+                        return;
                     }
                     this.fetchAPIData(null)
                 },
                 checkedRegulation: function(checkedRegulation) {
                     if (checkedRegulation.length === Number("{{regulation|length}}")) {
-                        
                         this.checkedRegulation = [];
+                        return;
                     }
                     this.fetchAPIData(null)
                 },
@@ -350,6 +351,7 @@
                     if (checkedPillar.length == pillarsSize) {
                         this.checkedPillar = [];
                         this.checkedCategory = [];
+                        return;
                     }
                     this.fetchAPIData(null)
                 },
