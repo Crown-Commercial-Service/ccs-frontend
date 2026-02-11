@@ -94,19 +94,18 @@
 
                                             </a>
                                         {% endif %}
+
                                         <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
-                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ whitepaper.post_title }}</h3>
+                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">
+                                                <a href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}" title="{{ whitepaper.post_title }}>
+                                                    {{ whitepaper.post_title }}
+                                                </a>
+                                            </h3>
                                             {% if whitepaper.post_excerpt is defined and whitepaper.post_excerpt is not empty %}
                                                 <p>{{ whitepaper.post_excerpt }}</p>
                                             {% endif %}
-                                            <a class="ccs-list-grid__item__cta" href="/whitepaper/request/{{ whitepaper.ID }}/{{ whitepaper.post_name }}/">
-                                                {% if whitepaper.link_text is not empty %}
-                                                    {{ whitepaper.link_text }}
-                                                {% else %}
-                                                    Learn more
-                                                {% endif %}
-                                            </a>
                                         </div>
+
                                     </li>
                                 {% endfor %}
                             </ol>
@@ -292,19 +291,18 @@
                                                 <span class="govuk-visually-hidden">View resource: {{ downloadable_resource.post_title }}</span>
                                                 </a>
                                         {% endif %}
+
                                         <div class="ccs-list-grid__item__details ccs-list-grid__item__details--wide">
-                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">{{ downloadable_resource.post_title }}</h3>
+                                            <h3 class="govuk-heading-m ccs-list-grid__item__heading">
+                                                <a href="/downloadable-resource/request/{{ downloadable_resource.ID }}/{{ downloadable_resource.post_name }}" title="{{ downloadable_resource.post_title }}>
+                                                    {{ downloadable_resource.post_title }}
+                                                </a>
+                                            </h3>
                                             {% if downloadable_resource.post_excerpt is defined and downloadable_resource.post_excerpt is not empty %}
                                                 <p>{{ downloadable_resource.post_excerpt }}</p>
                                             {% endif %}
-                                            <a class="ccs-list-grid__item__cta" href="/downloadable-resource/request/{{ downloadable_resource.ID }}/{{ downloadable_resource.post_name }}/">
-                                                {% if downloadable_resource.link_text is not empty %}
-                                                    {{ downloadable_resource.link_text }}
-                                                {% else %}
-                                                    Learn more
-                                                {% endif %}
-                                            </a>
                                         </div>
+
                                     </li>
                                 {% endfor %}
                             </ol>
