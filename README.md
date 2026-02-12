@@ -1,6 +1,6 @@
 # Government Commercial Agency Service website
 
-Symfony application to generate the Government Commercial Agency public website at [https://www.crowncommercial.gov.uk/](https://www.crowncommercial.gov.uk/)
+Symfony application to generate the Government Commercial Agency public website at [https://www.gca.gov.uk/](https://www.gca.gov.uk/)
 
 Please see [further web documentation](https://github.com/Crown-Commercial-Service/ccsweb-docs/tree/master/web) (this is a private repo), or check the documentation in the [docs directory of this repo](docs/README.md).
 
