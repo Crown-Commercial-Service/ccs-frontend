@@ -1,6 +1,6 @@
-# Crown Commercial Service website
+# Government Commercial Agency Service website
 
-Symfony application to generate the Crown Commercial public website at [https://www.crowncommercial.gov.uk/](https://www.crowncommercial.gov.uk/)
+Symfony application to generate the Government Commercial Agency public website at [https://www.crowncommercial.gov.uk/](https://www.crowncommercial.gov.uk/)
 
 Please see [further web documentation](https://github.com/Crown-Commercial-Service/ccsweb-docs/tree/master/web) (this is a private repo), or check the documentation in the [docs directory of this repo](docs/README.md).
 
@@ -168,7 +168,7 @@ See details on [Environments](https://github.com/Crown-Commercial-Service/ccsweb
 There are a few deployment checks that are required to pass before merging new code into production, notably:
 
 * Code must pass static code analysis tests & automated tests (Travis).
-* Manual review by CCS TechOps to approve Pull Request.
+* Manual review by GCA TechOps to approve Pull Request.
 
 ## Continuous integration
 
