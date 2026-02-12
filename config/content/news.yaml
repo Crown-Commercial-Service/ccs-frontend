@@ -18,3 +18,5 @@ post_components_rows:
   config: flexible-components.yaml
 author_image:
   type: image
+display_banner:
+  type: boolean
