@@ -14,6 +14,11 @@
         <meta property="twitter:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail-prevew.png' />
     {% endif %}
 
+    {% if show_agreement_page is defined and show_agreement_page is not empty %}
+        <meta name="title" content="{{ framework.content.rm_number }} {{ framework.content.title }} | CCS">
+        <meta name="description" content="Access {{ framework.content.rm_number }} {{ framework.content.title }} through Crown Commercial Service.">
+    {% endif %}
+
     {% if canonical is defined and canonical is not empty %}
         
         {% if canonical|last == '/' %}
