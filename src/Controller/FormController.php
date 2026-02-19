@@ -20,6 +20,8 @@ use Aws\S3\S3Client;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Mime\Part\DataPart;
 use Symfony\Component\Mime\Part\Multipart\FormDataPart;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Form controller
@@ -35,7 +37,12 @@ class FormController extends AbstractController
 
     protected $client;
 
-    public function __construct(CacheItemPoolInterface $cache)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(CacheItemPoolInterface $cache, LoggerInterface $logger)
     {
         $this->api = new RestData(
             getenv('APP_API_BASE_URL'),
@@ -46,6 +53,7 @@ class FormController extends AbstractController
         $this->api->setCache($psr16Cache);
 
         $this->client = HttpClient::create();
+        $this->logger = $logger;
     }
 
     public function esourcingRegisterSubmit(Request $request)
@@ -580,6 +588,83 @@ class FormController extends AbstractController
                 throw new NotFoundHttpException('Failed to upload (Document Upload)', $exception);
                 return null;
             }
+        }
+    }
+
+    public function submitCsatSurvey(Request $request): JsonResponse
+    {
+        // Decode JSON Payload (Frontend sends application/json)
+        $content = $request->getContent();
+        $data = json_decode($content, true);
+
+        // Validation
+        $rating = $data['rating'] ?? null;
+        $comments = $data['feedback-comments'] ?? '';
+
+        // Basic validation: Rating is mandatory, 1-10
+        if (!$rating || !is_numeric($rating)) {
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'A valid rating (1-10) is required.'
+            ], 400);
+        }
+
+        // Prepare Qualtrics Payload
+        $qualtricsPayload = [
+            'values' => [
+                'QID14'      => intval($rating),
+                'QID24_TEXT' => $comments,
+            ],
+            'embeddedData' => [
+                'referer'   => $request->headers->get('referer'),
+                'userAgent' => $request->headers->get('User-Agent'),
+            ]
+        ];
+
+        // Get Config from Env
+        $apiToken   = getenv('QUALTRICS_API_TOKEN');
+        $surveyId   = getenv('QUALTRICS_SURVEY_ID');
+
+        $endpoint = "https://fra1.qualtrics.com/API/v3/surveys/{$surveyId}/responses";
+
+        try {
+            // Send Request using existing Symfony HttpClient
+            $response = $this->client->request('POST', $endpoint, [
+                'headers' => [
+                    'X-API-TOKEN'  => $apiToken,
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => $qualtricsPayload
+            ]);
+
+            $statusCode = $response->getStatusCode();
+
+            // Convert response to array (non-blocking)
+            $result = $response->toArray(false);
+
+            // Handle Success
+            if ($statusCode === 200 && isset($result['result']['responseId'])) {
+                return new JsonResponse([
+                    'success' => true,
+                    'message' => 'Feedback submitted successfully'
+                ], 200);
+            }
+
+            // Handle API Rejection (e.g., Bad Request)
+            $this->logger->error('Qualtrics API Error: ' . json_encode($result));
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Survey provider rejected the submission',
+            ], 400);
+
+        } catch (\Exception $e) {
+            // Handle Network/Server Errors
+            $this->logger->error('Qualtrics Connection Failed: ' . $e->getMessage());
+
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'Internal server error processing feedback',
+            ], 500);
         }
     }
 }

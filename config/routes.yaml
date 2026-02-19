@@ -19,6 +19,11 @@ cnz_result:
     controller: App\Controller\GuideMatch\CarbonNetZeroController::resultPage
     methods: [GET]
 
+form_csat_submit:
+  path: /csat/submit
+  methods: POST
+  controller: App\Controller\FormController::submitCsatSurvey
+
 healthcheck:
   path: /healthcheck_r53
   controller: App\Controller\PageController::check
