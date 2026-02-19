@@ -668,7 +668,6 @@ class FormController extends AbstractController
                 'success' => false,
                 'message' => 'Survey provider rejected the submission',
             ], 400);
-
         } catch (\Exception $e) {
             // Handle Network/Server Errors
             $this->logger->error('Qualtrics Connection Failed: ' . $e->getMessage());
