@@ -169,3 +169,26 @@ $bp-desktop-max: 1024px;
         display: block !important;
     }
 }
+
+/* 5. Error styling */
+.govuk-form-group--error {
+    border-left: 5px solid #d4351c;
+    padding-left: 15px;
+
+    fieldset {
+        border-left: 4px solid #d4351c;
+        padding: 10px;
+    }
+
+    input[type="radio"] {
+        outline: 2px solid #d4351c;
+        outline-offset: 3px;
+    }
+
+    .govuk-error-message {
+        color: #d4351c;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+    }
+}
