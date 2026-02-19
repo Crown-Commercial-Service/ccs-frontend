@@ -121,7 +121,7 @@ function cancelFeedback() {
 function clearErrors() {
     // 4. Error clearing: Remove classes and hide messages
     const groups = ['rating-form-group', 'rating-form-group-mobile'];
-    const errors = ['rating-error', 'rating-error-mobile'];
+    const errors = ['rating-error', 'rating-error-mobile', 'feedback-global-error'];
 
     // Remove the red border class
     groups.forEach(id => {
