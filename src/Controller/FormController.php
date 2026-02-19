@@ -625,6 +625,18 @@ class FormController extends AbstractController
         $apiToken   = getenv('QUALTRICS_API_TOKEN');
         $surveyId   = getenv('QUALTRICS_SURVEY_ID');
 
+        // Check if any of the required env variables are missing or empty
+        if (empty($apiToken) || empty($surveyId)) {
+            // Log this as a critical error so you see it in your Symfony logs
+            $this->logger->critical('Qualtrics API configuration is missing in the .env file.');
+
+            // Return a safe, generic error to the JavaScript frontend
+            return new JsonResponse([
+                'success' => false,
+                'message' => 'The feedback service is currently unavailable. Please make sure the correct configs are setup.'
+            ], 500);
+        }
+
         $endpoint = "https://fra1.qualtrics.com/API/v3/surveys/{$surveyId}/responses";
 
         try {

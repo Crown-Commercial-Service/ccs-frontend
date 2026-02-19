@@ -21,6 +21,18 @@
                     <h3 id="feedback-heading" class="govuk-heading-s" style="margin-top: 0px;">Rate this service</h3>
                     
                     <form id="service-feedback-form">
+                        <div id="feedback-global-error" class="govuk-error-summary govuk-visually-hidden" aria-labelledby="error-summary-title" role="alert" tabindex="-1">
+                            <h2 class="govuk-error-summary__title" id="error-summary-title">
+                                There is a problem
+                            </h2>
+                            <div class="govuk-error-summary__body">
+                                <ul class="govuk-list govuk-error-summary__list">
+                                    <li>
+                                        <span id="feedback-global-error-text">There was a problem submitting your feedback. Please try again.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                         <div class="govuk-form-group" id="rating-form-group{{ mobile|default ? '-mobile' : '' }}">
                             <fieldset class="govuk-fieldset" aria-describedby="rating-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s"> 
