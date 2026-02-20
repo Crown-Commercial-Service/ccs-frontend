@@ -70,7 +70,7 @@
                         
                         <div class="feedback-form-actions">
                             <div class="govuk-button-group">
-                                <button id="submit-feedback-btn" class="govuk-button govuk-button--secondary" type="button" onclick="submitFeedback()" aria-describedby="rating-required-hint"> Submit feedback </button>
+                                <button id="submit-feedback-btn" class="govuk-button govuk-button--secondary" type="button" onclick="submitFeedback{{ mobile|default ? 'Mobile' : '' }}()" aria-describedby="rating-required-hint"> Submit feedback </button>
                                 <a class="govuk-link govuk-link--no-visited-state" href="#" onclick="cancelFeedback()"> Cancel </a>
                             </div>
                         </div>
