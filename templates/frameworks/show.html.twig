@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ framework.content.title }} - CCS{% endblock %}
+{% set show_agreement_page = true %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
