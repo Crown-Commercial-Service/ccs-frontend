@@ -4,14 +4,14 @@
 
 // Global Functions (Accessible by HTML onclick="")
 function submitFeedback() {
-    handleValidation('rating-form-group', 'rating-error');
+    handleValidation('rating-form-group', 'rating-error', false);
 }
 
 function submitFeedbackMobile() {
-    handleValidation('rating-form-group-mobile', 'rating-error-mobile');
+    handleValidation('rating-form-group-mobile', 'rating-error-mobile', true);
 }
 
-function handleValidation(groupId, errorId) {
+function handleValidation(groupId, errorId, isMobile = false) {
     const group = document.getElementById(groupId);
     const errorMsg = document.getElementById(errorId);
 
@@ -32,14 +32,22 @@ function handleValidation(groupId, errorId) {
         return false; // Stop submission
     }
 
-    // If valid, proceed with AJAX
-    processAjaxSubmission();
+    const formId = isMobile ? 'service-feedback-form-mobile' : 'service-feedback-form';
+    const submitBtnId = isMobile ? 'submit-feedback-btn-mobile' : 'submit-feedback-btn';
+
+    // If validation passed, proceed with AJAX for the correct form
+    processAjaxSubmission(formId, submitBtnId, isMobile);
 }
 
-async function processAjaxSubmission() {
-    // 1. Get the form with the NEW ID
-    const form = document.getElementById('service-feedback-form');
-    const submitBtn = document.getElementById('submit-feedback-btn');
+async function processAjaxSubmission(formId = 'service-feedback-form', submitBtnId = 'submit-feedback-btn', isMobile = false) {
+    // 1. Get the form (use provided id), but fallback to the other variant if not present
+    let form = document.getElementById(formId);
+    if (!form) {
+        // fallback: try the opposite form id
+        form = document.getElementById(formId === 'service-feedback-form' ? 'service-feedback-form-mobile' : 'service-feedback-form');
+    }
+
+    const submitBtn = document.getElementById(submitBtnId) || document.getElementById(submitBtnId + '-mobile') || document.getElementById('submit-feedback-btn');
 
     if (submitBtn) {
         submitBtn.disabled = true;
@@ -47,18 +55,18 @@ async function processAjaxSubmission() {
     }
 
     try {
+        if (!form) throw new Error('Feedback form not found');
+
         // 2. Grab all data automatically
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
 
         // 3. CLEANUP: Remove 'feedback-comments' if it is empty
-        // This ensures the key is only sent if the user actually typed something
         if (!data['feedback-comments'] || data['feedback-comments'].trim() === "") {
             delete data['feedback-comments'];
         }
 
         // 4. Send the payload
-        // The body will now look like { rating: "5" } OR { rating: "5", "feedback-comments": "Great service" }
         const response = await fetch('/csat/submit', {
             method: 'POST',
             headers: {
@@ -69,14 +77,15 @@ async function processAjaxSubmission() {
         });
 
         if (response.ok) {
-            showThankYouMessage();
+            showThankYouMessage(isMobile);
         } else {
             throw new Error('Network response was not ok');
         }
 
     } catch (error) {
         console.error('Error submitting feedback:', error);
-        const globalError = document.getElementById('feedback-global-error');
+        const globalErrorId = 'feedback-global-error' + (isMobile ? '-mobile' : '');
+        const globalError = document.getElementById(globalErrorId) || document.getElementById('feedback-global-error');
 
         if (globalError) {
             globalError.classList.remove('govuk-visually-hidden');
@@ -91,18 +100,23 @@ async function processAjaxSubmission() {
     }
 }
 
-function showThankYouMessage() {
-    const formContainer = document.querySelector('.feedback-form');
-    const thankYouMsg = document.getElementById('feedback-thank-you');
-    const feedbackTrigger = document.getElementById('feedback-trigger-section');
+function showThankYouMessage(isMobile = false) {
+    const containerId = 'feedback-form' + (isMobile ? '-mobile' : '');
+    const thankYouId = 'feedback-thank-you' + (isMobile ? '-mobile' : '');
+    const triggerId = 'feedback-trigger-section' + (isMobile ? '-mobile' : '');
+
+    const formContainer = document.getElementById(containerId) || document.querySelector('.feedback-form');
+    const thankYouMsg = document.getElementById(thankYouId) || document.getElementById('feedback-thank-you');
+    const feedbackTrigger = document.getElementById(triggerId) || document.getElementById('feedback-trigger-section');
 
     if (formContainer) formContainer.style.display = 'none';
     if (thankYouMsg) thankYouMsg.style.display = 'block';
     if (feedbackTrigger) feedbackTrigger.style.display = 'none';
 }
 
-function cancelFeedback() {
-    const form = document.getElementById('service-feedback-form');
+function cancelFeedback(isMobile = false) {
+    const formId = isMobile ? 'service-feedback-form-mobile' : 'service-feedback-form';
+    const form = document.getElementById(formId);
 
     // Reset the form values
     if (form) form.reset();
@@ -111,11 +125,10 @@ function cancelFeedback() {
     clearErrors();
 
     // Close the toggle checkbox (Mobile/Desktop)
-    const toggle = document.getElementById('feedback-toggle');
-    const toggleMobile = document.getElementById('feedback-toggle-mobile');
+    const toggleId = 'feedback-toggle' + (isMobile ? '-mobile' : '');
+    const toggle = document.getElementById(toggleId);
 
     if (toggle) toggle.checked = false;
-    if (toggleMobile) toggleMobile.checked = false;
 }
 
 function clearErrors() {

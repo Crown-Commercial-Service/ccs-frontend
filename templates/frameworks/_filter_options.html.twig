@@ -180,10 +180,12 @@
             </div>
         </div>
         <button class="govuk-button" data-module="govuk-button" v-show="!javascriptVersion"> Filter </button>
-        <div class="helpful-info-search-agreement-desktop">
-            {% include '/frameworks/_helpful_info.html.twig' with {'page' : 'search'} %}
-        </div>
+        
 
     </form>
+    
+    <div class="helpful-info-search-agreement-desktop">
+            {% include '/frameworks/_helpful_info.html.twig' with {'page' : 'search'} %}
+    </div>
 
 </div>
