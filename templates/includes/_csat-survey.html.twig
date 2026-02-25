@@ -18,7 +18,7 @@
                 </label>
             </p>
                 <div id="feedback-form{{ mobile|default ? '-mobile' : '' }}" class="feedback-form" role="region" aria-labelledby="feedback-heading">
-                    <form id="service-feedback-form">
+                    <form id="service-feedback-form{{ mobile|default ? '-mobile' : '' }}">
                         <div id="feedback-global-error" class="govuk-error-summary govuk-visually-hidden" aria-labelledby="error-summary-title" role="alert" tabindex="-1">
                             <h2 class="govuk-error-summary__title" id="error-summary-title">
                                 There is a problem
@@ -70,14 +70,14 @@
                         
                         <div class="feedback-form-actions">
                             <div class="govuk-button-group">
-                                <button id="submit-feedback-btn" class="govuk-button govuk-button--secondary" type="button" onclick="submitFeedback{{ mobile|default ? 'Mobile' : '' }}()" aria-describedby="rating-required-hint"> Submit feedback </button>
+                                <button id="submit-feedback-btn{{ mobile|default ? '-mobile' : '' }}" class="govuk-button govuk-button--secondary" type="button" onclick="submitFeedback{{ mobile|default ? 'Mobile' : '' }}()" aria-describedby="rating-required-hint"> Submit feedback </button>
                                 <a class="govuk-link govuk-link--no-visited-state" href="#" onclick="cancelFeedback()"> Cancel </a>
                             </div>
                         </div>
                     </form>
                 </div>
 
-            <div id="feedback-thank-you" class="feedback-thank-you" role="region" aria-live="polite" style="display: none;">
+            <div id="feedback-thank-you{{ mobile|default ? '-mobile' : '' }}" class="feedback-thank-you" role="region" aria-live="polite" style="display: none;">
                 <h3 class="govuk-heading-s" style="margin-top: 0px;">Thank you for your feedback</h3>
                 <p>Your response has been recorded.</p>
             </div>
