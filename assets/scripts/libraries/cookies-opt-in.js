@@ -213,10 +213,10 @@ var docCookies = {
                 ? twodays
                 : oneyear;
            
-            docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), cookie_timer, '/', '.crowncommercial.gov.uk');
+            docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), cookie_timer, '/', '.gca.gov.uk');
             // Set the 'cookies_reset_{current num + 1}' to prevent showing the banner again next time the user visits
-            docCookies.setItem('cookies_reset_2', JSON.stringify(true), cookie_timer, '/', '.crowncommercial.gov.uk');
-            docCookies.setItem('seen_cookie_message', true, cookie_timer, '/', '.crowncommercial.gov.uk');
+            docCookies.setItem('cookies_reset_2', JSON.stringify(true), cookie_timer, '/', '.gca.gov.uk');
+            docCookies.setItem('seen_cookie_message', true, cookie_timer, '/', '.gca.gov.uk');
         
     }
 
@@ -225,7 +225,7 @@ var docCookies = {
         // 1 month = 2.628e+6
         // set the cookie which tells us a user has 'accepted cookies'
         // setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure)
-        // docCookies.setItem('seen_cookie_message', true, oneyear, '/', '.crowncommercial.gov.uk');
+        // docCookies.setItem('seen_cookie_message', true, oneyear, '/', '.gca.gov.uk');
         var cookie_preferences_accepted = {
             essentials: true,
             usage: true,
@@ -233,13 +233,13 @@ var docCookies = {
             cs: true
         };
 
-        docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences_accepted), oneyear, '/', '.crowncommercial.gov.uk');
+        docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences_accepted), oneyear, '/', '.gca.gov.uk');
         // createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
 
         // Set the 'cookies_reset_{current num + 1}' to prevent showing the banner again next time the user visits
-        docCookies.setItem('cookies_reset_2', JSON.stringify(true), oneyear, '/', '.crowncommercial.gov.uk');
+        docCookies.setItem('cookies_reset_2', JSON.stringify(true), oneyear, '/', '.gca.gov.uk');
 
-        docCookies.setItem('seen_cookie_message', true, oneyear, '/', '.crowncommercial.gov.uk');
+        docCookies.setItem('seen_cookie_message', true, oneyear, '/', '.gca.gov.uk');
     }
 
     function updateCookieOnSafari() {
@@ -316,14 +316,14 @@ var docCookies = {
             ? twodays
             : oneyear;
 
-        docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), cookie_timer, '/', '.crowncommercial.gov.uk');
+        docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), cookie_timer, '/', '.gca.gov.uk');
         // createCookie('cookie_preferences', JSON.stringify(cookie_preferences), 365, '/');
 
         // check if cookie_preferences_set is set, if not, set it
         // we're checking this first because we don't want to reset to today every time
         if (!docCookies.hasItem('cookie_preferences_set')) {
             // set the cookie which tells us that a user has saved their cookie preferences
-            docCookies.setItem('cookie_preferences_set', true, cookie_timer, '/', '.crowncommercial.gov.uk');
+            docCookies.setItem('cookie_preferences_set', true, cookie_timer, '/', '.gca.gov.uk');
             // createCookie('cookie_preferences_set', 'true', 365, '/');
         }
 
@@ -481,7 +481,7 @@ var docCookies = {
 
     // Only set the default cookies if they haven't been set
     if (!docCookies.hasItem('cookie_preferences')) {
-        docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), twodays, '/', '.crowncommercial.gov.uk');
+        docCookies.setItem('cookie_preferences', JSON.stringify(cookie_preferences), twodays, '/', '.gca.gov.uk');
     }
 
 
@@ -501,7 +501,7 @@ var docCookies = {
 
     // delete previous cookie reset
     if (docCookies.hasItem('cookies_reset_1')) {
-        docCookies.removeItem('cookies_reset_1', '/', '.crowncommercial.gov.uk');
+        docCookies.removeItem('cookies_reset_1', '/', '.gca.gov.uk');
     }
 
     /**

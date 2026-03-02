@@ -55,9 +55,8 @@
 
     @include govuk-media-query($from: desktop) {
 
-        flex: 0 0 auto;
-        // margin-top: govuk-px-to-rem(22);
-        margin-top: 16px;
+        margin-right: auto;
+        margin-top: govuk-px-to-rem(22);
     }
 }
 
@@ -90,7 +89,7 @@
 
     @include govuk-media-query($from: desktop) {
 
-        max-width: govuk-px-to-rem(120);
+        max-width: govuk-px-to-rem(272);
 
     }
 
