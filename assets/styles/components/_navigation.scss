@@ -32,7 +32,7 @@
 
         display: flex;
         flex-flow: row nowrap;
-        padding: 0 0 govuk-px-to-rem(16) 0;
+        padding: 0 0 govuk-px-to-rem(5) 0;
         text-align: right;
         gap: 15px;
 
@@ -55,9 +55,8 @@
     @include govuk-media-query($from: desktop) {
 
         background-color: transparent;
+        margin-bottom: govuk-px-to-rem(2);
         margin-top: 0;
-        margin-bottom: govuk-px-to-rem(2) ;
-        margin-top: govuk-px-to-rem(10);
 
     }
 
@@ -110,7 +109,6 @@
     @include govuk-media-query($from: desktop) {
         display: block;
         order: 2;
-        margin-top: govuk-px-to-rem(8);
         margin-bottom: govuk-px-to-rem(- 4);
 
     }
