@@ -93,6 +93,13 @@
 
     }
 
+
+    @include govuk-media-query($from: 1400) {
+
+        max-width: govuk-px-to-rem(304);
+
+    }
+
 }
 
 
