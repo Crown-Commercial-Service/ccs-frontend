@@ -4,7 +4,7 @@
     {% if csat_design_enabled %}
         <noscript>
             <p>
-                <a class="govuk-link" style="color: #0E0E0E; font-weight: 600;" href="https://crowncommercial.qualtrics.com/jfe/form/SV_b2hqVz3TYDCxN2u">Give feedback on how we can improve this service.</a>
+                <a class="govuk-link" style="color: #0E0E0E; font-weight: 600;" href="{{ survey_link }}">Give feedback on how we can improve this service.</a>
             </p>
         </noscript>
 
@@ -84,7 +84,7 @@
         </div>
     {% else %}
         <p>
-            <a class="govuk-link" style="color: #0E0E0E; font-weight: 600;" href="https://crowncommercial.qualtrics.com/jfe/form/SV_b2hqVz3TYDCxN2u">Give feedback on how we can improve this service.</a>
+            <a class="govuk-link" style="color: #0E0E0E; font-weight: 600;" href="{{ survey_link }}">Give feedback on how we can improve this service.</a>
         </p>
     {% endif %}
 </div>
