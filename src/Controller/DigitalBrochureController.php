@@ -37,8 +37,7 @@ class DigitalBrochureController extends AbstractController
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
-        $this->formController = $formController;   
-
+        $this->formController = $formController;
     }
 
     public function request($id, $slug, Request $request)
