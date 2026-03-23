@@ -69,27 +69,8 @@ Disallow: *gad=*
 Disallow: *webinar/request*
 Disallow: *category/energy*
 
-Disallow: */suppliers/*0*
-Disallow: */suppliers/*1*
-Disallow: */suppliers/*2*
-Disallow: */suppliers/*3*
-Disallow: */suppliers/*4*
-Disallow: */suppliers/*5*
-Disallow: */suppliers/*6*
-Disallow: */suppliers/*7*
-Disallow: */suppliers/*8*
-Disallow: */suppliers/*9*
-
-Disallow: *lot-suppliers/*0*
-Disallow: *lot-suppliers/*1*
-Disallow: *lot-suppliers/*2*
-Disallow: *lot-suppliers/*3*
-Disallow: *lot-suppliers/*4*
-Disallow: *lot-suppliers/*5*
-Disallow: *lot-suppliers/*6*
-Disallow: *lot-suppliers/*7*
-Disallow: *lot-suppliers/*8*
-Disallow: *lot-suppliers/*9*
+Disallow: /agreements/*/suppliers/*
+Disallow: /agreements/*/lot-suppliers/*
 
 Disallow: *events/*0*
 Disallow: *events/*1*
