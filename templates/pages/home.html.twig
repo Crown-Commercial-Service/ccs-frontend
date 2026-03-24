@@ -247,13 +247,13 @@
             
                 <div class="govuk-full-width-container">
                     <div class="homepage-lower-components-container">
-                        <div class="govuk-grid-column-one-half homepage-news-list">
+                        <div class="govuk-grid-column-full homepage-news-list">
 
                             <h2 class="govuk-heading-m">Latest news</h2>
 
                             <ol class="featured-news news-listing homepage-news-listing">
                                 {% for news_item in news %}
-                                    {% if loop.index <= 2 %}
+                                    {% if loop.index <= 4 %}
                                         <li class="feature-news__item homepage-news-listing-item">
                                             {% if news_item.featuredImage %}
                                                 <picture>
@@ -308,16 +308,6 @@
                                     {% endif %}
                                 {% endfor %}
                             </ol>
-                        </div>
-                        <div class="govuk-grid-column-one-half homepage-campaign-box">
-                            {# <h2 class="govuk-heading-m">{{ homepageContent.video.title is defined ? homepageContent.video.title : "Learn about GCA" }}</h2> #}
-                            <div class= "homepage-campaign-box-content">
-                                <h2 class="govuk-heading-xl">{{ homepageContent.campaign.title is defined and homepageContent.campaign.title is not empty  ? homepageContent.campaign.title : "Digital brochure 2024-2025: Your buying decisions can make a difference" }}</h2>
-
-                                <p>{{ homepageContent.campaign.description is defined and homepageContent.campaign.description is not empty ? homepageContent.campaign.description  : "Discover procurement guidance, customer case studies and how to access our agreements" }}</p>
-
-                                <a class="govuk-button govuk-caption-button" href="{{ homepageContent.campaign.button_link is defined and homepageContent.campaign.button_link is not empty ? homepageContent.campaign.button_link : "downloadable-resource/request/30384/commercial-agreements-digital-brochure" }}">{{ homepageContent.campaign.button_text is defined and homepageContent.campaign.button_text is not empty ? homepageContent.campaign.button_text : "Download our digital brochure" }}</a>
-                            </div>
                         </div>
                     </div>
 
