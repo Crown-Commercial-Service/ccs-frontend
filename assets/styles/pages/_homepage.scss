@@ -262,34 +262,7 @@ overflow: hidden;
     margin-bottom: 41px;
 }
 
-.homepage-campaign-box {
-    background-color: #6A99FF;
-    padding: 47px 45px;
-    width: 103vw;
-    margin-bottom: 40px;
-    order: 1;
-}
 
-.homepage-campaign-box-content {
-
-    border-bottom: 3px solid #007E8A;
-    padding-bottom: 19px;
-    width: 300px;
-
-    h2 {
-        color: #000000;
-        font-weight: 700;
-    }
-
-    p {
-        color: #000000;
-        font-size: 1.125rem;
-    }
-
-    a {
-        margin-top: 22px;
-    }
-}
 
 .homepage-news-listing-item {
     max-width: 356px;
@@ -346,25 +319,11 @@ overflow: hidden;
 
 
 // ------------ media queries ------------
-@include govuk-media-query($until: 642) {
-    .homepage-campaign-box {
-        overflow: hidden;
-        margin: 0px -15px 30px -15px;
-    }
-
-    .homepage-campaign-box-content{
-        width: unset;
-    }
-}
 
 @include govuk-media-query($from: 642) {
     .homepage-card-container {
         float: none;
         padding: 0;
-    }
-
-    .homepage-campaign-box-content {
-        width: 100%
     }
 }
 
@@ -484,12 +443,6 @@ overflow: hidden;
         margin-top: 10px;
     }
 
-    .homepage-campaign-box {
-        width:100%;
-        order: 3;
-        overflow: hidden;
-    }
-
     .homepage-news-list {
         width: 100%;
     }
@@ -598,10 +551,6 @@ overflow: hidden;
         }
     }
 
-    .homepage-browse-all {
-        margin-top: -20px;
-    }
-
     .glossary-box-container {
         background-color: #f1f1f1;
         padding-bottom: 25px;
@@ -643,36 +592,12 @@ overflow: hidden;
         flex-wrap: nowrap;
     }
 
-    .homepage-campaign-box {
-        width: 50%;
-    }
-
-    .homepage-news-list {
-        width: 50%;
-    }
-
 
 }
 
 @include govuk-media-query($from: 1130) {
     .govuk-caption-link {
         width: govuk-px-to-rem(370);
-    }
-
-    .homepage-news-listing-item {
-        max-width: 47%;
-    }
-
-    .homepage-campaign-box-content {
-        h2 {
-            font-size: 2.5rem;
-        }
-    }
-
-    .homepage-campaign-box{
-        width: 47%;
-        padding-top: 35px;
-        padding-bottom: 35px;
     }
 }
 
@@ -683,11 +608,6 @@ overflow: hidden;
 
     .homepage-hero-capsule {
         margin-left: 423px;
-    }
-
-    .homepage-campaign-box {
-        padding-top:57px;
-        padding-bottom: 57px;
     }
 }
 
@@ -728,53 +648,6 @@ overflow: hidden;
         padding: .9375rem 1.25rem 2.25rem 1.25rem
     }
 
-    .homepage-campaign-box {
-        padding: 43px 70px 69px 43px;
-        width: 611px;
-        height: 492px;
-        margin-left: 0;
-        margin-right: 0;
-        z-index: 1;
-    }
-
-    .homepage-campaign-box-content {
-        width: 514px;
-        border: none;
-        padding: 0;
-        position: relative;
-
-        h2 {
-            margin-bottom: 30px;
-            width: 502px;
-        }
-
-        p {
-            font-size: 1.681rem;
-            width: 462px;
-        }
-
-        a {
-            padding-top: 0.625rem;
-            padding-bottom: 0.688rem;
-        }
-
-        &:after {
-            content: "";
-            position: absolute;
-            width: 117%;
-            height: 584px;
-            background-color: #8FB3FF;
-            border-radius: 0px 292px 292px 0px;
-            top: -97px;
-            left: -43px;
-            z-index:-99
-        }
-    }
-
-    .homepage-news-list {
-        width: 618px;
-    }
-
     .homepage-news-listing {
         height: 488px;
 
@@ -799,17 +672,6 @@ overflow: hidden;
     .govuk-hero-margin {
         margin-right: 134px;
      }
-
-    .homepage-campaign-box {
-        margin: 0 0 40px 55px;
-    }
-
-    .homepage-campaign-box-content {
-
-        a {
-            margin-bottom: 0;
-        }
-    }
 
 
     .homepage-news-listing {
