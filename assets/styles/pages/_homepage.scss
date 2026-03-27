@@ -279,6 +279,10 @@ overflow: hidden;
     position: relative;
 }
 
+.homepage-browse-all {
+    margin-top: govuk-px-to-rem(18);
+}
+
 .glossary-box-background {
     position: absolute;
     background-color: #E9EDC2;
@@ -516,6 +520,7 @@ overflow: hidden;
     .homepage-news-listing-item {
         margin-top: 0;
         flex: 1 0 auto;
+        height: 100%;
 
     }
 
@@ -582,6 +587,10 @@ overflow: hidden;
 
     .homepage-hero-capsule {
         margin-left: 368px;
+    }
+
+    .homepage-news-listing {
+        height: 100%;
     }
 
     .homepage-news-listing-item {
@@ -652,7 +661,7 @@ overflow: hidden;
         height: 488px;
 
         .homepage-news-listing-item {
-            height: 88%;
+            height: 95%;
             max-width: 297px;
         }
     }
