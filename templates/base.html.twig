@@ -8,15 +8,15 @@
     {% endif%}
     
     {% if homepage_meta is defined %}
-        <meta name="description" content="We help the UK public sector get better value for money when buying products and services. Unlock the power of procurement with Crown Commercial Service.">
-        <meta name="thumbnail-preview" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail-preview.png' />
-        <meta property="og:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail-preview.png' />
-        <meta property="twitter:image" content='https://assets.crowncommercial.gov.uk/wp-content/uploads/thumbnail-prevew.png' />
+        <meta name="description" content="We help the UK public sector get better value for money when buying products and services. Unlock the power of procurement with Goverment Commercial Agency.">
+        <meta name="thumbnail-preview" content='https://assets.gca.gov.uk/wp-content/uploads/thumbnail-preview.png' />
+        <meta property="og:image" content='https://assets.gca.gov.uk/wp-content/uploads/thumbnail-preview.png' />
+        <meta property="twitter:image" content='https://assets.gca.gov.uk/wp-content/uploads/thumbnail-prevew.png' />
     {% endif %}
 
     {% if show_agreement_page is defined and show_agreement_page is not empty %}
-        <meta name="title" content="{{ framework.content.rm_number }} {{ framework.content.title }} | CCS">
-        <meta name="description" content="Access {{ framework.content.rm_number }} {{ framework.content.title }} through Crown Commercial Service.">
+        <meta name="title" content="{{ framework.content.rm_number }} {{ framework.content.title }} | GCA (formerly CCS)">
+        <meta name="description" content="Access {{ framework.content.rm_number }} {{ framework.content.title }} through Government Commercial Agency (formerly CCS).">
     {% endif %}
 
     {% if canonical is defined and canonical is not empty %}
@@ -36,7 +36,7 @@
         {%- if page.head.title is not empty and page.head.title != page.title -%}
             {{ page.head.title }}
         {%- else -%}
-            {{ page.title|raw }} - CCS
+            {{ page.title|raw }} - GCA
         {%- endif -%}
     {% endblock -%}</title>
 
@@ -63,7 +63,7 @@
     </style>
 
     {# To bust cache, you bump the version up #}
-    {% set cssVersion = '2.01' %}
+    {% set cssVersion = '2.06' %}
 
     {% if app.environment == "prod" %}
          <link rel="preload" href={{"/assets/styles/styles.min.css?v=#{cssVersion}"}} as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -168,6 +168,7 @@
         </script>
         {# End Google Tag Manager #}
         <script src="/assets/scripts/dataLayer.js?v=2.1"></script>
+        <script src="/assets/scripts/csat-survey.js?v=2.2"></script>
 
     {% endblock %}
 </head>
@@ -217,9 +218,9 @@
 
 <div class="cookie-message" id="cookie-consent-container" aria-label="Cookie Policy" aria-live="polite" style="display: none;">
     <div class="cookie-message__inner govuk-width-container site-container">
-        <h2 class="govuk-heading-m">Cookies on crowncommercial.gov.uk</h2>
+        <h2 class="govuk-heading-m">Cookies on gca.gov.uk</h2>
         <div class="cookie-message__intro">
-            <p>We use cookies to collect information about how you use crowncommercial.gov.uk.<br><br> We use this information to make the website work as well as possible and improve government services.</p>
+            <p>We use cookies to collect information about how you use gca.gov.uk.<br><br> We use this information to make the website work as well as possible and improve government services.</p>
         </div>
         <div class="cookie-message__actions">
             <button class="govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm--accept-cookies-in-banner">Accept all cookies</button>
@@ -228,7 +229,7 @@
     </div>
 </div>
 
-<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.4"></script>
+<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.6"></script>
 
 {% block header %}
     <div id="skiplink-container">

@@ -51,7 +51,7 @@ function accordionButtonClick(accordionButton){
 
 //this is only ran on show framework and show supplier page
 function frameworkAndSupplierPage() {
-    const externalLinks = Array.from(document.querySelectorAll('main a')).filter(link => !(link.href.includes('crowncommercial') || link.href.includes('tel')) );
+    const externalLinks = Array.from(document.querySelectorAll('main a')).filter(link => !(link.href.includes('gca') || link.href.includes('tel')) );
 
     externalLinks.forEach(link => {
         link.addEventListener('click', () => {
@@ -232,7 +232,7 @@ function printResultPage(){
 }
 
 function contact(){
-    CnzPushDataLayer('contact', 'Contact CCS', null, null);
+    CnzPushDataLayer('contact', 'Contact GCA', null, null);
 }
 
 function back(){

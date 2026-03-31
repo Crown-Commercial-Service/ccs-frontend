@@ -2,7 +2,6 @@
 $color-text: #0e0e0e;
 $color-hint: #666;
 $color-border: #ccc;
-$color-button-bg: #E1E1E1;
 
 // Breakpoints for the radio grid
 $bp-mobile-max: 718px;
@@ -44,9 +43,6 @@ $bp-desktop-max: 1024px;
             border-color: $color-text;
             box-shadow: 0 0 0 2px $color-text;
         }
-    }
-    .govuk-button {
-        background-color: $color-button-bg;
     }
     
     // Default radio grid (large desktop)
@@ -167,5 +163,28 @@ $bp-desktop-max: 1024px;
 @media (max-width: 768px) {
     .helpful-info-search-agreement-mobile {
         display: block !important;
+    }
+}
+
+/* 5. Error styling */
+.govuk-form-group--error {
+    border-left: 5px solid #d4351c;
+    padding-left: 15px;
+
+    fieldset {
+        border-left: 4px solid #d4351c;
+        padding: 10px;
+    }
+
+    input[type="radio"] {
+        outline: 2px solid #d4351c;
+        outline-offset: 3px;
+    }
+
+    .govuk-error-message {
+        color: #d4351c;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
     }
 }

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}You message has been sent - CCS{% endblock %}
+{% block title %}You message has been sent - GCA{% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -44,7 +44,7 @@
     {% if '/contact' not in app.request.headers.get('referer') %}
         {% set formName = 'Page form' %}
     {% else %}
-        {% set formName = 'Contact CCS' %}
+        {% set formName = 'Contact GCA' %}
     {% endif %}
 
 

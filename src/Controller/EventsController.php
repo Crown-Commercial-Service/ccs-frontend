@@ -188,7 +188,7 @@ class EventsController extends AbstractController
             "organizer" => [
                 "@type" => "Organization",
                 "name" => "Crown Commercial Service",
-                "url" => "https://www.crowncommercial.gov.uk/"
+                "url" => "https://www.gca.gov.uk/"
             ]
         ];
 

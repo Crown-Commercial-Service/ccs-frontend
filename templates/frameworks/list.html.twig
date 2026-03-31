@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Search agreements - CCS{% endblock %}
-{% block metadescription %}This list provides a summary of the CCS agreements currently available through which government, public and third sector organisations can buy common goods and services. It includes details of when each agreement is due to expire and a web link to the full agreement information.{% endblock %}
+{% block title %}Search agreements - GCA{% endblock %}
+{% block metadescription %}This list provides a summary of the GCA agreements currently available through which government, public and third sector organisations can buy common goods and services. It includes details of when each agreement is due to expire and a web link to the full agreement information.{% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -133,7 +133,6 @@
                                 <li><p class="govuk-!-margin-bottom-1">removing filters</p></li>
                                 <li v-if="keyword"><p class="govuk-!-margin-bottom-1">double-checking your spelling</p></li>
                                 <li v-if="keyword"><p class="govuk-!-margin-bottom-1">using fewer keywords</p></li>
-                                <li v-if="keyword"><p class="govuk-!-margin-bottom-1">clicking 'start now' and answering a few simple questions to find the best agreement for your needs</p></li>
                             </ul>
                             <br>
                             <p>If you are still unable to find what you need, contact our customer service centre using our <a class="govuk-link" href="/contact">contact us form</a>.</p>
@@ -331,13 +330,14 @@
                 checkedStatus: function(checkedStatus) {
                     if (checkedStatus.length === 0 ) {
                         this.checkedStatus = ["Live"];
+                        return;
                     }
                     this.fetchAPIData(null)
                 },
                 checkedRegulation: function(checkedRegulation) {
                     if (checkedRegulation.length === Number("{{regulation|length}}")) {
-                        
                         this.checkedRegulation = [];
+                        return;
                     }
                     this.fetchAPIData(null)
                 },
@@ -351,6 +351,7 @@
                     if (checkedPillar.length == pillarsSize) {
                         this.checkedPillar = [];
                         this.checkedCategory = [];
+                        return;
                     }
                     this.fetchAPIData(null)
                 },

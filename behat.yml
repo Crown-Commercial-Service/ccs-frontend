@@ -2,7 +2,7 @@
 default:
   extensions:
     Behat\MinkExtension:
-      base_url: 'https://webuat.crowncommercial.gov.uk/'
+      base_url: 'https://webuat.gca.gov.uk/'
       browser_name: 'firefox'
       sessions:
         default:
