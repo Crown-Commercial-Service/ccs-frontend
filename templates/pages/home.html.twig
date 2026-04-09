@@ -2,7 +2,7 @@
 
 {% block htmlclass %}no-js is-home{% endblock %}
 
-{% block title %}Crown Commercial Service - CCS{% endblock %}
+{% block title %}Goverment Commercial Agency - GCA{% endblock %}
 {% set homepage_meta = true %}
 
 {% block header %}
@@ -27,7 +27,7 @@
                     <div class="govuk-hero-homepage-caption-container govuk-hero-margin">
                         <div class="govuk-hero-caption">
                                 <h1 class="govuk-caption-heading">Supporting better public <br/> procurement</h1>
-                                <p class="govuk-caption-link" style="color:white; margin-bottom: 0"><a href="https://www.crowncommercial.gov.uk/downloadable-resource/request/30384/commercial-agreements-digital-brochure">Find out how we help the UK public sector achieve value for the nation in our digital brochure.</a></p>
+                                <p class="govuk-caption-link" style="color:white; margin-bottom: 0"><a href="/about-gca">Find out how we help the UK public sector achieve value for the nation.</a></p>
                         </div>   
                     </div>
 
@@ -104,7 +104,7 @@
                                 <p class="govuk-body govuk-!-font-size-17featured">
                                     {{homepageContent.how_to_buy.description is defined ? 
                                     homepageContent.how_to_buy.description : 
-                                    "CCS has a wide range of commercial agreements you can
+                                    "GCA has a wide range of commercial agreements you can
                                     access in several ways: agreements, catalogues,
                                     portals and aggregation. Learn about the buying
                                     routes and what you can buy from each."}}
@@ -148,7 +148,7 @@
                                 <p class="govuk-body govuk-!-font-size-17featured">
                                     {{ homepageContent.upcoming_deals.description is defined ? 
                                     homepageContent.upcoming_deals.description : 
-                                    "CCS plans to launch new commercial agreements
+                                    "GCA plans to launch new commercial agreements
                                     and renew some existing ones. Learn which
                                     agreements are still open to suppliers to
                                     tender, and when they will be ready to buy
@@ -173,7 +173,7 @@
                                 <h2 class="govuk-heading-m govuk-!-font-size-24">How
                                     to buy</h2>
                                 <p class="govuk-body govuk-!-font-size-17featured">
-                                    CCS has a wide range of commercial agreements you can
+                                    GCA has a wide range of commercial agreements you can
                                     access in several ways: agreements, catalogues,
                                     portals and aggregation. Learn about the buying
                                     routes and what you can buy from each.</p>
@@ -204,7 +204,7 @@
                                 <h2 class="govuk-heading-m govuk-!-font-size-24">
                                     Upcoming deals</h2>
                                 <p class="govuk-body govuk-!-font-size-17featured">
-                                    CCS plans to launch new commercial agreements
+                                    GCA plans to launch new commercial agreements
                                     and renew some existing ones. Learn which
                                     agreements are still open to suppliers to
                                     tender, and when they will be ready to buy
@@ -247,13 +247,13 @@
             
                 <div class="govuk-full-width-container">
                     <div class="homepage-lower-components-container">
-                        <div class="govuk-grid-column-one-half homepage-news-list">
+                        <div class="govuk-grid-column-full homepage-news-list">
 
                             <h2 class="govuk-heading-m">Latest news</h2>
 
                             <ol class="featured-news news-listing homepage-news-listing">
                                 {% for news_item in news %}
-                                    {% if loop.index <= 2 %}
+                                    {% if loop.index <= 4 %}
                                         <li class="feature-news__item homepage-news-listing-item">
                                             {% if news_item.featuredImage %}
                                                 <picture>
@@ -292,10 +292,10 @@
                                                             {{ category.name|raw }}{% if loop.index < news_item.taxonomies.categories |length %}, {% endif %}
                                                         {% endfor %}
                                                     {% endif %}
-                                                    | {{ news_item.dateModified.format('jS F Y') }}
+                                                    | {{ news_item.dateModified.format('j F Y') }}
                                                 </div>
                                                 <h2 class="news-listing-title homepage-news-title-truncate">
-                                                    <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}">{{ news_item.title|raw }}</a>
+                                                    <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" title="{{ news_item.title|raw }}">{{ news_item.title|raw }}</a>
                                                 </h2>
 
                                                 {% if news_item.content.post_lead_text %}
@@ -303,24 +303,11 @@
                                                         {{ news_item.content.post_lead_text|raw }}
                                                     </p>
                                                 {% endif %}
-
-                                                <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}">Read more <span class="visuallyhidden">about {{ news_item.content.title|raw }}</span></a>
-
                                             </div>
                                         </li>
                                     {% endif %}
                                 {% endfor %}
                             </ol>
-                        </div>
-                        <div class="govuk-grid-column-one-half homepage-campaign-box">
-                            {# <h2 class="govuk-heading-m">{{ homepageContent.video.title is defined ? homepageContent.video.title : "Learn about CCS" }}</h2> #}
-                            <div class= "homepage-campaign-box-content">
-                                <h2 class="govuk-heading-xl">{{ homepageContent.campaign.title is defined and homepageContent.campaign.title is not empty  ? homepageContent.campaign.title : "Digital brochure 2024-2025: Your buying decisions can make a difference" }}</h2>
-
-                                <p>{{ homepageContent.campaign.description is defined and homepageContent.campaign.description is not empty ? homepageContent.campaign.description  : "Discover procurement guidance, customer case studies and how to access our agreements" }}</p>
-
-                                <a class="govuk-button govuk-caption-button" href="{{ homepageContent.campaign.button_link is defined and homepageContent.campaign.button_link is not empty ? homepageContent.campaign.button_link : "downloadable-resource/request/30384/commercial-agreements-digital-brochure" }}">{{ homepageContent.campaign.button_text is defined and homepageContent.campaign.button_text is not empty ? homepageContent.campaign.button_text : "Download our digital brochure" }}</a>
-                            </div>
                         </div>
                     </div>
 

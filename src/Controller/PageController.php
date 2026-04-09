@@ -420,6 +420,23 @@ class PageController extends AbstractController
          ]);
     }
 
+    public function sitemap()
+    {
+        $response = $this->client->request('GET', getenv('APP_CMS_BASE_URL') . '/wp-json/ccs/v1/sitemap');
+
+        if ($response->getStatusCode() !== 200) {
+            throw $this->createNotFoundException('Sitemap not available.');
+        }
+
+        $data = $response->toArray();
+
+        return new Response(
+            $data['raw_xml'],
+            Response::HTTP_OK,
+            ['Content-Type' => 'text/xml']
+        );
+        return $this->render('pages/sitemap.xml.twig', [], new Response('', 200, ['Content-Type' => 'application/xml']));
+    }
 
     public function getHeaderAndFooterListFromCMS($client, $APP_CMS_BASE_URL)
     {
@@ -475,9 +492,9 @@ class PageController extends AbstractController
 
         // Update cookies with expiry to 1 year
         if ($cookies->has('cookies_reset')) {
-            $cookiePreferences = new Cookie('cookie_preferences', '{"essentials":true,"usage":true,"marketing":true, "glassbox": true}', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
-            $seenCookieMessage = new Cookie('seen_cookie_message', 'true', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
-            $cookieReset = new Cookie('cookies_reset', 'true', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
+            $cookiePreferences = new Cookie('cookie_preferences', '{"essentials":true,"usage":true,"marketing":true, "glassbox": true}', strtotime('+1 year'), '/', '.gca.gov.uk', false, false);
+            $seenCookieMessage = new Cookie('seen_cookie_message', 'true', strtotime('+1 year'), '/', '.gca.gov.uk', false, false);
+            $cookieReset = new Cookie('cookies_reset', 'true', strtotime('+1 year'), '/', '.gca.gov.uk', false, false);
 
             $response = new Response();
             $response->headers->setCookie($cookiePreferences);

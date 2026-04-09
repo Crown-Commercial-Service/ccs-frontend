@@ -19,32 +19,58 @@
 
 # Allow crawling of all content
 User-agent: *
-Disallow: *?q==*
-Disallow: *&q==*
-Disallow: *?all==*
-Disallow: *&all==*
-Disallow: *?statuses%5B%5D=*
-Disallow: *&statuses%5B%5D=*
-Disallow: *?statuses=*
-Disallow: *&statuses=*
 
-Disallow: *?search=*
-Disallow: *&search=*
-Disallow: *?framework=*
-Disallow: *&framework=*
-Disallow: *?lot-filter-nested=*
-Disallow: *&lot-filter-nested=*
-Disallow: *?limit=*
-Disallow: *&limit=*
+Disallow: *q==*
+Disallow: *all==*
+Disallow: *statuses%5B%5D=*
+Disallow: *statuses%5B0%5D=*
+Disallow: *statuses=*
+Disallow: *status=*
+Disallow: *page=*
+Disallow: *search=*
+Disallow: *keyword=*
+Disallow: *framework=*
+Disallow: *lot-filter-nested=*
+Disallow: *limit=*
 
-Disallow: *?categories=*
-Disallow: *&categories=*
-Disallow: *?sectors=*
-Disallow: *&sectors=*
-Disallow: *?products_services=*
-Disallow: *&products_services=*
-Disallow: *?audience_tag=*
-Disallow: *&audience_tag=*
+Disallow: *allRegulation=*
+Disallow: *regulation=*
+Disallow: *regulation%5B%5D=*
+
+Disallow: *allType=*
+Disallow: *type=*
+Disallow: *type%5B%5D=*
+
+Disallow: *allCategories=*
+Disallow: *categories=*
+Disallow: *categories%5B%5D=*
+
+Disallow: *allSectors=*
+Disallow: *sectors=*
+Disallow: *sectors%5B%5D=*
+
+Disallow: *allPillarAndCategory=*
+Disallow: *product_service=*
+Disallow: *product_service%5B%5D=*
+Disallow: *products_services=*
+Disallow: *products_services%5B%5D=*
+
+Disallow: *digitalDownload=*
+Disallow: *digitalDownload%5B%5D=*
+
+Disallow: *audience_tag=*
+Disallow: *audience_tag%5B%5D=*
+
+Disallow: *event_type=*
+Disallow: *event_type%5B%5D=*
+
+Disallow: *utm_source=*
+Disallow: *gad=*
+Disallow: *webinar/request*
+Disallow: *category/energy*
+
+Disallow: /agreements/*/suppliers/*
+Disallow: /agreements/*/lot-suppliers/*
 
 #              ________
 #   __,_,     |        |

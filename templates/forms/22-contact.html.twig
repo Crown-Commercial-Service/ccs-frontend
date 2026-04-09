@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Contact Crown Commercial Services - CCS {% endblock %}
+{% block title %} Contact Government Commercial Agency - GCA {% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -40,7 +40,7 @@
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-two-thirds">
 
-                    <h1 class="govuk-heading-xl page-title">Contact CCS</h1>
+                    <h1 class="govuk-heading-xl page-title">Contact GCA</h1>
                     <p class="govuk-body-l">You can use the contact form below to ask a question or give us feedback</p>
 
                     <form class="govuk-!-width-three-quarters pardot-submit" action="/contact/submit" method="POST" novalidate data-evt-type='contact_form' {{ formErrors is defined ? "data-evt-state='error'" }} enctype="multipart/form-data">
@@ -266,7 +266,7 @@
                             Once you submit your details, you will receive a confirmation email to let you know your case reference number and next steps.</p>
 
                             <div class="govuk-form-group">
-                                <button data-prevent-double-click="true" data-module="govuk-button" type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit" onclick="pushToDataLayer({'event':'form_submit', 'form_type':'Contact CCS', 'form_id': document.querySelector('[name=subject]').value })">
+                                <button data-prevent-double-click="true" data-module="govuk-button" type="submit" id="submit" class="--gem-c-button govuk-!-font-size-18 govuk-!-font-weight-bold govuk-button gtm-form-submit" onclick="pushToDataLayer({'event':'form_submit', 'form_type':'Contact GCA', 'form_id': document.querySelector('[name=subject]').value })">
                                     Submit
                                 </button>
                             </div>
@@ -276,7 +276,7 @@
                         <h2 class="govuk-heading-m">Talk to us</h2>
                         <p>You can also contact us by email or phone</p>
                         <p>
-                            Email: <a href="mailto:info@crowncommercial.gov.uk">info@crowncommercial.gov.uk</a>
+                            Email: <a href="mailto:info@gca.gov.uk">info@gca.gov.uk</a>
                             <br>
                             Telephone: <a href="tel:03454102222">0345 410 2222</a>
                         </p>
@@ -285,7 +285,7 @@
                         <p>{{cscMessage | raw}}</p>
                     </div>
                     
-                    {% include 'forms/dataLayer_component/_form_start_form_error.html.twig' with {'formName': "Contact CCS" } %}
+                    {% include 'forms/dataLayer_component/_form_start_form_error.html.twig' with {'formName': "Contact GCA" } %}
 
                     <script>
 

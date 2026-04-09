@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Search agreements - CCS{% endblock %}
-{% block metadescription %}This list provides a summary of the CCS agreements currently available through which government, public and third sector organisations can buy common goods and services. It includes details of when each agreement is due to expire and a web link to the full agreement information.{% endblock %}
+{% block title %}Search agreements - GCA{% endblock %}
+{% block metadescription %}This list provides a summary of the GCA agreements currently available through which government, public and third sector organisations can buy common goods and services. It includes details of when each agreement is due to expire and a web link to the full agreement information.{% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -133,7 +133,6 @@
                                 <li><p class="govuk-!-margin-bottom-1">removing filters</p></li>
                                 <li v-if="keyword"><p class="govuk-!-margin-bottom-1">double-checking your spelling</p></li>
                                 <li v-if="keyword"><p class="govuk-!-margin-bottom-1">using fewer keywords</p></li>
-                                <li v-if="keyword"><p class="govuk-!-margin-bottom-1">clicking 'start now' and answering a few simple questions to find the best agreement for your needs</p></li>
                             </ul>
                             <br>
                             <p>If you are still unable to find what you need, contact our customer service centre using our <a class="govuk-link" href="/contact">contact us form</a>.</p>
@@ -255,6 +254,37 @@
                 }
             },
             mounted() {
+                // --- START FIX: Force Collapse on Load ---
+                // 1. Kill the custom session variable you found
+                // This stops the "Expand All" logic from triggering
+                if (sessionStorage.getItem('sessionCheckboxes')) {
+                    sessionStorage.removeItem('sessionCheckboxes');
+                }
+
+                // 2. Kill the standard GOV.UK memory 
+                // This stops the standard behavior of remembering which sections were open
+                Object.keys(sessionStorage).forEach(key => {
+                    if (key.startsWith('GOVUK_')) {
+                        sessionStorage.removeItem(key);
+                    }
+                });
+
+                // 3. Force the DOM to collapse visually immediately
+                // We use a timeout of 0 to let the browser paint the reset before other scripts run
+                setTimeout(() => {
+                    const expandedSections = document.querySelectorAll('.govuk-accordion__section--expanded');
+                    expandedSections.forEach(section => {
+                        section.classList.remove('govuk-accordion__section--expanded');
+
+                        // We must also update the button state so accessibility tools know it's closed
+                        const button = section.querySelector('.govuk-accordion__section-button');
+                        if (button) {
+                            button.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                }, 0);
+                // --- END FIX ---
+
                 this.fetchAPIData(this.currentPage);
                 this.setupHistoryApi(); 
                 this.initialLoad = false; 
@@ -300,13 +330,14 @@
                 checkedStatus: function(checkedStatus) {
                     if (checkedStatus.length === 0 ) {
                         this.checkedStatus = ["Live"];
+                        return;
                     }
                     this.fetchAPIData(null)
                 },
                 checkedRegulation: function(checkedRegulation) {
                     if (checkedRegulation.length === Number("{{regulation|length}}")) {
-                        
                         this.checkedRegulation = [];
+                        return;
                     }
                     this.fetchAPIData(null)
                 },
@@ -320,6 +351,7 @@
                     if (checkedPillar.length == pillarsSize) {
                         this.checkedPillar = [];
                         this.checkedCategory = [];
+                        return;
                     }
                     this.fetchAPIData(null)
                 },
