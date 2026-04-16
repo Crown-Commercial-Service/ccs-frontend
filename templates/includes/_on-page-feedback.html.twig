@@ -10,11 +10,11 @@
             </div>
         </div>
 
-        <div id="feedback-thanks-old" class="govuk-heading-m" style="display: none;">
+        <div id="thank-you-message" class="govuk-heading-m" style="display: none;">
             Thank you for your feedback.
         </div>
 
-        <div id="feedback-thanks-new" style="display: none;">
+        <div id="useful-yes" style="display: none;">
             <h2 class="govuk-heading-m">
                 Thank you for letting us know
             </h2>
@@ -59,16 +59,16 @@
                 </div>
 
                 <div class="govuk-button-group">
-                    <button onclick="handleFeedbackOld()" class="govuk-button">Submit</button>
+                    <button onclick="handleFeedbackSubmit()" class="govuk-button">Submit</button>
                     <button onclick="handleCancel()" class="govuk-button" style="background-color: #cbcbcb;">Cancel</button>
                 </div>
 
             </div>
         </div>
 
-        <div id="feedback-form" style="display: none;">
+        <div id="useful-no" style="display: none;">
             <h2 class="govuk-heading-m">
-                Thanks for letting us know
+                Thank you for letting us know
             </h2>
 
             <div style="background-color: white; padding: 2rem;">
@@ -111,7 +111,7 @@
                 </div>
 
                 <div class="govuk-button-group">
-                    <button onclick="handleFeedbackOld()" class="govuk-button">Submit</button>
+                    <button onclick="handleFeedbackSubmit()" class="govuk-button">Submit</button>
                     <button onclick="handleCancel()" class="govuk-button" style="background-color: #cbcbcb;">Cancel</button>
                 </div>
             </div>
@@ -124,26 +124,21 @@
 
         function handleFeedback(response) {
             document.getElementById('feedback-content').style.display = 'none';
-            if (response === 'yes') {
-                document.getElementById('feedback-thanks-new').style.display = 'block';
-                feedbackResponse = response;
-            } else {
-                document.getElementById('feedback-form').style.display = 'block';
-                feedbackResponse = response;
-            }
+            document.getElementById(`useful-${response}`).style.display = 'block';
+            feedbackResponse = response;
         }
 
         function handleCancel() {
             window.location.href = window.location.pathname;
         }
 
-        function handleFeedbackOld() {
-            document.getElementById('feedback-form').style.display = 'none';
-            document.getElementById('feedback-thanks-new').style.display = 'none';
-            document.getElementById('feedback-thanks-old').style.display = 'block';
+        function handleFeedbackSubmit() {
+            document.getElementById('useful-no').style.display = 'none';
+            document.getElementById('useful-yes').style.display = 'none';
+            document.getElementById('thank-you-message').style.display = 'block';
 
             // Add smooth scroll to the thanks message
-            document.getElementById('feedback-thanks-old').scrollIntoView({
+            document.getElementById('thank-you-message').scrollIntoView({
                 behavior: 'smooth',
                 block: 'center'
             });
