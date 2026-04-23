@@ -365,7 +365,7 @@
                         const pillarCategories = Object.keys(categories);
                         const formattedPillarName = pillarName.charAt(0).toUpperCase() + pillarName.slice(1);
                     
-                        const allCategoriesSelected = pillarCategories.every(category => 
+                        const allCategoriesSelected = pillarCategories.every(category =>
                             checkedCategory.includes(category.replace(/ /g, '+'))
                         );
 
