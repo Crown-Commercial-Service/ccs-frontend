@@ -21,9 +21,9 @@ pillars:
         db_value: 'Outsourced Services'
         slug: 'outsourced-services'
 
-      - name: 'Professional Services'
-        db_value: 'Professional Services'
-        slug: 'professional-services'
+      - name: 'Professional and Business Services'
+        db_value: 'Professional and Business Services'
+        slug: 'professional-and-business-services'
 
       - name: 'Travel, Accommodation and Venues'
         db_value: 'Travel, Accommodation and Venues'

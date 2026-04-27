@@ -50,7 +50,7 @@ class FrameworkCategoriesTest extends WebTestCase
         $this->assertEquals('travel-accommodation-and-Venues', $last);
 
         $this->assertEquals('energy', FrameworkCategories::getSlug('Energy'));
-        $this->assertEquals('professional-services', FrameworkCategories::getSlug('Professional Services'));
+        $this->assertEquals('professional-and-business-services', FrameworkCategories::getSlug('Professional and Business Services'));
         $this->assertEquals('Facilities Management', FrameworkCategories::getNameBySlug('facilities-management'));
         $this->assertEquals('Digital and Technology Services', FrameworkCategories::getNameBySlug('digital-and-technology-services'));
         $this->assertEquals(3, count(FrameworkCategories::getAllByPillar('Estates')));
@@ -67,7 +67,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testRedirectFromUtilitiesFuelsToEnergy()
     {
         $client = static::createClient();
-        $client->request('GET', '/agreements/category/utilities-fuels');
+        $client->request('GET', '/agreements?category=utilities-fuels');
         $response = $client->getResponse();
 
         $this->assertEquals(302, $response->getStatusCode());
@@ -78,7 +78,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testRedirectFromTravelToTravelAccommodationAndVenuesCategory()
     {
         $client = static::createClient();
-        $client->request('GET', '/agreements/category/travel');
+        $client->request('GET', '/agreements?category=travel');
         $response = $client->getResponse();
 
         $this->assertEquals(302, $response->getStatusCode());
@@ -89,7 +89,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testRedirectFromDigitalFuturesToDigitalCapabilityAndDelivery()
     {
         $client = static::createClient();
-        $client->request('GET', '/agreements/category/digital-future');
+        $client->request('GET', '/agreements?category=digital-future');
         $response = $client->getResponse();
 
         $this->assertEquals(302, $response->getStatusCode());
@@ -100,7 +100,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testRedirectFromNetworkSolutionsToNetworkServices()
     {
         $client = static::createClient();
-        $client->request('GET', '/agreements/category/network-solutions');
+        $client->request('GET', '/agreements?category=network-solutions');
         $response = $client->getResponse();
 
         $this->assertEquals(302, $response->getStatusCode());
@@ -111,7 +111,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testRedirectFromWorkplaceToEstates()
     {
         $client = static::createClient();
-        $client->request('GET', '/agreements/category/workplace');
+        $client->request('GET', '/agreements?category=workplace');
         $response = $client->getResponse();
 
         $this->assertEquals(302, $response->getStatusCode());
@@ -122,7 +122,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testRedirectFromtechnologyProductsServicesToTechnology()
     {
         $client = static::createClient();
-        $client->request('GET', '/agreements/category/technology-products-services');
+        $client->request('GET', '/agreements?category=technology-products-services');
         $response = $client->getResponse();
 
         $this->assertEquals(302, $response->getStatusCode());
@@ -131,7 +131,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testRedirectFromWorkforceHealthEducationToHrAndWorkforceServices()
     {
         $client = static::createClient();
-        $client->request('GET', '/agreements/category/workforce-health-education');
+        $client->request('GET', '/agreements?category=workforce-health-education');
         $response = $client->getResponse();
 
         $this->assertEquals(302, $response->getStatusCode());
@@ -142,7 +142,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testRedirectFromEstateSupportServicesToFacilitiesManagement()
     {
         $client = static::createClient();
-        $client->request('GET', '/agreements/category/estate-support-services');
+        $client->request('GET', '/agreements?category=estate-support-services');
         $response = $client->getResponse();
 
         $this->assertEquals(302, $response->getStatusCode());
@@ -153,7 +153,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testRedirectFromTechnologyServicesToDigitalTechnologyServices()
     {
         $client = static::createClient();
-        $client->request('GET', '/agreements/category/technology-services');
+        $client->request('GET', '/agreements?category=technology-services');
         $response = $client->getResponse();
 
         $this->assertEquals(302, $response->getStatusCode());
@@ -164,7 +164,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testRedirectFromDigitalCapabilityToDigitalTechnologyServices()
     {
         $client = static::createClient();
-        $client->request('GET', '/agreements/category/digital-capability-and-delivery');
+        $client->request('GET', '/agreements?category=digital-capability-and-delivery');
         $response = $client->getResponse();
 
         $this->assertEquals(302, $response->getStatusCode());
@@ -175,11 +175,22 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testRedirectFromSoftwareAndHardwareToSoftware()
     {
         $client = static::createClient();
-        $client->request('GET', '/agreements/category/software-and-hardware');
+        $client->request('GET', '/agreements?category=software-and-hardware');
         $response = $client->getResponse();
 
         $this->assertEquals(302, $response->getStatusCode());
 
         $this->assertResponseRedirects('/agreements?category%5B0%5D=Software');
+    }
+
+    public function testRedirectFromProfessionalServicesToPandBS()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/agreements?category=professional-services');
+        $response = $client->getResponse();
+
+        $this->assertEquals(302, $response->getStatusCode());
+
+        $this->assertResponseRedirects('/agreements?category%5B0%5D=Professional%20and%20Business%20Services');
     }
 }
