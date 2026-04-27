@@ -565,8 +565,6 @@ class FrameworksController extends AbstractController
 
     private function redirectToCatOrPillar($request)
     {
-        $oldCategory    = $request->attributes->get('category', null);
-
         $redirectToCat = [
             "utilities-fuels"   => "Energy",
             "software-cyber"    => "Software and Hardware",
@@ -586,6 +584,7 @@ class FrameworksController extends AbstractController
             "technology-services"                           => "Digital and Technology Services",
             "digital-capability-and-delivery"               => "Digital and Technology Services",
             "software-and-hardware"                         => "Software",
+            "professional-services"                         => "Professional and Business Services",
         ];
 
         $redirectToPillar = [
@@ -593,11 +592,22 @@ class FrameworksController extends AbstractController
             "technology-products-services"  => "Technology",
         ];
 
-        if (isset($oldCategory) && array_key_exists($oldCategory, (array)$redirectToCat)) {
-            return ['category' => [$redirectToCat[$oldCategory]]];
-        } elseif (isset($oldCategory) && array_key_exists($oldCategory, (array)$redirectToPillar)) {
-            return ['pillar' => [$redirectToPillar[$oldCategory]]];
+        $categories = (array) ($request->query->get("category") ?? []);
+        $categories = array_map(function ($value) {
+            $lower = strtolower($value);
+            return str_replace(' ', '-', $lower);
+        }, (array)$categories);
+
+        $validMatchesforCat = array_intersect($categories, array_keys($redirectToCat));
+        $validMatchesforPillar = array_intersect($categories, array_keys($redirectToPillar));
+
+        if (empty($categories)) {
+        } elseif (count($validMatchesforCat) != 0) {
+            return ['category' => [$redirectToCat[$validMatchesforCat[0]]]];
+        } elseif (count($validMatchesforPillar) != 0) {
+            return ['pillar' => [$redirectToPillar[$validMatchesforPillar[0]]]];
         }
+
         return null;
     }
 }
