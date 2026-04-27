@@ -50,7 +50,7 @@ class FrameworkCategoriesTest extends WebTestCase
         $this->assertEquals('travel-accommodation-and-Venues', $last);
 
         $this->assertEquals('energy', FrameworkCategories::getSlug('Energy'));
-        $this->assertEquals('professional-services', FrameworkCategories::getSlug('Professional Services'));
+        $this->assertEquals('professional-and-business-services', FrameworkCategories::getSlug('Professional and Business Services'));
         $this->assertEquals('Facilities Management', FrameworkCategories::getNameBySlug('facilities-management'));
         $this->assertEquals('Digital and Technology Services', FrameworkCategories::getNameBySlug('digital-and-technology-services'));
         $this->assertEquals(3, count(FrameworkCategories::getAllByPillar('Estates')));
