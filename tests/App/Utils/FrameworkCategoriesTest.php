@@ -13,7 +13,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testFind()
     {
         $cat = FrameworkCategories::find('Corporate');
-        $this->assertEquals(6, count($cat['categories']));
+        $this->assertEquals(5, count($cat['categories']));
         $this->assertTrue(isset($cat['categories']));
 
         $cat = FrameworkCategories::find('Estates');
@@ -32,8 +32,8 @@ class FrameworkCategoriesTest extends WebTestCase
         $this->assertEquals('cloud-and-hosting', $cat['slug']);
         $this->assertFalse(isset($cat['categories']));
 
-        $cat = FrameworkCategories::find('Outsourced Services');
-        $this->assertEquals('outsourced-services', $cat['slug']);
+        $cat = FrameworkCategories::find('Professional and Business Services');
+        $this->assertEquals('professional-and-business-services', $cat['slug']);
         $this->assertFalse(isset($cat['categories']));
 
         $cat = FrameworkCategories::find('FakeCat');
@@ -43,7 +43,7 @@ class FrameworkCategoriesTest extends WebTestCase
     public function testCategories()
     {
         $categories = FrameworkCategories::getAll();
-        $this->assertEquals(14, count($categories));
+        $this->assertEquals(13, count($categories));
         $first = current($categories);
         $this->assertEquals('cloud-and-hosting', $first);
         $last = end($categories);
