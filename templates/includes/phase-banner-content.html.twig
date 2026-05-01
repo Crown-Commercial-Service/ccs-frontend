@@ -1,24 +1,26 @@
-<div class="govuk-phase-banner-help-us">
-    <p class="govuk-phase-banner__content" role="region" aria-label="Beta banner">
-        <strong class="govuk-tag govuk-phase-banner__content__tag ">
-            beta
-        </strong>
-        <span class="govuk-phase-banner__text">
-            Help us make this service better for you.
-            <a href={{ survey_link }}> Give feedback on how we can improve this service</a>.
-        </span>
-    </p>
-</div>
-
-{% if display_banner ?? true %}
-    <div class="govuk-phase-banner-gca">
-        <div class="govuk-phase-banner__content" role="region" aria-label="Beta banner" style="margin-top: 10px">
-            <p class="govuk-phase-banner__text">
-                Crown Commercial Service became Government Commercial Agency on 1 April 2026.
-                <a href="/government-commercial-agency-what-you-need-to-know">
-                    Find out what you need to know
-                </a>
-            </p>
-        </div>
+ <section aria-label="Phase banner">
+    <div class="govuk-phase-banner-help-us">
+        <p class="govuk-phase-banner__content" aria-label="Beta banner">
+            <strong class="govuk-tag govuk-phase-banner__content__tag ">
+                beta
+            </strong>
+            <span class="govuk-phase-banner__text">
+                Help us make this service better for you.
+                <a href={{ survey_link }}> Give feedback on how we can improve this service</a>.
+            </span>
+        </p>
     </div>
-{% endif %}
+
+    {% if display_banner ?? true %}
+        <div class="govuk-phase-banner-gca">
+            <div class="govuk-phase-banner__content" aria-label="Beta banner" style="margin-top: 10px">
+                <p class="govuk-phase-banner__text">
+                    Crown Commercial Service became Government Commercial Agency on 1 April 2026.
+                    <a href="/government-commercial-agency-what-you-need-to-know">
+                        Find out what you need to know
+                    </a>
+                </p>
+            </div>
+        </div>
+    {% endif %}
+</section>
