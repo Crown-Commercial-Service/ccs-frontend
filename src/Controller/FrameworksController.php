@@ -585,6 +585,7 @@ class FrameworksController extends AbstractController
             "digital-capability-and-delivery"               => "Digital and Technology Services",
             "software-and-hardware"                         => "Software",
             "professional-services"                         => "Professional and Business Services",
+            "outsourced-Services"                           => "Professional and Business Services",
         ];
 
         $redirectToPillar = [

@@ -17,10 +17,6 @@ pillars:
         db_value: 'HR and Workforce Services'
         slug: 'hr-and-workforce-services'
 
-      - name: 'Outsourced Services'
-        db_value: 'Outsourced Services'
-        slug: 'outsourced-services'
-
       - name: 'Professional and Business Services'
         db_value: 'Professional and Business Services'
         slug: 'professional-and-business-services'
