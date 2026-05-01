@@ -209,7 +209,11 @@
 {# For data layer - outputs environment to be used in js file #}
 <div id="app-env" style="display: none" data-env="{{app.environment}}"></div>
 
-{{ staging_banner(app.environment) }}
+{% if app.environment != 'prod' %}
+    <aside aria-label="Environment status">
+        {{ staging_banner(app.environment) }}
+    </aside>
+{% endif %}
 
 {# Google Tag Manager (noscript) THIS SHOULD BE REMOVED IF EXPLICIT OPT-IN is used #}
 <noscript>
