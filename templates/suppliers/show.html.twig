@@ -152,16 +152,20 @@
                                                         </h3>
 
                                                         {% if lot.status == "Live" %}
-                                                            {% if lot.supplier_contact_email and lot.supplier_contact_email != "" %}
-                                                                <p class="govuk-!-font-size-16 govuk-!-margin-0">
-                                                                    Email {{ lot.supplier_contact_name }}
-                                                                    on
-                                                                    <a href="mailto:{{ lot.supplier_contact_email }}">{{ lot.supplier_contact_email }}</a>
-                                                                </p>
-                                                            {% elseif supplier.content.phone_number and supplier.content.phone_number != "" %}
-                                                                <p class="govuk-!-font-size-16 govuk-!-margin-0">
-                                                                    Call {{ name }}
-                                                                    on {{ supplier.content.phone_number }}</p>
+                                                            {% if lot.supplier_website_contact.value %}
+                                                                {% if lot.supplier_contact_email and lot.supplier_contact_email != "" %}
+                                                                    <p class="govuk-!-font-size-16 govuk-!-margin-0">
+                                                                        Email {{ lot.supplier_contact_name }} on <a href="mailto:{{ lot.supplier_contact_email }}">{{ lot.supplier_contact_email }}</a>
+                                                                    </p>
+                                                                {% elseif supplier.content.phone_number and supplier.content.phone_number != "" %}
+                                                                    <p class="govuk-!-font-size-16 govuk-!-margin-0">
+                                                                        Call {{ name }} on {{ supplier.content.phone_number }}
+                                                                    </p>
+                                                                {% else %}
+                                                                    <p class="govuk-!-font-size-16 govuk-!-margin-0">
+                                                                        <i>Contact details not available</i>
+                                                                    </p>
+                                                                {% endif %} 
                                                             {% else %}
                                                                 <p class="govuk-!-font-size-16 govuk-!-margin-0">
                                                                     <i>Contact details not available</i>
