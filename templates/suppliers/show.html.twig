@@ -23,7 +23,7 @@
         </div>
 
 
-        <div class="govuk-breadcrumbs">
+        <div class="govuk-breadcrumbs" role="navigation" aria-label="Breadcrumb">
             <ol class="govuk-breadcrumbs__list">
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="/">Home</a>
@@ -152,19 +152,24 @@
                                                         </h3>
 
                                                         {% if lot.status == "Live" %}
-                                                            {% if lot.supplier_contact_email %}
-                                                                <p class="govuk-!-font-size-16 govuk-!-margin-0">
-                                                                    Email {{ lot.supplier_contact_name }}
-                                                                    on
-                                                                    <a href="mailto:{{ lot.supplier_contact_email }}">{{ lot.supplier_contact_email }}</a>
-                                                                </p>
-                                                            {% elseif supplier.content.phone_number %}
-                                                                <p class="govuk-!-font-size-16 govuk-!-margin-0">
-                                                                    Call {{ name }}
-                                                                    on {{ supplier.content.phone_number }}</p>
+                                                            {% if lot.supplier_website_contact.value %}
+                                                                {% if lot.supplier_contact_email and lot.supplier_contact_email != "" %}
+                                                                    <p class="govuk-!-font-size-16 govuk-!-margin-0">
+                                                                        Email {{ lot.supplier_contact_name }} on <a href="mailto:{{ lot.supplier_contact_email }}">{{ lot.supplier_contact_email }}</a>
+                                                                    </p>
+                                                                {% elseif supplier.content.phone_number and supplier.content.phone_number != "" %}
+                                                                    <p class="govuk-!-font-size-16 govuk-!-margin-0">
+                                                                        Call {{ name }} on {{ supplier.content.phone_number }}
+                                                                    </p>
+                                                                {% else %}
+                                                                    <p class="govuk-!-font-size-16 govuk-!-margin-0">
+                                                                        <i>Contact details not available</i>
+                                                                    </p>
+                                                                {% endif %} 
                                                             {% else %}
                                                                 <p class="govuk-!-font-size-16 govuk-!-margin-0">
-                                                                    Call {{ name }}</p>
+                                                                    <i>Contact details not available</i>
+                                                                </p>
                                                             {% endif %}
                                                         {% endif %}
 
@@ -370,9 +375,12 @@
                         <div class="apollo-enclosure">
                             <h2 class="govuk-heading-m">Supplier details</h2>
 
-                            <h3 class="govuk-heading-m govuk-!-font-size-17featured govuk-!-margin-0 govuk-!-font-weight-bold">
-                                Telephone:</h3>
-                            <p class="govuk-!-font-size-17featured" itemprop="telephone">{{ supplier.content.phone_number }}</p>
+                            {% if supplier.content.phone_number and supplier.content.phone_number != "" %}
+                                <p class="govuk-body">
+                                    <h3 class="govuk-heading-m govuk-!-font-size-17featured govuk-!-margin-0 govuk-!-font-weight-bold">Telephone:</h3>
+                                    <p class="govuk-!-font-size-17featured" itemprop="telephone">{{ supplier.content.phone_number }}</p>
+                                </p>
+                            {% endif %}
 
                             {# Some URIs are malformed, here we check if a string starts with `http` and if it does, we display something #}
                             {% if supplier.content.website == "" or supplier.content.website matches "/@/" %}
