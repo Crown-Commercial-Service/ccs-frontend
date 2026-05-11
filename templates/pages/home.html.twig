@@ -262,24 +262,25 @@
                                                         <!--[if IE 9]>
                                                         <video style="display: none;>
                                                                                         <![endif]-->
-                                                        {% if news_item.featuredImage.byName('news-size-s') %}
-                                                            <source media="(max-width: 320px)" srcset="{{ news_item.featuredImage.byName('news-size-s') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-s') }}">
-                                                        {% endif %}
+                                                  {% if news_item.featuredImage.byName('news-size-s') %}
+                                                        <source media="(max-width: 320px)" srcset="{{ news_item.featuredImage.byName('news-size-s') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-s') }}" width="640" height="427">
+                                                    {% endif %}
 
-                                                        {% if news_item.featuredImage.byName('news-size-m') %}
-                                                            <source media="(max-width: 768px)" srcset="{{ news_item.featuredImage.byName('news-size-m') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-m') }}">
-                                                        {% endif %}
+                                                    {% if news_item.featuredImage.byName('news-size-m') %}
+                                                        <source media="(max-width: 768px)" srcset="{{ news_item.featuredImage.byName('news-size-m') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-m') }}" width="640" height="427">
+                                                    {% endif %}
 
-                                                        {% if news_item.featuredImage.byName('news-size-l') %}
-                                                            <source media="(max-width: 1280px)" srcset="{{ news_item.featuredImage.byName('news-size-l') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-l') }}">
-                                                        {% endif %}
-                                                        <!--[if IE 9]></video><![endif]-->
-                                                        <!-- Fallback -->
-                                                        {% if news_item.featuredImage.byName('news-size-s') %}
-                                                            <img src="{{ news_item.featuredImage.byName('news-size-s') }}" {{ news_item.featuredImage.alt is defined and news_item.featuredImage.alt is not empty ? "alt=" ~ news_item.featuredImage.alt : "alt='' role='presentation'" }} aria-hidden="true" tabindex="-1" width="640" height="427">
-                                                        {% else %}
-                                                            <img src="{{ news_item.featuredImage.byName('full') }}" {{ news_item.featuredImage.alt is defined and news_item.featuredImage.alt is not empty ? "alt=" ~ news_item.featuredImage.alt : "alt='' role='presentation'" }} aria-hidden="true" tabindex="-1" width="640" height="427">
-                                                        {% endif %}
+                                                    {% if news_item.featuredImage.byName('news-size-l') %}
+                                                        <source media="(max-width: 1280px)" srcset="{{ news_item.featuredImage.byName('news-size-l') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-l') }}" width="640" height="427">
+                                                    {% endif %}
+                                                    {% set altText = news_item.featuredImage.alt is defined and news_item.featuredImage.alt is not empty ? news_item.featuredImage.alt : '' %}
+                                                    {% set roleAttr = altText is empty ? 'role="presentation"' : '' %}
+
+                                                    {% if news_item.featuredImage.byName('news-size-s') %}
+                                                        <img src="{{ news_item.featuredImage.byName('news-size-s') }}" alt="{{ altText }}" {{ roleAttr|raw }} aria-hidden="true" tabindex="-1" width="640" height="427" loading="lazy">
+                                                    {% else %}
+                                                        <img src="{{ news_item.featuredImage.byName('full') }}" alt="{{ altText }}" {{ roleAttr|raw }} aria-hidden="true" tabindex="-1" width="640" height="427" loading="lazy">
+                                                    {% endif %}
 
                                                     </a>
                                                 </picture>
@@ -327,49 +328,47 @@
     </div>
 
 <script>
-pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'homepage'});
+    pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'homepage'});
 
-var newsItems = document.querySelectorAll('.home-news-item-truncate');
+    var newsItems = document.querySelectorAll('.home-news-item-truncate');
 
-newsItems.forEach(function (item) {
-    var heading = item.querySelector(".homepage-news-title-truncate a");
-    var summary = item.querySelector(".homepage-truncate-overflow");
+    newsItems.forEach(function (item) {
+        var heading = item.querySelector(".homepage-news-title-truncate a");
+        var summary = item.querySelector(".homepage-truncate-overflow");
 
-    truncatedContent = truncate(heading.innerText, summary.innerText);
+        truncatedContent = truncate(heading.innerText, summary.innerText);
 
-    heading.innerText = truncatedContent["truncatedHeading"];
-    summary.innerText = truncatedContent["truncatedSummary"];
-})
+        heading.innerText = truncatedContent["truncatedHeading"];
+        summary.innerText = truncatedContent["truncatedSummary"];
+    })
 
-function truncate(heading, summary) {
-    var newsContent = {
-        "truncatedHeading": heading,
-        "truncatedSummary": summary
+    function truncate(heading, summary) {
+        var newsContent = {
+            "truncatedHeading": heading,
+            "truncatedSummary": summary
+        };
+
+    if (heading.length > 44 ) {
+            newsContent["truncatedHeading"] = heading.substring(0, 44) + '...';
+    } 
+
+    if (summary.length > 5) {
+        newsContent["truncatedSummary"] = summary.substring(0, 92) + '...';
+    }
+
+    return newsContent;
+        
     };
 
-   if (heading.length > 44 ) {
-        newsContent["truncatedHeading"] = heading.substring(0, 44) + '...';
-   } 
+    // close message banner 
+    var messageBanner = document.querySelector('.message-banner');
+    var messageCloseBtn = document.querySelector('.message-banner-close-button');
 
-   if (summary.length > 5) {
-      newsContent["truncatedSummary"] = summary.substring(0, 92) + '...';
-   }
-
-   return newsContent;
-    
-};
-
-// close message banner 
-var messageBanner = document.querySelector('.message-banner');
-var messageCloseBtn = document.querySelector('.message-banner-close-button');
-
-if (messageCloseBtn !== null) {
-    messageCloseBtn.addEventListener("click", () => {
-        messageBanner.style.display = "none";
-    })
-}
-
-
+    if (messageCloseBtn !== null) {
+        messageCloseBtn.addEventListener("click", () => {
+            messageBanner.style.display = "none";
+        })
+    }
 
 </script>
 {% endblock %}
