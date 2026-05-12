@@ -166,17 +166,10 @@
                         f.parentNode.insertBefore(j, f);
                     })(window, document, 'script', 'dataLayer', 'GTM-5NQGRQN');
             }
-
-            // Setup a queue for data layer events that happen before GTM is loaded for deferred datalayer js to work
-            window.dataLayerQueue = window.dataLayerQueue || [];
-
-            window.pushToDataLayer = function(payload) {
-                window.dataLayerQueue.push(payload);
-            };
         </script>
         {# End Google Tag Manager #}
-        <script src="/assets/scripts/dataLayer.js?v=2.1" defer></script>
-        <script src="/assets/scripts/csat-survey.js?v=2.2" defer></script>
+        <script src="/assets/scripts/dataLayer.js?v=2.1"></script>
+        <script src="/assets/scripts/csat-survey.js?v=2.2"></script>
 
     {% endblock %}
 </head>
@@ -241,19 +234,7 @@
     </div>
 </div>
 
-    <script nonce="{{ app.request.attributes.get('_csp_nonce') }}">
-        (function() {
-            var hasSeenCookie = window.readCookie('seen_cookie_message') !== null;
-            var hasResetCookie2 = window.readCookie('cookies_reset_2') !== null;
-            var isSettingsPage = window.location.href.indexOf("cookie-settings") !== -1;
-
-            if ((!hasSeenCookie || (hasSeenCookie && !hasResetCookie2)) && !isSettingsPage) {
-                document.getElementById('cookie-consent-container').style.display = 'block';
-            }
-        })();
-    </script>
-
-<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.6" defer></script>
+<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.6"></script>
 
 {% block header %}
     <div id="skiplink-container">
@@ -521,7 +502,7 @@ items.forEach(function (li) {
 
 
 </script>
-<script type="text/javascript" src="https://api.useberry.com/integrations/liveUrl/scripts/useberryScript.js" defer></script>
+<script type="text/javascript" src="https://api.useberry.com/integrations/liveUrl/scripts/useberryScript.js"></script>
 
 <script type="module" src="/assets/scripts/all.js?v=2.3"></script>
 <script type="module" nonce="{{ app.request.attributes.get('_csp_nonce') }}">
