@@ -80,17 +80,8 @@
 {% endblock %}
 
 {% block body %}
-
-    {# required wrapper 1 #}
     <div class="--govuk-width-container">
-
-        {# If your design requires them, you should place components such as breadcrumbs, back link and phase banner inside this wrapper so that they sit directly underneath the header. #}
-
-
-        {# required wrapper 2 #}
         <main id="main-content" class="govuk-main-wrapper govuk-home-main-wrapper ccs-width-container">
-
-
             <div class="apollo-island homepage-apollo-island">
                 {% if homepageContent %}
                     <div class="govuk-grid-column-full homepage-card-container">
@@ -245,131 +236,104 @@
                 {% endif %}
             </div>
             
-                <div class="govuk-full-width-container">
-                    <div class="homepage-lower-components-container">
-                        <div class="govuk-grid-column-full homepage-news-list">
+            <div class="homepage-lower-components-container">
+                <div class="homepage-news-list">
 
-                            <h2 class="govuk-heading-m">Latest news</h2>
+                    <h2 class="govuk-heading-m">Latest news</h2>
 
-                            <ol class="featured-news news-listing homepage-news-listing">
-                                {% for news_item in news %}
-                                    {% if loop.index <= 4 %}
-                                        <li class="feature-news__item homepage-news-listing-item">
-                                            {% if news_item.featuredImage %}
-                                                <picture>
-                                                    <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link" tabindex="-1">
+                    <ol class="featured-news news-listing">
+                        {% for news_item in news %}
+                            <li class="feature-news__item news-listing__item">
+                                {% if news_item.featuredImage %}
+                                    <picture>
+                                        <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" aria-hidden="true" class="news-listing__item__image-link" tabindex="-1">
 
-                                                        <!--[if IE 9]>
-                                                        <video style="display: none;>
-                                                                                        <![endif]-->
-                                                        {% if news_item.featuredImage.byName('news-size-s') %}
-                                                            <source media="(max-width: 320px)" srcset="{{ news_item.featuredImage.byName('news-size-s') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-s') }}">
-                                                        {% endif %}
-
-                                                        {% if news_item.featuredImage.byName('news-size-m') %}
-                                                            <source media="(max-width: 768px)" srcset="{{ news_item.featuredImage.byName('news-size-m') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-m') }}">
-                                                        {% endif %}
-
-                                                        {% if news_item.featuredImage.byName('news-size-l') %}
-                                                            <source media="(max-width: 1280px)" srcset="{{ news_item.featuredImage.byName('news-size-l') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-l') }}">
-                                                        {% endif %}
-                                                        <!--[if IE 9]></video><![endif]-->
-                                                        <!-- Fallback -->
-                                                        {% if news_item.featuredImage.byName('news-size-s') %}
-                                                            <img src="{{ news_item.featuredImage.byName('news-size-s') }}" {{ news_item.featuredImage.alt is defined and news_item.featuredImage.alt is not empty ? "alt=" ~ news_item.featuredImage.alt : "alt='' role='presentation'" }} aria-hidden="true" tabindex="-1" width="640" height="427">
-                                                        {% else %}
-                                                            <img src="{{ news_item.featuredImage.byName('full') }}" {{ news_item.featuredImage.alt is defined and news_item.featuredImage.alt is not empty ? "alt=" ~ news_item.featuredImage.alt : "alt='' role='presentation'" }} aria-hidden="true" tabindex="-1" width="640" height="427">
-                                                        {% endif %}
-
-                                                    </a>
-                                                </picture>
+                                            <!--[if IE 9]>
+                                            <video style="display: none;>
+                                                                            <![endif]-->
+                                            {% if news_item.featuredImage.byName('news-size-s') %}
+                                                <source media="(max-width: 320px)" srcset="{{ news_item.featuredImage.byName('news-size-s') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-s') }}">
                                             {% endif %}
 
-                                            <div class="feature-news__item__details news-listing__item__caption home-news-item-truncate">
-                                                <div class="news-listing-meta">
-                                                    {% if news_item.taxonomies.categories  %}
-                                                        {% for category in news_item.taxonomies.categories %}
-                                                            {{ category.name|raw }}{% if loop.index < news_item.taxonomies.categories |length %}, {% endif %}
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                    | {{ news_item.dateModified.format('j F Y') }}
-                                                </div>
-                                                <h2 class="news-listing-title homepage-news-title-truncate">
-                                                    <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" title="{{ news_item.title|raw }}">{{ news_item.title|raw }}</a>
-                                                </h2>
+                                            {% if news_item.featuredImage.byName('news-size-m') %}
+                                                <source media="(max-width: 768px)" srcset="{{ news_item.featuredImage.byName('news-size-m') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-m') }}">
+                                            {% endif %}
 
-                                                {% if news_item.content.post_lead_text %}
-                                                    <p class="news-listing-summary homepage-truncate-overflow">
-                                                        {{ news_item.content.post_lead_text|raw }}
-                                                    </p>
-                                                {% endif %}
-                                            </div>
-                                        </li>
+                                            {% if news_item.featuredImage.byName('news-size-l') %}
+                                                <source media="(max-width: 1280px)" srcset="{{ news_item.featuredImage.byName('news-size-l') }}" data-srcset="{{ news_item.featuredImage.byName('news-size-l') }}">
+                                            {% endif %}
+                                            <!--[if IE 9]></video><![endif]-->
+                                            <!-- Fallback -->
+                                            {% if news_item.featuredImage.byName('news-size-m') %}
+                                                <img src="{{ news_item.featuredImage.byName('news-size-m') }}" {{ news_item.featuredImage.alt is defined and news_item.featuredImage.alt is not empty ? "alt=" ~ news_item.featuredImage.alt : "alt='' role='presentation'" }} aria-hidden="true" tabindex="-1">
+                                            {% else %}
+                                                <img src="{{ news_item.featuredImage.byName('full') }}" {{ news_item.featuredImage.alt is defined and news_item.featuredImage.alt is not empty ? "alt=" ~ news_item.featuredImage.alt : "alt='' role='presentation'" }} aria-hidden="true" tabindex="-1">
+                                            {% endif %}
+
+                                        </a>
+                                    </picture>
+                                {% endif %}
+
+                                <div class="feature-news__item__details news-listing__item__caption">
+                                    <div class="news-listing-meta">
+                                        {% if news_item.taxonomies.categories %}
+                                            {% for category in news_item.taxonomies.categories %}
+                                                {{ category.name|raw }}{% if loop.index < news_item.taxonomies.categories|length %}, {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                        | {{ news_item.dateModified.format('j F Y') }}
+                                    </div>
+                                    <h2 class="news-listing-title">
+                                        <a href="{{ path('news_page', {'slug': news_item.urlSlug}) }}" title="{{ news_item.title|raw }}">{{ news_item.title|raw }}</a>
+                                    </h2>
+
+                                    {% if news_item.content.post_lead_text %}
+                                        <p class="news-listing-summary">
+                                            {{ news_item.content.post_lead_text|raw }}
+                                        </p>
                                     {% endif %}
-                                {% endfor %}
-                            </ol>
-                        </div>
-                    </div>
-
-                    <p class="homepage-browse-all"><a href="/news">Browse all news articles</a></p>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ol>
 
                 </div>
-                 <div class="glossary-box-container">
-                 <div class="glossary-box-background"></div>
-                    <div class="glossary-box">
-                            <h3 class="govuk-heading-m">Glossary</h3>
-                            <p>We understand procurement can be confusing. Use our glossary to learn about common public procurement terms and abbreviations.</p>
-                            <p><a href="/glossary">Read the glossary</a></p>
-                    </div>
+
+            </div>
+
+            <p class="homepage-browse-all"><a href="/news">Browse all news articles</a></p>
+
+
+
+            <div class="glossary-box-container">
+                <div class="glossary-box-background"></div>
+                <div class="glossary-box">
+                        <h3 class="govuk-heading-m">Glossary</h3>
+                        <p>We understand procurement can be confusing. Use our glossary to learn about common public procurement terms and abbreviations.</p>
+                        <p><a href="/glossary">Read the glossary</a></p>
                 </div>
+            </div>
         </main>
-       
     </div>
 
-<script>
-pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'homepage'});
+    <script>
+        pushToDataLayer({'event': 'page_view', 'page_referrer': window.location.href, 'page_type': 'homepage'});
 
-var newsItems = document.querySelectorAll('.home-news-item-truncate');
+        var headings = document.querySelectorAll(".news-listing-title a");
+        headings.forEach(function(heading) {
+            if (heading.innerText.length > 75 ) {
+                heading.innerText = heading.innerText.substring(0, 75) + '...';
+            }
+        });
 
-newsItems.forEach(function (item) {
-    var heading = item.querySelector(".homepage-news-title-truncate a");
-    var summary = item.querySelector(".homepage-truncate-overflow");
+        // close message banner 
+        var messageBanner = document.querySelector('.message-banner');
+        var messageCloseBtn = document.querySelector('.message-banner-close-button');
 
-    truncatedContent = truncate(heading.innerText, summary.innerText);
-
-    heading.innerText = truncatedContent["truncatedHeading"];
-    summary.innerText = truncatedContent["truncatedSummary"];
-})
-
-function truncate(heading, summary) {
-    var newsContent = {
-        "truncatedHeading": heading,
-        "truncatedSummary": summary
-    };
-
-   if (heading.length > 44 ) {
-        newsContent["truncatedHeading"] = heading.substring(0, 44) + '...';
-   } 
-
-   if (summary.length > 5) {
-      newsContent["truncatedSummary"] = summary.substring(0, 92) + '...';
-   }
-
-   return newsContent;
-    
-};
-
-// close message banner 
-var messageBanner = document.querySelector('.message-banner');
-var messageCloseBtn = document.querySelector('.message-banner-close-button');
-
-if (messageCloseBtn !== null) {
-    messageCloseBtn.addEventListener("click", () => {
-        messageBanner.style.display = "none";
-    })
-}
-
-
-
-</script>
+        if (messageCloseBtn !== null) {
+            messageCloseBtn.addEventListener("click", () => {
+                messageBanner.style.display = "none";
+            })
+        }
+    </script>
 {% endblock %}
