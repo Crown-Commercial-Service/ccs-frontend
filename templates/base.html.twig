@@ -167,15 +167,9 @@
                     })(window, document, 'script', 'dataLayer', 'GTM-5NQGRQN');
             }
 
-            // Setup a queue for data layer events that happen before GTM is loaded for deferred datalayer js to work
-            window.dataLayerQueue = window.dataLayerQueue || [];
-
-            window.pushToDataLayer = function(payload) {
-                window.dataLayerQueue.push(payload);
-            };
         </script>
         {# End Google Tag Manager #}
-        <script src="/assets/scripts/dataLayer.js?v=2.1" defer></script>
+        <script src="/assets/scripts/dataLayer.js?v=2.1"></script>
         <script src="/assets/scripts/csat-survey.js?v=2.2" defer></script>
 
     {% endblock %}
