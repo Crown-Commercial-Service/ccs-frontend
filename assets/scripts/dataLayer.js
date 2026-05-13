@@ -224,16 +224,3 @@ function contact(){
 function back(){
     CnzPushDataLayer('back', 'Back', null, null);
 }
-
-window.pushToDataLayer = pushToDataLayer;
-
-// 2. Process anything that was clicked/triggered while this script was downloading
-if (window.dataLayerQueue && window.dataLayerQueue.length > 0) {
-    window.dataLayerQueue.forEach(function(payload) {
-        // Run each saved event through your real pushToDataLayer function
-        pushToDataLayer(payload); 
-    });
-    
-    // 3. Empty the bucket so events don't fire twice
-    window.dataLayerQueue = []; 
-}
