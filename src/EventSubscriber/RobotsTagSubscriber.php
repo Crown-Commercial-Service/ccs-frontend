@@ -30,7 +30,6 @@ class RobotsTagSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        // Listen to the response event with default priority
         return [
             KernelEvents::RESPONSE => 'onKernelResponse',
         ];
