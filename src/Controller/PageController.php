@@ -66,7 +66,7 @@ class PageController extends AbstractController
         $this->redirectionApi->setContentType('redirections');
 
         $this->glossaryApi = new RestData(
-            getenv('APP_API_BASE_URL'),
+            $_SERVER['APP_API_BASE_URL'],
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->glossaryApi->setContentType('glossary');
@@ -93,7 +93,7 @@ class PageController extends AbstractController
         $news = $this->api->listPages(1, ['per_page' => 3]);
 
         // request to homepage components
-        $homepageCompUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/homepage-components/0';
+        $homepageCompUrl = $_SERVER['APP_API_BASE_URL'] . 'ccs/v1/homepage-components/0';
         $messageBanner = ControllerHelper::getHomeMessageBanner();
         // dd($messageBanner);
         $client = HttpClient::create();
@@ -160,7 +160,7 @@ class PageController extends AbstractController
         }
 
         // request to option cards api
-        $optionCardsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/option-cards/0';
+        $optionCardsUrl = $_SERVER['APP_API_BASE_URL'] . 'ccs/v1/option-cards/0';
 
         $response = $this->client->request(
             'GET',

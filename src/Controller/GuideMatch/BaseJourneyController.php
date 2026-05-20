@@ -321,7 +321,7 @@ abstract class BaseJourneyController extends AbstractController
     protected function getAgreement(string $rmNumber): array
     {
         $api = new RestData(
-            getenv('APP_API_BASE_URL'),
+            $_SERVER['APP_API_BASE_URL'],
             new ContentModel(__DIR__ . '/../../../config/content/content-model.yaml')
         );
         $api->setContentType('frameworks');

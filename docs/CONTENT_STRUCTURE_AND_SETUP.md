@@ -81,7 +81,7 @@ In the constructor of each controller, you define the relevant content type for 
 
 ```
 $this->api = new Wordpress(
-    getenv('APP_API_BASE_URL'),
+    $_SERVER['APP_API_BASE_URL'] ?? '',
     new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
 );
 $this->api->setContentType('events');

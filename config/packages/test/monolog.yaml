@@ -8,7 +8,7 @@ monolog:
             path: "%kernel.logs_dir%/symfony.log"
             level: error
             channels: ["!event"]
-        rollbar:
-            type: service
-            id: Rollbar\Monolog\Handler\RollbarHandler
+        # rollbar:
+        #     type: service
+        #     id: Rollbar\Monolog\Handler\RollbarHandler
 

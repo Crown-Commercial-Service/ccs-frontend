@@ -23,9 +23,6 @@
     "monolog/monolog": {
         "version": "1.24.0"
     },
-    "n98/junit-xml": {
-        "version": "1.0.0"
-    },
     "overtrue/phplint": {
         "version": "dev-master"
     },
@@ -81,9 +78,6 @@
     },
     "rollbar/rollbar": {
         "version": "v1.8.1"
-    },
-    "rollbar/rollbar-php-symfony-bundle": {
-        "version": "v3.1.2"
     },
     "squizlabs/php_codesniffer": {
         "version": "3.0",
@@ -226,9 +220,6 @@
     "symfony/polyfill-php72": {
         "version": "v1.10.0"
     },
-    "symfony/polyfill-php73": {
-        "version": "v1.13.1"
-    },
     "symfony/process": {
         "version": "v4.2.2"
     },
@@ -243,9 +234,6 @@
             "version": "4.2",
             "ref": "5374e24d508ba8fd6ba9eb15170255fdb778316a"
         }
-    },
-    "symfony/serializer": {
-        "version": "v4.4.15"
     },
     "symfony/service-contracts": {
         "version": "v2.0.1"

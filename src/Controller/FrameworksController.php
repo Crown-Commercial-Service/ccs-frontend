@@ -39,7 +39,7 @@ class FrameworksController extends AbstractController
     public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new RestData(
-            getenv('APP_API_BASE_URL'),
+            $_SERVER['APP_API_BASE_URL'],
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('frameworks');
@@ -48,7 +48,7 @@ class FrameworksController extends AbstractController
         $this->api->setCacheLifetime(900);
 
         $this->searchApi = new RestData(
-            getenv('SEARCH_API_BASE_URL'),
+            $_SERVER['SEARCH_API_BASE_URL'],
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
 
@@ -151,7 +151,7 @@ class FrameworksController extends AbstractController
         $checkedTypeArray           = ControllerHelper::getArrayFromStringForParam($request, "type", "allType");
 
         //if allPillarAndCategory is checked || all Pillars are checked || all Categories are checked
-        if ($request->query->get("allPillarAndCategory", false) || count((array) $request->query->get("pillar", [])) == FrameworkCategories::getAllPillarSize() || count((array) $request->query->get("category", [])) == FrameworkCategories::getAllCategorySize()) {
+        if ($request->query->get("allPillarAndCategory", false) || count((array) ($request->query->all()['pillar'] ?? [])) == FrameworkCategories::getAllPillarSize() || count((array) ($request->query->all()['category'] ?? [])) == FrameworkCategories::getAllCategorySize()) {
             $checkedPillarArray   = [];
             $checkedCategoryArray = [];
         } else {
@@ -186,8 +186,8 @@ class FrameworksController extends AbstractController
         }
 
         $data = [
-            'api_base_url'      => getenv('SEARCH_API_BASE_URL'),
-            'app_base_url'      => getenv('APP_BASE_URL'),
+            'api_base_url'      => $_SERVER['SEARCH_API_BASE_URL'],
+            'app_base_url'      => $_SERVER['APP_BASE_URL'],
             'pageNumber'        => $page,
             'filters'           => $options,
             'pagination'        => $results->getPagination(),
@@ -251,8 +251,8 @@ class FrameworksController extends AbstractController
         $checkedTypes = ControllerHelper::getArrayFromStringForParam($request, "type", "allAgreementType");
 
         $data = [
-            'api_base_url'                  => getenv('SEARCH_API_BASE_URL'),
-            'app_base_url'                  => getenv('APP_BASE_URL'),
+            'api_base_url'                  => $_SERVER['SEARCH_API_BASE_URL'],
+            'app_base_url'                  => $_SERVER['APP_BASE_URL'],
             'statuses'                      => $checkedStatuses,
             'filters'                       => $options,
             'results'                       => $results,
@@ -281,7 +281,7 @@ class FrameworksController extends AbstractController
 
     private function getUpcomingDealsInfo()
     {
-        $url = getenv('APP_API_BASE_URL') . 'ccs/v1/upcoming-deals-page/0';
+        $url = $_SERVER['APP_API_BASE_URL'] . 'ccs/v1/upcoming-deals-page/0';
 
         $client = HttpClient::create();
         $response = $client->request(

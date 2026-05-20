@@ -24,7 +24,7 @@ class ApiController extends AbstractController
      */
     public function getCmsUrl(string $path = ''): string
     {
-        $url = $_ENV['APP_CMS_BASE_URL'];
+        $url = $_SERVER['APP_CMS_BASE_URL'];
         if (empty($url)) {
             throw new ApiException('Cannot determine CMS API URL');
         }
@@ -325,32 +325,32 @@ class ApiController extends AbstractController
 
         // campaign codes and form handler url
         $codes = [
-            'contact'   => getenv('PARDOT_EMAIL_FORM_HANDLER_URL'),
-            'people'    => getenv('PARDOT_EMAIL_FORM_HANDLER_PEOPLE_URL'),
-            'corpsol'   => getenv('PARDOT_EMAIL_FORM_HANDLER_CORPORATE_URL'),
-            'buildings' => getenv('PARDOT_EMAIL_FORM_HANDLER_BUILDINGS_URL'),
-            'tech'      => getenv('PARDOT_EMAIL_FORM_HANDLER_TECH_URL'),
-            'guide'     => getenv('PARDOT_EMAIL_FORM_HANDLER_GUIDE_URL'),
-            'cnz'       => getenv('PARDOT_EMAIL_FORM_HANDLER_CNZ_URL'),
-            'digitransformation' => getenv('PARDOT_EMAIL_FORM_HANDLER_DIGITRANS_URL'),
-            'digilg'    => getenv('PARDOT_EMAIL_FORM_HANDLER_DIGILG_URL'),
-            'diginhs'   => getenv('PARDOT_EMAIL_FORM_HANDLER_DIGINHS_URL'),
-            'estates'   => getenv('PARDOT_EMAIL_FORM_HANDLER_ESTATES_URL'),
-            'covidrecovery'     => getenv('PARDOT_EMAIL_FORM_HANDLER_COVIDRECOVERY_URL'),
-            'agg'       => getenv('PARDOT_EMAIL_FORM_HANDLER_AGG_URL'),
-            'event'     => getenv('PARDOT_EMAIL_FORM_HANDLER_EVENT_URL'),
-            'construction'     => getenv('PARDOT_EMAIL_FORM_HANDLER_CONSTRUCTION_URL'),
-            'fleet'     => getenv('PARDOT_EMAIL_FORM_HANDLER_FLEET_URL'),
-            'tepas'     => getenv('PARDOT_EMAIL_FORM_HANDLER_TEPAS_URL'),
-            'nhswa'     => getenv('PARDOT_EMAIL_FORM_HANDLER_NHSWA_URL'),
-            'mou'     => getenv('PARDOT_EMAIL_FORM_HANDLER_MOU_URL'),
-            'cyber'     => getenv('PARDOT_EMAIL_FORM_HANDLER_CYBER_URL'),
-            'newsletter'     => getenv('PARDOT_EMAIL_FORM_HANDLER_NEWSLETTER_URL'),
-            'lg'     => getenv('PARDOT_EMAIL_FORM_HANDLER_LG_URL'),
-            'nhs'     => getenv('PARDOT_EMAIL_FORM_HANDLER_NHS_URL'),
-            'whitepaper' => getenv('PARDOT_EMAIL_FORM_HANDLER_WHITEPAPER_URL'),
-            'webinar' => getenv('PARDOT_EMAIL_FORM_HANDLER_WEBINAR_URL'),
-            'digitalbrochure' => getenv('PARDOT_EMAIL_FORM_HANDLER_DB_URL'),
+            'contact'   => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_URL'],
+            'people'    => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_PEOPLE_URL'],
+            'corpsol'   => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_CORPORATE_URL'],
+            'buildings' => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_BUILDINGS_URL'],
+            'tech'      => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_TECH_URL'],
+            'guide'     => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_GUIDE_URL'],
+            'cnz'       => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_CNZ_URL'],
+            'digitransformation' => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_DIGITRANS_URL'],
+            'digilg'    => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_DIGILG_URL'],
+            'diginhs'   => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_DIGINHS_URL'],
+            'estates'   => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_ESTATES_URL'],
+            'covidrecovery'     => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_COVIDRECOVERY_URL'],
+            'agg'       => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_AGG_URL'],
+            'event'     => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_EVENT_URL'],
+            'construction'     => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_CONSTRUCTION_URL'],
+            'fleet'     => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_FLEET_URL'],
+            'tepas'     => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_TEPAS_URL'],
+            'nhswa'     => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_NHSWA_URL'],
+            'mou'     => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_MOU_URL'],
+            'cyber'     => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_CYBER_URL'],
+            'newsletter'     => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_NEWSLETTER_URL'],
+            'lg'     => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_LG_URL'],
+            'nhs'     => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_NHS_URL'],
+            'whitepaper' => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_WHITEPAPER_URL'],
+            'webinar' => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_WEBINAR_URL'],
+            'digitalbrochure' => $_SERVER['PARDOT_EMAIL_FORM_HANDLER_DB_URL'],
         ];
 
         $pardotFormUrl = null;

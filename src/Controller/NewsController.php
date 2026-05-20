@@ -30,7 +30,7 @@ class NewsController extends AbstractController
     public function __construct(CacheItemPoolInterface $cache)
     {
         $this->api = new Wordpress(
-            getenv('APP_API_BASE_URL'),
+            $_SERVER['APP_API_BASE_URL'],
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('news');
@@ -89,8 +89,8 @@ class NewsController extends AbstractController
 
         return $this->render('news/list.html.twig', [
             'url'                       => sprintf('/news/page/%s', $page),
-            'api_base_url'              => getenv('SEARCH_API_BASE_URL'),
-            'app_base_url'              => getenv('APP_BASE_URL'),
+            'api_base_url'              => $_SERVER['SEARCH_API_BASE_URL'],
+            'app_base_url'              => $_SERVER['APP_BASE_URL'],
             'pageNumber'                => $page,
             'categoriesFilters'         => $this->api->getAllTerms('categories'),
             'sectorsFilters'            => $this->api->getAllTerms('sectors'),
@@ -110,7 +110,7 @@ class NewsController extends AbstractController
 
         try {
             $page = $this->api->getPageByUrl($request->getRequestUri());
-            $response = HttpClient::create()->request('GET', getenv('APP_API_BASE_URL') . 'wp/v2/posts/' . $page->getId());
+            $response = HttpClient::create()->request('GET', $_SERVER['APP_API_BASE_URL'] . 'wp/v2/posts/' . $page->getId());
             if ($response->getStatusCode() == 200) {
                 $acfContent = (array) json_decode($response->getContent())->acf;
                 $authorText = array_key_exists('author_name_text', (array)$acfContent) ? $acfContent['author_name_text'] : null;
@@ -131,7 +131,7 @@ class NewsController extends AbstractController
             'page'          => $page,
             'authorText'    => $authorText,
             'authorImage'   => $authorImage,
-            'site_base_url' => getenv('APP_BASE_URL'),
+            'site_base_url' => $_SERVER['APP_BASE_URL'],
             'content_group' => $content_group ?? null,
             'display_banner' => $displayBanner,
         ]);
