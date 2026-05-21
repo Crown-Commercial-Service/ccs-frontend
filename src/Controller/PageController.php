@@ -90,7 +90,7 @@ class PageController extends AbstractController
         $flag = filter_var($request->query->get('feature'), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $this->api->setContentType('news');
-        $news = $this->api->listPages(1, ['limit' => 3]);
+        $news = $this->api->listPages(1, ['per_page' => 3]);
 
         // request to homepage components
         $homepageCompUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/homepage-components/0';

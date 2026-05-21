@@ -31,6 +31,8 @@
 
 
 .card-list__item {
+    display: flex;
+    flex-direction: column;
 
     @include govuk-media-query($from: tablet) {
 
@@ -172,6 +174,9 @@
 
 .card-list__item__wrapper {
 
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
     background: white;
     border: 1px solid #979797;
     border-width: 0 1px 1px 1px;

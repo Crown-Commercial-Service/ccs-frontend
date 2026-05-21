@@ -64,7 +64,7 @@
     </style>
 
     {# To bust cache, you bump the version up #}
-    {% set cssVersion = '2.06' %}
+    {% set cssVersion = '2.07' %}
 
     {% if app.environment == "prod" %}
          <link rel="preload" href={{"/assets/styles/styles.min.css?v=#{cssVersion}"}} as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -166,10 +166,11 @@
                         f.parentNode.insertBefore(j, f);
                     })(window, document, 'script', 'dataLayer', 'GTM-5NQGRQN');
             }
+
         </script>
         {# End Google Tag Manager #}
         <script src="/assets/scripts/dataLayer.js?v=2.1"></script>
-        <script src="/assets/scripts/csat-survey.js?v=2.2"></script>
+        <script src="/assets/scripts/csat-survey.js?v=2.2" defer></script>
 
     {% endblock %}
 </head>
@@ -234,7 +235,19 @@
     </div>
 </div>
 
-<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.6"></script>
+    <script nonce="{{ app.request.attributes.get('_csp_nonce') }}">
+        (function() {
+            var hasSeenCookie = window.readCookie('seen_cookie_message') !== null;
+            var hasResetCookie2 = window.readCookie('cookies_reset_2') !== null;
+            var isSettingsPage = window.location.href.indexOf("cookie-settings") !== -1;
+
+            if ((!hasSeenCookie || (hasSeenCookie && !hasResetCookie2)) && !isSettingsPage) {
+                document.getElementById('cookie-consent-container').style.display = 'block';
+            }
+        })();
+    </script>
+
+<script src="/assets/scripts/libraries/cookies-opt-in.js?v=3.0.6" defer></script>
 
 {% block header %}
     <div id="skiplink-container">
@@ -502,7 +515,7 @@ items.forEach(function (li) {
 
 
 </script>
-<script type="text/javascript" src="https://api.useberry.com/integrations/liveUrl/scripts/useberryScript.js"></script>
+<script type="text/javascript" src="https://api.useberry.com/integrations/liveUrl/scripts/useberryScript.js" defer></script>
 
 <script type="module" src="/assets/scripts/all.js?v=2.3"></script>
 <script type="module" nonce="{{ app.request.attributes.get('_csp_nonce') }}">
