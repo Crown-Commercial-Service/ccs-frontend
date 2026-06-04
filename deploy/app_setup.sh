@@ -46,7 +46,7 @@ echo "> Preparing new web deployment files..."
 echo "> Setting web deployment permissions..."
 (sudo chown -R ec2-user:ec2-user /var/www &&
     sudo chown -R apache:ec2-user "$WEB_CURRENT/var" &&
-    sudo chmod -R og+w "$WEB_CURRENT/var" &&
+    sudo chmod -R g+w "$WEB_CURRENT/var" &&
     sudo chmod 640 "$WEB_CURRENT/.env" &&
     sudo chgrp apache "$WEB_CURRENT/.env"
 ) || rollback
