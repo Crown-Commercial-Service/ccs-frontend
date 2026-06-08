@@ -1,4 +1,5 @@
 const sharp = require('sharp');
+const { optimize } = require('svgo'); 
 const fs = require('fs');
 const path = require('path');
 
@@ -11,11 +12,28 @@ if (!fs.existsSync(outputDir)) {
 
 fs.readdirSync(inputDir).forEach(file => {
   const ext = path.extname(file).toLowerCase();
+  const inputPath = path.join(inputDir, file);
+  const outputPath = path.join(outputDir, file);
   
+  // 1. Optimize Raster Images
   if (['.jpg', '.jpeg', '.png', '.webp'].includes(ext)) {
-    sharp(path.join(inputDir, file))
-      .toFile(path.join(outputDir, file))
+    sharp(inputPath)
+      .toFile(outputPath)
       .then(() => console.log(`✅ Optimized ${file}`))
       .catch(err => console.error(`❌ Error on ${file}:`, err));
+  } 
+  // 2. Minify and Transfer SVGs
+  else if (ext === '.svg') {
+    try {
+      const svgString = fs.readFileSync(inputPath, 'utf8');
+      const result = optimize(svgString, {
+        path: inputPath,
+        multipass: true
+      });
+      fs.writeFileSync(outputPath, result.data);
+      console.log(`✨ Minified & Transferred SVG: ${file}`);
+    } catch (err) {
+      console.error(`❌ Error optimizing SVG ${file}:`, err);
+    }
   }
 });
