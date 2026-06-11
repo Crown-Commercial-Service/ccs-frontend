@@ -2,7 +2,6 @@
 $color-text: #0e0e0e;
 $color-hint: #666;
 $color-border: #ccc;
-$color-button-bg: #E1E1E1;
 
 // Breakpoints for the radio grid
 $bp-mobile-max: 718px;
@@ -44,9 +43,6 @@ $bp-desktop-max: 1024px;
             border-color: $color-text;
             box-shadow: 0 0 0 2px $color-text;
         }
-    }
-    .govuk-button {
-        background-color: $color-button-bg;
     }
     
     // Default radio grid (large desktop)

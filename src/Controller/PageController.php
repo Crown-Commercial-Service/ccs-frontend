@@ -90,7 +90,7 @@ class PageController extends AbstractController
         $flag = filter_var($request->query->get('feature'), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $this->api->setContentType('news');
-        $news = $this->api->listPages(1, ['limit' => 3]);
+        $news = $this->api->listPages(1, ['per_page' => 3]);
 
         // request to homepage components
         $homepageCompUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/homepage-components/0';
@@ -492,9 +492,9 @@ class PageController extends AbstractController
 
         // Update cookies with expiry to 1 year
         if ($cookies->has('cookies_reset')) {
-            $cookiePreferences = new Cookie('cookie_preferences', '{"essentials":true,"usage":true,"marketing":true, "glassbox": true}', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
-            $seenCookieMessage = new Cookie('seen_cookie_message', 'true', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
-            $cookieReset = new Cookie('cookies_reset', 'true', strtotime('+1 year'), '/', '.crowncommercial.gov.uk', false, false);
+            $cookiePreferences = new Cookie('cookie_preferences', '{"essentials":true,"usage":true,"marketing":true, "glassbox": true}', strtotime('+1 year'), '/', '.gca.gov.uk', false, false);
+            $seenCookieMessage = new Cookie('seen_cookie_message', 'true', strtotime('+1 year'), '/', '.gca.gov.uk', false, false);
+            $cookieReset = new Cookie('cookies_reset', 'true', strtotime('+1 year'), '/', '.gca.gov.uk', false, false);
 
             $response = new Response();
             $response->headers->setCookie($cookiePreferences);
