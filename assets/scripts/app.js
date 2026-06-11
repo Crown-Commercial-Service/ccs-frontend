@@ -130,34 +130,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         } // end of exists
 
-    // make cards same height in list
-    var cardLists = document.querySelectorAll("ul.card-list");
-    var maxHeight = 0;
-    var windowWidth = window.innerWidth;
-
-    if (cardLists != null) {
-        cardLists.forEach(function (cardList) {
-          var cards = cardList.querySelectorAll("li.card-list__item");
-
-            if (cards.length > 1) {
-                cards.forEach(function (card) {
-                    var cardHeight = card.querySelector(".card-list__item__wrapper").offsetHeight;
-                    if (cardHeight > maxHeight) {
-                        maxHeight = cardHeight;
-                    }
-                });
-
-                cards.forEach(function (card) {
-                    card.querySelector(".card-list__item__wrapper").style.height = maxHeight - 50 + "px";
-
-                    if (windowWidth < 600) {
-                        card.querySelector(".card-list__item__wrapper").style.height = "auto";
-                    }
-                })
-            }
-        })
-    }
-
     /**
      * Globally enable showing of blocks if js is enabled.
      * Apply class ".hideWithoutJS govuk-visually-hidden" to your parent block 

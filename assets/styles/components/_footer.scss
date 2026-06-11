@@ -74,6 +74,11 @@
         margin-right: 8px;
 }
 
+@media (max-width: 717px) {
+    ul.social-links {
+        font-size: 24px;
+    }
+}
 
 .apollo-island--emphasised + .footer-global {
 

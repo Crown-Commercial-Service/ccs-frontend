@@ -4,6 +4,15 @@
     <p>You might not need all the contractual documents to buy the products or services from this agreement.</p>
 </div>
 
+{% if framework.content.document_updates and framework.content.document_updates != "" %}
+            <h3 class="govuk-heading-s">
+                Updates
+            </h3>
+            <div class="wysiwyg-content">
+                {{ framework.content.document_updates | raw }}
+            </div>
+{% endif %}
+
 {% set index = 0 %}
 <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
     {% if framework.content.customer_guide and framework.content.customer_guide != "" %}

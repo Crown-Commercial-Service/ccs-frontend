@@ -51,7 +51,7 @@ function accordionButtonClick(accordionButton){
 
 //this is only ran on show framework and show supplier page
 function frameworkAndSupplierPage() {
-    const externalLinks = Array.from(document.querySelectorAll('main a')).filter(link => !(link.href.includes('crowncommercial') || link.href.includes('tel')) );
+    const externalLinks = Array.from(document.querySelectorAll('main a')).filter(link => !(link.href.includes('gca') || link.href.includes('tel')) );
 
     externalLinks.forEach(link => {
         link.addEventListener('click', () => {
@@ -86,34 +86,20 @@ function onPageFeedback(feedbackResponse) {
     let feedbackCheckboxes;
     let feedbackChecked = [];
 
-    if (feedbackResponse === 'yes') {
-        feedbackCheckboxes = document.querySelectorAll("[name='useful']");
-        feedbackCheckboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-                feedbackChecked.push(checkbox.value);
-            }
-        })
+    const useful_or_not = feedbackResponse === 'yes' ? 'useful' : 'not-useful';
+    feedbackCheckboxes = document.querySelectorAll(`[name='${useful_or_not}']`);
 
-        pushToDataLayer({
-            'event': 'feedback',
-            'feedback': feedbackChecked,
-            'feedback_type': 'useful'
-        });
+    feedbackCheckboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            feedbackChecked.push(checkbox.value);
+        }
+    })
 
-    } else {
-        feedbackCheckboxes = document.querySelectorAll("[name='not-useful']");
-        feedbackCheckboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-                feedbackChecked.push(checkbox.value);
-            }
-        })
-
-        pushToDataLayer({
-            'event': 'feedback',
-            'feedback': feedbackChecked,
-            'feedback_type': 'not_useful'
-        });
-    }
+    pushToDataLayer({
+        'event': 'feedback',
+        'feedback': feedbackChecked,
+        'feedback_type': useful_or_not
+    });
 }
 
 function formStart(formType) {
