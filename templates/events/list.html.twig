@@ -18,7 +18,7 @@
     <div class="govuk-width-container">
         <div class="govuk-phase-banner">{% include '/includes/phase-banner-content.html.twig' %}</div>
 
-        <div class="govuk-breadcrumbs">
+        <div class="govuk-breadcrumbs" role="navigation" aria-label="Breadcrumb">
             <ol class="govuk-breadcrumbs__list">
                 <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="/">Home</a></li>
                 <li class="govuk-breadcrumbs__list-item" aria-current="page">Events</li>
@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <p class="visuallyhidden">This is a page with JS (VUE 3)</p>
+            <p class="visuallyhidden" aria-hidden="true">This is a page with JS (VUE 3)</p>
 
             <div class="govuk-grid-row events-page-listing">
                 <div class="govuk-grid-column-one-quarter">

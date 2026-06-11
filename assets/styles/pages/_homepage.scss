@@ -136,7 +136,7 @@ overflow: hidden;
 
     @include govuk-media-query($from: desktop) {
 
-        padding: govuk-px-to-rem(69) 0 govuk-px-to-rem(93) 0;
+        padding: govuk-px-to-rem(69) 0 govuk-px-to-rem(69) 0;
 
     }
 
@@ -243,6 +243,9 @@ overflow: hidden;
     display: flex;
     flex-wrap: wrap;
     justify-content:space-between;
+    padding-left: govuk-spacing(3);
+    padding-right: govuk-spacing(3);
+    padding-top: govuk-spacing(5);
 }
 
 .homepage-news-list {
@@ -253,24 +256,12 @@ overflow: hidden;
         margin-bottom: 10px;
     }
 
-    .homepage-news-listing {
-        margin-top: -20px;
-    }
 }
 
 .homepage-truncate-overflow {
     margin-bottom: 41px;
 }
 
-
-
-.homepage-news-listing-item {
-    max-width: 356px;
-    border: 1px solid #E7E7E7;
-    -ms-flex: 1 0 auto;
-    float: left;
-    margin-top: 44px;
-}
 
 .glossary-box-container {
     background-color: #E9EDC2;
@@ -451,11 +442,6 @@ overflow: hidden;
         width: 100%;
     }
 
-    .homepage-news-listing-item {
-       max-width: 296px;;
-    }
-
-
 }
 
 // laptop
@@ -517,13 +503,6 @@ overflow: hidden;
         flex-wrap: wrap;
     }
 
-    .homepage-news-listing-item {
-        margin-top: 0;
-        flex: 1 0 auto;
-        height: 100%;
-
-    }
-
     .homepage-news-list {
         padding-left: 0;
         padding-right: 0;
@@ -531,28 +510,6 @@ overflow: hidden;
         .govuk-heading-m {
             margin-top: -45px;
             margin-bottom: 17px;
-        }
-
-        .homepage-news-listing {
-            margin-right: 0;
-            margin-left: 0;
-            justify-content: space-between;
-            margin-top: 0;
-
-            &:before {
-                content: none;
-            }
-
-
-        }
-
-        .homepage-news-listing > li:first-child {
-            margin-left: 0;
-            margin-right: 0;
-        }
-
-        .homepage-news-listing > li:nth-child(2) {
-            margin-right: 0;
         }
     }
 
@@ -587,14 +544,6 @@ overflow: hidden;
 
     .homepage-hero-capsule {
         margin-left: 368px;
-    }
-
-    .homepage-news-listing {
-        height: 100%;
-    }
-
-    .homepage-news-listing-item {
-        max-width: 234px;
     }
 
     .homepage-lower-components-container {
@@ -657,15 +606,6 @@ overflow: hidden;
         padding: .9375rem 1.25rem 2.25rem 1.25rem
     }
 
-    .homepage-news-listing {
-        height: 488px;
-
-        .homepage-news-listing-item {
-            height: 95%;
-            max-width: 297px;
-        }
-    }
-
 }
 
 
@@ -680,11 +620,6 @@ overflow: hidden;
 
     .govuk-hero-margin {
         margin-right: 134px;
-     }
-
-
-    .homepage-news-listing {
-        justify-content: space-between;
     }
     
 }

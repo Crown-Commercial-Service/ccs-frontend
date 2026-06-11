@@ -83,6 +83,8 @@ live_frameworks:
           type: richtext
         expiry_date:
           type: date
+        supplier_website_contact: 
+          type: boolean
         supplier_contact_name:
           type: text
         supplier_contact_email:
