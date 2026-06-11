@@ -132,7 +132,7 @@ var docCookies = {
 
         {
             title: "Cookies that help with our communications and marketing",
-            description: "These cookies may be set by third party websites and do things like measure how you view YouTube videos that are on Goverment Commercial Agency (GCA).",
+            description: "These cookies may be set by third party websites and do things like measure how you view YouTube videos that are on Government Commercial Agency (GCA).",
             cookie_type: "marketing",
             enabled: null,
             adjustable: true,
