@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}News - CCS{% endblock %}
+{% block title %}News - GCA{% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -26,7 +26,7 @@
         
         {% set allDownloadable = [] %}
 
-        <div class="govuk-breadcrumbs">
+        <div class="govuk-breadcrumbs" role="navigation" aria-label="Breadcrumb">
             <ol class="govuk-breadcrumbs__list">
                 <li class="govuk-breadcrumbs__list-item"><a class="govuk-breadcrumbs__link" href="/">Home</a></li>
                 <li class="govuk-breadcrumbs__list-item" aria-current="page">News</li>
@@ -220,6 +220,8 @@
                                                             <img :src="result.imageURL"
                                                                  :alt="result.altText"
                                                                     role="presentation"
+                                                                    width="600" 
+                                                                    height="400"
                                                                     class=""
                                                                     loading="lazy"/>
                                                         </div>

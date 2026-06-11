@@ -46,7 +46,7 @@
 
     display: flex;
     flex-flow: row wrap;
-    align-items: flex-start;
+    align-items: stretch;
     list-style: none;
     margin-top: 0;
     padding: 0;
@@ -179,7 +179,7 @@
 
     @include govuk-media-query($from: tablet) {
 
-        padding: 30px 25px 30px 25px;
+        padding: 30px 25px 0 25px;
 
     }
 
@@ -190,13 +190,6 @@
 
     @include govuk-font(22, $weight: bold);
     margin: 10px 0;
-
-    a {
-
-        text-decoration: none;
-
-    }
-
 }
 
 .news-listing-summary {

@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Strata\Frontend\Exception\NotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Psr\Log\LoggerInterface;
 
 class DownloadableResourceController extends AbstractController
 {
@@ -25,9 +26,8 @@ class DownloadableResourceController extends AbstractController
     protected $api;
     protected $formController;
 
-    public function __construct(CacheItemPoolInterface $cache)
+    public function __construct(CacheItemPoolInterface $cache, FormController $formController)
     {
-
         $this->api = new WordPress(
             getenv('APP_API_BASE_URL'),
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
@@ -36,7 +36,7 @@ class DownloadableResourceController extends AbstractController
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
-        $this->formController = new FormController($cache);
+        $this->formController = $formController;
     }
 
     public function request($id, $slug, Request $request)

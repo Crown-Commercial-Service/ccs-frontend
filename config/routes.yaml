@@ -1,7 +1,7 @@
 # System routes
 # 1. The Landing Page
 cnz_landing:
-    path: /carbon-net-zero
+    path: /carbon-net-zero/find-a-carbon-net-zero-solution
     controller: App\Controller\GuideMatch\CarbonNetZeroController::landingPage
     methods: [GET]
 
@@ -18,6 +18,11 @@ cnz_result:
     path: /carbon-net-zero/result
     controller: App\Controller\GuideMatch\CarbonNetZeroController::resultPage
     methods: [GET]
+
+form_csat_submit:
+  path: /csat/submit
+  methods: POST
+  controller: App\Controller\FormController::submitCsatSurvey
 
 healthcheck:
   path: /healthcheck_r53
@@ -39,6 +44,10 @@ digits:
 digits-ctm:
   path: /digits-ctm.html
   controller: App\Controller\PageController::digitsCTM
+
+sitemap:
+  path: /sitemap.xml
+  controller: App\Controller\PageController::sitemap
 
 ppg_training:
   path: /ppg-guides

@@ -16,8 +16,6 @@ embed_video:
   type: text
 form_introduction:
   type: text
-link_text:
-  type: text
 description:
   type: text
 campaign_code:

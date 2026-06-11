@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Event - {{ event.title|raw }} - CCS{% endblock %}
+{% block title %}Event - {{ event.title|raw }} - GCA{% endblock %}
 
 {% block header %}
     {% embed '/includes/header.html.twig' %}
@@ -27,7 +27,7 @@
         </div>
 
 
-        <div class="govuk-breadcrumbs">
+        <div class="govuk-breadcrumbs" role="navigation" aria-label="Breadcrumb">
             <ol class="govuk-breadcrumbs__list">
                 <li class="govuk-breadcrumbs__list-item">
                     <a class="govuk-breadcrumbs__link" href="/">Home</a>

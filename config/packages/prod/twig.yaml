@@ -2,11 +2,11 @@ twig:
     # Salesforce Web-to-case form variables
     globals:
         # No trailing slash on site_url please
-        site_url: 'https://www.crowncommercial.gov.uk'
+        site_url: 'https://www.gca.gov.uk'
         web_to_case_post_url: 'https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8'
         web_to_case_orgid: '00Db0000000egy4'
         web_to_case_record_type: '012b00000005NWC'
-        survey_link: 'https://crowncommercial.qualtrics.com/jfe/form/SV_b2hqVz3TYDCxN2u'
+        survey_link: 'https://surveys.gca.gov.uk/jfe/form/SV_b2hqVz3TYDCxN2u'
         cat_domain: 'https://redirect.contractawardservice.crowncommercial.gov.uk'
         ppgLogin: 'http://identify.crowncommercial.gov.uk/'
         ppgCreateAccount: 'https://identify.crowncommercial.gov.uk/manage-org/register'

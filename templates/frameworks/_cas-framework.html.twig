@@ -109,7 +109,7 @@
     
             {% if framework.content.rm_number == "RM1043.8" or framework.content.rm_number == "RM1557.14" %}
                 <div class="govuk-inset-text">
-                    <p ><strong>You can now buy online with CCS.</strong> <br>Please select a lot to start.</p>
+                    <p ><strong>You can now buy online with GCA.</strong> <br>Please select a lot to start.</p>
                 </div>
                 <div class="grey-margin-bottom" id="agreement-lots"></div>
             {% endif %}
@@ -119,7 +119,7 @@
                 <dl class="apollo-list apollo-list--definition grey-margin-bottom">
                     <dt class="apollo-list--definition__key">
 
-                        {% if framework.content.rm_number ==  "RM1043.8" %}
+                        {% if framework.content.rm_number ==  "RM1043.8" or framework.content.rm_number ==  "RM1043.9" %}
                             <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/lot?agreement_id={{ framework.content.rm_number }}&lotNum={{ lot.lot_number }}">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
                         {% elseif framework.content.rm_number ==  "RM1557.14" %}
                             <span class="apollo-list--definition__key__inner"><a href="{{ cat_domain }}/agreement/{{ framework.content.rm_number }}/lot/All">Lot {{ lot.lot_number }} {{ lot.title|raw }}</a></span>
