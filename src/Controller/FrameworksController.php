@@ -540,7 +540,7 @@ class FrameworksController extends AbstractController
         return $results;
     }
 
-    
+
 
     private function addGovUkClassToTables(string $input)
     {
