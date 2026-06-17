@@ -63,9 +63,10 @@
 
 
                <ul class="govuk-list govuk-list--suppliers">
-                  {% for item in results %}
+               {% set sorted_results = results|sort((a, b) => a.content.supplier_name|lower <=> b.content.supplier_name|lower) %}
+                  {% for item in sorted_results %}
                       <li>
-                           {% set supplier_name = item.content.supplier_trading_name ?? item.content.supplier_name %}
+                           {% set supplier_name = item.content.supplier_name %}
                            <h3 class="{{ item.content.supplier_crp_url ? 'ccs-tag--inline' : '' }} govuk-heading-m ccs-heading-link ccs-font-weight-semibold govuk-!-font-size-22">
                               <a href="{{ path('suppliers_show', {'id': item.content.supplier_id, 'slug': slugify(supplier_name|trim)} ) }}">{{ supplier_name }}</a>
                            </h3>
