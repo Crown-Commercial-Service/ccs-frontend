@@ -448,9 +448,10 @@ class FrameworksController extends AbstractController
 
         try {
             $results = $this->api->list(1, ['limit' => 10000]);
+            $sortedResults = $this->sortResultsBySupplierName($results);
 
             $i = 1;
-            foreach ($results as $item) {
+            foreach ($sortedResults as $item) {
                 $supplier_name = ($item->getContent()->get('supplier_name')) ? $item->getContent()->get('supplier_name')->getValue() : '';
                 $trading_name = ($item->getContent()->get('supplier_trading_name')) ? $item->getContent()->get('supplier_trading_name')->getValue() : '';
                 $contact_name = ($item->getContent()->get('supplier_contact_name')) ? $item->getContent()->get('supplier_contact_name')->getValue() : '';
@@ -501,6 +502,15 @@ class FrameworksController extends AbstractController
         return $response;
     }
 
+    private function sortResultsBySupplierName($results)
+    {
+        $sortedResults = iterator_to_array($results);
+        usort($sortedResults, function ($a, $b) {
+            return strcasecmp($a->getContent()->get('supplier_name')->getValue(), $b->getContent()->get('supplier_name')->getValue());
+        });
+        return $sortedResults;
+    }
+
     private function setGovTableStyleForAllField($results)
     {
         $description = $results->getContent()['description']->getValue();
@@ -529,6 +539,8 @@ class FrameworksController extends AbstractController
 
         return $results;
     }
+
+
 
     private function addGovUkClassToTables(string $input)
     {
