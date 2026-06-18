@@ -36,4 +36,15 @@ fs.readdirSync(inputDir).forEach(file => {
       console.error(`❌ Error optimizing SVG ${file}:`, err);
     }
   }
+  // 3. Copy non-optimized file types like favicon.ico
+  else if (['.ico', '.gif', '.bmp', '.tiff'].includes(ext)) {
+    try {
+      fs.copyFileSync(inputPath, outputPath);
+      console.log(`📄 Copied ${file}`);
+    } catch (err) {
+      console.error(`❌ Error copying ${file}:`, err);
+    }
+  } else {
+    console.log(`⏭ Skipping unsupported file type: ${file}`);
+  }
 });
