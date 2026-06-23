@@ -28,22 +28,10 @@ healthcheck:
   path: /healthcheck_r53
   controller: App\Controller\PageController::check
 
-statuscheck:
-  path: /statuscheck
-  controller: App\Controller\PageController::statuscheck
-
 # Page routes
 home:
   path: /
   controller: App\Controller\PageController::home
-
-digits:
-  path: /digits-landing.html
-  controller: App\Controller\PageController::digitsLanding
-
-digits-ctm:
-  path: /digits-ctm.html
-  controller: App\Controller\PageController::digitsCTM
 
 sitemap:
   path: /sitemap.xml
@@ -66,24 +54,6 @@ frameworks_upcoming_deals:
   controller: App\Controller\FrameworksController::upcomingDealsSearch
   requirements:
     page: '\d+'
-
-frameworks_list_by_category:
-  path: /agreements/category/{category}/{page}/{query}
-  controller: App\Controller\FrameworksController::list
-  requirements:
-    page: '\d+'
-  defaults:
-    page: 1
-    query: ''
-
-frameworks_list_by_pillar:
-  path: /agreements/pillar/{pillar}/{page}/{query}
-  controller: App\Controller\FrameworksController::list
-  requirements:
-    page: '\d+'
-  defaults:
-    page: 1
-    query: ''
 
 frameworks_show:
   path: /agreements/{rmNumber}
@@ -234,10 +204,6 @@ webinar_confirmation:
 digital_brochure_request:
   path: /digital_brochure/request/{id}/{slug}
   controller: App\Controller\DigitalBrochureController::redirectToDownloadableResource
-
-# digital_brochure_confirmation:
-#   path: /digital_brochure/confirmation/{id}/{slug}
-#   controller: App\Controller\DigitalBrochureController::show
 
 downloadable_resource_request:
   path: /downloadable-resource/request/{id}/{slug}
