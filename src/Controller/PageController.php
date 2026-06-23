@@ -401,25 +401,6 @@ class PageController extends AbstractController
         return new JsonResponse(['message' => 'OK']);
     }
 
-    public function statuscheck()
-    {
-        $client = HttpClient::create(['verify_peer' => false, 'verify_host' => false, 'timeout' => 5]);
-        $listOfUrlToCheck = $this->getHeaderAndFooterListFromCMS($client, getenv('APP_CMS_BASE_URL'));
-        $results = [];
-
-        foreach ($listOfUrlToCheck as $url) {
-            try {
-                $response = $client->request('GET', $url);
-                $results[$url] = $response->getstatuscode();
-            } catch (TransportExceptionInterface) {
-            }
-        }
-        return $this->render('pages/status_check.html.twig', [
-            'results'           => $results,
-            'totalLinks'        => count($listOfUrlToCheck)
-         ]);
-    }
-
     public function sitemap()
     {
         $response = $this->client->request('GET', getenv('APP_CMS_BASE_URL') . '/wp-json/ccs/v1/sitemap');
@@ -461,22 +442,6 @@ class PageController extends AbstractController
             }
         }
         return array_unique($returnList);
-    }
-
-    public function digitsLanding()
-    {
-        // To render digits outage page use
-        // $this->render('pages/digits_landing.html.twig');
-
-        return $this->redirect('https://travel.crowncommercial.gov.uk/');
-    }
-
-    public function digitsCTM()
-    {
-        // To render digits outage page use
-        // $this->render('pages/digits_ctm.html.twig');
-
-        return $this->redirect('https://travel.crowncommercial.gov.uk/');
     }
 
     public function ppgTraining()
