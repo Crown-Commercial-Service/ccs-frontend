@@ -1,0 +1,33 @@
+{
+    "how_to_buy": {
+        "title": "How to buy",
+        "description": "With over 100 commercial agreements, we can help you get better value from products and services. Learn about our buying routes and what you can buy. \r\n",
+        "link_text": "Learn how to buy.",
+        "link_url": "/information-for-buyers-and-suppliers/help-for-new-buyers-and-suppliers/start-buying"
+    },
+    "agreements": {
+        "title": "How to supply",
+        "description": "The UK public sector spends billions every year on products and services. Learn how your organisation can benefit from becoming a supplier. ",
+        "link_text": "Learn how to supply.",
+        "link_url": "https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/start-supplying"
+    },
+    "upcoming_deals": {
+        "title": "Transforming Public Procurement",
+        "description": "The Transforming Public Procurement (TPP) programme will change how public procurement in the United Kingdom is regulated.",
+        "link_text": "Learn about the TPP programme.",
+        "link_url": "https://www.crowncommercial.gov.uk/information-for-buyers-and-suppliers/transforming-public-procurement"
+    },
+    "campaign": {
+        "title": "Digital brochure 2025-2026: Turning your buying decisions into lasting impact",
+        "description": "Discover procurement guidance, customer case studies and how to access our agreements",
+        "button_text": "Download our digital brochure ",
+        "button_link": "https://www.crowncommercial.gov.uk/downloadable-resource/request/30384/commercial-agreements-digital-brochure"
+    },
+    "video": {
+        "title": "Learn about CCS",
+        "video_link": "https://www.youtube-nocookie.com/embed/FRlRf8OpT7o",
+        "video_caption": "*QA*:power to your procurement",
+        "link_text": "Browse all help and support guides",
+        "link_url": "/buy-and-supply/"
+    }
+}

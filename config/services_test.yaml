@@ -1,0 +1,16 @@
+# config/services_test.yaml
+services:
+    _defaults:
+        public: true
+
+    Symfony\Contracts\HttpClient\HttpClientInterface:
+        alias: 'http_client'
+        public: true
+
+    Strata\Frontend\Cms\Wordpress:
+        public: true
+
+    # Substitute the production MenuController with our stable Test Double
+    App\Controller\MenuController:
+        class: App\Tests\App\Controller\Double\MockMenuController
+        public: true

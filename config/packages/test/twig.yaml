@@ -1,5 +1,7 @@
 twig:
     # Salesforce Web-to-case form variables
+    # config/packages/test/twig.yaml
+
     globals:
         # No trailing slash on site_url please
         site_url: 'https://webuat.gca.gov.uk'
