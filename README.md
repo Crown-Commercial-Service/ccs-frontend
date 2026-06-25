@@ -196,11 +196,15 @@ Where possible you can auto-fix code via:
 vendor/bin/phpcbf
 ```
 
-### PHP Unit
+### PHP Unit Testing
 
 Create unit tests in `tests/` and run via `bin/phpunit`
 
 See [Getting Started with PHPUnit](https://phpunit.de/getting-started/phpunit-7.html)
+
+Our repository uses PHPUnit for automated integration testing, driven completely by static JSON fixtures to guarantee high-speed execution without relying on live WordPress API connections.  You can execute the full suite using vendor/bin/phpunit, or isolate your focus on the new page controller test by running vendor/bin/phpunit tests/App/Controller/PageControllerTest.php. For laser-targeted debugging, append the --filter flag followed by the specific test method name.
+
+To mirror the cloud build pipeline right on your local machine before pushing code to remote branches, use the custom shell script by running travis-local.sh && ./travis-local.sh. This script emulates the entire Travis CI environment in a clean-room sequence: it forces the CLI runtime to APP_ENV=test, purges stale cache artifacts, builds necessary directory structures with proper read/write permissions, and executes both our core application tests and upstream vendor integration suites. Always resolve structural friction points—like wrapping raw getenv() calls into Symfony's native parameter injection or refining vague DOM selectors—before pushing code to maintain a pristine, passing pipeline.
 
 ### Behat
 
@@ -223,4 +227,4 @@ See [quick start](http://docs.behat.org/en/latest/quick_start.html) and [Behat a
 
 
 * [GDS](https://www.gov.uk/government/organisations/government-digital-service)
-.
+
