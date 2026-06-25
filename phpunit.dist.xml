@@ -14,7 +14,12 @@
         <ini name="display_errors" value="1" />
         <ini name="error_reporting" value="-1" />
         <server name="APP_ENV" value="test" force="true" />
+        <server name="APP_DEBUG" value="1" force="true" /> 
         <server name="SHELL_VERBOSITY" value="-1" />
+
+        <env name="APP_API_BASE_URL" value="http://fake-api.local/" force="true" />
+        <env name="APP_CMS_BASE_URL" value="http://fake-cms.local/" force="true" />
+        <env name="APP_BASE_URL" value="http://localhost/" force="true" />
     </php>
 
     <testsuites>

@@ -41,8 +41,8 @@ class ControllerHelper
 
         try {
             $cscMessage = $api->getOne(0);
-        } catch (NotFoundException $e) {
-            throw new NotFoundHttpException('CSC Message API broken, please check WordPress', $e);
+        } catch (\Throwable $e) {
+            return '';
         }
 
         return $cscMessage->getContent()->get('csc_message')->getValue();
