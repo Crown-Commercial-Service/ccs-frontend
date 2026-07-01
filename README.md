@@ -25,9 +25,9 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Requirements
 
-* PHP 7.3+
-* NPM 8.9.4
-* Elasticsearch 7.x+
+* PHP 8.2+
+* Node.js 22.x+ (and corresponding NPM)
+* OpenSearch 1.x/2.x
 
 ### Installation
 
@@ -47,11 +47,11 @@ To install PHP packages for Staging and Production, run:
 composer install --no-dev --optimize-autoloader
 ```
 
-#### Elasticsearch
+#### OpenSearch
 
-[Installation instructions for Elasticsearch](https://www.elastic.co/downloads/elasticsearch).
+[Installation instructions for OpenSearch](https://opensearch.org/docs/latest/install-and-configure/install-opensearch/index/).
 
-Run `bin/elasticsearch` (from Elasticsearch root directory) to make Frameworks and Suppliers search work.
+Run `bin/opensearch` (from OpenSearch root directory) to make Frameworks and Suppliers search work.
 
 #### Environment config
 
@@ -75,11 +75,11 @@ To explain these settings:
 * APP_API_BASE_URL - Base URL to WordPress site suffixed with /wp-json/ (e.g. `https://cms.crowncommercial.local/wp-json/`)
 * APP_CMS_BASE_URL - Base URL to WordPress site (without any suffix)
 * APP_BASE_URL - Base URL to front-end site
-* SEARCH_API_BASE_URL - Base API URL for [Elasticsearch](docs/ELASTICSEARCH.md) queries
+* SEARCH_API_BASE_URL - Base API URL for [OpenSearch](docs/ELASTICSEARCH.md) queries
 * PARDOT_EMAIL_FORM_HANDLER_URL - [Pardot form handler](docs/pardot.md) to send email addresses to
 
 #### NPM
-Use NPM to compile Javascript modules and Sass into CSS. Install the long-term support (LTS) version of [Node.js](https://nodejs.org/en/), which includes NPM. The minimum version of Node required is 8.9.4. We recommend using [`nvm`](https://github.com/creationix/nvm) for managing versions of Node.
+Use NPM to compile Javascript modules and Sass into CSS. Install the long-term support (LTS) version of [Node.js](https://nodejs.org/en/), which includes NPM. The minimum version of Node required is 22.22.0. We recommend using [`nvm`](https://github.com/creationix/nvm) for managing versions of Node.
 
 To install Node packages, run:
 
@@ -95,9 +95,9 @@ npm run build
 
 #### Building styles and scripts
 
-We import the GOV.UK Frontend styles into the main Sass file in our project. All our own Sass variables are placed before `@import "node_modules/govuk-frontend/all";` to make sure the right settings have been set before we compile the Sass to CSS.
+We import the GOV.UK Frontend styles into the main Sass file in our project. All our own Sass variables are placed before `@import "node_modules/govuk-frontend/dist/govuk/all";` to make sure the right settings have been set before we compile the Sass to CSS.
 
-The JavaScript is copied from `node_modules/govuk-frontend/all.js` to `public/assets/scripts/all.js` (and `public/assets/scripts/all.min.js`), where it is referenced in all templates.
+The JavaScript is copied from `node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.js` to `public/assets/scripts/all.js` (and `public/assets/scripts/all.min.js`), where it is referenced in all templates.
 
 As the GOV.UK Frontend does not initialise any scripts by default; all scripts are initialised, using `initAll`, in `app.js`.
 
@@ -113,10 +113,10 @@ npm run watch
 
 Set up local host http://local.crowncommercial.gov.uk/ to point to the `public/` folder.
 
-Optionally, you can view the website at http://127.0.0.1:8000, by running run:
+Optionally, you can view the website at http://127.0.0.1:8000, by running:
 
 ```
-bin/console server:run
+symfony server:start
 ```
 
 Although we wouldn't recommend using this method long-term as the environment is less customisable and reliable.
@@ -198,9 +198,13 @@ vendor/bin/phpcbf
 
 ### PHP Unit Testing
 
-Create unit tests in `tests/` and run via `bin/phpunit`
+Create unit tests in `tests/` and run via `vendor/bin/phpunit`
 
-See [Getting Started with PHPUnit](https://phpunit.de/getting-started/phpunit-7.html)
+See [Getting Started with PHPUnit](https://phpunit.de/getting-started/phpunit-10.html)
+
+Our repository uses PHPUnit for automated integration testing. Some parts of the application (like guide journeys) are driven by static JSON fixtures, while other parts integrate with the live API. You can execute the full suite using `vendor/bin/phpunit`, or isolate your focus on a specific test by running `vendor/bin/phpunit tests/App/Controller/GuideMatch/BaseJourneyControllerTest.php`. For laser-targeted debugging, append the `--filter` flag followed by the specific test method name.
+
+To mirror the cloud build pipeline right on your local machine before pushing code to remote branches, use the custom shell script by running `./travis-local.sh`. This script emulates the entire Travis CI environment in a clean-room sequence: it forces the CLI runtime to APP_ENV=test, purges stale cache artifacts, builds necessary directory structures with proper read/write permissions, and executes both our core application tests and upstream vendor integration suites. Always resolve structural friction points—like wrapping raw getenv() calls into Symfony's native parameter injection or refining vague DOM selectors—before pushing code to maintain a pristine, passing pipeline.
 
 Our repository uses PHPUnit for automated integration testing, driven completely by static JSON fixtures to guarantee high-speed execution without relying on live WordPress API connections.  You can execute the full suite using vendor/bin/phpunit, or isolate your focus on the new page controller test by running vendor/bin/phpunit tests/App/Controller/PageControllerTest.php. For laser-targeted debugging, append the --filter flag followed by the specific test method name.
 
