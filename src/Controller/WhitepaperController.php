@@ -9,34 +9,34 @@ use App\Helper\ControllerHelper;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Psr16Cache;
 use Strata\Frontend\Cms\Wordpress;
-use Strata\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Strata\Frontend\Exception\NotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Psr\Log\LoggerInterface;
 
 class WhitepaperController extends AbstractController
 {
-    /**
-     * Frameworks Rest API data
-     *
-     * @var Wordpress
-     */
-    protected $api;
-    protected $formController;
+    protected Wordpress $api;
+    protected FormController $formController;
+    protected string $appBaseUrl;
 
-    public function __construct(CacheItemPoolInterface $cache, FormController $formController)
-    {
-        $this->api = new WordPress(
-            getenv('APP_API_BASE_URL'),
-            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
-        );
+    public function __construct(
+        CacheItemPoolInterface $cache, 
+        FormController $formController,
+        Wordpress $api,
+        string $appBaseUrl
+    ) {
+        $this->api = $api;
         $this->api->setContentType('whitepapers');
+        
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
+        
         $this->formController = $formController;
+        $this->appBaseUrl = $appBaseUrl;
     }
 
     public function request($id, $slug, Request $request)
@@ -56,7 +56,9 @@ class WhitepaperController extends AbstractController
         $formData = ControllerHelper::getFormData($params);
         $utmParams = $request->query->all();
 
-        $returnURL = getenv('APP_BASE_URL') . '/whitepaper/confirmation/' . $whitepaper->getId() . '/' . $whitepaper->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $queryString = $request->getQueryString() ?? '';
+        $returnURL = $this->appBaseUrl . '/whitepaper/confirmation/' . $whitepaper->getId() . '/' . $whitepaper->getUrlSlug() . '/?' . filter_var($queryString, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        
         $campaignCode = $whitepaper->getContent()->get('campaign_code') ? $whitepaper->getContent()->get('campaign_code')->getValue() : '';
         $description = $whitepaper->getContent()->get('description') ? $whitepaper->getContent()->get('description')->getValue() : '';
 

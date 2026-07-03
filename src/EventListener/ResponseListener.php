@@ -6,6 +6,13 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class ResponseListener
 {
+    protected string $appEnv;
+
+    public function __construct(string $appEnv)
+    {
+        $this->appEnv = $appEnv;
+    }
+
     /**
      * Alter response
      *
@@ -15,8 +22,8 @@ class ResponseListener
     {
         $response = $event->getResponse();
 
-        // Add caching layer for Production (30 min cache on all pages)
-        if (getenv('APP_ENV') === 'prod') {
+        // Add caching layer for Production (5 min cache on all pages)
+        if ($this->appEnv === 'prod') {
             $response->setSharedMaxAge(300);
             $response->headers->addCacheControlDirective('must-revalidate', true);
         }

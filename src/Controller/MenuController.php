@@ -7,12 +7,10 @@ namespace App\Controller;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Psr16Cache;
 use Strata\Frontend\Cms\Wordpress;
-use Strata\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class MenuController extends AbstractController
 {
@@ -21,20 +19,25 @@ class MenuController extends AbstractController
      *
      * @var Wordpress
      */
-    protected $api;
+    protected Wordpress $api;
+    protected string $appCmsBaseUrl;
+    protected string $appBaseUrl;
 
-    public function __construct(CacheItemPoolInterface $cache)
-    {
-        $this->api = new Wordpress(
-            getenv('APP_API_BASE_URL'),
-            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
-        );
+    public function __construct(
+        CacheItemPoolInterface $cache,
+        Wordpress $api,
+        string $appCmsBaseUrl,
+        string $appBaseUrl
+    ) {
+        $this->api = $api;
+        $this->appCmsBaseUrl = $appCmsBaseUrl;
+        $this->appBaseUrl = $appBaseUrl;
+
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setContentType('page');
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
     }
-
 
     /**
      * Generic menu controller
@@ -54,14 +57,7 @@ class MenuController extends AbstractController
             return new Response();
         }
 
-        $cmsBaseUrl = getenv('APP_CMS_BASE_URL');
-        $appBaseUrl = getenv('APP_BASE_URL');
-
-        if (empty($cmsBaseUrl) || empty($appBaseUrl)) {
-            throw new HttpException(500, 'You must set APP_CMS_BASE_URL and APP_BASE_URL environment variables in your .env or .env.local');
-        }
-
-        $menu->setBaseUrls(getenv('APP_CMS_BASE_URL'), getenv('APP_BASE_URL'));
+        $menu->setBaseUrls($this->appCmsBaseUrl, $this->appBaseUrl);
 
         $menu->setActiveItems($currentPath);
 

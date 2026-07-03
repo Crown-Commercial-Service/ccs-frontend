@@ -206,10 +206,6 @@ Our repository uses PHPUnit for automated integration testing. Some parts of the
 
 To mirror the cloud build pipeline right on your local machine before pushing code to remote branches, use the custom shell script by running `./travis-local.sh`. This script emulates the entire Travis CI environment in a clean-room sequence: it forces the CLI runtime to APP_ENV=test, purges stale cache artifacts, builds necessary directory structures with proper read/write permissions, and executes both our core application tests and upstream vendor integration suites. Always resolve structural friction points—like wrapping raw getenv() calls into Symfony's native parameter injection or refining vague DOM selectors—before pushing code to maintain a pristine, passing pipeline.
 
-Our repository uses PHPUnit for automated integration testing, driven completely by static JSON fixtures to guarantee high-speed execution without relying on live WordPress API connections.  You can execute the full suite using vendor/bin/phpunit, or isolate your focus on the new page controller test by running vendor/bin/phpunit tests/App/Controller/PageControllerTest.php. For laser-targeted debugging, append the --filter flag followed by the specific test method name.
-
-To mirror the cloud build pipeline right on your local machine before pushing code to remote branches, use the custom shell script by running travis-local.sh && ./travis-local.sh. This script emulates the entire Travis CI environment in a clean-room sequence: it forces the CLI runtime to APP_ENV=test, purges stale cache artifacts, builds necessary directory structures with proper read/write permissions, and executes both our core application tests and upstream vendor integration suites. Always resolve structural friction points—like wrapping raw getenv() calls into Symfony's native parameter injection or refining vague DOM selectors—before pushing code to maintain a pristine, passing pipeline.
-
 ### Behat
 
 _Please note_: Behat is not currently used in CI but has a basic setup.

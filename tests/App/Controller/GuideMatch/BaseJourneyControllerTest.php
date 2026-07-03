@@ -53,8 +53,8 @@ class BaseJourneyControllerTest extends TestCase
         });
 
         // 3. Initialize Controller
-        // 3. Initialize Controller (Using an Anonymous Class to fix PSR-1 error)
-        $this->controller = new class ($this->journeyService, $this->cache) extends BaseJourneyController {
+        //  Added 'https://fake-api.local' as the 3rd argument
+        $this->controller = new class ($this->journeyService, $this->cache, 'https://fake-api.local') extends BaseJourneyController {
             protected string $journeyName = 'test_journey';
 
             protected function getLandingPageData(): array
@@ -111,7 +111,8 @@ class BaseJourneyControllerTest extends TestCase
         $this->expectException(\Exception::class);
         $this->expectExceptionMessage('$journeyName must be defined');
 
-        new class ($this->journeyService, $this->cache) extends BaseJourneyController {
+        // ✅ FIX: Added 'https://fake-api.local' as the 3rd argument here too
+        new class ($this->journeyService, $this->cache, 'https://fake-api.local') extends BaseJourneyController {
             protected string $journeyName = '';
             protected function getLandingPageData(): array
             {

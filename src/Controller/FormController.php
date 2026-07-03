@@ -6,17 +6,14 @@ namespace App\Controller;
 
 use App\Validation\FormValidation;
 use App\Helper\ControllerHelper;
-use App\Controller\WhitepaperController;
 use Strata\Frontend\Cms\RestData;
 use Strata\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Psr16Cache;
-use Aws\S3\S3Client;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Mime\Part\DataPart;
 use Symfony\Component\Mime\Part\Multipart\FormDataPart;
@@ -28,32 +25,57 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class FormController extends AbstractController
 {
-    /**
-     * Frameworks Rest API data
-     *
-     * @var RestData
-     */
     protected $api;
-
     protected $client;
 
-    /**
-     * @var LoggerInterface
-     */
+    protected ControllerHelper $controllerHelper;
     private $logger;
 
-    public function __construct(CacheItemPoolInterface $cache, LoggerInterface $logger)
-    {
+    // Environment Configuration Properties
+    protected string $appApiBaseUrl;
+    protected string $salesforceWebToCaseUrl;
+    protected string $sfRmCaseId;
+    protected string $documentHandlingPath;
+    protected string $documentHandlingKey;
+    protected string $documentHandlingEndpoint;
+    protected string $qualtricsApiToken;
+    protected string $qualtricsSurveyId;
+
+    public function __construct(
+        CacheItemPoolInterface $cache, 
+        LoggerInterface $logger,
+        HttpClientInterface $httpClient,
+        ControllerHelper $controllerHelper,
+        string $appApiBaseUrl,
+        string $salesforceWebToCaseUrl,
+        string $sfRmCaseId,
+        string $documentHandlingPath,
+        string $documentHandlingKey,
+        string $documentHandlingEndpoint,
+        string $qualtricsApiToken,
+        string $qualtricsSurveyId
+    ) {
+        $this->appApiBaseUrl = $appApiBaseUrl;
+
         $this->api = new RestData(
-            getenv('APP_API_BASE_URL'),
+            $this->appApiBaseUrl,
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
         $this->api->setContentType('esourcing_dates');
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
 
-        $this->client = HttpClient::create();
+        $this->client = $httpClient;
         $this->logger = $logger;
+        $this->controllerHelper = $controllerHelper;
+
+        $this->salesforceWebToCaseUrl = $salesforceWebToCaseUrl;
+        $this->sfRmCaseId = $sfRmCaseId;
+        $this->documentHandlingPath = $documentHandlingPath;
+        $this->documentHandlingKey = $documentHandlingKey;
+        $this->documentHandlingEndpoint = $documentHandlingEndpoint;
+        $this->qualtricsApiToken = $qualtricsApiToken;
+        $this->qualtricsSurveyId = $qualtricsSurveyId;
     }
 
     public function esourcingRegisterSubmit(Request $request)
@@ -70,7 +92,6 @@ class FormController extends AbstractController
             'company'   => $params->get('company', null),
         ];
 
-
         $formErrors = $this->validateEsourcingRegister($formData);
 
         if ($formErrors) {
@@ -84,9 +105,9 @@ class FormController extends AbstractController
             $params->set('00Nb0000009IXEs', $formData['jobTitle']);
             $params->set('priority', 'Green');
             $params->set('origin', 'Website - eSourcing Access');
-            $params->set('orgid', ControllerHelper::getOrgId());
+            $params->set('orgid', $this->controllerHelper->getOrgId());
 
-            $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+            $response = $this->client->request('POST', $this->salesforceWebToCaseUrl, [
                 'query'             => $params->all(),
             ]);
 
@@ -98,24 +119,11 @@ class FormController extends AbstractController
         return $this->redirectToRoute('form_esourcing_register_thanks');
     }
 
-    /**
-     * eSourcingTraining Form template
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentFieldNotSetException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PermissionException
-     */
     public function eSourcingTraining(Request $request)
     {
         $this->api->setContentType('esourcing_dates');
         $this->api->setCacheKey($request->getRequestUri());
 
-        // @todo At present need to pass fake ID since API method is intended to return one item with an ID, review this
         $results = $this->api->getOne(0);
 
         $data = ['esourcingDates' => $results];
@@ -157,9 +165,9 @@ class FormController extends AbstractController
             $params->set('00Nb0000009IXEs', $formData['jobTitle']);
             $params->set('priority', 'Green');
             $params->set('origin', 'Website - eSourcing Training');
-            $params->set('orgid', ControllerHelper::getOrgId());
+            $params->set('orgid', $this->controllerHelper->getOrgId());
 
-            $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+            $response = $this->client->request('POST', $this->salesforceWebToCaseUrl, [
                 'query'         => $params->all(),
             ]);
 
@@ -173,15 +181,14 @@ class FormController extends AbstractController
 
     public function contactCCS(Request $request)
     {
-        $referrer = $_SERVER['HTTP_REFERER'] ?? null;
+        $referrer = $request->headers->get('referer');
         $formType = $request->query->get('type', null);
 
-
-        $cscMessage = ControllerHelper::getCSCMessage();
+        $cscMessage = $this->controllerHelper->getCSCMessage();
 
         $data = [
             'referrer'      => $referrer,
-            'rmNumber'      => $referrer != null ? ControllerHelper::extractRmNumberFromReferrer($referrer) : null,
+            'rmNumber'      => $referrer != null ? $this->controllerHelper->extractRmNumberFromReferrer($referrer) : null,
             'cscMessage'    => $cscMessage,
             'formType'      => $formType,
         ];
@@ -216,7 +223,7 @@ class FormController extends AbstractController
             $formErrors = $this->validateContactCCS($formData);
 
             if ($formErrors) {
-                $cscMessage = ControllerHelper::getCSCMessage();
+                $cscMessage = $this->controllerHelper->getCSCMessage();
                 return $this->render('forms/22-contact.html.twig', [
                     'referrer'              => $params->get('00N4L000009OPAj', null),
                     'formErrors'            => $formErrors,
@@ -227,11 +234,11 @@ class FormController extends AbstractController
             } else {
                 $params->set('subject', 'Contact GCA');
                 $params->set('00Nb0000009IXEW', 'General-Enquiry');
-                $params->set(getenv('SF_RM_CASE_ID'), ControllerHelper::extractRmNumberFromReferrer($params->get('00N4L000009OPAj', null)));
+                $params->set($this->sfRmCaseId, $this->controllerHelper->extractRmNumberFromReferrer($params->get('00N4L000009OPAj', null)));
                 $params->set('recordType', '012b00000005NWC');
                 $params->set('00Nb0000009IXEs', $formData['jobTitle']);
                 $params->set('priority', 'Green');
-                $params->set('orgid', ControllerHelper::getOrgId());
+                $params->set('orgid', $this->controllerHelper->getOrgId());
 
                 if ($formData['callbackTimeslot'] != null) {
                     $params->set('Call_Back_Preference__c', $formData['callbackTimeslot']);
@@ -242,10 +249,10 @@ class FormController extends AbstractController
                 $attachmentID_filename = $this->sendToDocumentUpload();
 
                 if ($attachmentID_filename != null) {
-                    $params->set('00N4L000009vP2P', getenv('documentHanding_path') . $attachmentID_filename);
+                    $params->set('00N4L000009vP2P', $this->documentHandlingPath . $attachmentID_filename);
                 }
 
-                $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                $response = $this->client->request('POST', $this->salesforceWebToCaseUrl, [
                     'query' => $params->all(),
                 ]);
 
@@ -262,12 +269,11 @@ class FormController extends AbstractController
 
     public function complaintForm(Request $request)
     {
-        $referrer = $_SERVER['HTTP_REFERER'] ?? null;
+        $referrer = $request->headers->get('referer');
         $formType = $request->query->get('type', null);
         $rmNumber = $request->query->get('agreement', null);
 
-
-        $cscMessage = ControllerHelper::getCSCMessage();
+        $cscMessage = $this->controllerHelper->getCSCMessage();
 
         $data = [
             'referrer'      => $referrer,
@@ -306,7 +312,7 @@ class FormController extends AbstractController
             $formErrors = $this->validateContactCCS($formData);
 
             if ($formErrors) {
-                $cscMessage = ControllerHelper::getCSCMessage();
+                $cscMessage = $this->controllerHelper->getCSCMessage();
                 return $this->render('forms/complaint_form.html.twig', [
                     'referrer'              => $params->get('00N4L000009OPAj', null),
                     'rmNumber'              => $params->get('00NS90000025xmH', null),
@@ -318,11 +324,11 @@ class FormController extends AbstractController
             } else {
                 $params->set('subject', 'Contact GCA');
                 $params->set('00Nb0000009IXEW', 'General-Enquiry');
-                $params->set(getenv('SF_RM_CASE_ID'), $params->get('00NS90000025xmH', null));
+                $params->set($this->sfRmCaseId, $params->get('00NS90000025xmH', null));
                 $params->set('recordType', '012b00000005NWC');
                 $params->set('00Nb0000009IXEs', $formData['jobTitle']);
                 $params->set('priority', 'Green');
-                $params->set('orgid', ControllerHelper::getOrgId());
+                $params->set('orgid', $this->controllerHelper->getOrgId());
 
                 if ($formData['callbackTimeslot'] != null) {
                     $params->set('Call_Back_Preference__c', $formData['callbackTimeslot']);
@@ -333,10 +339,10 @@ class FormController extends AbstractController
                 $attachmentID_filename = $this->sendToDocumentUpload();
 
                 if ($attachmentID_filename != null) {
-                    $params->set('00N4L000009vP2P', getenv('documentHanding_path') . $attachmentID_filename);
+                    $params->set('00N4L000009vP2P', $this->documentHandlingPath . $attachmentID_filename);
                 }
 
-                $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                $response = $this->client->request('POST', $this->salesforceWebToCaseUrl, [
                     'query' => $params->all(),
                 ]);
 
@@ -350,7 +356,6 @@ class FormController extends AbstractController
             }
         }
     }
-
 
     public function newsletters(Request $request)
     {
@@ -378,10 +383,10 @@ class FormController extends AbstractController
                 $params->set('00Nb0000009IXEW', 'Newsletter');
                 $params->set('recordType', '012b00000005NWC');
                 $params->set('priority', 'Green');
-                $params->set('orgid', ControllerHelper::getOrgId());
+                $params->set('orgid', $this->controllerHelper->getOrgId());
                 $params->set('origin', 'Website - Newsletter');
 
-                $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+                $response = $this->client->request('POST', $this->salesforceWebToCaseUrl, [
                     'query' => $params->all(),
                 ]);
 
@@ -395,13 +400,12 @@ class FormController extends AbstractController
             }
         }
     }
+
     public function sendToSalesforceForDownload($params, $utmParams, $data, $campaignCode, $description)
     {
         $formErrors = $this->validateGatedForm($data);
 
         if (!$formErrors) {
-            $client = HttpClient::create();
-
             $params = self::checkUTM($utmParams, $params);
 
             $params->set('subject', $campaignCode);
@@ -410,12 +414,12 @@ class FormController extends AbstractController
             $params->set('recordType', '012b00000005NWC');
             $params->set('priority', 'Green');
             $params->set('description', $description);
-            $params->set('orgid', ControllerHelper::getOrgId());
+            $params->set('orgid', $this->controllerHelper->getOrgId());
             $params->set('origin', 'Website - Download');
 
-            $client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+            $this->client->request('POST', $this->salesforceWebToCaseUrl, [
                   'query' => $params->all(),
-              ]);
+            ]);
         }
 
         return $formErrors;
@@ -491,14 +495,12 @@ class FormController extends AbstractController
         $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
         $errorMessages['emailErr'] =    FormValidation::validationEmail($data['email']);
 
-
         return self::formatErrorMessages($errorMessages);
     }
 
     public function validateEventsForm(array $data)
     {
         $errorMessages = [];
-
 
         $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['jobTitleErr'] = FormValidation::validationJobTitleForContactCCS($data['jobTitle']);
@@ -511,13 +513,11 @@ class FormController extends AbstractController
 
     private function formatErrorMessages($errorMessages)
     {
-
         foreach ($errorMessages as $type => $value) {
             if (!empty($errorMessages[$type]['errors'])) {
                 return $errorMessages;
             }
         }
-
         return false;
     }
 
@@ -533,6 +533,7 @@ class FormController extends AbstractController
 
         return $params;
     }
+
     private function setUTM($params, $utmKey, $utmValue)
     {
         $utmMap = [
@@ -575,9 +576,9 @@ class FormController extends AbstractController
                 $formData = new FormDataPart($data);
 
                 $headers = $formData->getPreparedHeaders()->toArray();
-                $headers['x-api-key'] = getenv('documentHanding_key');
+                $headers['x-api-key'] = $this->documentHandlingKey;
 
-                $response = $this->client->request('POST', getenv('documentHanding_endpoint'), [
+                $response = $this->client->request('POST', $this->documentHandlingEndpoint, [
                     'headers'   => $headers,
                     'body'      => $formData->bodyToIterable(),
                 ]);
@@ -593,15 +594,12 @@ class FormController extends AbstractController
 
     public function submitCsatSurvey(Request $request): JsonResponse
     {
-        // Decode JSON Payload (Frontend sends application/json)
         $content = $request->getContent();
         $data = json_decode($content, true);
 
-        // Validation
         $rating = $data['rating'] ?? null;
         $comments = $data['feedback-comments'] ?? '';
 
-        // Basic validation: Rating is mandatory, 1-10
         if (!$rating || !is_numeric($rating)) {
             return new JsonResponse([
                 'success' => false,
@@ -609,7 +607,6 @@ class FormController extends AbstractController
             ], 400);
         }
 
-        // Prepare Qualtrics Payload
         $qualtricsPayload = [
             'values' => [
                 'QID14'      => intval($rating),
@@ -621,40 +618,29 @@ class FormController extends AbstractController
             ]
         ];
 
-        // Get Config from Env
-        $apiToken   = getenv('QUALTRICS_API_TOKEN');
-        $surveyId   = getenv('QUALTRICS_SURVEY_ID');
+        if (empty($this->qualtricsApiToken) || empty($this->qualtricsSurveyId)) {
+            $this->logger->critical('Qualtrics API configuration is missing in the environment bindings.');
 
-        // Check if any of the required env variables are missing or empty
-        if (empty($apiToken) || empty($surveyId)) {
-            // Log this as a critical error so you see it in your Symfony logs
-            $this->logger->critical('Qualtrics API configuration is missing in the .env file.');
-
-            // Return a safe, generic error to the JavaScript frontend
             return new JsonResponse([
                 'success' => false,
                 'message' => 'The feedback service is currently unavailable. Please make sure the correct configs are setup.'
             ], 500);
         }
 
-        $endpoint = "https://fra1.qualtrics.com/API/v3/surveys/{$surveyId}/responses";
+        $endpoint = "https://fra1.qualtrics.com/API/v3/surveys/{$this->qualtricsSurveyId}/responses";
 
         try {
-            // Send Request using existing Symfony HttpClient
             $response = $this->client->request('POST', $endpoint, [
                 'headers' => [
-                    'X-API-TOKEN'  => $apiToken,
+                    'X-API-TOKEN'  => $this->qualtricsApiToken,
                     'Content-Type' => 'application/json',
                 ],
                 'json' => $qualtricsPayload
             ]);
 
             $statusCode = $response->getStatusCode();
-
-            // Convert response to array (non-blocking)
             $result = $response->toArray(false);
 
-            // Handle Success
             if ($statusCode === 200 && isset($result['result']['responseId'])) {
                 return new JsonResponse([
                     'success' => true,
@@ -662,14 +648,12 @@ class FormController extends AbstractController
                 ], 200);
             }
 
-            // Handle API Rejection (e.g., Bad Request)
             $this->logger->error('Qualtrics API Error: ' . json_encode($result));
             return new JsonResponse([
                 'success' => false,
                 'message' => 'Survey provider rejected the submission',
             ], 400);
         } catch (\Exception $e) {
-            // Handle Network/Server Errors
             $this->logger->error('Qualtrics Connection Failed: ' . $e->getMessage());
 
             return new JsonResponse([

@@ -10,11 +10,25 @@ use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use App\Exception\ApiException;
 
 class ApiController extends AbstractController
 {
+    protected HttpClientInterface $client;
+    protected string $appCmsBaseUrl;
+    protected array $pardotUrls;
+
+    public function __construct(
+        HttpClientInterface $client,
+        string $appCmsBaseUrl,
+        array $pardotUrls
+    ) {
+        $this->client = $client;
+        $this->appCmsBaseUrl = $appCmsBaseUrl;
+        $this->pardotUrls = $pardotUrls;
+    }
+
     /**
      * Return CMS API URL
      *
@@ -24,7 +38,7 @@ class ApiController extends AbstractController
      */
     public function getCmsUrl(string $path = ''): string
     {
-        $url = $_ENV['APP_CMS_BASE_URL'];
+        $url = $this->appCmsBaseUrl;
         if (empty($url)) {
             throw new ApiException('Cannot determine CMS API URL');
         }
@@ -47,24 +61,11 @@ class ApiController extends AbstractController
 
     private function getResponse($apiUrl, $request, $allowedFilters)
     {
-        $client = HttpClient::create();
-        return $client->request('GET', $apiUrl, ['query' => $this->filterParams($request->query->all(), $allowedFilters)]);
+        return $this->client->request('GET', $apiUrl, ['query' => $this->filterParams($request->query->all(), $allowedFilters)]);
     }
 
     /**
      * API proxy for Suppliers search
-     *
-     * Proxy requests from https://FRONTEND/api/suppliers?keyword=l&framework=&lot=&limit=20&page=1
-     * to: https://CMS/search-api/suppliers?keyword=l&framework=&lot=&limit=20&page=1
-     *
-     * @param Request $request
-     * @param CacheItemPoolInterface $cache
-     * @return JsonResponse
-     * @throws ApiException
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function suppliers(Request $request, CacheItemPoolInterface $cache)
     {
@@ -90,26 +91,13 @@ class ApiController extends AbstractController
 
     /**
      * API proxy for Frameworks search
-     *
-     * Proxy requests from https://FRONTEND/api/frameworks?keyword=l&limit=20&page=1
-     * to: https://CMS/search-api/suppliers?keyword=l&limit=20&page=1
-     *
-     * @param Request $request
-     * @param CacheItemPoolInterface $cache
-     * @return JsonResponse
-     * @throws ApiException
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function frameworks(Request $request, CacheItemPoolInterface $cache)
     {
         $apiUrl = $this->getCmsUrl('/search-api/frameworks');
 
-        // Build query and input filter params
-        $client = HttpClient::create();
-        $response = $client->request(
+        // ✅ FIX: Use injected HTTP client
+        $response = $this->client->request(
             'GET',
             $apiUrl,
             [
@@ -118,7 +106,7 @@ class ApiController extends AbstractController
         );
 
         if ($response->getStatusCode() !== 200) {
-            throw new ApiException(sprintf('Error with Search Framework API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getMessage()));
+            throw new ApiException(sprintf('Error with Search Framework API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent()));
         }
 
         $responseFinal = json_decode($response->getContent());
@@ -127,11 +115,6 @@ class ApiController extends AbstractController
 
     /**
      * Return a filtered array of search params for framework API query
-     *
-     * Please note any GET params you want to allow to be passed onto the WP API must be added here
-     *
-     * @param array $params
-     * @return array
      */
     private function filterFrameworkParams(array $params)
     {
@@ -169,18 +152,6 @@ class ApiController extends AbstractController
 
     /**
      * API proxy for news filter
-     *
-     * Proxy requests from https://FRONTEND/api/news?categories=&sectors=&products_services=&page=1
-     * to: https://CMS/wp-json/wp/v2/posts?categories=&sectors=&products_services=&page=1
-     *
-     * @param Request $request
-     * @param CacheItemPoolInterface $cache
-     * @return JsonResponse
-     * @throws ApiException
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function news(Request $request, CacheItemPoolInterface $cache)
     {
@@ -211,18 +182,6 @@ class ApiController extends AbstractController
 
     /**
      * API proxy for events filter
-     *
-     * Proxy requests from https://FRONTEND/api/events?audience_tag=149
-     * to: https://CMS/wp-json/wp/v2/event?audience_tag=149
-     *
-     * @param Request $request
-     * @param CacheItemPoolInterface $cache
-     * @return JsonResponse
-     * @throws ApiException
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function events(Request $request, CacheItemPoolInterface $cache)
     {
@@ -252,17 +211,6 @@ class ApiController extends AbstractController
 
     /**
      * Send email address to Pardot
-     *
-     * This sends submitted email addresses to a Pardot form to help with marketing tracking
-     *
-     * We're only expecting AJAX POST requests to this controller action with a POST variable 'email'
-     *
-     * @param Request $request
-     * @return JsonResponse
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function pardotEmail(Request $request)
     {
@@ -311,52 +259,16 @@ class ApiController extends AbstractController
     }
 
     /**
-     *
      * sets pardot form URL based on campaign code (subject)
-     * @param string $subject
-     * @return string
-    */
+     */
     public function setPardotFormURL(string $subject)
     {
-        // strip out all whitespace
         $subject = preg_replace('/\s*/', '', $subject);
-        // convert the string to all lowercase
         $subject = strtolower((string) $subject);
-
-        // campaign codes and form handler url
-        $codes = [
-            'contact'   => getenv('PARDOT_EMAIL_FORM_HANDLER_URL'),
-            'people'    => getenv('PARDOT_EMAIL_FORM_HANDLER_PEOPLE_URL'),
-            'corpsol'   => getenv('PARDOT_EMAIL_FORM_HANDLER_CORPORATE_URL'),
-            'buildings' => getenv('PARDOT_EMAIL_FORM_HANDLER_BUILDINGS_URL'),
-            'tech'      => getenv('PARDOT_EMAIL_FORM_HANDLER_TECH_URL'),
-            'guide'     => getenv('PARDOT_EMAIL_FORM_HANDLER_GUIDE_URL'),
-            'cnz'       => getenv('PARDOT_EMAIL_FORM_HANDLER_CNZ_URL'),
-            'digitransformation' => getenv('PARDOT_EMAIL_FORM_HANDLER_DIGITRANS_URL'),
-            'digilg'    => getenv('PARDOT_EMAIL_FORM_HANDLER_DIGILG_URL'),
-            'diginhs'   => getenv('PARDOT_EMAIL_FORM_HANDLER_DIGINHS_URL'),
-            'estates'   => getenv('PARDOT_EMAIL_FORM_HANDLER_ESTATES_URL'),
-            'covidrecovery'     => getenv('PARDOT_EMAIL_FORM_HANDLER_COVIDRECOVERY_URL'),
-            'agg'       => getenv('PARDOT_EMAIL_FORM_HANDLER_AGG_URL'),
-            'event'     => getenv('PARDOT_EMAIL_FORM_HANDLER_EVENT_URL'),
-            'construction'     => getenv('PARDOT_EMAIL_FORM_HANDLER_CONSTRUCTION_URL'),
-            'fleet'     => getenv('PARDOT_EMAIL_FORM_HANDLER_FLEET_URL'),
-            'tepas'     => getenv('PARDOT_EMAIL_FORM_HANDLER_TEPAS_URL'),
-            'nhswa'     => getenv('PARDOT_EMAIL_FORM_HANDLER_NHSWA_URL'),
-            'mou'     => getenv('PARDOT_EMAIL_FORM_HANDLER_MOU_URL'),
-            'cyber'     => getenv('PARDOT_EMAIL_FORM_HANDLER_CYBER_URL'),
-            'newsletter'     => getenv('PARDOT_EMAIL_FORM_HANDLER_NEWSLETTER_URL'),
-            'lg'     => getenv('PARDOT_EMAIL_FORM_HANDLER_LG_URL'),
-            'nhs'     => getenv('PARDOT_EMAIL_FORM_HANDLER_NHS_URL'),
-            'whitepaper' => getenv('PARDOT_EMAIL_FORM_HANDLER_WHITEPAPER_URL'),
-            'webinar' => getenv('PARDOT_EMAIL_FORM_HANDLER_WEBINAR_URL'),
-            'digitalbrochure' => getenv('PARDOT_EMAIL_FORM_HANDLER_DB_URL'),
-        ];
 
         $pardotFormUrl = null;
 
-        foreach ($codes as $code => $url) {
-            // check if campaign code is within subject
+        foreach ($this->pardotUrls as $code => $url) {
             if (str_contains($subject, $code)) {
                 $pardotFormUrl = $url;
                 break;

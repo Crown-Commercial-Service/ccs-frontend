@@ -20,6 +20,8 @@
         <env name="APP_API_BASE_URL" value="http://fake-api.local/" force="true" />
         <env name="APP_CMS_BASE_URL" value="http://fake-cms.local/" force="true" />
         <env name="APP_BASE_URL" value="http://localhost/" force="true" />
+        <env name="ORG_ID_PROD" value="dummy_prod_id" />
+        <env name="ORG_ID_TEST" value="dummy_test_id" />
     </php>
 
     <testsuites>

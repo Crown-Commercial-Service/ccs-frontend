@@ -25,19 +25,33 @@ abstract class BaseJourneyController extends AbstractController
 {
     /** @var string The name of the current journey. Must be defined in child classes. */
     protected string $journeyName;
+    
+    protected RestData $frameworksApi;
 
     /**
      * @param GuideJourneyService    $journeyService The service for managing guide journey data.
      * @param CacheItemPoolInterface $cache          The cache item pool for caching API responses.
+     * @param string                 $appApiBaseUrl  The injected Base URL string
      * @throws \Exception If $journeyName is not defined in the child class.
      */
     public function __construct(
         protected GuideJourneyService $journeyService,
-        private CacheItemPoolInterface $cache
+        private CacheItemPoolInterface $cache,
+        string $appApiBaseUrl 
     ) {
         if (empty($this->journeyName)) {
             throw new \Exception('$journeyName must be defined in ' . static::class);
         }
+
+        // ✅ FIX: Build the API object safely inside the constructor
+        $this->frameworksApi = new RestData(
+            $appApiBaseUrl,
+            new ContentModel(__DIR__ . '/../../../config/content/content-model.yaml')
+        );
+        $this->frameworksApi->setContentType('frameworks');
+        $psr16Cache = new Psr16Cache($this->cache);
+        $this->frameworksApi->setCache($psr16Cache);
+        $this->frameworksApi->setCacheLifetime(900);
     }
 
     /**
@@ -320,18 +334,10 @@ abstract class BaseJourneyController extends AbstractController
      */
     protected function getAgreement(string $rmNumber): array
     {
-        $api = new RestData(
-            getenv('APP_API_BASE_URL'),
-            new ContentModel(__DIR__ . '/../../../config/content/content-model.yaml')
-        );
-        $api->setContentType('frameworks');
-        $psr16Cache = new Psr16Cache($this->cache);
-        $api->setCache($psr16Cache);
-        $api->setCacheLifetime(900);
-
         try {
-            $results = $api->getOne($rmNumber);
-            $content = $results->getContent(); // Strata\Frontend\Content\Content object
+            // ✅ FIX: Use the injected and cleanly built API service
+            $results = $this->frameworksApi->getOne($rmNumber);
+            $content = $results->getContent();
             $requiredData = [
                 'title',
                 'summary',

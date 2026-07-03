@@ -9,6 +9,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class CspNonceSubscriber implements EventSubscriberInterface
 {
+    protected string $appEnv;
+    public function __construct(string $appEnv)
+    {
+        $this->appEnv = $appEnv;
+    }
+
     public static function getSubscribedEvents(): array
     {
         return [
@@ -53,8 +59,7 @@ class CspNonceSubscriber implements EventSubscriberInterface
                 "object-src 'none'; " .
                 "report-to https://neypx8roc8.execute-api.eu-west-2.amazonaws.com/prod/report";
 
-        // Start in Report-Only for testing
-        if (getenv('APP_ENV') == 'test') {
+        if ($this->appEnv == 'test') {
             $response->headers->set('Content-Security-Policy-Report-Only', $policy);
         }
     }

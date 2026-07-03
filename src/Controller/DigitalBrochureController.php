@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Controller\FormController;
 use App\Helper\ControllerHelper;
-use Symfony\Component\Cache\Psr16Cache;
-use Psr\Cache\CacheItemPoolInterface;
 use Strata\Frontend\Cms\Wordpress;
 use Strata\Frontend\ContentModel\ContentModel;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Strata\Frontend\Exception\NotFoundException;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Cache\Psr16Cache;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Psr\Log\LoggerInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 class DigitalBrochureController extends AbstractController
 {
@@ -25,19 +25,23 @@ class DigitalBrochureController extends AbstractController
      */
     protected $api;
     protected $formController;
+    protected string $appBaseUrl;
 
-    public function __construct(CacheItemPoolInterface $cache, FormController $formController)
-    {
-
-        $this->api = new WordPress(
-            getenv('APP_API_BASE_URL'),
-            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
-        );
+    public function __construct(
+        CacheItemPoolInterface $cache, 
+        FormController $formController,
+        Wordpress $api,
+        string $appBaseUrl
+    ) {
+        $this->api = $api;
         $this->api->setContentType('digital_brochures');
+        
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
+        
         $this->formController = $formController;
+        $this->appBaseUrl = $appBaseUrl;
     }
 
     public function request($id, $slug, Request $request)
@@ -47,7 +51,6 @@ class DigitalBrochureController extends AbstractController
         switch ($sanitisedSlug) {
             case "commercial-agreements-spring-2021-digital-brochure":
             case "commercial-agreements-autumn-2021-digital-brochure":
-                // id is just a dummy value
                 return $this->redirectToRoute('digital_brochure_request', ['id' => '111', 'slug' => 'commercial-agreements-digital-brochure']);
                 break;
             case "digital-transformation-guide-technology-procurement-for-local-government":
@@ -68,7 +71,9 @@ class DigitalBrochureController extends AbstractController
         $formData = ControllerHelper::getFormData($params);
         $utmParams = $request->query->all();
 
-        $returnURL = getenv('APP_BASE_URL') . '/digital_brochure/confirmation/' . $digital_brochure->getId() . '/' . $digital_brochure->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $queryString = $request->getQueryString() ?? '';
+        $returnURL = $this->appBaseUrl . '/digital_brochure/confirmation/' . $digital_brochure->getId() . '/' . $digital_brochure->getUrlSlug() . '/?' . filter_var($queryString, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        
         $campaignCode = $digital_brochure->getContent()->get('campaign_code') ? $digital_brochure->getContent()->get('campaign_code')->getValue() : '';
         $description   = $digital_brochure->getContent()->get('description') ? $digital_brochure->getContent()->get('description')->getValue() : '';
 
