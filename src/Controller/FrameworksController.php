@@ -28,7 +28,7 @@ class FrameworksController extends AbstractController
      * @var RestData
      */
     protected $searchApi;
-    
+
     protected HttpClientInterface $httpClient;
     protected string $appApiBaseUrl;
     protected string $searchApiBaseUrl;
@@ -53,7 +53,7 @@ class FrameworksController extends AbstractController
 
         $this->api = new RestData($this->appApiBaseUrl, $contentModel);
         $this->api->setContentType('frameworks');
-        
+
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
@@ -218,7 +218,7 @@ class FrameworksController extends AbstractController
     private function getUpcomingDealsInfo()
     {
         $url = $this->appApiBaseUrl . 'ccs/v1/upcoming-deals-page/0';
-        
+
         $response = $this->httpClient->request('GET', $url);
 
         if ($response->getStatusCode() == 200) {
@@ -437,7 +437,7 @@ class FrameworksController extends AbstractController
         return(false);
     }
 
-   private function blockBot(?string $userAgent)
+    private function blockBot(?string $userAgent)
     {
         // ✅ Add a check to ensure $userAgent isn't null before running the regex
         if ($userAgent && preg_match('/bot|crawl|slurp|spider/i', $userAgent)) {

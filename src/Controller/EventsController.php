@@ -35,11 +35,11 @@ class EventsController extends AbstractController
     ) {
         $this->api = $api;
         $this->api->setContentType('events');
-        
+
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
-        
+
         $this->searchApiBaseUrl = $searchApiBaseUrl;
         $this->appBaseUrl = $appBaseUrl;
     }

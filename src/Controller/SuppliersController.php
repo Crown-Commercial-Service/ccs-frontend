@@ -44,7 +44,7 @@ class SuppliersController extends AbstractController
 
         $this->api = new RestData($this->appApiBaseUrl, $contentModel);
         $this->api->setContentType('suppliers');
-        
+
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);

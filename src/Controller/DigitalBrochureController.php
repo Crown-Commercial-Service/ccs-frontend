@@ -28,18 +28,18 @@ class DigitalBrochureController extends AbstractController
     protected string $appBaseUrl;
 
     public function __construct(
-        CacheItemPoolInterface $cache, 
+        CacheItemPoolInterface $cache,
         FormController $formController,
         Wordpress $api,
         string $appBaseUrl
     ) {
         $this->api = $api;
         $this->api->setContentType('digital_brochures');
-        
+
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
-        
+
         $this->formController = $formController;
         $this->appBaseUrl = $appBaseUrl;
     }
@@ -73,7 +73,7 @@ class DigitalBrochureController extends AbstractController
 
         $queryString = $request->getQueryString() ?? '';
         $returnURL = $this->appBaseUrl . '/digital_brochure/confirmation/' . $digital_brochure->getId() . '/' . $digital_brochure->getUrlSlug() . '/?' . filter_var($queryString, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        
+
         $campaignCode = $digital_brochure->getContent()->get('campaign_code') ? $digital_brochure->getContent()->get('campaign_code')->getValue() : '';
         $description   = $digital_brochure->getContent()->get('description') ? $digital_brochure->getContent()->get('description')->getValue() : '';
 

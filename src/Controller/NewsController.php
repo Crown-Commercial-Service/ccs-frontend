@@ -118,10 +118,10 @@ class NewsController extends AbstractController
 
         try {
             $page = $this->api->getPageByUrl($request->getRequestUri());
-            
+
             // ✅ FIX: Using the injected HTTP Client and injected API base URL
             $response = $this->httpClient->request('GET', $this->appApiBaseUrl . 'wp/v2/posts/' . $page->getId());
-            
+
             if ($response->getStatusCode() == 200) {
                 $acfContent = (array) json_decode($response->getContent())->acf;
                 $authorText = array_key_exists('author_name_text', (array)$acfContent) ? $acfContent['author_name_text'] : null;

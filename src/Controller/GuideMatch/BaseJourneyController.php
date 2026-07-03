@@ -25,7 +25,7 @@ abstract class BaseJourneyController extends AbstractController
 {
     /** @var string The name of the current journey. Must be defined in child classes. */
     protected string $journeyName;
-    
+
     protected RestData $frameworksApi;
 
     /**
@@ -37,7 +37,7 @@ abstract class BaseJourneyController extends AbstractController
     public function __construct(
         protected GuideJourneyService $journeyService,
         private CacheItemPoolInterface $cache,
-        string $appApiBaseUrl 
+        string $appApiBaseUrl
     ) {
         if (empty($this->journeyName)) {
             throw new \Exception('$journeyName must be defined in ' . static::class);

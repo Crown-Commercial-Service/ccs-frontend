@@ -23,18 +23,18 @@ class WhitepaperController extends AbstractController
     protected string $appBaseUrl;
 
     public function __construct(
-        CacheItemPoolInterface $cache, 
+        CacheItemPoolInterface $cache,
         FormController $formController,
         Wordpress $api,
         string $appBaseUrl
     ) {
         $this->api = $api;
         $this->api->setContentType('whitepapers');
-        
+
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
-        
+
         $this->formController = $formController;
         $this->appBaseUrl = $appBaseUrl;
     }
@@ -58,7 +58,7 @@ class WhitepaperController extends AbstractController
 
         $queryString = $request->getQueryString() ?? '';
         $returnURL = $this->appBaseUrl . '/whitepaper/confirmation/' . $whitepaper->getId() . '/' . $whitepaper->getUrlSlug() . '/?' . filter_var($queryString, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        
+
         $campaignCode = $whitepaper->getContent()->get('campaign_code') ? $whitepaper->getContent()->get('campaign_code')->getValue() : '';
         $description = $whitepaper->getContent()->get('description') ? $whitepaper->getContent()->get('description')->getValue() : '';
 

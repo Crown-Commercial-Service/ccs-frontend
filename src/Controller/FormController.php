@@ -42,7 +42,7 @@ class FormController extends AbstractController
     protected string $qualtricsSurveyId;
 
     public function __construct(
-        CacheItemPoolInterface $cache, 
+        CacheItemPoolInterface $cache,
         LoggerInterface $logger,
         HttpClientInterface $httpClient,
         ControllerHelper $controllerHelper,

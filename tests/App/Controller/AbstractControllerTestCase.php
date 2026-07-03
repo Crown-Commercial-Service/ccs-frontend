@@ -22,7 +22,7 @@ abstract class AbstractControllerTestCase extends WebTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         // Boot the Symfony kernel and browser client
         $this->client = static::createClient();
 
@@ -36,12 +36,12 @@ abstract class AbstractControllerTestCase extends WebTestCase
 
         // 3. Mock the ControllerHelper (intercepts getHomeMessageBanner, getCSCMessage, etc.)
         $this->mockControllerHelper = $this->createMock(ControllerHelper::class);
-        
+
         // Set safe default return values so tests don't crash if they forget to mock them
         $this->mockControllerHelper->method('getHomeMessageBanner')->willReturn(null);
         $this->mockControllerHelper->method('getCSCMessage')->willReturn('');
         $this->mockControllerHelper->method('getOrgId')->willReturn('test_org_id');
-        
+
         static::getContainer()->set(ControllerHelper::class, $this->mockControllerHelper);
 
         // 4. Mock the Symfony HTTP Client (Intercepts Salesforce, Pardot, and API calls)
@@ -56,7 +56,7 @@ abstract class AbstractControllerTestCase extends WebTestCase
         $mockContent = \App\Tests\App\Mock\CMSContentMockFactory::createMockContent($pageData['acf'] ?? []);
 
         $mockPage = $this->createMock(\Strata\Frontend\Content\Page::class);
-        
+
         $mockPage->method('getTitle')->willReturn($pageData['title']['rendered'] ?? 'Fallback Title');
         $mockPage->method('getTemplate')->willReturn($pageData['template'] ?? '');
         $mockPage->method('getContent')->willReturn($mockContent);

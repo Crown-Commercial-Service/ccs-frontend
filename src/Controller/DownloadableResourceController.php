@@ -28,18 +28,18 @@ class DownloadableResourceController extends AbstractController
 
     // ✅ FIX: Injected the core Wordpress instance and bound appBaseUrl parameter directly
     public function __construct(
-        CacheItemPoolInterface $cache, 
+        CacheItemPoolInterface $cache,
         FormController $formController,
         Wordpress $api,
         string $appBaseUrl
     ) {
         $this->api = $api;
         $this->api->setContentType('downloadable_resources');
-        
+
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
-        
+
         $this->formController = $formController;
         $this->appBaseUrl = $appBaseUrl;
     }
@@ -63,7 +63,7 @@ class DownloadableResourceController extends AbstractController
 
         $queryString = $request->getQueryString() ?? '';
         $returnURL = $this->appBaseUrl . '/downloadable-resource/confirmation/' . $downloadable_resource->getId() . '/' . $downloadable_resource->getUrlSlug() . '/?' . filter_var($queryString, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        
+
         $campaignCode = $downloadable_resource->getContent()->get('campaign_code') ? $downloadable_resource->getContent()->get('campaign_code')->getValue() : '';
         $description   = $downloadable_resource->getContent()->get('description') ? $downloadable_resource->getContent()->get('description')->getValue() : '';
 

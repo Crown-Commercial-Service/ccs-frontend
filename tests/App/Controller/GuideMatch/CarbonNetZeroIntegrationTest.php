@@ -24,12 +24,12 @@ class CarbonNetZeroIntegrationTest extends AbstractControllerTestCase
 
     public function testInvalidRouteReturns404()
     {
-       
+
         $this->mockHttpClient->setResponseFactory([
             new MockResponse('[]', ['http_code' => 200])
         ]);
 
-        // Inject the feature-specific mocks 
+        // Inject the feature-specific mocks
         $this->injectMocks();
 
         $this->client->request('GET', '/carbon-net-zero/garbage-path');
@@ -40,7 +40,7 @@ class CarbonNetZeroIntegrationTest extends AbstractControllerTestCase
     /**
      * Helper to inject mocks into the container for the current client.
      */
-   private function injectMocks()
+    private function injectMocks()
     {
         // 1. Mock Redirection API (Keep this string ID mapping as is)
         $mockRedirection = $this->createMock(RestData::class);
@@ -48,7 +48,7 @@ class CarbonNetZeroIntegrationTest extends AbstractControllerTestCase
         static::getContainer()->set('app.api.redirection', $mockRedirection);
 
         // 2.Remove the duplicate static::getContainer()->set(Wordpress::class) call!
-        // The base class AbstractControllerTestCase already sets up and registers 
+        // The base class AbstractControllerTestCase already sets up and registers
         // $this->mockWordpressApi cleanly in the container before the test begins.
         $this->mockWordpressApi->method('setContentType')->willReturnSelf();
 

@@ -55,7 +55,7 @@ class PageController extends AbstractController
         $this->api->setCacheLifetime(900);
 
         $this->client = $httpClient;
-        
+
         $this->appApiBaseUrl = $appApiBaseUrl;
         $this->appBaseUrl = $appBaseUrl;
         $this->appCmsBaseUrl = $appCmsBaseUrl;
@@ -80,11 +80,11 @@ class PageController extends AbstractController
         $news = $this->api->listPages(1, ['per_page' => 3]);
 
         $homepageCompUrl = $this->appApiBaseUrl . 'ccs/v1/homepage-components/0';
-        
-  
+
+
         $messageBanner = $this->controllerHelper->getHomeMessageBanner();
-    
-        
+
+
         $response = $this->client->request('GET', $homepageCompUrl);
         $homepageContent = null;
 

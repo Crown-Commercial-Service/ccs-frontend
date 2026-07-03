@@ -16,7 +16,7 @@ class PageControllerTest extends AbstractControllerTestCase
         // Enforce strict browser-like error handling across the entire test suite
         set_error_handler(function ($severity, $message, $file, $line) {
             if ($severity === E_DEPRECATED || $severity === E_USER_DEPRECATED || str_contains($file, '/vendor/')) {
-                return false; 
+                return false;
             }
             throw new \ErrorException($message, 0, $severity, $file, $line);
         });
@@ -25,7 +25,7 @@ class PageControllerTest extends AbstractControllerTestCase
     public function testHomepageLoadsWithMockedData(): void
     {
         $fixturePath = __DIR__ . '/../../Fixtures/homepage_components.json';
-        
+
         // Feed the MockResponse into the inherited HttpClient
         $this->mockHttpClient->setResponseFactory([
             new MockResponse(file_get_contents($fixturePath), ['http_code' => 200])
@@ -36,12 +36,12 @@ class PageControllerTest extends AbstractControllerTestCase
         $mockImage->method('byName')->willReturn('https://via.placeholder.com/150');
 
         $mockDate = $this->createMock(\Strata\Frontend\Content\Field\DateTime::class);
-        $mockDate->method('format')->willReturn('23 June 2026'); 
+        $mockDate->method('format')->willReturn('23 June 2026');
 
         $mockPage = $this->createMock(\Strata\Frontend\Content\Page::class);
         $mockPage->method('getUrlSlug')->willReturn('fake-news-article');
         $mockPage->method('getTitle')->willReturn('Mocked News Article');
-        $mockPage->method('getDateModified')->willReturn($mockDate); 
+        $mockPage->method('getDateModified')->willReturn($mockDate);
         $mockPage->method('getFeaturedImage')->willReturn($mockImage);
         $mockPage->method('getTaxonomies')->willReturn(['categories' => [['name' => 'Procurement']]]);
 
@@ -71,7 +71,7 @@ class PageControllerTest extends AbstractControllerTestCase
         $pageData = json_decode(file_get_contents($pageFixturePath), true);
 
         $cardsFixturePath = __DIR__ . '/../../Fixtures/option_cards.json';
-        
+
         // Feed the Option Cards response to the inherited HTTP Client
         $this->mockHttpClient->setResponseFactory([
             new MockResponse(file_get_contents($cardsFixturePath), ['http_code' => 200])

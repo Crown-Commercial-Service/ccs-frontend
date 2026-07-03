@@ -21,18 +21,18 @@ class WebinarController extends AbstractController
     protected FormController $formController;
     protected string $appBaseUrl;
     public function __construct(
-        CacheItemPoolInterface $cache, 
+        CacheItemPoolInterface $cache,
         FormController $formController,
         Wordpress $api,
         string $appBaseUrl
     ) {
         $this->api = $api;
         $this->api->setContentType('webinars');
-        
+
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
-        
+
         $this->formController = $formController;
         $this->appBaseUrl = $appBaseUrl;
     }
@@ -56,7 +56,7 @@ class WebinarController extends AbstractController
 
         $queryString = $request->getQueryString() ?? '';
         $returnURL = $this->appBaseUrl . '/webinar/confirmation/' . $webinar->getId() . '/' . $webinar->getUrlSlug() . '/?' . filter_var($queryString, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        
+
         $campaignCode = $webinar->getContent()->get('campaign_code') ? $webinar->getContent()->get('campaign_code')->getValue() : '';
         $description   = $webinar->getContent()->get('description') ? $webinar->getContent()->get('description')->getValue() : '';
 
