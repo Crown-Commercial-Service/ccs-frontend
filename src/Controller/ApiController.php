@@ -82,7 +82,7 @@ class ApiController extends AbstractController
         $response = $this->getResponse($apiUrl, $request, $allowedFilters);
 
         if ($response->getStatusCode() !== 200) {
-            throw new ApiException(sprintf('Error with Search Suppliers API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent()));
+            throw new ApiException(sprintf('Error with Search Suppliers API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent(false)));
         }
 
         $responseFinal = json_decode((string) $response->getContent());
@@ -106,7 +106,7 @@ class ApiController extends AbstractController
         );
 
         if ($response->getStatusCode() !== 200) {
-            throw new ApiException(sprintf('Error with Search Framework API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent()));
+            throw new ApiException(sprintf('Error with Search Framework API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent(false)));
         }
 
         $responseFinal = json_decode($response->getContent());
@@ -172,7 +172,7 @@ class ApiController extends AbstractController
         $response = $this->getResponse($apiUrl, $request, $allowedFilters);
 
         if ($response->getStatusCode() !== 200) {
-            throw new ApiException(sprintf('Error with news filter API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent()));
+            throw new ApiException(sprintf('Error with news filter API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent(false)));
         }
         $responseFinal['meta']['X-WP-TotalPages'] = (int) $response->getHeaders()["x-wp-totalpages"][0];
         $responseFinal['meta']['X-WP-Total'] = (int) $response->getHeaders()["x-wp-total"][0];
@@ -201,7 +201,7 @@ class ApiController extends AbstractController
         $response = $this->getResponse($apiUrl, $request, $allowedFilters);
 
         if ($response->getStatusCode() !== 200) {
-            throw new ApiException(sprintf('Error with event filter API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent()));
+            throw new ApiException(sprintf('Error with event filter API query, API status code: %s, API status message: %s', $response->getStatusCode(), $response->getContent(false)));
         }
         $responseFinal['meta']['X-WP-TotalPages'] = (int) $response->getHeaders()["x-wp-totalpages"][0];
         $responseFinal['meta']['X-WP-Total'] = (int) $response->getHeaders()["x-wp-total"][0];
@@ -254,7 +254,7 @@ class ApiController extends AbstractController
             return new JsonResponse(['message' => 'OK']);
         } else {
             $response = $pardot->getLastResponse();
-            throw new PardotException(sprintf('Error sending email data to Pardot. HTTP status code: %s, Message: %s', $response->getStatusCode(), $response->getContent()));
+            throw new PardotException(sprintf('Error sending email data to Pardot. HTTP status code: %s, Message: %s', $response->getStatusCode(), $response->getContent(false)));
         }
     }
 

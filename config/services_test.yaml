@@ -8,7 +8,7 @@ services:
             $appApiBaseUrl: '%env(APP_API_BASE_URL)%'
             $appEnv: '%kernel.environment%'
             $orgIdProd: 'mock_prod_org_id'
-            $orgIdTest: 'mock_prod_org_id'
+            $orgIdTest: 'mock_prod_test_id'
 
     Symfony\Contracts\HttpClient\HttpClientInterface:
         alias: 'http_client'
