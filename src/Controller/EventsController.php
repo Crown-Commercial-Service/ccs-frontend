@@ -9,9 +9,7 @@ use Error;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Psr16Cache;
 use Strata\Frontend\Cms\Wordpress;
-use Strata\Frontend\ContentModel\ContentModel;
 use Strata\Frontend\Exception\PaginationException;
-use Strata\Frontend\Exception\WordpressException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Strata\Frontend\Exception\NotFoundException;
@@ -25,17 +23,25 @@ class EventsController extends AbstractController
      * @var Wordpress
      */
     protected $api;
+    protected string $searchApiBaseUrl;
+    protected string $appBaseUrl;
 
-    public function __construct(CacheItemPoolInterface $cache)
-    {
-        $this->api = new Wordpress(
-            getenv('APP_API_BASE_URL'),
-            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
-        );
+    // ✅ FIX: Injected Wordpress service and bound configuration strings natively
+    public function __construct(
+        CacheItemPoolInterface $cache,
+        Wordpress $api,
+        string $searchApiBaseUrl,
+        string $appBaseUrl
+    ) {
+        $this->api = $api;
         $this->api->setContentType('events');
+
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
+
+        $this->searchApiBaseUrl = $searchApiBaseUrl;
+        $this->appBaseUrl = $appBaseUrl;
     }
 
     public function list(Request $request, $page = 1)
@@ -78,8 +84,8 @@ class EventsController extends AbstractController
         }
 
         return $this->render('events/list.html.twig', [
-            'api_base_url'          => getenv('SEARCH_API_BASE_URL'),
-            'app_base_url'          => getenv('APP_BASE_URL'),
+            'api_base_url'          => $this->searchApiBaseUrl,
+            'app_base_url'          => $this->appBaseUrl,
             'url'                   => sprintf('/events/page/%s', $page),
             'events'                => $list,
             'pagination'            => $list->getPagination(),

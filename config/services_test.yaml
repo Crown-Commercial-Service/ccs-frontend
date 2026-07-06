@@ -1,0 +1,29 @@
+# config/services_test.yaml
+services:
+    _defaults:
+        public: true
+        autowire: true
+        autoconfigure: true
+        bind:                 
+            $appApiBaseUrl: '%env(APP_API_BASE_URL)%'
+            $appEnv: '%kernel.environment%'
+            $orgIdProd: 'mock_prod_org_id'
+            $orgIdTest: 'mock_prod_test_id'
+
+    Symfony\Contracts\HttpClient\HttpClientInterface:
+        alias: 'http_client'
+        public: true
+
+    # Substitute the production MenuController with our stable Test Double
+    App\Controller\MenuController:
+        class: App\Tests\App\Controller\Double\MockMenuController
+        public: true
+
+    App\Helper\ControllerHelper:
+        public: true
+
+    Strata\Frontend\Cms\Wordpress:
+        public: true
+
+    Strata\Frontend\Cms\RestData:
+        public: true

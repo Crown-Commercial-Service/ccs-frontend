@@ -1,0 +1,14 @@
+{
+    "first_option_card": {
+        "title": "Search our commercial agreements",
+        "description": "Search over 100 commercial agreements covering a wide range of products and services.",
+        "link": "Search agreements.",
+        "link_url": "https://www.crowncommercial.gov.uk/agreements/?&status=Live&page=1"
+    },
+    "second_option_card": {
+        "title": "Glossary ",
+        "description": "Find explanations for common terms and abbreviations used in public procurement.",
+        "link": "Explore our glossary.",
+        "link_url": "https://www.crowncommercial.gov.uk/glossary"
+    }
+}
