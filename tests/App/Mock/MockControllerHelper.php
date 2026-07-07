@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Tests\App\Mock;
@@ -11,7 +12,7 @@ class MockControllerHelper extends ControllerHelper
     private string $cscMessage = '';
     private string $orgId = 'test_org_id';
 
-    // Accept the arguments to satisfy Symfony's DI binder, 
+    // Accept the arguments to satisfy Symfony's DI binder,
     // but leave the body empty so it NEVER loads the real RestData or YAML files
     public function __construct(
         string $appApiBaseUrl = '',
