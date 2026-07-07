@@ -20,6 +20,7 @@ services:
         public: true
 
     App\Helper\ControllerHelper:
+        class: App\Tests\App\Mock\MockControllerHelper
         public: true
 
     Strata\Frontend\Cms\Wordpress:

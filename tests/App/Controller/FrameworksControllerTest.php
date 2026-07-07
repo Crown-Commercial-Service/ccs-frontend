@@ -47,8 +47,9 @@ class FrameworksControllerTest extends AbstractControllerTestCase
     public function testShowEndpointRendersFrameworkSuccessfully()
     {
         // 1. Load and decode your raw JSON fixture
-        // (Make sure the path matches where you put your fixtures folder!)
         $fixturePath = __DIR__ . '/../../Fixtures/frameworks_show.json';
+        $this->assertFileExists($fixturePath, "Whoops! Cannot find fixture at: " . $fixturePath);
+        
         $fixtureJson = file_get_contents($fixturePath);
         $frameworkData = json_decode($fixtureJson, true);
 
@@ -59,7 +60,7 @@ class FrameworksControllerTest extends AbstractControllerTestCase
         $mockPage = $this->createMock(\Strata\Frontend\Content\Page::class);
         $mockPage->method('getContent')->willReturn($mockContent);
 
-        // 4. Build the Mock Chain for the ContentModel (to prevent the null pointer errors)
+        // 4. Build the Mock Chain for the ContentModel
         $mockContentType = $this->createMock(\Strata\Frontend\ContentModel\ContentType::class);
         $mockContentModel = $this->createMock(\Strata\Frontend\ContentModel\ContentModel::class);
         $mockContentModel->method('getContentType')->willReturn($mockContentType);
@@ -67,29 +68,25 @@ class FrameworksControllerTest extends AbstractControllerTestCase
         // 5. Create the RestData mock
         $mockRestData = $this->createMock(\Strata\Frontend\Cms\RestData::class);
         $mockRestData->method('getContentModel')->willReturn($mockContentModel);
-        
-        // Note: Strata's default method for fetching a single page is getOne(). 
-        // If your controller uses a different method name to fetch the agreement, update it here.
         $mockRestData->method('getOne')->willReturn($mockPage); 
 
-        // 6. Inject the mock into the container
+        // 6. Inject the RestData API mock into the container
+        // (ControllerHelper mock is now handled automatically by services_test.yaml!)
         static::getContainer()->set('app.test.rest_data_api', $mockRestData);
 
-        // 7. Dispatch the request to the show endpoint for RM6184
+        // 8. Dispatch the request to the show endpoint for RM6184
         $this->client->request('GET', '/agreements/RM6184');
 
-        // 8. Run your assertions
+        // 9. Run your assertions
         $this->assertResponseIsSuccessful();
         
-        // Assert that the page rendered the specific data from our fixture!
         $html = $this->client->getResponse()->getContent();
         
+        // Assert that the page rendered the specific data from our fixture!
         $this->assertStringContainsString('RM6184', $html);
         $this->assertStringContainsString('Offsite Construction Solutions', $html);
-        $this->assertStringContainsString('Standard framework', $html);
+        $this->assertStringContainsString('PCR15 Framework', $html);
     }
-
-
   /**
      * Tests that the lot suppliers endpoint compiles data into a downloadable CSV attachment.
      */
@@ -145,5 +142,240 @@ class FrameworksControllerTest extends AbstractControllerTestCase
         $csvContent = $this->client->getResponse()->getContent();
         $this->assertStringContainsString('"Supplier Name","Trading Name"', $csvContent);
         $this->assertStringContainsString('"Acme Corp","Acme Trading"', $csvContent);
+    }
+
+  /**
+     * Tests that the framework list endpoint successfully renders the page using the JSON fixture.
+     */
+    public function testListEndpointRendersFrameworksSuccessfully()
+    {
+        // 1. Load and decode your list fixture
+        $fixturePath = __DIR__ . '/../../Fixtures/frameworks_list.json';
+        $this->assertFileExists($fixturePath, "Cannot find fixture at: " . $fixturePath);
+        
+        $fixtureJson = file_get_contents($fixturePath);
+        $apiData = json_decode($fixtureJson, true);
+
+        // 2. Mock the Pagination object using the "meta" data from your JSON
+        $mockPagination = $this->createMock(\Strata\Frontend\Content\Pagination\PaginationInterface::class);
+        $mockPagination->method('getTotalResults')->willReturn($apiData['meta']['total_results']);
+        
+        // Return 1 so Twig skips the includes/pagination.html.twig file and avoids the crash!
+        $mockPagination->method('getTotalPages')->willReturn(1); // 248 results / 20 per page
+
+        // 3. Instantiate the REAL PageCollection
+        $realCollection = new \Strata\Frontend\Content\PageCollection($mockPagination);
+
+        // 4. Loop through the "results" array in your JSON and create a mock Page for each framework
+        foreach ($apiData['results'] as $frameworkData) {
+            // NOTE: If your test crashes on "format() on string", you will need to update your 
+            // CMSContentMockFactory to convert 'start_date' and 'end_date' into \DateTime objects!
+            $mockContent = \App\Tests\App\Mock\CMSContentMockFactory::createMockContent($frameworkData);
+            
+            $mockPage = $this->createMock(\Strata\Frontend\Content\Page::class);
+            $mockPage->method('getContent')->willReturn($mockContent);
+            
+            $realCollection->addItem($mockPage);
+        }
+
+        // 5. Build the ContentType & ContentModel mocks
+        $mockContentType = $this->createMock(\Strata\Frontend\ContentModel\ContentType::class);
+        $mockContentModel = $this->createMock(\Strata\Frontend\ContentModel\ContentModel::class);
+        $mockContentModel->method('getContentType')->willReturn($mockContentType);
+
+        // 6. Mock the SEARCH API (RestData)
+        $mockSearchApi = $this->createMock(\Strata\Frontend\Cms\RestData::class);
+        $mockSearchApi->method('getContentModel')->willReturn($mockContentModel);
+        $mockSearchApi->method('getContentType')->willReturn($mockContentType); 
+        
+        // Return our fixture-populated collection!
+        $mockSearchApi->method('list')->willReturn($realCollection); 
+
+        // 7. Inject the mock into the container (Targeting the search API)
+        static::getContainer()->set('app.test.rest_data_search_api', $mockSearchApi);
+
+        // 8. Dispatch the request to the list endpoint
+        $this->client->request('GET', '/agreements');
+
+        // 9. Run your assertions
+        $this->assertResponseIsSuccessful();
+        
+        $html = $this->client->getResponse()->getContent();
+        
+        // Assert the total results span is rendered (from list.html.twig)
+        $this->assertStringContainsString('248 agreements found', $html);
+
+        // Assert that the _resultWithoutJS.html.twig fallback correctly rendered the items from your JSON!
+        
+        // Checking for the first result (RM6348):
+        $this->assertStringContainsString('RM6348', $html);
+        $this->assertStringContainsString('Adult Skills and Learning DPS', $html);
+        $this->assertStringContainsString('Dynamic Purchasing System', $html);
+        
+        // Checking for the second result (RM6102):
+        $this->assertStringContainsString('RM6102', $html);
+        $this->assertStringContainsString('Apprenticeship Training Dynamic Marketplace', $html);
+    }
+
+      /**
+     * Tests that the upcoming deals page renders successfully with content from the HTTP API.
+     */
+    public function testUpcomingDealsPageRendersSuccessfully()
+    {
+        $this->mockHttpClient->setResponseFactory(function () {
+            return new MockResponse(json_encode([
+                'upcomingDealsInfo' => [
+                    'title' => 'Upcoming agreements overview',
+                    'page_description' => '<p>Find upcoming procurements here.</p>',
+                    'file' => '/files/pipeline-report.pdf'
+                ],
+                'table_4' => ['title' => 'Future pipeline', 'caption' => ''],
+                'table_3' => ['title' => 'Planned procurements', 'caption' => ''],
+                'table_1' => ['title' => 'Procurements in progress', 'caption' => ''],
+                'table_0' => ['title' => 'Procurements recently awarded', 'caption' => ''],
+                'table_2' => ['title' => 'Dynamic Purchasing Systems currently open', 'caption' => ''],
+                'table_5' => ['title' => 'Dynamic Market currently open', 'caption' => ''],
+            ]));
+        });
+
+        $controller = static::getContainer()->get(\App\Controller\FrameworksController::class);
+        $reflection = new \ReflectionClass($controller);
+        $httpClientProperty = $reflection->getProperty('httpClient');
+        $httpClientProperty->setAccessible(true);
+        $httpClientProperty->setValue($controller, $this->mockHttpClient);
+
+        $mockPagination = $this->createMock(\Strata\Frontend\Content\Pagination\PaginationInterface::class);
+        $mockPagination->method('getTotalPages')->willReturn(1);
+        $mockPagination->method('getTotalResults')->willReturn(0);
+
+        $realCollection = new \Strata\Frontend\Content\PageCollection($mockPagination);
+
+        $mockContentType = $this->createMock(\Strata\Frontend\ContentModel\ContentType::class);
+        $mockContentModel = $this->createMock(\Strata\Frontend\ContentModel\ContentModel::class);
+        $mockContentModel->method('getContentType')->willReturn($mockContentType);
+
+        $mockSearchApi = $this->createMock(\Strata\Frontend\Cms\RestData::class);
+        $mockSearchApi->method('getContentModel')->willReturn($mockContentModel);
+        $mockSearchApi->method('getContentType')->willReturn($mockContentType);
+        $mockSearchApi->method('list')->willReturn($realCollection);
+
+        $searchApiProperty = $reflection->getProperty('searchApi');
+        $searchApiProperty->setAccessible(true);
+        $searchApiProperty->setValue($controller, $mockSearchApi);
+
+        $this->client->request('GET', '/agreements/upcoming');
+
+        $this->assertResponseIsSuccessful();
+        $html = $this->client->getResponse()->getContent();
+
+        $this->assertStringContainsString('Upcoming agreements overview', $html);
+        $this->assertStringContainsString('Find upcoming procurements here.', $html);
+    }
+
+    /**
+     * Tests that the framework suppliers endpoint renders successfully.
+     */
+    public function testSuppliersOnFrameworkRendersSuccessfully()
+    {
+        // 1. Build the exact data structure Twig expects
+        $supplierData = [
+            'supplier_id' => 123,
+            'supplier_name' => 'Acme Test Supplier',
+            'supplier_crp_url' => '',
+            'live_frameworks' => [
+                [
+                    'title' => 'Test Framework',
+                    'rm_number' => 'RM1234',
+                    'status' => 'Live' // Setting this to Live bypasses the end_date.format() Twig crash!
+                ]
+            ]
+        ];
+
+        $mockContent = \App\Tests\App\Mock\CMSContentMockFactory::createMockContent($supplierData);
+        $mockPage = $this->createMock(\Strata\Frontend\Content\Page::class);
+        $mockPage->method('getContent')->willReturn($mockContent);
+
+        // 2. Mock Pagination 
+        $mockPagination = $this->createMock(\Strata\Frontend\Content\Pagination\PaginationInterface::class);
+        $mockPagination->method('getTotalPages')->willReturn(1);
+        $mockPagination->method('getTotalResults')->willReturn(1);
+
+        // 3. Build Collection & Add Metadata
+        $realCollection = new \Strata\Frontend\Content\PageCollection($mockPagination);
+        $realCollection->addItem($mockPage);
+        $realCollection->getMetadata()->add('framework_title', 'Test Framework Title');
+        $realCollection->getMetadata()->add('framework_rm_number', 'RM1234');
+
+        // 4. API Mocking
+        $mockContentType = $this->createMock(\Strata\Frontend\ContentModel\ContentType::class);
+        $mockContentModel = $this->createMock(\Strata\Frontend\ContentModel\ContentModel::class);
+        $mockContentModel->method('getContentType')->willReturn($mockContentType);
+
+        $mockRestData = $this->createMock(\Strata\Frontend\Cms\RestData::class);
+        $mockRestData->method('getContentModel')->willReturn($mockContentModel);
+        $mockRestData->method('list')->willReturn($realCollection);
+
+        // Inject into container
+        static::getContainer()->set('app.test.rest_data_api', $mockRestData);
+
+        // 5. Dispatch Request (Check your routes.yaml if this URL varies!)
+        $this->client->request('GET', '/agreements/RM1234/suppliers');
+
+        // 6. Assertions
+        $this->assertResponseIsSuccessful();
+        $html = $this->client->getResponse()->getContent();
+        
+        $this->assertStringContainsString('Acme Test Supplier', $html);
+        $this->assertStringContainsString('Test Framework Title', $html);
+    }
+
+    /**
+     * Tests that the framework lot suppliers endpoint renders successfully.
+     */
+    public function testSuppliersOnLotRendersSuccessfully()
+    {
+        $supplierData = [
+            'supplier_id' => 456,
+            'supplier_name' => 'Lot Supplier',
+            'supplier_trading_name' => 'Lot Trading Name',
+            'supplier_contact_name' => 'Jane Doe',
+            'supplier_contact_email' => 'jane@example.com',
+        ];
+
+        $mockContent = \App\Tests\App\Mock\CMSContentMockFactory::createMockContent($supplierData);
+        $mockPage = $this->createMock(\Strata\Frontend\Content\Page::class);
+        $mockPage->method('getContent')->willReturn($mockContent);
+
+        $mockPagination = $this->createMock(\Strata\Frontend\Content\Pagination\PaginationInterface::class);
+        $mockPagination->method('getTotalPages')->willReturn(1);
+        $mockPagination->method('getTotalResults')->willReturn(1);
+
+        $realCollection = new \Strata\Frontend\Content\PageCollection($mockPagination);
+        $realCollection->addItem($mockPage);
+        $realCollection->getMetadata()->add('framework_title', 'Test Framework Title');
+        $realCollection->getMetadata()->add('framework_rm_number', 'RM1234');
+        $realCollection->getMetadata()->add('lot_number', '1');
+        $realCollection->getMetadata()->add('lot_title', 'Test Lot');
+        $realCollection->getMetadata()->add('lot_description', 'Lot details');
+
+        $mockContentType = $this->createMock(\Strata\Frontend\ContentModel\ContentType::class);
+        $mockContentModel = $this->createMock(\Strata\Frontend\ContentModel\ContentModel::class);
+        $mockContentModel->method('getContentType')->willReturn($mockContentType);
+
+        $mockRestData = $this->createMock(\Strata\Frontend\Cms\RestData::class);
+        $mockRestData->method('getContentModel')->willReturn($mockContentModel);
+        $mockRestData->method('list')->willReturn($realCollection);
+
+        static::getContainer()->set('app.test.rest_data_api', $mockRestData);
+
+        $this->client->request('GET', '/agreements/RM1234:1/lot-suppliers/1');
+
+        $this->assertResponseIsSuccessful();
+        $html = $this->client->getResponse()->getContent();
+
+        $this->assertStringContainsString('Lot 1: Test Lot', $html);
+        $this->assertStringContainsString('Lot Trading Name', $html);
+        $this->assertStringContainsString('Test Framework Title', $html);
+        $this->assertStringContainsString('Download Supplier Contact Details', $html);
     }
 }

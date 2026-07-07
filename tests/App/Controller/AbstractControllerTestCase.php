@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\App\Controller;
 
 use App\Helper\ControllerHelper;
+use App\Tests\App\Mock\MockControllerHelper;
 use Strata\Frontend\Cms\RestData;
 use Strata\Frontend\Cms\Wordpress;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -34,13 +35,11 @@ abstract class AbstractControllerTestCase extends WebTestCase
         $this->mockRestDataApi = $this->createMock(RestData::class);
         static::getContainer()->set(RestData::class, $this->mockRestDataApi);
 
-        // 3. Mock the ControllerHelper (intercepts getHomeMessageBanner, getCSCMessage, etc.)
-        $this->mockControllerHelper = $this->createMock(ControllerHelper::class);
-
-        // Set safe default return values so tests don't crash if they forget to mock them
-        $this->mockControllerHelper->method('getHomeMessageBanner')->willReturn(null);
-        $this->mockControllerHelper->method('getCSCMessage')->willReturn('');
-        $this->mockControllerHelper->method('getOrgId')->willReturn('test_org_id');
+        // 3. Use a concrete test helper stub so instance and static-style helper calls work reliably.
+        $this->mockControllerHelper = new MockControllerHelper();
+        $this->mockControllerHelper->setHomeMessageBanner(null);
+        $this->mockControllerHelper->setCscMessage('');
+        $this->mockControllerHelper->setOrgId('test_org_id');
 
         static::getContainer()->set(ControllerHelper::class, $this->mockControllerHelper);
 

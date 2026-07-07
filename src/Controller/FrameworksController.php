@@ -247,7 +247,7 @@ class FrameworksController extends AbstractController
 
         $results = $this->setGovTableStyleForAllField($results);
 
-        $content_group = "agreement/" . $this->controllerHelper->toSlug($results->getContent()["category"]->getValue());
+       $content_group = "agreement/" . ControllerHelper::toSlug($results->getContent()["category"]->getValue());
         $cscMessage = $this->controllerHelper->getCSCMessage();
 
         $data = [
