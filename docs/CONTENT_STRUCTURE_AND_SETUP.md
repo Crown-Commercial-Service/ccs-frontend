@@ -80,13 +80,20 @@ The Controllers for the project live here:
 In the constructor of each controller, you define the relevant content type for the page, and also the cache lifetime for the page, e.g.
 
 ```
-$this->api = new Wordpress(
-    getenv('APP_API_BASE_URL'),
-    new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
-);
-$this->api->setContentType('events');
-$this->api->setCache($cache);
-$this->api->setCacheLifetime(300);
+public function __construct(CacheItemPoolInterface $cache, Wordpress $api)
+    {
+        $this->api = $api;
+        
+        // Set the content type for this controller
+        $this->api->setContentType('events');
+        
+        // Wrap the standard cache pool and assign it to the API
+        $psr16Cache = new Psr16Cache($cache);
+        $this->api->setCache($psr16Cache);
+        
+        // Set the cache lifetime
+        $this->api->setCacheLifetime(300);
+    }
 ```
 
 This will set the content type to 'events' and set the cache lifetime for pages served by this controller to 300 seconds (5 minutes).

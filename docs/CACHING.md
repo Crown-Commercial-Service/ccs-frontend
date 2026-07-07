@@ -44,15 +44,24 @@ The cache lifetime should be set in the ``__constructor`` method, alongside the 
 For example, see the constructor method for the events controller:
 
 ```php
-    public function __construct(CacheInterface $cache)
-    {
-        $this->api = new Wordpress(
-            getenv('APP_API_BASE_URL'),
-            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
-        );
+public function __construct(
+        CacheItemPoolInterface $cache,
+        Wordpress $api,
+        string $searchApiBaseUrl,
+        string $appBaseUrl
+    ) {
+        $this->api = $api;
         $this->api->setContentType('events');
-        $this->api->setCache($cache);
+        
+        $psr16Cache = new Psr16Cache($cache);
+        $this->api->setCache($psr16Cache);
+        
+        // Cache lifetime is set here (in seconds)
         $this->api->setCacheLifetime(900);
+        
+        $this->searchApiBaseUrl = $searchApiBaseUrl;
+        $this->appBaseUrl = $appBaseUrl;
+    }
     }
 ```
 

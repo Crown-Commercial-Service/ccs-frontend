@@ -9,12 +9,10 @@ use App\Utils\FrameworkCategories;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Psr16Cache;
 use Strata\Frontend\Cms\Wordpress;
-use Strata\Frontend\ContentModel\ContentModel;
 use Strata\Frontend\Exception\PaginationException;
-use Strata\Frontend\Exception\WordpressException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Strata\Frontend\Exception\NotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -25,18 +23,30 @@ class NewsController extends AbstractController
      *
      * @var Wordpress
      */
-    protected $api;
+    protected Wordpress $api;
+    protected HttpClientInterface $httpClient;
+    protected string $appApiBaseUrl;
+    protected string $searchApiBaseUrl;
+    protected string $appBaseUrl;
 
-    public function __construct(CacheItemPoolInterface $cache)
-    {
-        $this->api = new Wordpress(
-            getenv('APP_API_BASE_URL'),
-            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
-        );
+    public function __construct(
+        CacheItemPoolInterface $cache,
+        Wordpress $api,
+        HttpClientInterface $httpClient,
+        string $appApiBaseUrl,
+        string $searchApiBaseUrl,
+        string $appBaseUrl
+    ) {
+        $this->api = $api;
         $this->api->setContentType('news');
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
+
+        $this->httpClient = $httpClient;
+        $this->appApiBaseUrl = $appApiBaseUrl;
+        $this->searchApiBaseUrl = $searchApiBaseUrl;
+        $this->appBaseUrl = $appBaseUrl;
     }
 
     public function list(Request $request, $page = 1)
@@ -63,7 +73,6 @@ class NewsController extends AbstractController
         $sectorsOption          =   ControllerHelper::converArrayToStringForWordpress($request->query->get('sectors', null), null);
         $productsServicesOption =   ControllerHelper::converArrayToStringForWordpress($request->query->get('products_services', null), null);
 
-
         $options = [
             'categories'        => $categoriesOption,
             'noPost'            => $categoriesOption == null ? 1 : 0,
@@ -74,7 +83,6 @@ class NewsController extends AbstractController
             'per_page'          => 5,
             'digitalDownload'   => $downloadableOption,
         ];
-
 
         $options = $this->prepareOptionForWordpress($options, $defaultOptions, $request);
 
@@ -89,8 +97,8 @@ class NewsController extends AbstractController
 
         return $this->render('news/list.html.twig', [
             'url'                       => sprintf('/news/page/%s', $page),
-            'api_base_url'              => getenv('SEARCH_API_BASE_URL'),
-            'app_base_url'              => getenv('APP_BASE_URL'),
+            'api_base_url'              => $this->searchApiBaseUrl,
+            'app_base_url'              => $this->appBaseUrl,
             'pageNumber'                => $page,
             'categoriesFilters'         => $this->api->getAllTerms('categories'),
             'sectorsFilters'            => $this->api->getAllTerms('sectors'),
@@ -110,7 +118,10 @@ class NewsController extends AbstractController
 
         try {
             $page = $this->api->getPageByUrl($request->getRequestUri());
-            $response = HttpClient::create()->request('GET', getenv('APP_API_BASE_URL') . 'wp/v2/posts/' . $page->getId());
+
+            // ✅ FIX: Using the injected HTTP Client and injected API base URL
+            $response = $this->httpClient->request('GET', $this->appApiBaseUrl . 'wp/v2/posts/' . $page->getId());
+
             if ($response->getStatusCode() == 200) {
                 $acfContent = (array) json_decode($response->getContent())->acf;
                 $authorText = array_key_exists('author_name_text', (array)$acfContent) ? $acfContent['author_name_text'] : null;
@@ -131,7 +142,7 @@ class NewsController extends AbstractController
             'page'          => $page,
             'authorText'    => $authorText,
             'authorImage'   => $authorImage,
-            'site_base_url' => getenv('APP_BASE_URL'),
+            'site_base_url' => $this->appBaseUrl,
             'content_group' => $content_group ?? null,
             'display_banner' => $displayBanner,
         ]);
@@ -150,7 +161,6 @@ class NewsController extends AbstractController
 
     private function prepareOptionForWordpress(array $options, array $defaultOptions, $request)
     {
-
         $options = $request->query->get('allCategories') != null ? $this->resetCategoriesOption($options) : $options;
         $options["sectors"] = ($request->query->get('allSectors') != null) ? null : $options["sectors"];
         $options["products_services"] = ($request->query->get('allPS') != null) ? null : $options["products_services"];

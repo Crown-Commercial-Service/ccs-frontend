@@ -7,50 +7,61 @@ namespace App\Helper;
 use App\Utils\FrameworkCategories;
 use Strata\Frontend\Cms\RestData;
 use Strata\Frontend\ContentModel\ContentModel;
-use Strata\Frontend\Api\Providers\RestApi;
+use Strata\Frontend\Exception\NotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class ControllerHelper
 {
-    private static function setUpAPI($contentField)
-    {
+    protected RestData $api;
+    protected string $appEnv;
+    protected string $orgIdProd;
+    protected string $orgIdTest;
 
-        $api = new RestData(
-            getenv('APP_API_BASE_URL'),
+    public function __construct(
+        string $appApiBaseUrl,
+        string $appEnv,
+        string $orgIdProd,
+        string $orgIdTest
+    ) {
+        $this->api = new RestData(
+            $appApiBaseUrl,
             new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
         );
+        $this->appEnv = $appEnv;
+        $this->orgIdProd = $orgIdProd;
+        $this->orgIdTest = $orgIdTest;
+    }
+
+    private function setUpAPI(string $contentField): RestData
+    {
+        $api = clone $this->api;
         $api->setContentType($contentField);
         return $api;
     }
 
-    public static function honeyPot($honeyPotField)
+
+    public function getOrgId(): string
     {
-        if (!empty($honeyPotField) && (bool) $honeyPotField == true) {
-            die;
-        }
+        return $this->appEnv === 'prod' ? $this->orgIdProd : $this->orgIdTest;
     }
 
-    public static function getOrgId()
+    public function getCSCMessage(): string
     {
-        return getenv('APP_ENV') === 'prod' ? getenv('ORG_ID_PROD') : getenv('ORG_ID_TEST');
-    }
-
-    public static function getCSCMessage()
-    {
-
-        $api = ControllerHelper::setUpAPI('csc_message');
+        $api = $this->setUpAPI('csc_message');
 
         try {
             $cscMessage = $api->getOne(0);
-        } catch (NotFoundException $e) {
-            throw new NotFoundHttpException('CSC Message API broken, please check WordPress', $e);
+        } catch (\Throwable $e) {
+            return '';
         }
 
         return $cscMessage->getContent()->get('csc_message')->getValue();
     }
 
-    public static function getHomeMessageBanner()
+    public function getHomeMessageBanner()
     {
-        $api = ControllerHelper::setUpAPI('message_banner');
+        $api = $this->setUpAPI('message_banner');
 
         try {
             $messageBanner = $api->getOne(0);
@@ -61,11 +72,11 @@ class ControllerHelper
         return $messageBanner->getContent()->get('message_banner')->getValue()[0] ?? null;
     }
 
-    public static function getYoutubeVideo()
+    public function getYoutubeVideo()
     {
-        $api = ControllerHelper::setUpAPI('homepage_content');
+        $api = $this->setUpAPI('homepage_content');
 
-        $defultValue = [
+        $defaultValue = [
             "video_link" => "https://www.youtube-nocookie.com/embed/mn-3isisTGM",
             'video_caption' => 'CCS: power to your procurement'
         ];
@@ -78,7 +89,17 @@ class ControllerHelper
 
         $video = $result->getContent()->get('video')->getValue();
 
-        return empty($video["video_link"]) ? $defultValue : $video;
+        return empty($video["video_link"]) ? $defaultValue : $video;
+    }
+
+    // --- PURE STATIC FUNCTIONS BELOW ---
+
+    public static function honeyPot($honeyPotField)
+    {
+        if (!empty($honeyPotField) && (bool) $honeyPotField == true) {
+            //  Throw exception instead of crashing the PHP process with die;
+            throw new AccessDeniedHttpException('Bots are not allowed.');
+        }
     }
 
     public static function toSlug(string $string): string
@@ -123,7 +144,7 @@ class ControllerHelper
         if (!(empty(trim((string) $referrer)) || is_null($referrer))) {
             $referrerInArray = explode("agreements/RM", $referrer);
 
-            $regex = "/^\d{4}(\.[a-zA-Z0-9]{1,4})?$/";   //4 digits follow by 4 decimal places
+            $regex = "/^\d{4}(\.[a-zA-Z0-9]{1,4})?$/";
 
             if (isset($referrerInArray[1]) && preg_match($regex, $referrerInArray[1])) {
                 return "RM{$referrerInArray[1]}";
@@ -144,7 +165,6 @@ class ControllerHelper
 
     public static function getArrayFromStringForParam($request, string $paramName, string $allSelected = "")
     {
-
         if ($request->query->get($allSelected, false)) {
             return [];
         }
@@ -158,7 +178,6 @@ class ControllerHelper
 
     public static function validateCategory($request, array $pillarArray, string $paramName)
     {
-
         if (!is_array($request->query->get($paramName))) {
             return $request->query->get($paramName) != null ? [explode(",", (string) $request->query->get($paramName)), $pillarArray] : [[], $pillarArray];
         }
