@@ -41,7 +41,9 @@ class FrameworksController extends AbstractController
         ControllerHelper $controllerHelper,
         string $appApiBaseUrl,
         string $searchApiBaseUrl,
-        string $appBaseUrl
+        string $appBaseUrl,
+        ?RestData $api = null,
+        ?RestData $searchApi = null
     ) {
         $this->httpClient = $httpClient;
         $this->controllerHelper = $controllerHelper;
@@ -51,14 +53,14 @@ class FrameworksController extends AbstractController
 
         $contentModel = new ContentModel(__DIR__ . '/../../config/content/content-model.yaml');
 
-        $this->api = new RestData($this->appApiBaseUrl, $contentModel);
+        $this->api = $api ?? new RestData($this->appApiBaseUrl, $contentModel);
         $this->api->setContentType('frameworks');
 
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
 
-        $this->searchApi = new RestData($this->searchApiBaseUrl, $contentModel);
+        $this->searchApi = $searchApi ?? new RestData($this->searchApiBaseUrl, $contentModel);
         $this->searchApi->setContentType('frameworks');
         $this->searchApi->setCache($psr16Cache);
         $this->searchApi->setCacheLifetime(1);
