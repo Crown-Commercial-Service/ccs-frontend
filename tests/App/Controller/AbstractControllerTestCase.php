@@ -53,7 +53,7 @@ abstract class AbstractControllerTestCase extends WebTestCase
     {
         $mockContent = \App\Tests\App\Mock\CMSContentMockFactory::createMockContent($pageData['acf'] ?? []);
 
-        return new class($pageData, $mockContent) extends \Strata\Frontend\Content\Page {
+        return new class ($pageData, $mockContent) extends \Strata\Frontend\Content\Page {
             private array $pageData;
             protected $content;
 
