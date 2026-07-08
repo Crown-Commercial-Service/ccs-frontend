@@ -43,15 +43,6 @@
                                             <li>we begin buying energy 6 months before you start using it and continue throughout </li>
                                             <li>the price of energy will change on a monthly basis to reflect the current buying market</li>
                                         </ul> "%}
-    {% elseif recommendation == 'L24' %}
-        {% set recommendationTitle  =   "Long term locked" %}
-        {% set recommendationBody   =   "We designed this solution to help mitigate risks by buying energy over a longer period of time:
-                                        <ul class='govuk-list govuk-list--bullet'>
-                                            <li>this solution will last for 36 months </li>
-                                            <li>the total buying time is 24 months and we buy all energy before you start using it</li>
-                                            <li>you will then be able to use the energy over 12 months once the buying time has ended</li>
-                                            <li>the price of energy is fixed, this means you will pay the same price per unit each month</li>
-                                        </ul> "%}
     {% elseif recommendation == 'V30' %}
         {% set recommendationTitle  =   "Long term variable" %}
         {% set recommendationBody   =   "We designed this solution to help mitigate risks by buying energy over a longer period of time:
@@ -82,10 +73,14 @@
 
                     <div class="govuk-body journey-answers">
                         <h2 class="govuk-heading-l">Next steps</h2>
-
-                        <p>For more information, <a href="https://www.youtube.com/watch?v=xxzUVV9-7_8&t=20s">watch our energy solution webinar</a>.</p>
                         
-                        <p>Once you have watched the webinar you can register for your preferred energy solution by <a href={{ path('form_contact') }}>getting in touch with our energy team</a>.</p>
+                        <h3>Need more information?</h3>
+                        <p class="govuk-!-margin-bottom-1">Learn more about how our energy solutions work and how to access them.</p>
+                        <p><a href="https://www.youtube.com/watch?v=MBYPYMcbioQ">Watch our energy webinar now</a>.</p>
+
+                        <h3 class="govuk-!-padding-top-5">Buy your energy solution</h3>
+                        <p class="govuk-!-margin-bottom-1">To get started, you will need to sign a Customer Access Agreement. This authorises us to trade and buy gas and electricity on your behalf.</p>
+                        <p><a href="https://www.gca.gov.uk/contact">Request Customer Access Agreement</a>.</p>
 
                         <h2 class="govuk-heading-l">Your Answers</h2>
                         {% for key in history %}
@@ -98,13 +93,7 @@
                                 </dl>
                             </div>
                         {% endfor %}
-                        {# <div class="govuk-summary-list__row">
-                            <dl class="govuk-summary-list">
-                                <dt class="govuk-summary-list__key"> Energy solution recommendations</dt>
-                                <dd class="govuk-summary-list__value"> {{ recommendation }}</dd>
-                                <dd class="govuk-summary-list__value no-print"></dd>
-                            </dl>
-                        </div> #}
+
                     </div>
                     <div class="app-c-print-link">
                         <button onclick="window.print();" type="button" class="app-c-print-link__link" rel="alternate">Print this page</button>
