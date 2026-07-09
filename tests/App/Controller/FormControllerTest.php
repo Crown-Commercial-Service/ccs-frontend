@@ -339,6 +339,37 @@ class FormControllerTest extends AbstractControllerTestCase
         $this->assertNotEmpty($result['emailErr']['errors']);
     }
 
+    // --- /contact (GET view) ---
+
+    public function testContactCcsViewRendersSuccessfully(): void
+    {
+        $this->client->request('GET', '/contact');
+
+        $this->assertResponseIsSuccessful();
+        $html = $this->client->getResponse()->getContent();
+        $this->assertStringContainsString('Contact GCA', $html);
+    }
+
+    public function testContactCcsViewRendersSuccessfullyWithReferrer(): void
+    {
+        $this->client->request('GET', '/contact', [], [], [
+            'HTTP_REFERER' => 'https://example.com/agreements/RM6187',
+        ]);
+
+        $this->assertResponseIsSuccessful();
+    }
+
+    // --- /complaint (GET view) ---
+
+    public function testComplaintFormViewRendersSuccessfully(): void
+    {
+        $this->client->request('GET', '/complaint');
+
+        $this->assertResponseIsSuccessful();
+        $html = $this->client->getResponse()->getContent();
+        $this->assertStringContainsString('Complaint form', $html);
+    }
+
     // --- /contact/submit ---
 
     public function testContactCcsSubmitRendersValidationErrorsForInvalidData(): void
