@@ -51,15 +51,59 @@ abstract class AbstractControllerTestCase extends WebTestCase
 
     public function createPageFromJson(array $pageData): \Strata\Frontend\Content\Page
     {
-        // Outsource the complex dynamic content collection wrapping to our factory
         $mockContent = \App\Tests\App\Mock\CMSContentMockFactory::createMockContent($pageData['acf'] ?? []);
 
-        $mockPage = $this->createMock(\Strata\Frontend\Content\Page::class);
+        return new class ($pageData, $mockContent) extends \Strata\Frontend\Content\Page {
+            private array $pageData;
+            protected $content;
 
-        $mockPage->method('getTitle')->willReturn($pageData['title']['rendered'] ?? 'Fallback Title');
-        $mockPage->method('getTemplate')->willReturn($pageData['template'] ?? '');
-        $mockPage->method('getContent')->willReturn($mockContent);
+            public function __construct(array $pageData, $content)
+            {
+                parent::__construct();
+                $this->pageData = $pageData;
+                $this->content = $content;
+            }
 
-        return $mockPage;
+            public function getTitle(): string
+            {
+                return $this->pageData['title']['rendered'] ?? 'Fallback Title';
+            }
+
+            public function getTemplate(): string
+            {
+                return $this->pageData['template'] ?? '';
+            }
+
+            public function getContent(): \Strata\Frontend\Content\Field\ContentFieldCollection
+            {
+                return $this->content;
+            }
+
+            public function getUrlSlug(): string
+            {
+                return $this->pageData['slug'] ?? '';
+            }
+
+            public function __get(string $name)
+            {
+                if ($name === 'content') {
+                    return $this->content;
+                }
+
+                if ($name === 'template') {
+                    return $this->getTemplate();
+                }
+
+                if ($name === 'title') {
+                    return $this->getTitle();
+                }
+
+                if ($name === 'urlSlug') {
+                    return $this->getUrlSlug();
+                }
+
+                return null;
+            }
+        };
     }
 }
