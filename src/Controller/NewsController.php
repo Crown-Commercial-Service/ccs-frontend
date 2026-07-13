@@ -116,6 +116,10 @@ class NewsController extends AbstractController
 
         $this->api->setCacheKey($request->getRequestUri());
 
+        $authorText = null;
+        $authorImage = null;
+        $displayBanner = null;
+
         try {
             $page = $this->api->getPageByUrl($request->getRequestUri());
 
