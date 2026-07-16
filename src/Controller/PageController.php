@@ -7,83 +7,70 @@ namespace App\Controller;
 use App\Validation\FormValidation;
 use App\Helper\ControllerHelper;
 use Psr\Cache\CacheItemPoolInterface;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\Psr16Cache;
-use Symfony\Component\Cache\Adapter\Psr16Adapter;
 use Strata\Frontend\Cms\Wordpress;
 use Strata\Frontend\Cms\RestData;
 use Strata\Frontend\ContentModel\ContentModel;
-use Strata\Frontend\Exception\FailedRequestException;
 use Strata\Frontend\Exception\NotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class PageController extends AbstractController
 {
-    /**
-     * Frameworks Rest API data
-     *
-     * @var Wordpress
-     */
-    protected $api;
+    protected Wordpress $api;
+    protected RestData $redirectionApi;
+    protected RestData $glossaryApi;
+    protected HttpClientInterface $client;
+    protected ControllerHelper $controllerHelper;
 
-    /**
-     * Frameworks Rest API data
-     *
-     * @var RestData
-     */
-    protected $redirectionApi;
-
-    /**
-     * Frameworks Rest API data
-     *
-     * @var RestData
-     */
-    protected $glossaryApi;
-
-    protected $client;
+    protected string $appApiBaseUrl;
+    protected string $appBaseUrl;
+    protected string $appCmsBaseUrl;
+    protected string $salesforceWebToCaseUrl;
+    protected string $appEnv;
 
     public function __construct(
         CacheItemPoolInterface $cache,
+        Wordpress $api,
+        HttpClientInterface $httpClient,
         RestData $redirectionApi,
-        Wordpress $api
+        ControllerHelper $controllerHelper,
+        string $appApiBaseUrl,
+        string $appBaseUrl,
+        string $appCmsBaseUrl,
+        string $salesforceWebToCaseUrl,
+        string $appEnv // Explicitly inject the environment name for healthchecks
     ) {
         $this->api = $api;
+        $this->controllerHelper = $controllerHelper;
 
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setContentType('page');
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
-        $this->client = HttpClient::create();
+
+        $this->client = $httpClient;
+
+        $this->appApiBaseUrl = $appApiBaseUrl;
+        $this->appBaseUrl = $appBaseUrl;
+        $this->appCmsBaseUrl = $appCmsBaseUrl;
+        $this->salesforceWebToCaseUrl = $salesforceWebToCaseUrl;
+        $this->appEnv = $appEnv;
+
+        $contentModel = new ContentModel(__DIR__ . '/../../config/content/content-model.yaml');
 
         $this->redirectionApi = $redirectionApi;
         $this->redirectionApi->setContentType('redirections');
 
-        $this->glossaryApi = new RestData(
-            getenv('APP_API_BASE_URL'),
-            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
-        );
+        $this->glossaryApi = new RestData($this->appApiBaseUrl, $contentModel);
         $this->glossaryApi->setContentType('glossary');
     }
 
-    /**
-     * Homepage
-     *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PaginationException
-     * @throws \Strata\Frontend\Exception\PermissionException
-     */
     public function home(Request $request)
     {
         $this->api->setCacheKey($request->getRequestUri());
@@ -92,15 +79,13 @@ class PageController extends AbstractController
         $this->api->setContentType('news');
         $news = $this->api->listPages(1, ['per_page' => 3]);
 
-        // request to homepage components
-        $homepageCompUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/homepage-components/0';
-        $messageBanner = ControllerHelper::getHomeMessageBanner();
-        // dd($messageBanner);
-        $client = HttpClient::create();
-        $response = $client->request(
-            'GET',
-            $homepageCompUrl,
-        );
+        $homepageCompUrl = $this->appApiBaseUrl . 'ccs/v1/homepage-components/0';
+
+
+        $messageBanner = $this->controllerHelper->getHomeMessageBanner();
+
+
+        $response = $this->client->request('GET', $homepageCompUrl);
         $homepageContent = null;
 
         if ($response->getStatusCode() == 200) {
@@ -112,24 +97,9 @@ class PageController extends AbstractController
             'guided_match_flag' => $flag,
             'homepageContent' => $homepageContent,
             'messageBanner' => $messageBanner,
-
         ]);
     }
 
-    /**
-     * Generic page controller
-     *
-     * @param string $slug
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \Strata\Frontend\Exception\ApiException
-     * @throws \Strata\Frontend\Exception\ContentFieldException
-     * @throws \Strata\Frontend\Exception\ContentTypeNotSetException
-     * @throws \Strata\Frontend\Exception\FailedRequestException
-     * @throws \Strata\Frontend\Exception\PaginationException
-     * @throws \Strata\Frontend\Exception\PermissionException
-     */
     public function page(string $slug, Request $request)
     {
         $slug = filter_var($slug, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -139,7 +109,6 @@ class PageController extends AbstractController
             return $this->redirect($redirectedLink);
         }
 
-        // @todo May need to look at mapping URLs to page IDs in the future
         try {
             $this->api->setCacheKey($request->getRequestUri());
             $page = $this->api->getPageByUrl($request->getRequestUri());
@@ -147,8 +116,6 @@ class PageController extends AbstractController
             throw new NotFoundHttpException('Page not found', $e);
         }
 
-        // Create breadcrumb
-        // @todo Improve breadcrumb creation
         $parts = explode('/', trim($slug, '/'));
         array_pop($parts);
         $breadcrumb = [];
@@ -159,14 +126,8 @@ class PageController extends AbstractController
             $breadcrumb[$link] = $name;
         }
 
-        // request to option cards api
-        $optionCardsUrl = getenv('APP_API_BASE_URL') . 'ccs/v1/option-cards/0';
-
-        $response = $this->client->request(
-            'GET',
-            $optionCardsUrl,
-        );
-
+        $optionCardsUrl = $this->appApiBaseUrl . 'ccs/v1/option-cards/0';
+        $response = $this->client->request('GET', $optionCardsUrl);
         $optionCardsContent = null;
 
         if ($response->getStatusCode() == 200) {
@@ -177,7 +138,6 @@ class PageController extends AbstractController
         $formData = $this->getFromData($request->request);
         $formCampaignCode = null;
 
-        // Needed for tests to run successfully
         if (!$page) {
             throw $this->createNotFoundException('Page not found');
         }
@@ -188,21 +148,20 @@ class PageController extends AbstractController
 
         if ($request->isMethod('POST')) {
             $formErrors = $this->sendToSalesforceForPageEnquiry($request->request, $formData, $formCampaignCode);
-
             if ($formErrors instanceof Response) {
                 return $formErrors;
             }
         }
 
-        $cscMessage = ControllerHelper::getCSCMessage();
+        $cscMessage = $this->controllerHelper->getCSCMessage();
         $resourcesWithIndex = $this->extractResourcesFromContent($page->getContent());
 
         return $this->render('pages/page.html.twig', [
             'page'                       => $page,
             'breadcrumb_parents'         => $breadcrumb,
-            'page_query_string'          => filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_FULL_SPECIAL_CHARS),
-            'query_string_type'          => isset($_GET['type']) ? filter_var($_GET['type'], FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null,
-            'site_base_url'              => getenv('APP_BASE_URL'),
+            'page_query_string'          => filter_var($request->server->get('QUERY_STRING', ''), FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+            'query_string_type'          => $request->query->get('type') ? filter_var($request->query->get('type'), FILTER_SANITIZE_FULL_SPECIAL_CHARS) : null,
+            'site_base_url'              => $this->appBaseUrl,
             'option_cards'               => $optionCardsContent,
             'slug'                       => $slug,
             'formErrors'                 => $formErrors,
@@ -231,7 +190,6 @@ class PageController extends AbstractController
         if (property_exists($content, 'downloadable_list_downloadable_resource')) {
             $resources['downloadable_list_downloadable_resource'] = $index++;
         }
-
         return $resources;
     }
 
@@ -240,37 +198,29 @@ class PageController extends AbstractController
         $slug = strtolower((string) $slug);
 
         try {
-            // @todo At present need to pass fake ID since API method is intended to return one item with an ID, review this
             $results = $this->redirectionApi->getOne(0);
         } catch (\Throwable $e) {
-            // FIX: Catch \Throwable to handle cURL errors, API timeouts, and 404s.
-            // If the API is broken (or we are running a test with a fake URL),
-            // we catch the error, ignore it, and return '' so the page loads normally.
             return '';
         }
 
         try {
             $listOfRedirection = $results->getContent()->get('results')->getValue();
-
             foreach ($listOfRedirection as $redirection) {
                 $shortenUrl = $redirection->get('shortUrl')->getValue();
-                $longUrl = getenv('APP_BASE_URL') . "/" . $redirection->get('longUrl')->getValue();
+                $longUrl = $this->appBaseUrl . "/" . $redirection->get('longUrl')->getValue();
 
                 if ($shortenUrl == $slug) {
                     return $longUrl;
                 }
             }
         } catch (\Throwable $e) {
-            // Safety catch for data parsing errors
             return '';
         }
-
         return '';
     }
 
     private function sendToSalesforceForPageEnquiry($params, $formData, $formCampaignCode)
     {
-
         ControllerHelper::honeyPot($params->get('surname', null));
 
         $formErrors = $params->get('validateAggregationOption') ? $this->validateAggregationOptionForm($formData) : $this->validateForm($formData);
@@ -281,21 +231,19 @@ class PageController extends AbstractController
             $params->set('recordType', '012b00000005NWC');
             $params->set('00Nb0000009IXEs', $formData['jobTitle']);
             $params->set('priority', 'Green');
-            $params->set('orgid', ControllerHelper::getOrgId());
+            $params->set('orgid', $this->controllerHelper->getOrgId());
 
             $origin = $params->get('newsletterForm') ? 'Website - Newsletter' : 'Website - Page form enquiry';
 
             $params->set('origin', $origin);
             $params->set('description', $origin . ', callback: ' . $formData['callbackTimeslot'] . ', more-detail: ' . $formData['description']);
 
-            $response = $this->client->request('POST', getenv('SALESFORCE_WEB_TO_CASE_URL'), [
+            $response = $this->client->request('POST', $this->salesforceWebToCaseUrl, [
                 'query' => $params->all(),
             ]);
 
             if (!is_null($params->get('debug'))) {
-                return new Response(
-                    htmlspecialchars($response->getContent())
-                );
+                return new Response(htmlspecialchars($response->getContent()));
             }
             return $this->redirectToRoute($formCampaignCode == 'alwayson_newsletter' ? 'form_newsletter_thanks' : 'form_contact_thanks');
         }
@@ -306,7 +254,6 @@ class PageController extends AbstractController
     private function validateForm($data)
     {
         $errorMessages = [];
-
         $errorMessages['nameErr'] =     FormValidation::validationName($data['name']);
         $errorMessages['jobTitleErr'] = FormValidation::validationJobTitle($data['jobTitle']);
         $errorMessages['companyErr'] =  FormValidation::validationCompany($data['company']);
@@ -316,20 +263,17 @@ class PageController extends AbstractController
             $errorMessages['phoneErr'] = FormValidation::validationPhone($data['phone']);
         }
 
-
         foreach ($errorMessages as $type => $value) {
             if (!empty($errorMessages[$type]['errors'])) {
                 return $errorMessages;
             }
         }
-
         return false;
     }
 
     private function validateAggregationOptionForm($data)
     {
         $errorMessages = [];
-
         $errorMessages['nameErr'] =              FormValidation::validationName($data['name']);
         $errorMessages['emailErr'] =             FormValidation::validationEmail($data['email']);
         $errorMessages['phoneErr'] =             FormValidation::validationPhone($data['phone']);
@@ -342,7 +286,6 @@ class PageController extends AbstractController
                 return $errorMessages;
             }
         }
-
         return false;
     }
 
@@ -363,11 +306,6 @@ class PageController extends AbstractController
         ];
     }
 
-    /**
-     * Simple healthcheck
-     *
-     * @return JsonResponse
-     */
     public function check()
     {
         $required = '8.2.0';
@@ -375,7 +313,6 @@ class PageController extends AbstractController
             return new JsonResponse(['message' => sprintf("PHP version must be %s or above, found '%s'", $required, PHP_VERSION)], 500);
         }
 
-        // Check Composer has loaded required classes
         $required = [
             \Symfony\Bundle\FrameworkBundle\Controller\AbstractController::class,
             \Strata\Frontend\Cms\RestData::class,
@@ -387,15 +324,8 @@ class PageController extends AbstractController
             }
         }
 
-        // Check required environment variables
-        $required = [
-            'APP_API_BASE_URL',
-            'APP_ENV'
-        ];
-        foreach ($required as $variable) {
-            if (empty(getenv($variable))) {
-                return new JsonResponse(['message' => sprintf("Environment variable '%s' not set", $variable)], 500);
-            }
+        if (empty($this->appApiBaseUrl) || empty($this->appEnv)) {
+            return new JsonResponse(['message' => "Required Configuration properties are not properly injected"], 500);
         }
 
         return new JsonResponse(['message' => 'OK']);
@@ -403,7 +333,7 @@ class PageController extends AbstractController
 
     public function sitemap()
     {
-        $response = $this->client->request('GET', getenv('APP_CMS_BASE_URL') . '/wp-json/ccs/v1/sitemap');
+        $response = $this->client->request('GET', $this->appCmsBaseUrl . '/wp-json/ccs/v1/sitemap');
 
         if ($response->getStatusCode() !== 200) {
             throw $this->createNotFoundException('Sitemap not available.');
@@ -416,12 +346,10 @@ class PageController extends AbstractController
             Response::HTTP_OK,
             ['Content-Type' => 'text/xml']
         );
-        return $this->render('pages/sitemap.xml.twig', [], new Response('', 200, ['Content-Type' => 'application/xml']));
     }
 
     public function getHeaderAndFooterListFromCMS($client, $APP_CMS_BASE_URL)
     {
-
         $numbers = ['21','22','23','24','25'];
         $returnList = [];
 
@@ -446,16 +374,13 @@ class PageController extends AbstractController
 
     public function ppgTraining()
     {
-
         return $this->render('pages/ppg_training.html.twig');
     }
 
     public function setCookiesOnSafari(Request $request)
     {
-        // Read Current Cookies
         $cookies = $request->cookies;
 
-        // Update cookies with expiry to 1 year
         if ($cookies->has('cookies_reset')) {
             $cookiePreferences = new Cookie('cookie_preferences', '{"essentials":true,"usage":true,"marketing":true, "glassbox": true}', strtotime('+1 year'), '/', '.gca.gov.uk', false, false);
             $seenCookieMessage = new Cookie('seen_cookie_message', 'true', strtotime('+1 year'), '/', '.gca.gov.uk', false, false);
@@ -480,7 +405,6 @@ class PageController extends AbstractController
         }
 
         $meta = $results->getContent()->get('meta')->getValue();
-
         $results = $results->getContent()->get('glossaries')->getValue();
 
         $glossaries = [];

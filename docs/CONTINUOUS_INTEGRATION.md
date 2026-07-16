@@ -16,9 +16,11 @@ The following CI logic is currently used:
 
 The following tests are run:
 
-* Runs as PHP 7.3 and 7.4
-* Runs PHP code linting on 7.3 to ensure code syntax is valid
-* Runs PHP Code Sniffer to check application code is compliant with PSR-2
+* Runs as PHP 8.2
+* Runs PHP code linting to ensure code syntax is valid
+* Runs PHP Code Sniffer to check application code is compliant with PSR12
 * Runs PHP Unit (unit testing), this currently tests:
-    * Application tests (in tests/)
+    * Application tests (in tests/), with a plain-text code coverage summary printed to the build log
     * Core frontend library (in vendor/ccs/strata-frontend/tests)
+
+See the "Code coverage" section of the [main README](../README.md#php-unit-testing) for how to generate a full local coverage report.

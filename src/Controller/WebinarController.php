@@ -9,34 +9,32 @@ use App\Helper\ControllerHelper;
 use Symfony\Component\Cache\Psr16Cache;
 use Psr\Cache\CacheItemPoolInterface;
 use Strata\Frontend\Cms\Wordpress;
-use Strata\Frontend\ContentModel\ContentModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Strata\Frontend\Exception\NotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Psr\Log\LoggerInterface;
 
 class WebinarController extends AbstractController
 {
-    /**
-     * Frameworks Rest API data
-     *
-     * @var Wordpress
-     */
-    protected $api;
-    protected $formController;
-
-    public function __construct(CacheItemPoolInterface $cache, FormController $formController)
-    {
-        $this->api = new Wordpress(
-            getenv('APP_API_BASE_URL'),
-            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
-        );
+    protected Wordpress $api;
+    protected FormController $formController;
+    protected string $appBaseUrl;
+    public function __construct(
+        CacheItemPoolInterface $cache,
+        FormController $formController,
+        Wordpress $api,
+        string $appBaseUrl
+    ) {
+        $this->api = $api;
         $this->api->setContentType('webinars');
+
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
+
         $this->formController = $formController;
+        $this->appBaseUrl = $appBaseUrl;
     }
 
     public function request($id, $slug, Request $request)
@@ -56,7 +54,9 @@ class WebinarController extends AbstractController
         $formData = ControllerHelper::getFormData($params);
         $utmParams = $request->query->all();
 
-        $returnURL = getenv('APP_BASE_URL') . '/webinar/confirmation/' . $webinar->getId() . '/' . $webinar->getUrlSlug() . '/?' . filter_var($_SERVER['QUERY_STRING'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $queryString = $request->getQueryString() ?? '';
+        $returnURL = $this->appBaseUrl . '/webinar/confirmation/' . $webinar->getId() . '/' . $webinar->getUrlSlug() . '/?' . filter_var($queryString, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
         $campaignCode = $webinar->getContent()->get('campaign_code') ? $webinar->getContent()->get('campaign_code')->getValue() : '';
         $description   = $webinar->getContent()->get('description') ? $webinar->getContent()->get('description')->getValue() : '';
 

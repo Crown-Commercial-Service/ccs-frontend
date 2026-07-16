@@ -29,27 +29,31 @@ class SuppliersController extends AbstractController
      */
     protected $searchApi;
 
-    public function __construct(CacheItemPoolInterface $cache)
-    {
-        $this->api = new RestData(
-            getenv('APP_API_BASE_URL'),
-            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
-        );
+    protected string $appApiBaseUrl;
+    protected string $searchApiBaseUrl;
+
+    public function __construct(
+        CacheItemPoolInterface $cache,
+        string $appApiBaseUrl,
+        string $searchApiBaseUrl
+    ) {
+        $this->appApiBaseUrl = $appApiBaseUrl;
+        $this->searchApiBaseUrl = $searchApiBaseUrl;
+
+        $contentModel = new ContentModel(__DIR__ . '/../../config/content/content-model.yaml');
+
+        $this->api = new RestData($this->appApiBaseUrl, $contentModel);
         $this->api->setContentType('suppliers');
+
         $psr16Cache = new Psr16Cache($cache);
         $this->api->setCache($psr16Cache);
         $this->api->setCacheLifetime(900);
 
-        $this->searchApi = new RestData(
-            getenv('SEARCH_API_BASE_URL'),
-            new ContentModel(__DIR__ . '/../../config/content/content-model.yaml')
-        );
-
+        $this->searchApi = new RestData($this->searchApiBaseUrl, $contentModel);
         $this->searchApi->setContentType('suppliers');
         $this->searchApi->setCache($psr16Cache);
         $this->searchApi->setCacheLifetime(1);
     }
-
 
     /**
      * List active suppliers
@@ -94,7 +98,7 @@ class SuppliersController extends AbstractController
 
         $data = [
           'page_number'         => $page,
-          'search_api_base_url' => getenv('SEARCH_API_BASE_URL'),
+          'search_api_base_url' => $this->searchApiBaseUrl,
           'query'      => '',
           'limit'      => $limit,
           'pagination' => $results->getPagination(),
@@ -175,7 +179,7 @@ class SuppliersController extends AbstractController
 
         $data = [
             'page_number'         => $page,
-            'search_api_base_url' => getenv('SEARCH_API_BASE_URL'),
+            'search_api_base_url' => $this->searchApiBaseUrl,
             'query'               => (!empty($query) ? $query : ''),
             'pagination'          => $results->getPagination(),
             'results'             => $results,
@@ -229,7 +233,6 @@ class SuppliersController extends AbstractController
         return $this->render('suppliers/show.html.twig', $data);
     }
 
-
     /**
      * Attempt to retrieve the lot object for a lot from the facet data
      * searching by lot ID
@@ -252,7 +255,6 @@ class SuppliersController extends AbstractController
 
         return null;
     }
-
 
     /**
      * Attempt to retrieve the lot object for a lot from the facet data

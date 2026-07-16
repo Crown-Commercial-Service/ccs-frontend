@@ -18,7 +18,8 @@ class CarbonNetZeroControllerTest extends TestCase
         $journeyService = $this->createMock(GuideJourneyService::class);
         $cache = $this->createMock(CacheItemPoolInterface::class);
 
-        $this->controller = new CarbonNetZeroController($journeyService, $cache);
+        //  Added dummy API base URL string as the 3rd parameter
+        $this->controller = new CarbonNetZeroController($journeyService, $cache, 'https://fake-api.local');
     }
 
     public function testJourneyNameIsSetCorrectly()
@@ -55,7 +56,8 @@ class CarbonNetZeroControllerTest extends TestCase
         $journeyService = $this->createMock(GuideJourneyService::class);
         $cache = $this->createMock(CacheItemPoolInterface::class);
 
-        $controller = new CarbonNetZeroController($journeyService, $cache);
+        //  Added dummy API base URL string as the 3rd parameter here too
+        $controller = new CarbonNetZeroController($journeyService, $cache, 'https://fake-api.local');
 
         // 2. Check strict properties using Reflection (since they are protected)
         $reflection = new ReflectionClass($controller);

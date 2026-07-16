@@ -1,0 +1,1882 @@
+{
+    "id": 16658,
+    "date": "2020-02-03T14:36:29",
+    "date_gmt": "2020-02-03T14:36:29",
+    "guid": {
+        "rendered": "https://webdev-cms.crowncommercial.gov.uk/?page_id=16658"
+    },
+    "modified": "2025-11-04T16:01:27",
+    "modified_gmt": "2025-11-04T16:01:27",
+    "slug": "technology",
+    "status": "publish",
+    "type": "page",
+    "link": "http://ccs-agreements.cabinetoffice.localhost/products-and-services/technology/",
+    "title": {
+        "rendered": "Technology"
+    },
+    "content": {
+        "rendered": "<p>We empower you with the right tools, commercial agreements and access to cloud and hosting specialists on every step of your cloud journey.</p>\n",
+        "protected": false
+    },
+    "excerpt": {
+        "rendered": "<p>We empower you with the right tools, commercial agreements and access to cloud and hosting specialists on every step of your cloud journey.</p>\n",
+        "protected": false
+    },
+    "author": 66,
+    "featured_media": 0,
+    "parent": 17779,
+    "menu_order": 0,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "template": "page-templates/landing.php",
+    "meta": {
+        "_acf_changed": false,
+        "_lmt_disableupdate": "no",
+        "_lmt_disable": "",
+        "footnotes": ""
+    },
+    "sectors": [
+        150,
+        111,
+        133,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117
+    ],
+    "pillars": [
+        105
+    ],
+    "class_list": [
+        "post-16658",
+        "page",
+        "type-page",
+        "status-publish",
+        "hentry",
+        "sectors-central-government",
+        "sectors-charities",
+        "sectors-devolved",
+        "sectors-health",
+        "sectors-housing-associations",
+        "sectors-local-government",
+        "sectors-police-emergency-services",
+        "sectors-schools-academies",
+        "sectors-universities-colleges",
+        "pillars-technology",
+        "entry"
+    ],
+    "pp_statuses_selecting_workflow": false,
+    "pp_workflow_action": "current",
+    "pp_status_selection": "publish",
+    "acf": {
+        "hero_image": false,
+        "hero_heading": "",
+        "hero_cta_label": "",
+        "hero_cta_destination": "",
+        "page_components_rows": [
+            {
+                "acf_fc_layout": "intro_intro",
+                "intro_intro_heading": "Transforming your technology procurement",
+                "intro_intro_content": "<p>Our expert team will help you make smart technology procurement decisions for your organisation.</p>\n<p>We&#8217;re here to support your digital transformation journey, helping you access:</p>\n<ul>\n<li>compliant technology solutions at competitive prices</li>\n<li>approved suppliers, including Small and Medium Enterprises</li>\n<li>flexible agreements with a range of contract lengths</li>\n</ul>\n",
+                "intro_intro_cta_label": "Explore our technology agreements",
+                "intro_intro_cta_destination": "/agreements?page=1&pillar=Technology&status=Live",
+                "intro_intro_secondary_label": "",
+                "intro_intro_secondary_destination": "",
+                "intro_intro_media": [
+                    {
+                        "acf_fc_layout": "video_video",
+                        "video_video_video": "<iframe title=\"Commercial Insider - Episode 3 - Philip Orumwense\" width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/Ujw28fDnIdg?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+                        "video_video_caption": "<p><span style=\"font-weight: 400;\">Dr Philip Orumwense is Commercial Director and Chief Procurement Officer for Technology at Crown Commercial Service (CCS). He is responsible for common goods and services across technology and digital categories.</span></p>\n",
+                        "video_video_brick_class": "component_video"
+                    }
+                ],
+                "intro_intro_flip_media_text": "image_right",
+                "intro_intro_brick_class": "component_intro"
+            },
+            {
+                "acf_fc_layout": "subcategories_subcategories",
+                "subcategories_subcategories_optional_icon": false,
+                "subcategories_subcategories_heading": "Technology products and services",
+                "subcategories_subcategories_content": "",
+                "subcategories_subcategories_links": [
+                    {
+                        "acf_fc_layout": "link_link",
+                        "link_link_heading": "Cloud and hosting",
+                        "link_link_content": "<ul>\n<li>cloud services</li>\n<li>private cloud</li>\n<li>public cloud</li>\n</ul>\n",
+                        "link_link_link_url": "https://www.crowncommercial.gov.uk/agreements/?&status=Live&category=Cloud+and+Hosting&page=1",
+                        "link_link_link_text": "View our cloud and hosting agreements.",
+                        "link_link_brick_class": "component_subcategory"
+                    },
+                    {
+                        "acf_fc_layout": "link_link",
+                        "link_link_heading": "Network services",
+                        "link_link_content": "<ul>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">mobile</span></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">networks and telecoms</span></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">space and geospatial</span></li>\n</ul>\n",
+                        "link_link_link_url": "https://www.crowncommercial.gov.uk/agreements/?&status=Live&category=Network+Services&page=1",
+                        "link_link_link_text": "View our network services agreements.",
+                        "link_link_brick_class": "component_subcategory"
+                    },
+                    {
+                        "acf_fc_layout": "link_link",
+                        "link_link_heading": "Software and hardware",
+                        "link_link_content": "<ul>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">data and analytics</span></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><a href=\"https://www.crowncommercial.gov.uk/products-and-services/technology/artificial-intelligence\"><span style=\"font-weight: 400;\">artificial intelligence and automation</span></a></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">IT hardware</span></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">software</span></li>\n</ul>\n<p><a href=\"https://www.crowncommercial.gov.uk/agreements/?&amp;status=Live&amp;category=Software&amp;page=1\">View our software agreements.</a></p>\n",
+                        "link_link_link_url": "https://www.crowncommercial.gov.uk/agreements/?&status=Live&category=Hardware&page=1",
+                        "link_link_link_text": "View our hardware agreements.",
+                        "link_link_brick_class": "component_subcategory"
+                    },
+                    {
+                        "acf_fc_layout": "link_link",
+                        "link_link_heading": "Digital and technology services",
+                        "link_link_content": "<ul>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">technology managed services</span></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">technology strategy and information security services</span></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">transport technology and services</span></li>\n<li aria-level=\"1\">bespoke application development</li>\n<li aria-level=\"1\">digital, data and technology resource augmentation</li>\n</ul>\n",
+                        "link_link_link_url": "https://www.crowncommercial.gov.uk/agreements/?&status=Live&category=Digital+and+Technology+Services&page=1",
+                        "link_link_link_text": "View our digital and technology services agreements.",
+                        "link_link_brick_class": "component_subcategory"
+                    }
+                ],
+                "subcategories_subcategories_brick_class": "component_subcategories"
+            },
+            {
+                "acf_fc_layout": "cards_cards",
+                "cards_cards_heading": "",
+                "cards_cards_cards": [
+                    {
+                        "cards_title": "Technology aggregation",
+                        "cards_content": "<p>Learn how you can take advantage of our collective buying power to achieve great savings on technology, digital services and IT.</p>\n<p><a href=\"https://www.crowncommercial.gov.uk/products-and-services/aggregation\">Learn more about our aggregation opportunities.</a></p>\n"
+                    },
+                    {
+                        "cards_title": "Technology Memorandum of Understandings",
+                        "cards_content": "<p>Discover how we can empower you to get the best possible technology deals with our <span style=\"font-weight: 400;\">selection of Memorandum of Understandings (MoUs). </span></p>\n<p><a href=\"https://www.crowncommercial.gov.uk/products-and-services/technology/technology-memorandum-of-understanding/\">Learn more about MoUs.</a></p>\n"
+                    }
+                ],
+                "cards_cards_brick_class": "component_card_list"
+            },
+            {
+                "acf_fc_layout": "feature_news_feature_news",
+                "feature_news_feature_news_heading": "Related articles",
+                "feature_news_feature_news_news_type": [
+                    {
+                        "term_id": 29,
+                        "name": "Case study",
+                        "slug": "case-study",
+                        "term_group": 0,
+                        "term_taxonomy_id": 29,
+                        "taxonomy": "category",
+                        "description": "",
+                        "parent": 0,
+                        "count": 101,
+                        "filter": "raw",
+                        "acf": []
+                    },
+                    {
+                        "term_id": 26,
+                        "name": "News and blogs",
+                        "slug": "news",
+                        "term_group": 0,
+                        "term_taxonomy_id": 26,
+                        "taxonomy": "category",
+                        "description": "",
+                        "parent": 0,
+                        "count": 546,
+                        "filter": "raw",
+                        "acf": []
+                    }
+                ],
+                "feature_news_feature_news_view_more_text": "",
+                "feature_news_feature_news_products_and_services": [
+                    {
+                        "term_id": 118,
+                        "name": "Technology",
+                        "slug": "technology",
+                        "term_group": 0,
+                        "term_taxonomy_id": 118,
+                        "taxonomy": "products_services",
+                        "description": "",
+                        "parent": 0,
+                        "count": 183,
+                        "filter": "raw",
+                        "acf": []
+                    },
+                    {
+                        "term_id": 166,
+                        "name": "Aggregation",
+                        "slug": "aggregation",
+                        "term_group": 0,
+                        "term_taxonomy_id": 166,
+                        "taxonomy": "products_services",
+                        "description": "",
+                        "parent": 0,
+                        "count": 32,
+                        "filter": "raw",
+                        "acf": []
+                    },
+                    {
+                        "term_id": 179,
+                        "name": "Cloud and hosting",
+                        "slug": "cloud-and-hosting",
+                        "term_group": 0,
+                        "term_taxonomy_id": 179,
+                        "taxonomy": "products_services",
+                        "description": "",
+                        "parent": 118,
+                        "count": 16,
+                        "filter": "raw",
+                        "acf": []
+                    },
+                    {
+                        "term_id": 130,
+                        "name": "Network services",
+                        "slug": "network-services",
+                        "term_group": 0,
+                        "term_taxonomy_id": 130,
+                        "taxonomy": "products_services",
+                        "description": "",
+                        "parent": 118,
+                        "count": 34,
+                        "filter": "raw",
+                        "acf": []
+                    },
+                    {
+                        "term_id": 157,
+                        "name": "Software and hardware",
+                        "slug": "software-and-hardware",
+                        "term_group": 0,
+                        "term_taxonomy_id": 157,
+                        "taxonomy": "products_services",
+                        "description": "",
+                        "parent": 118,
+                        "count": 13,
+                        "filter": "raw",
+                        "acf": []
+                    },
+                    {
+                        "term_id": 132,
+                        "name": "Technology services",
+                        "slug": "technology-services",
+                        "term_group": 0,
+                        "term_taxonomy_id": 132,
+                        "taxonomy": "products_services",
+                        "description": "",
+                        "parent": 118,
+                        "count": 71,
+                        "filter": "raw",
+                        "acf": []
+                    },
+                    {
+                        "term_id": 189,
+                        "name": "Digital capability and delivery",
+                        "slug": "digital-capability-and-delivery",
+                        "term_group": 0,
+                        "term_taxonomy_id": 189,
+                        "taxonomy": "products_services",
+                        "description": "",
+                        "parent": 118,
+                        "count": 27,
+                        "filter": "raw",
+                        "acf": []
+                    }
+                ],
+                "feature_news_feature_news_sectors": false,
+                "feature_news_feature_news_cherry_picked_articles": "",
+                "feature_news_feature_news_brick_class": "component_feature_news",
+                "feature_news_link": "/news?categories=29%2C26&products_services=118%2C166%2C179%2C130%2C157%2C132%2C189",
+                "articles": [
+                    {
+                        "id": 80059,
+                        "date": "2025-10-23T14:21:03",
+                        "date_gmt": "2025-10-23T14:21:03",
+                        "guid": {
+                            "rendered": "https://webdev-cms.crowncommercial.gov.uk/?p=80059"
+                        },
+                        "modified": "2025-10-23T14:41:48",
+                        "modified_gmt": "2025-10-23T14:41:48",
+                        "slug": "new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation",
+                        "status": "publish",
+                        "type": "post",
+                        "link": "http://ccs-agreements.cabinetoffice.localhost/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/",
+                        "title": {
+                            "rendered": "New CCS agreement supports UK transport technology modernisation and digitalisation"
+                        },
+                        "content": {
+                            "rendered": "<p><span style=\"font-weight: 400;\">We have launched a new transport technology agreement called </span><a href=\"https://www.crowncommercial.gov.uk/agreements/RM6347\"><span style=\"font-weight: 400;\">RM6347 Transport Technology</span></a><span style=\"font-weight: 400;\">. This agreement replaces </span><a href=\"https://www.crowncommercial.gov.uk/agreements/RM6099\"><span style=\"font-weight: 400;\">RM6099 Transport Technology &amp; Associated Services</span></a><span style=\"font-weight: 400;\">.</span></p>\n<p><span style=\"font-weight: 400;\">This new agreement offers a simple and flexible way for you to buy the technology you need for road, rail, aviation, and urban transport systems across the UK.</span></p>\n<p><span style=\"font-weight: 400;\">The Transport Technology agreement goes live on 4 November 2025 and will run for 6 to 8 years.</span></p>\n<h2><b>Helping cut emissions with clean technology</b></h2>\n<p><iframe loading=\"lazy\" title=\"New CCS agreement supports UK transport technology modernisation and digitalisation\" width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/N-XT9sE86g0?start=3&#038;feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe></p>\n<p><span style=\"font-weight: 400;\">This new agreement helps Britain become a leader in clean energy by investing in new technologies that reduce emissions. Areas include:</span></p>\n<ul>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">electric vehicle (EV) infrastructure that helps reduce anxiety about the transition from internal combustion vehicles to EVs</span></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">smart ticketing for integrated public transport</span></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">services to ensure the right solutions meet local user needs </span></li>\n</ul>\n<p><span style=\"font-weight: 400;\">These capabilities help authorities spend public money on meaningful improvements to daily life, supporting infrastructure that enables worry-free EV adoption and better, more accessible public transport.</span></p>\n<p><span style=\"font-weight: 400;\">This ensures public money is spent on practical improvements to daily life, such as cleaner air and better transport. </span></p>\n<p><span style=\"font-weight: 400;\">You can find other agreements that help cut emissions using our </span><a href=\"https://www.crowncommercial.gov.uk/carbon-net-zero/find-a-carbon-net-zero-solution\"><span style=\"font-weight: 400;\">find a carbon net zero solution tool.</span></a></p>\n<h3>Modernising transport technology improves citizen experiences</h3>\n<p><span style=\"font-weight: 400;\">This agreement helps create value for the nation by modernising how public sector organisations buy transport solutions. This benefits citizens beyond just cost reduction.</span></p>\n<p><span style=\"font-weight: 400;\">Here’s how this will improve everyday travel for citizens:</span></p>\n<ul>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">real-time information on integrated apps helps reduce journey times and uncertainty for travellers</span></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">artificial intelligence-powered traffic systems cut congestion and emissions, leading to smoother, greener journeys</span></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">predictive maintenance prevents delays by fixing issues before they cause major failures, keeping the network reliable</span></li>\n</ul>\n<h4>Modern transport solutions available through the agreement</h4>\n<p><span style=\"font-weight: 400;\">Designed to support transport modernisation and digitalisation across all modes of transport throughout the UK, the replacement agreement helps:</span></p>\n<ul>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">local authorities to buy smart traffic management systems such as adaptive traffic signals, real-time monitoring networks, and intelligent pedestrian crossing systems</span></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">rail operators to access digital ticketing solutions and network monitoring services</span></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">city councils to source electric vehicle charging infrastructure and parking management solutions through one comprehensive agreement</span></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">airports to purchase security systems and environmental monitoring technology</span></li>\n</ul>\n<h3><b>Fewer barriers, more efficient procurement processes</b></h3>\n<p><span style=\"font-weight: 400;\">By removing barriers that constrain public sector procurement, the new agreement increases customer flexibility with no limitations on the number of suppliers, no value restrictions on <a href=\"https://www.crowncommercial.gov.uk/news/procurement-essentials-what-is-a-call-off-ccs\">call-off contracts</a>, and contract lengths that can be set by customers to align with specific project requirements.</span></p>\n<p><span style=\"font-weight: 400;\">Dr Philip Orumwense CBE, Chief Technology Procurement Officer and Commercial Director, Crown Commercial Service explains:</span></p>\n<blockquote><p><span style=\"font-weight: 400;\">&#8220;We have collaborated with partners across the public sector including suppliers and public sector bodies to develop this agreement which is based on national strategies. Buyers can source all their transport technology and service requirements in one place through this agreement from the accredited suppliers.</span></p>\n<p>Built to support delivery of local and national transport plans and newly nationalised services, the agreement will serve all levels of Government and the wider public sector, and all scales of requirement. Crown Commercial Service through this agreement aims to support the delivery of national transport plans and strategies.</p>\n<p>By using the new regulations and removing traditional barriers such as supplier limits and contract value restrictions, this agreement creates more flexibility for buyers. We have additionally deployed SME friendly and innovative features in support of UK businesses across all transport modes.&#8221;</p></blockquote>\n<h3><b>Innovations</b></h3>\n<p><span style=\"font-weight: 400;\">This new agreement makes it easier to buy and manage transport services. Here are the main improvements:</span></p>\n<h4>Full use of new regulations</h4>\n<p><span style=\"font-weight: 400;\">The agreement uses all the benefits of new procurement regulations so we don&#8217;t give you one way of working. Instead, we use our category management knowledge to recommend the best ways to get value for money, and support you in developing your requirements, tender and contract.</span></p>\n<h4>An easier buying process with more flexibility for customers</h4>\n<p><span style=\"font-weight: 400;\">No limits on the number of suppliers, contract values, or how long contracts run, giving customers more choice in how they buy. The removal of barriers also creates opportunities for small to medium enterprises (SMEs).</span></p>\n<h4>Modern contract terms</h4>\n<p><span style=\"font-weight: 400;\">Updated to Public Sector Contracting terms and conditions, combined with lots designed for specific market areas, creating a less complex approach while ensuring all regulatory requirements are met.</span></p>\n<h4>Comprehensive lotting structure</h4>\n<p><span style=\"font-weight: 400;\">Each lot covers all the services customers need in one area. For example, the parking services lot includes professional advice, day-to-day management, enforcement, and new infrastructure &#8211; which means customers don&#8217;t need to run separate competitions.</span></p>\n<h3>Lotting structure for RM6347 Transport Technology</h3>\n<p><span style=\"font-weight: 400;\">The framework comprises 8 primary lots, split into sub-lots to support specific markets: </span></p>\n<p><span style=\"font-weight: 400;\">Lot 1 &#8211; Transport Professional Services</span></p>\n<p><span style=\"font-weight: 400;\">Lot 2 &#8211; Transport Data Services</span></p>\n<p><span style=\"font-weight: 400;\">Lot 3 &#8211; Parking Management</span></p>\n<p><span style=\"font-weight: 400;\">Lot 4 &#8211; Environmental Monitoring &amp; Climate Resilience</span></p>\n<p><span style=\"font-weight: 400;\">Lot 5 &#8211; Enforcement, Security and Compliance</span></p>\n<p><span style=\"font-weight: 400;\">Lot 6 &#8211; Zero Emission Vehicle Infrastructure</span></p>\n<p><span style=\"font-weight: 400;\">Lot 7a &#8211; Transport System Integration</span></p>\n<p><span style=\"font-weight: 400;\">Lot 7b &#8211; Smart Ticketing</span></p>\n<p><span style=\"font-weight: 400;\">Lot 7c &#8211; Transport Network Management</span></p>\n<p><span style=\"font-weight: 400;\">Lot 8a &#8211; Network Devices</span></p>\n<p><span style=\"font-weight: 400;\">Lot 8b &#8211; Cabinets, Furniture, Storage and Ancillaries</span></p>\n<p><span style=\"font-weight: 400;\">Lot 8c &#8211; Lighting &amp; Electrical</span></p>\n<p><span style=\"font-weight: 400;\">Lot 8d &#8211; Traffic Management Technologies</span></p>\n<p><span style=\"font-weight: 400;\">Lot 8e &#8211; Detectors, Informing and Communication Technologies</span></p>\n<h4>Find out more</h4>\n<p><span style=\"font-weight: 400;\">To learn more about the Transport Technology agreement </span><a href=\"https://www.crowncommercial.gov.uk/agreements/RM6347\"><span style=\"font-weight: 400;\">visit the agreement page</span></a><span style=\"font-weight: 400;\"> or </span><strong>c</strong><b>ontact the CCS Service Desk </b><span style=\"font-weight: 400;\">at </span><a href=\"mailto:info@crowncommercial.gov.uk\"><span style=\"font-weight: 400;\">info@crowncommercial.gov.uk</span></a><span style=\"font-weight: 400;\">. </span></p>\n",
+                            "protected": false
+                        },
+                        "excerpt": {
+                            "rendered": "<p>We have launched a new transport technology agreement called RM6347 Transport Technology. This agreement replaces RM6099 Transport Technology &amp; Associated Services. This new agreement offers a simple and flexible way for you to buy the technology you need for road, rail, aviation, and urban transport systems across the UK. The Transport Technology agreement goes live [&hellip;]</p>\n",
+                            "protected": false
+                        },
+                        "author": 128,
+                        "featured_media": 80064,
+                        "comment_status": "closed",
+                        "ping_status": "open",
+                        "sticky": false,
+                        "template": "",
+                        "format": "standard",
+                        "meta": {
+                            "_acf_changed": false,
+                            "_lmt_disableupdate": "",
+                            "_lmt_disable": "",
+                            "footnotes": ""
+                        },
+                        "categories": [
+                            26
+                        ],
+                        "products_services": [
+                            118
+                        ],
+                        "sectors": [],
+                        "class_list": [
+                            "post-80059",
+                            "post",
+                            "type-post",
+                            "status-publish",
+                            "format-standard",
+                            "has-post-thumbnail",
+                            "hentry",
+                            "category-news",
+                            "products_services-technology",
+                            "entry"
+                        ],
+                        "pp_statuses_selecting_workflow": false,
+                        "pp_workflow_action": "current",
+                        "pp_status_selection": "publish",
+                        "yoast_head": "<!-- This site is optimized with the Yoast SEO plugin v24.2 - https://yoast.com/wordpress/plugins/seo/ -->\n<title>New CCS agreement supports UK transport technology modernisation and digitalisation - Crown Commercial Service</title>\n<meta name=\"description\" content=\"New CCS transport technology agreement helps modernise transport technology, providing cleaner solutions for customers.\" />\n<meta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" />\n<link rel=\"canonical\" href=\"https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/\" />\n<meta property=\"og:locale\" content=\"en_US\" />\n<meta property=\"og:type\" content=\"article\" />\n<meta property=\"og:title\" content=\"New CCS agreement supports UK transport technology modernisation and digitalisation - Crown Commercial Service\" />\n<meta property=\"og:description\" content=\"New CCS transport technology agreement helps modernise transport technology, providing cleaner solutions for customers.\" />\n<meta property=\"og:url\" content=\"https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/\" />\n<meta property=\"og:site_name\" content=\"Crown Commercial Service\" />\n<meta property=\"article:published_time\" content=\"2025-10-23T14:21:03+00:00\" />\n<meta property=\"article:modified_time\" content=\"2025-10-23T14:41:48+00:00\" />\n<meta property=\"og:image\" content=\"https://assets.crowncommercial.gov.uk/wp-content/uploads/GettyImages-2174924311-scaled.jpg\" />\n\t<meta property=\"og:image:width\" content=\"2560\" />\n\t<meta property=\"og:image:height\" content=\"1705\" />\n\t<meta property=\"og:image:type\" content=\"image/jpeg\" />\n<meta name=\"author\" content=\"Katie Edwards-Lishman\" />\n<meta name=\"twitter:card\" content=\"summary_large_image\" />\n<meta name=\"twitter:label1\" content=\"Written by\" />\n\t<meta name=\"twitter:data1\" content=\"Katie Edwards-Lishman\" />\n\t<meta name=\"twitter:label2\" content=\"Est. reading time\" />\n\t<meta name=\"twitter:data2\" content=\"4 minutes\" />\n<script type=\"application/ld+json\" class=\"yoast-schema-graph\">{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"WebPage\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/\",\"url\":\"https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/\",\"name\":\"New CCS agreement supports UK transport technology modernisation and digitalisation - Crown Commercial Service\",\"isPartOf\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#website\"},\"primaryImageOfPage\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/#primaryimage\"},\"image\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/#primaryimage\"},\"thumbnailUrl\":\"https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-2174924311-scaled.jpg\",\"datePublished\":\"2025-10-23T14:21:03+00:00\",\"dateModified\":\"2025-10-23T14:41:48+00:00\",\"author\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#/schema/person/afae5caa9a6c1635efdf343fffd9476a\"},\"description\":\"New CCS transport technology agreement helps modernise transport technology, providing cleaner solutions for customers.\",\"breadcrumb\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/#breadcrumb\"},\"inLanguage\":\"en-US\",\"potentialAction\":[{\"@type\":\"ReadAction\",\"target\":[\"https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/\"]}]},{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/#primaryimage\",\"url\":\"https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-2174924311-scaled.jpg\",\"contentUrl\":\"https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-2174924311-scaled.jpg\",\"width\":2560,\"height\":1705,\"caption\":\"Aerial view of a highway cutting through the green countryside near an industrial zone with warehouses and trucks\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https://webdev-cms.crowncommercial.gov.uk/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"New CCS agreement supports UK transport technology modernisation and digitalisation\"}]},{\"@type\":\"WebSite\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#website\",\"url\":\"https://webdev-cms.crowncommercial.gov.uk/\",\"name\":\"Crown Commercial Service\",\"description\":\"\",\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https://webdev-cms.crowncommercial.gov.uk/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"en-US\"},{\"@type\":\"Person\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#/schema/person/afae5caa9a6c1635efdf343fffd9476a\",\"name\":\"Katie Edwards-Lishman\",\"image\":{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#/schema/person/image/\",\"url\":\"https://secure.gravatar.com/avatar/e1c21ab51eb5c0edcc08718ca862482a7708187667a42c93695e78383f6a6926?s=96&d=mm&r=g\",\"contentUrl\":\"https://secure.gravatar.com/avatar/e1c21ab51eb5c0edcc08718ca862482a7708187667a42c93695e78383f6a6926?s=96&d=mm&r=g\",\"caption\":\"Katie Edwards-Lishman\"},\"url\":\"http://ccs-agreements.cabinetoffice.localhost/news/author/kedwards-lishman/\"}]}</script>\n<!-- / Yoast SEO plugin. -->",
+                        "yoast_head_json": {
+                            "title": "New CCS agreement supports UK transport technology modernisation and digitalisation - Crown Commercial Service",
+                            "description": "New CCS transport technology agreement helps modernise transport technology, providing cleaner solutions for customers.",
+                            "robots": {
+                                "index": "index",
+                                "follow": "follow",
+                                "max-snippet": "max-snippet:-1",
+                                "max-image-preview": "max-image-preview:large",
+                                "max-video-preview": "max-video-preview:-1"
+                            },
+                            "canonical": "https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/",
+                            "og_locale": "en_US",
+                            "og_type": "article",
+                            "og_title": "New CCS agreement supports UK transport technology modernisation and digitalisation - Crown Commercial Service",
+                            "og_description": "New CCS transport technology agreement helps modernise transport technology, providing cleaner solutions for customers.",
+                            "og_url": "https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/",
+                            "og_site_name": "Crown Commercial Service",
+                            "article_published_time": "2025-10-23T14:21:03+00:00",
+                            "article_modified_time": "2025-10-23T14:41:48+00:00",
+                            "og_image": [
+                                {
+                                    "width": 2560,
+                                    "height": 1705,
+                                    "url": "https://assets.crowncommercial.gov.uk/wp-content/uploads/GettyImages-2174924311-scaled.jpg",
+                                    "type": "image/jpeg"
+                                }
+                            ],
+                            "author": "Katie Edwards-Lishman",
+                            "twitter_card": "summary_large_image",
+                            "twitter_misc": {
+                                "Written by": "Katie Edwards-Lishman",
+                                "Est. reading time": "4 minutes"
+                            },
+                            "schema": {
+                                "@context": "https://schema.org",
+                                "@graph": [
+                                    {
+                                        "@type": "WebPage",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/",
+                                        "url": "https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/",
+                                        "name": "New CCS agreement supports UK transport technology modernisation and digitalisation - Crown Commercial Service",
+                                        "isPartOf": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/#website"
+                                        },
+                                        "primaryImageOfPage": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/#primaryimage"
+                                        },
+                                        "image": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/#primaryimage"
+                                        },
+                                        "thumbnailUrl": "https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-2174924311-scaled.jpg",
+                                        "datePublished": "2025-10-23T14:21:03+00:00",
+                                        "dateModified": "2025-10-23T14:41:48+00:00",
+                                        "author": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/#/schema/person/afae5caa9a6c1635efdf343fffd9476a"
+                                        },
+                                        "description": "New CCS transport technology agreement helps modernise transport technology, providing cleaner solutions for customers.",
+                                        "breadcrumb": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/#breadcrumb"
+                                        },
+                                        "inLanguage": "en-US",
+                                        "potentialAction": [
+                                            {
+                                                "@type": "ReadAction",
+                                                "target": [
+                                                    "https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "@type": "ImageObject",
+                                        "inLanguage": "en-US",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/#primaryimage",
+                                        "url": "https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-2174924311-scaled.jpg",
+                                        "contentUrl": "https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-2174924311-scaled.jpg",
+                                        "width": 2560,
+                                        "height": 1705,
+                                        "caption": "Aerial view of a highway cutting through the green countryside near an industrial zone with warehouses and trucks"
+                                    },
+                                    {
+                                        "@type": "BreadcrumbList",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/news/new-ccs-agreement-supports-uk-transport-technology-modernisation-and-digitalisation/#breadcrumb",
+                                        "itemListElement": [
+                                            {
+                                                "@type": "ListItem",
+                                                "position": 1,
+                                                "name": "Home",
+                                                "item": "https://webdev-cms.crowncommercial.gov.uk/"
+                                            },
+                                            {
+                                                "@type": "ListItem",
+                                                "position": 2,
+                                                "name": "New CCS agreement supports UK transport technology modernisation and digitalisation"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "@type": "WebSite",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/#website",
+                                        "url": "https://webdev-cms.crowncommercial.gov.uk/",
+                                        "name": "Crown Commercial Service",
+                                        "description": "",
+                                        "potentialAction": [
+                                            {
+                                                "@type": "SearchAction",
+                                                "target": {
+                                                    "@type": "EntryPoint",
+                                                    "urlTemplate": "https://webdev-cms.crowncommercial.gov.uk/?s={search_term_string}"
+                                                },
+                                                "query-input": {
+                                                    "@type": "PropertyValueSpecification",
+                                                    "valueRequired": true,
+                                                    "valueName": "search_term_string"
+                                                }
+                                            }
+                                        ],
+                                        "inLanguage": "en-US"
+                                    },
+                                    {
+                                        "@type": "Person",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/#/schema/person/afae5caa9a6c1635efdf343fffd9476a",
+                                        "name": "Katie Edwards-Lishman",
+                                        "image": {
+                                            "@type": "ImageObject",
+                                            "inLanguage": "en-US",
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/#/schema/person/image/",
+                                            "url": "https://secure.gravatar.com/avatar/e1c21ab51eb5c0edcc08718ca862482a7708187667a42c93695e78383f6a6926?s=96&d=mm&r=g",
+                                            "contentUrl": "https://secure.gravatar.com/avatar/e1c21ab51eb5c0edcc08718ca862482a7708187667a42c93695e78383f6a6926?s=96&d=mm&r=g",
+                                            "caption": "Katie Edwards-Lishman"
+                                        },
+                                        "url": "http://ccs-agreements.cabinetoffice.localhost/news/author/kedwards-lishman/"
+                                    }
+                                ]
+                            }
+                        },
+                        "yoast": {
+                            "focuskw": "Transport technology",
+                            "title": "",
+                            "metadesc": "New CCS transport technology agreement helps modernise transport technology, providing cleaner solutions for customers.",
+                            "linkdex": "67",
+                            "metakeywords": "",
+                            "meta-robots-noindex": "",
+                            "meta-robots-nofollow": "",
+                            "meta-robots-adv": "",
+                            "canonical": "",
+                            "redirect": "",
+                            "opengraph-title": "",
+                            "opengraph-description": "",
+                            "opengraph-image": "",
+                            "twitter-title": "",
+                            "twitter-description": "",
+                            "twitter-image": ""
+                        },
+                        "modified_by": "Katie Edwards-Lishman",
+                        "authorName": "Katie Edwards-Lishman",
+                        "author_image_url": null,
+                        "acf": {
+                            "post_lead_text": "New CCS transport technology agreement simplifies procurement processes while supporting sustainable transport innovation.",
+                            "author_image": false,
+                            "author_name_text": "",
+                            "Hide_from_View_All": false,
+                            "post_components_rows": false,
+                            "previous_text": "CCS provides further £180,000 into sustainability programme to help local government fight climate change",
+                            "previous_link": "/news/ccs-provides-further-180000-into-sustainability-programme-to-help-local-governments-fight-climate-change/",
+                            "next_text": "Updated action plan for small and medium-sized enterprises",
+                            "next_link": "/news/updated-action-plan-for-small-and-medium-sized-enterprises/"
+                        },
+                        "_links": {
+                            "self": [
+                                {
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/posts/80059",
+                                    "targetHints": {
+                                        "allow": [
+                                            "GET"
+                                        ]
+                                    }
+                                }
+                            ],
+                            "collection": [
+                                {
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/posts"
+                                }
+                            ],
+                            "about": [
+                                {
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/types/post"
+                                }
+                            ],
+                            "author": [
+                                {
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/users/128"
+                                }
+                            ],
+                            "replies": [
+                                {
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/comments?post=80059"
+                                }
+                            ],
+                            "version-history": [
+                                {
+                                    "count": 5,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/posts/80059/revisions"
+                                }
+                            ],
+                            "predecessor-version": [
+                                {
+                                    "id": 80083,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/posts/80059/revisions/80083"
+                                }
+                            ],
+                            "wp:featuredmedia": [
+                                {
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/media/80064"
+                                }
+                            ],
+                            "wp:attachment": [
+                                {
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/media?parent=80059"
+                                }
+                            ],
+                            "wp:term": [
+                                {
+                                    "taxonomy": "category",
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/categories?post=80059"
+                                },
+                                {
+                                    "taxonomy": "products_services",
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/products_services?post=80059"
+                                },
+                                {
+                                    "taxonomy": "sectors",
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/sectors?post=80059"
+                                }
+                            ],
+                            "curies": [
+                                {
+                                    "name": "wp",
+                                    "href": "https://api.w.org/{rel}",
+                                    "templated": true
+                                }
+                            ]
+                        },
+                        "post_type": "post"
+                    },
+                    {
+                        "id": 78320,
+                        "date": "2025-08-14T13:58:19",
+                        "date_gmt": "2025-08-14T13:58:19",
+                        "guid": {
+                            "rendered": "https://webdev-cms.crowncommercial.gov.uk/?p=78320"
+                        },
+                        "modified": "2025-08-15T15:16:58",
+                        "modified_gmt": "2025-08-15T15:16:58",
+                        "slug": "ccs-pavilion-digigov-expo-2025",
+                        "status": "publish",
+                        "type": "post",
+                        "link": "http://ccs-agreements.cabinetoffice.localhost/news/ccs-pavilion-digigov-expo-2025/",
+                        "title": {
+                            "rendered": "Crown Commercial Service to showcase digital innovation at DigiGov Expo 2025"
+                        },
+                        "content": {
+                            "rendered": "<p><span style=\"font-weight: 400;\">Crown Commercial Service (CCS) will host a dedicated pavilion at this year’s DigiGov Expo, the UK’s largest public sector technology event, taking place at ExCeL London on 24 to 25 September 2025.</span></p>\n<p><span style=\"font-weight: 400;\">The new CCS Pavilion will bring together technology suppliers and public sector buyers, creating opportunities to explore innovative solutions that can transform public services. With the Procurement Act 2023 now in effect, the pavilion will serve as a vital hub for understanding how to maximise value in technology procurement.</span></p>\n<p><span style=\"font-weight: 400;\">DigiGov Expo will bring together over 3,000 digital, data, and technology experts from Central Government departments, local authorities, and the wider public sector, to explore the latest innovations from tech suppliers, share best practices, and address the critical challenges and priorities for public sector digital reform.</span></p>\n<p><span style=\"font-weight: 400;\">The event will also feature mini theatre speaker sessions including presentations by:</span></p>\n<ul>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\">Lucy Mccormack, our Small and Medium Sized Enterprise (SME) champion, on the work CCS is doing to support SMEs </span></li>\n<li style=\"font-weight: 400;\" aria-level=\"1\"><span style=\"font-weight: 400;\"> Agata Taylor and Andy Gowanlock, CCS Commercial Leads on how CCS is supporting customers and suppliers to get to grips with the new procurement regulations</span></li>\n</ul>\n<p><span style=\"font-weight: 400;\">You can view the full agenda for the CCS mini theatre on the </span><a href=\"https://hubs.la/Q03Cwpc20\"><span style=\"font-weight: 400;\">DigiGov website</span></a><span style=\"font-weight: 400;\">.</span></p>\n<p><span style=\"font-weight: 400;\">Philip Orumwense, Commercial Director and Chief Technology Procurement Officer at CCS will also be taking part in a panel session on</span><span style=\"font-weight: 400;\"> Wednesday 24 September from 3:40pm to 4:30pm </span><span style=\"font-weight: 400;\">on </span><span style=\"font-weight: 400;\">Fostering Innovation: How can the government improve the way it works with industry and invests in capabilities for the UK?</span></p>\n<p>Philip says:</p>\n<blockquote><p><span style=\"font-weight: 400;\">I am delighted that CCS will be attending the DigiGov Expo event once again. It’s a wonderful opportunity for discovery – a chance for those who buy and supply for the public sector to share their knowledge and experience.</span></p>\n<p><span style=\"font-weight: 400;\">It further demonstrates how CCS is committed to supporting effective public sector procurement and the acceleration of modern digital government.</span></p></blockquote>\n<p><span style=\"font-weight: 400;\">Public sector representatives can register now for complimentary places, available for a limited time. For more information and to register, </span><a href=\"https://hubs.la/Q035yj9M0\"><span style=\"font-weight: 400;\">visit the main expo website</span></a><span style=\"font-weight: 400;\"> or </span><a href=\"https://hubs.la/Q035yj9Y0\"><span style=\"font-weight: 400;\">register directly here</span></a><span style=\"font-weight: 400;\">.</span></p>\n",
+                            "protected": false
+                        },
+                        "excerpt": {
+                            "rendered": "<p>Crown Commercial Service (CCS) will host a dedicated pavilion at this year’s DigiGov Expo, the UK’s largest public sector technology event, taking place at ExCeL London on 24 to 25 September 2025. The new CCS Pavilion will bring together technology suppliers and public sector buyers, creating opportunities to explore innovative solutions that can transform public [&hellip;]</p>\n",
+                            "protected": false
+                        },
+                        "author": 147,
+                        "featured_media": 78330,
+                        "comment_status": "closed",
+                        "ping_status": "open",
+                        "sticky": false,
+                        "template": "",
+                        "format": "standard",
+                        "meta": {
+                            "_acf_changed": false,
+                            "_lmt_disableupdate": "",
+                            "_lmt_disable": "",
+                            "footnotes": ""
+                        },
+                        "categories": [
+                            26
+                        ],
+                        "products_services": [
+                            179,
+                            189,
+                            130,
+                            157,
+                            118,
+                            132
+                        ],
+                        "sectors": [
+                            150,
+                            133,
+                            112,
+                            113,
+                            114,
+                            170
+                        ],
+                        "class_list": [
+                            "post-78320",
+                            "post",
+                            "type-post",
+                            "status-publish",
+                            "format-standard",
+                            "has-post-thumbnail",
+                            "hentry",
+                            "category-news",
+                            "products_services-cloud-and-hosting",
+                            "products_services-digital-capability-and-delivery",
+                            "products_services-network-services",
+                            "products_services-software-and-hardware",
+                            "products_services-technology",
+                            "products_services-technology-services",
+                            "sectors-central-government",
+                            "sectors-devolved",
+                            "sectors-health",
+                            "sectors-housing-associations",
+                            "sectors-local-government",
+                            "sectors-supplier",
+                            "entry"
+                        ],
+                        "pp_statuses_selecting_workflow": false,
+                        "pp_workflow_action": "current",
+                        "pp_status_selection": "publish",
+                        "yoast_head": "<!-- This site is optimized with the Yoast SEO plugin v24.2 - https://yoast.com/wordpress/plugins/seo/ -->\n<title>Crown Commercial Service to showcase digital innovation at DigiGov Expo 2025 - Crown Commercial Service</title>\n<meta name=\"description\" content=\"Join us at the Excel, London on the 24 and 25 September 2025 to network and connect with over 3,000 digital, data, and technology experts from across the public sector.\" />\n<meta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" />\n<link rel=\"canonical\" href=\"https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/\" />\n<meta property=\"og:locale\" content=\"en_US\" />\n<meta property=\"og:type\" content=\"article\" />\n<meta property=\"og:title\" content=\"Crown Commercial Service to showcase digital innovation at DigiGov Expo 2025 - Crown Commercial Service\" />\n<meta property=\"og:description\" content=\"Join us at the Excel, London on the 24 and 25 September 2025 to network and connect with over 3,000 digital, data, and technology experts from across the public sector.\" />\n<meta property=\"og:url\" content=\"https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/\" />\n<meta property=\"og:site_name\" content=\"Crown Commercial Service\" />\n<meta property=\"article:published_time\" content=\"2025-08-14T13:58:19+00:00\" />\n<meta property=\"article:modified_time\" content=\"2025-08-15T15:16:58+00:00\" />\n<meta property=\"og:image\" content=\"https://assets.crowncommercial.gov.uk/wp-content/uploads/GettyImages-1396315043-scaled.jpg\" />\n\t<meta property=\"og:image:width\" content=\"2560\" />\n\t<meta property=\"og:image:height\" content=\"1707\" />\n\t<meta property=\"og:image:type\" content=\"image/jpeg\" />\n<meta name=\"author\" content=\"Karen Lewis\" />\n<meta name=\"twitter:card\" content=\"summary_large_image\" />\n<meta name=\"twitter:label1\" content=\"Written by\" />\n\t<meta name=\"twitter:data1\" content=\"Karen Lewis\" />\n\t<meta name=\"twitter:label2\" content=\"Est. reading time\" />\n\t<meta name=\"twitter:data2\" content=\"2 minutes\" />\n<script type=\"application/ld+json\" class=\"yoast-schema-graph\">{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"WebPage\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/\",\"url\":\"https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/\",\"name\":\"Crown Commercial Service to showcase digital innovation at DigiGov Expo 2025 - Crown Commercial Service\",\"isPartOf\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#website\"},\"primaryImageOfPage\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/#primaryimage\"},\"image\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/#primaryimage\"},\"thumbnailUrl\":\"https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-1396315043-scaled.jpg\",\"datePublished\":\"2025-08-14T13:58:19+00:00\",\"dateModified\":\"2025-08-15T15:16:58+00:00\",\"author\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#/schema/person/557ae017bf903030f13c665012505181\"},\"description\":\"Join us at the Excel, London on the 24 and 25 September 2025 to network and connect with over 3,000 digital, data, and technology experts from across the public sector.\",\"breadcrumb\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/#breadcrumb\"},\"inLanguage\":\"en-US\",\"potentialAction\":[{\"@type\":\"ReadAction\",\"target\":[\"https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/\"]}]},{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/#primaryimage\",\"url\":\"https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-1396315043-scaled.jpg\",\"contentUrl\":\"https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-1396315043-scaled.jpg\",\"width\":2560,\"height\":1707,\"caption\":\"Join us at the Excel, London on the 24 and 25 September 2025 to network and connect with over 3,000 digital, data, and technology experts from across the public sector.\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https://webdev-cms.crowncommercial.gov.uk/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Crown Commercial Service to showcase digital innovation at DigiGov Expo 2025\"}]},{\"@type\":\"WebSite\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#website\",\"url\":\"https://webdev-cms.crowncommercial.gov.uk/\",\"name\":\"Crown Commercial Service\",\"description\":\"\",\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https://webdev-cms.crowncommercial.gov.uk/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"en-US\"},{\"@type\":\"Person\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#/schema/person/557ae017bf903030f13c665012505181\",\"name\":\"Karen Lewis\",\"image\":{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#/schema/person/image/\",\"url\":\"https://secure.gravatar.com/avatar/32a7dabfb25dcb3c42f7bd64eaaa0452eb67db3b8c9c3e83b150923e5959b869?s=96&d=mm&r=g\",\"contentUrl\":\"https://secure.gravatar.com/avatar/32a7dabfb25dcb3c42f7bd64eaaa0452eb67db3b8c9c3e83b150923e5959b869?s=96&d=mm&r=g\",\"caption\":\"Karen Lewis\"},\"url\":\"http://ccs-agreements.cabinetoffice.localhost/news/author/klewis1/\"}]}</script>\n<!-- / Yoast SEO plugin. -->",
+                        "yoast_head_json": {
+                            "title": "Crown Commercial Service to showcase digital innovation at DigiGov Expo 2025 - Crown Commercial Service",
+                            "description": "Join us at the Excel, London on the 24 and 25 September 2025 to network and connect with over 3,000 digital, data, and technology experts from across the public sector.",
+                            "robots": {
+                                "index": "index",
+                                "follow": "follow",
+                                "max-snippet": "max-snippet:-1",
+                                "max-image-preview": "max-image-preview:large",
+                                "max-video-preview": "max-video-preview:-1"
+                            },
+                            "canonical": "https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/",
+                            "og_locale": "en_US",
+                            "og_type": "article",
+                            "og_title": "Crown Commercial Service to showcase digital innovation at DigiGov Expo 2025 - Crown Commercial Service",
+                            "og_description": "Join us at the Excel, London on the 24 and 25 September 2025 to network and connect with over 3,000 digital, data, and technology experts from across the public sector.",
+                            "og_url": "https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/",
+                            "og_site_name": "Crown Commercial Service",
+                            "article_published_time": "2025-08-14T13:58:19+00:00",
+                            "article_modified_time": "2025-08-15T15:16:58+00:00",
+                            "og_image": [
+                                {
+                                    "width": 2560,
+                                    "height": 1707,
+                                    "url": "https://assets.crowncommercial.gov.uk/wp-content/uploads/GettyImages-1396315043-scaled.jpg",
+                                    "type": "image/jpeg"
+                                }
+                            ],
+                            "author": "Karen Lewis",
+                            "twitter_card": "summary_large_image",
+                            "twitter_misc": {
+                                "Written by": "Karen Lewis",
+                                "Est. reading time": "2 minutes"
+                            },
+                            "schema": {
+                                "@context": "https://schema.org",
+                                "@graph": [
+                                    {
+                                        "@type": "WebPage",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/",
+                                        "url": "https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/",
+                                        "name": "Crown Commercial Service to showcase digital innovation at DigiGov Expo 2025 - Crown Commercial Service",
+                                        "isPartOf": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/#website"
+                                        },
+                                        "primaryImageOfPage": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/#primaryimage"
+                                        },
+                                        "image": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/#primaryimage"
+                                        },
+                                        "thumbnailUrl": "https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-1396315043-scaled.jpg",
+                                        "datePublished": "2025-08-14T13:58:19+00:00",
+                                        "dateModified": "2025-08-15T15:16:58+00:00",
+                                        "author": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/#/schema/person/557ae017bf903030f13c665012505181"
+                                        },
+                                        "description": "Join us at the Excel, London on the 24 and 25 September 2025 to network and connect with over 3,000 digital, data, and technology experts from across the public sector.",
+                                        "breadcrumb": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/#breadcrumb"
+                                        },
+                                        "inLanguage": "en-US",
+                                        "potentialAction": [
+                                            {
+                                                "@type": "ReadAction",
+                                                "target": [
+                                                    "https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "@type": "ImageObject",
+                                        "inLanguage": "en-US",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/#primaryimage",
+                                        "url": "https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-1396315043-scaled.jpg",
+                                        "contentUrl": "https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-1396315043-scaled.jpg",
+                                        "width": 2560,
+                                        "height": 1707,
+                                        "caption": "Join us at the Excel, London on the 24 and 25 September 2025 to network and connect with over 3,000 digital, data, and technology experts from across the public sector."
+                                    },
+                                    {
+                                        "@type": "BreadcrumbList",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/news/ccs-pavilion-digigov-expo-2025/#breadcrumb",
+                                        "itemListElement": [
+                                            {
+                                                "@type": "ListItem",
+                                                "position": 1,
+                                                "name": "Home",
+                                                "item": "https://webdev-cms.crowncommercial.gov.uk/"
+                                            },
+                                            {
+                                                "@type": "ListItem",
+                                                "position": 2,
+                                                "name": "Crown Commercial Service to showcase digital innovation at DigiGov Expo 2025"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "@type": "WebSite",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/#website",
+                                        "url": "https://webdev-cms.crowncommercial.gov.uk/",
+                                        "name": "Crown Commercial Service",
+                                        "description": "",
+                                        "potentialAction": [
+                                            {
+                                                "@type": "SearchAction",
+                                                "target": {
+                                                    "@type": "EntryPoint",
+                                                    "urlTemplate": "https://webdev-cms.crowncommercial.gov.uk/?s={search_term_string}"
+                                                },
+                                                "query-input": {
+                                                    "@type": "PropertyValueSpecification",
+                                                    "valueRequired": true,
+                                                    "valueName": "search_term_string"
+                                                }
+                                            }
+                                        ],
+                                        "inLanguage": "en-US"
+                                    },
+                                    {
+                                        "@type": "Person",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/#/schema/person/557ae017bf903030f13c665012505181",
+                                        "name": "Karen Lewis",
+                                        "image": {
+                                            "@type": "ImageObject",
+                                            "inLanguage": "en-US",
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/#/schema/person/image/",
+                                            "url": "https://secure.gravatar.com/avatar/32a7dabfb25dcb3c42f7bd64eaaa0452eb67db3b8c9c3e83b150923e5959b869?s=96&d=mm&r=g",
+                                            "contentUrl": "https://secure.gravatar.com/avatar/32a7dabfb25dcb3c42f7bd64eaaa0452eb67db3b8c9c3e83b150923e5959b869?s=96&d=mm&r=g",
+                                            "caption": "Karen Lewis"
+                                        },
+                                        "url": "http://ccs-agreements.cabinetoffice.localhost/news/author/klewis1/"
+                                    }
+                                ]
+                            }
+                        },
+                        "yoast": {
+                            "focuskw": "DigiGov",
+                            "title": "",
+                            "metadesc": "Join us at the Excel, London on the 24 and 25 September 2025 to network and connect with over 3,000 digital, data, and technology experts from across the public sector.",
+                            "linkdex": "63",
+                            "metakeywords": "",
+                            "meta-robots-noindex": "",
+                            "meta-robots-nofollow": "",
+                            "meta-robots-adv": "",
+                            "canonical": "",
+                            "redirect": "",
+                            "opengraph-title": "",
+                            "opengraph-description": "",
+                            "opengraph-image": "",
+                            "twitter-title": "",
+                            "twitter-description": "",
+                            "twitter-image": ""
+                        },
+                        "modified_by": "Jack Colwill",
+                        "authorName": "Karen Lewis",
+                        "author_image_url": null,
+                        "acf": {
+                            "post_lead_text": "Join us at the Excel, London on the 24 and 25 September 2025 to network and connect with over 3,000 digital, data, and technology experts from across the public sector.",
+                            "author_name_text": "",
+                            "Hide_from_View_All": false,
+                            "previous_text": "How we assess and award suppliers who bid for a place on our agreements",
+                            "previous_link": "/news/supplier-specifics-how-we-assess-and-award-suppliers-who-bid-for-a-place-on-our-agreements/",
+                            "next_text": "What is the competitive flexible procedure and how will it work for public sector buyers?",
+                            "next_link": "/news/what-is-the-competitive-flexible-procedure-procurement-essentials/",
+                            "sectors": [
+                                "Central government",
+                                "Devolved",
+                                "Health",
+                                "Housing associations",
+                                "Local government",
+                                "Supplier"
+                            ]
+                        },
+                        "_links": {
+                            "self": [
+                                {
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/posts/78320",
+                                    "targetHints": {
+                                        "allow": [
+                                            "GET"
+                                        ]
+                                    }
+                                }
+                            ],
+                            "collection": [
+                                {
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/posts"
+                                }
+                            ],
+                            "about": [
+                                {
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/types/post"
+                                }
+                            ],
+                            "author": [
+                                {
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/users/147"
+                                }
+                            ],
+                            "replies": [
+                                {
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/comments?post=78320"
+                                }
+                            ],
+                            "version-history": [
+                                {
+                                    "count": 3,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/posts/78320/revisions"
+                                }
+                            ],
+                            "predecessor-version": [
+                                {
+                                    "id": 78358,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/posts/78320/revisions/78358"
+                                }
+                            ],
+                            "wp:featuredmedia": [
+                                {
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/media/78330"
+                                }
+                            ],
+                            "wp:attachment": [
+                                {
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/media?parent=78320"
+                                }
+                            ],
+                            "wp:term": [
+                                {
+                                    "taxonomy": "category",
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/categories?post=78320"
+                                },
+                                {
+                                    "taxonomy": "products_services",
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/products_services?post=78320"
+                                },
+                                {
+                                    "taxonomy": "sectors",
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/sectors?post=78320"
+                                }
+                            ],
+                            "curies": [
+                                {
+                                    "name": "wp",
+                                    "href": "https://api.w.org/{rel}",
+                                    "templated": true
+                                }
+                            ]
+                        },
+                        "post_type": "post"
+                    },
+                    {
+                        "id": 77899,
+                        "date": "2025-07-31T07:41:18",
+                        "date_gmt": "2025-07-31T07:41:18",
+                        "guid": {
+                            "rendered": "https://webdev-cms.crowncommercial.gov.uk/?p=77899"
+                        },
+                        "modified": "2025-07-31T07:41:18",
+                        "modified_gmt": "2025-07-31T07:41:18",
+                        "slug": "new-space-technology-agreement-launched",
+                        "status": "publish",
+                        "type": "post",
+                        "link": "http://ccs-agreements.cabinetoffice.localhost/news/new-space-technology-agreement-launched/",
+                        "title": {
+                            "rendered": "New flexible agreement helps accelerate the public sector’s access to innovation in space technology "
+                        },
+                        "content": {
+                            "rendered": "<p><span style=\"font-weight: 400;\">A new commercial agreement from Crown Commercial Service (CCS) developed in collaboration with the Ministry of Defence (MOD), gives the UK public sector access to CCS’s first Dynamic Market for space-related technologies, maximising the flexibilities under the new Procurement Act 2023. </span></p>\n<h2>A new procurement approach to space-related technology</h2>\n<p><span style=\"font-weight: 400;\">The space sector is extremely important to the future prosperity of the UK. Many of the services that are essential to our modern daily lives are driven by space-related technologies such as communication systems, navigation, weather forecasting, power grid monitoring, crop monitoring, financial transactions and national security. Currently worth over £18.9 billion annually and employing more than 52,000 people, this strategically important sector helps secure the UK&#8217;s global competitive position through encouraging and championing innovation.</span></p>\n<p><span style=\"font-weight: 400;\">CCS has launched the new Space Technology Solutions agreement, to help public sector organisations access both upstream and downstream space technology solutions. It expands upon a previous CCS agreement, Space-Enabled and Geospatial Services Dynamic Purchasing System, with an enhanced scope, suitable for complex space-related procurement.</span></p>\n<h3>Strengthening the UK&#8217;s access to space innovation</h3>\n<p><span style=\"font-weight: 400;\">This agreement is helping the public sector access space innovation in multiple ways.  Examples include:</span></p>\n<h4>Weather forecasting and climate monitoring</h4>\n<p><span style=\"font-weight: 400;\">Public sector organisations can now access cutting-edge Earth observation technologies. Satellite data analytics firms are pioneering machine learning algorithms that transform raw imagery into actionable weather intelligence for more accurate weather forecasting and climate monitoring. </span></p>\n<h4>Satellite communications</h4>\n<p><span style=\"font-weight: 400;\">This agreement connects public sector customers with companies developing next-generation connectivity solutions. The agreement facilitates procurement of technologies such as low-Earth orbit satellite networks that provide resilient communications for emergency services and remote communities.</span></p>\n<p><span style=\"font-weight: 400;\">The new Space Technology Solutions agreement represents a significant advancement in how the public sector can access these vital technologies. Patrick Cahill, Deputy Director of Network, Telecoms and Space Solutions at CCS says:</span></p>\n<blockquote><p><span style=\"font-weight: 400;\">We&#8217;ve designed this agreement to respond directly to our customers&#8217; needs for simplified access to critical space technologies. The dynamic market approach, combined with the flexibilities offered under the new Procurement Act, will help public sector organisations provide better services while generating economic growth and supporting innovation across all regions of the UK.</span></p></blockquote>\n<h3>Collaborative approach and improvements</h3>\n<p><span style=\"font-weight: 400;\">CCS has worked closely with the MOD and other public sector bodies to develop this agreement, ensuring it meets their specific requirements. The agreement offers several advantages for the UK space economy while supporting the government&#8217;s commitment to collaborative procurement. </span></p>\n<p><span style=\"font-weight: 400;\">Victoria Cope, Defence’s Digital Commercial Director and Senior Responsible Officer for HMG Enterprise Space Category </span><span style=\"font-weight: 400;\">says:</span></p>\n<blockquote><p><span style=\"font-weight: 400;\">This collaborative initiative between MOD and CCS exemplifies how government departments can work together to solve complex challenges. The Space Technology Solutions agreement is an important pillar within our HMG Enterprise Space Category. It will enable us to tap into cutting-edge space innovations that enhance our capabilities while also creating opportunities for both British and global businesses across the space sector. It&#8217;s a win-win approach that demonstrates the value of strategic partnerships within government.</span></p></blockquote>\n<p><span style=\"font-weight: 400;\">Benefits include:</span></p>\n<ul>\n<li><span style=\"font-weight: 400;\">direct access to a wide range of upstream and downstream space technologies</span></li>\n<li><span style=\"font-weight: 400;\">flexibility through the Competitive Flexible Procedure, allowing buyers to design fit-for-purpose procurement processes</span></li>\n<li><span style=\"font-weight: 400;\">compliance with the new Procurement Act 2023 </span></li>\n</ul>\n<h3>Supporting UK-wide growth and SME opportunities</h3>\n<p><span style=\"font-weight: 400;\">Making it easier for public sector organisations to work with space technology suppliers of all sizes helps modernise public services while creating high-quality jobs throughout the country and ensuring taxpayer value. </span></p>\n<p><span style=\"font-weight: 400;\">The agreement aims to strengthen regional economic growth by creating more opportunities for space technology businesses across the UK, in particular through supporting regional space clusters (geographical hubs t</span><span style=\"font-weight: 400;\">hat aim to support the growth of the UK space industry by creating local employment and enabling technological advancement) </span><span style=\"font-weight: 400;\">. </span></p>\n<p><span style=\"font-weight: 400;\">The agreement will run for 6 years with an option to extend for a further 2 years, ensuring the long-term stability that suppliers and buyers need to plan effectively for the future.</span></p>\n<h3>Find out more</h3>\n<p><span style=\"font-weight: 400;\">To learn more visit the </span><a href=\"https://www.crowncommercial.gov.uk/agreements/RM6370\"><span style=\"font-weight: 400;\">Space Technology Solutions agreement page</span></a><span style=\"font-weight: 400;\"> or contact the CCS Service Desk at </span><a href=\"mailto:info@crowncommercial.gov.uk\"><span style=\"font-weight: 400;\">info@crowncommercial.gov.uk</span></a><span style=\"font-weight: 400;\">. </span></p>\n",
+                            "protected": false
+                        },
+                        "excerpt": {
+                            "rendered": "<p>A new commercial agreement from Crown Commercial Service (CCS) developed in collaboration with the Ministry of Defence (MOD), gives the UK public sector access to CCS’s first Dynamic Market for space-related technologies, maximising the flexibilities under the new Procurement Act 2023.  A new procurement approach to space-related technology The space sector is extremely important to [&hellip;]</p>\n",
+                            "protected": false
+                        },
+                        "author": 147,
+                        "featured_media": 77907,
+                        "comment_status": "closed",
+                        "ping_status": "open",
+                        "sticky": false,
+                        "template": "",
+                        "format": "standard",
+                        "meta": {
+                            "_acf_changed": false,
+                            "_lmt_disableupdate": "",
+                            "_lmt_disable": "",
+                            "footnotes": ""
+                        },
+                        "categories": [
+                            26
+                        ],
+                        "products_services": [
+                            189,
+                            118,
+                            132
+                        ],
+                        "sectors": [
+                            150,
+                            114,
+                            115
+                        ],
+                        "class_list": [
+                            "post-77899",
+                            "post",
+                            "type-post",
+                            "status-publish",
+                            "format-standard",
+                            "has-post-thumbnail",
+                            "hentry",
+                            "category-news",
+                            "products_services-digital-capability-and-delivery",
+                            "products_services-technology",
+                            "products_services-technology-services",
+                            "sectors-central-government",
+                            "sectors-local-government",
+                            "sectors-police-emergency-services",
+                            "entry"
+                        ],
+                        "pp_statuses_selecting_workflow": false,
+                        "pp_workflow_action": "current",
+                        "pp_status_selection": "publish",
+                        "yoast_head": "<!-- This site is optimized with the Yoast SEO plugin v24.2 - https://yoast.com/wordpress/plugins/seo/ -->\n<title>New flexible space technology agreement launched | CCS</title>\n<meta name=\"description\" content=\"A new flexible space technology agreement means public sector organisations can access a wider range of space technology solutions.\" />\n<meta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" />\n<link rel=\"canonical\" href=\"https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/\" />\n<meta property=\"og:locale\" content=\"en_US\" />\n<meta property=\"og:type\" content=\"article\" />\n<meta property=\"og:title\" content=\"New flexible space technology agreement launched | CCS\" />\n<meta property=\"og:description\" content=\"A new flexible space technology agreement means public sector organisations can access a wider range of space technology solutions.\" />\n<meta property=\"og:url\" content=\"https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/\" />\n<meta property=\"og:site_name\" content=\"Crown Commercial Service\" />\n<meta property=\"article:published_time\" content=\"2025-07-31T07:41:18+00:00\" />\n<meta property=\"og:image\" content=\"https://assets.crowncommercial.gov.uk/wp-content/uploads/GettyImages-480902223-2-scaled.jpg\" />\n\t<meta property=\"og:image:width\" content=\"2560\" />\n\t<meta property=\"og:image:height\" content=\"1722\" />\n\t<meta property=\"og:image:type\" content=\"image/jpeg\" />\n<meta name=\"author\" content=\"Karen Lewis\" />\n<meta name=\"twitter:card\" content=\"summary_large_image\" />\n<meta name=\"twitter:label1\" content=\"Written by\" />\n\t<meta name=\"twitter:data1\" content=\"Karen Lewis\" />\n\t<meta name=\"twitter:label2\" content=\"Est. reading time\" />\n\t<meta name=\"twitter:data2\" content=\"3 minutes\" />\n<script type=\"application/ld+json\" class=\"yoast-schema-graph\">{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"WebPage\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/\",\"url\":\"https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/\",\"name\":\"New flexible space technology agreement launched | CCS\",\"isPartOf\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#website\"},\"primaryImageOfPage\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/#primaryimage\"},\"image\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/#primaryimage\"},\"thumbnailUrl\":\"https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-480902223-2-scaled.jpg\",\"datePublished\":\"2025-07-31T07:41:18+00:00\",\"dateModified\":\"2025-07-31T07:41:18+00:00\",\"author\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#/schema/person/557ae017bf903030f13c665012505181\"},\"description\":\"A new flexible space technology agreement means public sector organisations can access a wider range of space technology solutions.\",\"breadcrumb\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/#breadcrumb\"},\"inLanguage\":\"en-US\",\"potentialAction\":[{\"@type\":\"ReadAction\",\"target\":[\"https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/\"]}]},{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/#primaryimage\",\"url\":\"https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-480902223-2-scaled.jpg\",\"contentUrl\":\"https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-480902223-2-scaled.jpg\",\"width\":2560,\"height\":1722,\"caption\":\"The agreement facilitates procurement of technologies such as low-Earth orbit satellite networks that provide resilient communications for emergency services and remote communities.\"},{\"@type\":\"BreadcrumbList\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https://webdev-cms.crowncommercial.gov.uk/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"New flexible agreement helps accelerate the public sector’s access to innovation in space technology \"}]},{\"@type\":\"WebSite\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#website\",\"url\":\"https://webdev-cms.crowncommercial.gov.uk/\",\"name\":\"Crown Commercial Service\",\"description\":\"\",\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https://webdev-cms.crowncommercial.gov.uk/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"en-US\"},{\"@type\":\"Person\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#/schema/person/557ae017bf903030f13c665012505181\",\"name\":\"Karen Lewis\",\"image\":{\"@type\":\"ImageObject\",\"inLanguage\":\"en-US\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#/schema/person/image/\",\"url\":\"https://secure.gravatar.com/avatar/32a7dabfb25dcb3c42f7bd64eaaa0452eb67db3b8c9c3e83b150923e5959b869?s=96&d=mm&r=g\",\"contentUrl\":\"https://secure.gravatar.com/avatar/32a7dabfb25dcb3c42f7bd64eaaa0452eb67db3b8c9c3e83b150923e5959b869?s=96&d=mm&r=g\",\"caption\":\"Karen Lewis\"},\"url\":\"http://ccs-agreements.cabinetoffice.localhost/news/author/klewis1/\"}]}</script>\n<!-- / Yoast SEO plugin. -->",
+                        "yoast_head_json": {
+                            "title": "New flexible space technology agreement launched | CCS",
+                            "description": "A new flexible space technology agreement means public sector organisations can access a wider range of space technology solutions.",
+                            "robots": {
+                                "index": "index",
+                                "follow": "follow",
+                                "max-snippet": "max-snippet:-1",
+                                "max-image-preview": "max-image-preview:large",
+                                "max-video-preview": "max-video-preview:-1"
+                            },
+                            "canonical": "https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/",
+                            "og_locale": "en_US",
+                            "og_type": "article",
+                            "og_title": "New flexible space technology agreement launched | CCS",
+                            "og_description": "A new flexible space technology agreement means public sector organisations can access a wider range of space technology solutions.",
+                            "og_url": "https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/",
+                            "og_site_name": "Crown Commercial Service",
+                            "article_published_time": "2025-07-31T07:41:18+00:00",
+                            "og_image": [
+                                {
+                                    "width": 2560,
+                                    "height": 1722,
+                                    "url": "https://assets.crowncommercial.gov.uk/wp-content/uploads/GettyImages-480902223-2-scaled.jpg",
+                                    "type": "image/jpeg"
+                                }
+                            ],
+                            "author": "Karen Lewis",
+                            "twitter_card": "summary_large_image",
+                            "twitter_misc": {
+                                "Written by": "Karen Lewis",
+                                "Est. reading time": "3 minutes"
+                            },
+                            "schema": {
+                                "@context": "https://schema.org",
+                                "@graph": [
+                                    {
+                                        "@type": "WebPage",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/",
+                                        "url": "https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/",
+                                        "name": "New flexible space technology agreement launched | CCS",
+                                        "isPartOf": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/#website"
+                                        },
+                                        "primaryImageOfPage": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/#primaryimage"
+                                        },
+                                        "image": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/#primaryimage"
+                                        },
+                                        "thumbnailUrl": "https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-480902223-2-scaled.jpg",
+                                        "datePublished": "2025-07-31T07:41:18+00:00",
+                                        "dateModified": "2025-07-31T07:41:18+00:00",
+                                        "author": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/#/schema/person/557ae017bf903030f13c665012505181"
+                                        },
+                                        "description": "A new flexible space technology agreement means public sector organisations can access a wider range of space technology solutions.",
+                                        "breadcrumb": {
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/#breadcrumb"
+                                        },
+                                        "inLanguage": "en-US",
+                                        "potentialAction": [
+                                            {
+                                                "@type": "ReadAction",
+                                                "target": [
+                                                    "https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "@type": "ImageObject",
+                                        "inLanguage": "en-US",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/#primaryimage",
+                                        "url": "https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-480902223-2-scaled.jpg",
+                                        "contentUrl": "https://assets.webdev.crowncommercial.gov.uk/wp-content/uploads/GettyImages-480902223-2-scaled.jpg",
+                                        "width": 2560,
+                                        "height": 1722,
+                                        "caption": "The agreement facilitates procurement of technologies such as low-Earth orbit satellite networks that provide resilient communications for emergency services and remote communities."
+                                    },
+                                    {
+                                        "@type": "BreadcrumbList",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/news/new-space-technology-agreement-launched/#breadcrumb",
+                                        "itemListElement": [
+                                            {
+                                                "@type": "ListItem",
+                                                "position": 1,
+                                                "name": "Home",
+                                                "item": "https://webdev-cms.crowncommercial.gov.uk/"
+                                            },
+                                            {
+                                                "@type": "ListItem",
+                                                "position": 2,
+                                                "name": "New flexible agreement helps accelerate the public sector’s access to innovation in space technology "
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "@type": "WebSite",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/#website",
+                                        "url": "https://webdev-cms.crowncommercial.gov.uk/",
+                                        "name": "Crown Commercial Service",
+                                        "description": "",
+                                        "potentialAction": [
+                                            {
+                                                "@type": "SearchAction",
+                                                "target": {
+                                                    "@type": "EntryPoint",
+                                                    "urlTemplate": "https://webdev-cms.crowncommercial.gov.uk/?s={search_term_string}"
+                                                },
+                                                "query-input": {
+                                                    "@type": "PropertyValueSpecification",
+                                                    "valueRequired": true,
+                                                    "valueName": "search_term_string"
+                                                }
+                                            }
+                                        ],
+                                        "inLanguage": "en-US"
+                                    },
+                                    {
+                                        "@type": "Person",
+                                        "@id": "https://webdev-cms.crowncommercial.gov.uk/#/schema/person/557ae017bf903030f13c665012505181",
+                                        "name": "Karen Lewis",
+                                        "image": {
+                                            "@type": "ImageObject",
+                                            "inLanguage": "en-US",
+                                            "@id": "https://webdev-cms.crowncommercial.gov.uk/#/schema/person/image/",
+                                            "url": "https://secure.gravatar.com/avatar/32a7dabfb25dcb3c42f7bd64eaaa0452eb67db3b8c9c3e83b150923e5959b869?s=96&d=mm&r=g",
+                                            "contentUrl": "https://secure.gravatar.com/avatar/32a7dabfb25dcb3c42f7bd64eaaa0452eb67db3b8c9c3e83b150923e5959b869?s=96&d=mm&r=g",
+                                            "caption": "Karen Lewis"
+                                        },
+                                        "url": "http://ccs-agreements.cabinetoffice.localhost/news/author/klewis1/"
+                                    }
+                                ]
+                            }
+                        },
+                        "yoast": {
+                            "focuskw": "space technology solutions",
+                            "title": "New flexible space technology agreement launched | CCS",
+                            "metadesc": "A new flexible space technology agreement means public sector organisations can access a wider range of space technology solutions.",
+                            "linkdex": "66",
+                            "metakeywords": "",
+                            "meta-robots-noindex": "",
+                            "meta-robots-nofollow": "",
+                            "meta-robots-adv": "",
+                            "canonical": "",
+                            "redirect": "",
+                            "opengraph-title": "",
+                            "opengraph-description": "",
+                            "opengraph-image": "",
+                            "twitter-title": "",
+                            "twitter-description": "",
+                            "twitter-image": ""
+                        },
+                        "modified_by": "Katie Edwards-Lishman",
+                        "authorName": "Karen Lewis",
+                        "author_image_url": null,
+                        "acf": {
+                            "post_lead_text": "Public sector organisations now have access to a wider range of space related technology solutions for goods and services, improving public services.",
+                            "author_name_text": "",
+                            "Hide_from_View_All": false,
+                            "previous_text": "Changes to our agreements in July",
+                            "previous_link": "/news/changes-to-our-agreements-in-july-2025/",
+                            "next_text": "Prompt payment policy guidance for Small and Medium Enterprises",
+                            "next_link": "/news/prompt-payment-policy-guidance-for-small-and-medium-enterprises-supplier-specifics/",
+                            "sectors": [
+                                "Central government",
+                                "Local government",
+                                "Police and emergency services"
+                            ]
+                        },
+                        "_links": {
+                            "self": [
+                                {
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/posts/77899",
+                                    "targetHints": {
+                                        "allow": [
+                                            "GET"
+                                        ]
+                                    }
+                                }
+                            ],
+                            "collection": [
+                                {
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/posts"
+                                }
+                            ],
+                            "about": [
+                                {
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/types/post"
+                                }
+                            ],
+                            "author": [
+                                {
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/users/147"
+                                }
+                            ],
+                            "replies": [
+                                {
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/comments?post=77899"
+                                }
+                            ],
+                            "version-history": [
+                                {
+                                    "count": 7,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/posts/77899/revisions"
+                                }
+                            ],
+                            "predecessor-version": [
+                                {
+                                    "id": 77901,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/posts/77899/revisions/77901"
+                                }
+                            ],
+                            "wp:featuredmedia": [
+                                {
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/media/77907"
+                                }
+                            ],
+                            "wp:attachment": [
+                                {
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/media?parent=77899"
+                                }
+                            ],
+                            "wp:term": [
+                                {
+                                    "taxonomy": "category",
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/categories?post=77899"
+                                },
+                                {
+                                    "taxonomy": "products_services",
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/products_services?post=77899"
+                                },
+                                {
+                                    "taxonomy": "sectors",
+                                    "embeddable": true,
+                                    "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/sectors?post=77899"
+                                }
+                            ],
+                            "curies": [
+                                {
+                                    "name": "wp",
+                                    "href": "https://api.w.org/{rel}",
+                                    "templated": true
+                                }
+                            ]
+                        },
+                        "post_type": "post"
+                    }
+                ]
+            },
+            {
+                "acf_fc_layout": "feature_events_feature_events",
+                "feature_events_feature_events_heading": "Upcoming events and webinars",
+                "feature_events_feature_events_event_categories": [
+                    {
+                        "term_id": 118,
+                        "name": "Technology",
+                        "slug": "technology",
+                        "term_group": 0,
+                        "term_taxonomy_id": 118,
+                        "taxonomy": "products_services",
+                        "description": "",
+                        "parent": 0,
+                        "count": 183,
+                        "filter": "raw",
+                        "acf": []
+                    },
+                    {
+                        "term_id": 179,
+                        "name": "Cloud and hosting",
+                        "slug": "cloud-and-hosting",
+                        "term_group": 0,
+                        "term_taxonomy_id": 179,
+                        "taxonomy": "products_services",
+                        "description": "",
+                        "parent": 118,
+                        "count": 16,
+                        "filter": "raw",
+                        "acf": []
+                    },
+                    {
+                        "term_id": 189,
+                        "name": "Digital capability and delivery",
+                        "slug": "digital-capability-and-delivery",
+                        "term_group": 0,
+                        "term_taxonomy_id": 189,
+                        "taxonomy": "products_services",
+                        "description": "",
+                        "parent": 118,
+                        "count": 27,
+                        "filter": "raw",
+                        "acf": []
+                    },
+                    {
+                        "term_id": 130,
+                        "name": "Network services",
+                        "slug": "network-services",
+                        "term_group": 0,
+                        "term_taxonomy_id": 130,
+                        "taxonomy": "products_services",
+                        "description": "",
+                        "parent": 118,
+                        "count": 34,
+                        "filter": "raw",
+                        "acf": []
+                    },
+                    {
+                        "term_id": 157,
+                        "name": "Software and hardware",
+                        "slug": "software-and-hardware",
+                        "term_group": 0,
+                        "term_taxonomy_id": 157,
+                        "taxonomy": "products_services",
+                        "description": "",
+                        "parent": 118,
+                        "count": 13,
+                        "filter": "raw",
+                        "acf": []
+                    },
+                    {
+                        "term_id": 132,
+                        "name": "Technology services",
+                        "slug": "technology-services",
+                        "term_group": 0,
+                        "term_taxonomy_id": 132,
+                        "taxonomy": "products_services",
+                        "description": "",
+                        "parent": 118,
+                        "count": 71,
+                        "filter": "raw",
+                        "acf": []
+                    }
+                ],
+                "feature_events_feature_events_sectors": false,
+                "feature_events_feature_events_brick_class": "component_feature_events",
+                "articles": []
+            }
+        ],
+        "resources_intro_heading": "Resources",
+        "resources_intro_introduction": "<div class=\"resources-section__intro\">\n<div class=\"introduction-paragraph\">\n<p>At CCS, we’re experts in procurement. Our teams use their deep category knowledge to create a wealth of resources for the public and third sector. Explore the resources below to find out how CCS can help you find the right procurement solutions for your organisation.</p>\n</div>\n</div>\n",
+        "brochures_list_brochures_list": false,
+        "whitepapers_list_whitepapers": [
+            {
+                "ID": 16947,
+                "post_author": "66",
+                "post_date": "2020-02-10 10:20:53",
+                "post_date_gmt": "2020-02-10 10:20:53",
+                "post_content": "",
+                "post_title": "Buying digital services in the public sector",
+                "post_excerpt": "Find out how to get the right solution for your cloud or digital requirements.",
+                "post_status": "publish",
+                "comment_status": "closed",
+                "ping_status": "closed",
+                "post_password": "",
+                "post_name": "buying-digital-services-in-the-public-sector",
+                "to_ping": "",
+                "pinged": "",
+                "post_modified": "2022-12-05 15:26:25",
+                "post_modified_gmt": "2022-12-05 15:26:25",
+                "post_content_filtered": "",
+                "post_parent": 0,
+                "guid": "https://webdev-cms.crowncommercial.gov.uk/?post_type=whitepaper&#038;p=16947",
+                "menu_order": 0,
+                "post_type": "whitepaper",
+                "post_mime_type": "",
+                "comment_count": "0",
+                "filter": "raw",
+                "acf": {
+                    "whitepaper_file": 22151,
+                    "description": "Buying digital services in the public sector whitepaper has been downloaded. CSC team - please follow up with customer. ",
+                    "campaign_code": "BUYINGDIGIWP",
+                    "form_introduction": "<p><span style=\"font-weight: 400;\">An accessible version of this whitepaper is available upon request. Please email </span><a href=\"mailto:info@crowncommercial.gov.uk\"><span style=\"font-weight: 400;\">info@crowncommercial.gov.uk</span></a></p>\n"
+                },
+                "ccs_whitepaper_file": 22151,
+                "ccs_whitepaper_featured_image": 16949,
+                "link_text": "Access whitepaper"
+            },
+            {
+                "ID": 16964,
+                "post_author": "66",
+                "post_date": "2020-02-10 10:33:39",
+                "post_date_gmt": "2020-02-10 10:33:39",
+                "post_content": "",
+                "post_title": "Cloud security in the public sector",
+                "post_excerpt": "How to ensure your organisation's cloud services are secure. ",
+                "post_status": "publish",
+                "comment_status": "closed",
+                "ping_status": "closed",
+                "post_password": "",
+                "post_name": "cloud-security-in-the-public-sector",
+                "to_ping": "",
+                "pinged": "",
+                "post_modified": "2022-12-05 15:23:40",
+                "post_modified_gmt": "2022-12-05 15:23:40",
+                "post_content_filtered": "",
+                "post_parent": 0,
+                "guid": "https://webdev-cms.crowncommercial.gov.uk/?post_type=whitepaper&#038;p=16964",
+                "menu_order": 0,
+                "post_type": "whitepaper",
+                "post_mime_type": "",
+                "comment_count": "0",
+                "filter": "raw",
+                "acf": {
+                    "whitepaper_file": 22153,
+                    "description": "Cloud security in the public sector whitepaper has been downloaded. CSC team - please follow up with customer. ",
+                    "campaign_code": "CLOUDSECWP",
+                    "form_introduction": "<p><span style=\"font-weight: 400;\">An accessible version of this whitepaper is available upon request. Please email </span><a href=\"mailto:info@crowncommercial.gov.uk\"><span style=\"font-weight: 400;\">info@crowncommercial.gov.uk</span></a></p>\n"
+                },
+                "ccs_whitepaper_file": 22153,
+                "ccs_whitepaper_featured_image": 16967,
+                "link_text": "Access whitepaper"
+            },
+            {
+                "ID": 16952,
+                "post_author": "66",
+                "post_date": "2020-02-10 10:25:53",
+                "post_date_gmt": "2020-02-10 10:25:53",
+                "post_content": "",
+                "post_title": "Disaggregation in local government",
+                "post_excerpt": "Your guide to exiting complex IT contracts and unbundling services.",
+                "post_status": "publish",
+                "comment_status": "closed",
+                "ping_status": "closed",
+                "post_password": "",
+                "post_name": "disaggregation",
+                "to_ping": "",
+                "pinged": "",
+                "post_modified": "2022-12-05 15:26:02",
+                "post_modified_gmt": "2022-12-05 15:26:02",
+                "post_content_filtered": "",
+                "post_parent": 0,
+                "guid": "https://webdev-cms.crowncommercial.gov.uk/?post_type=whitepaper&#038;p=16952",
+                "menu_order": 0,
+                "post_type": "whitepaper",
+                "post_mime_type": "",
+                "comment_count": "0",
+                "filter": "raw",
+                "acf": {
+                    "whitepaper_file": 22156,
+                    "description": "Disaggregation whitepaper has been downloaded. CSC team - please follow up with customer. ",
+                    "campaign_code": "DISAGGREGATIONWP",
+                    "form_introduction": "<p><span style=\"font-weight: 400;\">An accessible version of this whitepaper is available upon request. Please email </span><a href=\"mailto:info@crowncommercial.gov.uk\"><span style=\"font-weight: 400;\">info@crowncommercial.gov.uk</span></a></p>\n"
+                },
+                "ccs_whitepaper_file": 22156,
+                "ccs_whitepaper_featured_image": 16954,
+                "link_text": "Access whitepaper"
+            },
+            {
+                "ID": 16956,
+                "post_author": "66",
+                "post_date": "2020-02-10 10:28:28",
+                "post_date_gmt": "2020-02-10 10:28:28",
+                "post_content": "",
+                "post_title": "Technology solutions",
+                "post_excerpt": "9 lessons to help your organisation save time and money on technology. ",
+                "post_status": "publish",
+                "comment_status": "closed",
+                "ping_status": "closed",
+                "post_password": "",
+                "post_name": "technology-solutions",
+                "to_ping": "",
+                "pinged": "",
+                "post_modified": "2022-12-05 15:25:35",
+                "post_modified_gmt": "2022-12-05 15:25:35",
+                "post_content_filtered": "",
+                "post_parent": 0,
+                "guid": "https://webdev-cms.crowncommercial.gov.uk/?post_type=whitepaper&#038;p=16956",
+                "menu_order": 0,
+                "post_type": "whitepaper",
+                "post_mime_type": "",
+                "comment_count": "0",
+                "filter": "raw",
+                "acf": {
+                    "whitepaper_file": 22158,
+                    "description": "Technology solutions whitepaper has been downloaded. CSC team - please follow up with customer. ",
+                    "campaign_code": "TECHSOLUTIONSWP",
+                    "form_introduction": "<p><span style=\"font-weight: 400;\">An accessible version of this whitepaper is available upon request. Please email </span><a href=\"mailto:info@crowncommercial.gov.uk\"><span style=\"font-weight: 400;\">info@crowncommercial.gov.uk</span></a></p>\n"
+                },
+                "ccs_whitepaper_file": 22158,
+                "ccs_whitepaper_featured_image": 16958,
+                "link_text": "Access whitepaper"
+            }
+        ],
+        "webinars_list_webinars": [
+            {
+                "ID": 38240,
+                "post_author": "64",
+                "post_date": "2021-11-24 15:54:36",
+                "post_date_gmt": "2021-11-24 15:54:36",
+                "post_content": "",
+                "post_title": "Transport Technology and Associated Services - an introduction",
+                "post_excerpt": "Find out how our new sustainable transport technology framework can help with decarbonisation across your procurement portfolio. The webinar covers the background to the framework, an overview of what's on offer, a look at the benefits to using the framework, and how to buy through it.",
+                "post_status": "publish",
+                "comment_status": "closed",
+                "ping_status": "closed",
+                "post_password": "",
+                "post_name": "transport-technology-and-associated-services-technology-ccs",
+                "to_ping": "",
+                "pinged": "",
+                "post_modified": "2022-12-05 15:50:39",
+                "post_modified_gmt": "2022-12-05 15:50:39",
+                "post_content_filtered": "",
+                "post_parent": 0,
+                "guid": "https://webdev-cms.crowncommercial.gov.uk/?post_type=webinar&#038;p=38240",
+                "menu_order": 0,
+                "post_type": "webinar",
+                "post_mime_type": "",
+                "comment_count": "0",
+                "filter": "raw",
+                "acf": {
+                    "form_introduction": "<p>Find out how our new sustainable transport technology framework can help with decarbonisation across your procurement portfolio. The webinar covers the background to the framework, an overview of what&#8217;s on offer, a look at the benefits to using the framework, and how to buy through it.</p>\n",
+                    "additional_text": "",
+                    "webinar_video": "<iframe title=\"Transport Technology and Associated Services (TTAS) webinar\" width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/vLbS6aLjN3w?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+                    "description": "TTAS webinar download. Please add contact to SF and not follow up ",
+                    "campaign_code": "TTAS21/22"
+                },
+                "ccs_webinar_featured_image": 0,
+                "link_text": "Access webinar"
+            },
+            {
+                "ID": 28850,
+                "post_author": "66",
+                "post_date": "2021-02-02 10:39:55",
+                "post_date_gmt": "2021-02-02 10:39:55",
+                "post_content": "",
+                "post_title": "Introduction to Crown Hosting",
+                "post_excerpt": "Hear from Jason Liggins, Advisory Consultant at CCS, as he delivers a customer webinar about Crown Hosting, Information Technology, it's impact upon the environment, along with some really simple things that you can do to improve the sustainability of your IT estate.",
+                "post_status": "publish",
+                "comment_status": "closed",
+                "ping_status": "closed",
+                "post_password": "",
+                "post_name": "introduction-to-crown-hosting",
+                "to_ping": "",
+                "pinged": "",
+                "post_modified": "2022-12-05 15:58:03",
+                "post_modified_gmt": "2022-12-05 15:58:03",
+                "post_content_filtered": "",
+                "post_parent": 0,
+                "guid": "https://webdev-cms.crowncommercial.gov.uk/?post_type=webinar&#038;p=28850",
+                "menu_order": 0,
+                "post_type": "webinar",
+                "post_mime_type": "",
+                "comment_count": "0",
+                "filter": "raw",
+                "acf": {
+                    "form_introduction": "<p>Hear from Jason Liggins, Advisory Consultant at CCS, as he delivers a customer webinar about Crown Hosting, Information Technology, it&#8217;s impact upon the environment, along with some really simple things that you can do to improve the sustainability of your IT estate.</p>\n",
+                    "additional_text": "",
+                    "webinar_video": "<iframe title=\"Introduction to Crown Hosting\" width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/vfaZpLRqK-I?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+                    "description": "Contact has downloaded the 'Introduction to Crown Hosting' webinar - CSC team please follow up with the customer",
+                    "campaign_code": "CROWNHOSTING_WEBINARDOWNLOAD"
+                },
+                "ccs_webinar_featured_image": 0,
+                "link_text": "Access webinar "
+            },
+            {
+                "ID": 42388,
+                "post_author": "43",
+                "post_date": "2022-03-07 13:35:41",
+                "post_date_gmt": "2022-03-07 13:35:41",
+                "post_content": "",
+                "post_title": "Webinar: Introduction to G-Cloud 13 (supplier)",
+                "post_excerpt": "This webinar provides suppliers with an overview of the G-Cloud 13 agreement including the scope, application process and timetable for lots 1-3 and the same for lot 4.",
+                "post_status": "publish",
+                "comment_status": "closed",
+                "ping_status": "closed",
+                "post_password": "",
+                "post_name": "introduction-to-g-cloud-13",
+                "to_ping": "",
+                "pinged": "",
+                "post_modified": "2024-03-05 14:45:55",
+                "post_modified_gmt": "2024-03-05 14:45:55",
+                "post_content_filtered": "",
+                "post_parent": 0,
+                "guid": "https://webdev-cms.crowncommercial.gov.uk/?post_type=webinar&#038;p=42388",
+                "menu_order": 0,
+                "post_type": "webinar",
+                "post_mime_type": "",
+                "comment_count": "0",
+                "filter": "raw",
+                "acf": {
+                    "form_introduction": "<div class=\"gmail_default\">The presentation provides suppliers with an overview of the G-Cloud 13 agreement including the scope, application process and timetable for lots 1-3 and the same for lot 4. In addition, it provides guidance on the clarification process and information on the key differences between G-Cloud 12 and G-Cloud 13.</div>\n<div class=\"gmail_default\"></div>\n",
+                    "additional_text": "",
+                    "webinar_video": "<iframe title=\"Introduction to G Cloud 13\" width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/mJZKHIF7cFA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+                    "description": "Introduction to G-Cloud 13 customer webinar download. Please create contact on SF if one does not currently exist. No further follow up required. ",
+                    "campaign_code": "G-Cloud 13_Customer Webinar Download"
+                },
+                "ccs_webinar_featured_image": 0,
+                "link_text": "Access webinar "
+            },
+            {
+                "ID": 64230,
+                "post_author": "63",
+                "post_date": "2024-03-05 14:24:26",
+                "post_date_gmt": "2024-03-05 14:24:26",
+                "post_content": "",
+                "post_title": "Webinar: Introduction to G-Cloud 13 (customer)",
+                "post_excerpt": "",
+                "post_status": "publish",
+                "comment_status": "closed",
+                "ping_status": "closed",
+                "post_password": "",
+                "post_name": "g-cloud-13-lots-1-3-recorded-webinar",
+                "to_ping": "",
+                "pinged": "",
+                "post_modified": "2024-03-05 14:46:24",
+                "post_modified_gmt": "2024-03-05 14:46:24",
+                "post_content_filtered": "",
+                "post_parent": 0,
+                "guid": "https://webdev-cms.crowncommercial.gov.uk/?post_type=webinar&#038;p=64230",
+                "menu_order": 0,
+                "post_type": "webinar",
+                "post_mime_type": "",
+                "comment_count": "0",
+                "filter": "raw",
+                "acf": {
+                    "form_introduction": "",
+                    "additional_text": "",
+                    "webinar_video": "<iframe title=\"G Cloud 13 Lots 1-3\" width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/Yk0JryItudQ?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+                    "description": "Contact has downloaded the G-Cloud 13 webinar.",
+                    "campaign_code": "GCLOUD13WEBINAR"
+                },
+                "ccs_webinar_featured_image": 0,
+                "link_text": "Access webinar"
+            }
+        ],
+        "contact_form_show_contact_form": true,
+        "contact_form_form_heading": "Speak to an expert about technology agreements",
+        "contact_form_form_sub_heading": "",
+        "contact_form_message_question_title": "Tell us how we can help",
+        "contact_form_message_question_description": "Please give us as much detail as possible, including the framework name (if applicable to your enquiry).",
+        "contact_form_form_campaign_code": "TECH",
+        "contact_form_show_what_areas_aggregation": false,
+        "contact_form_find_out_more_aggregation": false,
+        "contact_form_show_newsletter_form": false,
+        "downloadable_list_downloadable_resource": [
+            {
+                "ID": 67557,
+                "post_author": "39",
+                "post_date": "2024-07-25 12:25:41",
+                "post_date_gmt": "2024-07-25 12:25:41",
+                "post_content": "",
+                "post_title": "Buyer’s guidance –  supporting the procurement of Artificial Intelligence",
+                "post_excerpt": "Download CCS buyer's guide to Artificial Intelligence.",
+                "post_status": "publish",
+                "comment_status": "closed",
+                "ping_status": "closed",
+                "post_password": "",
+                "post_name": "buyers-guidance-supporting-the-procurement-of-artificial-intelligence-via-ccs-agreements",
+                "to_ping": "",
+                "pinged": "",
+                "post_modified": "2024-07-25 12:57:37",
+                "post_modified_gmt": "2024-07-25 12:57:37",
+                "post_content_filtered": "",
+                "post_parent": 0,
+                "guid": "https://webdev-cms.crowncommercial.gov.uk/?post_type=downloadable&#038;p=67557",
+                "menu_order": 0,
+                "post_type": "downloadable",
+                "post_mime_type": "",
+                "comment_count": "0",
+                "filter": "raw",
+                "acf": {
+                    "downloadable_type": "Digital guide",
+                    "form_introduction": "<p>Download our guide to Artificial Intelligence (AI) for buyers.</p>\n",
+                    "prompt_text": "To read this guide, we need a few details",
+                    "download_confirmation_msg": "You can now download the guide",
+                    "downloadable_resources_url": "<p>Download our <a href=\"https://assets.crowncommercial.gov.uk/wp-content/uploads/AI-Buyers-Guidance-v1.0.docx.pdf\">guide for Artificial Intelligence</a>.</p>\n<p>We hope you find it useful.</p>\n<p>The best way to use the guide is to download and open it using a PDF reader rather than in your browser.</p>\n<p>You can also download an accessible version below.</p>\n",
+                    "downloadable_resources_file": 67558,
+                    "downloadable_resources_file_text": "Artificial Intelligence buyer's guidance (accessible version)",
+                    "embed_video": "",
+                    "description": "Contact has downloaded guide to AI - CSC team please create contact on Salesforce and close case",
+                    "campaign_code": "AI_guide"
+                },
+                "ccs_downloadable_file": null,
+                "ccs_downloadable_featured_image": 66674,
+                "link_text": ""
+            }
+        ],
+        "contact_form_hide_callback_form": false
+    },
+    "yoast_head": "<!-- This site is optimized with the Yoast SEO plugin v24.2 - https://yoast.com/wordpress/plugins/seo/ -->\n<title>Technology frameworks | Technology procurement | CCS</title>\n<meta name=\"description\" content=\"We provide technology procurement frameworks for public sector organisations. Buy telecoms, cloud services, digital software and IT hardware.\" />\n<meta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1\" />\n<link rel=\"canonical\" href=\"https://webdev-cms.crowncommercial.gov.uk/products-and-services/technology/\" />\n<meta property=\"og:locale\" content=\"en_US\" />\n<meta property=\"og:type\" content=\"article\" />\n<meta property=\"og:title\" content=\"Technology frameworks | Technology procurement | CCS\" />\n<meta property=\"og:description\" content=\"We provide technology procurement frameworks for public sector organisations. Buy telecoms, cloud services, digital software and IT hardware.\" />\n<meta property=\"og:url\" content=\"https://webdev-cms.crowncommercial.gov.uk/products-and-services/technology/\" />\n<meta property=\"og:site_name\" content=\"Crown Commercial Service\" />\n<meta property=\"article:modified_time\" content=\"2025-11-04T16:01:27+00:00\" />\n<meta name=\"twitter:card\" content=\"summary_large_image\" />\n<meta name=\"twitter:label1\" content=\"Est. reading time\" />\n\t<meta name=\"twitter:data1\" content=\"1 minute\" />\n<script type=\"application/ld+json\" class=\"yoast-schema-graph\">{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"WebPage\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/products-and-services/technology/\",\"url\":\"https://webdev-cms.crowncommercial.gov.uk/products-and-services/technology/\",\"name\":\"Technology frameworks | Technology procurement | CCS\",\"isPartOf\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#website\"},\"datePublished\":\"2020-02-03T14:36:29+00:00\",\"dateModified\":\"2025-11-04T16:01:27+00:00\",\"description\":\"We provide technology procurement frameworks for public sector organisations. Buy telecoms, cloud services, digital software and IT hardware.\",\"breadcrumb\":{\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/products-and-services/technology/#breadcrumb\"},\"inLanguage\":\"en-US\",\"potentialAction\":[{\"@type\":\"ReadAction\",\"target\":[\"https://webdev-cms.crowncommercial.gov.uk/products-and-services/technology/\"]}]},{\"@type\":\"BreadcrumbList\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/products-and-services/technology/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https://webdev-cms.crowncommercial.gov.uk/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Products and services\",\"item\":\"https://webdev-cms.crowncommercial.gov.uk/products-and-services/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"Technology\"}]},{\"@type\":\"WebSite\",\"@id\":\"https://webdev-cms.crowncommercial.gov.uk/#website\",\"url\":\"https://webdev-cms.crowncommercial.gov.uk/\",\"name\":\"Crown Commercial Service\",\"description\":\"\",\"potentialAction\":[{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https://webdev-cms.crowncommercial.gov.uk/?s={search_term_string}\"},\"query-input\":{\"@type\":\"PropertyValueSpecification\",\"valueRequired\":true,\"valueName\":\"search_term_string\"}}],\"inLanguage\":\"en-US\"}]}</script>\n<!-- / Yoast SEO plugin. -->",
+    "yoast_head_json": {
+        "title": "Technology frameworks | Technology procurement | CCS",
+        "description": "We provide technology procurement frameworks for public sector organisations. Buy telecoms, cloud services, digital software and IT hardware.",
+        "robots": {
+            "index": "index",
+            "follow": "follow",
+            "max-snippet": "max-snippet:-1",
+            "max-image-preview": "max-image-preview:large",
+            "max-video-preview": "max-video-preview:-1"
+        },
+        "canonical": "https://webdev-cms.crowncommercial.gov.uk/products-and-services/technology/",
+        "og_locale": "en_US",
+        "og_type": "article",
+        "og_title": "Technology frameworks | Technology procurement | CCS",
+        "og_description": "We provide technology procurement frameworks for public sector organisations. Buy telecoms, cloud services, digital software and IT hardware.",
+        "og_url": "https://webdev-cms.crowncommercial.gov.uk/products-and-services/technology/",
+        "og_site_name": "Crown Commercial Service",
+        "article_modified_time": "2025-11-04T16:01:27+00:00",
+        "twitter_card": "summary_large_image",
+        "twitter_misc": {
+            "Est. reading time": "1 minute"
+        },
+        "schema": {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "WebPage",
+                    "@id": "https://webdev-cms.crowncommercial.gov.uk/products-and-services/technology/",
+                    "url": "https://webdev-cms.crowncommercial.gov.uk/products-and-services/technology/",
+                    "name": "Technology frameworks | Technology procurement | CCS",
+                    "isPartOf": {
+                        "@id": "https://webdev-cms.crowncommercial.gov.uk/#website"
+                    },
+                    "datePublished": "2020-02-03T14:36:29+00:00",
+                    "dateModified": "2025-11-04T16:01:27+00:00",
+                    "description": "We provide technology procurement frameworks for public sector organisations. Buy telecoms, cloud services, digital software and IT hardware.",
+                    "breadcrumb": {
+                        "@id": "https://webdev-cms.crowncommercial.gov.uk/products-and-services/technology/#breadcrumb"
+                    },
+                    "inLanguage": "en-US",
+                    "potentialAction": [
+                        {
+                            "@type": "ReadAction",
+                            "target": [
+                                "https://webdev-cms.crowncommercial.gov.uk/products-and-services/technology/"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "@type": "BreadcrumbList",
+                    "@id": "https://webdev-cms.crowncommercial.gov.uk/products-and-services/technology/#breadcrumb",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Home",
+                            "item": "https://webdev-cms.crowncommercial.gov.uk/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Products and services",
+                            "item": "https://webdev-cms.crowncommercial.gov.uk/products-and-services/"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 3,
+                            "name": "Technology"
+                        }
+                    ]
+                },
+                {
+                    "@type": "WebSite",
+                    "@id": "https://webdev-cms.crowncommercial.gov.uk/#website",
+                    "url": "https://webdev-cms.crowncommercial.gov.uk/",
+                    "name": "Crown Commercial Service",
+                    "description": "",
+                    "potentialAction": [
+                        {
+                            "@type": "SearchAction",
+                            "target": {
+                                "@type": "EntryPoint",
+                                "urlTemplate": "https://webdev-cms.crowncommercial.gov.uk/?s={search_term_string}"
+                            },
+                            "query-input": {
+                                "@type": "PropertyValueSpecification",
+                                "valueRequired": true,
+                                "valueName": "search_term_string"
+                            }
+                        }
+                    ],
+                    "inLanguage": "en-US"
+                }
+            ]
+        }
+    },
+    "yoast": {
+        "focuskw": "Technology frameworks",
+        "title": "Technology frameworks | Technology procurement | CCS",
+        "metadesc": "We provide technology procurement frameworks for public sector organisations. Buy telecoms, cloud services, digital software and IT hardware.",
+        "linkdex": "36",
+        "metakeywords": "",
+        "meta-robots-noindex": "",
+        "meta-robots-nofollow": "",
+        "meta-robots-adv": "",
+        "canonical": "",
+        "redirect": "",
+        "opengraph-title": "",
+        "opengraph-description": "",
+        "opengraph-image": "",
+        "twitter-title": "",
+        "twitter-description": "",
+        "twitter-image": ""
+    },
+    "_links": {
+        "self": [
+            {
+                "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/pages/16658",
+                "targetHints": {
+                    "allow": [
+                        "GET"
+                    ]
+                }
+            }
+        ],
+        "collection": [
+            {
+                "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/pages"
+            }
+        ],
+        "about": [
+            {
+                "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/types/page"
+            }
+        ],
+        "author": [
+            {
+                "embeddable": true,
+                "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/users/66"
+            }
+        ],
+        "replies": [
+            {
+                "embeddable": true,
+                "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/comments?post=16658"
+            }
+        ],
+        "version-history": [
+            {
+                "count": 138,
+                "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/pages/16658/revisions"
+            }
+        ],
+        "predecessor-version": [
+            {
+                "id": 80472,
+                "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/pages/16658/revisions/80472"
+            }
+        ],
+        "up": [
+            {
+                "embeddable": true,
+                "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/pages/17779"
+            }
+        ],
+        "wp:attachment": [
+            {
+                "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/media?parent=16658"
+            }
+        ],
+        "wp:term": [
+            {
+                "taxonomy": "sectors",
+                "embeddable": true,
+                "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/sectors?post=16658"
+            },
+            {
+                "taxonomy": "pillars",
+                "embeddable": true,
+                "href": "http://ccs-agreements.cabinetoffice.localhost/wp-json/wp/v2/pillars?post=16658"
+            }
+        ],
+        "curies": [
+            {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }
+        ]
+    }
+}

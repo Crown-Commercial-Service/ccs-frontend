@@ -11,6 +11,48 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $appApiBaseUrl: '%env(APP_API_BASE_URL)%'
+            $appBaseUrl: '%env(APP_BASE_URL)%'
+            $searchApiBaseUrl: '%env(SEARCH_API_BASE_URL)%'
+            $appCmsBaseUrl: '%env(APP_CMS_BASE_URL)%'
+            $salesforceWebToCaseUrl: '%env(SALESFORCE_WEB_TO_CASE_URL)%'
+            $sfRmCaseId: '%env(SF_RM_CASE_ID)%'
+            $documentHandlingPath: '%env(documentHanding_path)%'
+            $documentHandlingKey: '%env(documentHanding_key)%'
+            $documentHandlingEndpoint: '%env(documentHanding_endpoint)%'
+            $qualtricsApiToken: '%env(QUALTRICS_API_TOKEN)%'
+            $qualtricsSurveyId: '%env(QUALTRICS_SURVEY_ID)%'
+            $appEnv: '%env(APP_ENV)%'
+            $orgIdProd: '%env(ORG_ID_PROD)%'
+            $orgIdTest: '%env(ORG_ID_TEST)%'
+            $pardotUrls:
+                contact: '%env(default::PARDOT_EMAIL_FORM_HANDLER_URL)%'
+                people: '%env(default::PARDOT_EMAIL_FORM_HANDLER_PEOPLE_URL)%'
+                corpsol: '%env(default::PARDOT_EMAIL_FORM_HANDLER_CORPORATE_URL)%'
+                buildings: '%env(default::PARDOT_EMAIL_FORM_HANDLER_BUILDINGS_URL)%'
+                tech: '%env(default::PARDOT_EMAIL_FORM_HANDLER_TECH_URL)%'
+                guide: '%env(default::PARDOT_EMAIL_FORM_HANDLER_GUIDE_URL)%'
+                cnz: '%env(default::PARDOT_EMAIL_FORM_HANDLER_CNZ_URL)%'
+                digitransformation: '%env(default::PARDOT_EMAIL_FORM_HANDLER_DIGITRANS_URL)%'
+                digilg: '%env(default::PARDOT_EMAIL_FORM_HANDLER_DIGILG_URL)%'
+                diginhs: '%env(default::PARDOT_EMAIL_FORM_HANDLER_DIGINHS_URL)%'
+                estates: '%env(default::PARDOT_EMAIL_FORM_HANDLER_ESTATES_URL)%'
+                covidrecovery: '%env(default::PARDOT_EMAIL_FORM_HANDLER_COVIDRECOVERY_URL)%'
+                agg: '%env(default::PARDOT_EMAIL_FORM_HANDLER_AGG_URL)%'
+                event: '%env(default::PARDOT_EMAIL_FORM_HANDLER_EVENT_URL)%'
+                construction: '%env(default::PARDOT_EMAIL_FORM_HANDLER_CONSTRUCTION_URL)%'
+                fleet: '%env(default::PARDOT_EMAIL_FORM_HANDLER_FLEET_URL)%'
+                tepas: '%env(default::PARDOT_EMAIL_FORM_HANDLER_TEPAS_URL)%'
+                nhswa: '%env(default::PARDOT_EMAIL_FORM_HANDLER_NHSWA_URL)%'
+                mou: '%env(default::PARDOT_EMAIL_FORM_HANDLER_MOU_URL)%'
+                cyber: '%env(default::PARDOT_EMAIL_FORM_HANDLER_CYBER_URL)%'
+                newsletter: '%env(default::PARDOT_EMAIL_FORM_HANDLER_NEWSLETTER_URL)%'
+                lg: '%env(default::PARDOT_EMAIL_FORM_HANDLER_LG_URL)%'
+                nhs: '%env(default::PARDOT_EMAIL_FORM_HANDLER_NHS_URL)%'
+                whitepaper: '%env(default::PARDOT_EMAIL_FORM_HANDLER_WHITEPAPER_URL)%'
+                webinar: '%env(default::PARDOT_EMAIL_FORM_HANDLER_WEBINAR_URL)%'
+                digitalbrochure: '%env(default::PARDOT_EMAIL_FORM_HANDLER_DB_URL)%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

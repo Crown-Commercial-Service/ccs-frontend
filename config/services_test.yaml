@@ -1,0 +1,59 @@
+# config/services_test.yaml
+services:
+    _defaults:
+        public: true
+        autowire: true
+        autoconfigure: true
+        bind:                 
+            $appApiBaseUrl: '%env(APP_API_BASE_URL)%'
+            $appEnv: '%kernel.environment%'
+            $orgIdProd: 'mock_prod_org_id'
+            $orgIdTest: 'mock_prod_test_id'
+
+    Symfony\Contracts\HttpClient\HttpClientInterface:
+        alias: 'http_client'
+        public: true
+
+    # Substitute the production MenuController with our stable Test Double
+    App\Controller\MenuController:
+        class: App\Tests\App\Controller\Double\MockMenuController
+        public: true
+
+    App\Helper\ControllerHelper:
+        class: App\Tests\App\Mock\MockControllerHelper
+        public: true
+
+    Strata\Frontend\Cms\Wordpress:
+        public: true
+
+    Strata\Frontend\Cms\RestData:
+        public: true
+
+    # Explicitly target the FrameworksController and bind constructor strings
+    App\Controller\FrameworksController:
+        public: true
+        bind:
+            $api: '@app.test.rest_data_api'
+            $searchApi: '@app.test.rest_data_search_api'
+            $searchApiBaseUrl: '%env(SEARCH_API_BASE_URL)%'
+            $appBaseUrl: 'https://mock.app.local'
+
+    # Standalone Test Services
+    app.test.content_model:
+        class: Strata\Frontend\ContentModel\ContentModel
+        arguments:
+            - '%kernel.project_dir%/config/content/content-model.yaml'
+
+    app.test.rest_data_api:
+        class: Strata\Frontend\Cms\RestData
+        arguments:
+            - '%env(APP_API_BASE_URL)%'
+            - '@app.test.content_model'
+            - '@http_client' 
+
+    app.test.rest_data_search_api:
+        class: Strata\Frontend\Cms\RestData
+        arguments:
+            - '%env(SEARCH_API_BASE_URL)%'
+            - '@app.test.content_model'
+            - '@http_client' 
