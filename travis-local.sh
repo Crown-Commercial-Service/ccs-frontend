@@ -13,5 +13,5 @@ mkdir -p var/cache/test var/log
 chmod -R 777 var/cache var/log
 
 # Run tests (from script section)
-vendor/bin/phpunit
+XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --colors=never
 vendor/bin/phpunit vendor/ccs/strata-frontend/tests

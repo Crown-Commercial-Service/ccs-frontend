@@ -206,6 +206,39 @@ Our repository uses PHPUnit for automated integration testing. Some parts of the
 
 To mirror the cloud build pipeline right on your local machine before pushing code to remote branches, use the custom shell script by running `./travis-local.sh`. This script emulates the entire Travis CI environment in a clean-room sequence: it forces the CLI runtime to APP_ENV=test, purges stale cache artifacts, builds necessary directory structures with proper read/write permissions, and executes both our core application tests and upstream vendor integration suites. Always resolve structural friction points—like wrapping raw getenv() calls into Symfony's native parameter injection or refining vague DOM selectors—before pushing code to maintain a pristine, passing pipeline.
 
+#### Code coverage
+
+Coverage is generated locally using Xdebug (make sure it's installed — `php -v` should list it under the loaded extensions). It's off by default so everyday `vendor/bin/phpunit` runs stay fast; it's only switched on for the command that needs it via the `XDEBUG_MODE` environment variable.
+
+To generate a coverage report, run:
+
+```
+composer test:coverage
+```
+
+This produces:
+
+* An HTML report at `var/coverage/html/index.html` — open it in a browser to drill into per-file/per-line coverage.
+* A plain-text summary printed to the console.
+
+Every Travis build also prints a plain-text coverage summary in the build log (no third-party account or token required), so coverage trends are visible on each PR without leaving CI.
+
+If you need to share coverage results with the wider team (e.g. for a testing retrospective), copy the console summary or a screenshot of the HTML report into the relevant Confluence page — there's no automated upload step.
+
+#### Refreshing static JSON test fixtures
+
+Some tests (e.g. `tests/App/Controller/FrameworksControllerTest.php`, `tests/App/Controller/PageControllerTest.php`) don't hit a live API — they load a static snapshot of a real WordPress/Strata API response from `tests/Fixtures/*.json`. There's no automated fixture generator; these files are hand-captured snapshots, so when a WordPress content schema (an ACF field set, a REST API response shape, a Strata search endpoint) changes, the fixture has to be refreshed manually:
+
+1. **Identify the endpoint** the fixture represents (e.g. `wp-json/wp/v2/pages/<id>` for a page fixture, or the relevant Strata search endpoint for a `*_list.json` fixture).
+2. **Fetch a fresh response** from a WordPress instance that has the new schema (dev/staging), e.g. via `curl` or a browser.
+3. **Pretty-print before saving**, so the diff in your PR stays reviewable, e.g.:
+   ```
+   curl <endpoint-url> | jq . > tests/Fixtures/<name>.json
+   ```
+4. **Check where the fixture is loaded** before assuming your change is isolated — fixtures are consumed either directly via `file_get_contents()` + `json_decode()` in the test itself, or via a helper: `App\Tests\App\Mock\CMSContentMockFactory::createMockContent()` (wraps decoded fixture data as ACF-style content) or `AbstractControllerTestCase::createPageFromJson()` (builds a mock `Page` from a decoded fixture). Search the test suite for the fixture's filename — several fixtures (e.g. `option_cards.json`) are reused across multiple tests, so a schema change can affect more than the test you're currently working on.
+5. **Re-run the full suite** (`vendor/bin/phpunit`) after refreshing a fixture, not just the test you were originally targeting, to catch any other test that silently relied on the old shape.
+6. **Commit the fixture together with the test/code change** that motivated the refresh, in the same commit — this keeps the fixture's history tied to *why* it changed.
+
 ### Behat
 
 _Please note_: Behat is not currently used in CI but has a basic setup.

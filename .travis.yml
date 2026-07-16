@@ -36,8 +36,8 @@ script:
   - vendor/bin/phplint
   # Run PHPCS
   - if [[ "$SNIFF" == "1" ]]; then vendor/bin/phpcs; fi
-  # Run PHP Unit
-  - vendor/bin/phpunit
+  # Run PHP Unit, with a plain-text code coverage summary in the build log
+  - XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --colors=never
   - vendor/bin/phpunit vendor/ccs/strata-frontend/tests
 
 notifications:
