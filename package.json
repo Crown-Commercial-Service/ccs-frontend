@@ -60,7 +60,7 @@
     "@babel/preset-env": "^7.14.4",
     "postcss": "^8.4.31",
     "postcss-cli": "^8.3.1",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.0",
     "zombie": "^6.1.4"
   },
   "overrides": {
