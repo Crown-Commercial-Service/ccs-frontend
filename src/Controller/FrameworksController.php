@@ -83,16 +83,17 @@ class FrameworksController extends AbstractController
 
         $limit = $request->query->has('limit') ? (int) filter_var($request->query->get('limit'), FILTER_SANITIZE_NUMBER_INT) : 20;
 
-        if (!is_array($request->query->get('status'))) {
-            $checkedStatusArray = $request->query->get('status') != null ? explode(",", $request->query->get('status')) : ["Live"];
+        $statusParam = $request->query->all()['status'] ?? null;
+        if (!is_array($statusParam)) {
+            $checkedStatusArray = $statusParam != null ? explode(",", $statusParam) : ["Live"];
         } else {
-            $checkedStatusArray = $request->query->get('status');
+            $checkedStatusArray = $statusParam;
         }
 
         $checkedRegulationArray = ControllerHelper::getArrayFromStringForParam($request, "regulation", "allRegulation");
         $checkedTypeArray = ControllerHelper::getArrayFromStringForParam($request, "type", "allType");
 
-        if ($request->query->get("allPillarAndCategory", false) || count((array) $request->query->get("pillar", [])) == FrameworkCategories::getAllPillarSize() || count((array) $request->query->get("category", [])) == FrameworkCategories::getAllCategorySize()) {
+        if (($request->query->all()["allPillarAndCategory"] ?? false) || count((array) ($request->query->all()["pillar"] ?? [])) == FrameworkCategories::getAllPillarSize() || count((array) ($request->query->all()["category"] ?? [])) == FrameworkCategories::getAllCategorySize()) {
             $checkedPillarArray   = [];
             $checkedCategoryArray = [];
         } else {
@@ -477,7 +478,7 @@ class FrameworksController extends AbstractController
             "technology-products-services"  => "Technology",
         ];
 
-        $categories = (array) ($request->query->get("category") ?? []);
+        $categories = (array) ($request->query->all()["category"] ?? []);
         $categories = array_map(function ($value) {
             $lower = strtolower($value);
             return str_replace(' ', '-', $lower);

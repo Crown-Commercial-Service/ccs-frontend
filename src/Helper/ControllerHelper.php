@@ -165,26 +165,30 @@ class ControllerHelper
 
     public static function getArrayFromStringForParam($request, string $paramName, string $allSelected = "")
     {
-        if ($request->query->get($allSelected, false)) {
+        if ($request->query->all()[$allSelected] ?? false) {
             return [];
         }
 
-        if (!is_array($request->query->get($paramName))) {
-            return $request->query->get($paramName) != null ? explode(",", (string) $request->query->get($paramName)) : [];
+        $value = $request->query->all()[$paramName] ?? null;
+
+        if (!is_array($value)) {
+            return $value != null ? explode(",", (string) $value) : [];
         }
 
-        return array_map(fn($string) => str_replace('+', ' ', $string), $request->query->get($paramName));
+        return array_map(fn($string) => str_replace('+', ' ', $string), $value);
     }
 
     public static function validateCategory($request, array $pillarArray, string $paramName)
     {
-        if (!is_array($request->query->get($paramName))) {
-            return $request->query->get($paramName) != null ? [explode(",", (string) $request->query->get($paramName)), $pillarArray] : [[], $pillarArray];
+        $value = $request->query->all()[$paramName] ?? null;
+
+        if (!is_array($value)) {
+            return $value != null ? [explode(",", (string) $value), $pillarArray] : [[], $pillarArray];
         }
 
         $pillarsAndCategories =  FrameworkCategories::getAllPillars()["pillars"];
 
-        $selected = array_map(fn($string) => str_replace('+', ' ', $string), $request->query->get($paramName, []));
+        $selected = array_map(fn($string) => str_replace('+', ' ', $string), $value);
 
         foreach ($pillarsAndCategories as $eachPillar) {
             $allCat = array_column($eachPillar["categories"], "name");

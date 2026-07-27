@@ -8,22 +8,22 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "aws/aws-sdk-php": "^3.272",
-        "ccs/strata-frontend": "2.1.x-dev",
-        "rollbar/rollbar-php-symfony-bundle": "4.0.0",
+        "ccs/strata-frontend": "^2.2",
+        "rollbar/rollbar": "^4.0",
         "symfony/apache-pack": "^1.0",
-        "symfony/browser-kit": "^5.4.0",
-        "symfony/config": "^5.4.0",
-        "symfony/dotenv": "^5.4.0",
-        "symfony/flex": "^1.1",
-        "symfony/framework-bundle": "^5.4.0",
-        "symfony/http-client": "^5.4.0",
-        "symfony/http-foundation": "^5.4.0",
-        "symfony/http-kernel": "^5.4.0",
-        "symfony/lock": "^5.4.0",
-        "symfony/mime": "^5.4",
-        "symfony/twig-bundle": "^5.4.0",
-        "symfony/yaml": "^5.4.0",
-        "toflar/psr6-symfony-http-cache-store": "^3.0"
+        "symfony/browser-kit": "7.4.*",
+        "symfony/config": "7.4.*",
+        "symfony/dotenv": "7.4.*",
+        "symfony/flex": "^2.4",
+        "symfony/framework-bundle": "7.4.*",
+        "symfony/http-client": "7.4.*",
+        "symfony/http-foundation": "7.4.*",
+        "symfony/http-kernel": "7.4.*",
+        "symfony/lock": "7.4.*",
+        "symfony/mime": "7.4.*",
+        "symfony/twig-bundle": "7.4.*",
+        "symfony/yaml": "7.4.*",
+        "toflar/psr6-symfony-http-cache-store": "^4.0"
     },
     "config": {
         "preferred-install": {
@@ -72,21 +72,20 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "^5.4.0"
+            "require": "7.4.*"
         }
     },
     "require-dev": {
         "behat/mink": "^1.10",
-        "behat/mink-zombie-driver": "^1.6",
         "friends-of-behat/mink-extension": "^2.7",
-        "overtrue/phplint": "5.4.0",
+        "overtrue/phplint": "^9.7",
         "phpunit/phpunit": "^10",
         "rector/rector": "^2.1",
         "roave/security-advisories": "dev-master",
         "squizlabs/php_codesniffer": "3.*",
-        "symfony/debug-bundle": "^4.4",
+        "symfony/debug-bundle": "7.4.*",
         "symfony/monolog-bundle": "^3.0",
-        "symfony/stopwatch": "^4.4",
-        "symfony/web-profiler-bundle": "^5.4.0"
+        "symfony/stopwatch": "7.4.*",
+        "symfony/web-profiler-bundle": "7.4.*"
     }
 }
