@@ -79,6 +79,14 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response }
 
+    # Rollbar Monolog handler, referenced by id from config/packages/*/monolog.yaml
+    app.rollbar_handler:
+        class: Monolog\Handler\RollbarHandler
+        factory: ['App\Factory\RollbarHandlerFactory', 'create']
+        arguments:
+            $accessToken: '%env(ROLLBAR_ACCESS_TOKEN)%'
+            $environment: '%env(APP_ENV)%'
+
      # Define the Wordpress API Service
     Strata\Frontend\Cms\Wordpress:
         public: true # Important for testing!

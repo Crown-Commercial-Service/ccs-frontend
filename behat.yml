@@ -4,7 +4,5 @@ default:
     Behat\MinkExtension:
       base_url: 'https://webuat.gca.gov.uk/'
       browser_name: 'firefox'
-      sessions:
-        default:
-          zombie: 
-            node_modules_path: 'node_modules/'
+      # zombie session removed: behat/mink-zombie-driver has no Symfony 7 compatible
+      # release. Pick a new driver (e.g. Selenium/Panther) before running bin/behat again.

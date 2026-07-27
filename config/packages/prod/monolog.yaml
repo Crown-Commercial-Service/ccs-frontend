@@ -1,6 +1,3 @@
-rollbar:
-  access_token: '%env(ROLLBAR_ACCESS_TOKEN)%'
-  environment: '%env(APP_ENV)%'
 monolog:
     handlers:
         main:
@@ -21,4 +18,4 @@ monolog:
             channels: ["!event", "!doctrine"]
         rollbar:
             type: service
-            id: Rollbar\Monolog\Handler\RollbarHandler
+            id: app.rollbar_handler
