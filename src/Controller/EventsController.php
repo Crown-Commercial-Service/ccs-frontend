@@ -62,17 +62,17 @@ class EventsController extends AbstractController
         $sectors            = $this->api->getAllTerms('sectors');
 
         //Get taxonomies that user has selected
-        $audienceTagFilter      = ControllerHelper::converArrayToStringForWordpress($request->query->get('audience_tag'), $audienceTag != null ? $audienceTag->count() : null);
-        $eventTypeFilter        = ControllerHelper::converArrayToStringForWordpress($request->query->get('event_type'), $eventType != null ? $eventType->count() : null);
-        $productServiceFilter   = ControllerHelper::converArrayToStringForWordpress($request->query->get('product_service'), $productsServices != null ? $productsServices->count() : null);
-        $sectorFilter           = ControllerHelper::converArrayToStringForWordpress($request->query->get('sector'), $sectors != null ? $sectors->count() : null);
+        $audienceTagFilter      = ControllerHelper::converArrayToStringForWordpress($request->query->all()['audience_tag'] ?? null, $audienceTag != null ? $audienceTag->count() : null);
+        $eventTypeFilter        = ControllerHelper::converArrayToStringForWordpress($request->query->all()['event_type'] ?? null, $eventType != null ? $eventType->count() : null);
+        $productServiceFilter   = ControllerHelper::converArrayToStringForWordpress($request->query->all()['product_service'] ?? null, $productsServices != null ? $productsServices->count() : null);
+        $sectorFilter           = ControllerHelper::converArrayToStringForWordpress($request->query->all()['sector'] ?? null, $sectors != null ? $sectors->count() : null);
 
         //Define options for Rest API query and check if view all option has been checked
         $options = [
-            'audience_tag'          => $request->query->get('allAudience') != null ? null : $audienceTagFilter,
-            'event_type'            => $request->query->get('allType') != null ? null : $eventTypeFilter,
-            'products_services'     => $request->query->get('allPS') != null ? null : $productServiceFilter,
-            'sectors'               => $request->query->get('allSectors') != null ? null : $sectorFilter,
+            'audience_tag'          => ($request->query->all()['allAudience'] ?? null) != null ? null : $audienceTagFilter,
+            'event_type'            => ($request->query->all()['allType'] ?? null) != null ? null : $eventTypeFilter,
+            'products_services'     => ($request->query->all()['allPS'] ?? null) != null ? null : $productServiceFilter,
+            'sectors'               => ($request->query->all()['allSectors'] ?? null) != null ? null : $sectorFilter,
             'orderby'               => 'start_datetime',
             'order'                 => 'asc',
         ];

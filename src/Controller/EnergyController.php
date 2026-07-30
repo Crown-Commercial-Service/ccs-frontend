@@ -44,7 +44,7 @@ class EnergyController extends AbstractController
 
     public function resultPage(Request $request)
     {
-        $history = $request->query->get('history');
+        $history = $request->query->all()['history'] ?? null;
         $historyArray = $this->prepareHistoryArray($history);
 
         $recommendation    = $request->query->get('recommendation');

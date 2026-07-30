@@ -67,19 +67,19 @@ class NewsController extends AbstractController
             'digitalDownload'   => $this->formatIdFromObject($this->api->getAllTerms('content_type')),
         ];
 
-        $categoriesOption       =   ControllerHelper::converArrayToStringForWordpress($request->query->get('categories', null), null);
-        $downloadableOption     =   ControllerHelper::converArrayToStringForWordpress($request->query->get('digitalDownload', null), null);
+        $categoriesOption       =   ControllerHelper::converArrayToStringForWordpress($request->query->all()['categories'] ?? null, null);
+        $downloadableOption     =   ControllerHelper::converArrayToStringForWordpress($request->query->all()['digitalDownload'] ?? null, null);
 
-        $sectorsOption          =   ControllerHelper::converArrayToStringForWordpress($request->query->get('sectors', null), null);
-        $productsServicesOption =   ControllerHelper::converArrayToStringForWordpress($request->query->get('products_services', null), null);
+        $sectorsOption          =   ControllerHelper::converArrayToStringForWordpress($request->query->all()['sectors'] ?? null, null);
+        $productsServicesOption =   ControllerHelper::converArrayToStringForWordpress($request->query->all()['products_services'] ?? null, null);
 
         $options = [
             'categories'        => $categoriesOption,
             'noPost'            => $categoriesOption == null ? 1 : 0,
             'sectors'           => $sectorsOption,
             'products_services' => $productsServicesOption,
-            'whitepaper'        => $request->query->get('whitepaper', null),
-            'webinar'           => $request->query->get('webinar', null),
+            'whitepaper'        => $request->query->all()['whitepaper'] ?? null,
+            'webinar'           => $request->query->all()['webinar'] ?? null,
             'per_page'          => 5,
             'digitalDownload'   => $downloadableOption,
         ];
@@ -165,9 +165,9 @@ class NewsController extends AbstractController
 
     private function prepareOptionForWordpress(array $options, array $defaultOptions, $request)
     {
-        $options = $request->query->get('allCategories') != null ? $this->resetCategoriesOption($options) : $options;
-        $options["sectors"] = ($request->query->get('allSectors') != null) ? null : $options["sectors"];
-        $options["products_services"] = ($request->query->get('allPS') != null) ? null : $options["products_services"];
+        $options = ($request->query->all()['allCategories'] ?? null) != null ? $this->resetCategoriesOption($options) : $options;
+        $options["sectors"] = (($request->query->all()['allSectors'] ?? null) != null) ? null : $options["sectors"];
+        $options["products_services"] = (($request->query->all()['allPS'] ?? null) != null) ? null : $options["products_services"];
 
         $allEmpty = true;
 
@@ -182,7 +182,7 @@ class NewsController extends AbstractController
         ];
 
         foreach ($checkType as $each) {
-            if (!empty($request->query->get($each))) {
+            if (!empty($request->query->all()[$each] ?? null)) {
                 $allEmpty = false;
                 break;
             }
