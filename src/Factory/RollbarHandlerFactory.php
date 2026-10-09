@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Factory;
 
 use Monolog\Handler\RollbarHandler;
-use Monolog\Logger;
+use Monolog\Level;
 use Rollbar\Rollbar;
 
 /**
@@ -19,11 +19,17 @@ class RollbarHandlerFactory
 {
     public static function create(string $accessToken, string $environment): RollbarHandler
     {
+        $isLocalOrDev = in_array(strtolower($environment), ['dev', 'local', 'development'], true);
+        $isDummy = ($accessToken === '' || $accessToken === '11111111111111111111111111111111' || strlen($accessToken) < 32);
+        $enabled = !$isLocalOrDev && !$isDummy;
+        $token = $isDummy ? '00000000000000000000000000000000' : $accessToken;
+
         Rollbar::init([
-            'access_token' => $accessToken,
+            'access_token' => $token,
             'environment' => $environment,
+            'enabled' => $enabled,
         ], false, false, false);
 
-        return new RollbarHandler(Rollbar::logger(), Logger::ERROR);
+        return new RollbarHandler(Rollbar::logger(), Level::Error);
     }
 }
