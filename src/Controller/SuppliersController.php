@@ -220,7 +220,7 @@ class SuppliersController extends AbstractController
         try {
             $results = $this->api->getOne($id);
         } catch (NotFoundException $e) {
-            throw new NotFoundHttpException('Supplier not found', $e);
+            return $this->redirectToRoute('suppliers_search');
         }
 
         if (!in_array($slug, $results->getContent()['slugArray']->getValue())) {

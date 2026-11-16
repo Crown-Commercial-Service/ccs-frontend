@@ -122,6 +122,18 @@ class SupplierControllerTest extends AbstractControllerTestCase
         $this->assertStringContainsString('Lot One', $html);
     }
 
+    public function testShowEndpointRedirectsToSearchWhenSupplierNotFound(): void
+    {
+        $mockApi = $this->createMock(\Strata\Frontend\Cms\RestData::class);
+        $mockApi->method('getOne')->willThrowException(new \Strata\Frontend\Exception\NotFoundException());
+
+        $this->injectControllerMocks(api: $mockApi);
+
+        $this->client->request('GET', '/suppliers/123/acme-supplier');
+
+        $this->assertResponseRedirects('/suppliers/search', 302);
+    }
+
     public function testShowEndpointReturnsNotFoundForInvalidSlug(): void
     {
         $mockContent = \App\Tests\App\Mock\CMSContentMockFactory::createMockContent([
